@@ -1,5 +1,7 @@
-package com.hoo.aar.infra;
+package com.hoo.aar.infra.security;
 
+import com.hoo.aar.infra.security.handler.OAuth2SuccessHandler;
+import com.hoo.aar.infra.security.service.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+//                .oauth2Login(oauth2 -> oauth2
+//                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+//                        .successHandler(oAuth2SuccessHandler)
+//                )
                 .build();
     }
 }

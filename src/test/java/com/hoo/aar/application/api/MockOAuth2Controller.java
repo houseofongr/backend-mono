@@ -11,6 +11,8 @@ public class MockOAuth2Controller {
 
     @GetMapping("/authn/kakao")
     public ResponseEntity<Login.Response> kakaoLogin() {
-        return new ResponseEntity<>(new Login.Response("leaf", "test@example.com", "kakao"), HttpStatus.OK);
+        return new ResponseEntity<>(new Login.Response("leaf",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                "kakao",false), HttpStatus.OK);
     }
 }
