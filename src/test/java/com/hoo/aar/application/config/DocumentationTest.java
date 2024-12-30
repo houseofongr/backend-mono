@@ -1,6 +1,6 @@
 package com.hoo.aar.application.config;
 
-import com.hoo.aar.infra.security.SecurityConfig;
+import com.hoo.aar.adapter.in.web.authn.springsecurity.SecurityConfig;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.restdocs.RestDocumentationExtension;

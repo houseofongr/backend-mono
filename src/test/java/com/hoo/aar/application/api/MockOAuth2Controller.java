@@ -1,6 +1,6 @@
 package com.hoo.aar.application.api;
 
-import com.hoo.aar.domain.authn.dto.Login;
+import com.hoo.aar.adapter.in.web.authn.Login;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

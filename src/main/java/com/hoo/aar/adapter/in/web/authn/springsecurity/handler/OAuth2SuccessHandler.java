@@ -1,6 +1,6 @@
-package com.hoo.aar.infra.security.handler;
+package com.hoo.aar.adapter.in.web.authn.springsecurity.handler;
 
-import com.hoo.aar.domain.authn.dto.Login;
+import com.hoo.aar.adapter.in.web.authn.Login;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,7 +1,5 @@
-package com.hoo.aar.infra.security;
+package com.hoo.aar.adapter.in.web.authn.springsecurity;
 
-import com.hoo.aar.infra.security.handler.OAuth2SuccessHandler;
-import com.hoo.aar.infra.security.service.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,4 +1,4 @@
-package com.hoo.aar.infra.security.service;
+package com.hoo.aar.adapter.in.web.authn.springsecurity.service;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

@@ -1,4 +1,4 @@
-package com.hoo.aar.domain.authn.dto;
+package com.hoo.aar.adapter.in.web.authn;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
