@@ -1,14 +1,25 @@
 package com.hoo.aar.adapter.out.persistence.entity;
 
+import com.hoo.aar.common.SnsDomain;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "AAR_USER")
-public class SnsAccount {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class SnsAccountJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 255)
+    private String name;
 
     @Column(nullable = false, length = 100)
     private String email;
@@ -21,6 +32,6 @@ public class SnsAccount {
     private SnsDomain snsDomain;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+    @JoinColumn(name = "USER_ID", nullable = true)
+    private UserJpaEntity userJpaEntity;
 }

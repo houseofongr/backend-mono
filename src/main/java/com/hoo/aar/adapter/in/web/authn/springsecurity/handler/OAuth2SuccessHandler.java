@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
-    @Value("${auth.frontend-redirect-uri}")
+    @Value("${aar.authn.frontend-redirect-uri}")
     private String redirectUri;
 
     @Override
@@ -24,7 +24,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
 
         String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
-                .queryParams(Login.Response.getQueryParams(null))
+                .queryParams(Login.Response.getQueryParams(user.getAttributes()))
                 .build().toUriString();
 
         response.sendRedirect(redirectUrl);

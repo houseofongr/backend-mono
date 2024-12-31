@@ -1,10 +1,19 @@
 package com.hoo.aar.adapter.in.web.authn.springsecurity.dto;
 
+import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
+
+import java.util.Map;
+
 public record OAuth2Dto() {
     public record KakaoUserInfo(
             String id,
             KakaoAccount kakao_account
     ) {
+
+        public SnsAccountJpaEntity toEntity() {
+            return null;
+        }
+
         public record KakaoAccount(
                 String email,
                 Boolean has_email,

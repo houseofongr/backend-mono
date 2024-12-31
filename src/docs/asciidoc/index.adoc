@@ -22,4 +22,4 @@ Audio Archive Room API Docs.
 
 [[kakao-login]]
 === 카카오 로그인
-operation::authn-kakao[snippets='curl-request,http-request,http-response,response-fields,response-body']
+operation::authn-kakao[snippets='curl-request,http-request,path-parameters,http-response,response-fields,response-body']

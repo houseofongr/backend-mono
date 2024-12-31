@@ -1,6 +1,5 @@
 package com.hoo.aar.application.config;
 
-import com.hoo.aar.adapter.in.web.authn.springsecurity.AarSecurityConfig;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,10 +11,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@ContextConfiguration(classes = {SecurityMockMvcConfig.class, AarSecurityConfig.class})
+@ContextConfiguration(classes = {DefaultMockMvcConfig.class})
 @ExtendWith(RestDocumentationExtension.class)
 @WebAppConfiguration
 @WebMvcTest
 @AutoConfigureRestDocs
-public @interface DocumentationTest {
+public @interface MockDocumentationTest {
 }

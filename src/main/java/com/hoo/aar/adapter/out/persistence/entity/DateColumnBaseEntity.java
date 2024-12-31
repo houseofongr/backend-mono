@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class DateColumn {
+public class DateColumnBaseEntity {
 
     @Column(nullable = false)
     @CreatedDate
