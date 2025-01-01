@@ -1,6 +1,8 @@
 package com.hoo.aar.adapter.in.web.authn.springsecurity;
 
 import com.hoo.aar.adapter.in.web.authn.springsecurity.handler.OAuth2SuccessHandler;
+import com.hoo.aar.adapter.in.web.authn.springsecurity.service.MockOAuth2UserServiceDelegator;
+import com.hoo.aar.adapter.in.web.authn.springsecurity.service.OAuth2UserServiceDelegator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-@Import({AarSecurityConfig.class, OAuth2SuccessHandler.class})
+@Import({AarSecurityConfig.class, OAuth2SuccessHandler.class, MockOAuth2UserServiceDelegator.class})
 class AarSecurityConfigTest {
 
     @Autowired
