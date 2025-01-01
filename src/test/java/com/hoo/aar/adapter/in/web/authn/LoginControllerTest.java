@@ -30,6 +30,6 @@ public class LoginControllerTest {
                 .andExpect(status().is(302))
                 .andDo(document("authn-kakao",
                         pathParameters(parameterWithName("provider").description("로그인을 시도할 서드파티 인증 기관명입니다. +" + "\n" + "[kakao, naver, google, apple]")),
-                        responseHeaders(headerWithName("Location").description("로그인 이후 이동하는 경로와 파라미터 정보입니다."))));
+                        responseHeaders(headerWithName("Location").description("로그인 이후 이동하는 경로와 쿼리 파라미터입니다."))));
     }
 }

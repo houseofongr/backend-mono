@@ -1,0 +1,32 @@
+@import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
+
+@font-face {
+    font-family: "Apple SDGothic Neo";
+    font-style: normal;
+    font-weight: bold;
+    src: url(../fonts/AppleSDGothicNeoB.woff) format("woff");
+}
+
+body {
+    font-family: "Apple SDGothic Neo", sans-serif;
+}
+
+table.tableblock>.title {
+    font-family: "Apple SDGothic Neo", sans-serif;
+}
+
+.small-text {
+    font-size: 0.8em;
+    color: #888;
+}
+
+h1, h2, h3, h4, h5, h6, #toctitle {
+    font-family: "Apple SDGothic Neo", monospace;
+    font-weight: bolder;
+}
+
+.hljs {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+}
