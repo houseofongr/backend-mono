@@ -4,6 +4,7 @@ import com.hoo.aar.adapter.in.web.authn.springsecurity.util.JwtUtil;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aar.application.port.out.database.SaveSnsAccountPort;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class KakaoLoadUserServiceTest {
@@ -40,14 +41,10 @@ class KakaoLoadUserServiceTest {
         OAuth2User loadUser = sut.load(user);
 
         // then
-        assertThat(loadUser.getAttributes())
-                .anySatisfy((k, v) -> assertThat(k).contains("username"))
-                .anySatisfy((k, v) -> assertThat(k).contains("accessToken"))
-                .anySatisfy((k, v) -> assertThat(k).contains("provider"))
-                .anySatisfy((k, v) -> {
-                    assertThat(k).contains("isFirstLogin");
-                    assertThat((boolean) v).isFalse();
-                });
+        assertThat(loadUser.getAttributes()).containsKey("username");
+        assertThat(loadUser.getAttributes()).containsKey("accessToken");
+        assertThat(loadUser.getAttributes()).containsKey("provider");
+        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(InstanceOfAssertFactories.BOOLEAN)).isFalse();
     }
 
     @Test
@@ -62,13 +59,10 @@ class KakaoLoadUserServiceTest {
         OAuth2User loadUser = sut.load(user);
 
         // then
-        assertThat(loadUser.getAttributes())
-                .anySatisfy((k, v) -> assertThat(k).contains("username"))
-                .anySatisfy((k, v) -> assertThat(k).contains("accessToken"))
-                .anySatisfy((k, v) -> assertThat(k).contains("provider"))
-                .anySatisfy((k, v) -> {
-                    assertThat(k).contains("isFirstLogin");
-                    assertThat((boolean) v).isTrue();
-                });
+        verify(saveSnsAccountPort, times(1)).save(any());
+        assertThat(loadUser.getAttributes()).containsKey("username");
+        assertThat(loadUser.getAttributes()).containsKey("accessToken");
+        assertThat(loadUser.getAttributes()).containsKey("provider");
+        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(InstanceOfAssertFactories.BOOLEAN)).isTrue();
     }
 }
