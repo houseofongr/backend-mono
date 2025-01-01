@@ -14,9 +14,9 @@ public class JwtConfig {
     private final MACSigner macSigner;
     private final JwtAttribute jwtAttribute;
 
-    public JwtConfig(@Value("${authn.jwt.secret}") String secret,
-                     @Value("${authn.jwt.issuer}") String issuer,
-                     @Value("${authn.jwt.expire}") Long expire
+    public JwtConfig(@Value("${security.jwt.secret}") String secret,
+                     @Value("${security.jwt.issuer}") String issuer,
+                     @Value("${security.jwt.expire}") Long expire
     ) throws KeyLengthException {
         this.macSigner = new MACSigner(secret);
         this.jwtAttribute = new JwtAttribute(secret, issuer, expire);

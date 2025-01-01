@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
-    @Value("${aar.authn.frontend-redirect-uri}")
+    @Value("${security.frontend-redirect-uri}")
     private String redirectUri;
 
     @Override
