@@ -5,6 +5,9 @@ import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.beans.Encoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,22 +47,6 @@ public record Login() {
             ret.put("isFirstLogin", isFirstLogin);
 
             return ret;
-        }
-
-        public static MultiValueMap<String, String> getQueryParams(Response dto) {
-
-            MultiValueMap<String, String> ret = new LinkedMultiValueMap<>();
-
-            ret.add("username",dto.username);
-            ret.add("accessToken",dto.accessToken);
-            ret.add("provider",dto.provider);
-            ret.add("isFirstLogin", String.valueOf(dto.isFirstLogin));
-
-            return ret;
-        }
-
-        public static MultiValueMap<String, String> getQueryParams(Map<String, Object> attributes) {
-            return getQueryParams(of(attributes));
         }
     }
 }

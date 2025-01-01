@@ -9,11 +9,6 @@ public record OAuth2Dto() {
             String id,
             KakaoAccount kakao_account
     ) {
-
-        public SnsAccountJpaEntity toEntity() {
-            return null;
-        }
-
         public record KakaoAccount(
                 String email,
                 Boolean has_email,

@@ -39,6 +39,10 @@ spring:
     name: aar-backend
   jpa:
     database: mysql
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: com.hoo.aar.adapter.out.persistence.config.HibernateCustomNamingStrategy
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: ${database.username}

@@ -4,6 +4,7 @@ import com.hoo.aar.adapter.in.web.authn.Login;
 import com.hoo.aar.adapter.in.web.authn.springsecurity.dto.OAuth2Dto;
 import com.hoo.aar.adapter.in.web.authn.springsecurity.util.JwtUtil;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -22,6 +23,7 @@ public class KakaoLoadUserService implements LoadUserService {
     private final Gson gson = new Gson();
     private final LoadSnsAccountPort loadSnsAccountPort;
     private final SaveSnsAccountPort saveSnsAccountPort;
+    private final SnsAccountMapper snsAccountMapper;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -33,7 +35,7 @@ public class KakaoLoadUserService implements LoadUserService {
         Login.Response response = loadSnsAccountPort.load(userInfo.id()).map(entity -> Login.Response.of(entity, jwtUtil.getAccessToken(entity), false))
 
                 .orElseGet(() -> {
-                    SnsAccountJpaEntity newEntity = saveSnsAccountPort.save(userInfo.toEntity());
+                    SnsAccountJpaEntity newEntity = saveSnsAccountPort.save(snsAccountMapper.kakaoUserToSnsAccount(userInfo));
                     return Login.Response.of(newEntity, jwtUtil.getAccessToken(newEntity), true);
                 });
 

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
@@ -22,9 +24,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
+        Login.Response dto = Login.Response.of(user.getAttributes());
 
         String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
-                .queryParams(Login.Response.getQueryParams(user.getAttributes()))
+                .queryParam("username", URLEncoder.encode(dto.username(), StandardCharsets.UTF_8))
+                .queryParam("accessToken",dto.accessToken())
+                .queryParam("provider",URLEncoder.encode(dto.provider(), StandardCharsets.UTF_8))
+                .queryParam("isFirstLogin", String.valueOf(dto.isFirstLogin()))
                 .build().toUriString();
 
         response.sendRedirect(redirectUrl);

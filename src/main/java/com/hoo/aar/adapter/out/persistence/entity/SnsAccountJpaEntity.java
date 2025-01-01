@@ -34,4 +34,8 @@ public class SnsAccountJpaEntity extends DateColumnBaseEntity {
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = true)
     private UserJpaEntity userJpaEntity;
+
+    public static SnsAccountJpaEntity regist(String name, String email, String snsId, SnsDomain snsDomain) {
+        return new SnsAccountJpaEntity(null,name, email,snsId,snsDomain,null);
+    }
 }
