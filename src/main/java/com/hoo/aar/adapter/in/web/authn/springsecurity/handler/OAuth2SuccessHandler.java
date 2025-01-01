@@ -29,7 +29,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .queryParam("username", URLEncoder.encode(dto.username(), StandardCharsets.UTF_8))
                 .queryParam("accessToken",dto.accessToken())
-                .queryParam("provider",URLEncoder.encode(dto.provider(), StandardCharsets.UTF_8))
+                .queryParam("provider",URLEncoder.encode(dto.provider().toLowerCase(), StandardCharsets.UTF_8))
                 .queryParam("isFirstLogin", String.valueOf(dto.isFirstLogin()))
                 .build().toUriString();
 

@@ -19,7 +19,7 @@ public class MockOAuth2Controller {
         String redirectUrl = UriComponentsBuilder.fromUriString("/frontend-redirect-url")
                 .queryParam("username", URLEncoder.encode("남상엽", StandardCharsets.UTF_8))
                 .queryParam("accessToken", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZCIsInN1YiI6IuuCqOyDgeyXvSIsInJvbGUiOiJURU1QX1VTRVIiLCJzbnNJZCI6IjM4NTk0NzYwMjkiLCJleHAiOjE3MzU3MjI4MjIsInVzZXJJZCI6LTF9.aLJFkMUsfRhFxEWiWdJV0D0gytj1NrZYkw9UIAfDjcQ")
-                .queryParam("provider", "KAKAO")
+                .queryParam("provider", "kakao")
                 .queryParam("isFirstLogin", "false")
                 .build().toUriString();
 
