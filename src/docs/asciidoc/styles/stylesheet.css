@@ -15,11 +15,6 @@ table.tableblock>.title {
     font-family: "Apple SDGothic Neo", sans-serif;
 }
 
-.small-text {
-    font-size: 0.8em;
-    color: #888;
-}
-
 h1, h2, h3, h4, h5, h6, #toctitle {
     font-family: "Apple SDGothic Neo", monospace;
     font-weight: bolder;
