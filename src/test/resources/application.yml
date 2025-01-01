@@ -1,4 +1,13 @@
 spring:
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: aar-local-db
+    password: test1234
+    url: jdbc:mysql://localhost:3306/aar_test
   security:
     oauth2:
       client:

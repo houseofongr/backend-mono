@@ -43,7 +43,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: ${database.username}
     password: ${database.password}
-    url: ${database.url}
+    url: ${database.url}/${database.scheme}
   security:
     oauth2:
       client:

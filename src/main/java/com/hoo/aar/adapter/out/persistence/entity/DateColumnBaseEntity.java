@@ -13,11 +13,11 @@ import java.time.ZonedDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class DateColumnBaseEntity {
 
-    @Column(nullable = false)
+    @Column
     @CreatedDate
     private ZonedDateTime createdDate;
 
-    @Column(nullable = false)
+    @Column
     @LastModifiedDate
     private ZonedDateTime updatedDate;
 }
