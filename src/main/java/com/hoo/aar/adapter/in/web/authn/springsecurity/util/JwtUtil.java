@@ -27,7 +27,7 @@ public class JwtUtil {
                     .subject(snsAccount.getName())
                     .issuer(jwtAttribute.issuer())
                     .claim("userId", snsAccount.getUserJpaEntity() != null? snsAccount.getUserJpaEntity() : -1)
-                    .claim("snsId", snsAccount.getSnsId())
+                    .claim("snsId", snsAccount.getId())
                     .claim("role", Role.TEMP_USER)
                     .expirationTime(new Date(new Date().getTime() + jwtAttribute.expire()))
                     .build();

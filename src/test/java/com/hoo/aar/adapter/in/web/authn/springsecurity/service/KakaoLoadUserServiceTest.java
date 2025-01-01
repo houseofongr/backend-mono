@@ -1,7 +1,10 @@
 package com.hoo.aar.adapter.in.web.authn.springsecurity.service;
 
 import com.hoo.aar.adapter.in.web.authn.springsecurity.util.JwtUtil;
+import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
+import com.hoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
+import com.hoo.aar.adapter.out.persistence.mapper.SnsAccountMapperImpl;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aar.application.port.out.database.SaveSnsAccountPort;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -20,14 +23,16 @@ class KakaoLoadUserServiceTest {
     KakaoLoadUserService sut;
     LoadSnsAccountPort loadSnsAccountPort;
     SaveSnsAccountPort saveSnsAccountPort;
+    SnsAccountMapper snsAccountMapper;
     JwtUtil jwtUtil;
 
     @BeforeEach
     void init() {
         loadSnsAccountPort = mock(LoadSnsAccountPort.class);
         saveSnsAccountPort = mock(SaveSnsAccountPort.class);
+        snsAccountMapper = mock(SnsAccountMapper.class);
         jwtUtil = mock(JwtUtil.class);
-        sut = new KakaoLoadUserService(loadSnsAccountPort, saveSnsAccountPort, jwtUtil);
+        sut = new KakaoLoadUserService(loadSnsAccountPort, saveSnsAccountPort, snsAccountMapper, jwtUtil);
     }
 
     @Test
@@ -52,10 +57,12 @@ class KakaoLoadUserServiceTest {
     void testNotExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
+        SnsAccountJpaEntity entity = SnsAccountJpaEntityF.KAKAO.get();
 
         // when
         when(loadSnsAccountPort.load(any())).thenReturn(Optional.empty());
-        when(saveSnsAccountPort.save(any())).thenReturn(SnsAccountJpaEntityF.KAKAO.get());
+        when(saveSnsAccountPort.save(any())).thenReturn(entity);
+        when(snsAccountMapper.kakaoUserToSnsAccount(any())).thenReturn(entity);
         OAuth2User loadUser = sut.load(user);
 
         // then

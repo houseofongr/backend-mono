@@ -22,4 +22,8 @@ Audio Archive Room API Docs.
 
 [[kakao-login]]
 === 카카오 로그인
-operation::authn-kakao[snippets='curl-request,http-request,path-parameters,http-response,response-fields,response-body']
+operation::authn-kakao[snippets='curl-request,http-request,path-parameters,http-response,response-headers']
+
+* 파라미터 관련 정보는 아래 [Response Fields]를 참고바랍니다.
+
+operation::authn-kakao-2[snippets='response-fields']
