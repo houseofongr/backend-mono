@@ -2,16 +2,11 @@ package com.hoo.aar.adapter.in.web.authn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import java.beans.Encoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-public record Login() {
+public record LoginApiDto() {
 
     public record Response(
             String username,

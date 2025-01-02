@@ -1,6 +1,6 @@
 package com.hoo.aar.adapter.in.web.authn.springsecurity.handler;
 
-import com.hoo.aar.adapter.in.web.authn.Login;
+import com.hoo.aar.adapter.in.web.authn.LoginApiDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
-        Login.Response dto = Login.Response.of(user.getAttributes());
+        LoginApiDto.Response dto = LoginApiDto.Response.of(user.getAttributes());
 
         String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .queryParam("username", URLEncoder.encode(dto.username(), StandardCharsets.UTF_8))
