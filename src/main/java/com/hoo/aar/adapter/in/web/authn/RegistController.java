@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistController {
 
     @PostMapping
-    ResponseEntity<?> regist() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    ResponseEntity<?> regist(RegistApiDto.Request dto) {
+        RegistApiDto.Response response = new RegistApiDto.Response("test", "token");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

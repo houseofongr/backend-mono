@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +35,7 @@ class AarSecurityConfigTest {
     @DisplayName("TEMP_USER 권한 URL 테스트")
     void testTempUserURL() throws Exception {
         mockMvc.perform(post("/aar/authn/regist").accept(MediaType.APPLICATION_JSON)
-                        .with(user("temp_user").roles("TEMP_USER")))
+                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
                 .andExpect(status().is(200));
     }
 

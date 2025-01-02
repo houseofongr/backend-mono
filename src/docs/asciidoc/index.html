@@ -181,7 +181,8 @@ h3 {
 <li><a href="#authn-api">인증(Authentication) API</a>
 <ul class="sectlevel2">
 <li><a href="#authn-flow">인증 플로우</a></li>
-<li><a href="#login-api">로그인 API</a></li>
+<li><a href="#authn-login-api">SNS 로그인 API</a></li>
+<li><a href="#authn-regist-api">회원가입 API</a></li>
 </ul>
 </li>
 </ul>
@@ -324,18 +325,19 @@ h3 {
 </div>
 </div>
 <div class="sect2">
-<h3 id="login-api">로그인 API</h3>
+<h3 id="authn-login-api">SNS 로그인 API</h3>
+<div class="paragraph">
+<p>SNS 로그인을 시도합니다.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>서드파티 인증 페이지로 이동</strong>하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.</p>
+</li>
+</ul>
+</div>
 <div class="sect3">
-<h4 id="login-api_curl_request">Curl request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl 'https://api.archiveofongr.site/aar/authn/login/kakao' -i -X GET \
-    -H 'Accept: application/json'</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="login-api_http_request">HTTP request</h4>
+<h4 id="authn-login-api_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/authn/login/kakao HTTP/1.1
@@ -345,7 +347,7 @@ Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="login-api_path_parameters">Path parameters</h4>
+<h4 id="authn-login-api_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /aar/authn/login/{provider}</caption>
 <colgroup>
@@ -368,7 +370,7 @@ Host: api.archiveofongr.site</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="login-api_http_response">HTTP response</h4>
+<h4 id="authn-login-api_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 302 Found
@@ -377,7 +379,7 @@ Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%9
 </div>
 </div>
 <div class="sect3">
-<h4 id="login-api_response_headers">Response headers</h4>
+<h4 id="authn-login-api_response_headers">Response headers</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -397,13 +399,11 @@ Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%9
 </tbody>
 </table>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>파라미터에 대한 세부 정보는 아래 [Response Fields]를 참고바랍니다.</pre>
-</div>
+<div class="paragraph">
+<p><code>파라미터에 대한 세부 정보는 아래 <strong>Response fields</strong>를 참고바랍니다.</code></p>
 </div>
 <div class="sect3">
-<h4 id="login-api_response_fields">Response fields</h4>
+<h4 id="authn-login-api_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -443,12 +443,118 @@ Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%9
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="authn-regist-api">회원가입 API</h3>
+<div class="paragraph">
+<p>회원가입을 시도합니다.</p>
+</div>
+<div class="sect3">
+<h4 id="authn-regist-api_http_request">HTTP request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /aar/authn/regist HTTP/1.1
+Content-Length: 94
+Host: api.archiveofongr.site
+
+{
+  "nickName" : "leaf",
+  "recordAgreement" : true,
+  "personalInformationAgreement" : true
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="authn-regist-api_request_fields">Request fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">해당 사용자가 사용할 닉네임입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordAgreement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">녹화물에 대한 2차 가공 동의여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>personalInformationAgreement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 개인정보 수집 및 활용에 대한 동의여부입니다.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="authn-regist-api_http_response">HTTP response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 52
+
+{
+  "username" : "test",
+  "accessToken" : "token"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="authn-regist-api_response_fields">Response fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원가입한 사용자의 이름입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원가입한 사용자의 JWT 액세스 토큰입니다.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-02 08:52:29 +0900
+Last updated 2025-01-02 10:02:38 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
