@@ -27,7 +27,7 @@ public class RegisterControllerTest {
     @Test
     @DisplayName("회원가입 API")
     void testRegist() throws Exception {
-        RegisterController.RegisterUserRequest dto = new RegisterController.RegisterUserRequest("leaf", true, true);
+        RegisterController.RegisterUserRequest dto = new RegisterController.RegisterUserRequest(true, true);
         String json = gson.toJson(dto);
         mockMvc.perform(post("/aar/authn/regist")
                         .content(json)
@@ -35,7 +35,6 @@ public class RegisterControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("authn-regist",
                         requestFields(
-                                fieldWithPath("nickname").description("해당 사용자가 사용할 닉네임입니다."),
                                 fieldWithPath("recordAgreement").description("녹화물에 대한 2차 가공 동의여부입니다."),
                                 fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수집 및 활용에 대한 동의여부입니다.")
                         ),

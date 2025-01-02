@@ -23,7 +23,7 @@ public class JwtUtil {
 
     public String getAccessToken(SnsAccountJpaEntity snsAccount) {
         if (snsAccount.getUserJpaEntity() == null)
-            getAccessToken(snsAccount.getName(),-1L, snsAccount.getId(), Role.TEMP_USER);
+            return getAccessToken(snsAccount.getName(),-1L, snsAccount.getId(), Role.TEMP_USER);
         return getAccessToken(snsAccount.getName(),snsAccount.getUserJpaEntity().getId(), snsAccount.getId(), Role.USER);
     }
 

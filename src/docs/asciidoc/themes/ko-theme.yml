@@ -1,5 +1,7 @@
 extends: default
 font:
+  fallbacks:
+    - Apple Gothic
   catalog:
     merge: true
     Noto Sans:
@@ -16,4 +18,6 @@ base:
   font-color: #333333
   font-family: Apple Gothic
 code:
+  font-family: Apple Gothic
+pre:
   font-family: Apple Gothic

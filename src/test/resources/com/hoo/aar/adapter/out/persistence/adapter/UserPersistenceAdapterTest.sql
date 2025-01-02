@@ -1,0 +1,2 @@
+insert into AAR_USER(ID, NAME, PHONE_NUMBER, NICKNAME, RECORD_AGREEMENT, PERSONAL_INFORMATION_AGREEMENT) values
+('1', '남상엽', 'NOT_SET', 'leaf', false, false);

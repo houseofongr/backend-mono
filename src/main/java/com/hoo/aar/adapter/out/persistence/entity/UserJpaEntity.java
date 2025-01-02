@@ -1,5 +1,6 @@
 package com.hoo.aar.adapter.out.persistence.entity;
 
+import com.hoo.aar.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,8 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     @ColumnDefault("0")
     private Boolean personalInformationAgreement;
+
+    public static UserJpaEntity regist(User user) {
+        return new UserJpaEntity(null, user.getName(), user.getPhoneNumber(), user.getNickname(), user.getRecordAgreement(), user.getPersonalInformationAgreement());
+    }
 }

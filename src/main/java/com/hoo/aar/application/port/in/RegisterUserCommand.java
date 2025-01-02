@@ -5,7 +5,6 @@ import com.hoo.aar.domain.User;
 public record RegisterUserCommand() {
     public record In(
             Long snsId,
-            String nickname,
             Boolean recordAgreement,
             Boolean personalInformationAgreement
     ) {

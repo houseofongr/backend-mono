@@ -21,7 +21,6 @@ public class RegisterController {
 
         RegisterUserCommand.In command = new RegisterUserCommand.In(
                 snsId,
-                request.nickName,
                 request.recordAgreement,
                 request.personalInformationAgreement);
 
@@ -29,7 +28,6 @@ public class RegisterController {
     }
 
     record RegisterUserRequest(
-            String nickName,
             Boolean recordAgreement,
             Boolean personalInformationAgreement
     ) {

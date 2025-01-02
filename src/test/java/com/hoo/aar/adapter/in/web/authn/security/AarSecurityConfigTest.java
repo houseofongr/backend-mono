@@ -2,6 +2,7 @@ package com.hoo.aar.adapter.in.web.authn.security;
 
 import com.hoo.aar.adapter.in.web.authn.security.handler.OAuth2SuccessHandler;
 import com.hoo.aar.adapter.in.web.authn.security.service.MockOAuth2UserServiceDelegator;
+import com.hoo.aar.application.port.in.RegisterUserUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
@@ -21,6 +23,9 @@ class AarSecurityConfigTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @MockitoBean
+    RegisterUserUseCase registerUserUseCase;
 
     @Test
     @DisplayName("전체 공개 URL 테스트")

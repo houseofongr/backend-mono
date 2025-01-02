@@ -26,12 +26,9 @@ public class RegisterUserService implements RegisterUserUseCase {
     @Override
     public RegisterUserCommand.Out register(RegisterUserCommand.In command) {
 
-        loadUserPort.assertNotExistNickname(command.nickname());
-
         SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId());
 
         User newUser = new User(snsAccount,
-                command.nickname(),
                 command.recordAgreement(),
                 command.personalInformationAgreement());
 

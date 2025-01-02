@@ -2,7 +2,7 @@ spring:
   jpa:
     database: mysql
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: aar-local-db
