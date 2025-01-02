@@ -2,7 +2,11 @@ package com.hoo.aar.adapter.out.persistence.adapter;
 
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
+import com.hoo.aar.adapter.out.persistence.mapper.UserMapper;
+import com.hoo.aar.adapter.out.persistence.mapper.UserMapperImpl;
 import com.hoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.hoo.aar.domain.SnsAccount;
+import com.hoo.aar.domain.SnsAccountF;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(SnsAccountPersistenceAdapter.class)
+@Import({SnsAccountPersistenceAdapter.class, UserMapperImpl.class})
 class SnsAccountPersistenceAdapterTest {
 
     @Autowired
@@ -31,14 +35,17 @@ class SnsAccountPersistenceAdapterTest {
     @DisplayName("SNS Account 조회")
     void testLoadSnsAccount() {
         // given
-        SnsAccountJpaEntity snsAccount = SnsAccountJpaEntityF.KAKAO.get();
+        SnsAccountJpaEntity snsAccountJpaEntity = SnsAccountJpaEntityF.KAKAO.get();
+        SnsAccount snsAccount = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        Optional<SnsAccountJpaEntity> entityInDB = sut.load(snsAccount.getSnsId());
+        SnsAccount entityById = sut.load(snsAccount.getId());
+        Optional<SnsAccountJpaEntity> entityBySnsId = sut.load(snsAccountJpaEntity.getSnsId());
 
         // then
-        assertThat(entityInDB).isNotEmpty();
-        assertThat(entityInDB.get()).usingRecursiveComparison().isEqualTo(snsAccount);
+        assertThat(entityById).usingRecursiveComparison().isEqualTo(snsAccount);
+        assertThat(entityBySnsId).isNotEmpty();
+        assertThat(entityBySnsId.get()).usingRecursiveComparison().isEqualTo(snsAccountJpaEntity);
     }
 
     @Test

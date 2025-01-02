@@ -28,8 +28,8 @@ public class JwtUtil {
         return getAccessToken(snsAccount.getName(),snsAccount.getUserEntity().getId(), snsAccount.getId(), Role.USER);
     }
 
-    public String getAccessToken(User user, SnsAccount snsAccount) {
-        return getAccessToken(user.getName(), user.getId(), snsAccount.getId(), Role.USER);
+    public String getAccessToken(SnsAccount snsAccount) {
+        return getAccessToken(snsAccount.getUser().getName(), snsAccount.getUser().getId(), snsAccount.getId(), Role.USER);
     }
 
     private String getAccessToken(String name, Long userId, Long snsId, Role role) {
@@ -39,7 +39,7 @@ public class JwtUtil {
                     .issuer(jwtAttribute.issuer())
                     .claim("userId", userId)
                     .claim("snsId", snsId)
-                    .claim("role", Role.TEMP_USER)
+                    .claim("role", role)
                     .expirationTime(new Date(new Date().getTime() + jwtAttribute.expire()))
                     .build();
 

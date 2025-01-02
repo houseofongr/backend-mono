@@ -1,12 +1,13 @@
 package com.hoo.aar.adapter.in.web.authn;
 
-import com.hoo.aar.application.config.DocumentationTest;
+import com.hoo.aar.adapter.in.web.config.DocumentationTest;
 import com.hoo.aar.application.port.in.MockRegisterUserUseCase;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,8 +18,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DocumentationTest
-@Import({RegisterController.class, MockRegisterUserUseCase.class})
-public class RegisterControllerTest {
+@Import({RegisterUserController.class, MockRegisterUserUseCase.class})
+public class RegisterUserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -27,11 +28,13 @@ public class RegisterControllerTest {
     @Test
     @DisplayName("회원가입 API")
     void testRegist() throws Exception {
-        RegisterController.RegisterUserRequest dto = new RegisterController.RegisterUserRequest(true, true);
+        RegisterUserController.RegisterUserRequest dto = new RegisterUserController.RegisterUserRequest(true, true);
         String json = gson.toJson(dto);
         mockMvc.perform(post("/aar/authn/regist")
                         .content(json)
-                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(jwt -> jwt.claim("snsId", "1"))
+                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
                 .andExpect(status().is(200))
                 .andDo(document("authn-regist",
                         requestFields(

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
@@ -18,7 +19,7 @@ import static org.springframework.http.HttpMethod.*;
 public class AarSecurityConfig {
 
     @Bean
-    public SecurityFilterChain aarFilterChain(HttpSecurity http, OAuth2UserServiceDelegator userService, OAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
+    public SecurityFilterChain aarFilterChain(HttpSecurity http, OAuth2UserServiceDelegator userService, OAuth2SuccessHandler oAuth2SuccessHandler, JwtDecoder jwtDecoder) throws Exception {
         return http
                 .securityMatcher("/aar/**")
                 .csrf(CsrfConfigurer::disable)
@@ -30,6 +31,9 @@ public class AarSecurityConfig {
                         .userInfoEndpoint(userInfo ->
                                 userInfo.userService(userService))
                         .successHandler(oAuth2SuccessHandler))
+
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.decoder(jwtDecoder)))
 
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(GET,

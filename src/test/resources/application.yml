@@ -27,3 +27,10 @@ spring:
 logging:
   level:
     root: debug
+
+security:
+  frontend-redirect-uri: http://localhost:8080
+  jwt:
+    secret: cANZLk0MJon8ETjGKatPwEGiKgNjLTaFoPrhp4RQkpc=
+    issuer: aar-backend-test
+    expire: 10000

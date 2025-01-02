@@ -25,6 +25,9 @@ public class User {
     }
 
     public static User regist(SnsAccount snsAccount, Boolean recordAgreement, Boolean personalInformationAgreement) {
-        return new User(null, snsAccount.getName(), snsAccount.getNickname(), "NOT_SET",recordAgreement,personalInformationAgreement, List.of(snsAccount));
+        User newUser = new User(null, snsAccount.getName(), snsAccount.getNickname(), "NOT_SET", recordAgreement, personalInformationAgreement, List.of(snsAccount));
+        snsAccount.setUser(newUser);
+
+        return newUser;
     }
 }

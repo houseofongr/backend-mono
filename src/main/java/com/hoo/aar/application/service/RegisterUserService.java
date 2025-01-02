@@ -1,15 +1,10 @@
 package com.hoo.aar.application.service;
 
 import com.hoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aar.adapter.out.persistence.adapter.SnsAccountPersistenceAdapter;
-import com.hoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aar.application.port.in.RegisterUserUseCase;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
-import com.hoo.aar.application.port.out.database.LoadUserPort;
 import com.hoo.aar.application.port.out.database.SaveUserPort;
-import com.hoo.aar.common.enums.ErrorCode;
-import com.hoo.aar.common.exception.AarException;
 import com.hoo.aar.domain.SnsAccount;
 import com.hoo.aar.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RegisterUserService implements RegisterUserUseCase {
 
-    private final LoadUserPort loadUserPort;
     private final LoadSnsAccountPort loadSnsAccountPort;
     private final SaveUserPort saveUserPort;
-    private final UserMapper userMapper;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -34,7 +27,7 @@ public class RegisterUserService implements RegisterUserUseCase {
 
         newUser = saveUserPort.save(newUser);
 
-        String accessToken = jwtUtil.getAccessToken(newUser, snsAccount);
+        String accessToken = jwtUtil.getAccessToken(snsAccount);
 
         return new RegisterUserCommand.Out(newUser.getNickname(), accessToken);
     }

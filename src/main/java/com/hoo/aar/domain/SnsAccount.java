@@ -2,6 +2,7 @@ package com.hoo.aar.domain;
 
 import com.hoo.aar.common.enums.SnsDomain;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class SnsAccount {
@@ -11,7 +12,9 @@ public class SnsAccount {
     private final String email;
     private final String snsId;
     private final SnsDomain snsDomain;
-    private final User user;
+
+    @Setter
+    private User user;
 
     public SnsAccount(Long id, String name, String nickname, String email, String snsId, SnsDomain snsDomain, User user) {
         this.id = id;

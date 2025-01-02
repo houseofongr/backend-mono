@@ -2,6 +2,7 @@ package com.hoo.aar.adapter.in.web.authn.security.jwt;
 
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
+import com.hoo.aar.domain.*;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -36,8 +37,8 @@ class JwtUtilTest {
     }
 
     @Test
-    @DisplayName("토큰 생성 테스트")
-    void testAccessToken() {
+    @DisplayName("SNS Account 토큰 생성 테스트")
+    void testSnsAccountAccessToken() {
         // given
         SnsAccountJpaEntity entity = SnsAccountJpaEntityF.KAKAO.get();
 
@@ -50,6 +51,26 @@ class JwtUtilTest {
         assertThat(jwt.getClaims()).extractingByKey("userId").isEqualTo(-1L);
         assertThat(jwt.getClaims()).extractingByKey("iss").isEqualTo("aoo");
         assertThat(jwt.getClaims()).extractingByKey("role").isEqualTo("TEMP_USER");
+        assertThat(jwt.getClaims()).extractingByKey("exp", as(InstanceOfAssertFactories.INSTANT))
+                .isBefore(Instant.now().plus(10000L, ChronoUnit.MILLIS));
+    }
+
+    @Test
+    @DisplayName("User 토큰 생성 테스트")
+    void testUserAccessToken() {
+        // given
+        User user = DomainFixtureRepository.getRegisteredUser();
+        SnsAccount snsAccount = user.getSnsAccounts().getFirst();
+
+        // when
+        Jwt jwt = jwtDecoder.decode(sut.getAccessToken(snsAccount));
+
+        // then
+        assertThat(jwt.getClaims()).containsKey("sub");
+        assertThat(jwt.getClaims()).containsKey("snsId");
+        assertThat(jwt.getClaims()).extractingByKey("userId").isEqualTo(1L);
+        assertThat(jwt.getClaims()).extractingByKey("iss").isEqualTo("aoo");
+        assertThat(jwt.getClaims()).extractingByKey("role").isEqualTo("USER");
         assertThat(jwt.getClaims()).extractingByKey("exp", as(InstanceOfAssertFactories.INSTANT))
                 .isBefore(Instant.now().plus(10000L, ChronoUnit.MILLIS));
     }

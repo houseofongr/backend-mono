@@ -1,7 +1,5 @@
 package com.hoo.aar.application.port.in;
 
-import com.hoo.aar.adapter.in.web.authn.RegisterController;
-
 public class MockRegisterUserUseCase implements RegisterUserUseCase {
 
     @Override

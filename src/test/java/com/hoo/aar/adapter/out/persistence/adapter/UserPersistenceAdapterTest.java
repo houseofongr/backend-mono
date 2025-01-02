@@ -41,14 +41,14 @@ class UserPersistenceAdapterTest {
     @DisplayName("사용자 저장")
     void testSaveUser() {
         // given
-        User user = UserF.NOT_REGISTERED.get();
+        User user = UserF.REGISTERED_WITH_NO_ID.get();
 
         // when
         User savedUser = sut.save(user);
 
         // then
         assertThat(savedUser).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "snsAccounts")
                 .isEqualTo(user);
     }
 }

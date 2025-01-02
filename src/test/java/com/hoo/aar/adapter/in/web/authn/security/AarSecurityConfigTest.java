@@ -6,7 +6,9 @@ import com.hoo.aar.application.port.in.RegisterUserUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,8 +19,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
-@Import({AarSecurityConfig.class, OAuth2SuccessHandler.class, MockOAuth2UserServiceDelegator.class})
+@SpringBootTest
+@AutoConfigureMockMvc
 class AarSecurityConfigTest {
 
     @Autowired
@@ -40,7 +42,10 @@ class AarSecurityConfigTest {
     @DisplayName("TEMP_USER 권한 URL 테스트")
     void testTempUserURL() throws Exception {
         mockMvc.perform(post("/aar/authn/regist").accept(MediaType.APPLICATION_JSON)
-                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"recordAgreement\":true, \"personalInformationAgreement\":true}")
+                        .with(jwt().jwt(jwt -> jwt.claim("snsId", "1"))
+                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
                 .andExpect(status().is(200));
     }
 

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "SNS_ACCOUNT")
@@ -35,6 +36,7 @@ public class SnsAccountJpaEntity extends DateColumnBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = true)
+    @Setter
     private UserJpaEntity userEntity;
 
     public static SnsAccountJpaEntity regist(String name, String email, String snsId, SnsDomain snsDomain) {
