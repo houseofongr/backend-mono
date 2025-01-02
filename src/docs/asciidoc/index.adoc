@@ -4,6 +4,7 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :description: 소리기록실 API 문서입니다.
 :icons: font
 :source-highlighter: highlightjs
+:highlightjs-theme:
 :toc: left
 :toclevels: 2
 :pdf-themesdir: {docdir}/themes
@@ -22,10 +23,51 @@ Audio Archive Room API Docs.
 
 인증과 관련된 API 문서입니다.
 
-[[kakao-login]]
-=== 카카오 로그인
-operation::authn-kakao[snippets='curl-request,http-request,path-parameters,http-response,response-headers']
+[[authn-flow]]
+=== 인증 플로우
+.로그인 플로우차트
+//https://excalidraw.com/#json=aTnuIuf60RUxbEY_BPuum,jbkQ3CdbR9HT5byljXptkw
+image::login.png[login flow]
 
- 파라미터에 대한 세부 정보는 아래 [Response Fields]를 참고바랍니다.
+1. `**User 로그인**`
+    a. ``사용자``가 소리기록실 페이지로 접속해서 로그인을 시도합니다.
+    b. ``프론트엔드``에서 ``백엔드``로 특정 서드파티 도메인의 로그인 API 요청을 전송합니다.
+    c. 이를 받은 ``백엔드``는 브라우저를 ``서드파티``의 로그인 페이지로 이동시킵니다.
+2. `**SNS 로그인 시도**`
+    a. ``사용자``가 서드파티 페이지에서 로그인을 시도합니다.
+    b. 정상 로그인일 경우, ``서드파티``에서 백엔드로 코드를 전송합니다.
+    c. 해당 코드를 수신한 ``백엔드``는 토큰을 교환하여 사용자 정보를 받습니다.
+3. `**SNS 로그인 완료**`
+    a. ``백엔드``에서 받은 사용자 정보를 확인하여 ``프론트엔드``로 전송합니다.
+    b. ``프론트엔드``에서는 해당 사용자 정보를 포함하여 메인 페이지를 전송합니다.
+    c. ``사용자``는 메인 페이지로 이동합니다.
 
-operation::authn-kakao-2[snippets='response-fields']
+.회원가입 플로우차트
+//https://excalidraw.com/#json=ZlQOr-_1yHyOU65158_Hd,h0Df7KyDrhCJoL7BzYLHqA
+image::regist.png[regist flow]
+
+1. `**User 로그인**`
+    - 사용자가 로그인을 시도합니다.(로그인 플로우와 동일)
+2. `**SNS 계정 등록**`
+    a. ``백엔드``에서 해당 SNS 계정이 등록되어 있지 않으면 해당 계정을 **임시 저장**합니다.
+    b. ``프론트엔드``에게 임시 저장된 계정 정보와 함께 **임시 토큰**을 전송합니다.
+    c. ``프론트엔드``는 해당 정보를 임시 저장하고, 회원가입 페이지를 전송합니다.
+3. `**회원가입**`
+    a. ``사용자``는 회원가입 페이지에서 필요한 양식을 채워 회원가입을 시도합니다.
+    b. ``프론트엔드``는 해당 정보를 ``백엔드``로 전송합니다.
+    c. ``백엔드``는 해당 정보를 등록하고, 사용자 정보와 함께 **토큰**을 전송합니다.
+    d. ``프론트엔드``는 해당 사용자 정보를 포함하여 메인 페이지를 전송합니다.
+    e. ``사용자``는 메인 페이지로 이동합니다.
+
+[[login-api]]
+=== SNS 로그인 API
+
+SNS 로그인을 시도합니다.
+
+- **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
+
+operation::authn-login[snippets='curl-request,http-request,path-parameters,http-response,response-headers']
+
+`파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.`
+
+operation::authn-login-2[snippets='response-fields']

@@ -22,29 +22,39 @@ body {
     font-family: "Apple SDGothic Neo", sans-serif;
 }
 
-table.tableblock>.title {
+.admonitionblock td.content>.title, .audioblock>.title, .exampleblock>.title, .imageblock>.title, .listingblock>.title, .literalblock>.title, .stemblock>.title, .openblock>.title, .paragraph>.title, .quoteblock>.title, table.tableblock>.title, .verseblock>.title, .videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title, .hdlist>.title {
     font-family: "Apple SDGothic Neo", sans-serif;
-}
-
-.small-text {
-    font-size: 0.8em;
-    color: #888;
+    color: seagreen;
 }
 
 h1, h2, h3, h4, h5, h6, #toctitle {
     font-family: "Apple SDGothic Neo", monospace;
     font-weight: bolder;
+    color: #666;
 }
 
-.hljs {
+h1 {
+    color: black
+}
+
+h2 {
+    color: darkcyan;
+}
+
+h3 {
+    color: darkorange;
+}
+
+.hljs, pre, .literalblock pre, code, :not(pre):not([class^=L])>code{
+    font-family: "Apple SDGothic Neo", sans-serif;
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow-wrap: anywhere;
+    background: #e5e5e5;
 }
-
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/.min.css">
 <style>
 /*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */
 .tabs {
@@ -170,7 +180,8 @@ h1, h2, h3, h4, h5, h6, #toctitle {
 <ul class="sectlevel1">
 <li><a href="#authn-api">인증(Authentication) API</a>
 <ul class="sectlevel2">
-<li><a href="#kakao-login">카카오 로그인</a></li>
+<li><a href="#authn-flow">인증 플로우</a></li>
+<li><a href="#login-api">로그인 API</a></li>
 </ul>
 </li>
 </ul>
@@ -194,9 +205,128 @@ h1, h2, h3, h4, h5, h6, #toctitle {
 <p>인증과 관련된 API 문서입니다.</p>
 </div>
 <div class="sect2">
-<h3 id="kakao-login">카카오 로그인</h3>
+<h3 id="authn-flow">인증 플로우</h3>
+<div class="imageblock">
+<div class="content">
+<img src="login.png" alt="login flow">
+</div>
+<div class="title">Figure 1. 로그인 플로우차트</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code><strong>User 로그인</strong></code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p><code>사용자</code>가 소리기록실 페이지로 접속해서 로그인을 시도합니다.</p>
+</li>
+<li>
+<p><code>프론트엔드</code>에서 <code>백엔드</code>로 특정 서드파티 도메인의 로그인 API 요청을 전송합니다.</p>
+</li>
+<li>
+<p>이를 받은 <code>백엔드</code>는 브라우저를 <code>서드파티</code>의 로그인 페이지로 이동시킵니다.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code><strong>SNS 로그인 시도</strong></code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p><code>사용자</code>가 서드파티 페이지에서 로그인을 시도합니다.</p>
+</li>
+<li>
+<p>정상 로그인일 경우, <code>서드파티</code>에서 백엔드로 코드를 전송합니다.</p>
+</li>
+<li>
+<p>해당 코드를 수신한 <code>백엔드</code>는 토큰을 교환하여 사용자 정보를 받습니다.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code><strong>SNS 로그인 완료</strong></code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p><code>백엔드</code>에서 받은 사용자 정보를 확인하여 <code>프론트엔드</code>로 전송합니다.</p>
+</li>
+<li>
+<p><code>프론트엔드</code>에서는 해당 사용자 정보를 포함하여 메인 페이지를 전송합니다.</p>
+</li>
+<li>
+<p><code>사용자</code>는 메인 페이지로 이동합니다.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="regist.png" alt="regist flow">
+</div>
+<div class="title">Figure 2. 회원가입 플로우차트</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code><strong>User 로그인</strong></code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>사용자가 로그인을 시도합니다.(로그인 플로우와 동일)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code><strong>SNS 계정 등록</strong></code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p><code>백엔드</code>에서 해당 SNS 계정이 등록되어 있지 않으면 해당 계정을 <strong>임시 저장</strong>합니다.</p>
+</li>
+<li>
+<p><code>프론트엔드</code>에게 임시 저장된 계정 정보와 함께 <strong>임시 토큰</strong>을 전송합니다.</p>
+</li>
+<li>
+<p><code>프론트엔드</code>는 해당 정보를 임시 저장하고, 회원가입 페이지를 전송합니다.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code><strong>회원가입</strong></code></p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p><code>사용자</code>는 회원가입 페이지에서 필요한 양식을 채워 회원가입을 시도합니다.</p>
+</li>
+<li>
+<p><code>프론트엔드</code>는 해당 정보를 <code>백엔드</code>로 전송합니다.</p>
+</li>
+<li>
+<p><code>백엔드</code>는 해당 정보를 등록하고, 사용자 정보와 함께 <strong>토큰</strong>을 전송합니다.</p>
+</li>
+<li>
+<p><code>프론트엔드</code>는 해당 사용자 정보를 포함하여 메인 페이지를 전송합니다.</p>
+</li>
+<li>
+<p><code>사용자</code>는 메인 페이지로 이동합니다.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="login-api">로그인 API</h3>
 <div class="sect3">
-<h4 id="kakao-login_curl_request">Curl request</h4>
+<h4 id="login-api_curl_request">Curl request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl 'https://api.archiveofongr.site/aar/authn/login/kakao' -i -X GET \
@@ -205,7 +335,7 @@ h1, h2, h3, h4, h5, h6, #toctitle {
 </div>
 </div>
 <div class="sect3">
-<h4 id="kakao-login_http_request">HTTP request</h4>
+<h4 id="login-api_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/authn/login/kakao HTTP/1.1
@@ -215,7 +345,7 @@ Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kakao-login_path_parameters">Path parameters</h4>
+<h4 id="login-api_path_parameters">Path parameters</h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /aar/authn/login/{provider}</caption>
 <colgroup>
@@ -238,7 +368,7 @@ Host: api.archiveofongr.site</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="kakao-login_http_response">HTTP response</h4>
+<h4 id="login-api_http_response">HTTP response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 302 Found
@@ -247,7 +377,7 @@ Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%9
 </div>
 </div>
 <div class="sect3">
-<h4 id="kakao-login_response_headers">Response headers</h4>
+<h4 id="login-api_response_headers">Response headers</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -273,7 +403,7 @@ Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%9
 </div>
 </div>
 <div class="sect3">
-<h4 id="kakao-login_response_fields">Response fields</h4>
+<h4 id="login-api_response_fields">Response fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -318,7 +448,7 @@ Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%9
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-01 19:34:02 +0900
+Last updated 2025-01-02 08:52:29 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

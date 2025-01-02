@@ -15,3 +15,5 @@ font:
 base:
   font-color: #333333
   font-family: Apple Gothic
+code:
+  font-family: Apple Gothic
