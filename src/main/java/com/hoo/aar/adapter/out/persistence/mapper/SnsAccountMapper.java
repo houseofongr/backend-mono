@@ -1,8 +1,8 @@
 package com.hoo.aar.adapter.out.persistence.mapper;
 
-import com.hoo.aar.adapter.in.web.authn.springsecurity.dto.OAuth2Dto;
+import com.hoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aar.common.SnsDomain;
+import com.hoo.aar.common.enums.SnsDomain;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

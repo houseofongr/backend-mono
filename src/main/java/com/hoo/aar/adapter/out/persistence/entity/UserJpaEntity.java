@@ -26,7 +26,7 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     private String phoneNumber;
 
     @Column(nullable = true, length = 255)
-    private String nickName;
+    private String nickname;
 
     @Column(nullable = false)
     @ColumnDefault("0")

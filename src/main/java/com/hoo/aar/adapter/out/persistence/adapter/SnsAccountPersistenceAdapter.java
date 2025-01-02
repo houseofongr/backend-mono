@@ -4,6 +4,7 @@ import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aar.application.port.out.database.SaveSnsAccountPort;
+import com.hoo.aar.domain.SnsAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,11 @@ public class SnsAccountPersistenceAdapter implements LoadSnsAccountPort, SaveSns
     @Override
     public Optional<SnsAccountJpaEntity> load(String snsId) {
         return snsAccountJpaRepository.findBySnsId(snsId);
+    }
+
+    @Override
+    public SnsAccount load(Long id) {
+        return null;
     }
 
     @Override

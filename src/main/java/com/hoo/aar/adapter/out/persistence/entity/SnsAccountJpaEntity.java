@@ -1,6 +1,6 @@
 package com.hoo.aar.adapter.out.persistence.entity;
 
-import com.hoo.aar.common.SnsDomain;
+import com.hoo.aar.common.enums.SnsDomain;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

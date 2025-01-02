@@ -1,7 +1,6 @@
 package com.hoo.aar.adapter.out.persistence.entity;
 
-import com.hoo.aar.common.SnsDomain;
-import jakarta.annotation.Nonnull;
+import com.hoo.aar.common.enums.SnsDomain;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
