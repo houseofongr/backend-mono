@@ -2,6 +2,8 @@ package com.hoo.aar.domain;
 
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class User {
     private Long id;
@@ -10,15 +12,19 @@ public class User {
     private String phoneNumber;
     private final Boolean recordAgreement;
     private final Boolean personalInformationAgreement;
-    private SnsAccount snsAccount;
+    private final List<SnsAccount> snsAccounts;
 
-    public User(SnsAccount snsAccount, Boolean recordAgreement, Boolean personalInformationAgreement) {
-        this.name = snsAccount.getName();
-        this.nickname = snsAccount.getNickname();
-        this.snsAccount = snsAccount;
-        this.phoneNumber = "NOT_SET";
-        this.recordAgreement = recordAgreement;
+    public User(Long id, String name, String nickname, String phoneNumber, Boolean recordAgreement, Boolean personalInformationAgreement, List<SnsAccount> snsAccounts) {
+        this.id = id;
+        this.name = name;
+        this.nickname = nickname;
         this.personalInformationAgreement = personalInformationAgreement;
+        this.phoneNumber = phoneNumber;
+        this.recordAgreement = recordAgreement;
+        this.snsAccounts = snsAccounts;
     }
 
+    public static User regist(SnsAccount snsAccount, Boolean recordAgreement, Boolean personalInformationAgreement) {
+        return new User(null, snsAccount.getName(), snsAccount.getNickname(), "NOT_SET",recordAgreement,personalInformationAgreement, List.of(snsAccount));
+    }
 }

@@ -2,6 +2,7 @@ package com.hoo.aar.adapter.in.web.authn.security.jwt;
 
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aar.common.enums.Role;
+import com.hoo.aar.domain.SnsAccount;
 import com.hoo.aar.domain.User;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -22,13 +23,13 @@ public class JwtUtil {
     private final JwtAttribute jwtAttribute;
 
     public String getAccessToken(SnsAccountJpaEntity snsAccount) {
-        if (snsAccount.getUserJpaEntity() == null)
+        if (snsAccount.getUserEntity() == null)
             return getAccessToken(snsAccount.getName(),-1L, snsAccount.getId(), Role.TEMP_USER);
-        return getAccessToken(snsAccount.getName(),snsAccount.getUserJpaEntity().getId(), snsAccount.getId(), Role.USER);
+        return getAccessToken(snsAccount.getName(),snsAccount.getUserEntity().getId(), snsAccount.getId(), Role.USER);
     }
 
-    public String getAccessToken(User user) {
-        return getAccessToken(user.getName(), user.getId(), user.getSnsAccount().getId(),Role.USER);
+    public String getAccessToken(User user, SnsAccount snsAccount) {
+        return getAccessToken(user.getName(), user.getId(), snsAccount.getId(), Role.USER);
     }
 
     private String getAccessToken(String name, Long userId, Long snsId, Role role) {

@@ -36,18 +36,19 @@ class UserPersistenceAdapterTest {
                 .hasMessage(ErrorCode.NICK_NAME_CONFLICT.getMessage());
     }
 
-//    @Test
-//    @DisplayName("사용자 저장")
-//    void testSaveUser() {
-//        // given
-//        User user = UserF.NOT_REGISTERED.get();
-//
-//        // when
-//        User savedUser = sut.save(user);
-//
-//        // then
-//        assertThat(savedUser).usingRecursiveComparison()
-//                .ignoringFields("id")
-//                .isEqualTo(user);
-//    }
+    @Test
+    @Sql("UserPersistenceAdapterTest.sql")
+    @DisplayName("사용자 저장")
+    void testSaveUser() {
+        // given
+        User user = UserF.NOT_REGISTERED.get();
+
+        // when
+        User savedUser = sut.save(user);
+
+        // then
+        assertThat(savedUser).usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(user);
+    }
 }

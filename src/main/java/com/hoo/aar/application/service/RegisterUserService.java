@@ -2,6 +2,7 @@ package com.hoo.aar.application.service;
 
 import com.hoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aar.adapter.out.persistence.adapter.SnsAccountPersistenceAdapter;
+import com.hoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aar.application.port.in.RegisterUserUseCase;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
@@ -21,6 +22,7 @@ public class RegisterUserService implements RegisterUserUseCase {
     private final LoadUserPort loadUserPort;
     private final LoadSnsAccountPort loadSnsAccountPort;
     private final SaveUserPort saveUserPort;
+    private final UserMapper userMapper;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -28,13 +30,11 @@ public class RegisterUserService implements RegisterUserUseCase {
 
         SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId());
 
-        User newUser = new User(snsAccount,
-                command.recordAgreement(),
-                command.personalInformationAgreement());
+        User newUser = User.regist(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
 
         newUser = saveUserPort.save(newUser);
 
-        String accessToken = jwtUtil.getAccessToken(newUser);
+        String accessToken = jwtUtil.getAccessToken(newUser, snsAccount);
 
         return new RegisterUserCommand.Out(newUser.getNickname(), accessToken);
     }

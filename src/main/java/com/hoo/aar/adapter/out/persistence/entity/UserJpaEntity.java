@@ -8,11 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
+
 @Entity
 @Table(name = "AAR_USER")
-
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserJpaEntity extends DateColumnBaseEntity {
 
@@ -23,11 +24,11 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(nullable = false, length = 20)
-    private String phoneNumber;
-
     @Column(nullable = true, length = 255)
     private String nickname;
+
+    @Column(nullable = false, length = 20)
+    private String phoneNumber;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -37,7 +38,6 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     @ColumnDefault("0")
     private Boolean personalInformationAgreement;
 
-    public static UserJpaEntity regist(User user) {
-        return new UserJpaEntity(null, user.getName(), user.getPhoneNumber(), user.getNickname(), user.getRecordAgreement(), user.getPersonalInformationAgreement());
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<SnsAccountJpaEntity> snsAccountEntities;
 }
