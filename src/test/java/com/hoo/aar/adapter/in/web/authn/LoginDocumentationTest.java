@@ -4,7 +4,6 @@ import com.hoo.aar.adapter.in.web.config.MockDocumentationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -13,16 +12,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @MockDocumentationTest
-@Import(MockOAuth2Controller2.class)
-public class LoginControllerTest2 {
+@Import(DocumentationOAuth2Controller.class)
+public class LoginDocumentationTest {
 
     MockMvc mockMvc;
 
@@ -41,18 +41,13 @@ public class LoginControllerTest2 {
     }
 
     @Test
-    @DisplayName("SNS 로그인 API 2")
+    @DisplayName("SNS 로그인 API")
     void testSnsLogin() throws Exception {
-        mockMvc.perform(get("/aar/authn/login/{provider}/v2", "kakao")
+        mockMvc.perform(get("/aar/authn/login/{provider}", "kakao")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(document("authn-login-2",
-                        pathParameters(
-                                parameterWithName("provider").description("로그인을 시도할 서드파티 인증 기관명입니다. +" + "\n" + "[kakao, naver, google, apple]")),
-                        responseFields(
-                                fieldWithPath("nickname").description("로그인한 사용자의 이름입니다."),
-                                fieldWithPath("accessToken").description("로그인한 사용자의 JWT 액세스 토큰입니다."),
-                                fieldWithPath("provider").description("로그인을 제공한 서드파티 인증 기관명입니다. +" + "\n" + "[kakao, naver, google, apple]"),
-                                fieldWithPath("isFirstLogin").description("해당 사용자가 처음 로그인했는지 여부입니다."))));
+                .andExpect(status().is(302))
+                .andDo(document("authn-login",
+                        pathParameters(parameterWithName("provider").description("로그인을 시도할 서드파티 인증 기관명입니다. +" + "\n" + "[kakao, naver, google, apple]")),
+                        responseHeaders(headerWithName("Location").description("로그인 이후 이동하는 경로와 쿼리 파라미터입니다."))));
     }
-
 }

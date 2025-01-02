@@ -1,34 +1,34 @@
 package com.hoo.aar.adapter.in.web.authn;
 
 import com.hoo.aar.adapter.in.web.config.IntegrationTest;
+import com.hoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aar.application.port.in.RegisterUserCommand;
 import com.nimbusds.jose.shaded.gson.Gson;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.boot.http.client.ClientHttpRequestFactorySettings;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.*;
 
 @IntegrationTest
 public class RegisterIntegrationTest {
 
-    MockMvc mockMvc;
+    @Autowired
+    TestRestTemplate restTemplate;
 
     Gson gson = new Gson();
 
@@ -36,42 +36,87 @@ public class RegisterIntegrationTest {
     JwtDecoder jwtDecoder;
 
     @Autowired
-    UserJpaRepository repository;
+    UserJpaRepository userJpaRepository;
 
-    @BeforeEach
-    void init(WebApplicationContext wac) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac)
-                .addFilter(new CharacterEncodingFilter("UTF-8", true))
-                .alwaysDo(print())
-                .apply(springSecurity())
-                .build();
-    }
+    @Autowired
+    SnsAccountJpaRepository snsAccountJpaRepository;
+
+    @Autowired
+    private ClientHttpRequestFactorySettings clientHttpRequestFactorySettings;
+
 
     @Test
     @Sql("RegisterIntegrationTest.sql")
     @DisplayName("회원가입 통합테스트")
     void testRegister() throws Exception {
-        // given
-        RegisterUserController.RegisterUserRequest request = new RegisterUserController.RegisterUserRequest(true, true);
+        /* 1. 사용자 로그인 시도 */
 
-        // when : 닉네임, 토큰 전송
-        String responseBody = mockMvc.perform(post("/aar/authn/regist").content(gson.toJson(request))
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .with(jwt().jwt(jwt -> jwt.claim("snsId", 1L))
-                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
-                .andExpect(status().is(200))
-                .andReturn().getResponse().getContentAsString();
-        RegisterUserCommand.Out res = gson.fromJson(responseBody, RegisterUserCommand.Out.class);
+        ResponseEntity<?> loginResponse = whenLogin();
 
-        // then : 사용자 닉네임 확인
-        assertThat(res.nickname()).isEqualTo("leaf");
+        assertThat(loginResponse.getStatusCode().value()).isEqualTo(302);
 
-        // then : 토큰 권한 확인
-        Jwt jwt = jwtDecoder.decode(res.accessToken());
-        assertThat((String) jwt.getClaim("role")).isEqualTo("USER");
+        /* 2. SNS 계정 임시 저장, 사용자 정보, 임시 토큰 전송 */
 
-        // then : 사용자 정보 저장여부 확인
-        assertThat(repository.findByNickname("leaf")).isNotEmpty();
+        Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
+
+        assertThat(snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID")).isNotEmpty();
+        assertThat(queryParams).containsKey("nickname");
+        assertThat(queryParams).containsKey("accessToken");
+
+        String tempAccessToken = queryParams.get("accessToken");
+        Jwt jwt = jwtDecoder.decode(tempAccessToken);
+
+        assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
+
+        /* 3. 사용자 회원가입 시도 */
+
+        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+
+        ResponseEntity<?> registResponse = whenRegist(tempAccessToken, body);
+
+        assertThat(registResponse.getStatusCode().value()).isEqualTo(200);
+
+        /* 4. 사용자 회원가입, 사용자 정보, 토큰 전송 */
+
+        RegisterUserCommand.Out responseBody = (RegisterUserCommand.Out) registResponse.getBody();
+
+        assertThat(userJpaRepository.findByNickname("leaf")).isNotEmpty();
+        assertThat(responseBody.nickname()).isNotEmpty();
+        assertThat(responseBody.accessToken()).isNotEmpty();
+
+        String userAccessToken = responseBody.accessToken();
+        Jwt jwt2 = jwtDecoder.decode(userAccessToken);
+
+        assertThat((String)jwt2.getClaim("role")).isEqualTo("USER");
+    }
+
+    private ResponseEntity<?> whenLogin() {
+        HttpEntity<?> request = getHttpEntity(null, null);
+
+        return restTemplate
+                .withRequestFactorySettings(
+                        clientHttpRequestFactorySettings.withRedirects(DONT_FOLLOW))
+                .exchange(
+                "/mock/authn/login",
+                HttpMethod.GET,
+                request,
+                Void.class);
+    }
+
+    private ResponseEntity<?> whenRegist(String accessToken, String body) {
+        HttpEntity<?> request = getHttpEntity(accessToken, body);
+
+        return restTemplate.exchange(
+                "/aar/authn/regist",
+                HttpMethod.POST,
+                request,
+                RegisterUserCommand.Out.class);
+    }
+
+    private HttpEntity<?> getHttpEntity(String accessToken, String body) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        headers.add("Authorization", "Bearer " + accessToken);
+        return new HttpEntity<>(body, headers);
     }
 }
