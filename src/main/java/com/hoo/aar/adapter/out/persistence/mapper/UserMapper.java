@@ -1,19 +1,20 @@
 package com.hoo.aar.adapter.out.persistence.mapper;
 
+import com.hoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aar.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aar.common.enums.SnsDomain;
 import com.hoo.aar.domain.SnsAccount;
 import com.hoo.aar.domain.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
-public interface UserMapper {
+@Component
+public class UserMapper {
 
-    default User mapToUserDomainEntity(UserJpaEntity userJpaEntity, List<SnsAccountJpaEntity> snsAccountJpaEntities) {
-        List<SnsAccount> snsAccounts = snsAccountJpaEntities.stream().map(this::snsAccountJpaEntityToSnsAccount).toList();
+    public User mapToUserDomainEntity(UserJpaEntity userJpaEntity, List<SnsAccountJpaEntity> snsAccountJpaEntities) {
+        List<SnsAccount> snsAccounts = snsAccountJpaEntities.stream().map(this::mapToSnsAccountDomainEntity).toList();
         User user = new User(
                 userJpaEntity.getId(),
                 userJpaEntity.getName(),
@@ -29,7 +30,7 @@ public interface UserMapper {
         return user;
     }
 
-    default UserJpaEntity mapToUserJpaEntity(User user, List<SnsAccountJpaEntity> snsAccountEntities) {
+    public UserJpaEntity mapToUserJpaEntity(User user, List<SnsAccountJpaEntity> snsAccountEntities) {
         UserJpaEntity userJpaEntity = new UserJpaEntity(
                 user.getId(),
                 user.getName(),
@@ -45,7 +46,36 @@ public interface UserMapper {
         return userJpaEntity;
     }
 
-    @Mapping(target = "user", ignore = true)
-    SnsAccount snsAccountJpaEntityToSnsAccount(SnsAccountJpaEntity snsAccountJpaEntity);
+    public SnsAccount mapToSnsAccountDomainEntity(SnsAccountJpaEntity snsAccountJpaEntity) {
+        return new SnsAccount(
+                snsAccountJpaEntity.getId(),
+                snsAccountJpaEntity.getName(),
+                snsAccountJpaEntity.getNickname(),
+                snsAccountJpaEntity.getEmail(),
+                snsAccountJpaEntity.getSnsId(),
+                snsAccountJpaEntity.getSnsDomain(),
+                null
+        );
+    }
+
+    public SnsAccountJpaEntity mapToSnsAccountJpaEntity(SnsAccount snsAccount) {
+        return new SnsAccountJpaEntity(
+                snsAccount.getId(),
+                snsAccount.getName(),
+                snsAccount.getNickname(),
+                snsAccount.getEmail(),
+                snsAccount.getSnsId(),
+                snsAccount.getSnsDomain(),
+                null
+        );
+    }
+
+    public SnsAccount kakaoUserToSnsAccount(OAuth2Dto.KakaoUserInfo kakaoUser) {
+        return SnsAccount.regist(
+                kakaoUser.kakao_account().profile().nickname(),
+                kakaoUser.kakao_account().email(),
+                kakaoUser.id(),
+                SnsDomain.KAKAO);
+    }
 
 }

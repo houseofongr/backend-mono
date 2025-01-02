@@ -58,7 +58,7 @@ public class RegisterIntegrationTest {
         String responseBody = mockMvc.perform(post("/aar/authn/regist").content(gson.toJson(request))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .with(jwt().jwt(jwt -> jwt.claim("snsId", "1"))
+                        .with(jwt().jwt(jwt -> jwt.claim("snsId", 1L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
                 .andExpect(status().is(200))
                 .andReturn().getResponse().getContentAsString();

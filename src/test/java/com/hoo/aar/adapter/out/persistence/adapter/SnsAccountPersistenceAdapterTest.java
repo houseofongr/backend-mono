@@ -1,9 +1,6 @@
 package com.hoo.aar.adapter.out.persistence.adapter;
 
-import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
 import com.hoo.aar.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aar.adapter.out.persistence.mapper.UserMapperImpl;
 import com.hoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aar.domain.SnsAccount;
 import com.hoo.aar.domain.SnsAccountF;
@@ -21,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({SnsAccountPersistenceAdapter.class, UserMapperImpl.class})
+@Import({SnsAccountPersistenceAdapter.class, UserMapper.class})
 class SnsAccountPersistenceAdapterTest {
 
     @Autowired
@@ -35,27 +32,26 @@ class SnsAccountPersistenceAdapterTest {
     @DisplayName("SNS Account 조회")
     void testLoadSnsAccount() {
         // given
-        SnsAccountJpaEntity snsAccountJpaEntity = SnsAccountJpaEntityF.KAKAO.get();
         SnsAccount snsAccount = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
         SnsAccount entityById = sut.load(snsAccount.getId());
-        Optional<SnsAccountJpaEntity> entityBySnsId = sut.load(snsAccountJpaEntity.getSnsId());
+        Optional<SnsAccount> entityBySnsId = sut.loadNullableWithUser(snsAccount.getSnsId());
 
         // then
         assertThat(entityById).usingRecursiveComparison().isEqualTo(snsAccount);
         assertThat(entityBySnsId).isNotEmpty();
-        assertThat(entityBySnsId.get()).usingRecursiveComparison().isEqualTo(snsAccountJpaEntity);
+        assertThat(entityBySnsId.get()).usingRecursiveComparison().isEqualTo(snsAccount);
     }
 
     @Test
     @DisplayName("SNS Account 저장")
     void testSaveSnsAccount() {
         // given
-        SnsAccountJpaEntity snsAccount = SnsAccountJpaEntityF.KAKAO_NO_ID.get();
+        SnsAccount snsAccount = SnsAccountF.KAKAO_NOT_REGISTERED_WITH_NO_ID.get();
 
         // when
-        SnsAccountJpaEntity entityInDB = sut.save(snsAccount);
+        SnsAccount entityInDB = sut.save(snsAccount);
 
         // then
         assertThat(entityInDB).usingRecursiveComparison()

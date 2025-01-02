@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @MappedSuperclass
@@ -20,12 +21,12 @@ public class DateColumnBaseEntity {
 
     @PrePersist
     public void prePersist() {
-        this.createdDate = ZonedDateTime.now();
-        this.updatedDate = ZonedDateTime.now();
+        this.createdDate = ZonedDateTime.now(ZoneId.systemDefault());
+        this.updatedDate = ZonedDateTime.now(ZoneId.systemDefault());
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedDate = ZonedDateTime.now();
+        this.updatedDate = ZonedDateTime.now(ZoneId.systemDefault());
     }
 }

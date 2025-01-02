@@ -8,7 +8,7 @@ public class DomainFixtureRepository {
         User user = new User(
                 1L,
                 "남상엽",
-                "leaf",
+                "LEAF",
                 "NOT_SET",
                 false,
                 false,
@@ -16,5 +16,9 @@ public class DomainFixtureRepository {
         );
         snsAccount.setUser(user);
         return user;
+    }
+
+    public static SnsAccount getRegisteredSnsAccount() {
+        return getRegisteredUser().getSnsAccounts().getFirst();
     }
 }

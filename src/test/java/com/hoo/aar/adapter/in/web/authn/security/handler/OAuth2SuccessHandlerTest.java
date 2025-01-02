@@ -34,11 +34,11 @@ class OAuth2SuccessHandlerTest {
     void testSuccessHandler() throws ServletException, IOException {
         // given
         Map<String, Object> map = new HashMap<>();
-        map.put("username", "leaf");
+        map.put("nickname", "leaf");
         map.put("accessToken", "ACCESS_TOKEN");
         map.put("provider", "kakao");
         map.put("isFirstLogin", false);
-        DefaultOAuth2User principal = new DefaultOAuth2User(null, map, "username");
+        DefaultOAuth2User principal = new DefaultOAuth2User(null, map, "nickname");
         HttpServletResponse response = new MockHttpServletResponse();
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null);
 
@@ -47,7 +47,7 @@ class OAuth2SuccessHandlerTest {
 
         // then
         assertThat(response.getHeader(HttpHeaders.LOCATION)).contains(redirectUri);
-        assertThat(response.getHeader(HttpHeaders.LOCATION)).contains("username", "accessToken", "provider", "isFirstLogin");
+        assertThat(response.getHeader(HttpHeaders.LOCATION)).contains("nickname", "accessToken", "provider", "isFirstLogin");
         assertThat(response.getStatus()).isEqualTo(302);
     }
 }

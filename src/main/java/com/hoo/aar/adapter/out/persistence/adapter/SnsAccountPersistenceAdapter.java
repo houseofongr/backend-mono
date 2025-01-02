@@ -9,7 +9,6 @@ import com.hoo.aar.common.enums.ErrorCode;
 import com.hoo.aar.common.exception.AarException;
 import com.hoo.aar.domain.SnsAccount;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -22,8 +21,9 @@ public class SnsAccountPersistenceAdapter implements LoadSnsAccountPort, SaveSns
     private final UserMapper userMapper;
 
     @Override
-    public Optional<SnsAccountJpaEntity> load(String snsId) {
-        return snsAccountJpaRepository.findBySnsId(snsId);
+    public Optional<SnsAccount> loadNullableWithUser(String snsId) {
+        return snsAccountJpaRepository.findBySnsIdWithUserEntity(snsId)
+                .map(userMapper::mapToSnsAccountDomainEntity);
     }
 
     @Override
@@ -31,11 +31,16 @@ public class SnsAccountPersistenceAdapter implements LoadSnsAccountPort, SaveSns
         SnsAccountJpaEntity snsAccountJpaEntity = snsAccountJpaRepository.findById(id)
                 .orElseThrow(() -> new AarException(ErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
-        return userMapper.snsAccountJpaEntityToSnsAccount(snsAccountJpaEntity);
+        return userMapper.mapToSnsAccountDomainEntity(snsAccountJpaEntity);
     }
 
     @Override
-    public SnsAccountJpaEntity save(SnsAccountJpaEntity snsAccount) {
-        return snsAccountJpaRepository.save(snsAccount);
+    public SnsAccount save(SnsAccount snsAccount) {
+
+        SnsAccountJpaEntity newSnsAccountJpaEntity = userMapper.mapToSnsAccountJpaEntity(snsAccount);
+
+        snsAccountJpaRepository.save(newSnsAccountJpaEntity);
+
+        return userMapper.mapToSnsAccountDomainEntity(newSnsAccountJpaEntity);
     }
 }

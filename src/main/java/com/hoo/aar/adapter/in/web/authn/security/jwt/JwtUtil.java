@@ -13,6 +13,8 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 
 @Slf4j
@@ -22,14 +24,10 @@ public class JwtUtil {
     private final MACSigner signer;
     private final JwtAttribute jwtAttribute;
 
-    public String getAccessToken(SnsAccountJpaEntity snsAccount) {
-        if (snsAccount.getUserEntity() == null)
-            return getAccessToken(snsAccount.getName(),-1L, snsAccount.getId(), Role.TEMP_USER);
-        return getAccessToken(snsAccount.getName(),snsAccount.getUserEntity().getId(), snsAccount.getId(), Role.USER);
-    }
-
     public String getAccessToken(SnsAccount snsAccount) {
-        return getAccessToken(snsAccount.getUser().getName(), snsAccount.getUser().getId(), snsAccount.getId(), Role.USER);
+        if (snsAccount.getUser() == null)
+            return getAccessToken(snsAccount.getName(),-1L, snsAccount.getId(), Role.TEMP_USER);
+        return getAccessToken(snsAccount.getName(),snsAccount.getUser().getId(), snsAccount.getId(), Role.USER);
     }
 
     private String getAccessToken(String name, Long userId, Long snsId, Role role) {
@@ -40,7 +38,7 @@ public class JwtUtil {
                     .claim("userId", userId)
                     .claim("snsId", snsId)
                     .claim("role", role)
-                    .expirationTime(new Date(new Date().getTime() + jwtAttribute.expire()))
+                    .expirationTime(new Date(System.currentTimeMillis() + jwtAttribute.expire()))
                     .build();
 
             SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);

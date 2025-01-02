@@ -1,8 +1,9 @@
 package com.hoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
-import com.hoo.aar.domain.*;
+import com.hoo.aar.domain.DomainFixtureRepository;
+import com.hoo.aar.domain.SnsAccount;
+import com.hoo.aar.domain.SnsAccountF;
+import com.hoo.aar.domain.User;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -40,7 +41,7 @@ class JwtUtilTest {
     @DisplayName("SNS Account 토큰 생성 테스트")
     void testSnsAccountAccessToken() {
         // given
-        SnsAccountJpaEntity entity = SnsAccountJpaEntityF.KAKAO.get();
+        SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
         Jwt jwt = jwtDecoder.decode(sut.getAccessToken(entity));

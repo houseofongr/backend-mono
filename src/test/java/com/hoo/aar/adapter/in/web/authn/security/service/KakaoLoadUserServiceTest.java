@@ -1,11 +1,12 @@
 package com.hoo.aar.adapter.in.web.authn.security.service;
 
 import com.hoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntityF;
-import com.hoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
+import com.hoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aar.application.port.out.database.SaveSnsAccountPort;
+import com.hoo.aar.domain.DomainFixtureRepository;
+import com.hoo.aar.domain.SnsAccount;
+import com.hoo.aar.domain.SnsAccountF;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,16 +23,16 @@ class KakaoLoadUserServiceTest {
     KakaoLoadUserService sut;
     LoadSnsAccountPort loadSnsAccountPort;
     SaveSnsAccountPort saveSnsAccountPort;
-    SnsAccountMapper snsAccountMapper;
+    UserMapper userMapper;
     JwtUtil jwtUtil;
 
     @BeforeEach
     void init() {
         loadSnsAccountPort = mock(LoadSnsAccountPort.class);
         saveSnsAccountPort = mock(SaveSnsAccountPort.class);
-        snsAccountMapper = mock(SnsAccountMapper.class);
+        userMapper = mock(UserMapper.class);
         jwtUtil = mock(JwtUtil.class);
-        sut = new KakaoLoadUserService(loadSnsAccountPort, saveSnsAccountPort, snsAccountMapper, jwtUtil);
+        sut = new KakaoLoadUserService(loadSnsAccountPort, saveSnsAccountPort, userMapper, jwtUtil);
     }
 
     @Test
@@ -39,13 +40,14 @@ class KakaoLoadUserServiceTest {
     void testExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
+        SnsAccount snsAccount = DomainFixtureRepository.getRegisteredSnsAccount();
 
         // when
-        when(loadSnsAccountPort.load((String) any())).thenReturn(Optional.of(SnsAccountJpaEntityF.KAKAO.get()));
+        when(loadSnsAccountPort.loadNullableWithUser((String) any())).thenReturn(Optional.of(snsAccount));
         OAuth2User loadUser = sut.load(user);
 
         // then
-        assertThat(loadUser.getAttributes()).containsKey("username");
+        assertThat(loadUser.getAttributes()).containsKey("nickname");
         assertThat(loadUser.getAttributes()).containsKey("accessToken");
         assertThat(loadUser.getAttributes()).containsKey("provider");
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(InstanceOfAssertFactories.BOOLEAN)).isFalse();
@@ -56,17 +58,17 @@ class KakaoLoadUserServiceTest {
     void testNotExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccountJpaEntity entity = SnsAccountJpaEntityF.KAKAO.get();
+        SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        when(loadSnsAccountPort.load((String) any())).thenReturn(Optional.empty());
+        when(loadSnsAccountPort.loadNullableWithUser((String) any())).thenReturn(Optional.empty());
         when(saveSnsAccountPort.save(any())).thenReturn(entity);
-        when(snsAccountMapper.kakaoUserToSnsAccount(any())).thenReturn(entity);
+        when(userMapper.kakaoUserToSnsAccount(any())).thenReturn(entity);
         OAuth2User loadUser = sut.load(user);
 
         // then
         verify(saveSnsAccountPort, times(1)).save(any());
-        assertThat(loadUser.getAttributes()).containsKey("username");
+        assertThat(loadUser.getAttributes()).containsKey("nickname");
         assertThat(loadUser.getAttributes()).containsKey("accessToken");
         assertThat(loadUser.getAttributes()).containsKey("provider");
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(InstanceOfAssertFactories.BOOLEAN)).isTrue();

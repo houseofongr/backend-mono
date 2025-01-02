@@ -2,10 +2,7 @@ package com.hoo.aar.adapter.out.persistence.entity;
 
 import com.hoo.aar.common.enums.SnsDomain;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "SNS_ACCOUNT")

@@ -17,10 +17,10 @@ public class RegisterUserController {
     private final RegisterUserUseCase registerUserUseCase;
 
     @PostMapping("/aar/authn/regist")
-    ResponseEntity<?> regist(@RequestBody RegisterUserRequest request, @Jwt("snsId") String snsId) {
+    ResponseEntity<?> regist(@RequestBody RegisterUserRequest request, @Jwt("snsId") Long snsId) {
 
         RegisterUserCommand.In command = new RegisterUserCommand.In(
-                Long.parseLong(snsId),
+                snsId,
                 request.recordAgreement,
                 request.personalInformationAgreement);
 

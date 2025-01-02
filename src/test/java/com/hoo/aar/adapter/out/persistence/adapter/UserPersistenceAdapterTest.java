@@ -1,6 +1,6 @@
 package com.hoo.aar.adapter.out.persistence.adapter;
 
-import com.hoo.aar.adapter.out.persistence.mapper.UserMapperImpl;
+import com.hoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aar.common.enums.ErrorCode;
 import com.hoo.aar.common.exception.AarException;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({UserPersistenceAdapter.class, UserMapperImpl.class})
+@Import({UserPersistenceAdapter.class, UserMapper.class})
 class UserPersistenceAdapterTest {
 
     @Autowired

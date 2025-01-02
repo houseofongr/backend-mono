@@ -25,4 +25,8 @@ public class SnsAccount {
         this.snsDomain = snsDomain;
         this.user = user;
     }
+
+    public static SnsAccount regist(String nickname, String email, String snsId, SnsDomain snsDomain) {
+        return new SnsAccount(null, nickname, nickname, email, snsId, snsDomain, null);
+    }
 }

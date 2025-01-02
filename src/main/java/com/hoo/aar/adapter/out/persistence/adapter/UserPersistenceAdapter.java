@@ -35,10 +35,10 @@ public class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
         List<SnsAccountJpaEntity> snsAccountEntities = snsAccountJpaRepository.findAllById(
                 user.getSnsAccounts().stream().map(SnsAccount::getId).toList());
 
-        UserJpaEntity newUser = userMapper.mapToUserJpaEntity(user, snsAccountEntities);
+        UserJpaEntity newUserJpaEntity = userMapper.mapToUserJpaEntity(user, snsAccountEntities);
 
-        userJpaRepository.save(newUser);
+        userJpaRepository.save(newUserJpaEntity);
 
-        return userMapper.mapToUserDomainEntity(newUser, snsAccountEntities);
+        return userMapper.mapToUserDomainEntity(newUserJpaEntity, snsAccountEntities);
     }
 }

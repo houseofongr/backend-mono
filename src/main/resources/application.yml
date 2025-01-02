@@ -45,9 +45,9 @@ spring:
         physical-strategy: com.hoo.aar.adapter.out.persistence.config.HibernateCustomNamingStrategy
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username: ${database.username}
-    password: ${database.password}
-    url: ${database.url}/${database.scheme}
+    username: ${database.mysql.username}
+    password: ${database.mysql.password}
+    url: jdbc:${database.mysql.name}://${database.mysql.address}:${database.mysql.port}/${database.mysql.scheme}?serverTimezone=${database.mysql.timezone}
   security:
     oauth2:
       client:
