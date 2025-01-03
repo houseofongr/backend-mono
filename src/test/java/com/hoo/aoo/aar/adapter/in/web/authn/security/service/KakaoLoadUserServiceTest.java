@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.InstanceOfAssertFactories.BOOLEAN;
 import static org.mockito.Mockito.*;
 
 class KakaoLoadUserServiceTest {
@@ -36,41 +37,54 @@ class KakaoLoadUserServiceTest {
     }
 
     @Test
-    @DisplayName("DB에 존재하는 계정은 속성 값만 변경 후 반환")
+    @DisplayName("DB에 존재하는 계정은 isLogin = false")
     void testExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
         SnsAccount snsAccount = DomainFixtureRepository.getRegisteredSnsAccount();
 
         // when
-        when(loadSnsAccountPort.loadNullableWithUser((String) any())).thenReturn(Optional.of(snsAccount));
+        when(loadSnsAccountPort.loadNullableWithUser(any())).thenReturn(Optional.of(snsAccount));
         OAuth2User loadUser = sut.load(user);
 
         // then
         assertThat(loadUser.getAttributes()).containsKey("nickname");
         assertThat(loadUser.getAttributes()).containsKey("accessToken");
         assertThat(loadUser.getAttributes()).containsKey("provider");
-        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(InstanceOfAssertFactories.BOOLEAN)).isFalse();
+        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isFalse();
     }
 
     @Test
-    @DisplayName("DB에 존재하지 않는 계정은 회원가입 후 로그인 시도")
+    @DisplayName("DB에 존재하지 않는 계정은 회원가입, isLogin = ture")
     void testNotExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
         SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        when(loadSnsAccountPort.loadNullableWithUser((String) any())).thenReturn(Optional.empty());
+        when(loadSnsAccountPort.loadNullableWithUser(any())).thenReturn(Optional.empty());
         when(saveSnsAccountPort.save(any())).thenReturn(entity);
         when(userMapper.kakaoUserToSnsAccount(any())).thenReturn(entity);
         OAuth2User loadUser = sut.load(user);
 
         // then
         verify(saveSnsAccountPort, times(1)).save(any());
-        assertThat(loadUser.getAttributes()).containsKey("nickname");
-        assertThat(loadUser.getAttributes()).containsKey("accessToken");
-        assertThat(loadUser.getAttributes()).containsKey("provider");
-        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(InstanceOfAssertFactories.BOOLEAN)).isTrue();
+        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
+    }
+
+    @Test
+    @DisplayName("DB에 존재하지만 사용자와 연동되지 않은 계정은 isLogin = true")
+    void testNotRegisteredSnsAccount() {
+        // given
+        OAuth2User user = mock(OAuth2User.class);
+        SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
+
+        // when
+        when(loadSnsAccountPort.loadNullableWithUser(any())).thenReturn(Optional.of(entity));
+        OAuth2User loadUser = sut.load(user);
+
+        // then
+        verify(saveSnsAccountPort, times(0)).save(any());
+        assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
 }

@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.*;
 
 @IntegrationTest
-public class RegisterIntegrationTest {
+public class AarAuthIntegrationTest {
 
     @Autowired
     TestRestTemplate restTemplate;
@@ -44,11 +44,11 @@ public class RegisterIntegrationTest {
     @Autowired
     private ClientHttpRequestFactorySettings clientHttpRequestFactorySettings;
 
-
     @Test
     @Sql("RegisterIntegrationTest.sql")
-    @DisplayName("회원가입 통합테스트")
+    @DisplayName("tc : 정상 회원가입 플로우")
     void testRegister() {
+
         /* 1. 사용자 로그인 시도 */
 
         ResponseEntity<?> loginResponse = whenLogin();
@@ -91,13 +91,45 @@ public class RegisterIntegrationTest {
     }
     
     @Test
-    @DisplayName("이미 DB에 등록된 SNS 계정 재로그인")
+    @Sql("RegisterIntegrationTest.sql")
+    @DisplayName("tc : 이미 DB에 등록된 SNS 계정 재로그인")
     void testAlreadyRegisteredUser() {
-        // given
-    
-        // when
-    
-        // then
+
+        /* 1. 사용자 로그인 시도 */
+
+        ResponseEntity<?> loginResponse = whenLogin();
+
+        assertThat(loginResponse.getStatusCode().value()).isEqualTo(302);
+
+        /* 2. SNS 계정 임시 저장, 사용자 정보, 임시 토큰 전송 */
+
+        Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
+
+        assertThat(snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID")).isNotEmpty();
+        assertThat(queryParams).containsKey("nickname");
+        assertThat(queryParams).containsKey("accessToken");
+
+        String tempAccessToken = queryParams.get("accessToken");
+        Jwt jwt = jwtDecoder.decode(tempAccessToken);
+
+        assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
+
+        /* 3. 사용자 회원가입 없이 재로그인 시도 */
+
+        ResponseEntity<?> loginResponse2 = whenLogin();
+
+        assertThat(loginResponse2.getStatusCode().value()).isEqualTo(302);
+
+        /* 4. 저장된 SNS 계정 불러옴, 동일한 정보의 토큰 전송 */
+
+        Map<String, String> queryParams2 = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
+
+        snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID"); // SNS Entity 중복여부 확인
+        String tempAccessToken2 = queryParams2.get("accessToken");
+        Jwt jwt2 = jwtDecoder.decode(tempAccessToken2);
+
+        assertThat(jwt.getClaims()).usingRecursiveComparison()
+                .ignoringFields("exp", "iat").isEqualTo(jwt2.getClaims());
     }
 
     private ResponseEntity<?> whenLogin() {
