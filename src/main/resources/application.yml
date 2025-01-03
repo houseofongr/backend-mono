@@ -17,32 +17,32 @@ spring:
     activate:
       on-profile: prod
     import:
-      - file:./config/prod/aar-config.yml
+      - file:./config/prod/aoo-config.yml
 ---
 spring:
   config:
     activate:
       on-profile: dev
-    import: file:./config/dev/aar-config.yml
+    import: file:./config/dev/aoo-config.yml
 ---
 spring:
   config:
     activate:
       on-profile: local
-    import: classpath:aar-config.yml
+    import: classpath:aoo-config.yml
 ---
 spring:
   config:
     activate:
       on-profile: common
   application:
-    name: aar-backend
+    name: aoo-backend
   jpa:
     database: mysql
     hibernate:
       ddl-auto: validate
       naming:
-        physical-strategy: com.hoo.aar.adapter.out.persistence.config.HibernateCustomNamingStrategy
+        physical-strategy: com.hoo.aoo.aar.adapter.out.persistence.config.HibernateCustomNamingStrategy
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: ${database.mysql.username}
