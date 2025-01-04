@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.domain;
 
-import com.hoo.aoo.aar.common.enums.SnsDomain;
+import com.hoo.aoo.common.enums.SnsDomain;
 import lombok.Getter;
 import lombok.Setter;
 

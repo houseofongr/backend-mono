@@ -3,7 +3,7 @@ package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.aar.common.enums.SnsDomain;
+import com.hoo.aoo.common.enums.SnsDomain;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.User;
 import org.springframework.stereotype.Component;

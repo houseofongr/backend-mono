@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aoo.aar.common.enums.Role;
+import com.hoo.aoo.common.enums.Role;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;

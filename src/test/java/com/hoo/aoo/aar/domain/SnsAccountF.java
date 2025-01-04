@@ -1,8 +1,6 @@
 package com.hoo.aoo.aar.domain;
 
-import com.hoo.aoo.aar.common.enums.SnsDomain;
-import com.hoo.aoo.aar.domain.SnsAccount;
-import com.hoo.aoo.aar.domain.User;
+import com.hoo.aoo.common.enums.SnsDomain;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

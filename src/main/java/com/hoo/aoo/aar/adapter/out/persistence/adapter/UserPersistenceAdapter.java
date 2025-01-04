@@ -7,8 +7,8 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepositor
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.LoadUserPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
-import com.hoo.aoo.aar.common.enums.ErrorCode;
-import com.hoo.aoo.aar.common.exception.AarException;
+import com.hoo.aoo.common.enums.ErrorCode;
+import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.User;
 import lombok.AllArgsConstructor;
@@ -25,9 +25,8 @@ public class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
     private final UserMapper userMapper;
 
     @Override
-    public void assertNotExistNickname(String nickname) {
-        if (userJpaRepository.findByNickname(nickname).isPresent())
-            throw new AarException(ErrorCode.NICK_NAME_CONFLICT);
+    public boolean existByNickname(String nickname) {
+        return userJpaRepository.findByNickname(nickname).isPresent();
     }
 
     @Override

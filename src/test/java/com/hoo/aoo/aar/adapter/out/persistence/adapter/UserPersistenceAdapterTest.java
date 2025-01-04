@@ -2,8 +2,8 @@ package com.hoo.aoo.aar.adapter.out.persistence.adapter;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.aar.common.enums.ErrorCode;
-import com.hoo.aoo.aar.common.exception.AarException;
+import com.hoo.aoo.common.enums.ErrorCode;
+import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.User;
 import com.hoo.aoo.aar.domain.UserF;
 import org.junit.jupiter.api.DisplayName;
@@ -31,9 +31,7 @@ class UserPersistenceAdapterTest {
     @Sql("UserPersistenceAdapterTest.sql")
     @DisplayName("닉네임 충돌여부 조회")
     void testLoadUser() {
-        assertThatThrownBy(() -> sut.assertNotExistNickname("leaf"))
-                .isInstanceOf(AarException.class)
-                .hasMessage(ErrorCode.NICK_NAME_CONFLICT.getMessage());
+        assertThat(sut.existByNickname("leaf")).isTrue();
     }
 
     @Test

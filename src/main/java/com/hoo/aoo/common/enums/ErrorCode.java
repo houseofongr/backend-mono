@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.common.enums;
+package com.hoo.aoo.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
