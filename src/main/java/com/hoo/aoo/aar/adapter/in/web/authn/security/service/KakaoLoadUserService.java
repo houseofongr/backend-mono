@@ -14,8 +14,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Component
 @AllArgsConstructor
 public class KakaoLoadUserService implements LoadUserService {
@@ -32,7 +30,7 @@ public class KakaoLoadUserService implements LoadUserService {
 
         OAuth2Dto.KakaoUserInfo userInfo = gson.fromJson(gson.toJsonTree(user.getAttributes()), OAuth2Dto.KakaoUserInfo.class);
 
-        SnsAccount snsAccountInDB = loadSnsAccountPort.loadNullableWithUser(userInfo.id())
+        SnsAccount snsAccountInDB = loadSnsAccountPort.loadWithUser(userInfo.id())
                 .orElseGet(() -> save(userInfo));
 
         SNSLoginResponse response = snsAccountInDB.getUser() == null?

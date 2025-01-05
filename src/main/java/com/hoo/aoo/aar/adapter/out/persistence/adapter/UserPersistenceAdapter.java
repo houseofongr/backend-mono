@@ -7,8 +7,6 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepositor
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.LoadUserPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
-import com.hoo.aoo.common.enums.ErrorCode;
-import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.User;
 import lombok.AllArgsConstructor;

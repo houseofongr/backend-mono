@@ -1,6 +1,8 @@
 package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
+import com.hoo.aoo.aar.application.exception.AarErrorCode;
+import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
@@ -9,6 +11,8 @@ import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +25,8 @@ public class RegisterUserService implements RegisterUserUseCase {
     @Override
     public RegisterUserCommand.Out register(RegisterUserCommand.In command) {
 
-        SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId());
+        SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId())
+                .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
         User newUser = User.regist(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
 

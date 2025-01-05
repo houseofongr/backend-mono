@@ -7,7 +7,6 @@ import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.DomainFixtureRepository;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.SnsAccountF;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,7 @@ class KakaoLoadUserServiceTest {
         SnsAccount snsAccount = DomainFixtureRepository.getRegisteredSnsAccount();
 
         // when
-        when(loadSnsAccountPort.loadNullableWithUser(any())).thenReturn(Optional.of(snsAccount));
+        when(loadSnsAccountPort.loadWithUser(any())).thenReturn(Optional.of(snsAccount));
         OAuth2User loadUser = sut.load(user);
 
         // then
@@ -62,7 +61,7 @@ class KakaoLoadUserServiceTest {
         SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        when(loadSnsAccountPort.loadNullableWithUser(any())).thenReturn(Optional.empty());
+        when(loadSnsAccountPort.loadWithUser(any())).thenReturn(Optional.empty());
         when(saveSnsAccountPort.save(any())).thenReturn(entity);
         when(userMapper.kakaoUserToSnsAccount(any())).thenReturn(entity);
         OAuth2User loadUser = sut.load(user);
@@ -80,7 +79,7 @@ class KakaoLoadUserServiceTest {
         SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        when(loadSnsAccountPort.loadNullableWithUser(any())).thenReturn(Optional.of(entity));
+        when(loadSnsAccountPort.loadWithUser(any())).thenReturn(Optional.of(entity));
         OAuth2User loadUser = sut.load(user);
 
         // then

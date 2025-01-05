@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -37,14 +39,14 @@ class RegisterUserServiceTest {
         RegisterUserCommand.In command = new RegisterUserCommand.In(1L, true, true);
 
         // when
-        when(loadSnsAccountPort.load(1L)).thenReturn(SnsAccountF.KAKAO_NOT_REGISTERED.get());
+        when(loadSnsAccountPort.load(1L)).thenReturn(Optional.of(SnsAccountF.KAKAO_NOT_REGISTERED.get()));
         when(saveUserPort.save(any())).thenReturn(UserF.REGISTERED_WITH_NO_ID.get());
         RegisterUserCommand.Out register = sut.register(command);
 
         // then
         verify(loadSnsAccountPort, times(1)).load(1L);
         verify(saveUserPort, times(1)).save(any());
-        verify(jwtUtil, times(1)).getAccessToken((SnsAccount) any());
+        verify(jwtUtil, times(1)).getAccessToken(any());
 
         assertThat(register.nickname()).isEqualTo("leaf");
     }

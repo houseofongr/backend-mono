@@ -1,15 +1,14 @@
 package com.hoo.aoo.aar.application.exception;
 
-import com.hoo.aoo.common.enums.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class AarException extends ApplicationException {
+public class AarException extends RuntimeException {
 
-    private final ErrorCode error;
+    private final AarErrorCode error;
     private final String message;
 
-    public AarException(ErrorCode error) {
+    public AarException(AarErrorCode error) {
         this.error = error;
         this.message = error.getMessage();
     }

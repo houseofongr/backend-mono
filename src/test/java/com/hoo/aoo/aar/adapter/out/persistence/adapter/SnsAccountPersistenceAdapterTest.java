@@ -35,12 +35,13 @@ class SnsAccountPersistenceAdapterTest {
         SnsAccount snsAccount = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        SnsAccount entityById = sut.load(snsAccount.getId());
-        Optional<SnsAccount> entityBySnsId = sut.loadNullableWithUser(snsAccount.getSnsId());
+        Optional<SnsAccount> entityById = sut.load(snsAccount.getId());
+        Optional<SnsAccount> entityBySnsId = sut.loadWithUser(snsAccount.getSnsId());
 
         // then
-        assertThat(entityById).usingRecursiveComparison().isEqualTo(snsAccount);
+        assertThat(entityById).isNotEmpty();
         assertThat(entityBySnsId).isNotEmpty();
+        assertThat(entityById.get()).usingRecursiveComparison().isEqualTo(snsAccount);
         assertThat(entityBySnsId.get()).usingRecursiveComparison().isEqualTo(snsAccount);
     }
 

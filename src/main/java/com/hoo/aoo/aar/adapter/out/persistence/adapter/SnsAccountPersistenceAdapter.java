@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
-import com.hoo.aoo.common.enums.ErrorCode;
+import com.hoo.aoo.aar.application.exception.AarErrorCode;
 import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +21,15 @@ public class SnsAccountPersistenceAdapter implements LoadSnsAccountPort, SaveSns
     private final UserMapper userMapper;
 
     @Override
-    public Optional<SnsAccount> loadNullableWithUser(String snsId) {
+    public Optional<SnsAccount> loadWithUser(String snsId) {
         return snsAccountJpaRepository.findBySnsIdWithUserEntity(snsId)
                 .map(userMapper::mapToSnsAccountDomainEntity);
     }
 
     @Override
-    public SnsAccount load(Long id) {
-        SnsAccountJpaEntity snsAccountJpaEntity = snsAccountJpaRepository.findById(id)
-                .orElseThrow(() -> new AarException(ErrorCode.SNS_ACCOUNT_NOT_FOUND));
-
-        return userMapper.mapToSnsAccountDomainEntity(snsAccountJpaEntity);
+    public Optional<SnsAccount> load(Long id) {
+        Optional<SnsAccountJpaEntity> snsAccountJpaEntity = snsAccountJpaRepository.findById(id);
+        return snsAccountJpaEntity.map(userMapper::mapToSnsAccountDomainEntity);
     }
 
     @Override

@@ -2,8 +2,6 @@ package com.hoo.aoo.aar.adapter.out.persistence.adapter;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.common.enums.ErrorCode;
-import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.User;
 import com.hoo.aoo.aar.domain.UserF;
 import org.junit.jupiter.api.DisplayName;
