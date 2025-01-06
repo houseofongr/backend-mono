@@ -374,7 +374,7 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 302 Found
-Location: https://archiveofongr.site/login/auth?name=%EB%82%A8%EC%83%81%EC%97%BD&amp;accessToken=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZCIsInN1YiI6IuuCqOyDgeyXvSIsInJvbGUiOiJURU1QX1VTRVIiLCJzbnNJZCI6IjM4NTk0NzYwMjkiLCJleHAiOjE3MzU3MjI4MjIsInVzZXJJZCI6LTF9.aLJFkMUsfRhFxEWiWdJV0D0gytj1NrZYkw9UIAfDjcQ&amp;provider=kakao&amp;isFirstLogin=false</code></pre>
+Location: https://archiveofongr.site/login/auth?username=%EB%82%A8%EC%83%81%EC%97%BD&amp;accessToken=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZCIsInN1YiI6IuuCqOyDgeyXvSIsInJvbGUiOiJURU1QX1VTRVIiLCJzbnNJZCI6IjM4NTk0NzYwMjkiLCJleHAiOjE3MzU3MjI4MjIsInVzZXJJZCI6LTF9.aLJFkMUsfRhFxEWiWdJV0D0gytj1NrZYkw9UIAfDjcQ&amp;provider=kakao&amp;isFirstLogin=false</code></pre>
 </div>
 </div>
 </div>
@@ -421,12 +421,13 @@ Location: https://archiveofongr.site/login/auth?name=%EB%82%A8%EC%83%81%EC%97%BD
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인한 사용자의 이름입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">로그인한 사용자의 닉네임입니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인한 사용자의 JWT 액세스 토큰입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">로그인한 사용자의 JWT 액세스 토큰입니다.<br>
+Claim : [userId, snsId, nickname, role]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>provider</code></p></td>
@@ -495,6 +496,9 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
@@ -502,9 +506,9 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 191
+Content-Length: 223
 
-{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"}</code></pre>
+{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjE3ODE2OSwidXNlcklkIjoxfQ.seNbsZEOuhRzIkCrtpDZKbdiXRcYU_kakCI0Z6ocMio"}</code></pre>
 </div>
 </div>
 </div>
@@ -532,7 +536,8 @@ Content-Length: 191
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원가입한 사용자의 JWT 액세스 토큰입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원가입한 사용자의 JWT 액세스 토큰입니다.<br>
+Claim : [userId, snsId, nickname, role]</p></td>
 </tr>
 </tbody>
 </table>
