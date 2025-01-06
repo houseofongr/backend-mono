@@ -15,7 +15,7 @@ public class DocumentationOAuth2Controller {
     @GetMapping("/aar/authn/login/kakao")
     public void kakaoLogin(HttpServletResponse response) throws IOException {
         String redirectUrl = UriComponentsBuilder.fromUriString("https://archiveofongr.site/login/auth")
-                .queryParam("username", URLEncoder.encode("남상엽", StandardCharsets.UTF_8))
+                .queryParam("nickname", URLEncoder.encode("남상엽", StandardCharsets.UTF_8))
                 .queryParam("accessToken", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZCIsInN1YiI6IuuCqOyDgeyXvSIsInJvbGUiOiJURU1QX1VTRVIiLCJzbnNJZCI6IjM4NTk0NzYwMjkiLCJleHAiOjE3MzU3MjI4MjIsInVzZXJJZCI6LTF9.aLJFkMUsfRhFxEWiWdJV0D0gytj1NrZYkw9UIAfDjcQ")
                 .queryParam("provider", "kakao")
                 .queryParam("isFirstLogin", "false")
