@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface SnsAccountJpaRepository extends JpaRepository<SnsAccountJpaEntity, Long> {
 
-    @Query("select s from SnsAccountJpaEntity s left join fetch s.userEntity")
+    @Query("select s from SnsAccountJpaEntity s left join fetch s.userEntity where s.snsId = :snsId")
     Optional<SnsAccountJpaEntity> findBySnsIdWithUserEntity(String snsId);
 }

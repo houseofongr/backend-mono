@@ -3,7 +3,6 @@ package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.SNSLoginResponse;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.SnsAccount;
@@ -33,8 +32,8 @@ public class KakaoLoadUserService implements LoadUserService {
         SnsAccount snsAccountInDB = loadSnsAccountPort.load(userInfo.id())
                 .orElseGet(() -> save(userInfo));
 
-        SNSLoginResponse response = snsAccountInDB.getUser() == null?
-                SNSLoginResponse.of(snsAccountInDB, jwtUtil.getAccessToken(snsAccountInDB), true):
+        SNSLoginResponse response = snsAccountInDB.getUser() == null ?
+                SNSLoginResponse.of(snsAccountInDB, jwtUtil.getAccessToken(snsAccountInDB), true) :
                 SNSLoginResponse.of(snsAccountInDB, jwtUtil.getAccessToken(snsAccountInDB), false);
 
         return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
@@ -42,12 +41,12 @@ public class KakaoLoadUserService implements LoadUserService {
 
     private SnsAccount save(OAuth2Dto.KakaoUserInfo userInfo) {
 
-        SnsAccount registered = SnsAccount.regist(
-                userInfo.kakao_account().profile().nickname(),
-                userInfo.kakao_account().email(),
-                userInfo.id(),
-                SnsDomain.KAKAO);
-
-        return saveSnsAccountPort.save(registered);
+        return saveSnsAccountPort.save(
+                SnsAccount.regist(
+                        userInfo.kakao_account().profile().nickname(),
+                        userInfo.kakao_account().email(),
+                        userInfo.id(),
+                        SnsDomain.KAKAO)
+        );
     }
 }

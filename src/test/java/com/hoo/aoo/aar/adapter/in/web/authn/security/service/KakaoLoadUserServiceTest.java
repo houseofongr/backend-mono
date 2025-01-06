@@ -60,10 +60,10 @@ class KakaoLoadUserServiceTest {
     void testNotExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
-        OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo("SNS_ID",
-                new OAuth2Dto.KakaoUserInfo.KakaoAccount("test@example.com", true, true, true,
-                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile("leaf",true)));
+        SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED_2.get();
+        OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo(entity.getSnsId(),
+                new OAuth2Dto.KakaoUserInfo.KakaoAccount(entity.getEmail(), true, true, true,
+                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getNickname(),true)));
         Gson gson = new Gson();
         Map<String, Object> attributes = gson.fromJson(gson.toJsonTree(userInfo), Map.class);
 
@@ -75,6 +75,7 @@ class KakaoLoadUserServiceTest {
 
         // then
         verify(saveSnsAccountPort, times(1)).save(any());
+        assertThat(loadUser.getAttributes()).extractingByKey("nickname").isEqualTo("spearoad");
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
 

@@ -1,9 +1,11 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
 import com.hoo.aoo.aar.adapter.in.web.config.IntegrationTest;
+import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
+import com.hoo.aoo.aar.domain.SnsAccountF;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +53,7 @@ public class AarAuthnIntegrationTest {
 
         /* 1. 사용자 로그인 시도 */
 
-        ResponseEntity<?> loginResponse = whenLogin();
+        ResponseEntity<?> loginResponse = whenLogin(1);
 
         assertThat(loginResponse.getStatusCode().value()).isEqualTo(302);
 
@@ -89,7 +91,53 @@ public class AarAuthnIntegrationTest {
 
         assertThat((String)jwt2.getClaim("role")).isEqualTo("USER");
     }
-    
+
+    @Test
+    @Sql("RegisterIntegrationTest.sql")
+    @DisplayName("tc : 다른 SNS 계정이 DB에 있을 때 신규 SNS 계정으로 회원가입")
+    void testNewSnsAccount() {
+
+        /* 1. DB에 존재하지 않는 SNS 계정으로 로그인 시도 */
+
+        ResponseEntity<?> loginResponse = whenLogin(2);
+
+        assertThat(loginResponse.getStatusCode().value()).isEqualTo(302);
+
+        /* 2. SNS 계정 임시 저장, 사용자 정보, 임시 토큰 전송 */
+
+        Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
+
+        assertThat(snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID_2")).isNotEmpty();
+        assertThat(queryParams).containsKey("nickname");
+        assertThat(queryParams).containsKey("accessToken");
+
+        String tempAccessToken = queryParams.get("accessToken");
+        Jwt jwt = jwtDecoder.decode(tempAccessToken);
+
+        assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
+
+        /* 3. 사용자 회원가입 시도 */
+
+        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+
+        ResponseEntity<?> registResponse = whenRegist(tempAccessToken, body);
+
+        assertThat(registResponse.getStatusCode().value()).isEqualTo(200);
+
+        /* 4. 사용자 회원가입, 사용자 정보, 토큰 전송 */
+
+        RegisterUserCommand.Out responseBody = (RegisterUserCommand.Out) registResponse.getBody();
+
+        assertThat(userJpaRepository.findByNickname("spearoad")).isNotEmpty();
+        assertThat(responseBody.nickname()).isNotEmpty();
+        assertThat(responseBody.accessToken()).isNotEmpty();
+
+        String userAccessToken = responseBody.accessToken();
+        Jwt jwt2 = jwtDecoder.decode(userAccessToken);
+
+        assertThat((String)jwt2.getClaim("role")).isEqualTo("USER");
+    }
+
     @Test
     @Sql("RegisterIntegrationTest.sql")
     @DisplayName("tc : 이미 DB에 등록된 SNS 계정 재로그인")
@@ -97,7 +145,7 @@ public class AarAuthnIntegrationTest {
 
         /* 1. 사용자 로그인 시도 */
 
-        ResponseEntity<?> loginResponse = whenLogin();
+        ResponseEntity<?> loginResponse = whenLogin(1);
 
         assertThat(loginResponse.getStatusCode().value()).isEqualTo(302);
 
@@ -116,7 +164,7 @@ public class AarAuthnIntegrationTest {
 
         /* 3. 사용자 회원가입 없이 재로그인 시도 */
 
-        ResponseEntity<?> loginResponse2 = whenLogin();
+        ResponseEntity<?> loginResponse2 = whenLogin(1);
 
         assertThat(loginResponse2.getStatusCode().value()).isEqualTo(302);
 
@@ -132,14 +180,16 @@ public class AarAuthnIntegrationTest {
                 .ignoringFields("exp", "iat").isEqualTo(jwt2.getClaims());
     }
 
-    private ResponseEntity<?> whenLogin() {
+    private ResponseEntity<?> whenLogin(long userId) {
         HttpEntity<?> request = getHttpEntity(null, null);
+
+        new SnsAccountJpaEntity();
 
         return restTemplate
                 .withRequestFactorySettings(
                         clientHttpRequestFactorySettings.withRedirects(DONT_FOLLOW))
                 .exchange(
-                "/mock/authn/login",
+                "/mock/authn/login/" + userId,
                 HttpMethod.GET,
                 request,
                 Void.class);
