@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.*;
 
 @IntegrationTest
-public class AarAuthIntegrationTest {
+public class AarAuthnIntegrationTest {
 
     @Autowired
     TestRestTemplate restTemplate;

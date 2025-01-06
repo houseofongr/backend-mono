@@ -3,6 +3,7 @@ package com.hoo.aoo.aar.adapter.out.persistence.adapter;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.hoo.aoo.aar.application.exception.AarErrorCode;
@@ -21,15 +22,16 @@ public class SnsAccountPersistenceAdapter implements LoadSnsAccountPort, SaveSns
     private final UserMapper userMapper;
 
     @Override
-    public Optional<SnsAccount> loadWithUser(String snsId) {
+    public Optional<SnsAccount> load(String snsId) {
         return snsAccountJpaRepository.findBySnsIdWithUserEntity(snsId)
                 .map(userMapper::mapToSnsAccountDomainEntity);
+
     }
 
     @Override
     public Optional<SnsAccount> load(Long id) {
-        Optional<SnsAccountJpaEntity> snsAccountJpaEntity = snsAccountJpaRepository.findById(id);
-        return snsAccountJpaEntity.map(userMapper::mapToSnsAccountDomainEntity);
+        return snsAccountJpaRepository.findById(id)
+                .map(userMapper::mapToSnsAccountDomainEntity);
     }
 
     @Override

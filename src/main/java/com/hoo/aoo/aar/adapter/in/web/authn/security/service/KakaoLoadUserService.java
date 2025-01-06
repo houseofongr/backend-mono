@@ -7,6 +7,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.SnsAccount;
+import com.hoo.aoo.common.enums.SnsDomain;
 import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -21,7 +22,6 @@ public class KakaoLoadUserService implements LoadUserService {
     private final Gson gson = new Gson();
     private final LoadSnsAccountPort loadSnsAccountPort;
     private final SaveSnsAccountPort saveSnsAccountPort;
-    private final UserMapper userMapper;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -30,7 +30,7 @@ public class KakaoLoadUserService implements LoadUserService {
 
         OAuth2Dto.KakaoUserInfo userInfo = gson.fromJson(gson.toJsonTree(user.getAttributes()), OAuth2Dto.KakaoUserInfo.class);
 
-        SnsAccount snsAccountInDB = loadSnsAccountPort.loadWithUser(userInfo.id())
+        SnsAccount snsAccountInDB = loadSnsAccountPort.load(userInfo.id())
                 .orElseGet(() -> save(userInfo));
 
         SNSLoginResponse response = snsAccountInDB.getUser() == null?
@@ -41,6 +41,13 @@ public class KakaoLoadUserService implements LoadUserService {
     }
 
     private SnsAccount save(OAuth2Dto.KakaoUserInfo userInfo) {
-        return saveSnsAccountPort.save(userMapper.kakaoUserToSnsAccount(userInfo));
+
+        SnsAccount registered = SnsAccount.regist(
+                userInfo.kakao_account().profile().nickname(),
+                userInfo.kakao_account().email(),
+                userInfo.id(),
+                SnsDomain.KAKAO);
+
+        return saveSnsAccountPort.save(registered);
     }
 }

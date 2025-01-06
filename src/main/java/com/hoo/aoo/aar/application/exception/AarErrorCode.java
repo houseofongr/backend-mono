@@ -10,10 +10,11 @@ import static org.springframework.http.HttpStatus.*;
 @AllArgsConstructor
 public enum AarErrorCode {
 
-    NICK_NAME_CONFLICT(CONFLICT, "User nickname is conflict."),
-    SNS_ACCOUNT_NOT_FOUND(NOT_FOUND, "SNS Account not found.");
+    NICK_NAME_CONFLICT("User nickname is conflict.", CONFLICT),
+    SNS_ACCOUNT_NOT_FOUND( "SNS Account not found.", NOT_FOUND),
+    ALREADY_REGISTERED_SNS_ACCOUNT("Already Registered Sns Account.", BAD_REQUEST);
 
-    private final HttpStatus status;
     private final String message;
+    private final HttpStatus status;
 
 }

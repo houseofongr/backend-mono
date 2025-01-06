@@ -1,5 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
 
+import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
@@ -7,11 +8,14 @@ import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.DomainFixtureRepository;
 import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.oauth2.core.OAuth2DeviceCode;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -23,16 +27,14 @@ class KakaoLoadUserServiceTest {
     KakaoLoadUserService sut;
     LoadSnsAccountPort loadSnsAccountPort;
     SaveSnsAccountPort saveSnsAccountPort;
-    UserMapper userMapper;
     JwtUtil jwtUtil;
 
     @BeforeEach
     void init() {
         loadSnsAccountPort = mock(LoadSnsAccountPort.class);
         saveSnsAccountPort = mock(SaveSnsAccountPort.class);
-        userMapper = mock(UserMapper.class);
         jwtUtil = mock(JwtUtil.class);
-        sut = new KakaoLoadUserService(loadSnsAccountPort, saveSnsAccountPort, userMapper, jwtUtil);
+        sut = new KakaoLoadUserService(loadSnsAccountPort, saveSnsAccountPort, jwtUtil);
     }
 
     @Test
@@ -43,7 +45,7 @@ class KakaoLoadUserServiceTest {
         SnsAccount snsAccount = DomainFixtureRepository.getRegisteredSnsAccount();
 
         // when
-        when(loadSnsAccountPort.loadWithUser(any())).thenReturn(Optional.of(snsAccount));
+        when(loadSnsAccountPort.load((String) any())).thenReturn(Optional.of(snsAccount));
         OAuth2User loadUser = sut.load(user);
 
         // then
@@ -59,11 +61,16 @@ class KakaoLoadUserServiceTest {
         // given
         OAuth2User user = mock(OAuth2User.class);
         SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
+        OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo("SNS_ID",
+                new OAuth2Dto.KakaoUserInfo.KakaoAccount("test@example.com", true, true, true,
+                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile("leaf",true)));
+        Gson gson = new Gson();
+        Map<String, Object> attributes = gson.fromJson(gson.toJsonTree(userInfo), Map.class);
 
         // when
-        when(loadSnsAccountPort.loadWithUser(any())).thenReturn(Optional.empty());
+        when(user.getAttributes()).thenReturn(attributes);
+        when(loadSnsAccountPort.load((String) any())).thenReturn(Optional.empty());
         when(saveSnsAccountPort.save(any())).thenReturn(entity);
-        when(userMapper.kakaoUserToSnsAccount(any())).thenReturn(entity);
         OAuth2User loadUser = sut.load(user);
 
         // then
@@ -79,7 +86,7 @@ class KakaoLoadUserServiceTest {
         SnsAccount entity = SnsAccountF.KAKAO_NOT_REGISTERED.get();
 
         // when
-        when(loadSnsAccountPort.loadWithUser(any())).thenReturn(Optional.of(entity));
+        when(loadSnsAccountPort.load((String) any())).thenReturn(Optional.of(entity));
         OAuth2User loadUser = sut.load(user);
 
         // then

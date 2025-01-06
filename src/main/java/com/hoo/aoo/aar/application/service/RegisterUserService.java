@@ -11,8 +11,7 @@ import com.hoo.aoo.aar.domain.SnsAccount;
 import com.hoo.aoo.aar.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +22,15 @@ public class RegisterUserService implements RegisterUserUseCase {
     private final JwtUtil jwtUtil;
 
     @Override
+    @Transactional
     public RegisterUserCommand.Out register(RegisterUserCommand.In command) {
 
         SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId())
                 .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
-        User newUser = User.regist(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
+        if (snsAccount.getUser() != null) throw new AarException(AarErrorCode.ALREADY_REGISTERED_SNS_ACCOUNT);
+
+        User newUser = User.register(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
 
         newUser = saveUserPort.save(newUser);
 

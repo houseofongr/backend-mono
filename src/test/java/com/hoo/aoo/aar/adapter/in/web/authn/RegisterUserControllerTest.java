@@ -27,7 +27,7 @@ public class RegisterUserControllerTest {
 
     @Test
     @DisplayName("회원가입 API")
-    void testRegist() throws Exception {
+    void testRegister() throws Exception {
         RegisterUserController.RegisterUserRequest dto = new RegisterUserController.RegisterUserRequest(true, true);
         String json = gson.toJson(dto);
         mockMvc.perform(post("/aar/authn/regist")

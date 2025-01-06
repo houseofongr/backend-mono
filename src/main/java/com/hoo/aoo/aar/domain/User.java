@@ -24,7 +24,7 @@ public class User {
         this.snsAccounts = snsAccounts;
     }
 
-    public static User regist(SnsAccount snsAccount, Boolean recordAgreement, Boolean personalInformationAgreement) {
+    public static User register(SnsAccount snsAccount, Boolean recordAgreement, Boolean personalInformationAgreement) {
         User newUser = new User(null, snsAccount.getName(), snsAccount.getNickname(), "NOT_SET", recordAgreement, personalInformationAgreement, List.of(snsAccount));
         snsAccount.setUser(newUser);
 

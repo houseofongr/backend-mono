@@ -11,6 +11,6 @@ public enum UserF {
     private final Boolean personalInformationAgreement;
 
     public User get() {
-        return User.regist(snsAccount, recordAgreement, personalInformationAgreement);
+        return User.register(snsAccount, recordAgreement, personalInformationAgreement);
     }
 }

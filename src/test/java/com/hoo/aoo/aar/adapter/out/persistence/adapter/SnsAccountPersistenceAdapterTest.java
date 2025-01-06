@@ -36,7 +36,7 @@ class SnsAccountPersistenceAdapterTest {
 
         // when
         Optional<SnsAccount> entityById = sut.load(snsAccount.getId());
-        Optional<SnsAccount> entityBySnsId = sut.loadWithUser(snsAccount.getSnsId());
+        Optional<SnsAccount> entityBySnsId = sut.load(snsAccount.getSnsId());
 
         // then
         assertThat(entityById).isNotEmpty();
