@@ -19,7 +19,7 @@ public class MockJwtUtil {
                             new String(secretKey),
                             "mock_jwt_util",
                             10000L
-                    ));
+                    ), null);
         } catch (KeyLengthException e) {
             throw new RuntimeException(e);
         }

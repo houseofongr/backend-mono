@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hoo.aoo.aar.domain.SnsAccount;
+import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,15 +21,15 @@ public record SNSLoginResponse(
                 (Boolean) attributes.get("isFirstLogin"));
     }
 
-    public static SNSLoginResponse of(SnsAccount accountEntity, String accessToken, boolean isFirstLogin) {
+    public static SNSLoginResponse of(SnsAccountJpaEntity snsAccountJpaEntity, String accessToken, boolean isFirstLogin) {
 
-        String nickname = isFirstLogin?
-                accountEntity.getNickname() : accountEntity.getUser().getNickname();
+        String nickname = isFirstLogin? snsAccountJpaEntity.getNickname() : snsAccountJpaEntity.getUserEntity().getNickname();
+        String provider = snsAccountJpaEntity.getSnsDomain().name().toUpperCase();
 
         return new SNSLoginResponse(
                 nickname,
                 accessToken,
-                accountEntity.getSnsDomain().name(),
+                provider,
                 isFirstLogin);
     }
 

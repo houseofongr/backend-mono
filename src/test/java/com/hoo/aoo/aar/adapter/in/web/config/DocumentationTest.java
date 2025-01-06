@@ -1,25 +1,18 @@
 package com.hoo.aoo.aar.adapter.in.web.config;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.config.WebConfig;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.AarSecurityConfig;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.handler.OAuth2SuccessHandler;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtConfig;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.service.MockOAuth2UserServiceDelegator;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @ExtendWith(RestDocumentationExtension.class)
-@WebAppConfiguration
-@WebMvcTest
 @AutoConfigureRestDocs
-@ContextConfiguration(classes = {AarSecurityConfig.class, OAuth2SuccessHandler.class, MockOAuth2UserServiceDelegator.class, DocumentationConfig.class, JwtConfig.class, WebConfig.class})
+@AutoConfigureMockMvc
+@SpringBootTest
 public @interface DocumentationTest {
 }

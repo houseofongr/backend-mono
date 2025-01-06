@@ -7,8 +7,9 @@ import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
-import com.hoo.aoo.aar.domain.SnsAccount;
-import com.hoo.aoo.aar.domain.User;
+import com.hoo.aoo.aar.domain.account.SnsAccount;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,17 +26,25 @@ public class RegisterUserService implements RegisterUserUseCase {
     @Transactional
     public RegisterUserCommand.Out register(RegisterUserCommand.In command) {
 
-        SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId())
-                .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
+        try {
+            SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId())
+                    .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
-        if (snsAccount.getUser() != null) throw new AarException(AarErrorCode.ALREADY_REGISTERED_SNS_ACCOUNT);
+            if (snsAccount.getUserId() != null)
+                throw new AarException(AarErrorCode.ALREADY_REGISTERED_SNS_ACCOUNT);
 
-        User newUser = User.register(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
 
-        newUser = saveUserPort.save(newUser);
+            User user = User.registerWithDefaultPhoneNumber(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
 
-        String accessToken = jwtUtil.getAccessToken(snsAccount);
+            saveUserPort.save(user);
 
-        return new RegisterUserCommand.Out(newUser.getNickname(), accessToken);
+            String nickname = user.getName().getNickname();
+            String accessToken = jwtUtil.getAccessToken(snsAccount);
+
+            return new RegisterUserCommand.Out(nickname, accessToken);
+
+        } catch (InvalidPhoneNumberException e) {
+            throw new AarException(AarErrorCode.INVALID_PHONE_NUMBER_ERROR, e.getMessage());
+        }
     }
 }

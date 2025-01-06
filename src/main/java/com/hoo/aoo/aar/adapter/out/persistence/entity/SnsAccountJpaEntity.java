@@ -16,7 +16,7 @@ public class SnsAccountJpaEntity extends DateColumnBaseEntity {
     private Long id;
 
     @Column(nullable = false, length = 255)
-    private String name;
+    private String realName;
 
     @Column(nullable = false, length = 255)
     private String nickname;

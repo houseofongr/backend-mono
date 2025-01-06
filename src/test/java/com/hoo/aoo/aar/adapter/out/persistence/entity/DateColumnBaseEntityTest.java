@@ -3,6 +3,7 @@ package com.hoo.aoo.aar.adapter.out.persistence.entity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,15 +28,15 @@ class DateColumnBaseEntityTest {
 
     @Test
     @DisplayName("DB 시간과 동기화 확인")
-    void testSyncTime() {
-        SnsAccountJpaEntity entity = mapper.mapToSnsAccountJpaEntity(SnsAccountF.KAKAO_NOT_REGISTERED_WITH_NO_ID.get());
+    void testSyncTime() throws InvalidPhoneNumberException {
+        SnsAccountJpaEntity entity = mapper.mapToNewJpaEntity(SnsAccountF.NOT_REGISTERED_KAKAO.get());
         ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
 
         repository.save(entity);
 
         SnsAccountJpaEntity snsAccountJpaEntity = repository.findById(entity.getId()).get();
 
-        assertThat(snsAccountJpaEntity.getCreatedDate()).isCloseTo(now, new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
-        assertThat(snsAccountJpaEntity.getUpdatedDate()).isCloseTo(now, new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
+        assertThat(snsAccountJpaEntity.getCreatedTime()).isCloseTo(now, new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
+        assertThat(snsAccountJpaEntity.getUpdatedTime()).isCloseTo(now, new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
     }
 }

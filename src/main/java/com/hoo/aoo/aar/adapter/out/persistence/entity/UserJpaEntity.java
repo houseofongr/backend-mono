@@ -20,7 +20,7 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     private Long id;
 
     @Column(nullable = false, length = 255)
-    private String name;
+    private String realName;
 
     @Column(nullable = true, length = 255)
     private String nickname;

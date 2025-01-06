@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
-import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.hoo.aoo.common.enums.SnsDomain;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ public class AarAuthnIntegrationTest {
 
         Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
 
-        assertThat(snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID")).isNotEmpty();
+        assertThat(snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO,"SNS_ID")).isNotEmpty();
         assertThat(queryParams).containsKey("nickname");
         assertThat(queryParams).containsKey("accessToken");
 
@@ -70,7 +70,7 @@ public class AarAuthnIntegrationTest {
 
         assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
 
-        /* 3. 사용자 회원가입 시도 */
+        /* 3. 토큰과 응답 바디로 사용자 회원가입 시도 */
 
         String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
 
@@ -82,7 +82,7 @@ public class AarAuthnIntegrationTest {
 
         RegisterUserCommand.Out responseBody = (RegisterUserCommand.Out) registResponse.getBody();
 
-        assertThat(userJpaRepository.findByNickname("leaf")).isNotEmpty();
+        assertThat(userJpaRepository.findAll()).hasSize(1);
         assertThat(responseBody.nickname()).isNotEmpty();
         assertThat(responseBody.accessToken()).isNotEmpty();
 
@@ -99,7 +99,7 @@ public class AarAuthnIntegrationTest {
 
         /* 1. DB에 존재하지 않는 SNS 계정으로 로그인 시도 */
 
-        ResponseEntity<?> loginResponse = whenLogin(2);
+        ResponseEntity<?> loginResponse = whenLogin(3);
 
         assertThat(loginResponse.getStatusCode().value()).isEqualTo(302);
 
@@ -107,7 +107,7 @@ public class AarAuthnIntegrationTest {
 
         Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
 
-        assertThat(snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID_2")).isNotEmpty();
+        assertThat(snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO, "SNS_ID_2")).isNotEmpty();
         assertThat(queryParams).containsKey("nickname");
         assertThat(queryParams).containsKey("accessToken");
 
@@ -128,7 +128,7 @@ public class AarAuthnIntegrationTest {
 
         RegisterUserCommand.Out responseBody = (RegisterUserCommand.Out) registResponse.getBody();
 
-        assertThat(userJpaRepository.findByNickname("spearoad")).isNotEmpty();
+        assertThat(userJpaRepository.findByPhoneNumber("010-0000-0000")).isNotEmpty();
         assertThat(responseBody.nickname()).isNotEmpty();
         assertThat(responseBody.accessToken()).isNotEmpty();
 
@@ -153,7 +153,7 @@ public class AarAuthnIntegrationTest {
 
         Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
 
-        assertThat(snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID")).isNotEmpty();
+        assertThat(snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO, "SNS_ID")).isNotEmpty();
         assertThat(queryParams).containsKey("nickname");
         assertThat(queryParams).containsKey("accessToken");
 
@@ -164,7 +164,7 @@ public class AarAuthnIntegrationTest {
 
         /* 3. 사용자 회원가입 없이 재로그인 시도 */
 
-        ResponseEntity<?> loginResponse2 = whenLogin(1);
+        ResponseEntity<?> loginResponse2 = whenLogin(2);
 
         assertThat(loginResponse2.getStatusCode().value()).isEqualTo(302);
 
@@ -172,7 +172,7 @@ public class AarAuthnIntegrationTest {
 
         Map<String, String> queryParams2 = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
 
-        snsAccountJpaRepository.findBySnsIdWithUserEntity("SNS_ID"); // SNS Entity 중복여부 확인
+        snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO,"SNS_ID"); // SNS Entity 중복여부 확인
         String tempAccessToken2 = queryParams2.get("accessToken");
         Jwt jwt2 = jwtDecoder.decode(tempAccessToken2);
 

@@ -12,7 +12,8 @@ public enum AarErrorCode {
 
     NICK_NAME_CONFLICT("User nickname is conflict.", CONFLICT),
     SNS_ACCOUNT_NOT_FOUND( "SNS Account not found.", NOT_FOUND),
-    ALREADY_REGISTERED_SNS_ACCOUNT("Already Registered Sns Account.", BAD_REQUEST);
+    ALREADY_REGISTERED_SNS_ACCOUNT("Already Registered Sns Account.", BAD_REQUEST),
+    INVALID_PHONE_NUMBER_ERROR("Invalid phone number.", BAD_REQUEST);
 
     private final String message;
     private final HttpStatus status;

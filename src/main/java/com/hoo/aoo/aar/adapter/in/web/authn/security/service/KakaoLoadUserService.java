@@ -3,9 +3,11 @@ package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.SNSLoginResponse;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
-import com.hoo.aoo.aar.domain.SnsAccount;
+import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.common.enums.SnsDomain;
 import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.AllArgsConstructor;
@@ -19,8 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class KakaoLoadUserService implements LoadUserService {
 
     private final Gson gson = new Gson();
-    private final LoadSnsAccountPort loadSnsAccountPort;
-    private final SaveSnsAccountPort saveSnsAccountPort;
+    private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -29,24 +30,25 @@ public class KakaoLoadUserService implements LoadUserService {
 
         OAuth2Dto.KakaoUserInfo userInfo = gson.fromJson(gson.toJsonTree(user.getAttributes()), OAuth2Dto.KakaoUserInfo.class);
 
-        SnsAccount snsAccountInDB = loadSnsAccountPort.load(userInfo.id())
+        SnsAccountJpaEntity snsAccountInDB = snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO, userInfo.id())
                 .orElseGet(() -> save(userInfo));
 
-        SNSLoginResponse response = snsAccountInDB.getUser() == null ?
+        SNSLoginResponse response = snsAccountInDB.getUserEntity() == null ?
                 SNSLoginResponse.of(snsAccountInDB, jwtUtil.getAccessToken(snsAccountInDB), true) :
                 SNSLoginResponse.of(snsAccountInDB, jwtUtil.getAccessToken(snsAccountInDB), false);
 
         return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
     }
 
-    private SnsAccount save(OAuth2Dto.KakaoUserInfo userInfo) {
+    private SnsAccountJpaEntity save(OAuth2Dto.KakaoUserInfo userInfo) {
 
-        return saveSnsAccountPort.save(
-                SnsAccount.regist(
-                        userInfo.kakao_account().profile().nickname(),
-                        userInfo.kakao_account().email(),
-                        userInfo.id(),
-                        SnsDomain.KAKAO)
-        );
+        String name = userInfo.kakao_account().profile().nickname();
+        String email = userInfo.kakao_account().email();
+        String snsId = userInfo.id();
+
+        SnsAccountJpaEntity newSnsAccount = new SnsAccountJpaEntity(null, name, name, email, snsId, SnsDomain.KAKAO, null);
+        snsAccountJpaRepository.save(newSnsAccount);
+
+        return newSnsAccount;
     }
 }

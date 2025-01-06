@@ -2,8 +2,9 @@ package com.hoo.aoo.aar.adapter.out.persistence.adapter;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.domain.SnsAccount;
+import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,35 +28,40 @@ class SnsAccountPersistenceAdapterTest {
     @Autowired
     SnsAccountJpaRepository repository;
 
+    @Autowired
+    UserMapper userMapper;
+
     @Test
     @Sql("SnsAccountPersistenceAdapterTest.sql")
     @DisplayName("SNS Account 조회")
-    void testLoadSnsAccount() {
+    void testLoadSnsAccount() throws InvalidPhoneNumberException {
         // given
-        SnsAccount snsAccount = SnsAccountF.KAKAO_NOT_REGISTERED.get();
+        SnsAccount snsAccount = SnsAccountF.REGISTERED_KAKAO.get();
 
         // when
-        Optional<SnsAccount> entityById = sut.load(snsAccount.getId());
-        Optional<SnsAccount> entityBySnsId = sut.load(snsAccount.getSnsId());
+        Optional<SnsAccount> entityById = sut.load(1L);
+        Optional<SnsAccount> entityBySnsId = sut.load(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId());
 
         // then
         assertThat(entityById).isNotEmpty();
         assertThat(entityBySnsId).isNotEmpty();
-        assertThat(entityById.get()).usingRecursiveComparison().isEqualTo(snsAccount);
-        assertThat(entityBySnsId.get()).usingRecursiveComparison().isEqualTo(snsAccount);
+        assertThat(entityById.get()).usingRecursiveComparison().ignoringFields("dateInfo").isEqualTo(snsAccount);
+        assertThat(entityBySnsId.get()).usingRecursiveComparison().ignoringFields("dateInfo").isEqualTo(snsAccount);
     }
 
     @Test
     @DisplayName("SNS Account 저장")
-    void testSaveSnsAccount() {
+    void testSaveSnsAccount() throws InvalidPhoneNumberException {
         // given
-        SnsAccount snsAccount = SnsAccountF.KAKAO_NOT_REGISTERED_WITH_NO_ID.get();
+        SnsAccount snsAccount = SnsAccountF.NOT_REGISTERED_KAKAO.get();
 
         // when
-        SnsAccount entityInDB = sut.save(snsAccount);
+        sut.save(snsAccount);
 
         // then
-        assertThat(entityInDB).usingRecursiveComparison()
-                .ignoringFields("id").isEqualTo(snsAccount);
+        assertThat(repository.findWithUserEntity(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId()))
+                .get().usingRecursiveComparison()
+                .ignoringFields("id", "createdTime", "updatedTime")
+                .isEqualTo(userMapper.mapToNewJpaEntity(snsAccount));
     }
 }

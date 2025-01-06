@@ -1,9 +1,14 @@
 package com.hoo.aoo.aar.adapter.out.persistence.adapter;
 
+import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.aar.domain.User;
-import com.hoo.aoo.aar.domain.UserF;
+import com.hoo.aoo.aar.domain.DomainFixtureRepository;
+import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.hoo.aoo.aar.domain.account.SnsAccount;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +17,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
-import static org.assertj.core.api.Assertions.*;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -25,26 +33,26 @@ class UserPersistenceAdapterTest {
     @Autowired
     UserJpaRepository repository;
 
-    @Test
-    @Sql("UserPersistenceAdapterTest.sql")
-    @DisplayName("닉네임 충돌여부 조회")
-    void testLoadUser() {
-        assertThat(sut.existByNickname("leaf")).isTrue();
-    }
+    @Autowired
+    UserMapper userMapper;
 
     @Test
     @Sql("UserPersistenceAdapterTest.sql")
     @DisplayName("사용자 저장")
-    void testSaveUser() {
+    void testSaveUser() throws InvalidPhoneNumberException {
         // given
-        User user = UserF.REGISTERED_WITH_NO_ID.get();
+        SnsAccount snsAccount = SnsAccountF.REGISTERED_KAKAO.get();
+        User user = DomainFixtureRepository.getRegisteredUser(snsAccount);
+        List<SnsAccountJpaEntity> snsAccountJpaEntities = List.of(userMapper.mapToNewJpaEntity(snsAccount));
 
         // when
-        User savedUser = sut.save(user);
+        sut.save(user);
 
         // then
-        assertThat(savedUser).usingRecursiveComparison()
-                .ignoringFields("id", "snsAccounts")
-                .isEqualTo(user);
+        Optional<UserJpaEntity> optional = repository.findByPhoneNumber(user.getPhoneNumber().getNumber());
+        assertThat(optional).isNotEmpty()
+                .get().usingRecursiveComparison()
+                .ignoringFields("id", "snsAccountEntities", "createdTime", "updatedTime")
+                .isEqualTo(userMapper.mapToNewJpaEntity(user, snsAccountJpaEntities));
     }
 }

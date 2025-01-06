@@ -1,7 +1,16 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
+import com.hoo.aoo.aar.adapter.out.persistence.adapter.SnsAccountPersistenceAdapter;
+import com.hoo.aoo.aar.adapter.out.persistence.adapter.UserPersistenceAdapter;
+import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.hoo.aoo.aar.application.exception.AarErrorCode;
+import com.hoo.aoo.aar.application.exception.AarException;
+import com.hoo.aoo.aar.domain.account.SnsAccount;
+import com.hoo.aoo.aar.domain.account.SnsAccountId;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.common.enums.Role;
-import com.hoo.aoo.aar.domain.SnsAccount;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -12,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,17 +29,27 @@ public class JwtUtil {
 
     private final MACSigner signer;
     private final JwtAttribute jwtAttribute;
+    private final SnsAccountJpaRepository snsAccountJpaRepository;
 
     public String getAccessToken(SnsAccount snsAccount) {
-        if (snsAccount.getUser() == null)
-            return getAccessToken(snsAccount.getName(),-1L, snsAccount.getId(), Role.TEMP_USER);
-        return getAccessToken(snsAccount.getName(),snsAccount.getUser().getId(), snsAccount.getId(), Role.USER);
+        SnsAccountJpaEntity snsAccountJpaEntity = snsAccountJpaRepository.findWithUserEntity(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId())
+                .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
+
+        return getAccessToken(snsAccountJpaEntity);
     }
 
-    private String getAccessToken(String name, Long userId, Long snsId, Role role) {
+    public String getAccessToken(SnsAccountJpaEntity snsAccount) {
+
+        if (snsAccount.getUserEntity() == null)
+            return getAccessToken(snsAccount.getNickname(), -1L, snsAccount.getId(), Role.TEMP_USER);
+        else
+            return getAccessToken(snsAccount.getNickname(), snsAccount.getUserEntity().getId(), snsAccount.getId(), Role.USER);
+    }
+
+    private String getAccessToken(String nickname, Long userId, Long snsId, Role role) {
         try {
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                    .subject(name)
+                    .subject(nickname)
                     .issuer(jwtAttribute.issuer())
                     .claim("userId", userId)
                     .claim("snsId", snsId)

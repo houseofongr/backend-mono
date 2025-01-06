@@ -1,33 +1,63 @@
 package com.hoo.aoo.aar.adapter.out.persistence.adapter;
 
+import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
+import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.LoadUserPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
-import com.hoo.aoo.aar.domain.User;
+import com.hoo.aoo.aar.domain.Name;
+import com.hoo.aoo.aar.domain.account.SnsAccountId;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.Agreement;
+import com.hoo.aoo.aar.domain.user.PhoneNumber;
+import com.hoo.aoo.aar.domain.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
 
     private final UserJpaRepository userJpaRepository;
+    private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final UserMapper userMapper;
 
     @Override
-    public boolean existByNickname(String nickname) {
-        return userJpaRepository.findByNickname(nickname).isPresent();
+    public Optional<User> load(Long id) throws InvalidPhoneNumberException {
+        Optional<UserJpaEntity> optional = userJpaRepository.findById(id);
+
+        if (optional.isEmpty()) return Optional.empty();
+
+        UserJpaEntity jpaEntity = optional.get();
+
+        List<SnsAccountJpaEntity> snsAccountJpaEntities = snsAccountJpaRepository.findAllByUserId(jpaEntity.getId());
+
+        Agreement agreement = new Agreement(jpaEntity.getPersonalInformationAgreement(), jpaEntity.getRecordAgreement());
+
+        PhoneNumber phoneNumber = new PhoneNumber(jpaEntity.getPhoneNumber());
+
+        List<SnsAccountId> snsAccountIds = snsAccountJpaEntities.stream()
+                .map(snsAccountJpaEntity -> new SnsAccountId(snsAccountJpaEntity.getSnsDomain(), snsAccountJpaEntity.getSnsId())).toList();
+
+        Name name = new Name(jpaEntity.getRealName(), jpaEntity.getNickname());
+
+        return Optional.of(userMapper.mapToDomainEntity(agreement, phoneNumber, snsAccountIds, name));
     }
 
     @Override
-    public User save(User user) {
+    public void save(User user) {
 
-        UserJpaEntity newUserJpaEntity = userMapper.mapToUserJpaEntity(user);
+        List<SnsAccountJpaEntity> snsAccountJpaEntities = user.getSnsAccounts().stream().map(snsAccountId ->
+                snsAccountJpaRepository.findWithUserEntity(
+                        snsAccountId.getSnsDomain(), snsAccountId.getSnsId()).get()).toList();
 
-        userJpaRepository.save(newUserJpaEntity);
+        UserJpaEntity entity = userMapper.mapToNewJpaEntity(user, snsAccountJpaEntities);
 
-        return userMapper.mapToUserDomainEntity(newUserJpaEntity);
+        userJpaRepository.save(entity);
     }
 }

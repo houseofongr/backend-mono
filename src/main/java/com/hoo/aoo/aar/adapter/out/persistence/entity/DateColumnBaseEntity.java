@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -15,20 +14,20 @@ public class DateColumnBaseEntity {
 
     @Column
     @CreatedDate
-    private ZonedDateTime createdDate;
+    private ZonedDateTime createdTime;
 
     @Column
     @LastModifiedDate
-    private ZonedDateTime updatedDate;
+    private ZonedDateTime updatedTime;
 
     @PrePersist
     public void prePersist() {
-        this.createdDate = ZonedDateTime.now(ZoneId.systemDefault());
-        this.updatedDate = ZonedDateTime.now(ZoneId.systemDefault());
+        this.createdTime = ZonedDateTime.now(ZoneId.systemDefault());
+        this.updatedTime = ZonedDateTime.now(ZoneId.systemDefault());
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedDate = ZonedDateTime.now(ZoneId.systemDefault());
+        this.updatedTime = ZonedDateTime.now(ZoneId.systemDefault());
     }
 }

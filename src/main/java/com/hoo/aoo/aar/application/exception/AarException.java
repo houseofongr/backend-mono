@@ -12,4 +12,9 @@ public class AarException extends RuntimeException {
         this.error = error;
         this.message = error.getMessage();
     }
+
+    public AarException(AarErrorCode error, String message) {
+        this.error = error;
+        this.message = message;
+    }
 }

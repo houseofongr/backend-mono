@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.application.port.out.database;
 
-import com.hoo.aoo.aar.domain.User;
+import com.hoo.aoo.aar.domain.user.User;
 
 public interface SaveUserPort {
-    User save(User user);
+    void save(User user);
 }
