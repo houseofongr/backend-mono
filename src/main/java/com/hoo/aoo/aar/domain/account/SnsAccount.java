@@ -3,10 +3,7 @@ package com.hoo.aoo.aar.domain.account;
 import com.hoo.aoo.aar.domain.DateInfo;
 import com.hoo.aoo.aar.domain.Name;
 import com.hoo.aoo.aar.domain.user.PhoneNumber;
-import com.hoo.aoo.common.enums.SnsDomain;
 import lombok.Getter;
-
-import java.time.ZonedDateTime;
 
 @Getter
 public class SnsAccount {

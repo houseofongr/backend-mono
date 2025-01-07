@@ -2,7 +2,7 @@ package com.hoo.aoo.aar.application.port.out.database;
 
 import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.common.enums.SnsDomain;
+import com.hoo.aoo.aar.domain.account.SnsDomain;
 
 import java.util.Optional;
 

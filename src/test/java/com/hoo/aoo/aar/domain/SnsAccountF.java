@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.account.SnsAccountId;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.PhoneNumber;
-import com.hoo.aoo.common.enums.SnsDomain;
+import com.hoo.aoo.aar.domain.account.SnsDomain;
 import lombok.AllArgsConstructor;
 
 import java.time.ZonedDateTime;

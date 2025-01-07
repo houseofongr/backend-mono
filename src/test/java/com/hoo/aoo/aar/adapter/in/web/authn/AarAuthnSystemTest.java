@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
-import com.hoo.aoo.common.enums.SnsDomain;
+import com.hoo.aoo.aar.domain.account.SnsDomain;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.*;
 
 @IntegrationTest
-public class AarAuthnIntegrationTest {
+public class AarAuthnSystemTest {
 
     @Autowired
     TestRestTemplate restTemplate;

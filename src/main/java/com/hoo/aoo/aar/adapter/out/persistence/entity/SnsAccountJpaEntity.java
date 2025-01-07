@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.out.persistence.entity;
 
-import com.hoo.aoo.common.enums.SnsDomain;
+import com.hoo.aoo.aar.domain.account.SnsDomain;
 import jakarta.persistence.*;
 import lombok.*;
 

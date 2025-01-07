@@ -1,6 +1,5 @@
 package com.hoo.aoo.aar.domain.account;
 
-import com.hoo.aoo.common.enums.SnsDomain;
 import lombok.Getter;
 
 public class SnsAccountId {
