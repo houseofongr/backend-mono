@@ -4,6 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.aar.application.exception.AarErrorCode;
 import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
+import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
@@ -24,7 +25,7 @@ public class RegisterUserService implements RegisterUserUseCase {
 
     @Override
     @Transactional
-    public RegisterUserCommand.Out register(RegisterUserCommand.In command) {
+    public RegisterUserResult register(RegisterUserCommand command) {
 
         try {
             SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId())
@@ -41,7 +42,7 @@ public class RegisterUserService implements RegisterUserUseCase {
             String nickname = user.getName().getNickname();
             String accessToken = jwtUtil.getAccessToken(snsAccount);
 
-            return new RegisterUserCommand.Out(nickname, accessToken);
+            return new RegisterUserResult(nickname, accessToken);
 
         } catch (InvalidPhoneNumberException e) {
             throw new AarException(AarErrorCode.INVALID_PHONE_NUMBER_ERROR, e.getMessage());

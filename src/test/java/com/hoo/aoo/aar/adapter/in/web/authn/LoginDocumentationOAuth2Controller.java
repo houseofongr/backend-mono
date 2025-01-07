@@ -10,7 +10,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-public class DocumentationOAuth2Controller {
+public class LoginDocumentationOAuth2Controller {
 
     @GetMapping("/aar/authn/login/kakao")
     public void kakaoLogin(HttpServletResponse response) throws IOException {

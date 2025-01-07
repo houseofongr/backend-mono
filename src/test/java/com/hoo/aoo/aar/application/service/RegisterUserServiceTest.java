@@ -1,9 +1,9 @@
 package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
+import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
 import com.hoo.aoo.aar.domain.SnsAccountF;
@@ -39,11 +39,11 @@ class RegisterUserServiceTest {
     @DisplayName("사용자 등록 테스트")
     void testRegisterWithDefaultPhoneNumberUser() throws InvalidPhoneNumberException {
         // given
-        RegisterUserCommand.In command = new RegisterUserCommand.In(1L, true, true);
+        RegisterUserCommand command = new RegisterUserCommand(1L, true, true);
 
         // when
         when(loadSnsAccountPort.load(1L)).thenReturn(Optional.of(SnsAccountF.NOT_REGISTERED_KAKAO.get()));
-        RegisterUserCommand.Out register = sut.register(command);
+        RegisterUserResult register = sut.register(command);
 
         // then
         verify(loadSnsAccountPort, times(1)).load(1L);

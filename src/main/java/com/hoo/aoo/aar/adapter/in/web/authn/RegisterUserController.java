@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class RegistController {
+public class RegisterUserController {
 
     private final RegisterUserUseCase registerUserUseCase;
 
@@ -20,7 +20,7 @@ public class RegistController {
     ResponseEntity<?> regist(@RequestBody Request request,
                              @Jwt("snsId") Long snsId) {
 
-        RegisterUserCommand.In command = new RegisterUserCommand.In(
+        RegisterUserCommand command = new RegisterUserCommand(
                 snsId,
                 request.recordAgreement,
                 request.personalInformationAgreement);

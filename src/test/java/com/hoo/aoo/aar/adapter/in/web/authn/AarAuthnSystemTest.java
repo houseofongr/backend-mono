@@ -1,5 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
+import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.common.adapter.in.web.config.IntegrationTest;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
@@ -78,7 +79,7 @@ public class AarAuthnSystemTest {
 
         /* 4. 사용자 회원가입, 사용자 정보, 토큰 전송 */
 
-        RegisterUserCommand.Out responseBody = (RegisterUserCommand.Out) registResponse.getBody();
+        RegisterUserResult responseBody = (RegisterUserResult) registResponse.getBody();
 
         assertThat(userJpaRepository.findAll()).hasSize(1);
         assertThat(responseBody.nickname()).isNotEmpty();
@@ -124,7 +125,7 @@ public class AarAuthnSystemTest {
 
         /* 4. 사용자 회원가입, 사용자 정보, 토큰 전송 */
 
-        RegisterUserCommand.Out responseBody = (RegisterUserCommand.Out) registResponse.getBody();
+        RegisterUserResult responseBody = (RegisterUserResult) registResponse.getBody();
 
         assertThat(userJpaRepository.findByPhoneNumber("010-0000-0000")).isNotEmpty();
         assertThat(responseBody.nickname()).isNotEmpty();
@@ -200,7 +201,7 @@ public class AarAuthnSystemTest {
                 "/aar/authn/regist",
                 HttpMethod.POST,
                 request,
-                RegisterUserCommand.Out.class);
+                RegisterUserResult.class);
     }
 
     private HttpEntity<?> getHttpEntity(String accessToken, String body) {

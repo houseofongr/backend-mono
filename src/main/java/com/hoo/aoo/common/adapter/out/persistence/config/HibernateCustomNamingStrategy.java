@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.out.persistence.config;
+package com.hoo.aoo.common.adapter.out.persistence.config;
 
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.boot.model.naming.Identifier;

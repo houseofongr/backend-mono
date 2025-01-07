@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DocumentationOAuth2ControllerV2 {
+public class LoginDocumentationOAuth2ControllerV2 {
 
     @GetMapping("/aar/authn/login/kakao/v2")
     public ResponseEntity<SNSLoginResponse> kakaoLogin() {
