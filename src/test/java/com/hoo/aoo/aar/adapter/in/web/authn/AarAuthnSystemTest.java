@@ -32,8 +32,6 @@ public class AarAuthnSystemTest {
     @Autowired
     TestRestTemplate restTemplate;
 
-    Gson gson = new Gson();
-
     @Autowired
     JwtDecoder jwtDecoder;
 
@@ -47,7 +45,7 @@ public class AarAuthnSystemTest {
     private ClientHttpRequestFactorySettings clientHttpRequestFactorySettings;
 
     @Test
-    @Sql("RegisterIntegrationTest.sql")
+    @Sql("AarAuthnSystemTest.sql")
     @DisplayName("tc : 정상 회원가입 플로우")
     void testRegister() {
 
@@ -76,7 +74,7 @@ public class AarAuthnSystemTest {
 
         ResponseEntity<?> registResponse = whenRegist(tempAccessToken, body);
 
-        assertThat(registResponse.getStatusCode().value()).isEqualTo(200);
+        assertThat(registResponse.getStatusCode().value()).isEqualTo(201);
 
         /* 4. 사용자 회원가입, 사용자 정보, 토큰 전송 */
 
@@ -93,7 +91,7 @@ public class AarAuthnSystemTest {
     }
 
     @Test
-    @Sql("RegisterIntegrationTest.sql")
+    @Sql("AarAuthnSystemTest.sql")
     @DisplayName("tc : 다른 SNS 계정이 DB에 있을 때 신규 SNS 계정으로 회원가입")
     void testNewSnsAccount() {
 
@@ -122,7 +120,7 @@ public class AarAuthnSystemTest {
 
         ResponseEntity<?> registResponse = whenRegist(tempAccessToken, body);
 
-        assertThat(registResponse.getStatusCode().value()).isEqualTo(200);
+        assertThat(registResponse.getStatusCode().value()).isEqualTo(201);
 
         /* 4. 사용자 회원가입, 사용자 정보, 토큰 전송 */
 
@@ -139,7 +137,7 @@ public class AarAuthnSystemTest {
     }
 
     @Test
-    @Sql("RegisterIntegrationTest.sql")
+    @Sql("AarAuthnSystemTest.sql")
     @DisplayName("tc : 이미 DB에 등록된 SNS 계정 재로그인")
     void testAlreadyRegisteredUser() {
 

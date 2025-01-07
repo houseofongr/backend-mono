@@ -44,7 +44,7 @@ public class LoginDocumentationV2Test {
     void testSnsLogin() throws Exception {
         mockMvc.perform(get("/aar/authn/login/{provider}/v2", "kakao")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(document("authn-login-2",
+                .andDo(document("aar-authn-login-2",
                         pathParameters(
                                 parameterWithName("provider").description("로그인을 시도할 서드파티 인증 기관명입니다. +" + "\n" + "[kakao, naver, google, apple]")),
                         responseFields(

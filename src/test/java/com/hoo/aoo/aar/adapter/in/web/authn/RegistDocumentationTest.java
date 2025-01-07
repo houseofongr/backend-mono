@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DocumentationTest
-public class RegisterUserDocumentationTest {
+public class RegistDocumentationTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -27,15 +27,16 @@ public class RegisterUserDocumentationTest {
     @Sql("RegisterUserDocumentationTest.sql")
     @DisplayName("회원가입 API")
     void testRegisterWithDefaultPhoneNumber() throws Exception {
-        RegisterUserController.RegisterUserRequest dto = new RegisterUserController.RegisterUserRequest(true, true);
-        String json = gson.toJson(dto);
+
+        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+
         mockMvc.perform(post("/aar/authn/regist")
-                        .content(json)
+                        .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(jwt().jwt(jwt -> jwt.claim("snsId", 1L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
-                .andExpect(status().is(200))
-                .andDo(document("authn-regist",
+                .andExpect(status().is(201))
+                .andDo(document("aar-authn-regist",
                         requestFields(
                                 fieldWithPath("recordAgreement").description("녹화물에 대한 2차 가공 동의여부입니다."),
                                 fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수집 및 활용에 대한 동의여부입니다.")

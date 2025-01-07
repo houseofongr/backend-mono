@@ -1,4 +1,4 @@
-= 소리기록실(AAR) API 문서
+= 아카이브 오브 옹알 API 문서
 Sangyeop. Nam <spearoad15@gmail.com>
 :doctype: book
 :description: 소리기록실 API 문서입니다.
@@ -14,17 +14,17 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :stylesdir: {docdir}/styles
 // :sectlinks:
 
-소리기록실 API 문서입니다
+아카이브 오브 옹알 API 공식 문서입니다.
 
-Audio Archive Room API Docs.
+This is Archive Of Ong(AOO) R API Official Documents.
 
 [[authn-api]]
-== 인증(Authentication) API
+== 인증(Authn) API
 
-인증과 관련된 API 문서입니다.
+소리기록실(Audio Record Room; ARR)의 인증과 관련된 로직과 주요 API입니다.
 
-[[authn-flow]]
-=== 인증 플로우
+[[aar-authn-flow]]
+=== 소리기록실 인증 플로우
 .로그인 플로우차트
 //https://excalidraw.com/#json=aTnuIuf60RUxbEY_BPuum,jbkQ3CdbR9HT5byljXptkw
 image::login.png[login flow]
@@ -59,22 +59,39 @@ image::regist.png[regist flow]
     d. ``프론트엔드``는 해당 사용자 정보를 포함하여 메인 페이지를 전송합니다.
     e. ``사용자``는 메인 페이지로 이동합니다.
 
-[[authn-login-api]]
-=== SNS 로그인 API
+[[aar-authn-login-api]]
+=== 소리기록실 SNS 로그인 API
 
 SNS 로그인을 시도합니다.
 
 - **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
 
-operation::authn-login[snippets='http-request,path-parameters,http-response,response-headers']
+operation::aar-authn-login[snippets='http-request,path-parameters,http-response,response-headers']
 
 `파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.`
 
-operation::authn-login-2[snippets='response-fields']
+operation::aar-authn-login-2[snippets='response-fields']
 
-[[authn-regist-api]]
-=== 회원가입 API
+[[aar-authn-regist-api]]
+=== 소리기록실 회원가입 API
 
 회원가입을 시도합니다.
 
-operation::authn-regist[snippets='http-request,request-fields,http-response,response-fields']
+operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
+
+[[file-api]]
+== 파일(File) API
+
+[[file-public-images-upload-api]]
+=== 이미지 업로드 API(Public)
+
+이미지 파일을 공개 서버에 업로드합니다.
+
+operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
+
+[[file-public-images-download-api]]
+=== 이미지 다운로드 API(Public)
+
+이미지 파일을 공개 서버로부터 다운로드합니다.
+
+operation::file-public-images-download[snippets='http-request,response-file']

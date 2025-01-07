@@ -42,7 +42,7 @@ class AarSecurityConfigTest {
                         .content("{\"recordAgreement\":true, \"personalInformationAgreement\":true}")
                         .with(jwt().jwt(jwt -> jwt.claim("snsId", "1"))
                                 .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
-                .andExpect(status().is(200));
+                .andExpect(status().is(201));
     }
 
     @Test

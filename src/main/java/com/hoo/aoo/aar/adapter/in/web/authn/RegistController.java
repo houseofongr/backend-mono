@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class RegisterUserController {
+public class RegistController {
 
     private final RegisterUserUseCase registerUserUseCase;
 
     @PostMapping("/aar/authn/regist")
-    ResponseEntity<?> regist(@RequestBody RegisterUserRequest request,
+    ResponseEntity<?> regist(@RequestBody Request request,
                              @Jwt("snsId") Long snsId) {
 
         RegisterUserCommand.In command = new RegisterUserCommand.In(
@@ -25,12 +25,11 @@ public class RegisterUserController {
                 request.recordAgreement,
                 request.personalInformationAgreement);
 
-        return new ResponseEntity<>(registerUserUseCase.register(command), HttpStatus.OK);
+        return new ResponseEntity<>(registerUserUseCase.register(command), HttpStatus.CREATED);
     }
 
-    record RegisterUserRequest(
+    private record Request(
             Boolean recordAgreement,
             Boolean personalInformationAgreement
-    ) {
-    }
+    ) {}
 }
