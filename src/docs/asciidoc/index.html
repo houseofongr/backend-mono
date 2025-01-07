@@ -178,14 +178,14 @@ h3 {
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#authn-api">인증(Authentication) API</a>
+<li><a href="#authn-api">인증(Authn) API</a>
 <ul class="sectlevel2">
 <li><a href="#aar-authn-flow">소리기록실 인증 플로우</a></li>
 <li><a href="#aar-authn-login-api">소리기록실 SNS 로그인 API</a></li>
 <li><a href="#aar-authn-regist-api">소리기록실 회원가입 API</a></li>
 </ul>
 </li>
-<li><a href="#file-api">파일 API</a>
+<li><a href="#file-api">파일(File) API</a>
 <ul class="sectlevel2">
 <li><a href="#file-public-images-upload-api">이미지 업로드 API(Public)</a></li>
 <li><a href="#file-public-images-download-api">이미지 다운로드 API(Public)</a></li>
@@ -206,7 +206,7 @@ h3 {
 </div>
 </div>
 <div class="sect1">
-<h2 id="authn-api">인증(Authentication) API</h2>
+<h2 id="authn-api">인증(Authn) API</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>소리기록실(Audio Record Room; ARR)의 인증과 관련된 로직과 주요 API입니다.</p>
@@ -514,7 +514,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 223
 
-{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjI1MDU3NywidXNlcklkIjoxfQ.weJfmI0F3ULghglHhwcyOp6SR8vdzmkghjpqKO6wU2k"}</code></pre>
+{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjI1MzU2MCwidXNlcklkIjoxfQ.01aY0kEhqjRRvjWISy0mzWtBLja0xT5UcBqtkbX4eTc"}</code></pre>
 </div>
 </div>
 </div>
@@ -552,7 +552,7 @@ Claim : [userId, snsId, nickname, role]</p></td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="file-api">파일 API</h2>
+<h2 id="file-api">파일(File) API</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="file-public-images-upload-api">이미지 업로드 API(Public)</h3>
@@ -563,7 +563,7 @@ Claim : [userId, snsId, nickname, role]</p></td>
 <h4 id="file-public-images-upload-api_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /file/public/images HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /public/images HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Accept: application/json
 Host: file.archiveofongr.site
@@ -648,7 +648,7 @@ Content-Length: 165
 <h4 id="file-public-images-download-api_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /file/public/images/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /public/images/1 HTTP/1.1
 Host: file.archiveofongr.site</code></pre>
 </div>
 </div>
@@ -663,7 +663,7 @@ Host: file.archiveofongr.site</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-07 20:40:38 +0900
+Last updated 2025-01-07 20:50:34 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

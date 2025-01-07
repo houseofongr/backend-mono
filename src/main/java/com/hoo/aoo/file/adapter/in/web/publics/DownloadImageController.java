@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class DownloadImageController {
 
-    @GetMapping("/file/public/images/{fileId}")
+    @GetMapping("/public/images/{fileId}")
     public ResponseEntity<?> download(@PathVariable Long fileId) throws IOException {
 
         Resource classPathResource = new ClassPathResource("logo.png");

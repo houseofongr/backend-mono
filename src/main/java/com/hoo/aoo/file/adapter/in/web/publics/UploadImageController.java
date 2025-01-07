@@ -17,7 +17,7 @@ public class UploadImageController {
 
     private final UploadImageUseCase uploadImageUseCase;
 
-    @PostMapping("/file/public/images")
+    @PostMapping("/public/images")
     public ResponseEntity<?> upload(@RequestParam(value = "images") List<MultipartFile> images) {
         Response response =
                 new Response(List.of(

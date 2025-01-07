@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepositor
 import com.hoo.aoo.aar.application.exception.AarErrorCode;
 import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.common.enums.Role;
+import com.hoo.aoo.common.domain.Role;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
