@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
-import com.hoo.aoo.aar.adapter.in.web.config.MockDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.MockDocumentationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

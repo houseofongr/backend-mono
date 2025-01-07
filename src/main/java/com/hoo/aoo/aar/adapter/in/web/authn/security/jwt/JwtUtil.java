@@ -1,15 +1,10 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aoo.aar.adapter.out.persistence.adapter.SnsAccountPersistenceAdapter;
-import com.hoo.aoo.aar.adapter.out.persistence.adapter.UserPersistenceAdapter;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.application.exception.AarErrorCode;
 import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.aar.domain.account.SnsAccountId;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.common.enums.Role;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -21,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor

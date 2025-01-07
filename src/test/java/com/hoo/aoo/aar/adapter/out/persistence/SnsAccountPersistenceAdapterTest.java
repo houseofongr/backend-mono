@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.out.persistence.adapter;
+package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;

@@ -1,4 +1,4 @@
-package com.hoo.aoo.common.adapter.web;
+package com.hoo.aoo.common.adapter.in.web;
 
 public record MessageDto(String message) {
 

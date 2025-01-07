@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.config;
+package com.hoo.aoo.common.adapter.in.web.config;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;

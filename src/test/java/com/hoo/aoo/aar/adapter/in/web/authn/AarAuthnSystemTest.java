@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
-import com.hoo.aoo.aar.adapter.in.web.config.IntegrationTest;
+import com.hoo.aoo.common.adapter.in.web.config.IntegrationTest;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;

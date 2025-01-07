@@ -1,6 +1,7 @@
 package com.hoo.aoo.aar.adapter.out.persistence.entity;
 
 import com.hoo.aoo.aar.domain.account.SnsDomain;
+import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

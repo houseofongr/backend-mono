@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
-import com.hoo.aoo.aar.adapter.in.web.config.DocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.DocumentationTest;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

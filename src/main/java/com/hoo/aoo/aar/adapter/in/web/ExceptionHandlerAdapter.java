@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.in.web;
 
 import com.hoo.aoo.aar.application.exception.AarException;
-import com.hoo.aoo.common.adapter.web.MessageDto;
+import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

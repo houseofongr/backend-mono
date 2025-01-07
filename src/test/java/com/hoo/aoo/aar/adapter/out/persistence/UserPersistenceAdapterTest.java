@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.out.persistence.adapter;
+package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;

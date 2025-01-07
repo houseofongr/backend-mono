@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.config;
+package com.hoo.aoo.common.adapter.in.web.config;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

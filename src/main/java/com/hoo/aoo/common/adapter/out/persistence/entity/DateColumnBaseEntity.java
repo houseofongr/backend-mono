@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.out.persistence.entity;
+package com.hoo.aoo.common.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
