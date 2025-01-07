@@ -66,7 +66,7 @@ SNS 로그인을 시도합니다.
 
 - **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
 
-operation::aar-authn-login[snippets='http-request,path-parameters,http-response,response-headers']
+operation::aar-authn-login[snippets='http-request,fileId-parameters,http-response,response-headers']
 
 `파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.`
 
