@@ -1,12 +1,16 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
 import com.hoo.aoo.common.adapter.in.web.config.DocumentationTest;
+import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -24,6 +28,12 @@ public class UploadImageDocumentationTest {
 
     MockMvc mockMvc;
 
+    @TempDir
+    java.io.File tempDir;
+
+    @Autowired
+    FileAttribute fileAttribute;
+
     @BeforeEach
     void init(WebApplicationContext wac, RestDocumentationContextProvider restDocumentation) {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
@@ -36,6 +46,7 @@ public class UploadImageDocumentationTest {
                         .withResponseDefaults(prettyPrint())
                 )
                 .build();
+        ReflectionTestUtils.setField(fileAttribute, "publicImagePath", tempDir.getPath());
     }
 
     @Test

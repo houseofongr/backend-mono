@@ -1,5 +1,7 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
+import com.hoo.aoo.file.application.port.in.DownloadImageResult;
+import com.hoo.aoo.file.application.port.in.DownloadImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -18,19 +20,16 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class DownloadImageController {
 
+    private final DownloadImageUseCase downloadImageUseCase;
+
     @GetMapping("/public/images/{fileId}")
-    public ResponseEntity<?> download(@PathVariable Long fileId) throws IOException {
+    public ResponseEntity<?> download(@PathVariable Long fileId) {
 
-        Resource classPathResource = new ClassPathResource("logo.png");
+        DownloadImageResult result = downloadImageUseCase.download(fileId);
 
-        byte[] bytes = classPathResource.getContentAsByteArray();
-
-        ContentDisposition disposition = ContentDisposition.attachment()
-                .filename("result.png", StandardCharsets.UTF_8)
-                .build();
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, disposition.toString()).body(bytes);
-
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
+                .body(result.bytes());
     }
 
 }

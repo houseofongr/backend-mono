@@ -1,16 +1,19 @@
 package com.hoo.aoo.file.application.service;
 
+import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.SaveFilePersistencePort;
-import com.hoo.aoo.file.application.port.out.filesystem.StoreImageFileSystemPort;
-import com.hoo.aoo.file.domain.*;
+import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePersistencePort;
+import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.FileId;
+import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UploadImageService implements UploadImageUseCase {
 
-    private final SaveFilePersistencePort saveFilePersistencePort;
-    private final StoreImageFileSystemPort storeImageFilesystemPort;
+    private final SavePublicImageFilePersistencePort savePublicImageFilePersistencePort;
+    private final FileAttribute fileAttribute;
 
     @Override
     @Transactional
@@ -30,10 +33,32 @@ public class UploadImageService implements UploadImageUseCase {
 
         for (MultipartFile multipartFile : images) {
 
-            File storedFile = storeImageFilesystemPort.storePublicFile(multipartFile);
-            Long savedId = saveFilePersistencePort.savePublicFile(storedFile);
+            try {
+                FileId fileId = new FileId(fileAttribute.getPublicImagePath(), multipartFile.getOriginalFilename());
 
-            fileInfos.add(new UploadImageResult.FileInfo(storedFile, savedId));
+                File file = File.createImageFile(fileId, multipartFile.getSize());
+
+                file.retrieve();
+
+                if (!file.getJavaFile().createNewFile())
+                    throw new FileException(FileErrorCode.FILE_NAME_DUPLICATION);
+
+                multipartFile.transferTo(file.getJavaFile());
+
+                Long savedId = savePublicImageFilePersistencePort.save(file);
+
+                fileInfos.add(new UploadImageResult.FileInfo(file, savedId));
+
+            } catch (IOException e) {
+
+                log.error(e.getMessage());
+                throw new FileException(FileErrorCode.NEW_FILE_CREATION_FAILED);
+
+            } catch (FileSizeLimitExceedException e) {
+
+                log.error(e.getMessage());
+                throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
+            }
         }
 
         return new UploadImageResult(fileInfos);

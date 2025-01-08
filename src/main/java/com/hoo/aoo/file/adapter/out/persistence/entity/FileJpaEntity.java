@@ -1,4 +1,4 @@
-package com.hoo.aoo.file.adapter.out.persistance.entity;
+package com.hoo.aoo.file.adapter.out.persistence.entity;
 
 import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
@@ -36,6 +36,9 @@ public class FileJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Authority authority;
+
+    @Column(nullable = false)
+    private Long fileSize;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID")

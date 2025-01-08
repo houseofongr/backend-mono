@@ -1,11 +1,9 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
-import com.hoo.aoo.file.adapter.out.persistance.repository.FileJpaRepository;
+import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
-import com.hoo.aoo.file.application.service.FileErrorCode;
 import com.hoo.aoo.file.domain.FileSize;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

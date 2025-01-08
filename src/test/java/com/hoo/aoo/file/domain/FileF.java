@@ -3,6 +3,8 @@ package com.hoo.aoo.file.domain;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.AllArgsConstructor;
 
+import java.io.FileNotFoundException;
+
 @AllArgsConstructor
 public enum FileF {
     IMAGE_FILE_1(FileType.IMAGE, "test.png", 1234L);
@@ -15,8 +17,8 @@ public enum FileF {
         switch (fileType) {
             case IMAGE -> {
                 try {
-                    return File.createImageFile(new FileId(directory, fileName), size, null);
-                } catch (FileSizeLimitExceedException e) {
+                    return File.createImageFile(new FileId(directory, fileName), size);
+                } catch (FileSizeLimitExceedException | FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }

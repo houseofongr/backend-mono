@@ -1,7 +1,9 @@
 package com.hoo.aoo.file.domain;
 
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+import lombok.Getter;
 
+@Getter
 public class FileSize {
     public static final Long FILE_SIZE_LIMIT = 100 * 1024 * 1024L;
     private final Long fileByte;

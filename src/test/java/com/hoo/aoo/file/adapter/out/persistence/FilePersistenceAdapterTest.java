@@ -1,20 +1,24 @@
-package com.hoo.aoo.file.adapter.out.persistance;
+package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.adapter.out.persistance.entity.FileJpaEntity;
-import com.hoo.aoo.file.adapter.out.persistance.repository.FileJpaRepository;
+import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
+import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
+import com.hoo.aoo.file.domain.FileStatus;
 import com.hoo.aoo.file.domain.FileType;
+import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -31,12 +35,12 @@ class FilePersistenceAdapterTest {
 
     @Test
     @DisplayName("파일 엔티티 저장")
-    void testSavePublicFile() {
+    void testSave() {
         // given
         File file = FileF.IMAGE_FILE_1.get("/tmp");
 
         // when
-        Long id = sut.savePublicFile(file);
+        Long id = sut.save(file);
 
         FileJpaEntity entityInDB = fileJpaRepository.findByFileNameAndAbsolutePath(file.getFileId().getFileName(), file.getFileId().getDirectory());
 
@@ -47,5 +51,30 @@ class FilePersistenceAdapterTest {
         assertThat(entityInDB.getIsDeleted()).isFalse();
         assertThat(entityInDB.getCreatedTime()).isCloseTo(ZonedDateTime.now(), within(1, ChronoUnit.SECONDS));
         assertThat(entityInDB.getUpdatedTime()).isCloseTo(ZonedDateTime.now(), within(1, ChronoUnit.SECONDS));
+    }
+
+    @Test
+    @Sql("FilePersistenceAdapterTest.sql")
+    @DisplayName("파일 엔티티 조회")
+    void testLoadPublicFile() throws FileSizeLimitExceedException {
+        // given
+        Long fileId = 1L;
+
+        // when
+        Optional<File> optional = sut.load(fileId);
+
+        // then
+        assertThat(optional).isNotEmpty();
+
+        File file = optional.get();
+
+        assertThat(file.getFileId().getDirectory()).isEqualTo("/tmp");
+        assertThat(file.getFileId().getFileName()).isEqualTo("test.png");
+        assertThat(file.getSize().getFileByte()).isEqualTo(1234);
+        assertThat(file.getOwner()).isNull();
+        assertThat(file.getStatus()).isEqualTo(FileStatus.CREATED);
+        assertThat(file.getType()).isEqualTo(FileType.IMAGE);
+        assertThat(file.getAuthority()).isEqualTo(Authority.PUBLIC);
+        assertThat(file.getJavaFile()).isNull();
     }
 }
