@@ -1,13 +1,12 @@
 package com.hoo.aoo.file.application.service;
 
-import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.adapter.out.persistance.entity.FileJpaEntity;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.SaveFileEntityPort;
-import com.hoo.aoo.file.application.port.out.filesystem.SaveFilePort;
+import com.hoo.aoo.file.application.port.out.database.SaveFilePersistencePort;
+import com.hoo.aoo.file.application.port.out.filesystem.StoreImageFileSystemPort;
 import com.hoo.aoo.file.domain.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,30 +14,26 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UploadImageService implements UploadImageUseCase {
 
-    private final SaveFileEntityPort saveFileEntityPort;
-    private final SaveFilePort saveFilePort;
+    private final SaveFilePersistencePort saveFilePersistencePort;
+    private final StoreImageFileSystemPort storeImageFilesystemPort;
 
     @Override
     @Transactional
     public UploadImageResult upload(List<MultipartFile> images) {
 
         List<UploadImageResult.FileInfo> fileInfos = new ArrayList<>();
-        List<File> files = new ArrayList<>();
 
-        for (MultipartFile image : images) {
-            File file = File.createImageFile(image.getName(), image.getSize());
-            Long savedId = saveFileEntityPort.save(file);
+        for (MultipartFile multipartFile : images) {
 
-            files.add(file);
-            fileInfos.add(new UploadImageResult.FileInfo(file, savedId));
-        }
+            File storedFile = storeImageFilesystemPort.storePublicFile(multipartFile);
+            Long savedId = saveFilePersistencePort.savePublicFile(storedFile);
 
-        for (File file : files) {
-            saveFilePort.save(file);
+            fileInfos.add(new UploadImageResult.FileInfo(storedFile, savedId));
         }
 
         return new UploadImageResult(fileInfos);

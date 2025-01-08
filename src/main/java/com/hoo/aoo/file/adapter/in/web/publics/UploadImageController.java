@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,12 +19,9 @@ public class UploadImageController {
 
     private final UploadImageUseCase uploadImageUseCase;
 
-    @PostMapping("/public/images")
-    public ResponseEntity<?> upload(@RequestParam(value = "images") List<MultipartFile> images) {
-        UploadImageResult response =
-                new UploadImageResult(List.of(
-                        new UploadImageResult.FileInfo(1L, "image.png", "23.456MB"),
-                        new UploadImageResult.FileInfo(2L, "image2.png", "34.567MB")));
+    @PostMapping(value = "/public/images")
+    public ResponseEntity<UploadImageResult> upload(@RequestParam("images") List<MultipartFile> images) {
+        UploadImageResult response = uploadImageUseCase.upload(images);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

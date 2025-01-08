@@ -1,13 +1,11 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
-import com.hoo.aoo.common.adapter.in.web.config.IntegrationTest;
+import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.domain.account.SnsDomain;
-import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +25,8 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.*;
 
-@IntegrationTest
-public class AarAuthnSystemTest {
+@SystemTest
+public class AuthnSystemTest {
 
     @Autowired
     TestRestTemplate restTemplate;
@@ -46,7 +44,7 @@ public class AarAuthnSystemTest {
     private ClientHttpRequestFactorySettings clientHttpRequestFactorySettings;
 
     @Test
-    @Sql("AarAuthnSystemTest.sql")
+    @Sql("AuthnSystemTest.sql")
     @DisplayName("tc : 정상 회원가입 플로우")
     void testRegister() {
 
@@ -92,7 +90,7 @@ public class AarAuthnSystemTest {
     }
 
     @Test
-    @Sql("AarAuthnSystemTest.sql")
+    @Sql("AuthnSystemTest.sql")
     @DisplayName("tc : 다른 SNS 계정이 DB에 있을 때 신규 SNS 계정으로 회원가입")
     void testNewSnsAccount() {
 
@@ -138,7 +136,7 @@ public class AarAuthnSystemTest {
     }
 
     @Test
-    @Sql("AarAuthnSystemTest.sql")
+    @Sql("AuthnSystemTest.sql")
     @DisplayName("tc : 이미 DB에 등록된 SNS 계정 재로그인")
     void testAlreadyRegisteredUser() {
 
@@ -181,8 +179,6 @@ public class AarAuthnSystemTest {
 
     private ResponseEntity<?> whenLogin(long userId) {
         HttpEntity<?> request = getHttpEntity(null, null);
-
-        new SnsAccountJpaEntity();
 
         return restTemplate
                 .withRequestFactorySettings(

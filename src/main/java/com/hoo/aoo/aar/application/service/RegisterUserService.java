@@ -1,8 +1,6 @@
 package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.application.exception.AarErrorCode;
-import com.hoo.aoo.aar.application.exception.AarException;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;

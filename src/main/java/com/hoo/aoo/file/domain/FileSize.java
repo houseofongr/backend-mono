@@ -1,9 +1,15 @@
 package com.hoo.aoo.file.domain;
 
+import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+
 public class FileSize {
+    public static final Long FILE_SIZE_LIMIT = 100 * 1024 * 1024L;
     private final Long fileByte;
 
-    public FileSize(Long fileByte) {
+    public FileSize(Long fileByte) throws FileSizeLimitExceedException {
+        if (fileByte > FILE_SIZE_LIMIT)
+            throw new FileSizeLimitExceedException();
+
         this.fileByte = fileByte;
     }
 

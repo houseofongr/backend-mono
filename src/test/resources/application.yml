@@ -38,3 +38,9 @@ security:
     secret: cANZLk0MJon8ETjGKatPwEGiKgNjLTaFoPrhp4RQkpc=
     issuer: aar-backend-test
     expire: 10000
+
+file:
+  size-limit: 104857600 # 100MB : 100 * 1024 * 1024 Byte
+  public:
+    image-path: "/archive/public/images/"
+    audio-path: "/archive/public/audios/"

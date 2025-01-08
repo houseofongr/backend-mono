@@ -1,0 +1,20 @@
+package com.hoo.aoo.file.adapter.in.web;
+
+import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.file.application.service.FileException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@Slf4j
+@RestControllerAdvice
+public class FileExceptionHandlerAdapter {
+
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<?> handler(FileException e) {
+        log.error("File Exception has been occurred {}", e.getMessage());
+        return ResponseEntity.status(e.getError().getStatus())
+                .body(new MessageDto(e.getMessage()));
+    }
+}

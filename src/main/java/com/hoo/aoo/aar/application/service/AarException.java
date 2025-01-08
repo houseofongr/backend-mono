@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.exception;
+package com.hoo.aoo.aar.application.service;
 
 import lombok.Getter;
 

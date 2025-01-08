@@ -1,8 +1,10 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
-import com.hoo.aoo.file.application.port.out.database.SaveFileEntityPort;
-import com.hoo.aoo.file.application.port.out.filesystem.SaveFilePort;
+import com.hoo.aoo.file.application.port.out.database.SaveFilePersistencePort;
+import com.hoo.aoo.file.application.port.out.filesystem.StoreImageFileSystemPort;
+import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.FileF;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,15 +22,15 @@ class UploadImageServiceTest {
 
     UploadImageService sut;
 
-    SaveFileEntityPort saveFileEntityPort;
+    SaveFilePersistencePort saveFilePersistencePort;
 
-    SaveFilePort saveFilePort;
+    StoreImageFileSystemPort storeImageFilesystemPort;
 
     @BeforeEach
     void init() {
-        saveFileEntityPort = mock();
-        saveFilePort = mock();
-        sut = new UploadImageService(saveFileEntityPort, saveFilePort);
+        saveFilePersistencePort = mock();
+        storeImageFilesystemPort = mock();
+        sut = new UploadImageService(saveFilePersistencePort, storeImageFilesystemPort);
     }
 
     @Test
@@ -38,32 +40,31 @@ class UploadImageServiceTest {
         char[] arr = new char[10 * 1024];
         Arrays.fill(arr, 'a');
 
-        MockMultipartFile file = new MockMultipartFile("test.jpg", "<<png bin>>".getBytes(StandardCharsets.UTF_8));
-        MockMultipartFile file2 = new MockMultipartFile("test2.jpg", new String(arr).getBytes(StandardCharsets.UTF_8));
-        List<MultipartFile> files = List.of(file, file2);
+        MockMultipartFile requestFile = new MockMultipartFile("test.png", "<<png bin>>".getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile requestFile2 = new MockMultipartFile("test2.png", new String(arr).getBytes(StandardCharsets.UTF_8));
+        List<MultipartFile> files = List.of(requestFile, requestFile2);
+
+        File file = FileF.IMAGE_FILE_1.get("/tmp/");
 
         // when
+        when(storeImageFilesystemPort.storePublicFile(any())).thenReturn(file);
         UploadImageResult result = sut.upload(files);
 
         // then
 
         // 이미지 엔티티 저장 호출
-        verify(saveFileEntityPort, times(2)).save(any());
+        verify(saveFilePersistencePort, times(2)).savePublicFile(any());
 
         // 이미지 파일 저장 호출
-        verify(saveFilePort, times(2)).save(any());
+        verify(storeImageFilesystemPort, times(2)).storePublicFile(any());
 
         // 결과 확인
         assertThat(result.fileInfos()).hasSize(2);
         assertThat(result.fileInfos())
                 .anySatisfy(fileInfo -> {
                     assertThat(fileInfo.id()).isNotNull();
-                    assertThat(fileInfo.name()).isEqualTo("test.jpg");
-                    assertThat(fileInfo.size()).matches("^\\d{1,3}Byte$");
-                }).anySatisfy(fileInfo -> {
-                    assertThat(fileInfo.id()).isNotNull();
-                    assertThat(fileInfo.name()).isEqualTo("test2.jpg");
-                    assertThat(fileInfo.size()).matches("^\\d{1,3}.\\d{2}KB$");
+                    assertThat(fileInfo.name()).isEqualTo("test.png");
+                    assertThat(fileInfo.size()).matches("^\\d{1,3}.\\d{1,2}KB$");
                 });
     }
 }

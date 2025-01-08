@@ -1,5 +1,8 @@
 package com.hoo.aoo.file.domain;
 
+import lombok.Getter;
+
+@Getter
 public class Owner {
     Long id;
 

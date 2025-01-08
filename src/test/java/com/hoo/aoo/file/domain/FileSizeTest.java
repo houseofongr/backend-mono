@@ -1,15 +1,16 @@
 package com.hoo.aoo.file.domain;
 
+import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class FileSizeTest {
 
     @Test
     @DisplayName("Byte 단위 변환")
-    void testGetByte() {
+    void testGetByte() throws FileSizeLimitExceedException {
         // given
         FileSize _999ByteSize = new FileSize(999L);
 
@@ -22,7 +23,7 @@ class FileSizeTest {
 
     @Test
     @DisplayName("KB 단위 변환")
-    void testGetKBSize() {
+    void testGetKBSize() throws FileSizeLimitExceedException {
         // given
         FileSize _1KBSize = new FileSize(1001L);
         FileSize _1KBSize2 = new FileSize(1024L);
@@ -41,7 +42,7 @@ class FileSizeTest {
 
     @Test
     @DisplayName("MB 단위 변환")
-    void testGetMBSize() {
+    void testGetMBSize() throws FileSizeLimitExceedException {
         // given
         FileSize _1MBSize = new FileSize(1024 * 1000L);
 
@@ -50,5 +51,14 @@ class FileSizeTest {
 
         // then
         assertThat(_1MB).isEqualTo("0.98MB");
+    }
+
+    @Test
+    @DisplayName("파일용량 초과")
+    void testFileSizeExceed() throws FileSizeLimitExceedException {
+        assertThat(new FileSize(100 * 1024 * 1024L).getUnitSize())
+                .isEqualTo("100.00MB");
+        assertThatThrownBy(() -> new FileSize(100 * 1024 * 1024L + 1))
+                .isInstanceOf(FileSizeLimitExceedException.class);
     }
 }
