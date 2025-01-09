@@ -196,6 +196,18 @@ h3 {
 <li><a href="#house-create-api">하우스 생성 API</a></li>
 </ul>
 </li>
+<li><a href="#error-code">에러코드</a>
+<ul class="sectlevel2">
+<li><a href="#aar-error-code-api">소리기록실 에러코드 API</a></li>
+<li><a href="#file-error-code-api">파일 에러코드 API</a></li>
+</ul>
+</li>
+<li><a href="#error-code-table">에러코드 테이블</a>
+<ul class="sectlevel3">
+<li><a href="#aar-error-code-table">소리기록실 에러코드 테이블</a></li>
+<li><a href="#file-error-code-table">파일 에러코드 테이블</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -502,7 +514,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 223
 
-{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjM0NzY0OSwidXNlcklkIjoxfQ.xMC8PktB1aRSlCaQJzQaKbdJHu7p2OI94fxHfKflLb4"}</code></pre>
+{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjQyMTgzOSwidXNlcklkIjoxfQ.UR575Y36sZtUmo5clH0YLKdCmfl4y0UWf6ldBTnz0R4"}</code></pre>
 </div>
 </div>
 </div>
@@ -757,7 +769,7 @@ Content-Type: image/png
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">두번쨰 방의 기본 이미지입니다. metadata의 이미지 ID와 일치해야 합니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">두번째 방의 기본 이미지입니다. metadata의 이미지 ID와 일치해야 합니다.</p></td>
 </tr>
 </tbody>
 </table>
@@ -859,10 +871,150 @@ Content-Length: 304
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="error-code">에러코드</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>API 요청 간 발생하는 에러코드를 조회할 수 있습니다.</p>
+</div>
+<div class="paragraph">
+<p><strong>에러코드 조회 API</strong>의 응답 결과는 아래 <a href="#error-code-table">에러코드 테이블</a>을 참고 바랍니다.</p>
+</div>
+<div class="sect2">
+<h3 id="aar-error-code-api">소리기록실 에러코드 API</h3>
+<div class="paragraph">
+<p>소리기록실에서 관리하는 에러코드를 확인할 수 있습니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/error-codes HTTP/1.1
+Host: api.archiveofongr.site</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="file-error-code-api">파일 에러코드 API</h3>
+<div class="paragraph">
+<p>파일 서버에서 관리하는 에러코드를 확인할 수 있습니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /public/error-codes HTTP/1.1
+Host: file.archiveofongr.site</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="error-code-table">에러코드 테이블</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>전체 에러코드는 다음 표에서 확인할 수 있습니다.
+해당 표에서 확인되지 않는 에러코드는 별도 문의 바랍니다.</p>
+</div>
+<div class="sect3">
+<h4 id="aar-error-code-table">소리기록실 에러코드 테이블</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Code</th>
+<th class="tableblock halign-left valign-top">설명(메시지)</th>
+<th class="tableblock halign-center valign-top">HTTP 상태 코드</th>
+<th class="tableblock halign-center valign-top">코드 원인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">AAR-AUTHN-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 닉네임이 중복됩니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">409</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Conflict</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">AAR-AUTHN-2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SNS 계정을 찾을 수 없습니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Not Found</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">AAR-AUTHN-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미 등록된 SNS 계정입니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">409</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Conflict</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">AAR-AUTHN-4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">잘못된 전화번호입니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Bad Request</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="file-error-code-table">파일 에러코드 테이블</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Code</th>
+<th class="tableblock halign-left valign-top">설명(메시지)</th>
+<th class="tableblock halign-center valign-top">HTTP 상태 코드</th>
+<th class="tableblock halign-center valign-top">코드 원인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">FILE-PUBLIC-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">새로운 파일을 생성하는 과정에서 오류가 발생했습니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">500</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Internal Server Error</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">FILE-PUBLIC-2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">파일 용량 한도를 초과했습니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Bad Request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">FILE-PUBLIC-3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">파일 이름이 중복됩니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">400</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Bad Request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">FILE-PUBLIC-4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">파일을 불러오는 데 실패했습니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">500</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Internal Server Error</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">FILE-PUBLIC-5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">파일을 찾을 수 없습니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">404</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Not Found</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-08 23:52:25 +0900
+Last updated 2025-01-09 20:21:29 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
