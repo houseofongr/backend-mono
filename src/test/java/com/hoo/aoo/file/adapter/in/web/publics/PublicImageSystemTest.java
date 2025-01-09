@@ -75,11 +75,11 @@ public class PublicImageSystemTest {
 
         assertThat(fileJpaRepository.findById(fileId)).isNotEmpty();
 
-        /* 4. 동일 이미지 재업로드 시 400 오류 */
+        /* 4. 동일 이미지 재업로드 시 409 오류 */
 
         ResponseEntity<?> responseEntity2 = whenUpload(List.of(imageFile));
 
-        assertThat(responseEntity2.getStatusCode().value()).isEqualTo(400);
+        assertThat(responseEntity2.getStatusCode().value()).isEqualTo(409);
     }
 
     private ResponseEntity<?> whenUpload(List<MultipartFile> files) {
