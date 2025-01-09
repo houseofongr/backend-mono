@@ -12,10 +12,14 @@ public class Room {
     private final Axis axis;
     private final RoomImage image;
 
-    public Room(Area area, RoomId id, Axis axis, RoomImage image) {
+    private Room(RoomId id, Area area, Axis axis, RoomImage image) {
         this.area = area;
         this.id = id;
         this.axis = axis;
         this.image = image;
+    }
+
+    public static Room createNewRoom(RoomId roomId, Axis axis, Area area, RoomImage image) {
+        return new Room(roomId, area, axis, image);
     }
 }
