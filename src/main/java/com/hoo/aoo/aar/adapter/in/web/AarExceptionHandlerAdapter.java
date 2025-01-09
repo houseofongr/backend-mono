@@ -14,7 +14,7 @@ public class AarExceptionHandlerAdapter {
 
     @ExceptionHandler(AarException.class)
     public ResponseEntity<?> handler(AarException e) {
-        log.error("AAR Exception has been occurred {}", e.getMessage());
+        log.error("AAR Exception {} has been occurred {}", e.getError().getCode(), e.getMessage());
         return ResponseEntity.status(e.getError().getStatus())
                 .body(ErrorResponse.of(e.getError()));
     }
