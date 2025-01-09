@@ -1,5 +1,6 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
+import com.hoo.aoo.common.adapter.in.web.ErrorResponse;
 import com.hoo.aoo.file.application.service.FileErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

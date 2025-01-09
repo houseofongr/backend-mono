@@ -1,4 +1,4 @@
-package com.hoo.aoo.file.adapter.in.web.publics;
+package com.hoo.aoo.common.adapter.in.web;
 
 import com.hoo.aoo.common.application.service.ErrorCode;
 

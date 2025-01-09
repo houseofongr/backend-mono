@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.in.web;
 
 import com.hoo.aoo.aar.application.service.AarErrorCode;
-import com.hoo.aoo.file.adapter.in.web.publics.ErrorResponse;
+import com.hoo.aoo.common.adapter.in.web.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
