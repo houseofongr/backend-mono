@@ -3,7 +3,7 @@ package com.hoo.aoo.file.application.service;
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePersistencePort;
+import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileId;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UploadImageService implements UploadImageUseCase {
 
-    private final SavePublicImageFilePersistencePort savePublicImageFilePersistencePort;
+    private final SavePublicImageFilePort savePublicImageFilePort;
     private final FileAttribute fileAttribute;
 
     @Override
@@ -45,7 +45,7 @@ public class UploadImageService implements UploadImageUseCase {
 
                 multipartFile.transferTo(file.getJavaFile());
 
-                Long savedId = savePublicImageFilePersistencePort.save(file);
+                Long savedId = savePublicImageFilePort.save(file);
 
                 fileInfos.add(new UploadImageResult.FileInfo(file, savedId));
 

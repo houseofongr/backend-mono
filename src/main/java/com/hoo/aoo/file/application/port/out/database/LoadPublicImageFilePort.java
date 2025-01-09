@@ -5,6 +5,6 @@ import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 
 import java.util.Optional;
 
-public interface LoadPublicImageFilePersistencePort {
+public interface LoadPublicImageFilePort {
     Optional<File> load(Long fileId) throws FileSizeLimitExceedException;
 }

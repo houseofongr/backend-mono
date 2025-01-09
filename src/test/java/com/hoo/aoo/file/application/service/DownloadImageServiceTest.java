@@ -1,8 +1,7 @@
 package com.hoo.aoo.file.application.service;
 
-import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
-import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePersistencePort;
+import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -10,10 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -25,12 +22,12 @@ class DownloadImageServiceTest {
 
     DownloadImageService sut;
 
-    LoadPublicImageFilePersistencePort loadPublicImageFilePersistencePort;
+    LoadPublicImageFilePort loadPublicImageFilePort;
 
     @BeforeEach
     void init() {
-        loadPublicImageFilePersistencePort = mock();
-        sut = new DownloadImageService(loadPublicImageFilePersistencePort);
+        loadPublicImageFilePort = mock();
+        sut = new DownloadImageService(loadPublicImageFilePort);
     }
 
     @Test
@@ -45,7 +42,7 @@ class DownloadImageServiceTest {
         Files.writeString(file.getJavaFile().toPath(), "test file");
 
         // when
-        when(loadPublicImageFilePersistencePort.load(fileId)).thenReturn(Optional.of(file));
+        when(loadPublicImageFilePort.load(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.download(fileId);
 
         // then

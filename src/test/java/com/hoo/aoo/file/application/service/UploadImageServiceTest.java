@@ -2,7 +2,7 @@ package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
-import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePersistencePort;
+import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,15 +22,15 @@ class UploadImageServiceTest {
 
     UploadImageService sut;
 
-    SavePublicImageFilePersistencePort savePublicImageFilePersistencePort;
+    SavePublicImageFilePort savePublicImageFilePort;
 
     FileAttribute fileAttribute;
 
     @BeforeEach
     void init(@TempDir Path tempDir) {
-        savePublicImageFilePersistencePort = mock();
+        savePublicImageFilePort = mock();
         fileAttribute = new FileAttribute(100 * 1024 * 1024L, tempDir.toString(), tempDir.toString());
-        sut = new UploadImageService(savePublicImageFilePersistencePort, fileAttribute);
+        sut = new UploadImageService(savePublicImageFilePort, fileAttribute);
     }
 
     @Test
@@ -50,7 +50,7 @@ class UploadImageServiceTest {
         // then
 
         // 이미지 엔티티 저장 호출
-        verify(savePublicImageFilePersistencePort, times(2)).save(any());
+        verify(savePublicImageFilePort, times(2)).save(any());
 
         // 결과 확인
         assertThat(result.fileInfos()).hasSize(2);

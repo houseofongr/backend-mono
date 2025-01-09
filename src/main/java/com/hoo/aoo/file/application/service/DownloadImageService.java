@@ -2,7 +2,7 @@ package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
 import com.hoo.aoo.file.application.port.in.DownloadImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePersistencePort;
+import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadImageUseCase {
 
-    private final LoadPublicImageFilePersistencePort loadPublicImageFilePersistencePort;
+    private final LoadPublicImageFilePort loadPublicImageFilePort;
 
     @Override
     public DownloadImageResult download(Long fileId) {
         try {
-            File loadedFile = loadPublicImageFilePersistencePort.load(fileId)
+            File loadedFile = loadPublicImageFilePort.load(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
             loadedFile.retrieve();
