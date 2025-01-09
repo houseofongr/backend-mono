@@ -111,7 +111,7 @@ operation::file-public-images-download[snippets='http-request,response-file']
 operation::admin-house-create[snippets='http-request,request-parts,http-response,response-fields']
 
 [[error-code]]
-== 에러코드
+== 에러코드 API
 
 API 요청 간 발생하는 에러코드를 조회할 수 있습니다.
 
@@ -123,6 +123,14 @@ API 요청 간 발생하는 에러코드를 조회할 수 있습니다.
 소리기록실에서 관리하는 에러코드를 확인할 수 있습니다.
 
 include::{snippets}/aar-error-code/http-request.adoc[]
+
+[[admin-error-code-api]]
+=== 관리자 에러코드 API
+
+관리자 페이지에서 관리하는 에러코드를 확인할 수 있습니다.
+
+include::{snippets}/admin-error-code/http-request.adoc[]
+
 
 [[file-error-code-api]]
 === 파일 에러코드 API
@@ -142,9 +150,9 @@ include::{snippets}/file-error-code/http-request.adoc[]
 
 include::{snippets}/aar-error-code/error-code-response-fields.adoc[]
 
-// [[admin-error-code-table]]
-// ==== 관리자 에러코드 테이블
-// include::{snippets}/aar-error-code/error-code-response-fields.adoc[]
+[[admin-error-code-table]]
+==== 관리자 에러코드 테이블
+include::{snippets}/admin-error-code/error-code-response-fields.adoc[]
 
 [[file-error-code-table]]
 ==== 파일 에러코드 테이블
