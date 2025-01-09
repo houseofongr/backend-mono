@@ -1,20 +1,17 @@
 package com.hoo.aoo.aar.application.service;
 
+import com.hoo.aoo.common.application.service.ApplicationException;
 import lombok.Getter;
 
 @Getter
-public class AarException extends RuntimeException {
+public class AarException extends ApplicationException {
 
-    private final AarErrorCode error;
-    private final String message;
 
     public AarException(AarErrorCode error) {
-        this.error = error;
-        this.message = error.getMessage();
+        super(error);
     }
 
     public AarException(AarErrorCode error, String message) {
-        this.error = error;
-        this.message = message;
+        super(error, message);
     }
 }

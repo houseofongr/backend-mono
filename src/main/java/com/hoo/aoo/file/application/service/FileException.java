@@ -1,15 +1,16 @@
 package com.hoo.aoo.file.application.service;
 
-import com.hoo.aoo.aar.application.service.AarErrorCode;
+import com.hoo.aoo.common.application.service.ApplicationException;
 import lombok.Getter;
 
 @Getter
-public class FileException extends RuntimeException{
-    private final FileErrorCode error;
-    private final String message;
+public class FileException extends ApplicationException {
 
-    public FileException (FileErrorCode error) {
-        this.error = error;
-        this.message = error.getMessage();
+    public FileException(FileErrorCode error) {
+        super(error);
+    }
+
+    public FileException(FileErrorCode error, String message) {
+        super(error, message);
     }
 }
