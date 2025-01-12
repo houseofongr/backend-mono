@@ -22,10 +22,10 @@ class HouseTest {
         Integer height = 5000;
         Long basicImageId = 1L;
         Long borderImageId = 2L;
-        List<Room> rooms = List.of(Room.createNewRoom(title, null, 1, 1, 1, 1, 1, null));
+        List<Room> rooms = List.of(Room.create(title, null, 1, 1, 1, 1, 1, null));
 
         // when
-        House newHouse = House.createNewHouse(title, author, width, height, basicImageId, borderImageId, rooms);
+        House newHouse = House.create(title, author, width, height, basicImageId, borderImageId, rooms);
 
         // then
         assertThat(newHouse.getRooms()).hasSize(1);

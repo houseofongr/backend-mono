@@ -1,11 +1,7 @@
 package com.hoo.aoo.admin.domain.room;
 
-import com.hoo.aoo.admin.domain.Area;
-import com.hoo.aoo.admin.domain.Axis;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.house.HouseId;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +23,7 @@ class RoomTest {
         Long imageId = 1L;
 
         // when
-        Room newRoom = Room.createNewRoom(title, name, x, y, z, width, height, imageId);
+        Room newRoom = Room.create(title, name, x, y, z, width, height, imageId);
 
         // then
         assertThat(newRoom.getId().getHouseId().getTitle()).isEqualTo("cozy house");
