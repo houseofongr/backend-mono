@@ -1,11 +1,12 @@
 package com.hoo.aoo.file.application.service;
 
+import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadImageUseCase;
 import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePort;
-import com.hoo.aoo.file.domain.File;
-import com.hoo.aoo.file.domain.FileId;
+import com.hoo.aoo.file.domain.*;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -34,16 +36,28 @@ public class UploadImageService implements UploadImageUseCase {
         for (MultipartFile multipartFile : images) {
 
             try {
-                FileId fileId = new FileId(fileAttribute.getPublicImagePath(), multipartFile.getOriginalFilename());
+                String originalFilename = multipartFile.getOriginalFilename();
 
-                File file = File.createImageFile(fileId, multipartFile.getSize());
+                String[] split = originalFilename.split("\\.");
 
-                file.retrieve();
+                if (split.length < 2)
+                    throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
 
-                if (!file.getJavaFile().createNewFile())
+                String tempFileName = UUID.randomUUID() + "." + split[split.length - 1];
+
+                FileId fileId = FileId.create(fileAttribute.getPublicImagePath(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE, originalFilename, tempFileName);
+                FileSize fileSize = new FileSize(multipartFile.getSize(), fileAttribute.getFileSizeLimit());
+
+                File file = File.create(fileId, FileStatus.CREATED, Owner.empty(), fileSize);
+
+                java.io.File javaFile = new java.io.File(file.getFileId().getPath());
+
+                javaFile.getParentFile().mkdirs();
+
+                if (!javaFile.createNewFile())
                     throw new FileException(FileErrorCode.FILE_NAME_DUPLICATION);
 
-                multipartFile.transferTo(file.getJavaFile());
+                multipartFile.transferTo(javaFile);
 
                 Long savedId = savePublicImageFilePort.save(file);
 
@@ -58,6 +72,10 @@ public class UploadImageService implements UploadImageUseCase {
 
                 log.error(e.getMessage());
                 throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
+            } catch (FileExtensionMismatchException e) {
+
+                log.error(e.getMessage());
+                throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
             }
         }
 

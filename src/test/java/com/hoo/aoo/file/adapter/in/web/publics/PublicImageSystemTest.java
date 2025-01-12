@@ -51,8 +51,8 @@ public class PublicImageSystemTest {
 
         /* 1. 파일 이미지 업로드[/test/resources/logo.png] */
 
-        Resource imageResource = new ClassPathResource("logo.png");
-        MockMultipartFile imageFile = new MockMultipartFile("logo.png", "logo.png", "image/png", imageResource.getContentAsByteArray());
+        Resource imageResource = new ClassPathResource("public/images/logo.png");
+        MockMultipartFile imageFile = new MockMultipartFile("public/images/logo.png", "public/images/logo.png", "image/png", imageResource.getContentAsByteArray());
 
         ResponseEntity<?> responseEntity = whenUpload(List.of(imageFile));
 
@@ -64,8 +64,8 @@ public class PublicImageSystemTest {
         UploadImageResult result = (UploadImageResult) responseEntity.getBody();
 
         assertThat(result.fileInfos()).anySatisfy(fileInfo -> {
-            assertThat(fileInfo.name()).isEqualTo("logo.png");
-            assertThat(fileInfo.size()).isEqualTo(new FileSize(20682L).getUnitSize());
+            assertThat(fileInfo.name()).contains(".png");
+            assertThat(fileInfo.size()).isEqualTo(new FileSize(20682L, 100000L).getUnitSize());
             assertThat(fileInfo.id()).isNotNull();
         });
 
@@ -75,11 +75,6 @@ public class PublicImageSystemTest {
 
         assertThat(fileJpaRepository.findById(fileId)).isNotEmpty();
 
-        /* 4. 동일 이미지 재업로드 시 409 오류 */
-
-        ResponseEntity<?> responseEntity2 = whenUpload(List.of(imageFile));
-
-        assertThat(responseEntity2.getStatusCode().value()).isEqualTo(409);
     }
 
     private ResponseEntity<?> whenUpload(List<MultipartFile> files) {

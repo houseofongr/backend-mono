@@ -4,7 +4,10 @@ import com.hoo.aoo.file.application.port.in.DownloadImageResult;
 import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
+import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,21 +35,21 @@ class DownloadImageServiceTest {
 
     @Test
     @DisplayName("이미지 다운로드 테스트")
-    void testDownloadImage(@TempDir Path tempDir) throws IOException, FileSizeLimitExceedException {
+    void testDownloadImage(@TempDir Path tempDir) throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
-
         File file = FileF.IMAGE_FILE_1.get(tempDir.toString());
-        file.retrieve();
-
-        Files.writeString(file.getJavaFile().toPath(), "test file");
+        java.io.File javaFile = new java.io.File(file.getFileId().getPath());
+        javaFile.getParentFile().mkdirs();
+        javaFile.createNewFile();
+        Files.writeString(javaFile.toPath(), "test file");
 
         // when
         when(loadPublicImageFilePort.load(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.download(fileId);
 
         // then
-        assertThat(result.disposition()).contains("inline;").contains("test.png");
+        assertThat(result.disposition()).contains("inline;").contains(file.getFileId().getFileSystemName());
         assertThat(result.bytes().length).isEqualTo(9);
     }
 }

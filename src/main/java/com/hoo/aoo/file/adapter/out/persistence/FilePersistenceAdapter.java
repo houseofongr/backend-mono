@@ -5,7 +5,10 @@ import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
 import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePort;
 import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
+import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +32,7 @@ public class FilePersistenceAdapter implements SavePublicImageFilePort, LoadPubl
     }
 
     @Override
-    public Optional<File> load(Long fileId) throws FileSizeLimitExceedException {
+    public Optional<File> load(Long fileId) throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
 
         Optional<FileJpaEntity> optional = fileJpaRepository.findById(fileId);
 

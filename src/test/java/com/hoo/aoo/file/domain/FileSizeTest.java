@@ -8,11 +8,13 @@ import static org.assertj.core.api.Assertions.*;
 
 class FileSizeTest {
 
+    Long limit = 100 * 1024 * 1024L;
+
     @Test
     @DisplayName("Byte 단위 변환")
     void testGetByte() throws FileSizeLimitExceedException {
         // given
-        FileSize _999ByteSize = new FileSize(999L);
+        FileSize _999ByteSize = new FileSize(999L, limit);
 
         // when
         String _999Byte = _999ByteSize.getUnitSize();
@@ -25,9 +27,9 @@ class FileSizeTest {
     @DisplayName("KB 단위 변환")
     void testGetKBSize() throws FileSizeLimitExceedException {
         // given
-        FileSize _1KBSize = new FileSize(1001L);
-        FileSize _1KBSize2 = new FileSize(1024L);
-        FileSize _999KBSize = new FileSize(1024 * 999L);
+        FileSize _1KBSize = new FileSize(1001L, limit);
+        FileSize _1KBSize2 = new FileSize(1024L, limit);
+        FileSize _999KBSize = new FileSize(1024 * 999L, limit);
 
         // when
         String _1KB = _1KBSize.getUnitSize();
@@ -44,7 +46,7 @@ class FileSizeTest {
     @DisplayName("MB 단위 변환")
     void testGetMBSize() throws FileSizeLimitExceedException {
         // given
-        FileSize _1MBSize = new FileSize(1024 * 1000L);
+        FileSize _1MBSize = new FileSize(1024 * 1000L, limit);
 
         // when
         String _1MB = _1MBSize.getUnitSize();
@@ -56,9 +58,9 @@ class FileSizeTest {
     @Test
     @DisplayName("파일용량 초과")
     void testFileSizeExceed() throws FileSizeLimitExceedException {
-        assertThat(new FileSize(100 * 1024 * 1024L).getUnitSize())
+        assertThat(new FileSize(100 * 1024 * 1024L, limit).getUnitSize())
                 .isEqualTo("100.00MB");
-        assertThatThrownBy(() -> new FileSize(100 * 1024 * 1024L + 1))
+        assertThatThrownBy(() -> new FileSize(100 * 1024 * 1024L + 1, limit))
                 .isInstanceOf(FileSizeLimitExceedException.class);
     }
 }

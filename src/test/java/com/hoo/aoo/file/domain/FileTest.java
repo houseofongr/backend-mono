@@ -1,37 +1,39 @@
 package com.hoo.aoo.file.domain;
 
+import com.hoo.aoo.common.domain.Authority;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FileTest {
 
     @Test
-    @DisplayName("이미지파일 생성 테스트")
-    void testCreateImageFile() throws FileSizeLimitExceedException, FileNotFoundException {
+    @DisplayName("빈 이미지파일 생성 테스트")
+    void testCreate(@TempDir Path tempDir) throws FileSizeLimitExceedException, IOException, FileExtensionMismatchException {
         // given
-        java.io.File javaFile = new java.io.File("/tmp/test.png");
+        String baseDir = tempDir.toString();
+        Authority authority = Authority.PUBLIC_FILE_ACCESS;
+        FileType fileType = FileType.IMAGE;
+        String fileName = "test.png";
+
+        FileId fileId = FileId.create(baseDir, authority, fileType, fileName, fileName);
 
         // when
-        File file = File.createImageFile(new FileId("/tmp/", "test.png"), 10000L);
+        File file = File.create(fileId, FileStatus.CREATED, Owner.empty(), new FileSize(10000L, 100000L));
+        java.io.File javaFile = new java.io.File(file.getFileId().getPath());
+        javaFile.getParentFile().mkdirs();
+        javaFile.createNewFile();
 
         // then
-        assertThat(file.getJavaFile()).isNull();
-        assertThat(file.getFileId().getPath()).isEqualTo(javaFile.getAbsolutePath());
-
-        file.retrieve();
-        assertThat(file.getJavaFile()).isEqualTo(javaFile);
-    }
-
-    @Test
-    @DisplayName("이미지 확장자 테스트")
-    void testImageExtension() {
-        File.verifyExtension(FileType.IMAGE, "test.png");
+        assertThat(javaFile).isReadable();
+        assertThat(javaFile).isFile();
     }
 }

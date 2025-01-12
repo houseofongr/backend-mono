@@ -13,7 +13,7 @@ public record UploadImageResult(
             String size
     ) {
         public FileInfo(File file, Long id) {
-            this(id, file.getFileId().getFileName(), file.getSize().getUnitSize());
+            this(id, file.getFileId().getFileSystemName(), file.getSize().getUnitSize());
         }
     }
 }

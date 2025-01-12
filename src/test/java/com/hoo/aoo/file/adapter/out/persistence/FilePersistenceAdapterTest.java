@@ -1,13 +1,17 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.common.domain.Authority;
+import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
 import com.hoo.aoo.file.domain.FileStatus;
 import com.hoo.aoo.file.domain.FileType;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
+import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +28,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({FilePersistenceAdapter.class, FileMapper.class})
+@Import({FilePersistenceAdapter.class, FileMapper.class, FileAttribute.class})
 class FilePersistenceAdapterTest {
 
     @Autowired
@@ -42,12 +46,10 @@ class FilePersistenceAdapterTest {
         // when
         Long id = sut.save(file);
 
-        FileJpaEntity entityInDB = fileJpaRepository.findByFileNameAndAbsolutePath(file.getFileId().getFileName(), file.getFileId().getDirectory());
+        FileJpaEntity entityInDB = fileJpaRepository.findByFileSystemNameAndAbsolutePath(file.getFileId().getFileSystemName(), file.getFileId().getDirectory());
 
         // then
         assertThat(entityInDB.getId()).isEqualTo(id);
-        assertThat(entityInDB.getAuthority()).isEqualTo(Authority.PUBLIC);
-        assertThat(entityInDB.getFileType()).isEqualTo(FileType.IMAGE);
         assertThat(entityInDB.getIsDeleted()).isFalse();
         assertThat(entityInDB.getCreatedTime()).isCloseTo(ZonedDateTime.now(), within(1, ChronoUnit.SECONDS));
         assertThat(entityInDB.getUpdatedTime()).isCloseTo(ZonedDateTime.now(), within(1, ChronoUnit.SECONDS));
@@ -56,7 +58,7 @@ class FilePersistenceAdapterTest {
     @Test
     @Sql("FilePersistenceAdapterTest.sql")
     @DisplayName("파일 엔티티 조회")
-    void testLoadPublicFile() throws FileSizeLimitExceedException {
+    void testLoadPublicFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
 
@@ -68,13 +70,12 @@ class FilePersistenceAdapterTest {
 
         File file = optional.get();
 
-        assertThat(file.getFileId().getDirectory()).isEqualTo("/tmp");
-        assertThat(file.getFileId().getFileName()).isEqualTo("test.png");
+        assertThat(file.getFileId().getBaseDir()).isEqualTo("/tmp");
+        assertThat(file.getFileId().getRealFileName()).isEqualTo("test.png");
         assertThat(file.getSize().getFileByte()).isEqualTo(1234);
         assertThat(file.getOwner()).isNull();
         assertThat(file.getStatus()).isEqualTo(FileStatus.CREATED);
-        assertThat(file.getType()).isEqualTo(FileType.IMAGE);
-        assertThat(file.getAuthority()).isEqualTo(Authority.PUBLIC);
-        assertThat(file.getJavaFile()).isNull();
+        assertThat(file.getFileId().getFileType()).isEqualTo(FileType.IMAGE);
+        assertThat(file.getFileId().getAuthority()).isEqualTo(Authority.PUBLIC_FILE_ACCESS);
     }
 }

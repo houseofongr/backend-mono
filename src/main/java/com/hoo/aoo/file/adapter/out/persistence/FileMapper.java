@@ -1,34 +1,42 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.domain.*;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
+import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class FileMapper {
+
+    private final FileAttribute fileAttribute;
+
     public FileJpaEntity mapToNewJpaEntity(File file, UserJpaEntity owner) {
         return new FileJpaEntity(null,
-                file.getFileId().getFileName(),
+                file.getFileId().getRealFileName(),
+                file.getFileId().getFileSystemName(),
                 file.getFileId().getDirectory(),
-                file.getType(),
                 file.getStatus() == FileStatus.DELETED,
-                file.getAuthority(),
                 file.getSize().getFileByte(),
                 owner);
     }
 
-    public File mapToDomainEntity(FileJpaEntity fileJpaEntity) throws FileSizeLimitExceedException {
+    public File mapToDomainEntity(FileJpaEntity fileJpaEntity) throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
 
-        FileId fileId = new FileId(fileJpaEntity.getAbsolutePath(), fileJpaEntity.getFileName());
+        FileId fileId = FileId.load(fileJpaEntity.getAbsolutePath(), fileJpaEntity.getRealFileName(), fileJpaEntity.getFileSystemName());
 
         FileStatus fileStatus = fileJpaEntity.getIsDeleted() ? FileStatus.DELETED : FileStatus.CREATED;
 
         Owner owner = fileJpaEntity.getOwner() == null ? null : new Owner(fileJpaEntity.getOwner().getId());
 
-        FileSize size = new FileSize(fileJpaEntity.getFileSize());
+        FileSize fileSize = new FileSize(fileJpaEntity.getFileSize(), fileAttribute.getFileSizeLimit());
 
-        return new File(fileId, fileJpaEntity.getFileType(), fileStatus, owner, fileJpaEntity.getAuthority(), size);
+        return File.create(fileId, fileStatus, owner, fileSize);
     }
 }

@@ -57,7 +57,7 @@ class UploadImageServiceTest {
         assertThat(result.fileInfos())
                 .anySatisfy(fileInfo -> {
                     assertThat(fileInfo.id()).isNotNull();
-                    assertThat(fileInfo.name()).isEqualTo("test2.png");
+                    assertThat(fileInfo.name()).contains(".png");
                     assertThat(fileInfo.size()).matches("^\\d{1,3}.\\d{1,2}KB$");
                 });
     }

@@ -8,12 +8,10 @@ import com.hoo.aoo.file.domain.FileType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.restdocs.RestDocumentationContext;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -21,7 +19,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
@@ -57,12 +54,12 @@ public class DownloadImageDocumentationTest {
     @DisplayName("이미지파일 다운로드 API")
     void testFile() throws Exception {
 
-        ClassPathResource resource = new ClassPathResource("logo.png");
+        ClassPathResource resource = new ClassPathResource("public/images/logo.png");
         byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        FileJpaEntity entity = new FileJpaEntity(null, "logo.png",  resource.getFile().getParent(), FileType.IMAGE, false, Authority.PUBLIC, (long) bytes.length, null);
+        FileJpaEntity entity = new FileJpaEntity(null, "logo.png", "logo.png", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
-        mockMvc.perform(get("/public/images/{imageId}", 1L))
+        mockMvc.perform(get("/public/images/{imageId}", entity.getId()))
                 .andExpect(status().is(200))
                 .andDo(document("file-public-images-download",
                         operation -> {

@@ -4,14 +4,19 @@ import com.hoo.aoo.file.application.port.in.DownloadImageResult;
 import com.hoo.aoo.file.application.port.in.DownloadImageUseCase;
 import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
 import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
+import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
+import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ContentDisposition;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Files;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadImageUseCase {
@@ -24,23 +29,31 @@ public class DownloadImageService implements DownloadImageUseCase {
             File loadedFile = loadPublicImageFilePort.load(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
-            loadedFile.retrieve();
+            java.io.File javaFile = new java.io.File(loadedFile.getFileId().getPath());
 
             ContentDisposition disposition = ContentDisposition.inline()
-                    .filename(loadedFile.getFileId().getFileName())
+                    .filename(loadedFile.getFileId().getFileSystemName())
                     .build();
 
             return new DownloadImageResult(
                     disposition.toString(),
-                    Files.readAllBytes(loadedFile.getJavaFile().toPath()));
+                    Files.readAllBytes(javaFile.toPath()));
 
         } catch (IOException e) {
-
+            log.error(e.getMessage());
             throw new FileException(FileErrorCode.RETRIEVE_FILE_FAILED);
-
         } catch (FileSizeLimitExceedException e) {
-
+            log.error(e.getMessage());
             throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
+        } catch (FileExtensionMismatchException e) {
+            log.error(e.getMessage());
+            throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
+        } catch (IllegalFileTypeDirException e) {
+            log.error(e.getMessage());
+            throw new FileException(FileErrorCode.ILLEGAL_FILE_TYPE_DIR);
+        } catch (IllegalFileAuthorityDirException e) {
+            log.error(e.getMessage());
+            throw new FileException(FileErrorCode.ILLEGAL_FILE_AUTHORITY_DIR);
         }
     }
 }

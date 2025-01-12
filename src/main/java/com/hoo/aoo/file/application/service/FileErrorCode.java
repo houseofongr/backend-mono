@@ -17,7 +17,10 @@ public enum FileErrorCode implements ErrorCode {
     FILE_NOT_FOUND("FILE-PUBLIC-3", NOT_FOUND, "파일을 찾을 수 없습니다."),
     FILE_NAME_DUPLICATION("FILE-PUBLIC-4", CONFLICT, "중복된 파일명입니다."),
     RETRIEVE_FILE_FAILED("FILE-PUBLIC-5", INTERNAL_SERVER_ERROR, "파일을 불러오는 데 실패했습니다."),
-    NEW_FILE_CREATION_FAILED("FILE-PUBLIC-6", INTERNAL_SERVER_ERROR, "새로운 파일을 생성하는 데 실패했습니다.");
+    NEW_FILE_CREATION_FAILED("FILE-PUBLIC-6", INTERNAL_SERVER_ERROR, "새로운 파일을 생성하는 데 실패했습니다."),
+    MAKE_FILES_PARENT_DIRECTORY_FAIL("FILE-PUBLIC-7", INTERNAL_SERVER_ERROR, "상위 디렉토리를 생성하는 데 실패했습니다."),
+    ILLEGAL_FILE_TYPE_DIR("FILE-PUBLIC-8", INTERNAL_SERVER_ERROR, "잘못된 파일 타입 경로입니다."),
+    ILLEGAL_FILE_AUTHORITY_DIR("FILE-PUBLIC-9", INTERNAL_SERVER_ERROR, "잘못된 파일 권한 경로입니다.");
 
     private final String code;
     private final HttpStatus status;

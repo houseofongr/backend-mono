@@ -2,15 +2,15 @@ package com.hoo.aoo.file.domain;
 
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.Getter;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 
 @Getter
 public class FileSize {
-    public static final Long FILE_SIZE_LIMIT = 100 * 1024 * 1024L;
     private final Long fileByte;
 
-    public FileSize(Long fileByte) throws FileSizeLimitExceedException {
-        if (fileByte > FILE_SIZE_LIMIT)
-            throw new FileSizeLimitExceedException();
+    public FileSize(Long fileByte, Long limit) throws FileSizeLimitExceedException {
+        if (fileByte > limit)
+            throw new FileSizeLimitExceedException(fileByte, limit);
 
         this.fileByte = fileByte;
     }
