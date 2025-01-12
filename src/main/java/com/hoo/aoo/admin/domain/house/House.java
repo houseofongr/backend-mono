@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.domain.house;
 
 import com.hoo.aoo.admin.domain.Area;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.room.Room;
 import lombok.Getter;
 
@@ -23,7 +24,13 @@ public class House {
         this.rooms = rooms;
     }
 
-    public static House createNewHouse(HouseId houseId, Author author, Area area, HouseImages houseImages, List<Room> rooms) {
-        return new House(houseId,area,author,houseImages, rooms);
+    public static House createNewHouse(String title, String author, Integer width, Integer height, Long basicImageId, Long borderImageId, List<Room> rooms) throws AreaLimitExceededException {
+
+        HouseId houseId = new HouseId(title);
+        Author author_ = new Author(author);
+        Area area = new Area(width, height);
+        HouseImages houseImages = new HouseImages(basicImageId, borderImageId);
+
+        return new House(houseId, area, author_, houseImages, rooms);
     }
 }

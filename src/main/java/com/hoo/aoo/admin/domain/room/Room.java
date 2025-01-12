@@ -2,6 +2,9 @@ package com.hoo.aoo.admin.domain.room;
 
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.Axis;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.house.HouseId;
 import lombok.Getter;
 
 @Getter
@@ -19,7 +22,14 @@ public class Room {
         this.image = image;
     }
 
-    public static Room createNewRoom(RoomId roomId, Axis axis, Area area, RoomImage image) {
+    public static Room createNewRoom(String title, String name, Integer x, Integer y, Integer z, Integer width, Integer height, Long imageId) throws AxisLimitExceededException, AreaLimitExceededException {
+
+        HouseId houseId = new HouseId(title);
+        RoomId roomId = new RoomId(houseId, name);
+        Axis axis = new Axis(x, y, z);
+        Area area = new Area(width, height);
+        RoomImage image = new RoomImage(imageId);
+
         return new Room(roomId, area, axis, image);
     }
 }

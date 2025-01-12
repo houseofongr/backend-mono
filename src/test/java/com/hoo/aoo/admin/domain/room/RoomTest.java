@@ -5,8 +5,11 @@ import com.hoo.aoo.admin.domain.Axis;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.HouseId;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RoomTest {
 
@@ -24,13 +27,17 @@ class RoomTest {
         Long imageId = 1L;
 
         // when
-        HouseId houseId = new HouseId(title);
-        RoomId roomId = new RoomId(houseId, name);
-        Axis axis = new Axis(x, y, z);
-        Area area = new Area(width, height);
-        RoomImage image = new RoomImage(imageId);
+        Room newRoom = Room.createNewRoom(title, name, x, y, z, width, height, imageId);
 
         // then
-        Room.createNewRoom(roomId, axis, area, image);
+        assertThat(newRoom.getId().getHouseId().getTitle()).isEqualTo("cozy house");
+        assertThat(newRoom.getId().getName()).isEqualTo("거실");
+        assertThat(newRoom.getAxis().getX()).isEqualTo(123);
+        assertThat(newRoom.getAxis().getY()).isEqualTo(456);
+        assertThat(newRoom.getAxis().getZ()).isEqualTo(1);
+        assertThat(newRoom.getArea().getWidth()).isEqualTo(100);
+        assertThat(newRoom.getArea().getHeight()).isEqualTo(200);
+        assertThat(newRoom.getImage().getImageId()).isEqualTo(1L);
+
     }
 }
