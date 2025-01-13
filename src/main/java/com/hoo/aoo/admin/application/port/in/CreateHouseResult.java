@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.application.port.in;
 
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.room.Room;
 
 import java.util.List;
 
@@ -20,9 +21,11 @@ public record CreateHouseResult(
     }
 
     public record Room(
-       Long id,
        Long imageFileId,
        String name
     ) {
+        public static Room of(com.hoo.aoo.admin.domain.room.Room room) {
+            return new Room(room.getImage().getImageId(), room.getId().getName());
+        }
     }
 }

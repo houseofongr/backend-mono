@@ -4,9 +4,11 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.room.Room;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class HouseMapper {
     public HouseJpaEntity mapToNewEntity(House house, List<RoomJpaEntity> rooms) {
         HouseJpaEntity houseJpaEntity = new HouseJpaEntity(null,

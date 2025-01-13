@@ -74,6 +74,9 @@ public class FileId {
             case PUBLIC_FILE_ACCESS -> {
                 return "public";
             }
+            case PRIVATE_FILE_ACCESS -> {
+                return "private";
+            }
             default -> throw new IllegalStateException("Unexpected value: " + authority);
         }
     }
