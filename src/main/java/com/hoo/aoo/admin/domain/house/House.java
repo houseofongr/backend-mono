@@ -2,7 +2,6 @@ package com.hoo.aoo.admin.domain.house;
 
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.room.RoomId;
 import lombok.Getter;
 

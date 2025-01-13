@@ -40,7 +40,7 @@ public class CreateHouseService implements CreateHouseUseCase {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
-        List<RoomId> rooms = new ArrayList<>();
+        List<Room> rooms = new ArrayList<>();
         List<CreateHouseResult.Room> roomCreateResult = new ArrayList<>();
         for (Metadata.Room room : metadata.rooms()) {
 
@@ -50,7 +50,7 @@ public class CreateHouseService implements CreateHouseUseCase {
             Long roomJpaId = saveRoomPort.save(newRoom);
 
             roomCreateResult.add(new CreateHouseResult.Room(roomJpaId, newRoom.getImage().getImageId(), newRoom.getId().getName()));
-            rooms.add(newRoom.getId());
+            rooms.add(newRoom);
         }
 
         UploadImageResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(List.of(getImageFile(metadata.house().houseFormName(), formData)));
@@ -61,9 +61,9 @@ public class CreateHouseService implements CreateHouseUseCase {
                 metadata.house().height(),
                 houseUploadResult.fileInfos().getFirst().id(),
                 borderUploadResult.fileInfos().getFirst().id(),
-                rooms);
+                rooms.stream().map(Room::getId).toList());
 
-        Long houseJpaId = saveHousePort.save(newHouse);
+        Long houseJpaId = saveHousePort.save(newHouse, rooms);
 
         return new CreateHouseResult(
                 new CreateHouseResult.House(houseJpaId,
