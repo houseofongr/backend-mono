@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.domain.room;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.house.HouseId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ class RoomTest {
     @DisplayName("룸 생성 테스트")
     void testCreateRoom() throws AxisLimitExceededException, AreaLimitExceededException {
         // given
-        String title = "cozy house";
+        HouseId houseId = new HouseId("cozy house", "leaf", "this is cozy house");
         String name = "거실";
         Integer x = 123;
         Integer y = 456;
@@ -23,7 +24,7 @@ class RoomTest {
         Long imageId = 1L;
 
         // when
-        Room newRoom = Room.create(title, name, x, y, z, width, height, imageId);
+        Room newRoom = Room.create(houseId, name, x, y, z, width, height, imageId);
 
         // then
         assertThat(newRoom.getId().getHouseId().getTitle()).isEqualTo("cozy house");
