@@ -27,7 +27,6 @@ public class CreateHouseService implements CreateHouseUseCase {
 
     private final SaveHousePort saveHousePort;
     private final UploadPrivateImageUseCase uploadPrivateImageUseCase;
-    private final Gson gson = new Gson();
 
     @Override
     public CreateHouseResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
