@@ -79,6 +79,34 @@ operation::aar-authn-login-2[snippets='response-fields']
 
 operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
 
+
+[[house-api]]
+== 하우스(House) API
+
+관리자페이지에서 하우스를 관리하기 위한 API 입니다.
+
+[[house-create-api]]
+=== 하우스 생성 API
+
+관리자가 지정한 하우스의 좌표에 맞게 하우스를 저장합니다.
+
+==== Http Request
+include::{snippets}/admin-house-create/http-request.adoc[]
+
+==== Request Form
+include::{snippets}/admin-house-create/request-parts.adoc[]
+
+`* 위 요청에서 각 이미지 파일의 Form 태그 name 속성값은 아래 **MetaData**와 일치해야 합니다.`
+
+==== Metadata
+include::{snippets}/admin-house-create-metadata/response-fields.adoc[]
+
+==== Metadata 예시
+include::{snippets}/admin-house-create-metadata/response-body.adoc[]
+
+operation::admin-house-create[snippets='http-response,response-fields']
+
+
 [[file-api]]
 == 파일(File) API
 
@@ -92,23 +120,11 @@ operation::aar-authn-regist[snippets='http-request,request-fields,http-response,
 operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
 
 [[file-public-images-download-api]]
-=== 이미지 다운로드 API(Public)
+=== 이미지 로드 API(Public)
 
-이미지 파일을 공개 서버로부터 다운로드합니다.
+이미지 파일을 공개 서버로부터 로드합니다.
 
 operation::file-public-images-download[snippets='http-request,response-file']
-
-[[house-api]]
-== 하우스(House) API
-
-관리자페이지에서 하우스를 관리하기 위한 API 입니다.
-
-[[house-create-api]]
-=== 하우스 생성 API
-
-관리자가 지정한 하우스의 좌표에 맞게 하우스를 저장합니다.
-
-operation::admin-house-create[snippets='http-request,request-parts,http-response,response-fields']
 
 [[error-code]]
 == 에러코드 API

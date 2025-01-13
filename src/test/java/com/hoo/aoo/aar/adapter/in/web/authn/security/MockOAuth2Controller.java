@@ -30,7 +30,6 @@ public class MockOAuth2Controller {
     private String redirectUri;
 
     private final JwtUtil jwtUtil;
-    private final UserMapper userMapper;
 
     @GetMapping("/mock/authn/login/{snsAccountId}")
     void mockLogin(HttpServletResponse response, @PathVariable Long snsAccountId) throws IOException, InvalidPhoneNumberException {
