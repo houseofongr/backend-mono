@@ -2,8 +2,8 @@ package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
-import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
-import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.LoadImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.SaveImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class FilePersistenceAdapter implements SavePublicImageFilePort, LoadPublicImageFilePort {
+public class FilePersistenceAdapter implements SaveImageFilePort, LoadImageFilePort {
 
     private final FileJpaRepository fileJpaRepository;
     private final FileMapper fileMapper;

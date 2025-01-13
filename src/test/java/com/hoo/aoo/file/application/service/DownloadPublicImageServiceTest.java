@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
-import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.LoadImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
@@ -21,16 +21,16 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class DownloadImageServiceTest {
+class DownloadPublicImageServiceTest {
 
-    DownloadImageService sut;
+    DownloadPublicImageService sut;
 
-    LoadPublicImageFilePort loadPublicImageFilePort;
+    LoadImageFilePort loadImageFilePort;
 
     @BeforeEach
     void init() {
-        loadPublicImageFilePort = mock();
-        sut = new DownloadImageService(loadPublicImageFilePort);
+        loadImageFilePort = mock();
+        sut = new DownloadPublicImageService(loadImageFilePort);
     }
 
     @Test
@@ -45,7 +45,7 @@ class DownloadImageServiceTest {
         Files.writeString(javaFile.toPath(), "test file");
 
         // when
-        when(loadPublicImageFilePort.load(fileId)).thenReturn(Optional.of(file));
+        when(loadImageFilePort.load(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.download(fileId);
 
         // then

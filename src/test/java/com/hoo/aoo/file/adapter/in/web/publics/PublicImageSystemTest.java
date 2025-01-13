@@ -42,7 +42,7 @@ public class PublicImageSystemTest {
 
     @BeforeEach
     void init() {
-        ReflectionTestUtils.setField(fileAttribute, "publicImagePath", tempDir.getPath());
+        ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.getPath());
     }
 
     @Test

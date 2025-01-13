@@ -1,8 +1,8 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
-import com.hoo.aoo.file.application.port.in.DownloadImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.LoadPublicImageFilePort;
+import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
+import com.hoo.aoo.file.application.port.out.database.LoadImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -19,14 +19,14 @@ import java.nio.file.Files;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DownloadImageService implements DownloadImageUseCase {
+public class DownloadPublicImageService implements DownloadPublicImageUseCase {
 
-    private final LoadPublicImageFilePort loadPublicImageFilePort;
+    private final LoadImageFilePort loadImageFilePort;
 
     @Override
     public DownloadImageResult download(Long fileId) {
         try {
-            File loadedFile = loadPublicImageFilePort.load(fileId)
+            File loadedFile = loadImageFilePort.load(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
             java.io.File javaFile = new java.io.File(loadedFile.getFileId().getPath());

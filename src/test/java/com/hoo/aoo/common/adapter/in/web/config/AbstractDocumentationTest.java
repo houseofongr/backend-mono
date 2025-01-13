@@ -40,6 +40,6 @@ public abstract class AbstractDocumentationTest {
                         .withResponseDefaults(prettyPrint())
                 )
                 .build();
-        ReflectionTestUtils.setField(fileAttribute, "publicImagePath", tempDir.getPath());
+        ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.getPath());
     }
 }

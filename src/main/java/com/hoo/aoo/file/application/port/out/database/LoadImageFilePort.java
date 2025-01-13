@@ -9,6 +9,7 @@ import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import java.io.FileNotFoundException;
 import java.util.Optional;
 
-public interface LoadPublicImageFilePort {
+public interface
+LoadImageFilePort {
     Optional<File> load(Long fileId) throws FileSizeLimitExceedException, FileNotFoundException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException;
 }

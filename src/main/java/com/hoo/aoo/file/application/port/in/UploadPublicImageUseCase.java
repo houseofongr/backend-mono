@@ -4,6 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public interface UploadImageUseCase {
-    UploadImageResult upload(List<MultipartFile> images);
+public interface UploadPublicImageUseCase {
+    UploadImageResult publicUpload(List<MultipartFile> images);
 }

@@ -41,6 +41,4 @@ security:
 
 file:
   size-limit: 104857600 # 100MB : 100 * 1024 * 1024 Byte
-  public:
-    image-path: "/archive/public/images/"
-    audio-path: "/archive/public/audios/"
+  base-dir: "/archive"

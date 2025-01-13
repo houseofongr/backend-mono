@@ -8,15 +8,12 @@ import org.springframework.stereotype.Component;
 @Getter
 public class FileAttribute {
 
-    private final String publicImagePath;
-    private final String publicAudioPath;
+    private final String baseDir;
     private final Long fileSizeLimit;
 
     public FileAttribute(@Value("${file.size-limit}") Long fileSizeLimit,
-                         @Value("${file.public.image-path}") String publicImagePath,
-                         @Value("${file.public.audio-path}") String publicAudioPath) {
+                         @Value("${file.base-dir}") String baseDir) {
         this.fileSizeLimit = fileSizeLimit;
-        this.publicImagePath = publicImagePath;
-        this.publicAudioPath = publicAudioPath;
+        this.baseDir = baseDir;
     }
 }

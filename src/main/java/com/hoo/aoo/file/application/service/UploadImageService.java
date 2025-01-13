@@ -3,8 +3,11 @@ package com.hoo.aoo.file.application.service;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
-import com.hoo.aoo.file.application.port.in.UploadImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.SavePublicImageFilePort;
+import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
+import com.hoo.aoo.file.application.port.in.UploadPublicImageUseCase;
+import com.hoo.aoo.file.application.port.out.database.SaveImageFilePort;
+import com.hoo.aoo.file.application.port.out.filesystem.RandomFileNamePort;
+import com.hoo.aoo.file.application.port.out.filesystem.WriteFilePort;
 import com.hoo.aoo.file.domain.*;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -17,19 +20,29 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UploadImageService implements UploadImageUseCase {
+public class UploadImageService implements UploadPublicImageUseCase, UploadPrivateImageUseCase {
 
-    private final SavePublicImageFilePort savePublicImageFilePort;
     private final FileAttribute fileAttribute;
+    private final SaveImageFilePort saveImageFilePort;
+    private final WriteFilePort writeFilePort;
+    private final RandomFileNamePort randomFileNamePort;
 
     @Override
     @Transactional
-    public UploadImageResult upload(List<MultipartFile> images) {
+    public UploadImageResult publicUpload(List<MultipartFile> images) {
+        return upload(images, new BasicFileIdCreateStrategy(fileAttribute.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE));
+    }
+
+    @Override
+    public UploadImageResult privateUpload(List<MultipartFile> images) {
+        return upload(images, new BasicFileIdCreateStrategy(fileAttribute.getBaseDir(), Authority.PRIVATE_FILE_ACCESS, FileType.IMAGE));
+    }
+
+    private UploadImageResult upload(List<MultipartFile> images, FileIdCreateStrategy fileIdCreateStrategy) {
 
         List<UploadImageResult.FileInfo> fileInfos = new ArrayList<>();
 
@@ -38,28 +51,23 @@ public class UploadImageService implements UploadImageUseCase {
             try {
                 String originalFilename = multipartFile.getOriginalFilename();
 
-                String[] split = originalFilename.split("\\.");
+                if (originalFilename == null)
+                    throw new FileException(FileErrorCode.FILE_NAME_EMPTY);
 
-                if (split.length < 2)
-                    throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
+                String fileSystemName = randomFileNamePort.getRandomFileName(originalFilename);
 
-                String tempFileName = UUID.randomUUID() + "." + split[split.length - 1];
 
-                FileId fileId = FileId.create(fileAttribute.getPublicImagePath(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE, originalFilename, tempFileName);
+                FileId fileId = fileIdCreateStrategy.create(originalFilename, fileSystemName);
+
                 FileSize fileSize = new FileSize(multipartFile.getSize(), fileAttribute.getFileSizeLimit());
 
                 File file = File.create(fileId, FileStatus.CREATED, Owner.empty(), fileSize);
 
-                java.io.File javaFile = new java.io.File(file.getFileId().getPath());
 
-                javaFile.getParentFile().mkdirs();
+                writeFilePort.write(file, multipartFile);
 
-                if (!javaFile.createNewFile())
-                    throw new FileException(FileErrorCode.FILE_NAME_DUPLICATION);
+                Long savedId = saveImageFilePort.save(file);
 
-                multipartFile.transferTo(javaFile);
-
-                Long savedId = savePublicImageFilePort.save(file);
 
                 fileInfos.add(new UploadImageResult.FileInfo(file, savedId));
 
@@ -72,10 +80,12 @@ public class UploadImageService implements UploadImageUseCase {
 
                 log.error(e.getMessage());
                 throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
+
             } catch (FileExtensionMismatchException e) {
 
                 log.error(e.getMessage());
                 throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
+
             }
         }
 
