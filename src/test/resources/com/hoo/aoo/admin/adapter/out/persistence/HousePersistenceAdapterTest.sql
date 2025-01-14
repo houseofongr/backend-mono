@@ -1,3 +1,8 @@
+set foreign_key_checks = 0;
+truncate table HOUSE;
+set foreign_key_checks = 1;
+
+
 insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IMAGE_FILE_ID, WIDTH, HEIGHT,
                   CREATED_TIME, UPDATED_TIME)
 values (2, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
