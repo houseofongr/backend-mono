@@ -5,6 +5,8 @@ import com.hoo.aoo.admin.application.port.in.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
+import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.room.Room;
@@ -77,6 +79,16 @@ public class CreateHouseService implements CreateHouseUseCase {
 
             log.error(e.getMessage());
             throw new AdminException(AdminErrorCode.IMAGE_SIZE_EXCEED);
+
+        } catch (RoomDuplicatedException e) {
+
+            log.error(e.getMessage());
+            throw new AdminException(AdminErrorCode.ROOM_NAME_DUPLICATED);
+
+        } catch (HouseRelationshipException e) {
+
+            log.error(e.getMessage());
+            throw new AdminException(AdminErrorCode.ILLEGAL_HOUSE_RELATIONSHIP);
 
         }
     }

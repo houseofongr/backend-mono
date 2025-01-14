@@ -6,6 +6,8 @@ import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
+import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.room.Room;
@@ -39,7 +41,7 @@ class HousePersistenceAdapterTest {
 
     @Test
     @DisplayName("House 저장 테스트")
-    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException {
+    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
         // given
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 
