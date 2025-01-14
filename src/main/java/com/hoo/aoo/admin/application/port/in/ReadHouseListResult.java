@@ -23,7 +23,7 @@ public record ReadHouseListResult(
                     houseJpaEntity.getId(),
                     houseJpaEntity.getTitle(),
                     houseJpaEntity.getAuthor(),
-                    houseJpaEntity.getDescription().substring(0, 100) + "...",
+                    houseJpaEntity.getDescription().length() > 100? houseJpaEntity.getDescription().substring(0, 100) + "..." : houseJpaEntity.getDescription(),
                     DateTimeFormatters.ENGLISH_DATE.getFormatter().format(houseJpaEntity.getCreatedTime()),
                     DateTimeFormatters.ENGLISH_DATE.getFormatter().format(houseJpaEntity.getUpdatedTime()),
                     houseJpaEntity.getBasicImageFileId());
