@@ -1,41 +1,28 @@
 package com.hoo.aoo.admin.domain;
 
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import lombok.Getter;
 
+@Getter
 public class Axis {
 
-    private final Short x;
-    private final Short y;
-    private final Short z;
+    private final Float x;
+    private final Float y;
+    private final Float z;
 
-    public Axis(Integer x, Integer y, Integer z) throws AxisLimitExceededException {
+    public Axis(Float x, Float y, Float z) throws AxisLimitExceededException {
         validateLimit(x, y, z);
-        this.x = x.shortValue();
-        this.y = y.shortValue();
-        this.z = z.shortValue();
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public Axis(Integer x, Integer y) throws AxisLimitExceededException {
-        validateLimit(x, y);
-        this.x = x.shortValue();
-        this.y = y.shortValue();
-        this.z = null;
+    public static Axis from(Float x, Float y) throws AxisLimitExceededException {
+        return new Axis(x,y,0f);
     }
 
-    public Integer getX() {
-        return x == null? null : Short.toUnsignedInt(x);
-    }
-
-    public Integer getY() {
-        return y == null? null : Short.toUnsignedInt(y);
-    }
-
-    public Integer getZ() {
-        return z == null? null : Short.toUnsignedInt(z);
-    }
-
-    private void validateLimit(Integer... params) throws AxisLimitExceededException {
-        for (Integer param : params) {
+    private void validateLimit(Float... params) throws AxisLimitExceededException {
+        for (Float param : params) {
             if (param < 0 || param > Short.MAX_VALUE) throw new AxisLimitExceededException();
         }
     }

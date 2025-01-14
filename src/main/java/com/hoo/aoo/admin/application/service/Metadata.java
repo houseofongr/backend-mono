@@ -22,9 +22,9 @@ public record Metadata(
     public record Room(
             String formName,
             String name,
-            Integer x,
-            Integer y,
-            Integer z,
+            Float x,
+            Float y,
+            Float z,
             Integer width,
             Integer height
     ) {

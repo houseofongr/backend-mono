@@ -16,9 +16,9 @@ class RoomTest {
         // given
         HouseId houseId = new HouseId("cozy house", "leaf", "this is cozy house");
         String name = "거실";
-        Integer x = 123;
-        Integer y = 456;
-        Integer z = 1;
+        Float x = 123f;
+        Float y = 456f;
+        Float z = 1f;
         Integer width = 100;
         Integer height = 200;
         Long imageId = 1L;

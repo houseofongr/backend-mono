@@ -15,7 +15,7 @@ public class MetadataController {
     ResponseEntity<Metadata> getMetadata() {
         Metadata metadata = new Metadata(
                 new Metadata.House("cozy house","남상엽","this is cozy house", "houseForm", "borderForm", 5000,5000),
-                List.of(new Metadata.Room("room1Form","거실",0,0,0,5000,1000))
+                List.of(new Metadata.Room("room1Form","거실",0F,0F,0F,5000,1000))
         );
         return new ResponseEntity<>(metadata, HttpStatus.OK);
     }

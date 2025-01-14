@@ -11,40 +11,49 @@ class AxisTest {
     @Test
     @DisplayName("좌표 범위 테스트")
     void testAxisBoundary() throws AxisLimitExceededException {
-        assertThatThrownBy(() -> new Axis(-1, 0, 0)).isInstanceOf(AxisLimitExceededException.class);
-        assertThatThrownBy(() -> new Axis(0, -1, 0)).isInstanceOf(AxisLimitExceededException.class);
-        assertThatThrownBy(() -> new Axis(0, 0, -1)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> new Axis(-1F, 0F, 0F)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> new Axis(0F, -1F, 0F)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> new Axis(0F, 0F, -1F)).isInstanceOf(AxisLimitExceededException.class);
 
-        new Axis(0, 0, 0);
+        new Axis(0F, 0F, 0F);
 
-        assertThatThrownBy(() -> new Axis(32768, 32767, 32767)).isInstanceOf(AxisLimitExceededException.class);
-        assertThatThrownBy(() -> new Axis(32767, 32768, 32767)).isInstanceOf(AxisLimitExceededException.class);
-        assertThatThrownBy(() -> new Axis(32767, 32767, 32768)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> new Axis(32768F, 32767F, 32767F)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> new Axis(32767F, 32768F, 32767F)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> new Axis(32767F, 32767F, 32768F)).isInstanceOf(AxisLimitExceededException.class);
 
-        Axis axis1 = new Axis(32765, 32766, 32767);
+        Axis axis1 = new Axis(32765F, 32766F, 32767F);
         assertThat(axis1.getX()).isEqualTo(32765);
         assertThat(axis1.getY()).isEqualTo(32766);
         assertThat(axis1.getZ()).isEqualTo(32767);
 
-        assertThatThrownBy(() -> new Axis(-1, 0)).isInstanceOf(AxisLimitExceededException.class);
-        assertThatThrownBy(() -> new Axis(0, -1)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> Axis.from(-1F, 0F)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> Axis.from(0F, -1F)).isInstanceOf(AxisLimitExceededException.class);
 
-        new Axis(0, 0);
+        Axis.from(0F, 0F);
 
-        assertThatThrownBy(() -> new Axis(32767, 32768)).isInstanceOf(AxisLimitExceededException.class);
-        assertThatThrownBy(() -> new Axis(32768, 32767)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> Axis.from(32767F, 32768F)).isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> Axis.from(32768F, 32767F)).isInstanceOf(AxisLimitExceededException.class);
 
-        Axis axis2 = new Axis(32767, 32767);
+        Axis axis2 = Axis.from(32767F, 32767F);
 
-        assertThat(axis2.getZ()).isNull();
+        assertThat(axis2.getZ()).isEqualTo(0f);
     }
 
     @Test
     @DisplayName("좌표 Getter 테스트")
     void testGetter() throws AxisLimitExceededException {
-        Axis axis1 = new Axis(32765, 32766, 32767);
+        Axis axis1 = new Axis(32765F, 32766F, 32767F);
         assertThat(axis1.getX()).isEqualTo(32765);
         assertThat(axis1.getY()).isEqualTo(32766);
         assertThat(axis1.getZ()).isEqualTo(32767);
+    }
+
+    @Test
+    @DisplayName("소수점 허용 테스트")
+    void testAllowFloat() throws AxisLimitExceededException {
+        Axis axis = new Axis(32765.12F, 32766.23F, 32766.34F);
+        assertThat(axis.getX()).isEqualTo(32765.12f);
+        assertThat(axis.getY()).isEqualTo(32766.23f);
+        assertThat(axis.getZ()).isEqualTo(32766.34f);
     }
 }

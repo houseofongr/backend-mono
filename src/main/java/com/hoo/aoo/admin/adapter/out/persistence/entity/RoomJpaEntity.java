@@ -21,13 +21,13 @@ public class RoomJpaEntity {
     private String name;
 
     @Column(nullable = false)
-    private Integer x;
+    private Float x;
 
     @Column(nullable = false)
-    private Integer y;
+    private Float y;
 
     @Column(nullable = false)
-    private Integer z;
+    private Float z;
 
     @Column(nullable = false)
     private Integer width;

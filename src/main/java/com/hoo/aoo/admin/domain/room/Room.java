@@ -22,7 +22,7 @@ public class Room {
         this.image = image;
     }
 
-    public static Room create(HouseId houseId, String name, Integer x, Integer y, Integer z, Integer width, Integer height, Long imageId) throws AxisLimitExceededException, AreaLimitExceededException {
+    public static Room create(HouseId houseId, String name, Float x, Float y, Float z, Integer width, Integer height, Long imageId) throws AxisLimitExceededException, AreaLimitExceededException {
 
         RoomId roomId = new RoomId(houseId, name);
         Axis axis = new Axis(x, y, z);
