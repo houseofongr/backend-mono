@@ -16,6 +16,7 @@ import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class CreateHouseService implements CreateHouseUseCase {
     private final UploadPrivateImageUseCase uploadPrivateImageUseCase;
 
     @Override
+    @Transactional
     public CreateHouseResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
