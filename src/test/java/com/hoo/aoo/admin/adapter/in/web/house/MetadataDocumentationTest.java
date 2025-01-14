@@ -29,15 +29,15 @@ public class MetadataDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("house.description").description("하우스에 대한 설명입니다."),
                                 fieldWithPath("house.houseFormName").description("기본 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다."),
                                 fieldWithPath("house.borderFormName").description("테두리 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다."),
-                                fieldWithPath("house.width").description("하우스의 가로 길이입니다."),
-                                fieldWithPath("house.height").description("하우스의 높이입니다."),
+                                fieldWithPath("house.width").description("하우스의 가로 길이입니다. 최대 32,767.000000까지 지원합니다."),
+                                fieldWithPath("house.height").description("하우스의 높이입니다. 최대 32,767.000000까지 지원합니다."),
                                 fieldWithPath("rooms[].formName").description("방의 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다."),
                                 fieldWithPath("rooms[].name").description("방의 이름입니다."),
-                                fieldWithPath("rooms[].x").description("방의 시작점(X좌표)입니다. 최대 32,767.00까지 지원합니다."),
-                                fieldWithPath("rooms[].y").description("방의 시작점(Y좌표)입니다. 최대 32,767.00까지 지원합니다."),
-                                fieldWithPath("rooms[].z").description("방의 시작점(Z좌표)입니다. 최대 32,767.00까지 지원합니다."),
-                                fieldWithPath("rooms[].width").description("방의 가로 길이입니다."),
-                                fieldWithPath("rooms[].height").description("방의 높이입니다.")
+                                fieldWithPath("rooms[].x").description("방의 시작점(X좌표)입니다. 최대 32,767.000000까지 지원합니다."),
+                                fieldWithPath("rooms[].y").description("방의 시작점(Y좌표)입니다. 최대 32,767.000000까지 지원합니다."),
+                                fieldWithPath("rooms[].z").description("방의 시작점(Z좌표)입니다. 최대 32,767.000000까지 지원합니다."),
+                                fieldWithPath("rooms[].width").description("방의 가로 길이입니다.최대 32,767.000000까지 지원합니다."),
+                                fieldWithPath("rooms[].height").description("방의 높이입니다. 최대 32,767.000000까지 지원합니다.")
                         )));
 
     }

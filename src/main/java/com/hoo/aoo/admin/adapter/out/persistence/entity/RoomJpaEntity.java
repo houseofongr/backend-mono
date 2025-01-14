@@ -30,10 +30,10 @@ public class RoomJpaEntity {
     private Float z;
 
     @Column(nullable = false)
-    private Integer width;
+    private Float width;
 
     @Column(nullable = false)
-    private Integer height;
+    private Float height;
 
     @Column(nullable = false)
     private Long imageFileId;

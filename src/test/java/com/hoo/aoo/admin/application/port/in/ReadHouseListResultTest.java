@@ -17,7 +17,7 @@ class ReadHouseListResultTest {
     void testCreateHouseDto() {
         // given
         String description = "this is new house. this is new house. this is new house. this is new house. this is new house. this is new house. this is new house. this is new house. this is new house.";
-        HouseJpaEntity houseJpaEntity = new HouseJpaEntity(1L, "new house", "leaf", description, 5000, 5000, 1L, 2L, null);
+        HouseJpaEntity houseJpaEntity = new HouseJpaEntity(1L, "new house", "leaf", description, 5000F, 5000F, 1L, 2L, null);
 
         // when
         houseJpaEntity.prePersist();
@@ -47,9 +47,9 @@ class ReadHouseListResultTest {
         char[] _101Description = new char[101];
         Arrays.fill(_101Description,'a');
 
-        HouseJpaEntity shortDescription = new HouseJpaEntity(1L, "new house", "leaf", "this is short.", 5000, 5000, 1L, 2L, null);
-        HouseJpaEntity fitDescription = new HouseJpaEntity(1L, "new house", "leaf", new String(_100Description), 5000, 5000, 1L, 2L, null);
-        HouseJpaEntity overDescription = new HouseJpaEntity(1L, "new house", "leaf", new String(_101Description), 5000, 5000, 1L, 2L, null);
+        HouseJpaEntity shortDescription = new HouseJpaEntity(1L, "new house", "leaf", "this is short.", 5000F, 5000F, 1L, 2L, null);
+        HouseJpaEntity fitDescription = new HouseJpaEntity(1L, "new house", "leaf", new String(_100Description), 5000F, 5000F, 1L, 2L, null);
+        HouseJpaEntity overDescription = new HouseJpaEntity(1L, "new house", "leaf", new String(_101Description), 5000F, 5000F, 1L, 2L, null);
 
         // when
         shortDescription.prePersist();

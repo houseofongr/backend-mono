@@ -14,8 +14,8 @@ public class MetadataController {
     @GetMapping("/mock/admin/house/metadata")
     ResponseEntity<Metadata> getMetadata() {
         Metadata metadata = new Metadata(
-                new Metadata.House("cozy house","남상엽","this is cozy house", "houseForm", "borderForm", 5000,5000),
-                List.of(new Metadata.Room("room1Form","거실",0F,0F,0F,5000,1000))
+                new Metadata.House("cozy house","남상엽","this is cozy house", "houseForm", "borderForm", 5000F,5000F),
+                List.of(new Metadata.Room("room1Form","거실",0F,0F,0F,5000F,1000f))
         );
         return new ResponseEntity<>(metadata, HttpStatus.OK);
     }

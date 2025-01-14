@@ -19,8 +19,8 @@ class RoomTest {
         Float x = 123f;
         Float y = 456f;
         Float z = 1f;
-        Integer width = 100;
-        Integer height = 200;
+        Float width = 100F;
+        Float height = 200F;
         Long imageId = 1L;
 
         // when

@@ -29,10 +29,10 @@ public class HouseJpaEntity extends DateColumnBaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private Integer width;
+    private Float width;
 
     @Column(nullable = false)
-    private Integer height;
+    private Float height;
 
     @Column(nullable = false)
     private Long basicImageFileId;

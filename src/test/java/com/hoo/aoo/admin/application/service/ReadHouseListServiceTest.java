@@ -33,7 +33,7 @@ class ReadHouseListServiceTest {
         // given
         List<HouseJpaEntity> es = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            HouseJpaEntity e = new HouseJpaEntity((long) i, "test house", "leaf", "create test house", 5000, 5000, 1L, 2L, null);
+            HouseJpaEntity e = new HouseJpaEntity((long) i, "test house", "leaf", "create test house", 5000F, 5000F, 1L, 2L, null);
             e.prePersist();
             es.add(e);
         }

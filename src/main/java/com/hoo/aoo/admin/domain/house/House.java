@@ -26,7 +26,7 @@ public class House {
         this.rooms = rooms;
     }
 
-    public static House create(HouseId houseId, Integer width, Integer height, List<RoomId> rooms) throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
+    public static House create(HouseId houseId, Float width, Float height, List<RoomId> rooms) throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
 
         Area area = new Area(width, height);
 
@@ -37,7 +37,7 @@ public class House {
         return house;
     }
 
-    public static House load(String title, String author, String description, Integer width, Integer height, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<RoomId> rooms) throws AreaLimitExceededException {
+    public static House load(String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<RoomId> rooms) throws AreaLimitExceededException {
 
         HouseId houseId = new HouseId(title, author, description);
         Area area = new Area(width, height);

@@ -14,8 +14,8 @@ public record Metadata(
             String description,
             String houseFormName,
             String borderFormName,
-            Integer width,
-            Integer height
+            Float width,
+            Float height
     ) {
 
     }
@@ -25,8 +25,8 @@ public record Metadata(
             Float x,
             Float y,
             Float z,
-            Integer width,
-            Integer height
+            Float width,
+            Float height
     ) {
 
     }

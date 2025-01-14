@@ -16,14 +16,11 @@ import static org.assertj.core.api.Assertions.*;
 
 class HouseTest {
 
-    Long persistenceId = 1L;
     String title = "cozy house";
     String author = "leaf";
     String description = "this is cozy house.";
-    Integer width = 5000;
-    Integer height = 5000;
-    Long basicImageId = 1L;
-    Long borderImageId = 2L;
+    Float width = 5000F;
+    Float height = 5000F;
 
     @Test
     @DisplayName("집 생성 테스트")

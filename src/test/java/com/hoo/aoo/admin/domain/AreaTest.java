@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.domain;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.FloatBoundaryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,25 +13,33 @@ class AreaTest {
     @DisplayName("영역 범위 테스트")
     void testAreaBoundary() throws AreaLimitExceededException {
 
-        assertThatThrownBy(() -> new Area(32768, 32768)).isInstanceOf(AreaLimitExceededException.class);
-        assertThatThrownBy(() -> new Area(32767, 32768)).isInstanceOf(AreaLimitExceededException.class);
-        assertThatThrownBy(() -> new Area(32768, 32767)).isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> new Area(32768F, 32768F)).isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> new Area(32767F, 32768F)).isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> new Area(32768F, 32767F)).isInstanceOf(AreaLimitExceededException.class);
 
-        Area area = new Area(32767, 32767);
+        Area area = new Area(32767F, 32767F);
 
-        assertThatThrownBy(() -> new Area(0, 0)).isInstanceOf(AreaLimitExceededException.class);
-        assertThatThrownBy(() -> new Area(1, 0)).isInstanceOf(AreaLimitExceededException.class);
-        assertThatThrownBy(() -> new Area(0, 1)).isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> new Area(0F, 0F)).isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> new Area(1F, 0F)).isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> new Area(0F, 1F)).isInstanceOf(AreaLimitExceededException.class);
 
-        area = new Area(1, 1);
+        area = new Area(1F, 1F);
     }
 
     @Test
     @DisplayName("영역 Getter 테스트")
     void testGetter() throws AreaLimitExceededException {
-        Area area = new Area(32766, 32767);
+        Area area = new Area(32766F, 32767F);
         assertThat(area.getWidth()).isEqualTo(32766);
-        assertThat(area.getHeight()).isEqualTo(32767);
+        assertThat(area.getHeight()).isEqualTo(32767F);
+    }
+
+    @Test
+    @DisplayName("영역 부동소수점 허용 테스트")
+    void testFloat() throws AreaLimitExceededException {
+        Area area = new Area(32765.12F, 32766.23F);
+        assertThat(area.getWidth()).isEqualTo(32765.12f);
+        assertThat(area.getHeight()).isEqualTo(32766.23f);
     }
 
 }
