@@ -28,6 +28,12 @@ spring:
 spring:
   config:
     activate:
+      on-profile: dev-local
+    import: file:./config/local/aoo-config.yml
+---
+spring:
+  config:
+    activate:
       on-profile: local
     import: classpath:aoo-config.yml
 ---
