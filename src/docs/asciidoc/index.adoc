@@ -96,7 +96,7 @@ include::{snippets}/admin-house-create/http-request.adoc[]
 ==== Request Form
 include::{snippets}/admin-house-create/request-parts.adoc[]
 
-`* 위 요청에서 각 이미지 파일의 Form 태그 name 속성값은 아래 **MetaData**와 일치해야 합니다.`
+`* 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 **MetaData**와 일치해야 합니다.`
 
 ==== Metadata
 include::{snippets}/admin-house-create-metadata/response-fields.adoc[]
@@ -130,6 +130,15 @@ operation::file-public-images-upload[snippets='http-request,http-response,respon
 이미지 파일을 공개 서버로부터 로드합니다.
 
 operation::file-public-images-download[snippets='http-request,response-file']
+
+[[file-private-images-download-api]]
+=== 이미지 로드 API(Private)
+
+이미지 파일을 비공개 서버로부터 로드합니다.
+
+`* 해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.`
+
+operation::file-private-images-download[snippets='http-request,response-file']
 
 [[error-code]]
 == 에러코드 API

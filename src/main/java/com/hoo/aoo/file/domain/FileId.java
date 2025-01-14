@@ -48,6 +48,8 @@ public class FileId {
         switch (authorityDir) {
             case "public":
                 return Authority.PUBLIC_FILE_ACCESS;
+            case "private":
+                return Authority.PRIVATE_FILE_ACCESS;
             default:
                 throw new IllegalFileAuthorityDirException(authorityDir);
         }

@@ -21,7 +21,9 @@ public enum FileErrorCode implements ErrorCode {
     NEW_FILE_CREATION_FAILED("FILE-PUBLIC-7", INTERNAL_SERVER_ERROR, "새로운 파일을 생성하는 데 실패했습니다."),
     MAKE_FILES_PARENT_DIRECTORY_FAIL("FILE-PUBLIC-8", INTERNAL_SERVER_ERROR, "상위 디렉토리를 생성하는 데 실패했습니다."),
     ILLEGAL_FILE_TYPE_DIR("FILE-PUBLIC-9", INTERNAL_SERVER_ERROR, "잘못된 파일 타입 경로입니다."),
-    ILLEGAL_FILE_AUTHORITY_DIR("FILE-PUBLIC-10", INTERNAL_SERVER_ERROR, "잘못된 파일 권한 경로입니다.");
+    ILLEGAL_FILE_AUTHORITY_DIR("FILE-PUBLIC-10", INTERNAL_SERVER_ERROR, "잘못된 파일 권한 경로입니다."),
+
+    INVALID_AUTHORITY("FILE-PRIVATE-1", FORBIDDEN, "잘못된 권한의 파일 요청입니다.");
 
     private final String code;
     private final HttpStatus status;

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequiredArgsConstructor
 public class DownloadPublicImageController {
@@ -19,7 +18,7 @@ public class DownloadPublicImageController {
     @GetMapping("/public/images/{fileId}")
     public ResponseEntity<?> download(@PathVariable Long fileId) {
 
-        DownloadImageResult result = downloadPublicImageUseCase.download(fileId);
+        DownloadImageResult result = downloadPublicImageUseCase.publicDownload(fileId);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())

@@ -26,8 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UploadPublicImageDocumentationTest extends AbstractDocumentationTest {
 
-    MockMvc mockMvc;
-
     @Override
     protected String getBaseUrl() {
         return "file.archiveofongr.site";

@@ -32,9 +32,9 @@ class DownloadPrivateImageDocumentationTest extends AbstractDocumentationTest {
     @DisplayName("이미지파일 다운로드 API")
     void testFile() throws Exception {
 
-        ClassPathResource resource = new ClassPathResource("private/images/secret.png");
+        ClassPathResource resource = new ClassPathResource("private/images/secret.jpeg");
         byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        FileJpaEntity entity = new FileJpaEntity(null, "secret.png", "secret.png", resource.getFile().getParent(), false, (long) bytes.length, null);
+        FileJpaEntity entity = new FileJpaEntity(null, "secret.jpeg", "secret.jpeg", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
         mockMvc.perform(get("/private/images/{imageId}", entity.getId()))
@@ -45,7 +45,7 @@ class DownloadPrivateImageDocumentationTest extends AbstractDocumentationTest {
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
                             var outputStream = new ByteArrayOutputStream();
                             outputStream.write("++++\n".getBytes());
-                            outputStream.write("<img src=\"data:image/png;base64,".getBytes());
+                            outputStream.write("<img src=\"data:image/jpeg;base64,".getBytes());
                             outputStream.write(Base64.getEncoder().encode(operation.getResponse().getContent()));
                             outputStream.write("\"/>\n".getBytes());
                             outputStream.write("++++\n".getBytes());
