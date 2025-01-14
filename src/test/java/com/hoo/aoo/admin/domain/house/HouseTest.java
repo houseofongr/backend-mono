@@ -46,17 +46,23 @@ class HouseTest {
 
     @Test
     @DisplayName("방 ID 중복 테스트")
-    void testRoomIdDuplication() {
+    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
         // when
         List<RoomId> rooms = List.of(
                 new RoomId(houseId, "거실"),
+                new RoomId(houseId, "주방"));
+
+        List<RoomId> roomsDuplicated = List.of(
+                new RoomId(houseId, "거실"),
                 new RoomId(houseId, "거실"));
 
         // then
-        assertThatThrownBy(() -> House.create(houseId, width, height, basicImageId, borderImageId, rooms))
+        assertThat(House.create(houseId, width, height, basicImageId, borderImageId, rooms)).isNotNull();
+
+        assertThatThrownBy(() -> House.create(houseId, width, height, basicImageId, borderImageId, roomsDuplicated))
                 .isInstanceOf(RoomDuplicatedException.class)
                 .hasMessage("Room name 거실 is duplicated.");
     }
