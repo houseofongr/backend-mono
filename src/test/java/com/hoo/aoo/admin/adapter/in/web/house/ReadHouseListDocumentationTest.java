@@ -4,7 +4,6 @@ import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.request.RequestDocumentation;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -22,7 +21,7 @@ public class ReadHouseListDocumentationTest extends AbstractDocumentationTest {
     @Test
     @DisplayName("집 리스트 조회 API")
     void testGetList() throws Exception {
-        mockMvc.perform(get("/admin/houses")
+        mockMvc.perform(get("/admin/houses?page=1&size=9")
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))

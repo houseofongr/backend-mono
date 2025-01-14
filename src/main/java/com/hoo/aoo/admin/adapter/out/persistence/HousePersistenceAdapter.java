@@ -4,6 +4,8 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
+import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
+import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
 import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.room.Room;
@@ -14,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class HousePersistenceAdapter implements SaveHousePort {
+public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final HouseMapper houseMapper;
@@ -30,4 +32,8 @@ public class HousePersistenceAdapter implements SaveHousePort {
         return houseJpaEntity.getId();
     }
 
+    @Override
+    public List<House> query(ReadHouseListCommand command) {
+        return List.of();
+    }
 }

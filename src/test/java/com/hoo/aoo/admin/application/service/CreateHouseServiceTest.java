@@ -2,9 +2,6 @@ package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.application.port.in.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
-import com.hoo.aoo.admin.application.port.out.database.SaveRoomPort;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
