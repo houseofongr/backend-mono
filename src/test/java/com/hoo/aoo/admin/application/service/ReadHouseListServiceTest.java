@@ -33,8 +33,6 @@ class ReadHouseListServiceTest {
     @DisplayName("리스트 조회 서비스 테스트")
     void testGetListService() {
         // given
-        Pageable pageable = Pageable.ofSize(9);
-        ReadHouseListCommand command = new ReadHouseListCommand(pageable, null, null);
         List<HouseJpaEntity> entities = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             HouseJpaEntity e = new HouseJpaEntity((long) i, "test house", "leaf", "create test house", 5000, 5000, 1L, 2L, null);
@@ -44,7 +42,7 @@ class ReadHouseListServiceTest {
 
         // when
         when(queryHousePort.query(any())).thenReturn(entities);
-        ReadHouseListResult list = sut.getList(command);
+        ReadHouseListResult list = sut.getList(any());
 
         // then
         assertThat(list.houses()).hasSize(9);
