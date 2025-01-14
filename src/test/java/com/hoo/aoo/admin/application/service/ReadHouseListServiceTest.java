@@ -1,16 +1,14 @@
 package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListResult;
 import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
-import javax.security.auth.callback.ConfirmationCallback;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +31,13 @@ class ReadHouseListServiceTest {
     @DisplayName("리스트 조회 서비스 테스트")
     void testGetListService() {
         // given
-        List<HouseJpaEntity> entities = new ArrayList<>();
+        List<HouseJpaEntity> es = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             HouseJpaEntity e = new HouseJpaEntity((long) i, "test house", "leaf", "create test house", 5000, 5000, 1L, 2L, null);
             e.prePersist();
-            entities.add(e);
+            es.add(e);
         }
+        Page<HouseJpaEntity> entities= new PageImpl<>(es);
 
         // when
         when(queryHousePort.query(any())).thenReturn(entities);

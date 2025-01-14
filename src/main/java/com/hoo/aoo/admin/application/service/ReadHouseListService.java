@@ -7,9 +7,8 @@ import com.hoo.aoo.admin.application.port.in.ReadHouseListResult;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListUseCase;
 import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +18,7 @@ public class ReadHouseListService implements ReadHouseListUseCase {
 
     @Override
     public ReadHouseListResult getList(ReadHouseListCommand command) {
-        List<HouseJpaEntity> entities = queryHousePort.query(command);
-        return new ReadHouseListResult(entities.stream().map(ReadHouseListResult.House::of).toList());
+        Page<HouseJpaEntity> entities = queryHousePort.query(command);
+        return new ReadHouseListResult(entities.map(ReadHouseListResult.House::of));
     }
 }

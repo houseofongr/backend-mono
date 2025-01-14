@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -70,26 +72,41 @@ class HousePersistenceAdapterTest {
     @DisplayName("HouseJpaEntity 조회 테스트")
     void testQueryHouse() {
         // given
-        Pageable pageable = Pageable.ofSize(9);
-        ReadHouseListCommand command = new ReadHouseListCommand(pageable, null, null);
+        Pageable pageable = PageRequest.of(0,9);
+
+        ReadHouseListCommand allCommand = new ReadHouseListCommand(pageable, null, null);
+        ReadHouseListCommand keywordCommand = new ReadHouseListCommand(pageable, SearchType.TITLE, "cozy");
+        ReadHouseListCommand keywordCommand2 = new ReadHouseListCommand(pageable, SearchType.AUTHOR, "leAf");
+        ReadHouseListCommand keywordCommand3 = new ReadHouseListCommand(pageable, SearchType.DESCRIPTION, "MY");
+        ReadHouseListCommand nonKeywordCommand = new ReadHouseListCommand(pageable, SearchType.DESCRIPTION, "no keyword");
 
         // when
-        List<HouseJpaEntity> entities = sut.query(command);
+        Page<HouseJpaEntity> entities = sut.query(allCommand);
+        Page<HouseJpaEntity> searchEntities = sut.query(keywordCommand);
+        Page<HouseJpaEntity> searchEntities2 = sut.query(keywordCommand2);
+        Page<HouseJpaEntity> searchEntities3 = sut.query(keywordCommand3);
+        Page<HouseJpaEntity> noEntities = sut.query(nonKeywordCommand);
 
         // then
         assertThat(entities).hasSize(9);
         assertThat(entities).allSatisfy(entity ->
-                assertThat(entity.getRooms()).isNull());
+                assertThat(entity.getRooms()).isEmpty());
         assertThat(entities).anySatisfy(entity -> {
                 assertThat(entity.getId()).isEqualTo(1L);
                 assertThat(entity.getTitle()).isEqualTo("cozy house");
                 assertThat(entity.getAuthor()).isEqualTo("leaf");
-                assertThat(entity.getDescription()).isEqualTo("my cozy house.");
+                assertThat(entity.getDescription()).isEqualTo("my cozy house");
                 assertThat(entity.getWidth()).isEqualTo(5000);
                 assertThat(entity.getHeight()).isEqualTo(5000);
                 assertThat(entity.getBasicImageFileId()).isEqualTo(1L);
-                assertThat(entity.getBorderImageFileId()).isEqualTo(1L);
-                assertThat(entity.getRooms()).isEqualTo(null);
+                assertThat(entity.getBorderImageFileId()).isEqualTo(2L);
+                assertThat(entity.getRooms()).isEmpty();
         });
+
+        // keyword search
+        assertThat(searchEntities).hasSize(1);
+        assertThat(searchEntities2).hasSize(1);
+        assertThat(searchEntities3).hasSize(1);
+        assertThat(noEntities).hasSize(0);
     }
 }

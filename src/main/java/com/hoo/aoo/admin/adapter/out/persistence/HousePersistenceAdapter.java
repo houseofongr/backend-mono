@@ -10,6 +10,7 @@ import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.room.Room;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort {
     }
 
     @Override
-    public List<HouseJpaEntity> query(ReadHouseListCommand command) {
-        return List.of();
+    public Page<HouseJpaEntity> query(ReadHouseListCommand command) {
+        return houseJpaRepository.searchByCommand(command);
     }
 }

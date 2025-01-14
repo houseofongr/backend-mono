@@ -1,7 +1,6 @@
 insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IMAGE_FILE_ID, WIDTH, HEIGHT,
                   CREATED_TIME, UPDATED_TIME)
-values (1, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       (2, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+values (2, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (3, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (4, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (5, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -9,4 +8,5 @@ values (1, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIME
        (7, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (8, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (9, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       (10, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+       (10, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

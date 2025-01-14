@@ -69,6 +69,10 @@ spring:
       enabled: true
       max-file-size: 100MB
       max-request-size: 100MB
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
 
 server:
   tomcat:

@@ -2,11 +2,10 @@ package com.hoo.aoo.admin.application.port.in;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public record ReadHouseListResult(
-        List<House> houses
+        Page<House> houses
 ) {
     public record House(
             Long id,
@@ -23,7 +22,7 @@ public record ReadHouseListResult(
                     houseJpaEntity.getId(),
                     houseJpaEntity.getTitle(),
                     houseJpaEntity.getAuthor(),
-                    houseJpaEntity.getDescription().length() > 100? houseJpaEntity.getDescription().substring(0, 100) + "..." : houseJpaEntity.getDescription(),
+                    houseJpaEntity.getDescription().length() > 100 ? houseJpaEntity.getDescription().substring(0, 100) + "..." : houseJpaEntity.getDescription(),
                     DateTimeFormatters.ENGLISH_DATE.getFormatter().format(houseJpaEntity.getCreatedTime()),
                     DateTimeFormatters.ENGLISH_DATE.getFormatter().format(houseJpaEntity.getUpdatedTime()),
                     houseJpaEntity.getBasicImageFileId());
