@@ -7,6 +7,9 @@ spring:
       dev:
         - dev
         - common
+      dev-local:
+        - dev-local
+        - common
       local:
         - local
         - common
