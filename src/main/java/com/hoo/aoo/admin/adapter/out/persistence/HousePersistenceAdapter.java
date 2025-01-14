@@ -33,7 +33,7 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort {
     }
 
     @Override
-    public List<House> query(ReadHouseListCommand command) {
+    public List<HouseJpaEntity> query(ReadHouseListCommand command) {
         return List.of();
     }
 }

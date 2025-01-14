@@ -1,12 +1,14 @@
 package com.hoo.aoo.admin.domain.house;
 
 import com.hoo.aoo.admin.domain.Area;
+import com.hoo.aoo.common.domain.BaseTime;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.room.RoomId;
 import lombok.Getter;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -15,12 +17,14 @@ public class House {
     private final HouseId id;
     private final Area area;
     private final HouseImages images;
+    private final BaseTime baseTime;
     private final List<RoomId> rooms;
 
-    private House(HouseId id, Area area, HouseImages images, List<RoomId> rooms) {
+    private House(HouseId id, Area area, HouseImages images, BaseTime baseTime, List<RoomId> rooms) {
         this.area = area;
         this.id = id;
         this.images = images;
+        this.baseTime = baseTime;
         this.rooms = rooms;
     }
 
@@ -29,11 +33,21 @@ public class House {
         Area area = new Area(width, height);
         HouseImages houseImages = new HouseImages(basicImageId, borderImageId);
 
-        House house = new House(houseId, area, houseImages, rooms);
+        House house = new House(houseId, area, houseImages, null, rooms);
 
         house.verifyRoom(rooms);
 
         return house;
+    }
+
+    public static House load(String title, String author, String description, Integer width, Integer height, Long basicImageId, Long borderImageId, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<RoomId> rooms) throws AreaLimitExceededException {
+
+        HouseId houseId = new HouseId(title, author, description);
+        Area area = new Area(width, height);
+        HouseImages houseImages = new HouseImages(basicImageId, borderImageId);
+        BaseTime baseTime = new BaseTime(createdTime, updatedTime);
+
+        return new House(houseId, area, houseImages, baseTime, rooms);
     }
 
     private void verifyRoom(List<RoomId> rooms) throws RoomDuplicatedException, HouseRelationshipException {

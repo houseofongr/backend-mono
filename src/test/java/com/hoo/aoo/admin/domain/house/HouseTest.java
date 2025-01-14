@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class HouseTest {
 
+    Long persistenceId = 1L;
     String title = "cozy house";
     String author = "leaf";
     String description = "this is cozy house.";
@@ -89,5 +90,15 @@ class HouseTest {
         assertThatThrownBy(() -> House.create(houseId, width, height, basicImageId, borderImageId, roomsToAnotherHouse))
                 .isInstanceOf(HouseRelationshipException.class)
                 .hasMessage("Room name 거실 doesn't related to " + houseId);
+    }
+
+    @Test
+    @DisplayName("집 조회 테스트")
+    void testLoadRoom() {
+        // given
+
+        // when
+
+        // then
     }
 }

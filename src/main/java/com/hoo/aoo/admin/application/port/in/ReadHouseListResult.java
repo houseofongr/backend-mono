@@ -1,5 +1,8 @@
 package com.hoo.aoo.admin.application.port.in;
 
+import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+
 import java.util.List;
 
 public record ReadHouseListResult(
@@ -15,5 +18,15 @@ public record ReadHouseListResult(
             Long imageId
     ) {
 
+        public static House of(HouseJpaEntity houseJpaEntity) {
+            return new House(
+                    houseJpaEntity.getId(),
+                    houseJpaEntity.getTitle(),
+                    houseJpaEntity.getAuthor(),
+                    houseJpaEntity.getDescription().substring(0, 100) + "...",
+                    DateTimeFormatters.ENGLISH_DATE.getFormatter().format(houseJpaEntity.getCreatedTime()),
+                    DateTimeFormatters.ENGLISH_DATE.getFormatter().format(houseJpaEntity.getUpdatedTime()),
+                    houseJpaEntity.getBasicImageFileId());
+        }
     }
 }
