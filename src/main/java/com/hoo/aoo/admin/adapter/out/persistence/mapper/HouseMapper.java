@@ -10,15 +10,15 @@ import java.util.List;
 
 @Component
 public class HouseMapper {
-    public HouseJpaEntity mapToNewEntity(House house, List<RoomJpaEntity> rooms) {
+    public HouseJpaEntity mapToNewEntity(House house, List<RoomJpaEntity> rooms, Long houseImageId, Long borderImageId) {
         HouseJpaEntity houseJpaEntity = new HouseJpaEntity(null,
                 house.getId().getTitle(),
                 house.getId().getAuthor(),
                 house.getId().getDescription(),
                 house.getArea().getWidth(),
                 house.getArea().getHeight(),
-                house.getImages().getBasicImageId(),
-                house.getImages().getBorderImageId(),
+                houseImageId,
+                borderImageId,
                 rooms
         );
 

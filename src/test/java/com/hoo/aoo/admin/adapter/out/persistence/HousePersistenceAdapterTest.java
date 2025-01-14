@@ -49,10 +49,10 @@ class HousePersistenceAdapterTest {
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 
         Room newRoom = Room.create(houseId, "거실", 0, 0, 0, 100, 100, 1L);
-        House newHouse = House.create(houseId, 5000, 5000, 2L, 3L, List.of(newRoom.getId()));
+        House newHouse = House.create(houseId, 5000, 5000, List.of(newRoom.getId()));
 
         // when
-        Long savedId = sut.save(newHouse, List.of(newRoom));
+        Long savedId = sut.save(newHouse, List.of(newRoom), 2L, 3L);
         em.flush();
         em.clear();
 

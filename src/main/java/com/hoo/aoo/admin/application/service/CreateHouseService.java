@@ -38,7 +38,6 @@ public class CreateHouseService implements CreateHouseUseCase {
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
         List<Room> rooms = new ArrayList<>();
-        List<CreateHouseResult.Room> roomCreateResult = new ArrayList<>();
 
         try {
             for (Metadata.Room room : metadata.rooms()) {
@@ -48,7 +47,6 @@ public class CreateHouseService implements CreateHouseUseCase {
                 Room newRoom = Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), uploadImageResult.fileInfos().getFirst().id());
 
                 rooms.add(newRoom);
-                roomCreateResult.add(new CreateHouseResult.Room(newRoom.getImage().getImageId(), newRoom.getId().getName()));
             }
 
             UploadImageResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(List.of(fileMap.get(metadata.house().houseFormName())));
@@ -57,20 +55,14 @@ public class CreateHouseService implements CreateHouseUseCase {
             House newHouse = House.create(houseId,
                     metadata.house().width(),
                     metadata.house().height(),
-                    houseUploadResult.fileInfos().getFirst().id(),
-                    borderUploadResult.fileInfos().getFirst().id(),
                     rooms.stream().map(Room::getId).toList());
 
-            Long houseJpaId = saveHousePort.save(newHouse, rooms);
+            Long savedId = saveHousePort.save(newHouse,
+                    rooms,
+                    houseUploadResult.fileInfos().getFirst().id(),
+                    borderUploadResult.fileInfos().getFirst().id());
 
-            return new CreateHouseResult(
-                    new CreateHouseResult.House(houseJpaId,
-                            newHouse.getImages().getBasicImageId(),
-                            newHouse.getImages().getBorderImageId(),
-                            newHouse.getId().getTitle(),
-                            newHouse.getId().getAuthor(),
-                            newHouse.getRooms().size()),
-                    rooms.stream().map(CreateHouseResult.Room::of).toList());
+            return new CreateHouseResult(savedId);
 
         } catch (AxisLimitExceededException e) {
 

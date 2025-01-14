@@ -87,14 +87,8 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
                                 partWithName("room2").description("두번째 방의 기본 이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("house.id").description("생성된 집의 아이디입니다."),
-                                fieldWithPath("house.title").description("생성된 방의 제목입니다."),
-                                fieldWithPath("house.author").description("생성한 작가의 이름입니다."),
-                                fieldWithPath("house.roomCnt").description("생성된 방의 개수입니다."),
-                                fieldWithPath("house.imageFileId").description("생성된 방의 기본 이미지입니다."),
-                                fieldWithPath("house.borderImageFileId").description("생성된 방의 기본 외곽 이미지입니다."),
-                                fieldWithPath("rooms[].name").description("생성된 방의 이름입니다."),
-                                fieldWithPath("rooms[].imageFileId").description("생성된 방의 이미지 아이디입니다."))
+                                fieldWithPath("houseId").description("생성된 집의 아이디입니다.")
+                        )
                 ));
     }
 

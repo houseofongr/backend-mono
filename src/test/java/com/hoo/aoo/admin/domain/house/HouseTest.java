@@ -33,7 +33,7 @@ class HouseTest {
         List<RoomId> rooms = List.of(new RoomId(houseId, "거실"));
 
         // when
-        House newHouse = House.create(houseId, width, height, basicImageId, borderImageId, rooms);
+        House newHouse = House.create(houseId, width, height, rooms);
 
         // then
         assertThat(newHouse.getRooms()).hasSize(1);
@@ -41,8 +41,6 @@ class HouseTest {
         assertThat(newHouse.getId().getAuthor()).isEqualTo("leaf");
         assertThat(newHouse.getArea().getWidth()).isEqualTo(5000);
         assertThat(newHouse.getArea().getHeight()).isEqualTo(5000);
-        assertThat(newHouse.getImages().getBasicImageId()).isEqualTo(1L);
-        assertThat(newHouse.getImages().getBorderImageId()).isEqualTo(2L);
     }
 
     @Test
@@ -61,9 +59,9 @@ class HouseTest {
                 new RoomId(houseId, "거실"));
 
         // then
-        assertThat(House.create(houseId, width, height, basicImageId, borderImageId, rooms)).isNotNull();
+        assertThat(House.create(houseId, width, height, rooms)).isNotNull();
 
-        assertThatThrownBy(() -> House.create(houseId, width, height, basicImageId, borderImageId, roomsDuplicated))
+        assertThatThrownBy(() -> House.create(houseId, width, height, roomsDuplicated))
                 .isInstanceOf(RoomDuplicatedException.class)
                 .hasMessage("Room name 거실 is duplicated.");
     }
@@ -83,11 +81,11 @@ class HouseTest {
 
 
         // then
-        assertThatThrownBy(() -> House.create(houseId, width, height, basicImageId, borderImageId, rooms))
+        assertThatThrownBy(() -> House.create(houseId, width, height, rooms))
                 .isInstanceOf(HouseRelationshipException.class)
                 .hasMessage("Room name 거실 doesn't related to " + houseId);
 
-        assertThatThrownBy(() -> House.create(houseId, width, height, basicImageId, borderImageId, roomsToAnotherHouse))
+        assertThatThrownBy(() -> House.create(houseId, width, height, roomsToAnotherHouse))
                 .isInstanceOf(HouseRelationshipException.class)
                 .hasMessage("Room name 거실 doesn't related to " + houseId);
     }

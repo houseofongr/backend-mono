@@ -23,10 +23,10 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort {
     private final HouseMapper houseMapper;
 
     @Override
-    public Long save(House house, List<Room> rooms) {
+    public Long save(House house, List<Room> rooms, Long houseImageId, Long borderImageId) {
 
         List<RoomJpaEntity> roomJpaEntities = rooms.stream().map(houseMapper::mapToNewEntity).toList();
-        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewEntity(house, roomJpaEntities);
+        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewEntity(house, roomJpaEntities, houseImageId, borderImageId);
 
         houseJpaRepository.save(houseJpaEntity);
 

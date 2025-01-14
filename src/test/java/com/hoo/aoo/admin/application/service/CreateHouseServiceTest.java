@@ -91,18 +91,8 @@ class CreateHouseServiceTest {
 
         // then
         verify(uploadPrivateImageUseCase, times(4)).privateUpload(any());
-        verify(saveHousePort, times(1)).save(any(), any());
+        verify(saveHousePort, times(1)).save(any(), any(), any(), any());
 
-        assertThat(result.house().id()).isNotNull();
-        assertThat(result.house().imageFileId()).isNotNull();
-        assertThat(result.house().title()).isEqualTo("cozy house");
-        assertThat(result.house().author()).isEqualTo("leaf");
-        assertThat(result.house().roomCnt()).isEqualTo(2);
-
-        assertThat(result.rooms()).hasSize(2);
-        assertThat(result.rooms()).anySatisfy((room -> {
-            assertThat(room.imageFileId()).isNotNull();
-            assertThat(room.name()).isEqualTo("거실");
-        }));
+        assertThat(result.houseId()).isNotNull();
     }
 }
