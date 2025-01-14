@@ -235,7 +235,7 @@ h3 {
 <h3 id="aar-authn-flow">소리기록실 인증 플로우</h3>
 <div class="imageblock">
 <div class="content">
-<img src="login.png" alt="login flow">
+<img src="images/login.png" alt="login flow">
 </div>
 <div class="title">Figure 1. 로그인 플로우차트</div>
 </div>
@@ -293,7 +293,7 @@ h3 {
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="regist.png" alt="regist flow">
+<img src="images/regist.png" alt="regist flow">
 </div>
 <div class="title">Figure 2. 회원가입 플로우차트</div>
 </div>
@@ -517,7 +517,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 223
 
-{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjc3NDA1MywidXNlcklkIjoxfQ.n8rlg__QQa1PrRGYz8EjNRajKLDi-Qvte07UeDBwL_s"}</code></pre>
+{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNjg1NTkwMCwidXNlcklkIjoxfQ.SSFk4Sd_7-jRM4rgNvBCTdtPZMwqSfDTDIgUselsFSk"}</code></pre>
 </div>
 </div>
 </div>
@@ -883,7 +883,7 @@ Content-Length: 276
 <h4 id="house-read-list-api_http_request">HTTP request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/houses HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/houses?page=1&amp;size=9 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: api.archiveofongr.site</code></pre>
 </div>
@@ -937,26 +937,109 @@ Host: api.archiveofongr.site</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 717
+Content-Length: 2543
 
 {
-  "houses" : [ {
-    "id" : 1,
-    "title" : "cozy house",
-    "author" : "남상엽",
-    "description" : "this is cozy house",
-    "createdDate" : "January.15. 2025",
-    "updatedDate" : "January.15. 2025",
-    "imageId" : 1
-  }, {
-    "id" : 2,
-    "title" : "2024 아오옹 시그치너 하우스 S/S",
-    "author" : "주아랑",
-    "description" : "990년 고딩2때 청주에서 전국체전이 열렸다. 그리고 주간야구라는 당시 유일했던 야구잡지사에서 글을 쓰는 기자분이 그라운드안에서 내게 인사를 건냈다. 그리고 몇가지 질문을 하고나서...",
-    "createdDate" : "January.15. 2025",
-    "updatedDate" : "January.16. 2025",
-    "imageId" : 2
-  } ]
+  "houses" : {
+    "content" : [ {
+      "id" : 1,
+      "title" : "cozy house",
+      "author" : "leaf",
+      "description" : "my cozy house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 1
+    }, {
+      "id" : 2,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 3,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 4,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 5,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 6,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 7,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 8,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    }, {
+      "id" : 9,
+      "title" : "temp house",
+      "author" : "tester",
+      "description" : "temp house",
+      "createdDate" : "January.14. 2025",
+      "updatedDate" : "January.14. 2025",
+      "imageId" : 3
+    } ],
+    "pageable" : {
+      "pageNumber" : 0,
+      "pageSize" : 9,
+      "sort" : {
+        "empty" : true,
+        "unsorted" : true,
+        "sorted" : false
+      },
+      "offset" : 0,
+      "paged" : true,
+      "unpaged" : false
+    },
+    "last" : false,
+    "totalElements" : 10,
+    "totalPages" : 2,
+    "first" : true,
+    "size" : 9,
+    "number" : 0,
+    "sort" : {
+      "empty" : true,
+      "unsorted" : true,
+      "sorted" : false
+    },
+    "numberOfElements" : 9,
+    "empty" : false
+  }
 }</code></pre>
 </div>
 </div>
@@ -978,40 +1061,135 @@ Content-Length: 717
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 아이디입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 제목입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 작가입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스에 대한 설명입니다.<br>
 * 100자까지만 전송됩니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].createdDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].createdDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스가 생성된 날짜입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].updatedDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].updatedDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스가 최종 수정된 날짜입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses[].imageId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.content[].imageId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스 기본 이미지의 ID입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.pageNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.pageSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지당 항목 수입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬이 비어 있는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않았는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되었는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.offset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지의 시작 항목 인덱스입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.unpaged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징이 해제되었는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.pageable.paged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징이 활성화되었는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">한 페이지의 항목 수입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.sort.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬이 비어 있는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.sort.unsorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되지 않았는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.sort.sorted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬되었는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.empty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지가 비어 있는지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.first</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">첫번째 페이지인지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지인지 여부입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지의 번호입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.numberOfElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지에 있는 항목의 수입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 전체 개수입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houses.totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 전체 페이지 개수입니다.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1064,12 +1242,12 @@ Content-Length: 302
 {
   "fileInfos" : [ {
     "id" : 3,
-    "name" : "e5e10c8f-137c-4125-8e31-f3101ddf00b5.png",
+    "name" : "c514d316-e10c-45a9-a663-373efb0d9a45.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   }, {
     "id" : 4,
-    "name" : "d7f80963-e9ed-4105-9fb8-2c5df36914df.png",
+    "name" : "2b009b7f-6132-4240-86c3-6aa267303e60.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   } ]
@@ -1277,21 +1455,21 @@ Host: file.archiveofongr.site</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">메타데이터에 등록되지 않은 이미지가 존재합니다.</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">Bad Request</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">메타데이터에 등록된 이미지가 존재하지 않습니다.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">400</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Bad Request</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">방 이름이 중복됩니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복되는 방 이름이 존재합니다.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">409</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Conflict</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">하우스와 방 사이에 잘못된 참조 관계가 존재합니다.</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">500</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Internal Server Error</p></td>
 </tr>
 </tbody>
 </table>

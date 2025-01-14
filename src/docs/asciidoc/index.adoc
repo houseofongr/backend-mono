@@ -9,9 +9,9 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :toclevels: 2
 :pdf-themesdir: {docdir}/themes
 :pdf-theme: ko
-:pdf-fontsdir: {docdir}/fonts
+:pdf-fontsdir: {docdir}/assets/fonts
 :stylesheet: stylesheet.css
-:stylesdir: {docdir}/styles
+:stylesdir: {docdir}/assets/styles
 // :sectlinks:
 
 아카이브 오브 옹알 API 공식 문서입니다.
