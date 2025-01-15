@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.hoo.aoo.admin.application.service.UpdateHouseService.*;
+
 @Component
 @RequiredArgsConstructor
 public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, LoadHousePort {
@@ -53,7 +55,13 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
     }
 
     @Override
-    public void update(House house, Map<String, Long> imageIdMap) {
+    public void update(Long id, House house) {
+
+        HouseJpaEntity entity = houseJpaRepository.findById(id).orElseThrow();
+
+        entity.setTitle(house.getId().getTitle());
+        entity.setAuthor(house.getId().getTitle());
+        entity.setDescription(house.getId().getTitle());
 
     }
 }

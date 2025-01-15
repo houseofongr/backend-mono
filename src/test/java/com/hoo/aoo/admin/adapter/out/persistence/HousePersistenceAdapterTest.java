@@ -11,6 +11,7 @@ import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.common.FixtureRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -140,5 +143,51 @@ class HousePersistenceAdapterTest {
                     assertThat(room.getImageFileId()).isEqualTo(5L);
                     assertThat(room.getHouse()).isEqualTo(query.get());
                 });
+    }
+
+    @Test
+    @Sql("HousePersistenceAdapterTest.sql")
+    @DisplayName("하우스 조회 테스트")
+    void testLoadHouse() {
+        // given
+        Long houseId = 1L;
+
+        // when
+        Optional<House> house = sut.load(houseId);
+
+        // then
+        assertThat(house).isNotEmpty();
+        assertThat(house.get().getId().getTitle()).isEqualTo("cozy house");
+        assertThat(house.get().getId().getAuthor()).isEqualTo("leaf");
+        assertThat(house.get().getId().getDescription()).isEqualTo("this is cozy house");
+        assertThat(house.get().getArea().getWidth()).isEqualTo(5000f);
+        assertThat(house.get().getArea().getHeight()).isEqualTo(5000f);
+        assertThat(house.get().getRooms()).hasSize(2)
+                .anySatisfy(room -> {
+                    assertThat(room.getId().getHouseId()).isEqualTo(house.get().getId());
+                    assertThat(room.getId().getName()).isEqualTo("거실");
+                    assertThat(room.getAxis().getX()).isEqualTo(0);
+                    assertThat(room.getAxis().getY()).isEqualTo(0);
+                    assertThat(room.getAxis().getZ()).isEqualTo(0);
+                    assertThat(room.getArea().getWidth()).isEqualTo(5000);
+                    assertThat(room.getArea().getHeight()).isEqualTo(0);
+                });
+    }
+
+    @Test
+    @DisplayName("하우스 수정 테스트")
+    void testUpdateHouse() throws Exception {
+        // given
+        House houseWithRoom = FixtureRepository.getHouseWithRoom(new HouseId("not cozy house", "arang", "this is not cozy house"));
+
+        // when
+        sut.update(1L, houseWithRoom);
+        Optional<HouseJpaEntity> query = sut.query(1L);
+
+        // then
+        assertThat(query).isNotEmpty();
+        assertThat(query.get().getTitle()).isEqualTo("not cozy house");
+        assertThat(query.get().getAuthor()).isEqualTo("arang");
+        assertThat(query.get().getDescription()).isEqualTo("this is not cozy house");
     }
 }

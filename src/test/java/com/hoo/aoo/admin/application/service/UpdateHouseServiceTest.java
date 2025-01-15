@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.application.service;
 
+import com.hoo.aoo.admin.application.port.in.UpdateHouseCommand;
 import com.hoo.aoo.admin.application.port.out.LoadHousePort;
 import com.hoo.aoo.admin.application.port.out.database.UpdateHousePort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
@@ -38,33 +39,27 @@ class UpdateHouseServiceTest {
 
     LoadHousePort loadHousePort;
     UpdateHousePort updateHousePort;
-    UploadPrivateImageUseCase uploadPrivateImageUseCase;
 
     @BeforeEach
     void init() {
         loadHousePort = mock();
         updateHousePort = mock();
-        uploadPrivateImageUseCase = mock();
-        sut = new UpdateHouseService(loadHousePort, updateHousePort, uploadPrivateImageUseCase);
+        sut = new UpdateHouseService(loadHousePort, updateHousePort);
     }
 
     @Test
     @DisplayName("하우스 업데이트 서비스 테스트")
     void testUpdate() throws Exception {
         // given
-        House house = FixtureRepository.getHouseWithRoom(new HouseId("cozy house", "leaf", "this is cozy house"));
-        Metadata metadata = getUpdateMetadata();
-
-        Map<String, MultipartFile> fileMap = getFileMap();
+        House house = getHouse(new HouseId("cozy house", "leaf", "this is cozy house"), List.of());
+        UpdateHouseCommand command = new UpdateHouseCommand(1L, "not cozy house", "arang", "this is not cozy house.");
 
         // when
         when(loadHousePort.load(1L)).thenReturn(Optional.of(house));
-        when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadImageResult(List.of(new UploadImageResult.FileInfo(1L, "newfile.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
-        MessageDto message = sut.update(1L, metadata, fileMap);
+        MessageDto message = sut.update(command);
 
         // then
         verify(loadHousePort, times(1)).load(1L);
-        verify(uploadPrivateImageUseCase, times(4)).privateUpload((MultipartFile) any());
         verify(updateHousePort, times(1)).update(any(),any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 수정이 완료되었습니다.");

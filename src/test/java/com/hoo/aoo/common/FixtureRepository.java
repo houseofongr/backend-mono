@@ -26,8 +26,11 @@ public class FixtureRepository {
         return House.create(houseId, 5000f, 5000f, List.of(getRoom(houseId,"거실"), getRoom(houseId,"주방")));
     }
 
-    public static Metadata getMetadata() {
+    public static House getHouse(HouseId houseId, List<Room> rooms) throws AreaLimitExceededException, HouseRelationshipException, RoomDuplicatedException {
+        return House.create(houseId, 5000f, 5000f, rooms);
+    }
 
+    public static Metadata getMetadata() {
         return new Gson().fromJson(getMetadataJson(), Metadata.class);
     }
 
@@ -65,45 +68,6 @@ public class FixtureRepository {
                   ]
                 }
                 """;
-    }
-
-    public static Metadata getUpdateMetadata() {
-        String data = """
-                {
-                  "house": {
-                    "title": "cozy house",
-                    "author": "leaf",
-                    "description": "this is cozy house.",
-                    "width": 5000,
-                    "height": 5000,
-                    "houseForm": "house",
-                    "borderForm": "border"
-                  },
-                  "rooms": [
-                    {
-                      "form": "room1",
-                      "originalName": "거실",
-                      "newName": "거실2",
-                      "x": 123,
-                      "y": 456,
-                      "z": 1,
-                      "width": 100,
-                      "height": 200
-                    },
-                    {
-                      "form": "room2",
-                      "originalName": "주방",
-                      "newName": "주방2",
-                      "x": 234,
-                      "y": 345,
-                      "z": 2,
-                      "width": 200,
-                      "height": 200
-                    }
-                  ]
-                }
-                """;
-        return new Gson().fromJson(data, Metadata.class);
     }
 
     public static Map<String, MultipartFile> getFileMap() {
