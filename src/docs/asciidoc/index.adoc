@@ -1,7 +1,7 @@
 = 아카이브 오브 옹알 API 문서
 Sangyeop. Nam <spearoad15@gmail.com>
 :doctype: book
-:description: 소리기록실 API 문서입니다.
+:description: 아카이브 오브 옹알 API 문서입니다.
 :icons: font
 :source-highlighter: highlightjs
 :highlightjs-theme:
@@ -15,9 +15,9 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :stylesdir: {docdir}/styles
 // :sectlinks:
 
-아카이브 오브 옹알 API 공식 문서입니다.
+아카이브 오브 옹알 공식 API 문서입니다.
 
-This is Archive Of Ong(AOO) R API Official Documents.
+This is Archive Of Ong(AOO) R Official API Documents.
 
 [[aar-api]]
 == 소리기록실(AAR) API

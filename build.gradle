@@ -79,12 +79,12 @@ asciidoctor {
     configurations 'asciidoctorExt'
 
     attributes = ['doctype'           : 'book',
-                  'description'       : '소리기록실 API 문서입니다.',
+                  'description'       : '아카이브 오브 옹알 API 문서입니다.',
                   'icons'             : 'font',
                   'source-highlighter': 'highlightjs',
                   'highlightjs-theme' : true,
                   'toc'               : 'left',
-                  'toclevels'         : '2',
+                  'toclevels'         : '3',
                   'toc-title'         : '목차',
                   'imagesdir'         : './images',
                   'linkcss'           : true,
