@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
+import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
     @DisplayName("하우스 생성 API")
     void testCreateHouse() throws Exception {
 
-        String metadata = getMetadata();
+        String metadata = FixtureRepository.getMetadataJson();
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
@@ -53,43 +54,4 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
                         )
                 ));
     }
-
-    private String getMetadata() {
-        String metadata = """
-                {
-                  "house": {
-                    "title": "cozy house",
-                    "author": "leaf",
-                    "description": "this is cozy house.",
-                    "width": 5000,
-                    "height": 5000,
-                    "houseFormName": "house",
-                    "borderFormName": "border"
-                  },
-                  "rooms": [
-                    {
-                      "formName": "room1",
-                      "name": "거실",
-                      "x": 123,
-                      "y": 456,
-                      "z": 1,
-                      "width": 100,
-                      "height": 200
-                    },
-                    {
-                      "formName": "room2",
-                      "name": "주방",
-                      "x": 234,
-                      "y": 345,
-                      "z": 2,
-                      "width": 200,
-                      "height": 200
-                    }
-                  ]
-                }
-                """;
-
-        return metadata;
-    }
-
 }

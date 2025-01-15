@@ -1,12 +1,11 @@
 package com.hoo.aoo.admin.domain.house;
 
-import com.hoo.aoo.admin.domain.FixtureRepository;
+import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.room.Room;
-import com.hoo.aoo.admin.domain.house.room.RoomId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

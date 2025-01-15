@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface UploadPrivateImageUseCase {
     UploadImageResult privateUpload(List<MultipartFile> images);
+
+    UploadImageResult privateUpload(MultipartFile image);
 }

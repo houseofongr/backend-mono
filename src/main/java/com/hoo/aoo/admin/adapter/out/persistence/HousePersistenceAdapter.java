@@ -48,12 +48,12 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
     }
 
     @Override
-    public void update(House house, List<Room> rooms, Map<Object, Long> imageIdMap) {
-
+    public Optional<House> load(Long houseId) {
+        return null;
     }
 
     @Override
-    public House load(Long houseId) {
-        return null;
+    public void update(House house, Map<String, Long> imageIdMap) {
+
     }
 }

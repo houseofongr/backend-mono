@@ -10,16 +10,18 @@ public record Metadata(
             String title,
             String author,
             String description,
-            String houseFormName,
-            String borderFormName,
+            String houseForm,
+            String borderForm,
             Float width,
             Float height
     ) {
 
     }
     public record Room(
-            String formName,
+            String form,
             String name,
+            String originalName,
+            String newName,
             Float x,
             Float y,
             Float z,

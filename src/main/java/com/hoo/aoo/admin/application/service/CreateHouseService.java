@@ -41,15 +41,15 @@ public class CreateHouseService implements CreateHouseUseCase {
         try {
             for (Metadata.Room room : metadata.rooms()) {
 
-                UploadImageResult uploadImageResult = uploadPrivateImageUseCase.privateUpload(List.of(fileMap.get(room.formName())));
+                UploadImageResult uploadImageResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(room.form()));
 
                 Room newRoom = Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), uploadImageResult.fileInfos().getFirst().id());
 
                 rooms.add(newRoom);
             }
 
-            UploadImageResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(List.of(fileMap.get(metadata.house().houseFormName())));
-            UploadImageResult borderUploadResult = uploadPrivateImageUseCase.privateUpload(List.of(fileMap.get(metadata.house().borderFormName())));
+            UploadImageResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().houseForm()));
+            UploadImageResult borderUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().borderForm()));
 
             House newHouse = House.create(houseId,
                     metadata.house().width(),
@@ -66,12 +66,12 @@ public class CreateHouseService implements CreateHouseUseCase {
         } catch (AxisLimitExceededException e) {
 
             log.error(e.getMessage());
-            throw new AdminException(AdminErrorCode.PIXEL_LIMIT_EXCEED);
+            throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
 
         } catch (AreaLimitExceededException e) {
 
             log.error(e.getMessage());
-            throw new AdminException(AdminErrorCode.IMAGE_SIZE_EXCEED);
+            throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
 
         } catch (RoomDuplicatedException e) {
 
