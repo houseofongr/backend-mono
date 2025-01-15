@@ -7,7 +7,7 @@ import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
-import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
+import com.hoo.aoo.admin.domain.exception.RoomNameDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
@@ -47,7 +47,7 @@ class HousePersistenceAdapterTest {
 
     @Test
     @DisplayName("House 저장 테스트")
-    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
+    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException, RoomNameDuplicatedException, HouseRelationshipException {
         // given
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 

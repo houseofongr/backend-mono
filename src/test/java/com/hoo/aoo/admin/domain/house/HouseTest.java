@@ -1,10 +1,7 @@
 package com.hoo.aoo.admin.domain.house;
 
+import com.hoo.aoo.admin.domain.exception.*;
 import com.hoo.aoo.common.FixtureRepository;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
-import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +20,7 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 생성 테스트")
-    void testCreateHouse() throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException, AxisLimitExceededException {
+    void testCreateHouse() throws AreaLimitExceededException, RoomNameDuplicatedException, HouseRelationshipException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -41,7 +38,7 @@ class HouseTest {
 
     @Test
     @DisplayName("방 ID 중복 테스트")
-    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException, AxisLimitExceededException {
+    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, RoomNameDuplicatedException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
@@ -59,13 +56,13 @@ class HouseTest {
         assertThat(House.create(houseId, width, height, rooms)).isNotNull();
 
         assertThatThrownBy(() -> House.create(houseId, width, height, roomsDuplicated))
-                .isInstanceOf(RoomDuplicatedException.class)
-                .hasMessage("Room name 거실 is duplicated.");
+                .isInstanceOf(RoomNameDuplicatedException.class)
+                .hasMessage("house 'cozy house' already has room named '거실'.");
     }
 
     @Test
     @DisplayName("방 참조관계 테스트")
-    void testRoomRelationship() throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomDuplicatedException {
+    void testRoomRelationship() throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomNameDuplicatedException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
@@ -98,7 +95,7 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 수정 테스트")
-    void testUpdateInfo() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException, AxisLimitExceededException {
+    void testUpdateInfo() throws HouseRelationshipException, AreaLimitExceededException, RoomNameDuplicatedException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -116,5 +113,31 @@ class HouseTest {
         assertThat(newHouse.getId().getTitle()).isEqualTo(title);
         assertThat(newHouse.getId().getAuthor()).isEqualTo("leaf");
         assertThat(newHouse.getId().getDescription()).isEqualTo(description);
+    }
+
+    @Test
+    @DisplayName("룸 수정 테스트")
+    void testUpdateRoomInfo() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException, RoomNameDuplicatedException, RoomNameNotFoundException {
+        // given
+        House houseWithRoom = FixtureRepository.getHouseWithRoom();
+        String originalName = "거실";
+        String newName = "욕실";
+        String newName2 = "주방";
+
+        // when
+        houseWithRoom.updateRoomInfo(originalName, newName);
+
+        // then
+        assertThat(houseWithRoom.getRooms()).anySatisfy(
+                room -> assertThat(room.getId().getName()).isEqualTo("욕실")
+        );
+
+        assertThatThrownBy(() -> houseWithRoom.updateRoomInfo(originalName, originalName))
+                .isInstanceOf(RoomNameNotFoundException.class)
+                .hasMessage("house 'cozy house' doesn't have room named '거실'.");
+
+        assertThatThrownBy(() -> houseWithRoom.updateRoomInfo(newName, newName2))
+                .isInstanceOf(RoomNameDuplicatedException.class)
+                .hasMessage("house 'cozy house' already has room named '주방'.");
     }
 }

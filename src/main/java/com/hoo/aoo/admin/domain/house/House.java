@@ -3,7 +3,8 @@ package com.hoo.aoo.admin.domain.house;
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
-import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
+import com.hoo.aoo.admin.domain.exception.RoomNameDuplicatedException;
+import com.hoo.aoo.admin.domain.exception.RoomNameNotFoundException;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.house.room.RoomId;
 import com.hoo.aoo.common.domain.BaseTime;
@@ -27,7 +28,7 @@ public class House {
         this.rooms = rooms;
     }
 
-    public static House create(HouseId houseId, Float width, Float height, List<Room> rooms) throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
+    public static House create(HouseId houseId, Float width, Float height, List<Room> rooms) throws AreaLimitExceededException, RoomNameDuplicatedException, HouseRelationshipException {
 
         Area area = new Area(width, height);
         House house = new House(houseId, area, null, rooms);
@@ -46,7 +47,7 @@ public class House {
         return new House(houseId, area, baseTime, rooms);
     }
 
-    private void verifyRoom() throws RoomDuplicatedException, HouseRelationshipException {
+    private void verifyRoom() throws RoomNameDuplicatedException, HouseRelationshipException {
         for (int i = 0; i < rooms.size(); i++) {
 
             RoomId roomId = rooms.get(i).getId();
@@ -59,12 +60,30 @@ public class House {
                 RoomId anotherRoomId = rooms.get(j).getId();
 
                 if (roomId.getName().equals(anotherRoomId.getName()))
-                    throw new RoomDuplicatedException(roomId);
+                    throw new RoomNameDuplicatedException(id.getTitle(), roomId.getName());
             }
         }
     }
 
     public void updateInfo(String title, String author, String description) {
         id.update(title, author, description);
+    }
+
+
+    public void updateRoomInfo(String originalName, String newName) throws RoomNameDuplicatedException, RoomNameNotFoundException {
+
+        for (Room room : rooms) {
+            if (room.getId().getName().equals(newName))
+                throw new RoomNameDuplicatedException(id.getTitle(), newName);
+        }
+
+        for (Room room : rooms) {
+            if (room.getId().getName().equals(originalName)) {
+                room.getId().update(newName);
+                return;
+            }
+        }
+
+        throw new RoomNameNotFoundException(id.getTitle(), originalName);
     }
 }
