@@ -77,7 +77,7 @@ class HousePersistenceAdapterTest {
         ReadHouseListCommand allCommand = new ReadHouseListCommand(pageable, null, null);
         ReadHouseListCommand keywordCommand = new ReadHouseListCommand(pageable, SearchType.TITLE, "cozy");
         ReadHouseListCommand keywordCommand2 = new ReadHouseListCommand(pageable, SearchType.AUTHOR, "leAf");
-        ReadHouseListCommand keywordCommand3 = new ReadHouseListCommand(pageable, SearchType.DESCRIPTION, "MY");
+        ReadHouseListCommand keywordCommand3 = new ReadHouseListCommand(pageable, SearchType.DESCRIPTION, "IS");
         ReadHouseListCommand nonKeywordCommand = new ReadHouseListCommand(pageable, SearchType.DESCRIPTION, "no keyword");
 
         // when
@@ -89,18 +89,16 @@ class HousePersistenceAdapterTest {
 
         // then
         assertThat(entities).hasSize(9);
-        assertThat(entities).allSatisfy(entity ->
-                assertThat(entity.getRooms()).isEmpty());
         assertThat(entities).anySatisfy(entity -> {
                 assertThat(entity.getId()).isEqualTo(1L);
                 assertThat(entity.getTitle()).isEqualTo("cozy house");
                 assertThat(entity.getAuthor()).isEqualTo("leaf");
-                assertThat(entity.getDescription()).isEqualTo("my cozy house");
+                assertThat(entity.getDescription()).isEqualTo("this is cozy house");
                 assertThat(entity.getWidth()).isEqualTo(5000);
                 assertThat(entity.getHeight()).isEqualTo(5000);
                 assertThat(entity.getBasicImageFileId()).isEqualTo(1L);
                 assertThat(entity.getBorderImageFileId()).isEqualTo(2L);
-                assertThat(entity.getRooms()).isEmpty();
+                assertThat(entity.getRooms()).hasSize(2);
         });
 
         // keyword search
@@ -111,6 +109,7 @@ class HousePersistenceAdapterTest {
     }
 
     @Test
+    @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("HouseJpaEntity 단건 조회 테스트")
     void testQueryHouse() {
         // given
@@ -137,8 +136,8 @@ class HousePersistenceAdapterTest {
                     assertThat(room.getY()).isEqualTo(0);
                     assertThat(room.getZ()).isEqualTo(0);
                     assertThat(room.getWidth()).isEqualTo(5000);
-                    assertThat(room.getHeight()).isEqualTo(1000);
-                    assertThat(room.getImageFileId()).isEqualTo(1L);
+                    assertThat(room.getHeight()).isEqualTo(0);
+                    assertThat(room.getImageFileId()).isEqualTo(5L);
                     assertThat(room.getHouse()).isEqualTo(query.get());
                 });
     }

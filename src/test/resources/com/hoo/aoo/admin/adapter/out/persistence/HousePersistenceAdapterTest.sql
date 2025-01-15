@@ -14,4 +14,8 @@ values (2, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMES
        (8, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (9, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (10, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       (1, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+       (1, 'cozy house', 'leaf', 'this is cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+insert into ROOM(ID, NAME, X, Y, Z, WIDTH, HEIGHT, IMAGE_FILE_ID, HOUSE_ID)
+values (1, "거실", 0, 0, 0, 5000, 0, 5, 1),
+       (2, "주방", 0, 1000, 0, 5000, 1000, 6, 1);
