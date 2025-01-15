@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.service;
 
-import com.hoo.aoo.admin.application.port.in.CreateHouseResult;
+import com.hoo.aoo.admin.application.port.in.HouseIdResult;
 import com.hoo.aoo.admin.application.port.in.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
@@ -12,7 +12,6 @@ import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
-import com.nimbusds.jose.shaded.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ public class CreateHouseService implements CreateHouseUseCase {
 
     @Override
     @Transactional
-    public CreateHouseResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
+    public HouseIdResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
@@ -62,7 +61,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                     houseUploadResult.fileInfos().getFirst().id(),
                     borderUploadResult.fileInfos().getFirst().id());
 
-            return new CreateHouseResult(savedId);
+            return new HouseIdResult(savedId);
 
         } catch (AxisLimitExceededException e) {
 

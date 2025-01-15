@@ -69,7 +69,7 @@ image::regist.png[regist flow]
 
 operation::aar-authn-login[snippets='http-request,fileId-parameters,http-response,response-headers']
 
-`파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.`
+> 파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.
 
 operation::aar-authn-login-2[snippets='response-fields']
 
@@ -97,7 +97,7 @@ include::{snippets}/admin-house-create/http-request.adoc[]
 ==== Request Form
 include::{snippets}/admin-house-create/request-parts.adoc[]
 
-`* 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 **MetaData**와 일치해야 합니다.`
+> 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 **MetaData**와 일치해야 합니다.
 
 ==== Metadata
 include::{snippets}/admin-house-create-metadata/response-fields.adoc[]
@@ -117,6 +117,16 @@ operation::admin-house-read-list[snippets='http-request,path-parameters,http-res
 
 operation::admin-house-read-detail[snippets='http-request,path-parameters,http-response,response-fields']
 
+
+[[house-update-api]]
+=== 하우스 수정 API
+
+operation::admin-house-update[snippets='http-request,path-parameters,request-parts']
+
+"생성 API와 동일하게 메타데이터 양식을 지켜야 합니다."
+-- 메타데이터에 관한 정보는 <<_metadata_예시>>를 참고하시기 바랍니다.
+
+operation::admin-house-update[snippets='http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API
@@ -142,7 +152,8 @@ operation::file-public-images-download[snippets='http-request,path-parameters,re
 
 이미지 파일을 비공개 서버로부터 로드합니다.
 
-`* 해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.`
+> 해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.
+-- 차후 해당 권한을 바탕으로 자원 접근을 제어할 예정입니다.
 
 operation::file-private-images-download[snippets='http-request,
 path-parameters,response-file']

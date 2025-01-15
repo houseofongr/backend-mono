@@ -1,11 +1,8 @@
 package com.hoo.aoo.admin.domain.house;
 
-import com.hoo.aoo.admin.application.port.in.CreateHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
-import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.room.RoomId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +20,7 @@ class HouseTest {
     Float height = 5000F;
 
     @Test
-    @DisplayName("집 생성 테스트")
+    @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
         // given
         HouseId houseId = new HouseId(title, author, description);
@@ -88,7 +85,7 @@ class HouseTest {
     }
 
     @Test
-    @DisplayName("집 조회 테스트")
+    @DisplayName("하우스 조회 테스트")
     void testLoadRoom() {
         // given
 

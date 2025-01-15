@@ -22,7 +22,7 @@ class ReadHouseDocumentationTest extends AbstractDocumentationTest {
 
     @Test
     @Sql("ReadHouseDocumentationTest.sql")
-    @DisplayName("집 상세조회 테스트")
+    @DisplayName("하우스 상세조회 테스트")
     void testGetHouse() throws Exception {
         mockMvc.perform(get("/admin/houses/{houseId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)

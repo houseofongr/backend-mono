@@ -6,5 +6,5 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 public interface CreateHouseUseCase {
-    CreateHouseResult create(Metadata metadata, Map<String, MultipartFile> fileMap);
+    HouseIdResult create(Metadata metadata, Map<String, MultipartFile> fileMap);
 }

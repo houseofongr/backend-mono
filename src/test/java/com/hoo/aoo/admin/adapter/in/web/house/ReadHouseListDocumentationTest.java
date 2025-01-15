@@ -21,7 +21,7 @@ public class ReadHouseListDocumentationTest extends AbstractDocumentationTest {
 
     @Test
     @Sql("ReadHouseListDocumentationTest.sql")
-    @DisplayName("집 리스트 조회 API")
+    @DisplayName("하우스 리스트 조회 API")
     void testGetList() throws Exception {
         mockMvc.perform(get("/admin/houses?page=1&size=9")
                         .contentType(MediaType.APPLICATION_JSON)

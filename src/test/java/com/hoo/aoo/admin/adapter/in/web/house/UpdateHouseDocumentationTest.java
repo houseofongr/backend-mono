@@ -14,7 +14,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CreateHouseDocumentationTest extends AbstractDocumentationTest {
+class UpdateHouseDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {
@@ -22,9 +22,8 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @DisplayName("하우스 생성 API")
-    void testCreateHouse() throws Exception {
-
+    @DisplayName("하우스 수정 문서화")
+    void testHouseUpdate() throws Exception {
         String metadata = getMetadata();
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
@@ -34,22 +33,23 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
         MockMultipartFile roomImage1 = new MockMultipartFile("room1", "image3.png", "image/png", "<<png data 3>>".getBytes());
         MockMultipartFile roomImage2 = new MockMultipartFile("room2", "image4.png", "image/png", "<<png data 4>>".getBytes());
 
-        mockMvc.perform(multipart("/admin/houses")
+        mockMvc.perform(multipart("/admin/houses/update/{houseId}", 1L)
                         .file(houseImage).file(borderImage).file(roomImage1).file(roomImage2)
                         .part(metadataPart)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is(201))
-                .andDo(document("admin-house-create",
+                .andExpect(status().is(200))
+                .andDo(document("admin-house-update",
+                        pathParameters(parameterWithName("houseId").description("수정할 하우스의 식별자입니다.")),
                         requestParts(
-                                partWithName("metadata").description("생성할 하우스의 정보를 포함하는 Json 형태의 문자열입니다."),
-                                partWithName("house").description("생성할 하우스의 기본 이미지입니다."),
-                                partWithName("border").description("생성할 하우스의 기본 외곽 이미지입니다."),
-                                partWithName("room1").description("첫번째 방의 기본 이미지입니다."),
-                                partWithName("room2").description("두번째 방의 기본 이미지입니다.")
+                                partWithName("metadata").description("수정할 하우스의 정보를 포함하는 Json 형태의 문자열입니다."),
+                                partWithName("house").description("하우스의 수정할 이미지입니다."),
+                                partWithName("border").description("하우스의 수정할 외곽 이미지입니다."),
+                                partWithName("room1").description("첫번째 방의 수정할 이미지입니다."),
+                                partWithName("room2").description("두번째 방의 수정할 이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("houseId").description("생성된 하우스의 아이디입니다.")
+                                fieldWithPath("houseId").description("수정된 하우스의 식별자입니다.")
                         )
                 ));
     }
@@ -58,32 +58,32 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
         String metadata = """
                 {
                   "house": {
-                    "title": "cozy house",
-                    "author": "leaf",
-                    "description": "this is cozy house.",
-                    "width": 5000,
-                    "height": 5000,
+                    "title": "not cozy house",
+                    "author": "arang",
+                    "description": "this is not cozy house.",
+                    "width": 4500,
+                    "height": 4500,
                     "houseFormName": "house",
                     "borderFormName": "border"
                   },
                   "rooms": [
                     {
                       "formName": "room1",
-                      "name": "거실",
-                      "x": 123,
-                      "y": 456,
+                      "name": "현관",
+                      "x": 345,
+                      "y": 567,
                       "z": 1,
-                      "width": 100,
-                      "height": 200
+                      "width": 500,
+                      "height": 300
                     },
                     {
                       "formName": "room2",
-                      "name": "주방",
-                      "x": 234,
-                      "y": 345,
-                      "z": 2,
-                      "width": 200,
-                      "height": 200
+                      "name": "옥탑",
+                      "x": 52.21,
+                      "y": 38.19,
+                      "z": 2.3,
+                      "width": 250,
+                      "height": 250
                     }
                   ]
                 }
@@ -91,5 +91,4 @@ class CreateHouseDocumentationTest extends AbstractDocumentationTest {
 
         return metadata;
     }
-
 }
