@@ -6,9 +6,9 @@ import com.hoo.aoo.admin.application.port.in.*;
 import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class ReadHouseService implements ReadHouseListUseCase, ReadHouseUseCase {
 
