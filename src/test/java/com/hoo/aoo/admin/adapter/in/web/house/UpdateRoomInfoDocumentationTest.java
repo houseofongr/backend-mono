@@ -4,8 +4,8 @@ import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -21,13 +21,14 @@ class UpdateRoomInfoDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
+    @Sql("UpdateRoomInfoDocumentationTest.sql")
     @DisplayName("룸 정보 수정 API")
     void testRoomInfoUpdate() throws Exception {
 
         String requestBody = """
                 {
                   "originalName" : "거실",
-                  "newName" : "주방"
+                  "newName" : "욕실"
                 }
                 """;
 

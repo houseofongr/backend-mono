@@ -145,7 +145,11 @@ operation::admin-house-update[snippets='http-request,path-parameters,request-fie
 
 > 룸의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
-operation::admin-house-room-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+operation::admin-house-room-update[snippets='http-request,path-parameters,request-fields']
+
+> **originalName**을 찾을 수 없거나, **newName**이 기존 이름과 중복되면 오류가 발생합니다.
+
+operation::admin-house-room-update[snippets='http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API

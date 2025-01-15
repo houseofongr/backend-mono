@@ -1,5 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
+import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoCommand;
+import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,11 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UpdateRoomInfoController {
 
+    private final UpdateRoomInfoUseCase updateRoomInfoUseCase;
+
     @PatchMapping("/admin/houses/rooms/{houseId}")
     ResponseEntity<MessageDto> update(
             @PathVariable Long houseId,
             @RequestBody Request request) {
-        return new ResponseEntity<>(new MessageDto(houseId + "번 하우스 " + request.originalName + " 룸의 정보 수정이 완료되었습니다."), HttpStatus.OK);
+
+        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(houseId, request.originalName, request.newName);
+        return new ResponseEntity<>(updateRoomInfoUseCase.update(command), HttpStatus.OK);
     }
 
     private record Request(
