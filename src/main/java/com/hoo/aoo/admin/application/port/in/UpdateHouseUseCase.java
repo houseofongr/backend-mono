@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 public interface UpdateHouseUseCase {
-    MessageDto update(Metadata metadata, Map<String, MultipartFile> fileMap);
+    MessageDto update(Long houseId, Metadata metadata, Map<String, MultipartFile> fileMap);
 }
