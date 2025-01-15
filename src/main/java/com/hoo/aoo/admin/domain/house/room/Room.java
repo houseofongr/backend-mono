@@ -13,23 +13,29 @@ public class Room {
     private final RoomId id;
     private final Area area;
     private final Axis axis;
-    private final RoomImage image;
 
-    private Room(RoomId id, Area area, Axis axis, RoomImage image) {
+    private Room(RoomId id, Area area, Axis axis) {
         this.area = area;
         this.id = id;
         this.axis = axis;
-        this.image = image;
     }
 
-    public static Room create(HouseId houseId, String name, Float x, Float y, Float z, Float width, Float height, Long imageId) throws AxisLimitExceededException, AreaLimitExceededException {
+    public static Room create(HouseId houseId, String name, Float x, Float y, Float z, Float width, Float height) throws AxisLimitExceededException, AreaLimitExceededException {
 
         RoomId roomId = new RoomId(houseId, name);
         Axis axis = new Axis(x, y, z);
         Area area = new Area(width, height);
-        RoomImage image = new RoomImage(imageId);
 
-        return new Room(roomId, area, axis, image);
+        return new Room(roomId, area, axis);
+    }
+
+    public static Room load(HouseId houseId, String name, Float x, Float y, Float z, Float width, Float height) throws AreaLimitExceededException, AxisLimitExceededException {
+
+        RoomId roomId = new RoomId(houseId, name);
+        Axis axis = new Axis(x, y, z);
+        Area area = new Area(width, height);
+
+        return new Room(roomId, area, axis);
     }
 
     public void updateInfo(String name) {

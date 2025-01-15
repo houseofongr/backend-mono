@@ -4,11 +4,14 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
+import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
 import com.hoo.aoo.admin.application.port.out.LoadHousePort;
 import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
 import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
 import com.hoo.aoo.admin.application.port.out.database.UpdateHousePort;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -23,13 +27,19 @@ import java.util.Optional;
 public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, LoadHousePort {
 
     private final HouseJpaRepository houseJpaRepository;
+    private final RoomJpaRepository roomJpaRepository;
     private final HouseMapper houseMapper;
 
     @Override
-    public Long save(House house, List<Room> rooms, Long houseImageId, Long borderImageId) {
+    public Long save(House house, List<Room> rooms, Map<String, Long> imageFileIdMap) {
 
-        List<RoomJpaEntity> roomJpaEntities = rooms.stream().map(houseMapper::mapToNewEntity).toList();
-        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewEntity(house, roomJpaEntities, houseImageId, borderImageId);
+        List<RoomJpaEntity> roomJpaEntities = rooms.stream().map(
+                room -> houseMapper.mapToNewEntity(
+                        room, imageFileIdMap.get(room.getId().getName())
+                )
+        ).toList();
+
+        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewEntity(house, roomJpaEntities, imageFileIdMap);
 
         houseJpaRepository.save(houseJpaEntity);
 
@@ -47,8 +57,15 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
     }
 
     @Override
-    public Optional<House> load(Long houseId) {
-        return null;
+    public Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
+
+        Optional<HouseJpaEntity> optional = query(id);
+
+        if (optional.isEmpty()) return Optional.empty();
+
+        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllByHouseId(id);
+
+        return Optional.ofNullable(houseMapper.mapToDomainEntity(optional.get(), roomJpaEntities));
     }
 
     @Override
@@ -56,9 +73,7 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
 
         HouseJpaEntity entity = houseJpaRepository.findById(id).orElseThrow();
 
-        entity.setTitle(house.getId().getTitle());
-        entity.setAuthor(house.getId().getTitle());
-        entity.setDescription(house.getId().getTitle());
+        entity.updateInfo(house.getId().getTitle(), house.getId().getAuthor(), house.getId().getDescription());
 
     }
 }

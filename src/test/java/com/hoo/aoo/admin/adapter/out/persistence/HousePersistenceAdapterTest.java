@@ -24,11 +24,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.hoo.aoo.admin.application.service.CreateHouseService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -51,11 +51,12 @@ class HousePersistenceAdapterTest {
         // given
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 
-        Room newRoom = Room.create(houseId, "거실", 0F, 0F, 0F, 100F, 100F, 1L);
+        Room newRoom = Room.create(houseId, "거실", 0F, 0F, 0F, 100F, 100F);
         House newHouse = House.create(houseId, 5000F, 5000F, List.of(newRoom));
+        Map<String, Long> imageFileIdMap = Map.of(BASIC_HOUSE_IMAGE_ID, 2L, HOUSE_BORDER_IMAGE_ID, 3L, newRoom.getId().getName(), 1L);
 
         // when
-        Long savedId = sut.save(newHouse, List.of(newRoom), 2L, 3L);
+        Long savedId = sut.save(newHouse, List.of(newRoom), imageFileIdMap);
         em.flush();
         em.clear();
 
@@ -139,7 +140,7 @@ class HousePersistenceAdapterTest {
                     assertThat(room.getY()).isEqualTo(0);
                     assertThat(room.getZ()).isEqualTo(0);
                     assertThat(room.getWidth()).isEqualTo(5000);
-                    assertThat(room.getHeight()).isEqualTo(0);
+                    assertThat(room.getHeight()).isEqualTo(1000);
                     assertThat(room.getImageFileId()).isEqualTo(5L);
                     assertThat(room.getHouse()).isEqualTo(query.get());
                 });
@@ -148,7 +149,7 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 조회 테스트")
-    void testLoadHouse() {
+    void testLoad() throws AreaLimitExceededException, AxisLimitExceededException {
         // given
         Long houseId = 1L;
 
@@ -170,11 +171,12 @@ class HousePersistenceAdapterTest {
                     assertThat(room.getAxis().getY()).isEqualTo(0);
                     assertThat(room.getAxis().getZ()).isEqualTo(0);
                     assertThat(room.getArea().getWidth()).isEqualTo(5000);
-                    assertThat(room.getArea().getHeight()).isEqualTo(0);
+                    assertThat(room.getArea().getHeight()).isEqualTo(1000);
                 });
     }
 
     @Test
+    @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfoHouse() throws Exception {
         // given

@@ -25,7 +25,6 @@ class RoomTest {
         assertThat(newRoom.getAxis().getZ()).isEqualTo(1);
         assertThat(newRoom.getArea().getWidth()).isEqualTo(100);
         assertThat(newRoom.getArea().getHeight()).isEqualTo(200);
-        assertThat(newRoom.getImage().getImageId()).isEqualTo(1L);
 
     }
 
@@ -52,9 +51,8 @@ class RoomTest {
         Float z = 1f;
         Float width = 100F;
         Float height = 200F;
-        Long imageId = 1L;
 
-        Room newRoom = Room.create(houseId, name, x, y, z, width, height, imageId);
+        Room newRoom = Room.create(houseId, name, x, y, z, width, height);
         return newRoom;
     }
 }

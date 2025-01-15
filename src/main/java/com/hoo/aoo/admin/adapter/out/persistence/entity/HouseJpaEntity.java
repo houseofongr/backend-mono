@@ -20,35 +20,33 @@ public class HouseJpaEntity extends DateColumnBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @Column(nullable = false, length = 255)
     private String title;
 
-    @Setter
     @Column(nullable = false, length = 255)
     private String author;
 
-    @Setter
     @Column(nullable = false, length = 255)
     private String description;
 
-    @Setter
     @Column(nullable = false)
     private Float width;
 
-    @Setter
     @Column(nullable = false)
     private Float height;
 
-    @Setter
     @Column(nullable = false)
     private Long basicImageFileId;
 
-    @Setter
     @Column(nullable = false)
     private Long borderImageFileId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", cascade = CascadeType.PERSIST)
     private List<RoomJpaEntity> rooms;
 
+    public void updateInfo(String title, String author, String description) {
+        this.title = title;
+        this.author = author;
+        this.description = description;
+    }
 }

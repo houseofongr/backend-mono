@@ -32,8 +32,6 @@ public class MetadataDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("house.height").description("하우스의 높이입니다. 최대 32,767.000000까지 지원합니다."),
                                 fieldWithPath("rooms[].form").description("방의 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다."),
                                 fieldWithPath("rooms[].name").description("방의 이름입니다."),
-                                fieldWithPath("rooms[].originalName").description("수정할 방의 기존 이름입니다.(생성 시 불필요)"),
-                                fieldWithPath("rooms[].newName").description("수정할 방의 변경할 이름입니다.(생성 시 불필요)"),
                                 fieldWithPath("rooms[].x").description("방의 시작점(X좌표)입니다. 최대 32,767.000000까지 지원합니다."),
                                 fieldWithPath("rooms[].y").description("방의 시작점(Y좌표)입니다. 최대 32,767.000000까지 지원합니다."),
                                 fieldWithPath("rooms[].z").description("방의 시작점(Z좌표)입니다. 최대 32,767.000000까지 지원합니다."),

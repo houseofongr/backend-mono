@@ -19,7 +19,7 @@ import java.util.Map;
 public class FixtureRepository {
 
     public static Room getRoom(HouseId houseId, String name) throws AxisLimitExceededException, AreaLimitExceededException {
-        return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f, 1L);
+        return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f);
     }
 
     public static House getHouseWithRoom(HouseId houseId) throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomDuplicatedException {

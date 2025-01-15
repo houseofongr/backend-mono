@@ -46,7 +46,7 @@ class CreateHouseServiceTest {
 
         // then
         verify(uploadPrivateImageUseCase, times(4)).privateUpload((MultipartFile) any());
-        verify(saveHousePort, times(1)).save(any(), any(), any(), any());
+        verify(saveHousePort, times(1)).save(any(), any(), any());
 
         assertThat(result.houseId()).isNotNull();
     }

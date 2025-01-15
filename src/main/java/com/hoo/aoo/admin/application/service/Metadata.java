@@ -20,8 +20,6 @@ public record Metadata(
     public record Room(
             String form,
             String name,
-            String originalName,
-            String newName,
             Float x,
             Float y,
             Float z,

@@ -13,19 +13,21 @@ import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CreateHouseService implements CreateHouseUseCase {
+
+    public static final String BASIC_HOUSE_IMAGE_ID = "basicImageId";
+    public static final String HOUSE_BORDER_IMAGE_ID = "borderImageId";
 
     private final SaveHousePort saveHousePort;
     private final UploadPrivateImageUseCase uploadPrivateImageUseCase;
@@ -38,49 +40,42 @@ public class CreateHouseService implements CreateHouseUseCase {
 
         List<Room> rooms = new ArrayList<>();
 
+        Map<String, Long> imageFileIdMap = new HashMap<>();
+
         try {
             for (Metadata.Room room : metadata.rooms()) {
 
                 UploadImageResult uploadImageResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(room.form()));
 
-                Room newRoom = Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), uploadImageResult.fileInfos().getFirst().id());
+                Room newRoom = Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height());
 
                 rooms.add(newRoom);
+
+                imageFileIdMap.put(room.name(), uploadImageResult.fileInfos().getFirst().id());
             }
 
             UploadImageResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().houseForm()));
             UploadImageResult borderUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().borderForm()));
 
-            House newHouse = House.create(houseId,
-                    metadata.house().width(),
-                    metadata.house().height(),
-                    rooms);
+            imageFileIdMap.put(BASIC_HOUSE_IMAGE_ID,houseUploadResult.fileInfos().getFirst().id());
+            imageFileIdMap.put(HOUSE_BORDER_IMAGE_ID,borderUploadResult.fileInfos().getFirst().id());
 
-            Long savedId = saveHousePort.save(newHouse,
-                    rooms,
-                    houseUploadResult.fileInfos().getFirst().id(),
-                    borderUploadResult.fileInfos().getFirst().id());
+            House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(), rooms);
+
+            Long savedId = saveHousePort.save(newHouse, rooms, imageFileIdMap);
 
             return new HouseIdResult(savedId);
 
         } catch (AxisLimitExceededException e) {
-
-            log.error(e.getMessage());
             throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
 
         } catch (AreaLimitExceededException e) {
-
-            log.error(e.getMessage());
             throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
 
         } catch (RoomDuplicatedException e) {
-
-            log.error(e.getMessage());
             throw new AdminException(AdminErrorCode.ROOM_NAME_DUPLICATED);
 
         } catch (HouseRelationshipException e) {
-
-            log.error(e.getMessage());
             throw new AdminException(AdminErrorCode.ILLEGAL_HOUSE_RELATIONSHIP);
 
         }
