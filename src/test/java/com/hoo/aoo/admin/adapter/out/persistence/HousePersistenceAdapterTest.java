@@ -70,7 +70,7 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("HouseJpaEntity 조회 테스트")
-    void testQueryHouse() {
+    void testPageQueryHouse() {
         // given
         Pageable pageable = PageRequest.of(0,9);
 
@@ -81,11 +81,11 @@ class HousePersistenceAdapterTest {
         ReadHouseListCommand nonKeywordCommand = new ReadHouseListCommand(pageable, SearchType.DESCRIPTION, "no keyword");
 
         // when
-        Page<HouseJpaEntity> entities = sut.query(allCommand);
-        Page<HouseJpaEntity> searchEntities = sut.query(keywordCommand);
-        Page<HouseJpaEntity> searchEntities2 = sut.query(keywordCommand2);
-        Page<HouseJpaEntity> searchEntities3 = sut.query(keywordCommand3);
-        Page<HouseJpaEntity> noEntities = sut.query(nonKeywordCommand);
+        Page<HouseJpaEntity> entities = sut.pageQuery(allCommand);
+        Page<HouseJpaEntity> searchEntities = sut.pageQuery(keywordCommand);
+        Page<HouseJpaEntity> searchEntities2 = sut.pageQuery(keywordCommand2);
+        Page<HouseJpaEntity> searchEntities3 = sut.pageQuery(keywordCommand3);
+        Page<HouseJpaEntity> noEntities = sut.pageQuery(nonKeywordCommand);
 
         // then
         assertThat(entities).hasSize(9);

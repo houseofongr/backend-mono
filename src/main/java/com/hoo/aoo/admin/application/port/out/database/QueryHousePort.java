@@ -5,5 +5,6 @@ import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
 import org.springframework.data.domain.Page;
 
 public interface QueryHousePort {
-    Page<HouseJpaEntity> query(ReadHouseListCommand command);
+    Page<HouseJpaEntity> pageQuery(ReadHouseListCommand command);
+    HouseJpaEntity query(Long id);
 }

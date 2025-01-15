@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -34,7 +35,13 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort {
     }
 
     @Override
-    public Page<HouseJpaEntity> query(ReadHouseListCommand command) {
+    public Page<HouseJpaEntity> pageQuery(ReadHouseListCommand command) {
         return houseJpaRepository.searchByCommand(command);
+    }
+
+    @Override
+    public HouseJpaEntity query(Long id) {
+        Optional<HouseJpaEntity> entity = houseJpaRepository.findById(id);
+        return null;
     }
 }

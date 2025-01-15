@@ -15,16 +15,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class ReadHouseListServiceTest {
+class ReadHouseServiceTest {
 
-    ReadHouseListService sut;
+    ReadHouseService sut;
 
     QueryHousePort queryHousePort;
 
     @BeforeEach
     void init() {
         queryHousePort = mock();
-        sut = new ReadHouseListService(queryHousePort);
+        sut = new ReadHouseService(queryHousePort);
     }
 
     @Test
@@ -40,7 +40,7 @@ class ReadHouseListServiceTest {
         Page<HouseJpaEntity> entities= new PageImpl<>(es);
 
         // when
-        when(queryHousePort.query(any())).thenReturn(entities);
+        when(queryHousePort.pageQuery(any())).thenReturn(entities);
         ReadHouseListResult list = sut.getList(any());
 
         // then
