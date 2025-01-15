@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UpdateHouseDocumentationTest extends AbstractDocumentationTest {
+class UpdateHouseInfoDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {

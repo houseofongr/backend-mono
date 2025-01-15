@@ -138,6 +138,15 @@ operation::admin-house-read-detail[snippets='http-request,path-parameters,http-r
 
 operation::admin-house-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[house-room-update-api]]
+==== 룸 정보 수정 API
+
+룸의 기본 정보를 수정하는 API입니다.
+
+> 룸의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
+
+operation::admin-house-room-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
 [[file-api]]
 == 파일(File) API
 
