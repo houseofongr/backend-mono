@@ -21,7 +21,8 @@ public class Area {
         }
     }
 
-    public void update(Float width, Float height) throws AreaLimitExceededException {
+    @Deprecated
+    void update(Float width, Float height) throws AreaLimitExceededException {
 
         if (width != null && height != null) validateLimit(width, height);
         else if (width != null) validateLimit(width);

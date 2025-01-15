@@ -43,7 +43,7 @@ class AreaTest {
     }
 
     @Test
-    @DisplayName("영역 업데이트 테스트")
+    @DisplayName("영역 업데이트 테스트 - 현재 사용하지 않음")
     void testUpdate() throws AreaLimitExceededException {
         // given
         Area area = new Area(5000F, 5000F);

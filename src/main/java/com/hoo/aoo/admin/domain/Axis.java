@@ -30,7 +30,8 @@ public class Axis {
         }
     }
 
-    public void update(Float x, Float y, Float z) throws AxisLimitExceededException {
+    @Deprecated
+    void update(Float x, Float y, Float z) throws AxisLimitExceededException {
 
         if (x == null && y == null && z == null) return;
 

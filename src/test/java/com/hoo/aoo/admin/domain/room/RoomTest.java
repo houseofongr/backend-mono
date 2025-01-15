@@ -31,27 +31,17 @@ class RoomTest {
 
     @Test
     @DisplayName("룸 수정 테스트")
-    void testUpdateRoom() throws AxisLimitExceededException, AreaLimitExceededException {
+    void testUpdateInfoRoom() throws AxisLimitExceededException, AreaLimitExceededException {
         // given
         Room room = getRoom();
 
         String name = "현관";
-        Float x = 345f;
-        Float y = 567f;
-        Float z = null;
-        Float width = 500f;
-        Float height = null;
 
         // when
-        room.update(name, x, y, z, width, height);
+        room.updateInfo(name);
 
         // then
         assertThat(room.getId().getName()).isEqualTo(name);
-        assertThat(room.getAxis().getX()).isEqualTo(x);
-        assertThat(room.getAxis().getY()).isEqualTo(y);
-        assertThat(room.getAxis().getZ()).isEqualTo(1f);
-        assertThat(room.getArea().getWidth()).isEqualTo(width);
-        assertThat(room.getArea().getHeight()).isEqualTo(200f);
     }
 
     private Room getRoom() throws AxisLimitExceededException, AreaLimitExceededException {

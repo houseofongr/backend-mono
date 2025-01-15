@@ -32,9 +32,7 @@ public class Room {
         return new Room(roomId, area, axis, image);
     }
 
-    public void update(String name, Float x, Float y, Float z, Float width, Float height) throws AreaLimitExceededException, AxisLimitExceededException {
+    public void updateInfo(String name) {
         id.update(name);
-        axis.update(x, y, z);
-        area.update(width,height);
     }
 }

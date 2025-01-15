@@ -59,7 +59,7 @@ class AxisTest {
     }
 
     @Test
-    @DisplayName("좌표 수정 테스트")
+    @DisplayName("좌표 수정 테스트 - 현재 사용하지 않음")
     void testUpdate() throws AxisLimitExceededException {
         // given
         Axis axis = new Axis(123F, 456F, 1F);
