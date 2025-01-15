@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.hoo.aoo.common.FixtureRepository.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UpdateHouseServiceTest {
@@ -59,6 +59,8 @@ class UpdateHouseServiceTest {
         // given
         House houseWithRoom = getHouseWithRoom();
         UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(1L, "거실", "욕실");
+        UpdateRoomInfoCommand notFoundCommand = new UpdateRoomInfoCommand(1L, "no name", "new name");
+        UpdateRoomInfoCommand duplicateCommand = new UpdateRoomInfoCommand(1L, "거실", "주방");
 
         // when
         when(loadHousePort.load(1L)).thenReturn(Optional.of(houseWithRoom));
@@ -66,9 +68,12 @@ class UpdateHouseServiceTest {
 
         // then
         verify(loadHousePort, times(1)).load(1L);
-        verify(updateRoomPort, times(1)).update(any(),any());
+        verify(updateRoomPort, times(1)).update(any(), any(), any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 거실 룸의 정보 수정이 완료되었습니다.");
+
+        assertThatThrownBy(() -> sut.update(notFoundCommand)).hasMessage(AdminErrorCode.ROOM_NOT_FOUND.getMessage());
+        assertThatThrownBy(() -> sut.update(duplicateCommand)).hasMessage(AdminErrorCode.ROOM_NAME_DUPLICATED.getMessage());
     }
 
 }

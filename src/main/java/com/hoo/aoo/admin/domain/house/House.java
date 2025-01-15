@@ -86,4 +86,13 @@ public class House {
 
         throw new RoomNameNotFoundException(id.getTitle(), originalName);
     }
+
+    public Room getRoom(String name) throws RoomNameNotFoundException {
+        for (Room room : rooms) {
+            if (room.getId().getName().equals(name))
+                return room;
+        }
+
+        throw new RoomNameNotFoundException(id.getTitle(), name);
+    }
 }
