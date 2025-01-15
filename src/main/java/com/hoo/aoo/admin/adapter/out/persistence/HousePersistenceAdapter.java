@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Component
 @RequiredArgsConstructor
 public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, UpdateRoomPort, LoadHousePort {
@@ -77,5 +79,13 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
     @Override
     public void update(Long houseId, String originalName, Room room) {
 
+        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllByHouseId(houseId);
+
+        for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
+            if (roomJpaEntity.getName().equals(originalName)){
+                roomJpaEntity.updateInfo(room.getId().getName());
+                return;
+            }
+        }
     }
 }

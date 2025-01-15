@@ -42,4 +42,8 @@ public class RoomJpaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID")
     private HouseJpaEntity house;
+
+    public void updateInfo(String name) {
+        this.name = name;
+    }
 }
