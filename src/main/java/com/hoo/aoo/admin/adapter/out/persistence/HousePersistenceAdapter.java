@@ -40,7 +40,7 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort {
     }
 
     @Override
-    public HouseJpaEntity query(Long id) {
+    public Optional<HouseJpaEntity> query(Long id) {
         Optional<HouseJpaEntity> entity = houseJpaRepository.findById(id);
         return null;
     }
