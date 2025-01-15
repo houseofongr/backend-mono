@@ -31,7 +31,6 @@ class ReadHouseListResultTest {
         assertThat(houseDto.imageId()).isEqualTo(houseJpaEntity.getBasicImageFileId());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM.dd. yyyy", Locale.ENGLISH);
-        System.out.println("houseDto = " + houseDto.createdDate());
         assertThat(houseDto.createdDate()).isEqualTo(formatter.format(houseJpaEntity.getCreatedTime()));
         assertThat(houseDto.updatedDate()).isEqualTo(formatter.format(houseJpaEntity.getUpdatedTime()));
 
