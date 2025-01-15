@@ -69,7 +69,7 @@ class HousePersistenceAdapterTest {
 
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
-    @DisplayName("HouseJpaEntity 조회 테스트")
+    @DisplayName("HouseJpaEntity 페이지 조회 테스트")
     void testPageQueryHouse() {
         // given
         Pageable pageable = PageRequest.of(0,9);
@@ -108,5 +108,38 @@ class HousePersistenceAdapterTest {
         assertThat(searchEntities2).hasSize(1);
         assertThat(searchEntities3).hasSize(1);
         assertThat(noEntities).hasSize(0);
+    }
+
+    @Test
+    @DisplayName("HouseJpaEntity 단건 조회 테스트")
+    void testQueryHouse() {
+        // given
+        Long houseId = 1L;
+
+        // when
+        Optional<HouseJpaEntity> query = sut.query(houseId);
+
+        // then
+        assertThat(query).isNotEmpty();
+        assertThat(query.get().getId()).isEqualTo(houseId);
+        assertThat(query.get().getTitle()).isEqualTo("cozy house");
+        assertThat(query.get().getAuthor()).isEqualTo("leaf");
+        assertThat(query.get().getDescription()).isEqualTo("this is cozy house");
+        assertThat(query.get().getWidth()).isEqualTo(5000f);
+        assertThat(query.get().getHeight()).isEqualTo(5000f);
+        assertThat(query.get().getBasicImageFileId()).isEqualTo(1L);
+        assertThat(query.get().getBorderImageFileId()).isEqualTo(2L);
+        assertThat(query.get().getRooms()).hasSize(2)
+                .anySatisfy(room -> {
+                    assertThat(room.getId()).isEqualTo(1L);
+                    assertThat(room.getName()).isEqualTo("거실");
+                    assertThat(room.getX()).isEqualTo(0);
+                    assertThat(room.getY()).isEqualTo(0);
+                    assertThat(room.getZ()).isEqualTo(0);
+                    assertThat(room.getWidth()).isEqualTo(5000);
+                    assertThat(room.getHeight()).isEqualTo(1000);
+                    assertThat(room.getImageFileId()).isEqualTo(1L);
+                    assertThat(room.getHouse()).isEqualTo(query.get());
+                });
     }
 }
