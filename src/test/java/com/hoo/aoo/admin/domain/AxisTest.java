@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.domain;
 
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,5 +56,29 @@ class AxisTest {
         assertThat(axis.getX()).isEqualTo(32765.12f);
         assertThat(axis.getY()).isEqualTo(32766.23f);
         assertThat(axis.getZ()).isEqualTo(32766.34f);
+    }
+
+    @Test
+    @DisplayName("좌표 수정 테스트")
+    void testUpdate() throws AxisLimitExceededException {
+        // given
+        Axis axis = new Axis(123F, 456F, 1F);
+
+        Float x = 345f;
+        Float y = 567f;
+        Float z = null;
+
+        // when
+        axis.update(x, y, z);
+
+        // then
+        assertThat(axis.getX()).isEqualTo(x);
+        assertThat(axis.getY()).isEqualTo(y);
+        assertThat(axis.getZ()).isEqualTo(1F);
+
+        assertThatThrownBy(() -> axis.update(32767.1F,null, null))
+                .isInstanceOf(AxisLimitExceededException.class);
+        assertThatThrownBy(() -> axis.update(-1F,null, null))
+                .isInstanceOf(AxisLimitExceededException.class);
     }
 }

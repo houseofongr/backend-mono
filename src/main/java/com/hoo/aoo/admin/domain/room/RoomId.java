@@ -7,10 +7,14 @@ import lombok.Getter;
 public class RoomId {
 
     private final HouseId houseId;
-    private final String name;
+    private String name;
 
     public RoomId(HouseId houseId, String name) {
         this.houseId = houseId;
         this.name = name;
+    }
+
+    public void update(String name) {
+        this.name = name == null? this.name : name;
     }
 }

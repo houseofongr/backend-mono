@@ -57,4 +57,9 @@ public class House {
             }
         }
     }
+
+    public void update(String title, String author, String description, Float width, Float height) throws AreaLimitExceededException {
+        id.update(title, author, description);
+        area.update(width, height);
+    }
 }

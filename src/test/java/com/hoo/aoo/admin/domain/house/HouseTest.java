@@ -85,12 +85,28 @@ class HouseTest {
     }
 
     @Test
-    @DisplayName("하우스 조회 테스트")
-    void testLoadRoom() {
+    @DisplayName("하우스 수정 테스트")
+    void testUpdate() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException {
         // given
+        HouseId houseId = new HouseId(title, author, description);
+        List<RoomId> rooms = List.of(new RoomId(houseId, "거실"));
+
+        House newHouse = House.create(houseId, width, height, rooms);
+
+        String title = "not cozy house";
+        String author = null;
+        String description = "this is not cozy house.";
+        Float width = null;
+        Float height = 4500F;
 
         // when
+        newHouse.update(title, author, description, width, height);
 
         // then
+        assertThat(newHouse.getId().getTitle()).isEqualTo(title);
+        assertThat(newHouse.getId().getAuthor()).isEqualTo("leaf");
+        assertThat(newHouse.getId().getDescription()).isEqualTo(description);
+        assertThat(newHouse.getArea().getWidth()).isEqualTo(5000F);
+        assertThat(newHouse.getArea().getHeight()).isEqualTo(4500F);
     }
 }

@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class Area {
 
-    private final Float width;
-    private final Float height;
+    private Float width;
+    private Float height;
 
     public Area(Float width, Float height) throws AreaLimitExceededException {
         validateLimit(height, width);
@@ -19,5 +19,16 @@ public class Area {
         for (Float param : params) {
             if (param <= 0 || param > Short.MAX_VALUE) throw new AreaLimitExceededException();
         }
+    }
+
+    public void update(Float width, Float height) throws AreaLimitExceededException {
+
+        if (width != null && height != null) validateLimit(width, height);
+        else if (width != null) validateLimit(width);
+        else if (height != null) validateLimit(height);
+        else return;
+
+        this.width = width == null? this.width : width;
+        this.height = height == null? this.height : height;
     }
 }

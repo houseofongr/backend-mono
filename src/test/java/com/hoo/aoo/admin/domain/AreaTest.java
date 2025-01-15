@@ -42,4 +42,23 @@ class AreaTest {
         assertThat(area.getHeight()).isEqualTo(32766.23f);
     }
 
+    @Test
+    @DisplayName("영역 업데이트 테스트")
+    void testUpdate() throws AreaLimitExceededException {
+        // given
+        Area area = new Area(5000F, 5000F);
+
+        // when
+        area.update(4500F,null);
+
+        // then
+        assertThat(area.getWidth()).isEqualTo(4500F);
+        assertThat(area.getHeight()).isEqualTo(5000F);
+
+        assertThatThrownBy(() -> area.update(32767.1F,null))
+                .isInstanceOf(AreaLimitExceededException.class);
+        assertThatThrownBy(() -> area.update(0F,null))
+                .isInstanceOf(AreaLimitExceededException.class);
+    }
+
 }

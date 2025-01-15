@@ -3,12 +3,15 @@ package com.hoo.aoo.admin.domain;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 public class Axis {
 
-    private final Float x;
-    private final Float y;
-    private final Float z;
+    private Float x;
+    private Float y;
+    private Float z;
 
     public Axis(Float x, Float y, Float z) throws AxisLimitExceededException {
         validateLimit(x, y, z);
@@ -18,12 +21,29 @@ public class Axis {
     }
 
     public static Axis from(Float x, Float y) throws AxisLimitExceededException {
-        return new Axis(x,y,0f);
+        return new Axis(x, y, 0f);
     }
 
     private void validateLimit(Float... params) throws AxisLimitExceededException {
         for (Float param : params) {
             if (param < 0 || param > Short.MAX_VALUE) throw new AxisLimitExceededException();
         }
+    }
+
+    public void update(Float x, Float y, Float z) throws AxisLimitExceededException {
+
+        if (x == null && y == null && z == null) return;
+
+        List<Float> updatable = new ArrayList<>();
+
+        if (x != null) updatable.add(x);
+        if (y != null) updatable.add(y);
+        if (z != null) updatable.add(z);
+
+        validateLimit(updatable.toArray(Float[]::new));
+
+        this.x = x == null ? this.x : x;
+        this.y = y == null ? this.y : y;
+        this.z = z == null ? this.z : z;
     }
 }
