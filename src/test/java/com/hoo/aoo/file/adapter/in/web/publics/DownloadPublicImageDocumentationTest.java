@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.restdocs.RestDocumentationContext;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -23,6 +24,7 @@ import java.util.Base64;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,6 +51,7 @@ public class DownloadPublicImageDocumentationTest extends AbstractDocumentationT
         mockMvc.perform(get("/public/images/{imageId}", entity.getId()))
                 .andExpect(status().is(200))
                 .andDo(document("file-public-images-download",
+                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");

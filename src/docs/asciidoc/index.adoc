@@ -9,19 +9,20 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :toclevels: 2
 :pdf-themesdir: {docdir}/themes
 :pdf-theme: ko
-:pdf-fontsdir: {docdir}/assets/fonts
+:pdf-fontsdir: {docdir}/fonts
 :stylesheet: stylesheet.css
-:stylesdir: {docdir}/assets/styles
+:imagesdir: {docdir}/images
+:stylesdir: {docdir}/styles
 // :sectlinks:
 
 아카이브 오브 옹알 API 공식 문서입니다.
 
 This is Archive Of Ong(AOO) R API Official Documents.
 
-[[authn-api]]
-== 인증(Authn) API
+[[aar-api]]
+== 소리기록실(AAR) API
 
-소리기록실(Audio Record Room; ARR)의 인증과 관련된 로직과 주요 API입니다.
+소리기록실(Audio Record Room; ARR) 사용자를 위한 API입니다.
 
 [[aar-authn-flow]]
 === 소리기록실 인증 플로우
@@ -60,9 +61,9 @@ image::regist.png[regist flow]
     e. ``사용자``는 메인 페이지로 이동합니다.
 
 [[aar-authn-login-api]]
-=== 소리기록실 SNS 로그인 API
+=== SNS 로그인 API
 
-SNS 로그인을 시도합니다.
+소리기록실에 SNS 로그인을 시도합니다.
 
 - **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
 
@@ -73,9 +74,9 @@ operation::aar-authn-login[snippets='http-request,fileId-parameters,http-respons
 operation::aar-authn-login-2[snippets='response-fields']
 
 [[aar-authn-regist-api]]
-=== 소리기록실 회원가입 API
+=== 회원가입 API
 
-회원가입을 시도합니다.
+소리기록실에 회원가입을 시도합니다.
 
 operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
 
@@ -111,6 +112,11 @@ operation::admin-house-create[snippets='http-response,response-fields']
 
 operation::admin-house-read-list[snippets='http-request,path-parameters,http-response,response-fields']
 
+[[house-read-detail-api]]
+=== 하우스 상세 조회 API
+
+operation::admin-house-read-detail[snippets='http-request,path-parameters,http-response,response-fields']
+
 
 [[file-api]]
 == 파일(File) API
@@ -129,7 +135,7 @@ operation::file-public-images-upload[snippets='http-request,http-response,respon
 
 이미지 파일을 공개 서버로부터 로드합니다.
 
-operation::file-public-images-download[snippets='http-request,response-file']
+operation::file-public-images-download[snippets='http-request,path-parameters,response-file']
 
 [[file-private-images-download-api]]
 === 이미지 로드 API(Private)
@@ -138,7 +144,8 @@ operation::file-public-images-download[snippets='http-request,response-file']
 
 `* 해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.`
 
-operation::file-private-images-download[snippets='http-request,response-file']
+operation::file-private-images-download[snippets='http-request,
+path-parameters,response-file']
 
 [[error-code]]
 == 에러코드 API

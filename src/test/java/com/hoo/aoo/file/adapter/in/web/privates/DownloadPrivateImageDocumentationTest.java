@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,6 +41,7 @@ class DownloadPrivateImageDocumentationTest extends AbstractDocumentationTest {
         mockMvc.perform(get("/private/images/{imageId}", entity.getId()))
                 .andExpect(status().is(200))
                 .andDo(document("file-private-images-download",
+                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
