@@ -16,10 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import static com.hoo.aoo.admin.application.service.UpdateHouseService.*;
 
 @Component
 @RequiredArgsConstructor

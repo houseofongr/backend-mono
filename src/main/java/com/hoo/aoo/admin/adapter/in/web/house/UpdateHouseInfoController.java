@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateHouseController {
+public class UpdateHouseInfoController {
 
     @PostMapping("/admin/houses/update/{houseId}")
     ResponseEntity<HouseIdResult> update(@PathVariable Long houseId) {

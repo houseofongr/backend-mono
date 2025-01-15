@@ -98,7 +98,7 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 수정 테스트")
-    void testUpdate() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException, AxisLimitExceededException {
+    void testUpdateInfo() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -110,7 +110,7 @@ class HouseTest {
         String description = "this is not cozy house.";
 
         // when
-        newHouse.update(title, author, description);
+        newHouse.updateInfo(title, author, description);
 
         // then
         assertThat(newHouse.getId().getTitle()).isEqualTo(title);

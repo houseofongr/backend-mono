@@ -21,7 +21,7 @@ class UpdateHouseDocumentationTest extends AbstractDocumentationTest {
 
     @Test
     @DisplayName("하우스 수정 문서화")
-    void testHouseUpdate() throws Exception {
+    void testHouseUpdateInfo() throws Exception {
 
 
         mockMvc.perform(patch("/admin/houses/{houseId}", 1L)
@@ -36,7 +36,7 @@ class UpdateHouseDocumentationTest extends AbstractDocumentationTest {
                                 partWithName("description").description("수정할 상세정보입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 하우스 수정이 완료되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : 0번 하우스 정보 수정이 완료되었습니다.")
                         )
                 ));
     }

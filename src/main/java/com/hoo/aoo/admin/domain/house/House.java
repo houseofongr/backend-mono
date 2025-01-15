@@ -64,7 +64,7 @@ public class House {
         }
     }
 
-    public void update(String title, String author, String description) throws AreaLimitExceededException {
+    public void updateInfo(String title, String author, String description) {
         id.update(title, author, description);
     }
 }

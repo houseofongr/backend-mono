@@ -176,7 +176,7 @@ class HousePersistenceAdapterTest {
 
     @Test
     @DisplayName("하우스 수정 테스트")
-    void testUpdateHouse() throws Exception {
+    void testUpdateInfoHouse() throws Exception {
         // given
         House houseWithRoom = FixtureRepository.getHouseWithRoom(new HouseId("not cozy house", "arang", "this is not cozy house"));
 

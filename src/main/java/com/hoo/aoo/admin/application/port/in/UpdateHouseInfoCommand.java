@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.in;
 
-public record UpdateHouseCommand(
+public record UpdateHouseInfoCommand(
         Long persistenceId,
         String title,
         String author,
