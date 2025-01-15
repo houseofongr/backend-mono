@@ -6,7 +6,7 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :source-highlighter: highlightjs
 :highlightjs-theme:
 :toc: left
-:toclevels: 2
+:toclevels: 3
 :pdf-themesdir: {docdir}/themes
 :pdf-theme: ko
 :pdf-fontsdir: {docdir}/fonts
@@ -60,71 +60,78 @@ image::regist.png[regist flow]
     d. ``프론트엔드``는 해당 사용자 정보를 포함하여 메인 페이지를 전송합니다.
     e. ``사용자``는 메인 페이지로 이동합니다.
 
+[[aar-authn-api]]
+=== 인증(Authn) API
+
+소리기록실의 인증을 위한 API입니다.
+
 [[aar-authn-login-api]]
-=== SNS 로그인 API
+==== SNS 로그인 API
 
 소리기록실에 SNS 로그인을 시도합니다.
 
 - **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
 
-operation::aar-authn-login[snippets='http-request,fileId-parameters,http-response,response-headers']
+operation::aar-authn-login[snippets='http-request,path-parameters,http-response,response-headers']
 
 > 파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.
 
 operation::aar-authn-login-2[snippets='response-fields']
 
 [[aar-authn-regist-api]]
-=== 회원가입 API
+==== 회원가입 API
 
 소리기록실에 회원가입을 시도합니다.
 
 operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
 
+[[admin-api]]
+== 관리자(Admin) API
+
+관리자페이지에서 소리기록실을 관리하기 위한 API 입니다.
 
 [[house-api]]
-== 하우스(House) API
-
-관리자페이지에서 하우스를 관리하기 위한 API 입니다.
+=== 하우스(House) API
 
 [[house-create-api]]
-=== 하우스 생성 API
+==== 하우스 생성 API
 
 관리자가 지정한 하우스의 좌표에 맞게 하우스를 저장합니다.
 
-==== Http Request
+===== Http Request
 include::{snippets}/admin-house-create/http-request.adoc[]
 
-==== Request Form
+===== Request Form
 include::{snippets}/admin-house-create/request-parts.adoc[]
 
-> 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 **MetaData**와 일치해야 합니다.
+> 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 <<Metadata>>와 일치해야 합니다.
 
-==== Metadata
+===== Metadata
 include::{snippets}/admin-house-create-metadata/response-fields.adoc[]
 
-==== Metadata 예시
+===== Metadata 예시
 include::{snippets}/admin-house-create-metadata/response-body.adoc[]
 
 operation::admin-house-create[snippets='http-response,response-fields']
 
 [[house-read-list-api]]
-=== 하우스 리스트 조회 API
+==== 하우스 리스트 조회 API
 
 operation::admin-house-read-list[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[house-read-detail-api]]
-=== 하우스 상세 조회 API
+==== 하우스 상세 조회 API
 
 operation::admin-house-read-detail[snippets='http-request,path-parameters,http-response,response-fields']
 
 
 [[house-update-api]]
-=== 하우스 수정 API
+==== 하우스 수정 API
 
 operation::admin-house-update[snippets='http-request,path-parameters,request-parts']
 
 "생성 API와 동일하게 메타데이터 양식을 지켜야 합니다."
--- 메타데이터에 관한 정보는 <<_metadata_예시>>를 참고하시기 바랍니다.
+-- 메타데이터에 관한 정보는 <<_metadata>>를 참고하시기 바랍니다.
 
 operation::admin-house-update[snippets='http-response,response-fields']
 
@@ -133,47 +140,58 @@ operation::admin-house-update[snippets='http-response,response-fields']
 
 파일서버의 업로드, 다운로드와 관련된 API입니다.
 
+[[public-file-api]]
+=== 공개(Public) API
+
+별도의 권한 없이 요청 가능한 API입니다.
+
 [[file-public-images-upload-api]]
-=== 이미지 업로드 API(Public)
+==== 이미지 업로드 API
 
 이미지 파일을 공개 서버에 업로드합니다.
 
 operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
 
 [[file-public-images-download-api]]
-=== 이미지 로드 API(Public)
+==== 이미지 로드 API
 
 이미지 파일을 공개 서버로부터 로드합니다.
 
 operation::file-public-images-download[snippets='http-request,path-parameters,response-file']
 
+[[private-file-api]]
+=== 비공개(Private) API
+
+해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.
+
+> 차후 해당 권한을 바탕으로 자원 접근을 제어할 예정입니다.
+
 [[file-private-images-download-api]]
-=== 이미지 로드 API(Private)
+==== 이미지 로드 API
 
 이미지 파일을 비공개 서버로부터 로드합니다.
 
-> 해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.
--- 차후 해당 권한을 바탕으로 자원 접근을 제어할 예정입니다.
-
-operation::file-private-images-download[snippets='http-request,
-path-parameters,response-file']
+operation::file-private-images-download[snippets='http-request,path-parameters,response-file']
 
 [[error-code]]
-== 에러코드 API
+== 에러코드
+
+[[error-code-API]]
+=== 에러코드 API
 
 API 요청 간 발생하는 에러코드를 조회할 수 있습니다.
 
-**에러코드 조회 API**의 응답 결과는 아래 <<에러코드 테이블>>을 참고 바랍니다.
+> **에러코드 조회 API**의 응답 결과는 아래 <<에러코드 테이블>>을 참고 바랍니다.
 
 [[aar-error-code-api]]
-=== 소리기록실 에러코드 API
+==== 소리기록실 에러코드 API
 
 소리기록실에서 관리하는 에러코드를 확인할 수 있습니다.
 
 include::{snippets}/aar-error-code/http-request.adoc[]
 
 [[admin-error-code-api]]
-=== 관리자 에러코드 API
+==== 관리자 에러코드 API
 
 관리자 페이지에서 관리하는 에러코드를 확인할 수 있습니다.
 
@@ -181,28 +199,28 @@ include::{snippets}/admin-error-code/http-request.adoc[]
 
 
 [[file-error-code-api]]
-=== 파일 에러코드 API
+==== 파일 에러코드 API
 
 파일 서버에서 관리하는 에러코드를 확인할 수 있습니다.
 
 include::{snippets}/file-error-code/http-request.adoc[]
 
 [[error-code-table]]
-== 에러코드 테이블
+=== 에러코드 테이블
 
 전체 에러코드는 다음 표에서 확인할 수 있습니다.
 해당 표에서 확인되지 않는 에러코드는 별도 문의 바랍니다.
 
 [[aar-error-code-table]]
-==== 소리기록실 에러코드 테이블
+==== 소리기록실 에러코드
 
 include::{snippets}/aar-error-code/error-code-response-fields.adoc[]
 
 [[admin-error-code-table]]
-==== 관리자 에러코드 테이블
+==== 관리자 에러코드
 include::{snippets}/admin-error-code/error-code-response-fields.adoc[]
 
 [[file-error-code-table]]
-==== 파일 에러코드 테이블
+==== 파일 에러코드
 
 include::{snippets}/file-error-code/error-code-response-fields.adoc[]
