@@ -6,10 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
-import com.hoo.aoo.admin.application.port.out.LoadHousePort;
-import com.hoo.aoo.admin.application.port.out.QueryHousePort;
-import com.hoo.aoo.admin.application.port.out.SaveHousePort;
-import com.hoo.aoo.admin.application.port.out.UpdateHousePort;
+import com.hoo.aoo.admin.application.port.out.*;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
@@ -24,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, LoadHousePort {
+public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, UpdateRoomPort, LoadHousePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
@@ -74,6 +71,11 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
         HouseJpaEntity entity = houseJpaRepository.findById(id).orElseThrow();
 
         entity.updateInfo(house.getId().getTitle(), house.getId().getAuthor(), house.getId().getDescription());
+
+    }
+
+    @Override
+    public void update(Long houseId, String originalName, Room room) {
 
     }
 }

@@ -192,4 +192,21 @@ class HousePersistenceAdapterTest {
         assertThat(query.get().getAuthor()).isEqualTo("arang");
         assertThat(query.get().getDescription()).isEqualTo("this is not cozy house");
     }
+
+    @Test
+    @Sql("HousePersistenceAdapterTest.sql")
+    @DisplayName("룸 수정 테스트")
+    void testUpdateRoomInfo() throws AxisLimitExceededException, AreaLimitExceededException {
+        // given
+        Room 욕실 = FixtureRepository.getRoom(new HouseId("", "", ""), "욕실");
+
+        // when
+        sut.update(1L, "거실", 욕실);
+        Optional<HouseJpaEntity> query = sut.query(1L);
+
+        // then
+        assertThat(query.get().getRooms()).anySatisfy(roomJpaEntity ->{
+            assertThat(roomJpaEntity.getName()).isEqualTo("욕실");
+        });
+    }
 }
