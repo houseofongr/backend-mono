@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListResult;
 import com.hoo.aoo.admin.application.port.in.ReadHouseResult;
-import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
+import com.hoo.aoo.admin.application.port.out.QueryHousePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

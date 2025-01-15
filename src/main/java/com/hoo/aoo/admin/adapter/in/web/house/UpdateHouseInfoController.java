@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.HouseIdResult;
 import com.hoo.aoo.admin.application.port.in.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.in.UpdateHouseInfoUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;

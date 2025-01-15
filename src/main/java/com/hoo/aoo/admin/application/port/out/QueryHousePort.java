@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.application.port.out.database;
+package com.hoo.aoo.admin.application.port.out;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;

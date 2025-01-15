@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.application.port.in.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.out.LoadHousePort;
-import com.hoo.aoo.admin.application.port.out.database.UpdateHousePort;
+import com.hoo.aoo.admin.application.port.out.UpdateHousePort;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
@@ -17,9 +17,9 @@ import static com.hoo.aoo.common.FixtureRepository.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class UpdateHouseInfoServiceTest {
+class UpdateHouseServiceTest {
 
-    UpdateHouseInfoService sut;
+    UpdateHouseService sut;
 
     LoadHousePort loadHousePort;
     UpdateHousePort updateHousePort;
@@ -28,12 +28,12 @@ class UpdateHouseInfoServiceTest {
     void init() {
         loadHousePort = mock();
         updateHousePort = mock();
-        sut = new UpdateHouseInfoService(loadHousePort, updateHousePort);
+        sut = new UpdateHouseService(loadHousePort, updateHousePort);
     }
 
     @Test
     @DisplayName("하우스 업데이트 서비스 테스트")
-    void testUpdateInfo() throws Exception {
+    void testUpdateRoomInfo() throws Exception {
         // given
         House house = getHouse(new HouseId("cozy house", "leaf", "this is cozy house"), List.of());
         UpdateHouseInfoCommand command = new UpdateHouseInfoCommand(1L, "not cozy house", "arang", "this is not cozy house.");
