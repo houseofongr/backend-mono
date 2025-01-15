@@ -117,23 +117,26 @@ operation::admin-house-create[snippets='http-response,response-fields']
 [[house-read-list-api]]
 ==== 하우스 리스트 조회 API
 
+여러 건의 하우스를 검색 조건에 맞게 조회합니다.
+
 operation::admin-house-read-list[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[house-read-detail-api]]
 ==== 하우스 상세 조회 API
 
+하우스와 내부 룸에 대한 상세 정보를 조회합니다.
+
 operation::admin-house-read-detail[snippets='http-request,path-parameters,http-response,response-fields']
 
 
 [[house-update-api]]
-==== 하우스 수정 API
+==== 하우스 정보 수정 API
 
-operation::admin-house-update[snippets='http-request,path-parameters,request-parts']
+하우스의 기본 정보를 수정하는 API입니다.
 
-"생성 API와 동일하게 메타데이터 양식을 지켜야 합니다."
--- 메타데이터에 관한 정보는 <<_metadata>>를 참고하시기 바랍니다.
+> 하우스의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
-operation::admin-house-update[snippets='http-response,response-fields']
+operation::admin-house-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API
