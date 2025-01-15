@@ -9,7 +9,7 @@ import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ public class CreateHouseService implements CreateHouseUseCase {
             House newHouse = House.create(houseId,
                     metadata.house().width(),
                     metadata.house().height(),
-                    rooms.stream().map(Room::getId).toList());
+                    rooms);
 
             Long savedId = saveHousePort.save(newHouse,
                     rooms,

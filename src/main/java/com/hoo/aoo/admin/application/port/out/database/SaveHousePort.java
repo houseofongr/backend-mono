@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.port.out.database;
 
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 
 import java.util.List;
 

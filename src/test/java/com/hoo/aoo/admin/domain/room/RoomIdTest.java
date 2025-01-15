@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.domain.room;
 
 import com.hoo.aoo.admin.domain.house.HouseId;
+import com.hoo.aoo.admin.domain.house.room.RoomId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

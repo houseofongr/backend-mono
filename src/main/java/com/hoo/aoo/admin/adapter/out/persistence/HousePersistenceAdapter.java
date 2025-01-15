@@ -5,11 +5,12 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
+import com.hoo.aoo.admin.application.port.out.LoadHousePort;
 import com.hoo.aoo.admin.application.port.out.database.QueryHousePort;
 import com.hoo.aoo.admin.application.port.out.database.SaveHousePort;
 import com.hoo.aoo.admin.application.port.out.database.UpdateHousePort;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort {
+public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, LoadHousePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final HouseMapper houseMapper;
@@ -49,5 +50,10 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
     @Override
     public void update(House house, List<Room> rooms, Map<Object, Long> imageIdMap) {
 
+    }
+
+    @Override
+    public House load(Long houseId) {
+        return null;
     }
 }

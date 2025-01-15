@@ -10,7 +10,7 @@ import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ class HousePersistenceAdapterTest {
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 
         Room newRoom = Room.create(houseId, "거실", 0F, 0F, 0F, 100F, 100F, 1L);
-        House newHouse = House.create(houseId, 5000F, 5000F, List.of(newRoom.getId()));
+        House newHouse = House.create(houseId, 5000F, 5000F, List.of(newRoom));
 
         // when
         Long savedId = sut.save(newHouse, List.of(newRoom), 2L, 3L);

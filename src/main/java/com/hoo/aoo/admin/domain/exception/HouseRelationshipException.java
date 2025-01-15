@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.domain.exception;
 
 import com.hoo.aoo.admin.domain.house.HouseId;
-import com.hoo.aoo.admin.domain.room.RoomId;
+import com.hoo.aoo.admin.domain.house.room.RoomId;
 
 public class HouseRelationshipException extends Throwable {
     public HouseRelationshipException(RoomId roomId, HouseId houseId) {

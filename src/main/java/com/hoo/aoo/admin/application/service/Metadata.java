@@ -1,7 +1,5 @@
 package com.hoo.aoo.admin.application.service;
 
-import com.hoo.aoo.admin.domain.room.Room;
-
 import java.util.List;
 
 public record Metadata(

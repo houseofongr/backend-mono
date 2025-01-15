@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.application.service;
 
+import com.hoo.aoo.admin.application.port.out.LoadHousePort;
 import com.hoo.aoo.admin.application.port.out.database.UpdateHousePort;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
@@ -21,14 +22,16 @@ class UpdateHouseServiceTest {
 
     UpdateHouseService sut;
 
+    LoadHousePort loadHousePort;
     UpdateHousePort updateHousePort;
     UploadPrivateImageUseCase uploadPrivateImageUseCase;
 
     @BeforeEach
     void init() {
+        loadHousePort = mock();
         updateHousePort = mock();
         uploadPrivateImageUseCase = mock();
-        sut = new UpdateHouseService(updateHousePort, uploadPrivateImageUseCase);
+        sut = new UpdateHouseService(loadHousePort, updateHousePort, uploadPrivateImageUseCase);
     }
 
     @Test
@@ -42,6 +45,7 @@ class UpdateHouseServiceTest {
         MessageDto message = sut.update(1L, metadata, fileMap);
 
         // then
+        verify(loadHousePort, times(1)).load(1L);
         verify(updateHousePort, times(1)).update(any(),any(),any());
         verify(uploadPrivateImageUseCase, times(4)).privateUpload(any());
 

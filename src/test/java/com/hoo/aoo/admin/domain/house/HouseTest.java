@@ -1,9 +1,12 @@
 package com.hoo.aoo.admin.domain.house;
 
+import com.hoo.aoo.admin.domain.FixtureRepository;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.exception.RoomDuplicatedException;
-import com.hoo.aoo.admin.domain.room.RoomId;
+import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.house.room.RoomId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,10 +24,10 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 생성 테스트")
-    void testCreateHouse() throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException {
+    void testCreateHouse() throws AreaLimitExceededException, RoomDuplicatedException, HouseRelationshipException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
-        List<RoomId> rooms = List.of(new RoomId(houseId, "거실"));
+        List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
 
         // when
         House newHouse = House.create(houseId, width, height, rooms);
@@ -39,20 +42,21 @@ class HouseTest {
 
     @Test
     @DisplayName("방 ID 중복 테스트")
-    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException {
+    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
         // when
-        List<RoomId> rooms = List.of(
-                new RoomId(houseId, "거실"),
-                new RoomId(houseId, "주방"));
+        List<Room> rooms = List.of(
+                FixtureRepository.getRoom(houseId, "거실"),
+                FixtureRepository.getRoom(houseId, "주방")
+        );
 
-        List<RoomId> roomsDuplicated = List.of(
-                new RoomId(houseId, "거실"),
-                new RoomId(houseId, "거실"));
-
-        // then
+        List<Room> roomsDuplicated = List.of(
+                FixtureRepository.getRoom(houseId, "거실"),
+                FixtureRepository.getRoom(houseId, "거실")
+        );
+                // then
         assertThat(House.create(houseId, width, height, rooms)).isNotNull();
 
         assertThatThrownBy(() -> House.create(houseId, width, height, roomsDuplicated))
@@ -62,20 +66,29 @@ class HouseTest {
 
     @Test
     @DisplayName("방 참조관계 테스트")
-    void testRoomRelationship() {
+    void testRoomRelationship() throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomDuplicatedException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
         // when
-        List<RoomId> rooms = List.of(
-                new RoomId(null, "거실"));
+        List<Room> rooms = List.of(
+                FixtureRepository.getRoom(houseId, "거실")
+        );
 
-        List<RoomId> roomsToAnotherHouse = List.of(
-                new RoomId(new HouseId("test", "tester","test house id"), "거실"));
+        List<Room> noHouseRoom = List.of(
+                FixtureRepository.getRoom(null, "거실")
+        );
+
+
+        List<Room> roomsToAnotherHouse = List.of(
+                FixtureRepository.getRoom(new HouseId("test", "tester","test house id"), "거실")
+        );
 
 
         // then
-        assertThatThrownBy(() -> House.create(houseId, width, height, rooms))
+        House.create(houseId,width,height,rooms);
+
+        assertThatThrownBy(() -> House.create(houseId, width, height, noHouseRoom))
                 .isInstanceOf(HouseRelationshipException.class)
                 .hasMessage("Room name 거실 doesn't related to " + houseId);
 
@@ -86,10 +99,10 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 수정 테스트")
-    void testUpdate() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException {
+    void testUpdate() throws HouseRelationshipException, AreaLimitExceededException, RoomDuplicatedException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
-        List<RoomId> rooms = List.of(new RoomId(houseId, "거실"));
+        List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
 
         House newHouse = House.create(houseId, width, height, rooms);
 

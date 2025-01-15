@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.domain.room;
+package com.hoo.aoo.admin.domain.house.room;
 
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.Axis;
