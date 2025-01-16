@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, UpdateHousePort, UpdateRoomPort, FindHousePort {
+public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, UpdateHousePort, UpdateRoomPort, FindHousePort, FindRoomPort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
@@ -85,5 +85,10 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
                 return;
             }
         }
+    }
+
+    @Override
+    public Optional<RoomJpaEntity> findJpaEntity(Long id, String roomName) {
+        return Optional.empty();
     }
 }

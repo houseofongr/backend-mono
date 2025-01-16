@@ -2,12 +2,16 @@ package com.hoo.aoo.admin.application.service;
 
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.*;
 import com.hoo.aoo.admin.application.port.out.FindHousePort;
+import com.hoo.aoo.admin.application.port.out.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.SearchHousePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +19,7 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
 
     private final SearchHousePort searchHousePort;
     private final FindHousePort findHousePort;
+    private final FindRoomPort findRoomPort;
 
     @Override
     public QueryHouseResult query(Long houseId) {
@@ -32,6 +37,9 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
 
     @Override
     public QueryRoomResult query(QueryRoomCommand command) {
-        return null;
+        RoomJpaEntity jpaEntity = findRoomPort.findJpaEntity(command.houseId(), command.roomName())
+                .orElseThrow(() -> new AdminException(AdminErrorCode.ROOM_NOT_FOUND));
+
+        return QueryRoomResult.of(jpaEntity);
     }
 }

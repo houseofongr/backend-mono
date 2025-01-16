@@ -22,8 +22,16 @@ public class FixtureRepository {
         return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f);
     }
 
+    public static Room getRoom(String roomName) throws AxisLimitExceededException, AreaLimitExceededException {
+        return getRoom(getHouseId(),roomName);
+    }
+
     public static House getHouseWithRoom() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException, RoomNameDuplicatedException {
-        return getHouseWithRoom(new HouseId("cozy house","leaf","this is cozy house"));
+        return getHouseWithRoom(getHouseId());
+    }
+
+    public static HouseId getHouseId() {
+        return new HouseId("cozy house", "leaf", "this is cozy house");
     }
 
     public static House getHouseWithRoom(HouseId houseId) throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomNameDuplicatedException {

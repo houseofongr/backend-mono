@@ -2,11 +2,14 @@ package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
-import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
-import com.hoo.aoo.admin.application.port.in.QueryHouseListResult;
-import com.hoo.aoo.admin.application.port.in.QueryHouseResult;
+import com.hoo.aoo.admin.application.port.in.*;
 import com.hoo.aoo.admin.application.port.out.FindHousePort;
+import com.hoo.aoo.admin.application.port.out.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.SearchHousePort;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.common.FixtureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,17 +29,19 @@ class QueryHouseServiceTest {
 
     SearchHousePort searchHousePort;
     FindHousePort findHousePort;
+    FindRoomPort findRoomPort;
 
     @BeforeEach
     void init() {
         searchHousePort = mock();
         findHousePort = mock();
-        sut = new QueryHouseService(searchHousePort, findHousePort);
+        findRoomPort = mock();
+        sut = new QueryHouseService(searchHousePort, findHousePort, findRoomPort);
     }
 
     @Test
     @DisplayName("리스트 조회 서비스 테스트")
-    void testQueryListService() {
+    void testQueryHouseListService() {
         // given
         List<HouseJpaEntity> es = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
@@ -56,7 +61,7 @@ class QueryHouseServiceTest {
 
     @Test
     @DisplayName("단건 조회 서비스 테스트")
-    void testQueryOneService() {
+    void testQueryHouseService() {
         // given
         List<RoomJpaEntity> rooms = List.of(
                 new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 5000f, 1000f, 3L, null),
@@ -67,7 +72,6 @@ class QueryHouseServiceTest {
         entity.prePersist();
 
         // when
-
         when(findHousePort.findJpaEntity(1L)).thenReturn(Optional.of(entity));
         QueryHouseResult result = sut.query(1L);
 
@@ -77,5 +81,23 @@ class QueryHouseServiceTest {
         // 조회되지 않을 때 예외처리
         assertThatThrownBy(() -> sut.query(2L)).isInstanceOf(AdminException.class)
                         .hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
+    }
+
+    @Test
+    @DisplayName("룸 조회 서비스 테스트")
+    void testQueryRoomService() {
+        // given
+        QueryRoomCommand command = new QueryRoomCommand(1L, "거실");
+        RoomJpaEntity entity = new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 1000f, 1000f, 1L, null);
+
+        // when
+        when(findRoomPort.findJpaEntity(1L, "거실")).thenReturn(Optional.of(entity));
+        QueryRoomResult result = sut.query(command);
+
+        // then
+        assertThat(result.room().name()).isEqualTo("거실");
+        assertThat(result.room().width()).isEqualTo(1000f);
+        assertThat(result.room().height()).isEqualTo(1000f);
+        assertThat(result.room().imageId()).isEqualTo(1L);
     }
 }
