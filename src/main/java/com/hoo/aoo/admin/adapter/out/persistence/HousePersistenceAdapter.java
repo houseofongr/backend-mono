@@ -94,11 +94,12 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
 
     @Override
     public void delete(Long id) {
-
+        roomJpaRepository.deleteAllByHouseId(id);
+        houseJpaRepository.deleteById(id);
     }
 
     @Override
     public void delete(Long houseId, String roomName) {
-
+        roomJpaRepository.deleteByHouseIdAndName(houseId, roomName);
     }
 }

@@ -251,6 +251,7 @@ class HousePersistenceAdapterTest {
 
         // then
         assertThat(houseJpaRepository.findById(id)).isEmpty();
+        assertThat(roomJpaRepository.findAllByHouseId(id)).isEmpty();
     }
 
 
