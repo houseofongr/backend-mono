@@ -128,7 +128,6 @@ operation::admin-house-read-list[snippets='http-request,path-parameters,http-res
 
 operation::admin-house-read-detail[snippets='http-request,path-parameters,http-response,response-fields']
 
-
 [[house-update-api]]
 ==== 하우스 정보 수정 API
 
@@ -137,6 +136,17 @@ operation::admin-house-read-detail[snippets='http-request,path-parameters,http-r
 > 하우스의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
 operation::admin-house-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
+[[house-delete-api]]
+==== 하우스 삭제 API
+
+하우스를 삭제하는 API입니다.
+
+> 하우스 내부에 포함된 룸과 아이템을 함께 삭제합니다.
+
+operation::admin-house-delete[snippets='http-request,path-parameters,http-response,response-fields']
+
+> 차후 사용자의 홈이 생성된 하우스는 삭제할 수 없도록 할 예정입니다.
 
 [[house-room-load-api]]
 ==== 룸 정보 상세조회 API
@@ -159,6 +169,17 @@ operation::admin-house-room-update[snippets='http-request,path-parameters,reques
 > **originalName**을 찾을 수 없거나, **newName**이 기존 이름과 중복되면 오류가 발생합니다.
 
 operation::admin-house-room-update[snippets='http-response,response-fields']
+
+[[house-room-delete-api]]
+==== 룸 삭제 API
+
+하우스의 룸을 삭제하는 API입니다.
+
+> 룸 내부에 포함된 아이템을 함께 삭제합니다.
+
+operation::admin-house-room-delete[snippets='http-request,path-parameters,http-response,response-fields']
+
+> 차후 사용자의 음원이 담긴 룸은 삭제할 수 없도록 할 예정입니다.
 
 [[file-api]]
 == 파일(File) API
