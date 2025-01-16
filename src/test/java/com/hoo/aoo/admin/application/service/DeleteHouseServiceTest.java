@@ -5,14 +5,11 @@ import com.hoo.aoo.admin.application.port.out.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.FindRoomPort;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
-import jakarta.persistence.Id;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DeleteHouseServiceTest {
