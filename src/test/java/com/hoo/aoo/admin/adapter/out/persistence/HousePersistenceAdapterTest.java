@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
@@ -208,5 +209,30 @@ class HousePersistenceAdapterTest {
         assertThat(query.get().getRooms()).anySatisfy(roomJpaEntity ->{
             assertThat(roomJpaEntity.getName()).isEqualTo("욕실");
         });
+    }
+
+    @Test
+    @Sql("HousePersistenceAdapterTest.sql")
+    @DisplayName("룸 조회 테스트")
+    void testFindRoomEntity() {
+        // given
+        Long id = 1L;
+        String name = "거실";
+
+        // when
+        Optional<RoomJpaEntity> jpaEntity = sut.findJpaEntity(id, name);
+        Optional<RoomJpaEntity> jpaEntity2 = sut.findJpaEntity(id, "not in house name");
+
+        // then
+        assertThat(jpaEntity).isNotEmpty();
+        assertThat(jpaEntity.get().getName()).isEqualTo("거실");
+        assertThat(jpaEntity.get().getX()).isEqualTo(0);
+        assertThat(jpaEntity.get().getY()).isEqualTo(0);
+        assertThat(jpaEntity.get().getZ()).isEqualTo(0);
+        assertThat(jpaEntity.get().getWidth()).isEqualTo(5000);
+        assertThat(jpaEntity.get().getHeight()).isEqualTo(1000);
+
+        // not found
+        assertThat(jpaEntity2.isEmpty());
     }
 }
