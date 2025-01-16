@@ -19,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Slf4j
-@Component
+@Compognent
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadPublicImageUseCase, DownloadPrivateImageUseCase {
 
@@ -57,20 +56,20 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
                     Files.readAllBytes(javaFile.toPath()));
 
         } catch (IOException e) {
-            log.error(e.getMessage());
             throw new FileException(FileErrorCode.RETRIEVE_FILE_FAILED);
+
         } catch (FileSizeLimitExceedException e) {
-            log.error(e.getMessage());
             throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
+
         } catch (FileExtensionMismatchException e) {
-            log.error(e.getMessage());
             throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
+
         } catch (IllegalFileTypeDirException e) {
-            log.error(e.getMessage());
             throw new FileException(FileErrorCode.ILLEGAL_FILE_TYPE_DIR);
+
         } catch (IllegalFileAuthorityDirException e) {
-            log.error(e.getMessage());
             throw new FileException(FileErrorCode.ILLEGAL_FILE_AUTHORITY_DIR);
+
         }
     }
 }
