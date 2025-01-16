@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.QueryHouseResult;
-import com.hoo.aoo.admin.application.port.out.QueryHousePort;
+import com.hoo.aoo.admin.application.port.out.SearchHousePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,12 +22,12 @@ class QueryHouseServiceTest {
 
     QueryHouseService sut;
 
-    QueryHousePort queryHousePort;
+    SearchHousePort searchHousePort;
 
     @BeforeEach
     void init() {
-        queryHousePort = mock();
-        sut = new QueryHouseService(queryHousePort);
+        searchHousePort = mock();
+        sut = new QueryHouseService(searchHousePort);
     }
 
     @Test
@@ -43,7 +43,7 @@ class QueryHouseServiceTest {
         Page<HouseJpaEntity> entities= new PageImpl<>(es);
 
         // when
-        when(queryHousePort.pageQuery(any())).thenReturn(entities);
+        when(searchHousePort.pageQuery(any())).thenReturn(entities);
         QueryHouseListResult list = sut.getList(any());
 
         // then
@@ -64,7 +64,7 @@ class QueryHouseServiceTest {
 
         // when
 
-        when(queryHousePort.query(1L)).thenReturn(Optional.of(entity));
+        when(searchHousePort.query(1L)).thenReturn(Optional.of(entity));
         QueryHouseResult result = sut.get(1L);
 
         // then

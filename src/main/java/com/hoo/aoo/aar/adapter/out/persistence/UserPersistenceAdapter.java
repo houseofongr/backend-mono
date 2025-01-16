@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.aar.application.port.out.database.LoadUserPort;
+import com.hoo.aoo.aar.application.port.out.database.FindUserPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
 import com.hoo.aoo.aar.domain.Name;
 import com.hoo.aoo.aar.domain.account.SnsAccountId;
@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class UserPersistenceAdapter implements LoadUserPort, SaveUserPort {
+public class UserPersistenceAdapter implements FindUserPort, SaveUserPort {
 
     private final UserJpaRepository userJpaRepository;
     private final SnsAccountJpaRepository snsAccountJpaRepository;

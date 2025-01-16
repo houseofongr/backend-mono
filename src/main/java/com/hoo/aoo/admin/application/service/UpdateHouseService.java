@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.application.port.in.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.in.UpdateHouseInfoUseCase;
 import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoUseCase;
-import com.hoo.aoo.admin.application.port.out.LoadHousePort;
+import com.hoo.aoo.admin.application.port.out.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.UpdateHousePort;
 import com.hoo.aoo.admin.application.port.out.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInfoUseCase {
 
-    private final LoadHousePort loadHousePort;
+    private final FindHousePort findHousePort;
     private final UpdateHousePort updateHousePort;
     private final UpdateRoomPort updateRoomPort;
 
@@ -30,7 +30,7 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInf
     public MessageDto update(UpdateHouseInfoCommand command) {
 
         try {
-            House house = loadHousePort.load(command.persistenceId())
+            House house = findHousePort.load(command.persistenceId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
             house.updateInfo(command.title(), command.author(), command.description());
@@ -52,7 +52,7 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInf
     @Transactional
     public MessageDto update(UpdateRoomInfoCommand command) {
         try {
-            House house = loadHousePort.load(command.persistenceId())
+            House house = findHousePort.load(command.persistenceId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
             house.updateRoomInfo(command.originalName(), command.newName());

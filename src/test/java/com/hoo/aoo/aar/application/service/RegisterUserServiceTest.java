@@ -4,7 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
-import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.FindSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
 import com.hoo.aoo.aar.domain.SnsAccountF;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
@@ -21,18 +21,18 @@ import static org.mockito.Mockito.*;
 class RegisterUserServiceTest {
 
     RegisterUserService sut;
-    LoadSnsAccountPort loadSnsAccountPort;
+    FindSnsAccountPort findSnsAccountPort;
     SaveUserPort saveUserPort;
     UserMapper userMapper;
     JwtUtil jwtUtil;
 
     @BeforeEach
     void init() {
-        loadSnsAccountPort = mock(LoadSnsAccountPort.class);
+        findSnsAccountPort = mock(FindSnsAccountPort.class);
         saveUserPort = mock(SaveUserPort.class);
         userMapper = new UserMapper();
         jwtUtil = mock(JwtUtil.class);
-        sut = new RegisterUserService(loadSnsAccountPort, saveUserPort, jwtUtil);
+        sut = new RegisterUserService(findSnsAccountPort, saveUserPort, jwtUtil);
     }
 
     @Test
@@ -42,11 +42,11 @@ class RegisterUserServiceTest {
         RegisterUserCommand command = new RegisterUserCommand(1L, true, true);
 
         // when
-        when(loadSnsAccountPort.load(1L)).thenReturn(Optional.of(SnsAccountF.NOT_REGISTERED_KAKAO.get()));
+        when(findSnsAccountPort.load(1L)).thenReturn(Optional.of(SnsAccountF.NOT_REGISTERED_KAKAO.get()));
         RegisterUserResult register = sut.register(command);
 
         // then
-        verify(loadSnsAccountPort, times(1)).load(1L);
+        verify(findSnsAccountPort, times(1)).load(1L);
         verify(saveUserPort, times(1)).save(any());
         verify(jwtUtil, times(1)).getAccessToken((SnsAccount) any());
 

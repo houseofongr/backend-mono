@@ -3,7 +3,7 @@ package com.hoo.aoo.aar.adapter.out.persistence;
 import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.FindSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.DateInfo;
 import com.hoo.aoo.aar.domain.Name;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class SnsAccountPersistenceAdapter implements LoadSnsAccountPort, SaveSnsAccountPort {
+public class SnsAccountPersistenceAdapter implements FindSnsAccountPort, SaveSnsAccountPort {
 
     private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final UserMapper userMapper;

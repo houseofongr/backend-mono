@@ -2,7 +2,7 @@ package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
-import com.hoo.aoo.file.application.port.out.database.LoadImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.FindImageFilePort;
 import com.hoo.aoo.file.domain.*;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -25,12 +25,12 @@ class DownloadImageServiceTest {
 
     DownloadImageService sut;
 
-    LoadImageFilePort loadImageFilePort;
+    FindImageFilePort findImageFilePort;
 
     @BeforeEach
     void init() {
-        loadImageFilePort = mock();
-        sut = new DownloadImageService(loadImageFilePort);
+        findImageFilePort = mock();
+        sut = new DownloadImageService(findImageFilePort);
     }
 
     @Test
@@ -45,7 +45,7 @@ class DownloadImageServiceTest {
         Files.writeString(javaFile.toPath(), "test file");
 
         // when
-        when(loadImageFilePort.load(fileId)).thenReturn(Optional.of(file));
+        when(findImageFilePort.load(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.publicDownload(fileId);
 
         // then
@@ -65,7 +65,7 @@ class DownloadImageServiceTest {
         Files.writeString(javaFile.toPath(), "test file");
 
         // when
-        when(loadImageFilePort.load(fileId)).thenReturn(Optional.of(file));
+        when(findImageFilePort.load(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.privateDownload(fileId);
 
         // then

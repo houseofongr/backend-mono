@@ -6,6 +6,6 @@ import com.hoo.aoo.admin.domain.house.House;
 
 import java.util.Optional;
 
-public interface LoadHousePort {
+public interface FindHousePort {
     Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException;
 }

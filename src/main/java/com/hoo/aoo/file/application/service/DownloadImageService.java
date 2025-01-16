@@ -4,9 +4,8 @@ import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
 import com.hoo.aoo.file.application.port.in.DownloadPrivateImageUseCase;
 import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.LoadImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.FindImageFilePort;
 import com.hoo.aoo.file.domain.File;
-import com.hoo.aoo.file.domain.FileType;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
@@ -24,7 +23,7 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadPublicImageUseCase, DownloadPrivateImageUseCase {
 
-    private final LoadImageFilePort loadImageFilePort;
+    private final FindImageFilePort findImageFilePort;
 
     @Override
     public DownloadImageResult privateDownload(Long fileId) {
@@ -38,7 +37,7 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
 
     private DownloadImageResult download(Long fileId, Authority authority) {
         try {
-            File loadedFile = loadImageFilePort.load(fileId)
+            File loadedFile = findImageFilePort.load(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
             if (loadedFile.getFileId().getAuthority() != authority)

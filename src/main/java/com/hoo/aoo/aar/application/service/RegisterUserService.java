@@ -4,7 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;
-import com.hoo.aoo.aar.application.port.out.database.LoadSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.FindSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RegisterUserService implements RegisterUserUseCase {
 
-    private final LoadSnsAccountPort loadSnsAccountPort;
+    private final FindSnsAccountPort findSnsAccountPort;
     private final SaveUserPort saveUserPort;
     private final JwtUtil jwtUtil;
 
@@ -26,7 +26,7 @@ public class RegisterUserService implements RegisterUserUseCase {
     public RegisterUserResult register(RegisterUserCommand command) {
 
         try {
-            SnsAccount snsAccount = loadSnsAccountPort.load(command.snsId())
+            SnsAccount snsAccount = findSnsAccountPort.load(command.snsId())
                     .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
             if (snsAccount.getUserId() != null)

@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, UpdateHousePort, UpdateRoomPort, LoadHousePort {
+public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, UpdateHousePort, UpdateRoomPort, FindHousePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
