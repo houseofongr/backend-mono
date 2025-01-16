@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.QueryRoomCommand;
+import com.hoo.aoo.admin.application.port.in.DeleteRoomUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DeleteRoomController {
 
+    private final DeleteRoomUseCase deleteRoomUseCase;
+
     @DeleteMapping("/admin/houses/{houseId}/rooms/{roomName}")
     ResponseEntity<MessageDto> delete(
             @PathVariable Long houseId,
             @PathVariable String roomName
     ) {
-        QueryRoomCommand command = new QueryRoomCommand(houseId, roomName);
-        return new ResponseEntity<>(new MessageDto(houseId + "번 하우스 " + roomName + " 룸이 삭제되었습니다."), HttpStatus.OK);
+        return new ResponseEntity<>(deleteRoomUseCase.delete(houseId, roomName), HttpStatus.OK);
     }
 }

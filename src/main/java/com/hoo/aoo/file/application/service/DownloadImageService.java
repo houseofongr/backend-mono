@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ContentDisposition;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,11 +27,13 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
     private final FindImageFilePort findImageFilePort;
 
     @Override
+    @Transactional(readOnly = true)
     public DownloadImageResult privateDownload(Long fileId) {
         return download(fileId, Authority.PRIVATE_FILE_ACCESS);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DownloadImageResult publicDownload(Long fileId) {
         return download(fileId, Authority.PUBLIC_FILE_ACCESS);
     }

@@ -4,8 +4,8 @@ import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -21,6 +21,7 @@ class DeleteHouseDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
+    @Sql("DeleteHouseDocumentationTest.sql")
     @DisplayName("하우스 삭제 API")
     void testDeleteHouse() throws Exception {
         mockMvc.perform(delete("/admin/houses/{houseId}", 1L)
