@@ -4,6 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
+import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
@@ -45,6 +46,8 @@ class HousePersistenceAdapterTest {
 
     @Autowired
     EntityManager em;
+    @Autowired
+    private RoomJpaRepository roomJpaRepository;
 
     @Test
     @DisplayName("House 저장 테스트")
@@ -234,5 +237,35 @@ class HousePersistenceAdapterTest {
 
         // not found
         assertThat(jpaEntity2.isEmpty());
+    }
+
+    @Test
+    @Sql("HousePersistenceAdapterTest.sql")
+    @DisplayName("하우스 삭제 테스트")
+    void testDeleteHouse() {
+        // given
+        Long id = 1L;
+
+        // when
+        sut.delete(id);
+
+        // then
+        assertThat(houseJpaRepository.findById(id)).isEmpty();
+    }
+
+
+    @Test
+    @Sql("HousePersistenceAdapterTest.sql")
+    @DisplayName("룸 삭제 테스트")
+    void testDeleteRoom() {
+        // given
+        Long houseId = 1L;
+        String roomName = "거실";
+
+        // when
+        sut.delete(houseId, roomName);
+
+        // then
+        assertThat(roomJpaRepository.findByHouseIdAndName(houseId, roomName)).isEmpty();
     }
 }
