@@ -43,11 +43,11 @@ class UpdateHouseServiceTest {
         UpdateHouseInfoCommand command = new UpdateHouseInfoCommand(1L, "not cozy house", "arang", "this is not cozy house.");
 
         // when
-        when(findHousePort.load(1L)).thenReturn(Optional.of(house));
+        when(findHousePort.find(1L)).thenReturn(Optional.of(house));
         MessageDto message = sut.update(command);
 
         // then
-        verify(findHousePort, times(1)).load(1L);
+        verify(findHousePort, times(1)).find(1L);
         verify(updateHousePort, times(1)).update(any(),any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 정보 수정이 완료되었습니다.");
@@ -63,11 +63,11 @@ class UpdateHouseServiceTest {
         UpdateRoomInfoCommand duplicateCommand = new UpdateRoomInfoCommand(1L, "거실", "주방");
 
         // when
-        when(findHousePort.load(1L)).thenReturn(Optional.of(houseWithRoom));
+        when(findHousePort.find(1L)).thenReturn(Optional.of(houseWithRoom));
         MessageDto message = sut.update(command);
 
         // then
-        verify(findHousePort, times(1)).load(1L);
+        verify(findHousePort, times(1)).find(1L);
         verify(updateRoomPort, times(1)).update(any(), any(), any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 거실 룸의 정보 수정이 완료되었습니다.");

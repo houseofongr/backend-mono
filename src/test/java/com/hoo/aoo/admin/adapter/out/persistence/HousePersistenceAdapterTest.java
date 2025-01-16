@@ -74,7 +74,7 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("HouseJpaEntity 페이지 조회 테스트")
-    void testPageQueryHouse() {
+    void testSearchJpaEntityHouse() {
         // given
         Pageable pageable = PageRequest.of(0,9);
 
@@ -85,11 +85,11 @@ class HousePersistenceAdapterTest {
         QueryHouseListCommand nonKeywordCommand = new QueryHouseListCommand(pageable, SearchType.DESCRIPTION, "no keyword");
 
         // when
-        Page<HouseJpaEntity> entities = sut.pageQuery(allCommand);
-        Page<HouseJpaEntity> searchEntities = sut.pageQuery(keywordCommand);
-        Page<HouseJpaEntity> searchEntities2 = sut.pageQuery(keywordCommand2);
-        Page<HouseJpaEntity> searchEntities3 = sut.pageQuery(keywordCommand3);
-        Page<HouseJpaEntity> noEntities = sut.pageQuery(nonKeywordCommand);
+        Page<HouseJpaEntity> entities = sut.search(allCommand);
+        Page<HouseJpaEntity> searchEntities = sut.search(keywordCommand);
+        Page<HouseJpaEntity> searchEntities2 = sut.search(keywordCommand2);
+        Page<HouseJpaEntity> searchEntities3 = sut.search(keywordCommand3);
+        Page<HouseJpaEntity> noEntities = sut.search(nonKeywordCommand);
 
         // then
         assertThat(entities).hasSize(9);
@@ -115,12 +115,12 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("HouseJpaEntity 단건 조회 테스트")
-    void testQueryHouse() {
+    void testFindJpaEntityHouse() {
         // given
         Long houseId = 1L;
 
         // when
-        Optional<HouseJpaEntity> query = sut.query(houseId);
+        Optional<HouseJpaEntity> query = sut.findJpaEntity(houseId);
 
         // then
         assertThat(query).isNotEmpty();
@@ -149,12 +149,12 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 조회 테스트")
-    void testLoad() throws AreaLimitExceededException, AxisLimitExceededException {
+    void testFind() throws AreaLimitExceededException, AxisLimitExceededException {
         // given
         Long houseId = 1L;
 
         // when
-        Optional<House> house = sut.load(houseId);
+        Optional<House> house = sut.find(houseId);
 
         // then
         assertThat(house).isNotEmpty();
@@ -184,7 +184,7 @@ class HousePersistenceAdapterTest {
 
         // when
         sut.update(1L, houseWithRoom);
-        Optional<HouseJpaEntity> query = sut.query(1L);
+        Optional<HouseJpaEntity> query = sut.findJpaEntity(1L);
 
         // then
         assertThat(query).isNotEmpty();
@@ -202,7 +202,7 @@ class HousePersistenceAdapterTest {
 
         // when
         sut.update(1L, "거실", 욕실);
-        Optional<HouseJpaEntity> query = sut.query(1L);
+        Optional<HouseJpaEntity> query = sut.findJpaEntity(1L);
 
         // then
         assertThat(query.get().getRooms()).anySatisfy(roomJpaEntity ->{

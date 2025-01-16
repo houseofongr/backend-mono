@@ -17,7 +17,7 @@ public class GetHouseController {
 
     @GetMapping("/admin/houses/{houseId}")
     public ResponseEntity<QueryHouseResult> getList(@PathVariable Long houseId) {
-        return new ResponseEntity<>(queryHouseUseCase.get(houseId), HttpStatus.OK);
+        return new ResponseEntity<>(queryHouseUseCase.query(houseId), HttpStatus.OK);
     }
 
 }

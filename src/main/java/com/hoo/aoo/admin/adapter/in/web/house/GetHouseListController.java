@@ -24,7 +24,7 @@ public class GetHouseListController {
                                                         @RequestParam(required = false) String keyword) {
 
         QueryHouseListCommand command = new QueryHouseListCommand(pageable, searchType, keyword);
-        QueryHouseListResult result = queryHouseListUseCase.getList(command);
+        QueryHouseListResult result = queryHouseListUseCase.query(command);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

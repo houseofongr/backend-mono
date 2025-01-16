@@ -30,7 +30,7 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInf
     public MessageDto update(UpdateHouseInfoCommand command) {
 
         try {
-            House house = findHousePort.load(command.persistenceId())
+            House house = findHousePort.find(command.persistenceId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
             house.updateInfo(command.title(), command.author(), command.description());
@@ -52,7 +52,7 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInf
     @Transactional
     public MessageDto update(UpdateRoomInfoCommand command) {
         try {
-            House house = findHousePort.load(command.persistenceId())
+            House house = findHousePort.find(command.persistenceId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
             house.updateRoomInfo(command.originalName(), command.newName());

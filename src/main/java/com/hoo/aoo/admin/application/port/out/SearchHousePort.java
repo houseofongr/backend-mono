@@ -7,6 +7,5 @@ import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 public interface SearchHousePort {
-    Page<HouseJpaEntity> pageQuery(QueryHouseListCommand command);
-    Optional<HouseJpaEntity> query(Long id);
+    Page<HouseJpaEntity> search(QueryHouseListCommand command);
 }

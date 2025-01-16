@@ -44,25 +44,25 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
     }
 
     @Override
-    public Page<HouseJpaEntity> pageQuery(QueryHouseListCommand command) {
-        return houseJpaRepository.searchByCommand(command);
-    }
-
-    @Override
-    public Optional<HouseJpaEntity> query(Long id) {
+    public Optional<HouseJpaEntity> findJpaEntity(Long id) {
         return houseJpaRepository.findById(id);
     }
 
     @Override
-    public Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
+    public Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
 
-        Optional<HouseJpaEntity> optional = query(id);
+        Optional<HouseJpaEntity> optional = findJpaEntity(id);
 
         if (optional.isEmpty()) return Optional.empty();
 
         List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllByHouseId(id);
 
         return Optional.ofNullable(houseMapper.mapToDomainEntity(optional.get(), roomJpaEntities));
+    }
+
+    @Override
+    public Page<HouseJpaEntity> search(QueryHouseListCommand command) {
+        return houseJpaRepository.searchByCommand(command);
     }
 
     @Override

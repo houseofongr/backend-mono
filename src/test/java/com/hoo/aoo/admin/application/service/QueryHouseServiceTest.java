@@ -2,8 +2,10 @@ package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.QueryHouseResult;
+import com.hoo.aoo.admin.application.port.out.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.SearchHousePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,16 +25,18 @@ class QueryHouseServiceTest {
     QueryHouseService sut;
 
     SearchHousePort searchHousePort;
+    FindHousePort findHousePort;
 
     @BeforeEach
     void init() {
         searchHousePort = mock();
-        sut = new QueryHouseService(searchHousePort);
+        findHousePort = mock();
+        sut = new QueryHouseService(searchHousePort, findHousePort);
     }
 
     @Test
     @DisplayName("리스트 조회 서비스 테스트")
-    void testGetListService() {
+    void testQueryListService() {
         // given
         List<HouseJpaEntity> es = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
@@ -43,8 +47,8 @@ class QueryHouseServiceTest {
         Page<HouseJpaEntity> entities= new PageImpl<>(es);
 
         // when
-        when(searchHousePort.pageQuery(any())).thenReturn(entities);
-        QueryHouseListResult list = sut.getList(any());
+        when(searchHousePort.search(any())).thenReturn(entities);
+        QueryHouseListResult list = sut.query((QueryHouseListCommand) any());
 
         // then
         assertThat(list.houses()).hasSize(9);
@@ -52,7 +56,7 @@ class QueryHouseServiceTest {
 
     @Test
     @DisplayName("단건 조회 서비스 테스트")
-    void testGetService() {
+    void testQueryOneService() {
         // given
         List<RoomJpaEntity> rooms = List.of(
                 new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 5000f, 1000f, 3L, null),
@@ -64,14 +68,14 @@ class QueryHouseServiceTest {
 
         // when
 
-        when(searchHousePort.query(1L)).thenReturn(Optional.of(entity));
-        QueryHouseResult result = sut.get(1L);
+        when(findHousePort.findJpaEntity(1L)).thenReturn(Optional.of(entity));
+        QueryHouseResult result = sut.query(1L);
 
         // then
         assertThat(result).isEqualTo(QueryHouseResult.of(entity));
 
         // 조회되지 않을 때 예외처리
-        assertThatThrownBy(() -> sut.get(2L)).isInstanceOf(AdminException.class)
+        assertThatThrownBy(() -> sut.query(2L)).isInstanceOf(AdminException.class)
                         .hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
     }
 }
