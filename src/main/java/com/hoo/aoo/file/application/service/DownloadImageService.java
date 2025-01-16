@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Compognent
+@Component
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadPublicImageUseCase, DownloadPrivateImageUseCase {
 
