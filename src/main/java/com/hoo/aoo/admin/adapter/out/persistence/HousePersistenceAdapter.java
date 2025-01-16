@@ -89,6 +89,6 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
 
     @Override
     public Optional<RoomJpaEntity> findJpaEntity(Long id, String roomName) {
-        return Optional.empty();
+        return roomJpaRepository.findByHouseIdAndName(id, roomName);
     }
 }
