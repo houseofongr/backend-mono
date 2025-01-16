@@ -6,5 +6,5 @@ import com.hoo.aoo.aar.domain.user.User;
 import java.util.Optional;
 
 public interface FindUserPort {
-    Optional<User> load(Long id) throws InvalidPhoneNumberException;
+    Optional<User> find(Long id) throws InvalidPhoneNumberException;
 }

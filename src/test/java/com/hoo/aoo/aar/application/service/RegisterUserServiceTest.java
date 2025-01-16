@@ -42,11 +42,11 @@ class RegisterUserServiceTest {
         RegisterUserCommand command = new RegisterUserCommand(1L, true, true);
 
         // when
-        when(findSnsAccountPort.load(1L)).thenReturn(Optional.of(SnsAccountF.NOT_REGISTERED_KAKAO.get()));
+        when(findSnsAccountPort.find(1L)).thenReturn(Optional.of(SnsAccountF.NOT_REGISTERED_KAKAO.get()));
         RegisterUserResult register = sut.register(command);
 
         // then
-        verify(findSnsAccountPort, times(1)).load(1L);
+        verify(findSnsAccountPort, times(1)).find(1L);
         verify(saveUserPort, times(1)).save(any());
         verify(jwtUtil, times(1)).getAccessToken((SnsAccount) any());
 

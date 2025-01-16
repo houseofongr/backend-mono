@@ -27,7 +27,7 @@ public class FileSystemAdapter implements WriteFilePort, RandomFileNamePort {
     }
 
     @Override
-    public String getRandomFileName(String originalFileName) {
+    public String getName(String originalFileName) {
 
         String[] split = originalFileName.split("\\.");
 

@@ -37,7 +37,7 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
 
     private DownloadImageResult download(Long fileId, Authority authority) {
         try {
-            File loadedFile = findImageFilePort.load(fileId)
+            File loadedFile = findImageFilePort.find(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
             if (loadedFile.getFileId().getAuthority() != authority)

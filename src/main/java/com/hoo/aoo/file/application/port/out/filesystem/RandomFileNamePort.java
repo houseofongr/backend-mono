@@ -1,5 +1,5 @@
 package com.hoo.aoo.file.application.port.out.filesystem;
 
 public interface RandomFileNamePort {
-    String getRandomFileName(String originalFileName);
+    String getName(String originalFileName);
 }

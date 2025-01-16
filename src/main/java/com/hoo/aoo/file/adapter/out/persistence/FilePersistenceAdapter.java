@@ -32,7 +32,7 @@ public class FilePersistenceAdapter implements SaveImageFilePort, FindImageFileP
     }
 
     @Override
-    public Optional<File> load(Long fileId) throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    public Optional<File> find(Long fileId) throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
 
         Optional<FileJpaEntity> optional = fileJpaRepository.findById(fileId);
 

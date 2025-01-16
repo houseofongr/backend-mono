@@ -61,7 +61,7 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
                 if (originalFilename == null)
                     throw new FileException(FileErrorCode.FILE_NAME_EMPTY);
 
-                String fileSystemName = randomFileNamePort.getRandomFileName(originalFilename);
+                String fileSystemName = randomFileNamePort.getName(originalFilename);
 
 
                 FileId fileId = fileIdCreateStrategy.create(originalFilename, fileSystemName);

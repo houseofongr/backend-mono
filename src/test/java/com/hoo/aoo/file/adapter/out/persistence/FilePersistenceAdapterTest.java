@@ -58,12 +58,12 @@ class FilePersistenceAdapterTest {
     @Test
     @Sql("FilePersistenceAdapterTest.sql")
     @DisplayName("파일 엔티티 조회")
-    void testLoadPublicFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    void testFindPublicFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
 
         // when
-        Optional<File> optional = sut.load(fileId);
+        Optional<File> optional = sut.find(fileId);
 
         // then
         assertThat(optional).isNotEmpty();

@@ -25,13 +25,13 @@ public class SnsAccountPersistenceAdapter implements FindSnsAccountPort, SaveSns
     private final UserMapper userMapper;
 
     @Override
-    public Optional<SnsAccount> load(SnsDomain domain, String snsId) throws InvalidPhoneNumberException {
+    public Optional<SnsAccount> find(SnsDomain domain, String snsId) throws InvalidPhoneNumberException {
 
         return getSnsAccountFromJpaEntity(snsAccountJpaRepository.findWithUserEntity(domain, snsId));
     }
 
     @Override
-    public Optional<SnsAccount> load(Long id) throws InvalidPhoneNumberException {
+    public Optional<SnsAccount> find(Long id) throws InvalidPhoneNumberException {
 
         return getSnsAccountFromJpaEntity(snsAccountJpaRepository.findById(id));
     }

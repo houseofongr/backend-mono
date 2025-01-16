@@ -45,7 +45,7 @@ class DownloadImageServiceTest {
         Files.writeString(javaFile.toPath(), "test file");
 
         // when
-        when(findImageFilePort.load(fileId)).thenReturn(Optional.of(file));
+        when(findImageFilePort.find(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.publicDownload(fileId);
 
         // then
@@ -65,7 +65,7 @@ class DownloadImageServiceTest {
         Files.writeString(javaFile.toPath(), "test file");
 
         // when
-        when(findImageFilePort.load(fileId)).thenReturn(Optional.of(file));
+        when(findImageFilePort.find(fileId)).thenReturn(Optional.of(file));
         DownloadImageResult result = sut.privateDownload(fileId);
 
         // then

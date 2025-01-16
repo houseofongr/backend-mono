@@ -34,13 +34,13 @@ class SnsAccountPersistenceAdapterTest {
     @Test
     @Sql("SnsAccountPersistenceAdapterTest.sql")
     @DisplayName("SNS Account 조회")
-    void testLoadSnsAccount() throws InvalidPhoneNumberException {
+    void testFindSnsAccount() throws InvalidPhoneNumberException {
         // given
         SnsAccount snsAccount = SnsAccountF.REGISTERED_KAKAO.get();
 
         // when
-        Optional<SnsAccount> entityById = sut.load(1L);
-        Optional<SnsAccount> entityBySnsId = sut.load(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId());
+        Optional<SnsAccount> entityById = sut.find(1L);
+        Optional<SnsAccount> entityBySnsId = sut.find(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId());
 
         // then
         assertThat(entityById).isNotEmpty();

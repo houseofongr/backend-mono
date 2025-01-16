@@ -7,6 +7,6 @@ import com.hoo.aoo.aar.domain.account.SnsDomain;
 import java.util.Optional;
 
 public interface FindSnsAccountPort {
-    Optional<SnsAccount> load(SnsDomain domain, String snsId) throws InvalidPhoneNumberException;
-    Optional<SnsAccount> load(Long id) throws InvalidPhoneNumberException;
+    Optional<SnsAccount> find(SnsDomain domain, String snsId) throws InvalidPhoneNumberException;
+    Optional<SnsAccount> find(Long id) throws InvalidPhoneNumberException;
 }
