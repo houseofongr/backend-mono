@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReadHouseService implements ReadHouseListUseCase, ReadHouseUseCase {
+public class findHouseService implements ReadHouseListUseCase, LoadHouseUseCase {
 
     private final QueryHousePort queryHousePort;
 

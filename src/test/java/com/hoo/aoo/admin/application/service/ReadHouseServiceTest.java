@@ -20,14 +20,14 @@ import static org.mockito.Mockito.*;
 
 class ReadHouseServiceTest {
 
-    ReadHouseService sut;
+    findHouseService sut;
 
     QueryHousePort queryHousePort;
 
     @BeforeEach
     void init() {
         queryHousePort = mock();
-        sut = new ReadHouseService(queryHousePort);
+        sut = new findHouseService(queryHousePort);
     }
 
     @Test

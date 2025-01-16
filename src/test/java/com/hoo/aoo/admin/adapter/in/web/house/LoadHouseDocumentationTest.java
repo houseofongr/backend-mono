@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class ReadHouseDocumentationTest extends AbstractDocumentationTest {
+class LoadHouseDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,7 +21,7 @@ class ReadHouseDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("ReadHouseDocumentationTest.sql")
+    @Sql("LoadHouseDocumentationTest.sql")
     @DisplayName("하우스 상세조회 테스트")
     void testGetHouse() throws Exception {
         mockMvc.perform(get("/admin/houses/{houseId}", 1L)
