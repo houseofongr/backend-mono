@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UpdateHouseInfoDocumentationTest extends AbstractDocumentationTest {
+class PatchHouseInfoDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,7 +21,7 @@ class UpdateHouseInfoDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("UpdateHouseDocumentationTest.sql")
+    @Sql("PatchHouseDocumentationTest.sql")
     @DisplayName("하우스 수정 문서화")
     void testHouseUpdateInfo() throws Exception {
 

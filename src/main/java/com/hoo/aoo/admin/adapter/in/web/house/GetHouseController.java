@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.ReadHouseResult;
-import com.hoo.aoo.admin.application.port.in.LoadHouseUseCase;
+import com.hoo.aoo.admin.application.port.in.QueryHouseResult;
+import com.hoo.aoo.admin.application.port.in.QueryHouseUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class LoadHouseController {
+public class GetHouseController {
 
-    private final LoadHouseUseCase loadHouseUseCase;
+    private final QueryHouseUseCase queryHouseUseCase;
 
     @GetMapping("/admin/houses/{houseId}")
-    public ResponseEntity<ReadHouseResult> getList(@PathVariable Long houseId) {
-        return new ResponseEntity<>(loadHouseUseCase.get(houseId), HttpStatus.OK);
+    public ResponseEntity<QueryHouseResult> getList(@PathVariable Long houseId) {
+        return new ResponseEntity<>(queryHouseUseCase.get(houseId), HttpStatus.OK);
     }
 
 }

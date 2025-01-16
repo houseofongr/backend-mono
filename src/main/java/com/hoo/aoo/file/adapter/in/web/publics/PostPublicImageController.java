@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class UploadPublicImageController {
+public class PostPublicImageController {
 
     private final UploadPublicImageUseCase uploadPublicImageUseCase;
 

@@ -1,7 +1,7 @@
-package com.hoo.aoo.file.adapter.in.web.publics;
+package com.hoo.aoo.file.adapter.in.web.privates;
 
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
-import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
+import com.hoo.aoo.file.application.port.in.DownloadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class DownloadPublicImageController {
+public class GetPrivateImageController {
 
-    private final DownloadPublicImageUseCase downloadPublicImageUseCase;
+    private final DownloadPrivateImageUseCase downloadPrivateImageUseCase;
 
-    @GetMapping("/public/images/{fileId}")
+    @GetMapping("/private/images/{fileId}")
     public ResponseEntity<?> download(@PathVariable Long fileId) {
 
-        DownloadImageResult result = downloadPublicImageUseCase.publicDownload(fileId);
+        DownloadImageResult result = downloadPrivateImageUseCase.privateDownload(fileId);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
@@ -26,3 +26,4 @@ public class DownloadPublicImageController {
     }
 
 }
+

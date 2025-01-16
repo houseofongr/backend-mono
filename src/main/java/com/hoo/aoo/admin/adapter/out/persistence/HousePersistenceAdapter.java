@@ -5,7 +5,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
-import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.out.*;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Component
 @RequiredArgsConstructor
@@ -46,7 +44,7 @@ public class HousePersistenceAdapter implements SaveHousePort, QueryHousePort, U
     }
 
     @Override
-    public Page<HouseJpaEntity> pageQuery(ReadHouseListCommand command) {
+    public Page<HouseJpaEntity> pageQuery(QueryHouseListCommand command) {
         return houseJpaRepository.searchByCommand(command);
     }
 

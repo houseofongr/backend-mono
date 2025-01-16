@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DocumentationTest
-public class RegisterUserDocumentationTest {
+public class PostUserDocumentationTest {
 
     @Autowired
     MockMvc mockMvc;

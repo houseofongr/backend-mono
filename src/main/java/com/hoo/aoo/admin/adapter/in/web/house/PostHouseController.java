@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class CreateHouseController {
+public class PostHouseController {
 
     private final Gson gson = new Gson();
     private final CreateHouseUseCase createHouseUseCase;

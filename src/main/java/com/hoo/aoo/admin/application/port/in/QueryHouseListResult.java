@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.data.domain.Page;
 
-public record ReadHouseListResult(
+public record QueryHouseListResult(
         Page<House> houses
 ) {
     public record House(

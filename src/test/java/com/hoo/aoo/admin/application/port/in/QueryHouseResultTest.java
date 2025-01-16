@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ReadHouseResultTest {
+class QueryHouseResultTest {
 
     @Test
     @DisplayName("하우스 매핑 테스트")
@@ -26,7 +26,7 @@ class ReadHouseResultTest {
 
         // when
         entity.prePersist();
-        ReadHouseResult result = ReadHouseResult.of(entity);
+        QueryHouseResult result = QueryHouseResult.of(entity);
 
         // then
         assertThat(result.house().title()).isEqualTo("cozy house");

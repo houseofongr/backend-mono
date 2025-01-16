@@ -15,7 +15,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CreateHouseDocumentationTest extends AbstractDocumentationTest {
+class PostHouseDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateHouseInfoController {
+public class PatchHouseInfoController {
 
     private final UpdateHouseInfoUseCase updateHouseInfoUseCase;
 

@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ReadHouseListResultTest {
+class QueryHouseListResultTest {
 
     @Test
     @DisplayName("하우스 JPA 엔티티로부터 DTO 생성")
@@ -21,7 +21,7 @@ class ReadHouseListResultTest {
 
         // when
         houseJpaEntity.prePersist();
-        ReadHouseListResult.House houseDto = ReadHouseListResult.House.of(houseJpaEntity);
+        QueryHouseListResult.House houseDto = QueryHouseListResult.House.of(houseJpaEntity);
 
         // then
         assertThat(houseDto.id()).isEqualTo(houseJpaEntity.getId());
@@ -55,9 +55,9 @@ class ReadHouseListResultTest {
         fitDescription.prePersist();
         overDescription.prePersist();
 
-        ReadHouseListResult.House houseDto = ReadHouseListResult.House.of(shortDescription);
-        ReadHouseListResult.House houseDto2 = ReadHouseListResult.House.of(fitDescription);
-        ReadHouseListResult.House houseDto3 = ReadHouseListResult.House.of(overDescription);
+        QueryHouseListResult.House houseDto = QueryHouseListResult.House.of(shortDescription);
+        QueryHouseListResult.House houseDto2 = QueryHouseListResult.House.of(fitDescription);
+        QueryHouseListResult.House houseDto3 = QueryHouseListResult.House.of(overDescription);
 
         // then
         assertThat(houseDto.description()).isEqualTo(shortDescription.getDescription());

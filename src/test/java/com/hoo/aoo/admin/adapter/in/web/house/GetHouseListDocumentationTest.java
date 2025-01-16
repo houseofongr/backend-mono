@@ -13,14 +13,14 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ReadHouseListDocumentationTest extends AbstractDocumentationTest {
+public class GetHouseListDocumentationTest extends AbstractDocumentationTest {
     @Override
     protected String getBaseUrl() {
         return "api.archiveofongr.site";
     }
 
     @Test
-    @Sql("ReadHouseListDocumentationTest.sql")
+    @Sql("GetHouseListDocumentationTest.sql")
     @DisplayName("하우스 리스트 조회 API")
     void testGetList() throws Exception {
         mockMvc.perform(get("/admin/houses?page=1&size=9")

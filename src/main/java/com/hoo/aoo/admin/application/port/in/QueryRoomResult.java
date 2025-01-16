@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.in;
 
-public record LoadRoomResult(
+public record QueryRoomResult(
         Room room
 ) {
     public record Room(

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateRoomInfoController {
+public class PatchRoomInfoController {
 
     private final UpdateRoomInfoUseCase updateRoomInfoUseCase;
 

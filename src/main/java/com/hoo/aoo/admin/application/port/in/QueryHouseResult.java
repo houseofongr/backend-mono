@@ -5,11 +5,11 @@ import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 
 import java.util.List;
 
-public record ReadHouseResult(
+public record QueryHouseResult(
         House house,
         List<Room> rooms
 ) {
-    public static ReadHouseResult of(HouseJpaEntity entity) {
+    public static QueryHouseResult of(HouseJpaEntity entity) {
         House house = new House(
                 entity.getTitle(),
                 entity.getAuthor(),
@@ -31,7 +31,7 @@ public record ReadHouseResult(
                         roomJpaEntity.getImageFileId()))
                 .toList();
 
-        return new ReadHouseResult(house,list);
+        return new QueryHouseResult(house,list);
     }
 
     public record House(

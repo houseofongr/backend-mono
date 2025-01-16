@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence.repository;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.admin.application.port.in.ReadHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -21,7 +21,7 @@ public class HouseQueryDslRepositoryImpl implements HouseQueryDslRepository {
     }
 
     @Override
-    public Page<HouseJpaEntity> searchByCommand(ReadHouseListCommand command) {
+    public Page<HouseJpaEntity> searchByCommand(QueryHouseListCommand command) {
 
         List<HouseJpaEntity> entities = query.selectFrom(houseJpaEntity)
                 .where(houseSearch(command))
@@ -38,7 +38,7 @@ public class HouseQueryDslRepositoryImpl implements HouseQueryDslRepository {
         return new PageImpl<>(entities, command.pageable(), count);
     }
 
-    private BooleanExpression houseSearch(ReadHouseListCommand command) {
+    private BooleanExpression houseSearch(QueryHouseListCommand command) {
         if (command.keyword() == null || command.keyword().isBlank()) return null;
         return switch (command.searchType()) {
             case NONE -> null;

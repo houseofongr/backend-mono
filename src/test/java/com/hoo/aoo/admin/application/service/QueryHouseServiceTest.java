@@ -2,8 +2,8 @@ package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
-import com.hoo.aoo.admin.application.port.in.ReadHouseListResult;
-import com.hoo.aoo.admin.application.port.in.ReadHouseResult;
+import com.hoo.aoo.admin.application.port.in.QueryHouseListResult;
+import com.hoo.aoo.admin.application.port.in.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.out.QueryHousePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,16 +18,16 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ReadHouseServiceTest {
+class QueryHouseServiceTest {
 
-    findHouseService sut;
+    QueryHouseService sut;
 
     QueryHousePort queryHousePort;
 
     @BeforeEach
     void init() {
         queryHousePort = mock();
-        sut = new findHouseService(queryHousePort);
+        sut = new QueryHouseService(queryHousePort);
     }
 
     @Test
@@ -44,7 +44,7 @@ class ReadHouseServiceTest {
 
         // when
         when(queryHousePort.pageQuery(any())).thenReturn(entities);
-        ReadHouseListResult list = sut.getList(any());
+        QueryHouseListResult list = sut.getList(any());
 
         // then
         assertThat(list.houses()).hasSize(9);
@@ -65,10 +65,10 @@ class ReadHouseServiceTest {
         // when
 
         when(queryHousePort.query(1L)).thenReturn(Optional.of(entity));
-        ReadHouseResult result = sut.get(1L);
+        QueryHouseResult result = sut.get(1L);
 
         // then
-        assertThat(result).isEqualTo(ReadHouseResult.of(entity));
+        assertThat(result).isEqualTo(QueryHouseResult.of(entity));
 
         // 조회되지 않을 때 예외처리
         assertThatThrownBy(() -> sut.get(2L)).isInstanceOf(AdminException.class)

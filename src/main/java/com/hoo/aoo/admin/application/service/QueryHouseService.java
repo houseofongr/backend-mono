@@ -10,21 +10,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class findHouseService implements ReadHouseListUseCase, LoadHouseUseCase {
+public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCase {
 
     private final QueryHousePort queryHousePort;
 
     @Override
-    public ReadHouseResult get(Long houseId) {
+    public QueryHouseResult get(Long houseId) {
         HouseJpaEntity entity = queryHousePort.query(houseId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-        return ReadHouseResult.of(entity);
+        return QueryHouseResult.of(entity);
     }
 
     @Override
-    public ReadHouseListResult getList(ReadHouseListCommand command) {
+    public QueryHouseListResult getList(QueryHouseListCommand command) {
         Page<HouseJpaEntity> entities = queryHousePort.pageQuery(command);
-        return new ReadHouseListResult(entities.map(ReadHouseListResult.House::of));
+        return new QueryHouseListResult(entities.map(QueryHouseListResult.House::of));
     }
 }
