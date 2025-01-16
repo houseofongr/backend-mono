@@ -138,6 +138,15 @@ operation::admin-house-read-detail[snippets='http-request,path-parameters,http-r
 
 operation::admin-house-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[house-room-load-api]]
+==== 룸 정보 상세조회 API
+
+룸의 상세 정보를 조회하는 API입니다.
+
+> 차후 아이템 관련 정보를 추가할 예정입니다.
+
+operation::admin-house-room-load[snippets='http-request,path-parameters,http-response,response-fields']
+
 [[house-room-update-api]]
 ==== 룸 정보 수정 API
 
@@ -150,15 +159,6 @@ operation::admin-house-room-update[snippets='http-request,path-parameters,reques
 > **originalName**을 찾을 수 없거나, **newName**이 기존 이름과 중복되면 오류가 발생합니다.
 
 operation::admin-house-room-update[snippets='http-response,response-fields']
-
-[[house-room-load-api]]
-==== 룸 정보 상세조회 API
-
-룸의 상세 정보를 조회하는 API입니다.
-
-> 차후 아이템 관련 정보를 추가할 예정입니다.
-
-operation::admin-house-room-load[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API

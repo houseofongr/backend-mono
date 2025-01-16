@@ -4,6 +4,7 @@ import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -20,6 +21,7 @@ class GetRoomDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
+    @Sql("GetRoomDocumentationTest.sql")
     @DisplayName("방 정보 조회 API")
     void testLoadRoomData() throws Exception {
         mockMvc.perform(get("/admin/houses/{houseId}/rooms/{roomName}", 1L, "거실")

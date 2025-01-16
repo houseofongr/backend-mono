@@ -1,5 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
+import com.hoo.aoo.admin.application.port.in.QueryRoomCommand;
+import com.hoo.aoo.admin.application.port.in.QueryRoomInfoUseCase;
 import com.hoo.aoo.admin.application.port.in.QueryRoomResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,13 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class GetRoomController {
 
+    private final QueryRoomInfoUseCase queryRoomInfoUseCase;
+
     @GetMapping("/admin/houses/{houseId}/rooms/{roomName}")
     ResponseEntity<QueryRoomResult> load(
             @PathVariable Long houseId,
             @PathVariable String roomName
     ) {
-        QueryRoomResult 거실 = new QueryRoomResult(new QueryRoomResult.Room("거실", 1000F, 1000F, 1L));
-        return new ResponseEntity<>(거실, HttpStatus.OK);
+        QueryRoomCommand command = new QueryRoomCommand(houseId,roomName);
+        return new ResponseEntity<>(queryRoomInfoUseCase.query(command), HttpStatus.OK);
     }
 
 }
