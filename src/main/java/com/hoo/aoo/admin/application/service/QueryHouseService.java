@@ -3,7 +3,7 @@ package com.hoo.aoo.admin.application.service;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
-import com.hoo.aoo.admin.application.port.in.*;
+import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.SearchHousePort;
@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

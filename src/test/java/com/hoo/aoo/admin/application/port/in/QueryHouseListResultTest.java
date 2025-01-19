@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.application.port.in;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

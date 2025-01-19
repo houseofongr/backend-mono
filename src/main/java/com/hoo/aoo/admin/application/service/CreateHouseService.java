@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service;
 
-import com.hoo.aoo.admin.application.port.in.CreateHouseUseCase;
-import com.hoo.aoo.admin.application.port.in.HouseIdResult;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
+import com.hoo.aoo.admin.application.port.in.house.HouseIdResult;
 import com.hoo.aoo.admin.application.port.out.SaveHousePort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;

@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service;
 
-import com.hoo.aoo.admin.application.port.in.DeleteHouseUseCase;
-import com.hoo.aoo.admin.application.port.in.DeleteRoomUseCase;
+import com.hoo.aoo.admin.application.port.in.house.DeleteHouseUseCase;
+import com.hoo.aoo.admin.application.port.in.house.DeleteRoomUseCase;
 import com.hoo.aoo.admin.application.port.out.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.FindHousePort;

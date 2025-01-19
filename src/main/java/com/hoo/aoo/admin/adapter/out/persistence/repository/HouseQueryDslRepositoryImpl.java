@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence.repository;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.HouseIdResult;
-import com.hoo.aoo.admin.application.port.in.CreateHouseUseCase;
+import com.hoo.aoo.admin.application.port.in.house.HouseIdResult;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.service.Metadata;
 import com.nimbusds.jose.shaded.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;

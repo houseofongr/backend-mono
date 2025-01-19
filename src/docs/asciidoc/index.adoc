@@ -93,6 +93,8 @@ operation::aar-authn-regist[snippets='http-request,request-fields,http-response,
 [[house-api]]
 === 하우스(House) API
 
+하우스 관리를 위한 API 입니다.
+
 [[house-create-api]]
 ==== 하우스 생성 API
 
@@ -180,6 +182,25 @@ operation::admin-house-room-update[snippets='http-response,response-fields']
 operation::admin-house-room-delete[snippets='http-request,path-parameters,http-response,response-fields']
 
 > 차후 사용자의 음원이 담긴 룸은 삭제할 수 없도록 할 예정입니다.
+
+[[user-api]]
+=== 사용자(User) API
+
+소리기록실 사용자 정보 관리를 위한 API 입니다.
+
+[[user-get-list-api]]
+==== 사용자 조회 API
+
+소리기록실 사용자를 조회하는 API 입니다.
+
+operation::admin-user-get-list[snippets='http-request,http-response,response-fields']
+
+[[user-get-home-list-api]]
+==== 사용자 홈 조회 API
+
+사용자가 보유한 홈을 조회하는 API 입니다.
+
+operation::admin-user-get-home-list[snippets='http-request,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API

@@ -1,9 +1,9 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
 import com.hoo.aoo.admin.adapter.out.persistence.SearchType;
-import com.hoo.aoo.admin.application.port.in.QueryHouseListCommand;
-import com.hoo.aoo.admin.application.port.in.QueryHouseListResult;
-import com.hoo.aoo.admin.application.port.in.QueryHouseListUseCase;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

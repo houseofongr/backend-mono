@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service;
 
-import com.hoo.aoo.admin.application.port.in.UpdateHouseInfoCommand;
-import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoCommand;
+import com.hoo.aoo.admin.application.port.in.house.UpdateHouseInfoCommand;
+import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.UpdateHousePort;
 import com.hoo.aoo.admin.application.port.out.UpdateRoomPort;

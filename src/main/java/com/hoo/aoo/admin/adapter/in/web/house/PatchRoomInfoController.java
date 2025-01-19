@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoCommand;
-import com.hoo.aoo.admin.application.port.in.UpdateRoomInfoUseCase;
+import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
+import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

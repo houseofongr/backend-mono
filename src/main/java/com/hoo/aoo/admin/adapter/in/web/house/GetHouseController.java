@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.QueryHouseResult;
-import com.hoo.aoo.admin.application.port.in.QueryHouseUseCase;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
