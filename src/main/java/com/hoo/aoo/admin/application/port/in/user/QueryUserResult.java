@@ -1,9 +1,9 @@
 package com.hoo.aoo.admin.application.port.in.user;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public record QueryUserResult(
-        List<User> users
+        Page<User> users
 ) {
     public record User(
             Long id,

@@ -1,9 +1,9 @@
 package com.hoo.aoo.admin.application.port.in.user;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
 
 public record QueryUserHomeListResult(
-        Page<Home> homes
+        List<Home> homes
 ) {
     public record Home(
             Long id,

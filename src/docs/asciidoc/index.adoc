@@ -200,7 +200,7 @@ operation::admin-user-get-list[snippets='http-request,http-response,response-fie
 
 사용자가 보유한 홈을 조회하는 API 입니다.
 
-operation::admin-user-get-home-list[snippets='http-request,http-response,response-fields']
+operation::admin-user-get-home-list[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API
