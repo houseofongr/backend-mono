@@ -33,6 +33,7 @@ class GetHouseDocumentationTest extends AbstractDocumentationTest {
                                 parameterWithName("houseId").description("조회할 하우스의 식별자입니다.")
                         ),
                         responseFields(
+                                fieldWithPath("house.houseId").description("하우스의 식별자입니다."),
                                 fieldWithPath("house.title").description("하우스의 제목입니다."),
                                 fieldWithPath("house.author").description("하우스의 작가입니다."),
                                 fieldWithPath("house.description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다."),

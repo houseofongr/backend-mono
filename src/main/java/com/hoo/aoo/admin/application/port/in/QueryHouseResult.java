@@ -11,6 +11,7 @@ public record QueryHouseResult(
 ) {
     public static QueryHouseResult of(HouseJpaEntity entity) {
         House house = new House(
+                entity.getId(),
                 entity.getTitle(),
                 entity.getAuthor(),
                 entity.getDescription(),
@@ -35,6 +36,7 @@ public record QueryHouseResult(
     }
 
     public record House(
+            Long houseId,
             String title,
             String author,
             String description,
