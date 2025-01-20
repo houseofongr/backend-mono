@@ -64,7 +64,12 @@ test {
     useJUnitPlatform()
 }
 
+task cleanSnippetsDir(type: Delete) {
+    delete file("./build/generated-snippets")
+}
+
 asciidoctor {
+
     inputs.dir snippetsDir
     sourceDir = file("src/docs/asciidoc/")
     ant.touch(file: "${sourceDir}/index.adoc")
@@ -94,10 +99,6 @@ asciidoctor {
     dependsOn test
 }
 
-asciidoctor.doFirst {
-    delete file('./build/docs/asciidoc/')
-    delete file("${snippetsDir}/**")
-}
 
 bootJar {
     dependsOn asciidoctor
