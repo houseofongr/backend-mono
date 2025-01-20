@@ -12,6 +12,7 @@ public class AdminUserPersistenceAdapter implements SearchUserPort {
 
     @Override
     public QueryUserInfoResult search(QueryUserInfoCommand command) {
+
         return null;
     }
 }

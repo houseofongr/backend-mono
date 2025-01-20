@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({HousePersistenceAdapter.class, HouseMapper.class})
-class HouseInfoPersistenceAdapterTest {
+class HousePersistenceAdapterTest {
 
     @Autowired
     HousePersistenceAdapter sut;
@@ -220,8 +220,7 @@ class HouseInfoPersistenceAdapterTest {
     @DisplayName("룸 조회 테스트")
     void testFindRoomJpaEntity() {
         // given
-        Long id = 1L;
-        String name = "거실";
+        Long id = 2L;
 
         // when
         Optional<RoomJpaEntity> jpaEntity = sut.findRoomJpaEntity(id);
@@ -229,9 +228,9 @@ class HouseInfoPersistenceAdapterTest {
 
         // then
         assertThat(jpaEntity).isNotEmpty();
-        assertThat(jpaEntity.get().getName()).isEqualTo("거실");
+        assertThat(jpaEntity.get().getName()).isEqualTo("주방");
         assertThat(jpaEntity.get().getX()).isEqualTo(0);
-        assertThat(jpaEntity.get().getY()).isEqualTo(0);
+        assertThat(jpaEntity.get().getY()).isEqualTo(1000);
         assertThat(jpaEntity.get().getZ()).isEqualTo(0);
         assertThat(jpaEntity.get().getWidth()).isEqualTo(5000);
         assertThat(jpaEntity.get().getHeight()).isEqualTo(1000);

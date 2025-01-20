@@ -37,7 +37,7 @@ class QueryHouseInfoServiceTest {
     }
 
     @Test
-    @DisplayName("리스트 조회 서비스 테스트")
+    @DisplayName("하우스 리스트 조회 서비스 테스트")
     void testQueryHouseListService() {
         // given
         List<HouseJpaEntity> es = new ArrayList<>();
@@ -57,7 +57,7 @@ class QueryHouseInfoServiceTest {
     }
 
     @Test
-    @DisplayName("단건 조회 서비스 테스트")
+    @DisplayName("하우스 단건 조회 서비스 테스트")
     void testQueryHouseService() {
         // given
         List<RoomJpaEntity> rooms = List.of(
@@ -70,13 +70,13 @@ class QueryHouseInfoServiceTest {
 
         // when
         when(findHousePort.findHouseJpaEntity(1L)).thenReturn(Optional.of(entity));
-        QueryHouseResult result = sut.query(1L);
+        QueryHouseResult result = sut.queryHouse(1L);
 
         // then
         assertThat(result).isEqualTo(QueryHouseResult.of(entity));
 
         // 조회되지 않을 때 예외처리
-        assertThatThrownBy(() -> sut.query(2L)).isInstanceOf(AdminException.class)
+        assertThatThrownBy(() -> sut.queryHouse(2L)).isInstanceOf(AdminException.class)
                         .hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
     }
 
@@ -84,12 +84,11 @@ class QueryHouseInfoServiceTest {
     @DisplayName("룸 조회 서비스 테스트")
     void testQueryRoomService() {
         // given
-        QueryRoomCommand command = new QueryRoomCommand(1L, "거실");
         RoomJpaEntity entity = new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 1000f, 1000f, 1L, null);
 
         // when
         when(findRoomPort.findRoomJpaEntity(1L)).thenReturn(Optional.of(entity));
-        QueryRoomResult result = sut.query(command);
+        QueryRoomResult result = sut.queryRoom(1L);
 
         // then
         assertThat(result.room().name()).isEqualTo("거실");

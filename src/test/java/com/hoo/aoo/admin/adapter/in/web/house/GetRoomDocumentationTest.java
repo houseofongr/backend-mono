@@ -24,13 +24,12 @@ class GetRoomDocumentationTest extends AbstractDocumentationTest {
     @Sql("GetRoomDocumentationTest.sql")
     @DisplayName("방 정보 조회 API")
     void testLoadRoomData() throws Exception {
-        mockMvc.perform(get("/admin/houses/{houseId}/rooms/{roomId}", 1L, 1L)
+        mockMvc.perform(get("/admin/houses/rooms/{roomId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-house-room-load",
                         pathParameters(
-                                parameterWithName("houseId").description("조회할 하우스의 식별자입니다."),
                                 parameterWithName("roomId").description("조회할 방의 식별자입니다.")
                         ),
                         responseFields(
