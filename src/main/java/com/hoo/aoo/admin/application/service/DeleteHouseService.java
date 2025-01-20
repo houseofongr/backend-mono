@@ -15,22 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DeleteHouseService implements DeleteHouseUseCase, DeleteRoomUseCase {
 
-    private final FindHousePort findHousePort;
-    private final FindRoomPort findRoomPort;
     private final DeleteHousePort deleteHousePort;
     private final DeleteRoomPort deleteRoomPort;
 
     @Override
     @Transactional
-    public MessageDto delete(Long id) {
+    public MessageDto deleteHouse(Long id) {
         deleteHousePort.deleteHouse(id);
         return new MessageDto(id + "번 하우스가 삭제되었습니다.");
     }
 
     @Override
     @Transactional
-    public MessageDto delete(Long houseId, String roomName) {
-        deleteRoomPort.deleteRoom(houseId);
-        return new MessageDto(houseId + "번 하우스 " + roomName + " 룸이 삭제되었습니다.");
+    public MessageDto deleteRoom(Long id) {
+        deleteRoomPort.deleteRoom(id);
+        return new MessageDto(id + "번 룸이 삭제되었습니다.");
     }
 }

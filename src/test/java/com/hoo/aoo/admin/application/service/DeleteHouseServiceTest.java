@@ -16,28 +16,24 @@ class DeleteHouseServiceTest {
 
     DeleteHouseService sut;
 
-    FindHousePort findHousePort;
-    FindRoomPort findRoomPort;
     DeleteHousePort deleteHousePort;
     DeleteRoomPort deleteRoomPort;
 
     @BeforeEach
     void init() {
-        findHousePort = mock();
-        findRoomPort = mock();
         deleteHousePort = mock();
         deleteRoomPort = mock();
-        sut = new DeleteHouseService(findHousePort, findRoomPort, deleteHousePort, deleteRoomPort);
+        sut = new DeleteHouseService(deleteHousePort, deleteRoomPort);
     }
 
     @Test
     @DisplayName("하우스 삭제 서비스 테스트")
-    void testDeleteHouse() {
+    void testDeleteHouseHouse() {
         // given
         Long id = 1L;
 
         // when
-        MessageDto messageDto = sut.delete(id);
+        MessageDto messageDto = sut.deleteHouse(id);
 
         // then
         verify(deleteHousePort, times(1)).deleteHouse(id);
@@ -46,17 +42,16 @@ class DeleteHouseServiceTest {
 
     @Test
     @DisplayName("룸 삭제 서비스 테스트")
-    void testDeleteRoom() {
+    void testDeleteRoomRoom() {
         // given
         Long id = 1L;
-        String name = "거실";
 
         // when
-        MessageDto messageDto = sut.delete(id, name);
+        MessageDto messageDto = sut.deleteRoom(id);
 
         // then
         verify(deleteRoomPort, times(1)).deleteRoom(id);
-        assertThat(messageDto.message()).isEqualTo("1번 하우스 거실 룸이 삭제되었습니다.");
+        assertThat(messageDto.message()).isEqualTo("1번 룸이 삭제되었습니다.");
     }
 
 }

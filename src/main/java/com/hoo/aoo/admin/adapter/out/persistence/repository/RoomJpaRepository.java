@@ -12,5 +12,4 @@ public interface RoomJpaRepository extends JpaRepository<RoomJpaEntity, Long> {
 
     void deleteAllByHouseId(Long houseId);
 
-    void deleteByHouseIdAndName(Long houseId, String name);
 }

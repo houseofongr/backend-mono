@@ -19,7 +19,7 @@ public class DeleteHouseController {
     ResponseEntity<MessageDto> delete(
             @PathVariable Long houseId
     ) {
-        return new ResponseEntity<>(deleteHouseUseCase.delete(houseId), HttpStatus.OK);
+        return new ResponseEntity<>(deleteHouseUseCase.deleteHouse(houseId), HttpStatus.OK);
     }
 
 }

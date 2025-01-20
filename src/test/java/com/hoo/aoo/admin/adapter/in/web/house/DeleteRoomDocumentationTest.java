@@ -24,17 +24,16 @@ class DeleteRoomDocumentationTest extends AbstractDocumentationTest {
     @Sql("DeleteRoomDocumentationTest.sql")
     @DisplayName("룸 삭제 API")
     void testDeleteRoom() throws Exception {
-        mockMvc.perform(delete("/admin/houses/{houseId}/rooms/{roomName}", 1L, "거실")
+        mockMvc.perform(delete("/admin/houses/rooms/{roomId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-house-room-delete",
                         pathParameters(
-                                parameterWithName("houseId").description("삭제할 방이 소속된 하우스의 식별자입니다."),
-                                parameterWithName("roomName").description("삭제할 방의 이름입니다.")
+                                parameterWithName("roomId").description("삭제할 방의 식별자입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("삭제 완료 메시지 : 0번 하우스 00 룸이 삭제되었습니다.")
+                                fieldWithPath("message").description("삭제 완료 메시지 : 0번 룸이 삭제되었습니다.")
                         )
                 ));
     }

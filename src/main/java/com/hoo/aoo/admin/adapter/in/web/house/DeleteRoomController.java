@@ -15,11 +15,9 @@ public class DeleteRoomController {
 
     private final DeleteRoomUseCase deleteRoomUseCase;
 
-    @DeleteMapping("/admin/houses/{houseId}/rooms/{roomName}")
-    ResponseEntity<MessageDto> delete(
-            @PathVariable Long houseId,
-            @PathVariable String roomName
-    ) {
-        return new ResponseEntity<>(deleteRoomUseCase.delete(houseId, roomName), HttpStatus.OK);
+    @DeleteMapping("/admin/houses/rooms/{roomId}")
+    ResponseEntity<MessageDto> delete(@PathVariable Long roomId) {
+
+        return new ResponseEntity<>(deleteRoomUseCase.deleteRoom(roomId), HttpStatus.OK);
     }
 }
