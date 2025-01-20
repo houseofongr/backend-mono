@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
@@ -119,12 +120,12 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("HouseJpaEntity 단건 조회 테스트")
-    void testFindJpaEntityHouse() {
+    void testFindHouseJpaEntityHouse() {
         // given
         Long houseId = 1L;
 
         // when
-        Optional<HouseJpaEntity> query = sut.findJpaEntity(houseId);
+        Optional<HouseJpaEntity> query = sut.findHouseJpaEntity(houseId);
 
         // then
         assertThat(query).isNotEmpty();
@@ -188,7 +189,7 @@ class HousePersistenceAdapterTest {
 
         // when
         sut.update(1L, houseWithRoom);
-        Optional<HouseJpaEntity> query = sut.findJpaEntity(1L);
+        Optional<HouseJpaEntity> query = sut.findHouseJpaEntity(1L);
 
         // then
         assertThat(query).isNotEmpty();
@@ -202,29 +203,30 @@ class HousePersistenceAdapterTest {
     @DisplayName("룸 수정 테스트")
     void testUpdateRoomInfo() throws AxisLimitExceededException, AreaLimitExceededException {
         // given
-        Room 욕실 = FixtureRepository.getRoom(new HouseId("", "", ""), "욕실");
+        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(
+           new UpdateRoomInfoCommand.RoomInfo(1L,"욕실")
+        ));
 
         // when
-        sut.update(1L, "거실", 욕실);
-        Optional<HouseJpaEntity> query = sut.findJpaEntity(1L);
+        sut.update(command);
+        Optional<RoomJpaEntity> query = sut.findRoomJpaEntity(1L);
 
         // then
-        assertThat(query.get().getRooms()).anySatisfy(roomJpaEntity ->{
-            assertThat(roomJpaEntity.getName()).isEqualTo("욕실");
-        });
+        assertThat(query).isNotEmpty();
+        assertThat(query.get().getName()).isEqualTo("욕실");
     }
 
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("룸 조회 테스트")
-    void testFindRoomEntity() {
+    void testFindRoomJpaEntity() {
         // given
         Long id = 1L;
         String name = "거실";
 
         // when
-        Optional<RoomJpaEntity> jpaEntity = sut.findJpaEntity(id, name);
-        Optional<RoomJpaEntity> jpaEntity2 = sut.findJpaEntity(id, "not in house name");
+        Optional<RoomJpaEntity> jpaEntity = sut.findRoomJpaEntity(id);
+        Optional<RoomJpaEntity> jpaEntity2 = sut.findRoomJpaEntity(id);
 
         // then
         assertThat(jpaEntity).isNotEmpty();
@@ -242,12 +244,12 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 삭제 테스트")
-    void testDeleteHouse() {
+    void testDeleteHouseRoomHouse() {
         // given
         Long id = 1L;
 
         // when
-        sut.delete(id);
+        sut.deleteHouse(id);
 
         // then
         assertThat(houseJpaRepository.findById(id)).isEmpty();
@@ -258,15 +260,14 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("룸 삭제 테스트")
-    void testDeleteRoom() {
+    void testDeleteHouseRoomRoom() {
         // given
-        Long houseId = 1L;
-        String roomName = "거실";
+        Long roomId = 1L;
 
         // when
-        sut.delete(houseId, roomName);
+        sut.deleteRoom(roomId);
 
         // then
-        assertThat(roomJpaRepository.findByHouseIdAndName(houseId, roomName)).isEmpty();
+        assertThat(roomJpaRepository.findById(roomId)).isEmpty();
     }
 }

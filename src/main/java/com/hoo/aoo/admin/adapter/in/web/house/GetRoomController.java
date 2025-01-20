@@ -16,12 +16,12 @@ public class GetRoomController {
 
     private final QueryRoomInfoUseCase queryRoomInfoUseCase;
 
-    @GetMapping("/admin/houses/{houseId}/rooms/{roomName}")
+    @GetMapping("/admin/houses/{houseId}/rooms/{roomId}")
     ResponseEntity<QueryRoomResult> load(
             @PathVariable Long houseId,
-            @PathVariable String roomName
+            @PathVariable String roomId
     ) {
-        QueryRoomCommand command = new QueryRoomCommand(houseId,roomName);
+        QueryRoomCommand command = new QueryRoomCommand(houseId,roomId);
         return new ResponseEntity<>(queryRoomInfoUseCase.query(command), HttpStatus.OK);
     }
 

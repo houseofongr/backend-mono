@@ -58,22 +58,18 @@ class UpdateHouseServiceTest {
     void testUpdateRoomInfo() throws Exception{
         // given
         House houseWithRoom = getHouseWithRoom();
-        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(1L, "거실", "욕실");
-        UpdateRoomInfoCommand notFoundCommand = new UpdateRoomInfoCommand(1L, "no name", "new name");
-        UpdateRoomInfoCommand duplicateCommand = new UpdateRoomInfoCommand(1L, "거실", "주방");
+        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")));
+        UpdateRoomInfoCommand notFoundCommand = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(100L, "욕실")));
 
         // when
-        when(findHousePort.find(1L)).thenReturn(Optional.of(houseWithRoom));
+        when(updateRoomPort.update(command)).thenReturn(1);
         MessageDto message = sut.update(command);
 
         // then
-        verify(findHousePort, times(1)).find(1L);
-        verify(updateRoomPort, times(1)).update(any(), any(), any());
+        verify(updateRoomPort, times(1)).update(any());
 
-        assertThat(message.message()).isEqualTo("1번 하우스 거실 룸의 정보 수정이 완료되었습니다.");
-
-        assertThatThrownBy(() -> sut.update(notFoundCommand)).hasMessage(AdminErrorCode.ROOM_NOT_FOUND.getMessage());
-        assertThatThrownBy(() -> sut.update(duplicateCommand)).hasMessage(AdminErrorCode.ROOM_NAME_DUPLICATED.getMessage());
+        assertThat(message.message()).isEqualTo("1개 룸의 정보 수정이 완료되었습니다.");
+        assertThat(sut.update(notFoundCommand).message()).isEqualTo("0개 룸의 정보 수정이 완료되었습니다.");
     }
 
 }

@@ -23,7 +23,7 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryHouseResult query(Long houseId) {
-        HouseJpaEntity entity = findHousePort.findJpaEntity(houseId)
+        HouseJpaEntity entity = findHousePort.findHouseJpaEntity(houseId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
         return QueryHouseResult.of(entity);
@@ -39,7 +39,7 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryRoomResult query(QueryRoomCommand command) {
-        RoomJpaEntity jpaEntity = findRoomPort.findJpaEntity(command.houseId(), command.roomName())
+        RoomJpaEntity jpaEntity = findRoomPort.findRoomJpaEntity(command.houseId())
                 .orElseThrow(() -> new AdminException(AdminErrorCode.ROOM_NOT_FOUND));
 
         return QueryRoomResult.of(jpaEntity);

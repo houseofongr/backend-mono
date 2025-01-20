@@ -40,7 +40,7 @@ class DeleteHouseServiceTest {
         MessageDto messageDto = sut.delete(id);
 
         // then
-        verify(deleteHousePort, times(1)).delete(id);
+        verify(deleteHousePort, times(1)).deleteHouse(id);
         assertThat(messageDto.message()).isEqualTo("1번 하우스가 삭제되었습니다.");
     }
 
@@ -55,7 +55,7 @@ class DeleteHouseServiceTest {
         MessageDto messageDto = sut.delete(id, name);
 
         // then
-        verify(deleteRoomPort, times(1)).delete(id, name);
+        verify(deleteRoomPort, times(1)).deleteRoom(id);
         assertThat(messageDto.message()).isEqualTo("1번 하우스 거실 룸이 삭제되었습니다.");
     }
 

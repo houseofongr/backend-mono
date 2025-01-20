@@ -11,25 +11,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class PatchRoomInfoController {
 
     private final UpdateRoomInfoUseCase updateRoomInfoUseCase;
 
-    @PatchMapping("/admin/houses/rooms/{houseId}")
-    ResponseEntity<MessageDto> update(
-            @PathVariable Long houseId,
-            @RequestBody Request request) {
+    @PatchMapping("/admin/houses/rooms")
+    ResponseEntity<MessageDto> update(@RequestBody List<UpdateRoomInfoCommand.RoomInfo> requests) {
 
-        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(houseId, request.originalName, request.newName);
+        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(requests);
+
         return new ResponseEntity<>(updateRoomInfoUseCase.update(command), HttpStatus.OK);
     }
 
-    private record Request(
-            String originalName,
-            String newName
-    ) {
-
-    }
 }

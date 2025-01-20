@@ -5,5 +5,5 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import java.util.Optional;
 
 public interface FindRoomPort {
-    Optional<RoomJpaEntity> findJpaEntity(Long id, String roomName);
+    Optional<RoomJpaEntity> findRoomJpaEntity(Long id);
 }

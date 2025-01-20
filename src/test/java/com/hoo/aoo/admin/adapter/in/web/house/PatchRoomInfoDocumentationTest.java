@@ -26,25 +26,29 @@ class PatchRoomInfoDocumentationTest extends AbstractDocumentationTest {
     void testRoomInfoUpdate() throws Exception {
 
         String requestBody = """
-                {
-                  "originalName" : "거실",
-                  "newName" : "욕실"
-                }
+                [
+                    {
+                      "roomId" : "1",
+                      "newName" : "욕실"
+                    }, {
+                      "roomId" : "2",
+                      "newName" : "베란다"
+                    }
+                ]
                 """;
 
-        mockMvc.perform(patch("/admin/houses/rooms/{houseId}", 1L)
+        mockMvc.perform(patch("/admin/houses/rooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-house-room-update",
-                        pathParameters(parameterWithName("houseId").description("수정할 하우스의 식별자입니다.")),
                         requestFields(
-                                fieldWithPath("originalName").description("수정할 룸의 원래 이름입니다."),
-                                fieldWithPath("newName").description("수정할 이름입니다.")
+                                fieldWithPath("[].roomId").description("수정할 룸의 식별자입니다."),
+                                fieldWithPath("[].newName").description("수정할 이름입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 하우스 00 룸의 정보 수정이 완료되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : 0개 룸의 정보 수정이 완료되었습니다.")
                         )
                 ));
     }

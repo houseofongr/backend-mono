@@ -23,7 +23,9 @@ public record QueryHouseResult(
         );
 
         List<Room> list = entity.getRooms().stream().map(roomJpaEntity ->
-                new Room(roomJpaEntity.getName(),
+                new Room(
+                        roomJpaEntity.getId(),
+                        roomJpaEntity.getName(),
                         roomJpaEntity.getX(),
                         roomJpaEntity.getY(),
                         roomJpaEntity.getZ(),
@@ -49,6 +51,7 @@ public record QueryHouseResult(
     }
 
     public record Room(
+            Long roomId,
             String name,
             Float x,
             Float y,

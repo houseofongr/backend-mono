@@ -23,14 +23,14 @@ public class DeleteHouseService implements DeleteHouseUseCase, DeleteRoomUseCase
     @Override
     @Transactional
     public MessageDto delete(Long id) {
-        deleteHousePort.delete(id);
+        deleteHousePort.deleteHouse(id);
         return new MessageDto(id + "번 하우스가 삭제되었습니다.");
     }
 
     @Override
     @Transactional
     public MessageDto delete(Long houseId, String roomName) {
-        deleteRoomPort.delete(houseId, roomName);
+        deleteRoomPort.deleteRoom(houseId);
         return new MessageDto(houseId + "번 하우스 " + roomName + " 룸이 삭제되었습니다.");
     }
 }

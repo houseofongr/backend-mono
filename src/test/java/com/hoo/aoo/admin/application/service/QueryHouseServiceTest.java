@@ -68,7 +68,7 @@ class QueryHouseServiceTest {
         entity.prePersist();
 
         // when
-        when(findHousePort.findJpaEntity(1L)).thenReturn(Optional.of(entity));
+        when(findHousePort.findHouseJpaEntity(1L)).thenReturn(Optional.of(entity));
         QueryHouseResult result = sut.query(1L);
 
         // then
@@ -87,7 +87,7 @@ class QueryHouseServiceTest {
         RoomJpaEntity entity = new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 1000f, 1000f, 1L, null);
 
         // when
-        when(findRoomPort.findJpaEntity(1L, "거실")).thenReturn(Optional.of(entity));
+        when(findRoomPort.findRoomJpaEntity(1L)).thenReturn(Optional.of(entity));
         QueryRoomResult result = sut.query(command);
 
         // then

@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.*;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
@@ -43,15 +44,14 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
         return houseJpaEntity.getId();
     }
 
-    @Override
-    public Optional<HouseJpaEntity> findJpaEntity(Long id) {
+    public Optional<HouseJpaEntity> findHouseJpaEntity(Long id) {
         return houseJpaRepository.findById(id);
     }
 
     @Override
     public Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
 
-        Optional<HouseJpaEntity> optional = findJpaEntity(id);
+        Optional<HouseJpaEntity> optional = findHouseJpaEntity(id);
 
         if (optional.isEmpty()) return Optional.empty();
 
@@ -75,31 +75,40 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
     }
 
     @Override
-    public void update(Long houseId, String originalName, Room room) {
+    public int update(UpdateRoomInfoCommand command) {
 
-        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllByHouseId(houseId);
+        List<Long> roomIds = command.roomInfos().stream().map(UpdateRoomInfoCommand.RoomInfo::roomId).toList();
+
+        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllById(roomIds);
+
+        int updateCount = 0;
 
         for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
-            if (roomJpaEntity.getName().equals(originalName)){
-                roomJpaEntity.updateInfo(room.getId().getName());
-                return;
+            for (UpdateRoomInfoCommand.RoomInfo roomInfo : command.roomInfos()) {
+                if (roomJpaEntity.getId().equals(roomInfo.roomId())){
+                    roomJpaEntity.updateInfo(roomInfo.newName());
+                    updateCount++;
+                }
             }
         }
+
+        return updateCount;
     }
 
     @Override
-    public Optional<RoomJpaEntity> findJpaEntity(Long id, String roomName) {
-        return roomJpaRepository.findByHouseIdAndName(id, roomName);
+    public Optional<RoomJpaEntity> findRoomJpaEntity(Long id) {
+        return roomJpaRepository.findById(id);
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteHouse(Long id) {
         roomJpaRepository.deleteAllByHouseId(id);
         houseJpaRepository.deleteById(id);
     }
 
     @Override
-    public void delete(Long houseId, String roomName) {
-        roomJpaRepository.deleteByHouseIdAndName(houseId, roomName);
+    public void deleteRoom(Long id) {
+        roomJpaRepository.deleteById(id);
     }
+
 }

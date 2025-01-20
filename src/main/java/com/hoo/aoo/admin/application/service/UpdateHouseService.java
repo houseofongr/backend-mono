@@ -9,8 +9,6 @@ import com.hoo.aoo.admin.application.port.out.UpdateHousePort;
 import com.hoo.aoo.admin.application.port.out.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.RoomNameDuplicatedException;
-import com.hoo.aoo.admin.domain.exception.RoomNameNotFoundException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -51,26 +49,7 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInf
     @Override
     @Transactional
     public MessageDto update(UpdateRoomInfoCommand command) {
-        try {
-            House house = findHousePort.find(command.persistenceId())
-                    .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
-
-            house.updateRoomInfo(command.originalName(), command.newName());
-            updateRoomPort.update(command.persistenceId(), command.originalName(), house.getRoom(command.newName()));
-
-            return new MessageDto(command.persistenceId() + "번 하우스 " + command.originalName() + " 룸의 정보 수정이 완료되었습니다.");
-
-        } catch (AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
-
-        } catch (AreaLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
-
-        } catch (RoomNameDuplicatedException e) {
-            throw new AdminException(AdminErrorCode.ROOM_NAME_DUPLICATED);
-
-        } catch (RoomNameNotFoundException e) {
-            throw new AdminException(AdminErrorCode.ROOM_NOT_FOUND);
-        }
+        int updateCount = updateRoomPort.update(command);
+        return new MessageDto(updateCount + "개 룸의 정보 수정이 완료되었습니다.");
     }
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface FindHousePort {
     Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException;
-    Optional<HouseJpaEntity> findJpaEntity(Long id);
+    Optional<HouseJpaEntity> findHouseJpaEntity(Long id);
 }
