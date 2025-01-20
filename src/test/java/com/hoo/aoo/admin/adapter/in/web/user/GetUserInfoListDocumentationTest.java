@@ -3,9 +3,11 @@ package com.hoo.aoo.admin.adapter.in.web.user;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,11 +19,16 @@ class GetUserInfoListDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
+    @Sql("GetUserInfoListDocumentationTest.sql")
     @DisplayName("사용자 리스트 조회 API")
     void testGetUserList() throws Exception {
-        mockMvc.perform(get("/admin/users"))
+        mockMvc.perform(get("/admin/users?page=1&size=9"))
                 .andExpect(status().is(200))
                 .andDo(document("admin-user-get-list",
+                        pathParameters(
+                                parameterWithName("page").description("보여줄 페이지 번호입니다. +" + "\n" + "* 기본값 : 1").optional(),
+                                parameterWithName("size").description("한 페이지에 보여줄 데이터 개수입니다. +" + "\n" + "* 기본값 : 10").optional()
+                        ),
                         responseFields(
                                 fieldWithPath("users.content[].id").description("사용자의 식별자입니다."),
                                 fieldWithPath("users.content[].realName").description("사용자의 이름입니다."),

@@ -189,7 +189,7 @@ operation::admin-house-delete-room[snippets='http-request,path-parameters,http-r
 
 소리기록실 사용자를 조회하는 API 입니다.
 
-operation::admin-user-get-list[snippets='http-request,http-response,response-fields']
+operation::admin-user-get-list[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[user-get-home-list-api]]
 ==== 사용자 홈 조회 API
