@@ -4,11 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class Agreement {
-    private final Boolean recordAgreement;
+    private final Boolean termsOfUseAgreement;
     private final Boolean personalInformationAgreement;
 
-    public Agreement(Boolean personalInformationAgreement, Boolean recordAgreement) {
+    public Agreement(Boolean personalInformationAgreement, Boolean termsOfUseAgreement) {
         this.personalInformationAgreement = personalInformationAgreement;
-        this.recordAgreement = recordAgreement;
+        this.termsOfUseAgreement = termsOfUseAgreement;
     }
 }

@@ -16,6 +16,8 @@ public record QueryUserInfoResult(
             String nickName,
             String phoneNumber,
             String registeredDate,
+            Boolean termsOfUseAgreement,
+            Boolean personalInformationAgreement,
             List<SnsAccountInfo> snsAccounts
     ) {
 

@@ -22,6 +22,8 @@ public class AdminUserMapper {
                 userJpaEntity.getNickname(),
                 userJpaEntity.getPhoneNumber(),
                 DateTimeFormatters.DOT_DATE.getFormatter().format(userJpaEntity.getCreatedTime()),
+                userJpaEntity.getTermsOfUseAgreement(),
+                userJpaEntity.getPersonalInformationAgreement(),
                 userJpaEntity.getSnsAccountEntities().stream().map(this::mapToQueryResult).toList()
         );
     }

@@ -35,6 +35,8 @@ class GetUserInfoListDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("users.content[].nickName").description("사용자의 이름입니다."),
                                 fieldWithPath("users.content[].phoneNumber").description("사용자의 전화번호입니다."),
                                 fieldWithPath("users.content[].registeredDate").description("사용자의 등록일입니다."),
+                                fieldWithPath("users.content[].termsOfUseAgreement").description("사용자의 이용약관 동의여부입니다."),
+                                fieldWithPath("users.content[].personalInformationAgreement").description("사용자의 개인정보 수집 및 이용 동의여부입니다."),
                                 fieldWithPath("users.content[].snsAccounts[].domain").description("SNS 계정의 제공자입니다."),
                                 fieldWithPath("users.content[].snsAccounts[].email").description("SNS 계정의 이메일 주소입니다."),
 

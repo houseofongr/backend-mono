@@ -31,7 +31,7 @@ public class UserJpaEntity extends DateColumnBaseEntity {
 
     @Column(nullable = false)
     @ColumnDefault("0")
-    private Boolean recordAgreement;
+    private Boolean termsOfUseAgreement;
 
     @Column(nullable = false)
     @ColumnDefault("0")

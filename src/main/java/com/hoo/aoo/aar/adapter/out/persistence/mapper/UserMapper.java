@@ -23,7 +23,7 @@ public class UserMapper {
                 user.getName().getRealName(),
                 user.getName().getNickname(),
                 user.getPhoneNumber().getNumber(),
-                user.getAgreement().getRecordAgreement(),
+                user.getAgreement().getTermsOfUseAgreement(),
                 user.getAgreement().getPersonalInformationAgreement(),
                 snsAccountJpaEntities
         );

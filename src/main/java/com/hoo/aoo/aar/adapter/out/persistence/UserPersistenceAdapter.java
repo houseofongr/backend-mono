@@ -37,7 +37,7 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort {
 
         List<SnsAccountJpaEntity> snsAccountJpaEntities = snsAccountJpaRepository.findAllByUserId(jpaEntity.getId());
 
-        Agreement agreement = new Agreement(jpaEntity.getPersonalInformationAgreement(), jpaEntity.getRecordAgreement());
+        Agreement agreement = new Agreement(jpaEntity.getPersonalInformationAgreement(), jpaEntity.getTermsOfUseAgreement());
 
         PhoneNumber phoneNumber = new PhoneNumber(jpaEntity.getPhoneNumber());
 
