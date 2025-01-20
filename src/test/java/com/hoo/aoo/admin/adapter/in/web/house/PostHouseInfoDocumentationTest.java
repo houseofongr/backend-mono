@@ -41,7 +41,7 @@ class PostHouseInfoDocumentationTest extends AbstractDocumentationTest {
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(201))
-                .andDo(document("admin-house-create",
+                .andDo(document("admin-house-post",
                         requestParts(
                                 partWithName("metadata").description("생성할 하우스의 정보를 포함하는 Json 형태의 문자열입니다."),
                                 partWithName("house").description("생성할 하우스의 기본 이미지입니다."),

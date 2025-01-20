@@ -21,7 +21,7 @@ public class MetadataDocumentationTest extends AbstractDocumentationTest {
     void testCreateMetadata() throws Exception {
         mockMvc.perform(get("/mock/admin/house/metadata")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(document("admin-house-create-metadata",
+                .andDo(document("admin-house-get-metadata",
                         responseFields(
                                 fieldWithPath("house.title").description("하우스의 제목입니다."),
                                 fieldWithPath("house.author").description("하우스의 작가입니다."),

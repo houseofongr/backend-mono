@@ -28,7 +28,7 @@ class GetHouseInfoDocumentationTest extends AbstractDocumentationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-read-detail",
+                .andDo(document("admin-house-get",
                         pathParameters(
                                 parameterWithName("houseId").description("조회할 하우스의 식별자입니다.")
                         ),

@@ -38,7 +38,7 @@ class PatchHouseInfoInfoDocumentationTest extends AbstractDocumentationTest {
                         .content(requestBody)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-update",
+                .andDo(document("admin-house-patch",
                         pathParameters(parameterWithName("houseId").description("수정할 하우스의 식별자입니다.")),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),

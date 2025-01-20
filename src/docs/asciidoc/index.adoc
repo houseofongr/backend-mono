@@ -101,34 +101,34 @@ operation::aar-authn-regist[snippets='http-request,request-fields,http-response,
 관리자가 지정한 하우스의 좌표에 맞게 하우스를 저장합니다.
 
 ===== Http Request
-include::{snippets}/admin-house-create/http-request.adoc[]
+include::{snippets}/admin-house-post/http-request.adoc[]
 
 ===== Request Form
-include::{snippets}/admin-house-create/request-parts.adoc[]
+include::{snippets}/admin-house-post/request-parts.adoc[]
 
 > 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 <<Metadata>>와 일치해야 합니다.
 
 ===== Metadata
-include::{snippets}/admin-house-create-metadata/response-fields.adoc[]
+include::{snippets}/admin-house-get-metadata/response-fields.adoc[]
 
 ===== Metadata 예시
-include::{snippets}/admin-house-create-metadata/response-body.adoc[]
+include::{snippets}/admin-house-get-metadata/response-body.adoc[]
 
-operation::admin-house-create[snippets='http-response,response-fields']
+operation::admin-house-post[snippets='http-response,response-fields']
 
 [[house-read-list-api]]
 ==== 하우스 리스트 조회 API
 
 여러 건의 하우스를 검색 조건에 맞게 조회합니다.
 
-operation::admin-house-read-list[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-get-list[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[house-read-detail-api]]
 ==== 하우스 상세 조회 API
 
 하우스와 내부 룸에 대한 상세 정보를 조회합니다.
 
-operation::admin-house-read-detail[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-get[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[house-update-api]]
 ==== 하우스 정보 수정 API
@@ -137,7 +137,7 @@ operation::admin-house-read-detail[snippets='http-request,path-parameters,http-r
 
 > 하우스의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
-operation::admin-house-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+operation::admin-house-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
 [[house-delete-api]]
 ==== 하우스 삭제 API
@@ -157,7 +157,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 > 차후 아이템 관련 정보를 추가할 예정입니다.
 
-operation::admin-house-room-load[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-get-room[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[house-room-update-api]]
 ==== 룸 정보 수정 API
@@ -166,7 +166,7 @@ operation::admin-house-room-load[snippets='http-request,path-parameters,http-res
 
 > 룸의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
-operation::admin-house-room-update[snippets='http-request,request-fields,http-response,response-fields']
+operation::admin-house-patch-room[snippets='http-request,request-fields,http-response,response-fields']
 
 [[house-room-delete-api]]
 ==== 룸 삭제 API
@@ -175,7 +175,7 @@ operation::admin-house-room-update[snippets='http-request,request-fields,http-re
 
 > 룸 내부에 포함된 아이템을 함께 삭제합니다.
 
-operation::admin-house-room-delete[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-delete-room[snippets='http-request,path-parameters,http-response,response-fields']
 
 > 차후 사용자의 음원이 담긴 룸은 삭제할 수 없도록 할 예정입니다.
 

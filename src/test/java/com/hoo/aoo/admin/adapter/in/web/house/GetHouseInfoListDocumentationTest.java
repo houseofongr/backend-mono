@@ -27,7 +27,7 @@ public class GetHouseInfoListDocumentationTest extends AbstractDocumentationTest
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-read-list",
+                .andDo(document("admin-house-get-list",
                         pathParameters(
                                 parameterWithName("page").description("보여줄 페이지 번호입니다. +" + "\n" + "* 기본값 : 1").optional(),
                                 parameterWithName("size").description("한 페이지에 보여줄 데이터 개수입니다. +" + "\n" + "* 기본값 : 10").optional(),

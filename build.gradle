@@ -70,6 +70,8 @@ task cleanSnippetsDir(type: Delete) {
 
 asciidoctor {
 
+    doFirst {cleanSnippetsDir}
+
     inputs.dir snippetsDir
     sourceDir = file("src/docs/asciidoc/")
     ant.touch(file: "${sourceDir}/index.adoc")

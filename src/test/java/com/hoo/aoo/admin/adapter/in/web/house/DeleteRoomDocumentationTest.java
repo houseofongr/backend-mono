@@ -28,7 +28,7 @@ class DeleteRoomDocumentationTest extends AbstractDocumentationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-room-delete",
+                .andDo(document("admin-house-delete-room",
                         pathParameters(
                                 parameterWithName("roomId").description("삭제할 방의 식별자입니다.")
                         ),

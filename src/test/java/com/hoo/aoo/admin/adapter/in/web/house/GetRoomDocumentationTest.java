@@ -28,7 +28,7 @@ class GetRoomDocumentationTest extends AbstractDocumentationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-room-load",
+                .andDo(document("admin-house-get-room",
                         pathParameters(
                                 parameterWithName("roomId").description("조회할 방의 식별자입니다.")
                         ),
