@@ -5,9 +5,9 @@ import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.data.domain.Page;
 
 public record QueryHouseListResult(
-        Page<House> houses
+        Page<HouseInfo> houses
 ) {
-    public record House(
+    public record HouseInfo(
             Long id,
             String title,
             String author,
@@ -17,8 +17,8 @@ public record QueryHouseListResult(
             Long imageId
     ) {
 
-        public static House of(HouseJpaEntity houseJpaEntity) {
-            return new House(
+        public static HouseInfo of(HouseJpaEntity houseJpaEntity) {
+            return new HouseInfo(
                     houseJpaEntity.getId(),
                     houseJpaEntity.getTitle(),
                     houseJpaEntity.getAuthor(),

@@ -1,6 +1,6 @@
 package com.hoo.aoo.common;
 
-import com.hoo.aoo.admin.application.service.Metadata;
+import com.hoo.aoo.admin.application.service.house.Metadata;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;

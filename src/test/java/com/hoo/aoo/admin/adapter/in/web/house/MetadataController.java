@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.service.Metadata;
+import com.hoo.aoo.admin.application.service.house.Metadata;
 import com.hoo.aoo.common.FixtureRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

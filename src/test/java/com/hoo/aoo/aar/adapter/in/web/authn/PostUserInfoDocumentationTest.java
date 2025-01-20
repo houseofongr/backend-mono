@@ -1,0 +1,48 @@
+package com.hoo.aoo.aar.adapter.in.web.authn;
+
+import com.hoo.aoo.common.adapter.in.web.config.DocumentationTest;
+import com.nimbusds.jose.shaded.gson.Gson;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@DocumentationTest
+public class PostUserInfoDocumentationTest {
+
+    @Autowired
+    MockMvc mockMvc;
+    Gson gson = new Gson();
+
+    @Test
+    @Sql("RegisterUserDocumentationTest.sql")
+    @DisplayName("회원가입 API")
+    void testRegisterWithDefaultPhoneNumber() throws Exception {
+
+        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+
+        mockMvc.perform(post("/aar/authn/regist")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(jwt -> jwt.claim("snsId", 1L))
+                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
+                .andExpect(status().is(201))
+                .andDo(document("aar-authn-regist",
+                        requestFields(
+                                fieldWithPath("recordAgreement").description("녹화물에 대한 2차 가공 동의여부입니다."),
+                                fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수하우스 및 활용에 대한 동의여부입니다.")
+                        ),
+                        responseFields(
+                                fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다."),
+                                fieldWithPath("accessToken").description("회원가입한 사용자의 JWT 액세스 토큰입니다. +" + "\n" + "Claim : [userId, snsId, nickname, role]"))));
+    }
+}

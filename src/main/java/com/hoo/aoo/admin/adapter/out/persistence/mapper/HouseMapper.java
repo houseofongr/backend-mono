@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.hoo.aoo.admin.application.service.CreateHouseService.*;
+import static com.hoo.aoo.admin.application.service.house.CreateHouseService.*;
 
 @Component
 public class HouseMapper {
