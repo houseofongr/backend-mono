@@ -10,7 +10,6 @@ import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
-import com.hoo.aoo.admin.domain.exception.RoomNameDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
@@ -52,7 +51,7 @@ class HousePersistenceAdapterTest {
 
     @Test
     @DisplayName("House 저장 테스트")
-    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException, RoomNameDuplicatedException, HouseRelationshipException {
+    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
         // given
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 
@@ -81,7 +80,7 @@ class HousePersistenceAdapterTest {
     @DisplayName("HouseJpaEntity 페이지 조회 테스트")
     void testSearchJpaEntityHouse() {
         // given
-        Pageable pageable = PageRequest.of(0,9);
+        Pageable pageable = PageRequest.of(0, 9);
 
         QueryHouseListCommand allCommand = new QueryHouseListCommand(pageable, null, null);
         QueryHouseListCommand keywordCommand = new QueryHouseListCommand(pageable, SearchType.TITLE, "cozy");
@@ -99,15 +98,15 @@ class HousePersistenceAdapterTest {
         // then
         assertThat(entities).hasSize(9);
         assertThat(entities).anySatisfy(entity -> {
-                assertThat(entity.getId()).isEqualTo(1L);
-                assertThat(entity.getTitle()).isEqualTo("cozy house");
-                assertThat(entity.getAuthor()).isEqualTo("leaf");
-                assertThat(entity.getDescription()).isEqualTo("this is cozy house");
-                assertThat(entity.getWidth()).isEqualTo(5000);
-                assertThat(entity.getHeight()).isEqualTo(5000);
-                assertThat(entity.getBasicImageFileId()).isEqualTo(1L);
-                assertThat(entity.getBorderImageFileId()).isEqualTo(2L);
-                assertThat(entity.getRooms()).hasSize(2);
+            assertThat(entity.getId()).isEqualTo(1L);
+            assertThat(entity.getTitle()).isEqualTo("cozy house");
+            assertThat(entity.getAuthor()).isEqualTo("leaf");
+            assertThat(entity.getDescription()).isEqualTo("this is cozy house");
+            assertThat(entity.getWidth()).isEqualTo(5000);
+            assertThat(entity.getHeight()).isEqualTo(5000);
+            assertThat(entity.getBasicImageFileId()).isEqualTo(1L);
+            assertThat(entity.getBorderImageFileId()).isEqualTo(2L);
+            assertThat(entity.getRooms()).hasSize(2);
         });
 
         // keyword search
@@ -154,7 +153,7 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 조회 테스트")
-    void testFind() throws AreaLimitExceededException, AxisLimitExceededException {
+    void testFind() throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
         // given
         Long houseId = 1L;
 
@@ -204,7 +203,7 @@ class HousePersistenceAdapterTest {
     void testUpdateRoomInfo() throws AxisLimitExceededException, AreaLimitExceededException {
         // given
         UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(
-           new UpdateRoomInfoCommand.RoomInfo(1L,"욕실")
+                new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")
         ));
 
         // when

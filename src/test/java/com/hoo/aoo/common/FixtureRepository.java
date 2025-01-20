@@ -4,7 +4,6 @@ import com.hoo.aoo.admin.application.service.Metadata;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
-import com.hoo.aoo.admin.domain.exception.RoomNameDuplicatedException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
@@ -26,7 +25,7 @@ public class FixtureRepository {
         return getRoom(getHouseId(),roomName);
     }
 
-    public static House getHouseWithRoom() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException, RoomNameDuplicatedException {
+    public static House getHouseWithRoom() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException {
         return getHouseWithRoom(getHouseId());
     }
 
@@ -34,11 +33,11 @@ public class FixtureRepository {
         return new HouseId("cozy house", "leaf", "this is cozy house");
     }
 
-    public static House getHouseWithRoom(HouseId houseId) throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomNameDuplicatedException {
+    public static House getHouseWithRoom(HouseId houseId) throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException {
         return House.create(houseId, 5000f, 5000f, List.of(getRoom(houseId,"거실"), getRoom(houseId,"주방")));
     }
 
-    public static House getHouse(HouseId houseId, List<Room> rooms) throws AreaLimitExceededException, HouseRelationshipException, RoomNameDuplicatedException {
+    public static House getHouse(HouseId houseId, List<Room> rooms) throws AreaLimitExceededException, HouseRelationshipException {
         return House.create(houseId, 5000f, 5000f, rooms);
     }
 

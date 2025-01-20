@@ -20,7 +20,7 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 생성 테스트")
-    void testCreateHouse() throws AreaLimitExceededException, RoomNameDuplicatedException, HouseRelationshipException, AxisLimitExceededException {
+    void testCreateHouse() throws AreaLimitExceededException, HouseRelationshipException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -38,7 +38,7 @@ class HouseTest {
 
     @Test
     @DisplayName("방 ID 중복 테스트")
-    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, RoomNameDuplicatedException, AxisLimitExceededException {
+    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
@@ -48,21 +48,13 @@ class HouseTest {
                 FixtureRepository.getRoom(houseId, "주방")
         );
 
-        List<Room> roomsDuplicated = List.of(
-                FixtureRepository.getRoom(houseId, "거실"),
-                FixtureRepository.getRoom(houseId, "거실")
-        );
-                // then
+        // then
         assertThat(House.create(houseId, width, height, rooms)).isNotNull();
-
-        assertThatThrownBy(() -> House.create(houseId, width, height, roomsDuplicated))
-                .isInstanceOf(RoomNameDuplicatedException.class)
-                .hasMessage("house 'cozy house' already has room named '거실'.");
     }
 
     @Test
     @DisplayName("방 참조관계 테스트")
-    void testRoomRelationship() throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException, RoomNameDuplicatedException {
+    void testRoomRelationship() throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
@@ -95,7 +87,7 @@ class HouseTest {
 
     @Test
     @DisplayName("하우스 수정 테스트")
-    void testUpdateInfo() throws HouseRelationshipException, AreaLimitExceededException, RoomNameDuplicatedException, AxisLimitExceededException {
+    void testUpdateInfo() throws HouseRelationshipException, AreaLimitExceededException, AxisLimitExceededException {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -117,12 +109,11 @@ class HouseTest {
 
     @Test
     @DisplayName("룸 수정 테스트")
-    void testUpdateRoomInfo() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException, RoomNameDuplicatedException, RoomNameNotFoundException {
+    void testUpdateRoomInfo() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException, RoomNameNotFoundException {
         // given
         House houseWithRoom = FixtureRepository.getHouseWithRoom();
         String originalName = "거실";
         String newName = "욕실";
-        String newName2 = "주방";
 
         // when
         houseWithRoom.updateRoomInfo(originalName, newName);
@@ -136,8 +127,5 @@ class HouseTest {
                 .isInstanceOf(RoomNameNotFoundException.class)
                 .hasMessage("house 'cozy house' doesn't have room named '거실'.");
 
-        assertThatThrownBy(() -> houseWithRoom.updateRoomInfo(newName, newName2))
-                .isInstanceOf(RoomNameDuplicatedException.class)
-                .hasMessage("house 'cozy house' already has room named '주방'.");
     }
 }

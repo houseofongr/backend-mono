@@ -3,7 +3,6 @@ package com.hoo.aoo.admin.domain.house;
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
-import com.hoo.aoo.admin.domain.exception.RoomNameDuplicatedException;
 import com.hoo.aoo.admin.domain.exception.RoomNameNotFoundException;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.house.room.RoomId;
@@ -28,7 +27,7 @@ public class House {
         this.rooms = rooms;
     }
 
-    public static House create(HouseId houseId, Float width, Float height, List<Room> rooms) throws AreaLimitExceededException, RoomNameDuplicatedException, HouseRelationshipException {
+    public static House create(HouseId houseId, Float width, Float height, List<Room> rooms) throws AreaLimitExceededException, HouseRelationshipException {
 
         Area area = new Area(width, height);
         House house = new House(houseId, area, null, rooms);
@@ -38,30 +37,26 @@ public class House {
         return house;
     }
 
-    public static House load(String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<Room> rooms) throws AreaLimitExceededException {
+    public static House load(String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<Room> rooms) throws AreaLimitExceededException, HouseRelationshipException {
 
         HouseId houseId = new HouseId(title, author, description);
         Area area = new Area(width, height);
         BaseTime baseTime = new BaseTime(createdTime, updatedTime);
 
-        return new House(houseId, area, baseTime, rooms);
+        House house = new House(houseId, area, baseTime, rooms);
+
+        house.verifyRoom();
+
+        return house;
     }
 
-    private void verifyRoom() throws RoomNameDuplicatedException, HouseRelationshipException {
-        for (int i = 0; i < rooms.size(); i++) {
+    private void verifyRoom() throws HouseRelationshipException {
+        for (Room room : rooms) {
 
-            RoomId roomId = rooms.get(i).getId();
+            RoomId roomId = room.getId();
 
             if (roomId.getHouseId() == null || !roomId.getHouseId().equals(this.id))
                 throw new HouseRelationshipException(roomId, this.id);
-
-            for (int j = i + 1; j < rooms.size(); j++) {
-
-                RoomId anotherRoomId = rooms.get(j).getId();
-
-                if (roomId.getName().equals(anotherRoomId.getName()))
-                    throw new RoomNameDuplicatedException(id.getTitle(), roomId.getName());
-            }
         }
     }
 
@@ -70,12 +65,7 @@ public class House {
     }
 
 
-    public void updateRoomInfo(String originalName, String newName) throws RoomNameDuplicatedException, RoomNameNotFoundException {
-
-        for (Room room : rooms) {
-            if (room.getId().getName().equals(newName))
-                throw new RoomNameDuplicatedException(id.getTitle(), newName);
-        }
+    public void updateRoomInfo(String originalName, String newName) throws RoomNameNotFoundException {
 
         for (Room room : rooms) {
             if (room.getId().getName().equals(originalName)) {
@@ -87,12 +77,4 @@ public class House {
         throw new RoomNameNotFoundException(id.getTitle(), originalName);
     }
 
-    public Room getRoom(String name) throws RoomNameNotFoundException {
-        for (Room room : rooms) {
-            if (room.getId().getName().equals(name))
-                return room;
-        }
-
-        throw new RoomNameNotFoundException(id.getTitle(), name);
-    }
 }

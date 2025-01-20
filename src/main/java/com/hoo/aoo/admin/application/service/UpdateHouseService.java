@@ -9,6 +9,7 @@ import com.hoo.aoo.admin.application.port.out.UpdateHousePort;
 import com.hoo.aoo.admin.application.port.out.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,8 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase, UpdateRoomInf
         } catch (AreaLimitExceededException e) {
             throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
 
+        } catch (HouseRelationshipException e) {
+            throw new AdminException(AdminErrorCode.ILLEGAL_HOUSE_RELATIONSHIP);
         }
 
     }

@@ -10,6 +10,7 @@ import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.*;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,7 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
     }
 
     @Override
-    public Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
+    public Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
 
         Optional<HouseJpaEntity> optional = findHouseJpaEntity(id);
 
