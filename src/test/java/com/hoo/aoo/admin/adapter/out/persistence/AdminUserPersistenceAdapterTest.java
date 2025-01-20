@@ -5,7 +5,18 @@ import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.jdbc.Sql;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import({AdminUserPersistenceAdapter.class})
 class AdminUserPersistenceAdapterTest {
 
     AdminUserPersistenceAdapter sut;
@@ -16,18 +27,25 @@ class AdminUserPersistenceAdapterTest {
     }
 
     @Test
+    @Sql("AdminUserPersistenceAdapterTest.sql")
     @DisplayName("사용자 검색 기능 테스트")
     void testSearchUser() {
         // given
-        QueryUserInfoCommand command = new QueryUserInfoCommand();
+        QueryUserInfoCommand command = new QueryUserInfoCommand(PageRequest.of(1, 10));
 
         // when
         QueryUserInfoResult result = sut.search(command);
 
         // then
-//        assertThat(result.users().getContent()).anySatisfy(userInfo -> {
-//
-//                }
-//        );
+        assertThat(result.users().getContent()).anySatisfy(userInfo -> {
+                    assertThat(userInfo.id()).isEqualTo(1L);
+                    assertThat(userInfo.realName()).isEqualTo("남상엽");
+                    assertThat(userInfo.nickName()).isEqualTo("leaf");
+                    assertThat(userInfo.phoneNumber()).isEqualTo("010-1234-5678");
+                    assertThat(userInfo.registeredDate()).isEqualTo("2025. 01. 20.");
+                    assertThat(userInfo.snsAccounts().getFirst().domain()).isEqualTo("KAKAO");
+                    assertThat(userInfo.snsAccounts().getFirst().email()).isEqualTo("test@example.com");
+                }
+        );
     }
 }

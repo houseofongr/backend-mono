@@ -24,10 +24,12 @@ class GetUserInfoListDocumentationTest extends AbstractDocumentationTest {
                 .andDo(document("admin-user-get-list",
                         responseFields(
                                 fieldWithPath("users.content[].id").description("사용자의 식별자입니다."),
-                                fieldWithPath("users.content[].name").description("사용자의 이름입니다."),
-                                fieldWithPath("users.content[].email").description("사용자의 이메일 주소입니다."),
+                                fieldWithPath("users.content[].realName").description("사용자의 이름입니다."),
+                                fieldWithPath("users.content[].nickName").description("사용자의 이름입니다."),
                                 fieldWithPath("users.content[].phoneNumber").description("사용자의 전화번호입니다."),
                                 fieldWithPath("users.content[].registeredDate").description("사용자의 등록일입니다."),
+                                fieldWithPath("users.content[].snsAccounts[].domain").description("SNS 계정의 제공자입니다."),
+                                fieldWithPath("users.content[].snsAccounts[].email").description("SNS 계정의 이메일 주소입니다."),
 
                                 fieldWithPath("users.pageable.pageNumber").description("현재 페이지 번호입니다."),
                                 fieldWithPath("users.pageable.pageSize").description("페이지당 항목 수입니다."),

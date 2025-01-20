@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.application.port.out.user.SearchUserPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
 
 import static org.mockito.Mockito.*;
 
@@ -24,7 +25,7 @@ class QueryUserServiceTest {
     @DisplayName("사용자 리스트 조회 서비스 테스트")
     void testQueryUserList() {
         // given
-        QueryUserInfoCommand command = new QueryUserInfoCommand();
+        QueryUserInfoCommand command = new QueryUserInfoCommand(PageRequest.of(1, 10));
 
         // when
         sut.query(command);

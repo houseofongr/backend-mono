@@ -579,7 +579,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 223
 
-{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNzM1NjA4MywidXNlcklkIjoxfQ.nwEIrR_Mwdey0Cg3F1kC_WXR10KJAfsOfE-_wyxo0tc"}</code></pre>
+{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNzM3NzU1NywidXNlcklkIjoxfQ._MGPM1rkfy5Lk3reqCxO9isjnptrrvaEKZGONK-tmuQ"}</code></pre>
 </div>
 </div>
 </div>
@@ -877,7 +877,7 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 19
 
 {
-  "houseId" : 2
+  "houseId" : 1
 }</code></pre>
 </div>
 </div>
@@ -1053,23 +1053,23 @@ Content-Length: 2543
       "pageSize" : 9,
       "sort" : {
         "empty" : true,
-        "unsorted" : true,
-        "sorted" : false
+        "sorted" : false,
+        "unsorted" : true
       },
       "offset" : 0,
       "paged" : true,
       "unpaged" : false
     },
     "last" : false,
-    "totalElements" : 10,
     "totalPages" : 2,
+    "totalElements" : 10,
     "first" : true,
     "size" : 9,
     "number" : 0,
     "sort" : {
       "empty" : true,
-      "unsorted" : true,
-      "sorted" : false
+      "sorted" : false,
+      "unsorted" : true
     },
     "numberOfElements" : 9,
     "empty" : false
@@ -1654,7 +1654,7 @@ Content-Length: 60
 <h5 id="house-room-load-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/houses/1/rooms/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/houses/rooms/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: api.archiveofongr.site</code></pre>
 </div>
@@ -1663,7 +1663,7 @@ Host: api.archiveofongr.site</code></pre>
 <div class="sect4">
 <h5 id="house-room-load-api_path_parameters">Path parameters</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /admin/houses/{houseId}/rooms/{roomId}</caption>
+<caption class="title">Table 1. /admin/houses/rooms/{roomId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1677,11 +1677,6 @@ Host: api.archiveofongr.site</code></pre>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">houseId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 하우스의 식별자입니다.</p></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">roomId</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
@@ -1967,28 +1962,40 @@ Host: api.archiveofongr.site</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1053
+Content-Length: 1345
 
 {
   "users" : {
     "content" : [ {
       "id" : 1,
-      "name" : "남상엽",
-      "email" : "test@example.com",
+      "realName" : "남상엽",
+      "nickName" : "leaf",
       "phoneNumber" : "010-0000-1111",
-      "registeredDate" : "2024. 12. 19."
+      "registeredDate" : "2025. 01. 20.",
+      "snsAccounts" : [ {
+        "domain" : "KAKAO",
+        "email" : "test@example.com"
+      } ]
     }, {
       "id" : 2,
-      "name" : "윤선영",
-      "email" : "test@example.com",
+      "realName" : "윤선영",
+      "nickName" : "young",
       "phoneNumber" : "010-1111-2222",
-      "registeredDate" : "2024. 12. 19."
+      "registeredDate" : "2024. 12. 19.",
+      "snsAccounts" : [ {
+        "domain" : "KAKAO",
+        "email" : "test@example.com"
+      } ]
     }, {
       "id" : 3,
-      "name" : "주아랑",
-      "email" : "test@example.com",
+      "realName" : "주아랑",
+      "nickName" : "rang",
       "phoneNumber" : "010-2222-3333",
-      "registeredDate" : "2024. 12. 19."
+      "registeredDate" : "2024. 12. 19.",
+      "snsAccounts" : [ {
+        "domain" : "KAKAO",
+        "email" : "test@example.com"
+      } ]
     } ],
     "pageable" : {
       "pageNumber" : 1,
@@ -2042,14 +2049,14 @@ Content-Length: 1053
 <td class="tableblock halign-left valign-top"><p class="tableblock">사용자의 식별자입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].realName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사용자의 이름입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].nickName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">사용자의 이메일 주소입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자의 이름입니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].phoneNumber</code></p></td>
@@ -2060,6 +2067,16 @@ Content-Length: 1053
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].registeredDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사용자의 등록일입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].snsAccounts[].domain</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SNS 계정의 제공자입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.content[].snsAccounts[].email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SNS 계정의 이메일 주소입니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>users.pageable.pageNumber</code></p></td>
@@ -2330,13 +2347,13 @@ Content-Length: 302
 
 {
   "fileInfos" : [ {
-    "id" : 3,
-    "name" : "d76e2c5d-5f2a-4330-9882-a2be3435c7aa.png",
+    "id" : 1,
+    "name" : "cc38f60a-c3e7-4c4d-bc10-cef01955a168.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   }, {
-    "id" : 4,
-    "name" : "98546bde-f5d0-44ca-969c-a2634608a3a8.png",
+    "id" : 2,
+    "name" : "a1a04ae9-448f-47c8-a30f-d378d920afd8.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   } ]
@@ -2395,7 +2412,7 @@ Content-Length: 302
 <h5 id="file-public-images-download-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /public/images/2 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /public/images/1 HTTP/1.1
 Host: file.archiveofongr.site</code></pre>
 </div>
 </div>
@@ -2452,7 +2469,7 @@ Host: file.archiveofongr.site</code></pre>
 <h5 id="file-private-images-download-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /private/images/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /private/images/2 HTTP/1.1
 Host: file.archiveofongr.site</code></pre>
 </div>
 </div>
@@ -2649,12 +2666,6 @@ Host: file.archiveofongr.site</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">중복되는 방 이름이 존재합니다.</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">409</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">Conflict</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">ADMIN-HOUSE-8</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스와 방 사이에 잘못된 참조 관계가 존재합니다.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">500</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Internal Server Error</p></td>
@@ -2755,7 +2766,7 @@ Host: file.archiveofongr.site</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-20 15:55:36 +0900
+Last updated 2025-01-20 21:52:29 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

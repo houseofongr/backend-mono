@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({UserPersistenceAdapter.class, UserMapper.class})
-class UserInfoPersistenceAdapterTest {
+class UserPersistenceAdapterTest {
 
     @Autowired
     UserPersistenceAdapter sut;
