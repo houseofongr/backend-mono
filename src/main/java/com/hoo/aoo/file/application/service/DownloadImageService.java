@@ -10,8 +10,10 @@ import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
 import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
+import com.nimbusds.jose.util.IOUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,15 +47,13 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
             if (loadedFile.getFileId().getAuthority() != authority)
                 throw new FileException(FileErrorCode.INVALID_AUTHORITY);
 
-            java.io.File javaFile = new java.io.File(loadedFile.getFileId().getPath());
-
             ContentDisposition disposition = ContentDisposition.inline()
                     .filename(loadedFile.getFileId().getFileSystemName())
                     .build();
 
             return new DownloadImageResult(
                     disposition.toString(),
-                    Files.readAllBytes(javaFile.toPath()));
+                    new UrlResource(loadedFile.getFileId().getFilePath()));
 
         } catch (IOException e) {
             throw new FileException(FileErrorCode.RETRIEVE_FILE_FAILED);

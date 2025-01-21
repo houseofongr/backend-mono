@@ -25,6 +25,7 @@ class FileIdTest {
 
         // then
         assertThat(fileId.getPath()).isEqualTo("/tmp/public/images/test.png");
+        assertThat(fileId.getFilePath()).isEqualTo("file:/tmp/public/images/test.png");
     }
 
     @Test
@@ -95,4 +96,5 @@ class FileIdTest {
         assertThat(fileId.getBaseDir()).isEqualTo("/test");
         assertThat(fileId.getDirectory()).isEqualTo("/test/public/images");
     }
+
 }

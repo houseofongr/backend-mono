@@ -22,7 +22,7 @@ public class GetPrivateImageController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
-                .body(result.bytes());
+                .body(result.resource());
     }
 
 }

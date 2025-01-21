@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -50,7 +51,7 @@ class DownloadImageServiceTest {
 
         // then
         assertThat(result.disposition()).contains("inline;").contains(file.getFileId().getFileSystemName());
-        assertThat(result.bytes().length).isEqualTo(9);
+        assertThat(result.resource().getContentAsByteArray().length).isEqualTo(9);
     }
 
     @Test
@@ -70,6 +71,6 @@ class DownloadImageServiceTest {
 
         // then
         assertThat(result.disposition()).contains("inline;").contains(file.getFileId().getFileSystemName());
-        assertThat(result.bytes().length).isEqualTo(9);
+        assertThat(result.resource().getContentAsString(StandardCharsets.UTF_8)).isEqualTo("test file");
     }
 }

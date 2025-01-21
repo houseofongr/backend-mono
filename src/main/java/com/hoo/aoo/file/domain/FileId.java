@@ -71,6 +71,10 @@ public class FileId {
         return getDirectory() + "/" + fileSystemName;
     }
 
+    public String getFilePath() {
+        return "file:" + getPath();
+    }
+
     private String getAuthorityPath() {
         switch (authority) {
             case PUBLIC_FILE_ACCESS -> {

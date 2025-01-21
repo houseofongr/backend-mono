@@ -57,40 +57,27 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
 
             try {
                 String originalFilename = multipartFile.getOriginalFilename();
-
-                if (originalFilename == null)
-                    throw new FileException(FileErrorCode.FILE_NAME_EMPTY);
+                if (originalFilename == null) throw new FileException(FileErrorCode.FILE_NAME_EMPTY);
 
                 String fileSystemName = randomFileNamePort.getName(originalFilename);
 
-
                 FileId fileId = fileIdCreateStrategy.create(originalFilename, fileSystemName);
-
                 FileSize fileSize = new FileSize(multipartFile.getSize(), fileAttribute.getFileSizeLimit());
-
                 File file = File.create(fileId, FileStatus.CREATED, Owner.empty(), fileSize);
-
 
                 writeFilePort.write(file, multipartFile);
 
                 Long savedId = saveImageFilePort.save(file);
 
-
                 fileInfos.add(new UploadImageResult.FileInfo(file, savedId));
 
             } catch (IOException e) {
-
-                log.error(e.getMessage());
                 throw new FileException(FileErrorCode.NEW_FILE_CREATION_FAILED);
 
             } catch (FileSizeLimitExceedException e) {
-
-                log.error(e.getMessage());
                 throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
 
             } catch (FileExtensionMismatchException e) {
-
-                log.error(e.getMessage());
                 throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
 
             }
