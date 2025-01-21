@@ -4,6 +4,7 @@ import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -18,13 +19,14 @@ class PostHomeDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
+    @Sql("PostHomeDocumentationTest.sql")
     @DisplayName("Home 생성 테스트")
     void testCreateHome() throws Exception {
 
         String content = """
                 {
-                  "userId": 1,
-                  "houseId": 1
+                  "userId": 10,
+                  "houseId": 20
                 }
                 """;
 

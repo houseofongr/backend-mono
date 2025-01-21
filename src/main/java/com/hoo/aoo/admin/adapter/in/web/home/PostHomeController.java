@@ -1,8 +1,8 @@
-package com.hoo.aoo.admin.adapter.in.web.user;
+package com.hoo.aoo.admin.adapter.in.web.home;
 
 import com.hoo.aoo.admin.application.port.in.user.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.user.CreateHomeResult;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.admin.application.port.in.user.CreateHomeUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostHomeController {
 
+    private final CreateHomeUseCase createHomeUseCase;
+
     @PostMapping("/admin/homes")
     ResponseEntity<CreateHomeResult> create(@RequestBody CreateHomeCommand command) {
-        return new ResponseEntity<>(new CreateHomeResult(1L), HttpStatus.CREATED);
+        return new ResponseEntity<>(createHomeUseCase.create(command), HttpStatus.CREATED);
     }
 
 }

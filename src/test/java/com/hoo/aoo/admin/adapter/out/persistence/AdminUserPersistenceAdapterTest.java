@@ -41,7 +41,7 @@ class AdminUserPersistenceAdapterTest {
                     assertThat(userInfo.realName()).isEqualTo("남상엽");
                     assertThat(userInfo.nickName()).isEqualTo("leaf");
                     assertThat(userInfo.phoneNumber()).isEqualTo("010-1234-5678");
-                    assertThat(userInfo.registeredDate()).isEqualTo("2025. 01. 20.");
+                    assertThat(userInfo.registeredDate()).matches("\\d{4}\\. \\d{2}\\. \\d{2}\\.");
                     assertThat(userInfo.snsAccounts().getFirst().domain()).isEqualTo(KAKAO);
                     assertThat(userInfo.snsAccounts().getFirst().email()).isEqualTo("test@example.com");
                 }

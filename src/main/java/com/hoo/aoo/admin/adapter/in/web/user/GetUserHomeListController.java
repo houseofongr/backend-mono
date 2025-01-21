@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class GetHomeListController {
+public class GetUserHomeListController {
 
     @GetMapping("/admin/users/{userId}/homes")
     public ResponseEntity<QueryUserHomeListResult> getHomeList(@PathVariable Long userId) {

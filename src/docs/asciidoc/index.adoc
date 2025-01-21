@@ -90,12 +90,12 @@ operation::aar-authn-regist[snippets='http-request,request-fields,http-response,
 
 관리자페이지에서 소리기록실을 관리하기 위한 API 입니다.
 
-[[house-api]]
+[[admin-house-api]]
 === 하우스(House) API
 
 하우스 관리를 위한 API 입니다.
 
-[[house-create-api]]
+[[admin-house-create-api]]
 ==== 하우스 생성 API
 
 관리자가 지정한 하우스의 좌표에 맞게 하우스를 저장합니다.
@@ -116,21 +116,21 @@ include::{snippets}/admin-house-get-metadata/response-body.adoc[]
 
 operation::admin-house-post[snippets='http-response,response-fields']
 
-[[house-read-list-api]]
+[[admin-house-read-list-api]]
 ==== 하우스 리스트 조회 API
 
 여러 건의 하우스를 검색 조건에 맞게 조회합니다.
 
 operation::admin-house-get-list[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[house-read-detail-api]]
+[[admin-house-read-detail-api]]
 ==== 하우스 상세 조회 API
 
 하우스와 내부 룸에 대한 상세 정보를 조회합니다.
 
 operation::admin-house-get[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[house-update-api]]
+[[admin-house-update-api]]
 ==== 하우스 정보 수정 API
 
 하우스의 기본 정보를 수정하는 API입니다.
@@ -139,7 +139,7 @@ operation::admin-house-get[snippets='http-request,path-parameters,http-response,
 
 operation::admin-house-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
-[[house-delete-api]]
+[[admin-house-delete-api]]
 ==== 하우스 삭제 API
 
 하우스를 삭제하는 API입니다.
@@ -150,7 +150,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 > 차후 사용자의 홈이 생성된 하우스는 삭제할 수 없도록 할 예정입니다.
 
-[[house-room-load-api]]
+[[admin-house-room-load-api]]
 ==== 룸 정보 상세조회 API
 
 룸의 상세 정보를 조회하는 API입니다.
@@ -159,7 +159,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 operation::admin-house-get-room[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[house-room-update-api]]
+[[admin-house-room-update-api]]
 ==== 룸 정보 수정 API
 
 룸의 기본 정보를 수정하는 API입니다.
@@ -168,7 +168,7 @@ operation::admin-house-get-room[snippets='http-request,path-parameters,http-resp
 
 operation::admin-house-patch-room[snippets='http-request,request-fields,http-response,response-fields']
 
-[[house-room-delete-api]]
+[[admin-house-room-delete-api]]
 ==== 룸 삭제 API
 
 하우스의 룸을 삭제하는 API입니다.
@@ -179,31 +179,50 @@ operation::admin-house-delete-room[snippets='http-request,path-parameters,http-r
 
 > 차후 사용자의 음원이 담긴 룸은 삭제할 수 없도록 할 예정입니다.
 
-[[user-api]]
+[[admin-user-api]]
 === 사용자(User) API
 
 소리기록실 사용자 정보 관리를 위한 API 입니다.
 
-[[user-get-list-api]]
+[[admin-user-get-list-api]]
 ==== 사용자 조회 API
 
 소리기록실 사용자를 조회하는 API 입니다.
 
 operation::admin-user-get-list[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[user-get-home-list-api]]
+[[admin-user-get-home-list-api]]
 ==== 사용자 홈 조회 API
 
 사용자가 보유한 홈을 조회하는 API 입니다.
 
 operation::admin-user-get-home-list[snippets='http-request,path-parameters,http-response,response-fields']
 
+[[admin-home-api]]
+=== 홈(Home) API
+
+소리기록실의 홈 정보 관리를 위한 API 입니다.
+
+[[user-post-home-api]]
+==== 홈 생성 API
+
+홈을 생성하는 API 입니다.
+
+operation::admin-home-post[snippets='http-request,request-fields,http-response,response-fields']
+
+[[user-get-home-api]]
+==== 홈 조회 API
+
+홈 정보를 조회하는 API 입니다.
+
+operation::admin-home-get[snippets='http-request,request-fields,http-response,response-fields']
+
 [[file-api]]
 == 파일(File) API
 
 파일서버의 업로드, 다운로드와 관련된 API입니다.
 
-[[public-file-api]]
+[[file-public-api]]
 === 공개(Public) API
 
 별도의 권한 없이 요청 가능한 API입니다.
@@ -222,7 +241,7 @@ operation::file-public-images-upload[snippets='http-request,http-response,respon
 
 operation::file-public-images-download[snippets='http-request,path-parameters,response-file']
 
-[[private-file-api]]
+[[file-private-api]]
 === 비공개(Private) API
 
 해당 API는 **PRIVATE_FILE_ACCESS** 권한이 필요합니다.
@@ -246,14 +265,14 @@ API 요청 간 발생하는 에러코드를 조회할 수 있습니다.
 
 > **에러코드 조회 API**의 응답 결과는 아래 <<에러코드 테이블>>을 참고 바랍니다.
 
-[[aar-error-code-api]]
+[[error-code-aar-api]]
 ==== 소리기록실 에러코드 API
 
 소리기록실에서 관리하는 에러코드를 확인할 수 있습니다.
 
 include::{snippets}/aar-error-code/http-request.adoc[]
 
-[[admin-error-code-api]]
+[[error-code-admin-api]]
 ==== 관리자 에러코드 API
 
 관리자 페이지에서 관리하는 에러코드를 확인할 수 있습니다.
@@ -261,7 +280,7 @@ include::{snippets}/aar-error-code/http-request.adoc[]
 include::{snippets}/admin-error-code/http-request.adoc[]
 
 
-[[file-error-code-api]]
+[[error-code-file-api]]
 ==== 파일 에러코드 API
 
 파일 서버에서 관리하는 에러코드를 확인할 수 있습니다.
@@ -274,16 +293,16 @@ include::{snippets}/file-error-code/http-request.adoc[]
 전체 에러코드는 다음 표에서 확인할 수 있습니다.
 해당 표에서 확인되지 않는 에러코드는 별도 문의 바랍니다.
 
-[[aar-error-code-table]]
+[[error-code-aar-table]]
 ==== 소리기록실 에러코드
 
 include::{snippets}/aar-error-code/error-code-response-fields.adoc[]
 
-[[admin-error-code-table]]
+[[error-code-admin-table]]
 ==== 관리자 에러코드
 include::{snippets}/admin-error-code/error-code-response-fields.adoc[]
 
-[[file-error-code-table]]
+[[error-code-file-table]]
 ==== 파일 에러코드
 
 include::{snippets}/file-error-code/error-code-response-fields.adoc[]
