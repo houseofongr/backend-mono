@@ -34,6 +34,7 @@ class GetHomeDocumentationTest extends AbstractDocumentationTest {
                         ),
                         responseFields(
                                 fieldWithPath("homeId").description("조회된 홈의 식별자입니다."),
+                                fieldWithPath("homeName").description("홈의 이름입니다."),
                                 fieldWithPath("createdDate").description("홈이 생성된 날짜입니다."),
                                 fieldWithPath("updatedDate").description("홈이 최종 수정된 날짜입니다."),
                                 fieldWithPath("house.width").description("하우스의 가로 길이입니다."),

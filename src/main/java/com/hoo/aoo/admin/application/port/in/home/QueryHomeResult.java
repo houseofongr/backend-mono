@@ -4,6 +4,7 @@ import java.util.List;
 
 public record QueryHomeResult(
         Long homeId,
+        String homeName,
         String createdDate,
         String updatedDate,
         HouseInfo house,

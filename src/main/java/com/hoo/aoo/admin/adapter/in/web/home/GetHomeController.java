@@ -17,7 +17,7 @@ public class GetHomeController {
     @GetMapping("/admin/homes/{homeId}")
     public ResponseEntity<QueryHomeResult> getHome(@PathVariable Long homeId) {
         QueryHomeResult 거실 = new QueryHomeResult(
-                1L, "January.21. 2025", "January.21. 2025",
+                1L, "leaf의 cozy house","January.21. 2025", "January.21. 2025",
                 new QueryHomeResult.HouseInfo(5000f, 5000f, 1L),
                 List.of(new QueryHomeResult.RoomInfo(1L, "거실", 0f, 0f, 0f, 5000f, 1000f, 1L))
         );
