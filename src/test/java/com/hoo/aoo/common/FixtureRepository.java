@@ -4,6 +4,7 @@ import com.hoo.aoo.admin.application.service.house.Metadata;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
+import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
@@ -100,5 +101,9 @@ public class FixtureRepository {
         map.put("room2", room2);
 
         return map;
+    }
+
+    public static Home getHome() throws Exception {
+        return Home.create(getHouseWithRoom(),getUser());
     }
 }

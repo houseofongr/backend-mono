@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
+import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
@@ -27,18 +28,18 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort {
     private final HomeJpaRepository homeJpaRepository;
 
     @Override
-    public CreateHomeResult save(CreateHomeCommand command) {
+    public CreateHomeResult save(CreateHomeCommand command, Home home) {
         HouseJpaEntity houseJpaEntity = houseJpaRepository.findById(command.houseId())
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
         UserJpaEntity userJpaEntity = userJpaRepository.findById(command.userId())
                 .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
-        HomeJpaEntity homeJpaEntity = HomeJpaEntity.create(houseJpaEntity, userJpaEntity);
+        HomeJpaEntity homeJpaEntity = HomeJpaEntity.create(houseJpaEntity, userJpaEntity, home.getHomeName().getName());
 
         homeJpaRepository.save(homeJpaEntity);
 
-        return new CreateHomeResult(homeJpaEntity.getId(), null);
+        return new CreateHomeResult(homeJpaEntity.getId(), homeJpaEntity.getName());
     }
 
     @Override

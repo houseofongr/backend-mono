@@ -12,6 +12,7 @@ import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
+import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,9 @@ public class CreateHomeService implements CreateHomeUseCase {
             User user = findUserPort.find(command.userId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
-            return saveHomePort.save(command);
+            Home home = Home.create(house, user);
+
+            return saveHomePort.save(command, home);
 
         } catch (AreaLimitExceededException e) {
             throw new RuntimeException(e);

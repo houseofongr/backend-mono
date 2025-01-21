@@ -44,11 +44,11 @@ class CreateHomeServiceTest {
         // when
         when(findHousePort.find(20L)).thenReturn(Optional.of(FixtureRepository.getHouseWithRoom()));
         when(findUserPort.find(10L)).thenReturn(Optional.of(FixtureRepository.getUser()));
-        when(saveHomePort.save(command)).thenReturn(new CreateHomeResult(100L, null));
+        when(saveHomePort.save(any(), any())).thenReturn(new CreateHomeResult(100L, null));
         CreateHomeResult createHomeResult = sut.create(command);
 
         // then
-        verify(saveHomePort, times(1)).save(command);
+        verify(saveHomePort, times(1)).save(any(), any());
         assertThat(createHomeResult.createdHomeId()).isEqualTo(100L);
     }
 }

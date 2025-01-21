@@ -4,6 +4,8 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
+import com.hoo.aoo.admin.domain.home.Home;
+import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,17 +32,19 @@ class HomePersistenceAdapterTest {
     @Test
     @Sql("HomePersistenceAdapter.sql")
     @DisplayName("홈 저장 테스트")
-    void testSaveHome() {
+    void testSaveHome() throws Exception {
         // given
         CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
+        Home home = FixtureRepository.getHome();
 
         // when
-        CreateHomeResult result = sut.save(command);
+        CreateHomeResult result = sut.save(command, home);
         Optional<HomeJpaEntity> find = homeJpaRepository.findById(result.createdHomeId());
 
         // then
         assertThat(result.createdHomeId()).isNotNull();
         assertThat(find).isNotEmpty();
+        assertThat(find.get().getName()).isEqualTo("leaf의 cozy house");
         assertThat(find.get().getUser().getId()).isEqualTo(10);
         assertThat(find.get().getHouse().getId()).isEqualTo(20);
     }

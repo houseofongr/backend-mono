@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +18,9 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String name;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID", nullable = false)
     private HouseJpaEntity house;
@@ -26,7 +29,7 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private UserJpaEntity user;
 
-    public static HomeJpaEntity create(HouseJpaEntity house, UserJpaEntity user) {
-        return new HomeJpaEntity(null,house,user);
+    public static HomeJpaEntity create(HouseJpaEntity house, UserJpaEntity user, String homeName) {
+        return new HomeJpaEntity(null, homeName, house, user);
     }
 }
