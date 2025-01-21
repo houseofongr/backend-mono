@@ -19,7 +19,9 @@ public enum AdminErrorCode implements ErrorCode {
     ROOM_NOT_FOUND("ADMIN-HOUSE-6", NOT_FOUND, "해당 하우스에 존재하지 않는 방 이름입니다."),
     ILLEGAL_HOUSE_RELATIONSHIP("ADMIN-HOUSE-7", INTERNAL_SERVER_ERROR, "하우스와 방 사이에 잘못된 참조 관계가 존재합니다."),
 
-    USER_NOT_FOUND("ADMIN-USER-1", NOT_FOUND, "해당 사용자를 찾을 수 없습니다.");
+    USER_NOT_FOUND("ADMIN-USER-1", NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
+
+    HOME_NOT_FOUND("ADMIN-HOME-1", NOT_FOUND, "해당 홈을 찾을 수 없습니다.");
 
     private final String code;
     private final HttpStatus status;
