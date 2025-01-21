@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.*;
@@ -14,6 +15,7 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -63,8 +65,9 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
     }
 
     @Override
-    public Page<HouseJpaEntity> search(QueryHouseListCommand command) {
-        return houseJpaRepository.searchByCommand(command);
+    public QueryHouseListResult search(QueryHouseListCommand command) {
+        Page<QueryHouseListResult.HouseInfo> houseInfoPages = houseJpaRepository.searchByCommand(command).map(QueryHouseListResult.HouseInfo::of);
+        return new QueryHouseListResult(houseInfoPages.getContent(), Pagination.of(houseInfoPages));
     }
 
     @Override

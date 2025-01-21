@@ -9,6 +9,7 @@ import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,17 +43,22 @@ class QueryHouseInfoServiceTest {
     @DisplayName("하우스 리스트 조회 서비스 테스트")
     void testQueryHouseListService() {
         // given
-        List<HouseJpaEntity> es = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            HouseJpaEntity e = new HouseJpaEntity((long) i, "test house", "leaf", "create test house", 5000F, 5000F, 1L, 2L, null);
-            e.prePersist();
-            es.add(e);
-        }
-        Page<HouseJpaEntity> entities= new PageImpl<>(es);
+
+        QueryHouseListResult result = new QueryHouseListResult(List.of(
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null),
+                new QueryHouseListResult.HouseInfo(null, null, null, null, null, null, null)
+        ), new Pagination(1, 1, 1, 1L));
 
         // when
-        when(searchHousePort.search(any())).thenReturn(entities);
-        QueryHouseListResult list = sut.query((QueryHouseListCommand) any());
+        when(searchHousePort.search(any())).thenReturn(result);
+        QueryHouseListResult list = sut.query(any());
 
         // then
         assertThat(list.houses()).hasSize(9);

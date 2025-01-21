@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
@@ -15,6 +16,7 @@ import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.FixtureRepository;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -90,31 +93,27 @@ class HousePersistenceAdapterTest {
         QueryHouseListCommand nonKeywordCommand = new QueryHouseListCommand(pageable, SearchType.DESCRIPTION, "no keyword");
 
         // when
-        Page<HouseJpaEntity> entities = sut.search(allCommand);
-        Page<HouseJpaEntity> searchEntities = sut.search(keywordCommand);
-        Page<HouseJpaEntity> searchEntities2 = sut.search(keywordCommand2);
-        Page<HouseJpaEntity> searchEntities3 = sut.search(keywordCommand3);
-        Page<HouseJpaEntity> noEntities = sut.search(nonKeywordCommand);
+        QueryHouseListResult result = sut.search(allCommand);
+        QueryHouseListResult searchResult = sut.search(keywordCommand);
+        QueryHouseListResult searchResult2 = sut.search(keywordCommand2);
+        QueryHouseListResult searchResult3 = sut.search(keywordCommand3);
+        QueryHouseListResult noResult = sut.search(nonKeywordCommand);
 
         // then
-        assertThat(entities).hasSize(9);
-        assertThat(entities).anySatisfy(entity -> {
-            assertThat(entity.getId()).isEqualTo(1L);
-            assertThat(entity.getTitle()).isEqualTo("cozy house");
-            assertThat(entity.getAuthor()).isEqualTo("leaf");
-            assertThat(entity.getDescription()).isEqualTo("this is cozy house");
-            assertThat(entity.getWidth()).isEqualTo(5000);
-            assertThat(entity.getHeight()).isEqualTo(5000);
-            assertThat(entity.getBasicImageFileId()).isEqualTo(1L);
-            assertThat(entity.getBorderImageFileId()).isEqualTo(2L);
-            assertThat(entity.getRooms()).hasSize(2);
+        assertThat(result.houses()).hasSize(9);
+        assertThat(result.houses()).anySatisfy(entity -> {
+            assertThat(entity.id()).isEqualTo(1L);
+            assertThat(entity.title()).isEqualTo("cozy house");
+            assertThat(entity.author()).isEqualTo("leaf");
+            assertThat(entity.description()).isEqualTo("this is cozy house");
+            assertThat(entity.createdDate()).isEqualTo(DateTimeFormatters.ENGLISH_DATE.getFormatter().format(ZonedDateTime.now()));
         });
 
         // keyword search
-        assertThat(searchEntities).hasSize(1);
-        assertThat(searchEntities2).hasSize(1);
-        assertThat(searchEntities3).hasSize(1);
-        assertThat(noEntities).hasSize(0);
+        assertThat(searchResult.houses()).hasSize(1);
+        assertThat(searchResult2.houses()).hasSize(1);
+        assertThat(searchResult3.houses()).hasSize(1);
+        assertThat(noResult.houses()).hasSize(0);
     }
 
     @Test

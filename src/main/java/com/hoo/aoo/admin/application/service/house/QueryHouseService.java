@@ -32,8 +32,7 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryHouseListResult query(QueryHouseListCommand command) {
-        Page<QueryHouseListResult.HouseInfo> houseInfoPages = searchHousePort.search(command).map(QueryHouseListResult.HouseInfo::of);
-        return new QueryHouseListResult(houseInfoPages.getContent(), Pagination.of(houseInfoPages));
+        return searchHousePort.search(command);
     }
 
     @Override
