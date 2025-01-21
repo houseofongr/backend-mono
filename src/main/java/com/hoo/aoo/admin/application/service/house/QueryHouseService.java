@@ -25,8 +25,8 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
 
     @Override
     @Transactional(readOnly = true)
-    public QueryHouseResult queryHouse(Long houseId) {
-        HouseJpaEntity entity = findHousePort.findHouseJpaEntity(houseId)
+    public QueryHouseResult queryHouse(Long id) {
+        HouseJpaEntity entity = findHousePort.findHouseJpaEntity(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
         return QueryHouseResult.of(entity);

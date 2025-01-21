@@ -1,5 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
+import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
@@ -14,9 +16,11 @@ import com.hoo.aoo.admin.application.service.AdminException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
-public class HomePersistenceAdapter implements SaveHomePort {
+public class HomePersistenceAdapter implements SaveHomePort, FindHomePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final UserJpaRepository userJpaRepository;
@@ -35,5 +39,10 @@ public class HomePersistenceAdapter implements SaveHomePort {
         homeJpaRepository.save(homeJpaEntity);
 
         return new CreateHomeResult(homeJpaEntity.getId(), null);
+    }
+
+    @Override
+    public Optional<QueryHomeResult> findHome(Long id) {
+        return Optional.empty();
     }
 }
