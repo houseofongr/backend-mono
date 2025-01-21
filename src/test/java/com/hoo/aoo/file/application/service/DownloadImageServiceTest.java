@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.application.port.in.DownloadImageResult;
+import com.hoo.aoo.file.application.port.in.DownloadFileResult;
 import com.hoo.aoo.file.application.port.out.database.FindImageFilePort;
 import com.hoo.aoo.file.domain.*;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
@@ -47,7 +47,7 @@ class DownloadImageServiceTest {
 
         // when
         when(findImageFilePort.find(fileId)).thenReturn(Optional.of(file));
-        DownloadImageResult result = sut.publicDownload(fileId);
+        DownloadFileResult result = sut.publicDownload(fileId);
 
         // then
         assertThat(result.disposition()).contains("inline;").contains(file.getFileId().getFileSystemName());
@@ -67,7 +67,7 @@ class DownloadImageServiceTest {
 
         // when
         when(findImageFilePort.find(fileId)).thenReturn(Optional.of(file));
-        DownloadImageResult result = sut.privateDownload(fileId);
+        DownloadFileResult result = sut.privateDownload(fileId);
 
         // then
         assertThat(result.disposition()).contains("inline;").contains(file.getFileId().getFileSystemName());

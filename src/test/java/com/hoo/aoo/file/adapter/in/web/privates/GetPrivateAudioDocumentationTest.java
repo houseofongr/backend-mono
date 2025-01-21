@@ -38,21 +38,21 @@ class GetPrivateAudioDocumentationTest extends AbstractDocumentationTest {
         FileJpaEntity entity = new FileJpaEntity(null, "sample.mp3", "secret.jpeg", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
-//        mockMvc.perform(get("/private/images/{imageId}", entity.getId()))
-//                .andExpect(status().is(200))
-//                .andDo(document("file-private-images-download",
-//                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
-//                        operation -> {
-//                            var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
-//                            var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
-//                            var outputStream = new ByteArrayOutputStream();
-//                            outputStream.write("++++\n".getBytes());
-//                            outputStream.write("<img src=\"data:image/jpeg;base64,".getBytes());
-//                            outputStream.write(Base64.getEncoder().encode(operation.getResponse().getContent()));
-//                            outputStream.write("\"/>\n".getBytes());
-//                            outputStream.write("++++\n".getBytes());
-//                            Files.createDirectories(path.getParent());
-//                            Files.write(path, outputStream.toByteArray());
-//                        }));
+        mockMvc.perform(get("/private/audios/{audioId}", entity.getId()))
+                .andExpect(status().is(200))
+                .andDo(document("file-private-audios-download",
+                        pathParameters(parameterWithName("audioId").description("조회(다운로드)할 음원 식별자입니다.")),
+                        operation -> {
+                            var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
+                            var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
+                            var outputStream = new ByteArrayOutputStream();
+                            outputStream.write("++++\n".getBytes());
+                            outputStream.write("<audio controls type=\"audio/mp3\" src=\"data:audio/mp3;base64,".getBytes());
+                            outputStream.write(Base64.getEncoder().encode(operation.getResponse().getContent()));
+                            outputStream.write("\"/>\n".getBytes());
+                            outputStream.write("++++\n".getBytes());
+                            Files.createDirectories(path.getParent());
+                            Files.write(path, outputStream.toByteArray());
+                        }));
     }
 }

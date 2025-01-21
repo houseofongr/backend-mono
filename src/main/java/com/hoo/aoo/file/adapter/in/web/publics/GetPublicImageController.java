@@ -1,6 +1,6 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
-import com.hoo.aoo.file.application.port.in.DownloadImageResult;
+import com.hoo.aoo.file.application.port.in.DownloadFileResult;
 import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +18,7 @@ public class GetPublicImageController {
     @GetMapping("/public/images/{fileId}")
     public ResponseEntity<?> download(@PathVariable Long fileId) {
 
-        DownloadImageResult result = downloadPublicImageUseCase.publicDownload(fileId);
+        DownloadFileResult result = downloadPublicImageUseCase.publicDownload(fileId);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())

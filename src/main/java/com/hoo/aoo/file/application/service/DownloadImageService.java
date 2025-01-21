@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.application.port.in.DownloadImageResult;
+import com.hoo.aoo.file.application.port.in.DownloadFileResult;
 import com.hoo.aoo.file.application.port.in.DownloadPrivateImageUseCase;
 import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
 import com.hoo.aoo.file.application.port.out.database.FindImageFilePort;
@@ -10,9 +10,7 @@ import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
 import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
-import com.nimbusds.jose.util.IOUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.MediaType;
@@ -31,17 +29,17 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
 
     @Override
     @Transactional(readOnly = true)
-    public DownloadImageResult privateDownload(Long fileId) {
+    public DownloadFileResult privateDownload(Long fileId) {
         return download(fileId, Authority.PRIVATE_FILE_ACCESS);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public DownloadImageResult publicDownload(Long fileId) {
+    public DownloadFileResult publicDownload(Long fileId) {
         return download(fileId, Authority.PUBLIC_FILE_ACCESS);
     }
 
-    private DownloadImageResult download(Long fileId, Authority authority) {
+    private DownloadFileResult download(Long fileId, Authority authority) {
         try {
             File loadedFile = findImageFilePort.find(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
@@ -54,7 +52,7 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
                     .build();
 
             String filePath = loadedFile.getFileId().getFilePath();
-            return new DownloadImageResult(
+            return new DownloadFileResult(
                     disposition.toString(),
                     MediaType.parseMediaType(Files.probeContentType(Path.of(filePath))),
                     new UrlResource(filePath));
