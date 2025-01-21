@@ -5,6 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepositor
 import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.SnsAccountF;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@PersistenceAdapterTest
 @Import({SnsAccountPersistenceAdapter.class, UserMapper.class})
 class SnsAccountPersistenceAdapterTest {
 
