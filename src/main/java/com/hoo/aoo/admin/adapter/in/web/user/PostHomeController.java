@@ -1,5 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.user;
 
+import com.hoo.aoo.admin.application.port.in.user.CreateHomeCommand;
+import com.hoo.aoo.admin.application.port.in.user.CreateHomeResult;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,16 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostHomeController {
 
     @PostMapping("/admin/homes")
-    ResponseEntity<MessageDto> create(
-            @RequestBody Request request
-    ) {
-        return new ResponseEntity<>(new MessageDto("0번 홈이 생성되었습니다."), HttpStatus.CREATED);
+    ResponseEntity<CreateHomeResult> create(@RequestBody CreateHomeCommand command) {
+        return new ResponseEntity<>(new CreateHomeResult(1L), HttpStatus.CREATED);
     }
 
-    private record Request(
-            Long userId,
-            Long houseId
-    ) {
-
-    }
 }
