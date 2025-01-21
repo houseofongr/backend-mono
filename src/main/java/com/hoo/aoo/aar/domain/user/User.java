@@ -24,10 +24,10 @@ public class User {
         this.name = name;
     }
 
-    public static User registerWithDefaultPhoneNumber(SnsAccount snsAccount, Boolean recordAgreement, Boolean personalInformationAgreement) throws InvalidPhoneNumberException {
+    public static User registerWithDefaultPhoneNumber(SnsAccount snsAccount, Boolean termsOfUseAgreement, Boolean personalInformationAgreement) throws InvalidPhoneNumberException {
 
         return new User(
-                new Agreement(recordAgreement,personalInformationAgreement),
+                new Agreement(termsOfUseAgreement,personalInformationAgreement),
                 new PhoneNumber(DEFAULT_PHONE_NUMBER),
                 List.of(snsAccount.getSnsAccountId()),
                 snsAccount.getName()

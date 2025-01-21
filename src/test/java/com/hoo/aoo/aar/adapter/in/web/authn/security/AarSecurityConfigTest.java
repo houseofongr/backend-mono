@@ -39,7 +39,7 @@ class AarSecurityConfigTest {
     void testTempUserURL() throws Exception {
         mockMvc.perform(post("/aar/authn/regist").accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"recordAgreement\":true, \"personalInformationAgreement\":true}")
+                        .content("{\"termsOfUseAgreement\":true, \"personalInformationAgreement\":true}")
                         .with(jwt().jwt(jwt -> jwt.claim("snsId", "1"))
                                 .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
                 .andExpect(status().is(201));

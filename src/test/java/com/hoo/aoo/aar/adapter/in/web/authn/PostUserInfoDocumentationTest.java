@@ -28,7 +28,7 @@ public class PostUserInfoDocumentationTest {
     @DisplayName("회원가입 API")
     void testRegisterWithDefaultPhoneNumber() throws Exception {
 
-        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+        String body = "{\"termsOfUseAgreement\":true, \"personalInformationAgreement\":true}";
 
         mockMvc.perform(post("/aar/authn/regist")
                         .content(body)
@@ -38,7 +38,7 @@ public class PostUserInfoDocumentationTest {
                 .andExpect(status().is(201))
                 .andDo(document("aar-authn-regist",
                         requestFields(
-                                fieldWithPath("recordAgreement").description("녹화물에 대한 2차 가공 동의여부입니다."),
+                                fieldWithPath("termsOfUseAgreement").description("녹화물에 대한 2차 가공 동의여부입니다."),
                                 fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수하우스 및 활용에 대한 동의여부입니다.")
                         ),
                         responseFields(

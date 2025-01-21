@@ -69,7 +69,7 @@ public class AuthnSystemTest {
 
         /* 3. 토큰과 응답 바디로 사용자 회원가입 시도 */
 
-        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+        String body = "{\"termsOfUseAgreement\":true, \"personalInformationAgreement\":true}";
 
         ResponseEntity<?> registResponse = whenRegist(tempAccessToken, body);
 
@@ -114,7 +114,7 @@ public class AuthnSystemTest {
 
         /* 3. 사용자 회원가입 시도 */
 
-        String body = "{\"recordAgreement\":true, \"personalInformationAgreement\":true}";
+        String body = "{\"termsOfUseAgreement\":true, \"personalInformationAgreement\":true}";
 
         ResponseEntity<?> registResponse = whenRegist(tempAccessToken, body);
 

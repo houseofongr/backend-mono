@@ -22,14 +22,14 @@ public class PostUserController {
 
         RegisterUserCommand command = new RegisterUserCommand(
                 snsId,
-                request.recordAgreement,
+                request.termsOfUseAgreement,
                 request.personalInformationAgreement);
 
         return new ResponseEntity<>(registerUserUseCase.register(command), HttpStatus.CREATED);
     }
 
     private record Request(
-            Boolean recordAgreement,
+            Boolean termsOfUseAgreement,
             Boolean personalInformationAgreement
     ) {}
 }

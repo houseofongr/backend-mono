@@ -33,7 +33,7 @@ public class RegisterUserService implements RegisterUserUseCase {
                 throw new AarException(AarErrorCode.ALREADY_REGISTERED_SNS_ACCOUNT);
 
 
-            User user = User.registerWithDefaultPhoneNumber(snsAccount, command.recordAgreement(), command.personalInformationAgreement());
+            User user = User.registerWithDefaultPhoneNumber(snsAccount, command.termsOfUseAgreement(), command.personalInformationAgreement());
 
             saveUserPort.save(user);
 
