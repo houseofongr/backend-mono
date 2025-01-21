@@ -40,7 +40,8 @@ class PostHomeDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("houseId").description("홈의 템플릿으로 사용할 하우스의 식별자입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("createdHomeId").description("생성된 홈의 아이디입니다.")
+                                fieldWithPath("createdHomeId").description("생성된 홈의 아이디입니다."),
+                                fieldWithPath("createdHomeName").description("생성된 홈의 이름입니다.")
                         )
                 ));
     }

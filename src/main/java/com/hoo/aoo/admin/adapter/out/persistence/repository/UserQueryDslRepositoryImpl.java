@@ -1,19 +1,17 @@
 package com.hoo.aoo.admin.adapter.out.persistence.repository;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import static com.hoo.aoo.common.adapter.out.persistence.entity.QSnsAccountJpaEntity.snsAccountJpaEntity;
 import static com.hoo.aoo.common.adapter.out.persistence.entity.QUserJpaEntity.userJpaEntity;
 
-@Repository
 public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
 
     private final JPAQueryFactory query;

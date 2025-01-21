@@ -7,6 +7,7 @@ import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.user.User;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,15 +18,15 @@ import java.util.Map;
 
 public class FixtureRepository {
 
-    public static Room getRoom(HouseId houseId, String name) throws AxisLimitExceededException, AreaLimitExceededException {
+    public static Room getRoom(HouseId houseId, String name) throws Exception {
         return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f);
     }
 
-    public static Room getRoom(String roomName) throws AxisLimitExceededException, AreaLimitExceededException {
+    public static Room getRoom(String roomName) throws Exception {
         return getRoom(getHouseId(),roomName);
     }
 
-    public static House getHouseWithRoom() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException {
+    public static House getHouseWithRoom() throws Exception {
         return getHouseWithRoom(getHouseId());
     }
 
@@ -33,16 +34,20 @@ public class FixtureRepository {
         return new HouseId("cozy house", "leaf", "this is cozy house");
     }
 
-    public static House getHouseWithRoom(HouseId houseId) throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException {
+    public static House getHouseWithRoom(HouseId houseId) throws Exception {
         return House.create(houseId, 5000f, 5000f, List.of(getRoom(houseId,"거실"), getRoom(houseId,"주방")));
     }
 
-    public static House getHouse(HouseId houseId, List<Room> rooms) throws AreaLimitExceededException, HouseRelationshipException {
+    public static House getHouse(HouseId houseId, List<Room> rooms) throws Exception {
         return House.create(houseId, 5000f, 5000f, rooms);
     }
 
     public static Metadata getMetadata() {
         return new Gson().fromJson(getMetadataJson(), Metadata.class);
+    }
+
+    public static User getUser() {
+        return User.load("leaf","남상엽");
     }
 
     public static String getMetadataJson() {

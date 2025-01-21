@@ -20,7 +20,7 @@ class HouseInfoTest {
 
     @Test
     @DisplayName("하우스 생성 테스트")
-    void testCreateHouse() throws AreaLimitExceededException, HouseRelationshipException, AxisLimitExceededException {
+    void testCreateHouse() throws Exception {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -38,7 +38,7 @@ class HouseInfoTest {
 
     @Test
     @DisplayName("방 ID 중복 테스트")
-    void testRoomIdDuplication() throws HouseRelationshipException, AreaLimitExceededException, AxisLimitExceededException {
+    void testRoomIdDuplication() throws Exception {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
@@ -54,7 +54,7 @@ class HouseInfoTest {
 
     @Test
     @DisplayName("방 참조관계 테스트")
-    void testRoomRelationship() throws AxisLimitExceededException, AreaLimitExceededException, HouseRelationshipException {
+    void testRoomRelationship() throws Exception {
         // given
         HouseId houseId = new HouseId(title, author, description);
 
@@ -87,7 +87,7 @@ class HouseInfoTest {
 
     @Test
     @DisplayName("하우스 수정 테스트")
-    void testUpdateInfo() throws HouseRelationshipException, AreaLimitExceededException, AxisLimitExceededException {
+    void testUpdateInfo() throws Exception {
         // given
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
@@ -109,7 +109,7 @@ class HouseInfoTest {
 
     @Test
     @DisplayName("룸 수정 테스트")
-    void testUpdateRoomInfo() throws HouseRelationshipException, AxisLimitExceededException, AreaLimitExceededException, RoomNameNotFoundException {
+    void testUpdateRoomInfo() throws Exception {
         // given
         House houseWithRoom = FixtureRepository.getHouseWithRoom();
         String originalName = "거실";

@@ -34,6 +34,6 @@ public class HomePersistenceAdapter implements SaveHomePort {
 
         homeJpaRepository.save(homeJpaEntity);
 
-        return new CreateHomeResult(homeJpaEntity.getId());
+        return new CreateHomeResult(homeJpaEntity.getId(), null);
     }
 }

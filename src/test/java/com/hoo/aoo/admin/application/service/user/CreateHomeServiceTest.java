@@ -3,10 +3,16 @@ package com.hoo.aoo.admin.application.service.user;
 import com.hoo.aoo.admin.adapter.out.persistence.HomePersistenceAdapter;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
+import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
+import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
+import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.home.CreateHomeService;
+import com.hoo.aoo.common.FixtureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -15,26 +21,34 @@ class CreateHomeServiceTest {
 
     CreateHomeService sut;
 
-    HomePersistenceAdapter homePersistenceAdapter;
+    FindHousePort findHousePort;
+
+    FindUserPort findUserPort;
+
+    SaveHomePort saveHomePort;
 
     @BeforeEach
     void init() {
-        homePersistenceAdapter = mock();
-        sut = new CreateHomeService(homePersistenceAdapter);
+        findHousePort = mock();
+        findUserPort = mock();
+        saveHomePort = mock();
+        sut = new CreateHomeService(findHousePort, findUserPort, saveHomePort);
     }
 
     @Test
     @DisplayName("홈 생성 서비스 테스트")
-    void testCreateHome() {
+    void testCreateHome() throws Exception {
         // given
         CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
 
         // when
-        when(homePersistenceAdapter.save(command)).thenReturn(new CreateHomeResult(100L));
+        when(findHousePort.find(20L)).thenReturn(Optional.of(FixtureRepository.getHouseWithRoom()));
+        when(findUserPort.find(10L)).thenReturn(Optional.of(FixtureRepository.getUser()));
+        when(saveHomePort.save(command)).thenReturn(new CreateHomeResult(100L, null));
         CreateHomeResult createHomeResult = sut.create(command);
 
         // then
-        verify(homePersistenceAdapter, times(1)).save(command);
+        verify(saveHomePort, times(1)).save(command);
         assertThat(createHomeResult.createdHomeId()).isEqualTo(100L);
     }
 }
