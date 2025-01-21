@@ -27,12 +27,14 @@ public record QueryUserHomesResult(
         }
 
         public record HouseInfo(
+                Long id,
                 String title,
                 String author,
                 String description
         ) {
             public static HouseInfo of(HouseJpaEntity houseJpaEntity) {
                 return new HouseInfo(
+                        houseJpaEntity.getId(),
                         houseJpaEntity.getTitle(),
                         houseJpaEntity.getAuthor(),
                         houseJpaEntity.getDescription().length() > 100 ? houseJpaEntity.getDescription().substring(0, 100) + "..." : houseJpaEntity.getDescription()

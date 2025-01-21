@@ -11,7 +11,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetHomeListDocumentationTest extends AbstractDocumentationTest {
+class GetUserHomesDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {
@@ -19,7 +19,7 @@ class GetHomeListDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("GetHomeListDocumentationTest.sql")
+    @Sql("GetUserHomesDocumentationTest.sql")
     @DisplayName("사용자 홈 조회 테스트")
     void testGetHomeList() throws Exception {
         mockMvc.perform(get("/admin/users/{userId}/homes", 10L))
@@ -31,6 +31,7 @@ class GetHomeListDocumentationTest extends AbstractDocumentationTest {
                         responseFields(
                                 fieldWithPath("homes[].id").description("홈의 아이디입니다."),
                                 fieldWithPath("homes[].name").description("홈의 이름입니다."),
+                                fieldWithPath("homes[].baseHouse.id").description("하우스의 식별자입니다."),
                                 fieldWithPath("homes[].baseHouse.title").description("하우스의 타이틀입니다."),
                                 fieldWithPath("homes[].baseHouse.author").description("하우스의 작가입니다."),
                                 fieldWithPath("homes[].baseHouse.description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다."),

@@ -7,6 +7,7 @@ import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
@@ -18,7 +19,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 
 @PersistenceAdapterTest
@@ -50,6 +51,8 @@ class HomePersistenceAdapterTest {
         assertThat(find.get().getName()).isEqualTo("leaf의 cozy house");
         assertThat(find.get().getUser().getId()).isEqualTo(10);
         assertThat(find.get().getHouse().getId()).isEqualTo(20);
+
+        assertThatThrownBy(() -> sut.save(command, home)).hasMessage(AdminErrorCode.ALREADY_CREATED_HOME.getMessage());
     }
 
     @Test
@@ -105,4 +108,5 @@ class HomePersistenceAdapterTest {
             assertThat(home.updatedDate()).matches("\\d{4}\\. \\d{2}\\. \\d{2}\\.");
         });
     }
+
 }

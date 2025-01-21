@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface HomeJpaRepository extends JpaRepository<HomeJpaEntity, Long>, HomeQueryDslRepository {
     List<HomeJpaEntity> findAllByUserId(Long id);
+
+    boolean existsByHouseIdAndUserId(Long houseId, Long userId);
 }
