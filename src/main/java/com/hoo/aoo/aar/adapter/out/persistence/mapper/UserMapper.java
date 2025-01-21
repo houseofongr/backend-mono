@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.domain.DateInfo;
 import com.hoo.aoo.aar.domain.Name;
 import com.hoo.aoo.aar.domain.account.SnsAccount;

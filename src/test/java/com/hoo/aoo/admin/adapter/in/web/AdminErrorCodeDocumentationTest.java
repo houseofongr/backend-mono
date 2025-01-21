@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.adapter.in.web;
 
-import com.hoo.aoo.aar.application.service.AarErrorCode;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;

@@ -1,15 +1,11 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

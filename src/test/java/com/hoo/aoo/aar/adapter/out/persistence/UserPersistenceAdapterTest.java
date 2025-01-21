@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.out.persistence;
 
-import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.domain.DomainFixtureRepository;

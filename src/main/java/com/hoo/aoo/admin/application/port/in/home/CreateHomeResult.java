@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.application.port.in.user;
+package com.hoo.aoo.admin.application.port.in.home;
 
 public record CreateHomeResult(
         Long createdHomeId

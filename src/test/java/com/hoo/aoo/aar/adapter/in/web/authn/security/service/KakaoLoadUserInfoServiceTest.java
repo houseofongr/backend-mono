@@ -2,8 +2,8 @@ package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.domain.DomainFixtureRepository;

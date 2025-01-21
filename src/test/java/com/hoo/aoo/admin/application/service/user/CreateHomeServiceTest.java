@@ -1,9 +1,9 @@
 package com.hoo.aoo.admin.application.service.user;
 
 import com.hoo.aoo.admin.adapter.out.persistence.HomePersistenceAdapter;
-import com.hoo.aoo.admin.application.port.in.user.CreateHomeCommand;
-import com.hoo.aoo.admin.application.port.in.user.CreateHomeResult;
-import org.assertj.core.api.Assertions;
+import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
+import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
+import com.hoo.aoo.admin.application.service.home.CreateHomeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

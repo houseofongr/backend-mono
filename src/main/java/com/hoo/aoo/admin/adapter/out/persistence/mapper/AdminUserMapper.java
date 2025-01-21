@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.aar.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.data.domain.Page;

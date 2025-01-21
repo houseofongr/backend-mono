@@ -1,8 +1,3 @@
-set foreign_key_checks = 0;
-truncate table HOUSE;
-truncate table ROOM;
-set foreign_key_checks = 1;
-
 insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IMAGE_FILE_ID, WIDTH, HEIGHT,
                   CREATED_TIME, UPDATED_TIME)
 values (1, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

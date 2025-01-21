@@ -2,8 +2,8 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.admin.application.port.in.user.CreateHomeCommand;
-import com.hoo.aoo.admin.application.port.in.user.CreateHomeResult;
+import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
+import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
