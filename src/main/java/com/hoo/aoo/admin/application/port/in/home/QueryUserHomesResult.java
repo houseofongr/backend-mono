@@ -11,6 +11,7 @@ public record QueryUserHomesResult(
 ) {
     public record HomeInfo(
             Long id,
+            String name,
             String createdDate,
             String updatedDate,
             HouseInfo baseHouse
@@ -18,6 +19,7 @@ public record QueryUserHomesResult(
         public static HomeInfo of(HomeJpaEntity homeJpaEntity) {
             return new HomeInfo(
                     homeJpaEntity.getId(),
+                    homeJpaEntity.getName(),
                     DateTimeFormatters.DOT_DATE.getFormatter().format(homeJpaEntity.getCreatedTime()),
                     DateTimeFormatters.DOT_DATE.getFormatter().format(homeJpaEntity.getUpdatedTime()),
                     HouseInfo.of(homeJpaEntity.getHouse())

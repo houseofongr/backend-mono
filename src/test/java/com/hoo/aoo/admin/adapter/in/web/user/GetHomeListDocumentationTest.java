@@ -30,6 +30,7 @@ class GetHomeListDocumentationTest extends AbstractDocumentationTest {
                         ),
                         responseFields(
                                 fieldWithPath("homes[].id").description("홈의 아이디입니다."),
+                                fieldWithPath("homes[].name").description("홈의 이름입니다."),
                                 fieldWithPath("homes[].baseHouse.title").description("하우스의 타이틀입니다."),
                                 fieldWithPath("homes[].baseHouse.author").description("하우스의 작가입니다."),
                                 fieldWithPath("homes[].baseHouse.description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다."),
