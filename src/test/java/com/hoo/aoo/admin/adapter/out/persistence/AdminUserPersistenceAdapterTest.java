@@ -36,7 +36,7 @@ class AdminUserPersistenceAdapterTest {
 
         // then
         assertThat(result.users()).hasSize(1);
-        assertThat(result.users().getContent()).anySatisfy(userInfo -> {
+        assertThat(result.users()).anySatisfy(userInfo -> {
                     assertThat(userInfo.id()).isEqualTo(1L);
                     assertThat(userInfo.realName()).isEqualTo("남상엽");
                     assertThat(userInfo.nickName()).isEqualTo("leaf");

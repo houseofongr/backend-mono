@@ -1,9 +1,7 @@
-package com.hoo.aoo.admin.application.service;
+package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.HouseIdResult;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
-import com.hoo.aoo.admin.application.service.house.CreateHouseService;
-import com.hoo.aoo.admin.application.service.house.Metadata;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;

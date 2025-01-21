@@ -1,11 +1,10 @@
-package com.hoo.aoo.admin.application.service;
+package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateRoomPort;
-import com.hoo.aoo.admin.application.service.house.UpdateHouseService;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;

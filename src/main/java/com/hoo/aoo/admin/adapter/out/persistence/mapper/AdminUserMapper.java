@@ -4,6 +4,7 @@ import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class AdminUserMapper {
 
     public QueryUserInfoResult mapToQueryResults(Page<UserJpaEntity> userJpaEntities) {
-        return new QueryUserInfoResult(userJpaEntities.map(this::mapToQueryResult));
+        Page<QueryUserInfoResult.UserInfo> userInfosPages = userJpaEntities.map(this::mapToQueryResult);
+        return new QueryUserInfoResult(userInfosPages.getContent(), Pagination.of(userInfosPages));
 
     }
 

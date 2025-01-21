@@ -9,6 +9,7 @@ import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,8 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryHouseListResult query(QueryHouseListCommand command) {
-        Page<HouseJpaEntity> entities = searchHousePort.search(command);
-        return new QueryHouseListResult(entities.map(QueryHouseListResult.HouseInfo::of));
+        Page<QueryHouseListResult.HouseInfo> houseInfoPages = searchHousePort.search(command).map(QueryHouseListResult.HouseInfo::of);
+        return new QueryHouseListResult(houseInfoPages.getContent(), Pagination.of(houseInfoPages));
     }
 
     @Override

@@ -1,8 +1,7 @@
-package com.hoo.aoo.admin.application.service;
+package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.house.DeleteRoomPort;
-import com.hoo.aoo.admin.application.service.house.DeleteHouseService;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,19 +1,14 @@
 package com.hoo.aoo.admin.adapter.in.web.user;
 
-import com.hoo.aoo.aar.domain.account.SnsDomain;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

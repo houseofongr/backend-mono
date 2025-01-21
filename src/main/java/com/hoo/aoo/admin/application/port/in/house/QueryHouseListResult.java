@@ -2,10 +2,13 @@ package com.hoo.aoo.admin.application.port.in.house;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
-import org.springframework.data.domain.Page;
+import com.hoo.aoo.common.application.port.in.Pagination;
+
+import java.util.List;
 
 public record QueryHouseListResult(
-        Page<HouseInfo> houses
+        List<HouseInfo> houses,
+        Pagination pagination
 ) {
     public record HouseInfo(
             Long id,

@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.application.service;
+package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
@@ -6,7 +6,8 @@ import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
-import com.hoo.aoo.admin.application.service.house.QueryHouseService;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.admin.application.service.AdminException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
