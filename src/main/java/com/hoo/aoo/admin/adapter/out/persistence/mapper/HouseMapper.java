@@ -18,7 +18,7 @@ import static com.hoo.aoo.admin.application.service.house.CreateHouseService.*;
 @Component
 public class HouseMapper {
 
-    public HouseJpaEntity mapToNewEntity(House house, List<RoomJpaEntity> roomJpaEntities, Map<String, Long> imageIdMap) {
+    public HouseJpaEntity mapToNewJpaEntity(House house, List<RoomJpaEntity> roomJpaEntities, Map<String, Long> imageIdMap) {
 
         HouseJpaEntity houseJpaEntity = new HouseJpaEntity(null,
                 house.getId().getTitle(),
@@ -36,7 +36,7 @@ public class HouseMapper {
         return houseJpaEntity;
     }
 
-    public RoomJpaEntity mapToNewEntity(Room room, Long imageId) {
+    public RoomJpaEntity mapToNewJpaEntity(Room room, Long imageId) {
         return new RoomJpaEntity(null,
                 room.getId().getName(),
                 room.getAxis().getX(),

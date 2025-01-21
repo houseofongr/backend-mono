@@ -33,12 +33,12 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
     public Long save(House house, List<Room> rooms, Map<String, Long> imageFileIdMap) {
 
         List<RoomJpaEntity> roomJpaEntities = rooms.stream().map(
-                room -> houseMapper.mapToNewEntity(
+                room -> houseMapper.mapToNewJpaEntity(
                         room, imageFileIdMap.get(room.getId().getName())
                 )
         ).toList();
 
-        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewEntity(house, roomJpaEntities, imageFileIdMap);
+        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewJpaEntity(house, roomJpaEntities, imageFileIdMap);
 
         houseJpaRepository.save(houseJpaEntity);
 

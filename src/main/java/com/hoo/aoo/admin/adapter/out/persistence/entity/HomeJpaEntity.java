@@ -19,11 +19,14 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
-    private UserJpaEntity user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID", nullable = false)
     private HouseJpaEntity house;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private UserJpaEntity user;
+
+    public static HomeJpaEntity create(HouseJpaEntity house, UserJpaEntity user) {
+        return new HomeJpaEntity(null,house,user);
+    }
 }

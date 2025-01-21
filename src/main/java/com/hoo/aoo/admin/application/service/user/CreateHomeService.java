@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.application.service.user;
 
-import com.hoo.aoo.admin.adapter.out.persistence.HomePersistenceAdapter;
 import com.hoo.aoo.admin.application.port.in.user.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.user.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.in.user.CreateHomeUseCase;
@@ -12,10 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateHomeService implements CreateHomeUseCase {
 
-    private final HomePersistenceAdapter homePersistenceAdapter;
+    private final SaveHomePort saveHomePort;
 
     @Override
     public CreateHomeResult create(CreateHomeCommand command) {
-        return homePersistenceAdapter.save(command);
+        return saveHomePort.save(command);
     }
 }
