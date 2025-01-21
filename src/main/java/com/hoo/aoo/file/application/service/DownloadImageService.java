@@ -15,11 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ContentDisposition;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Component
 @RequiredArgsConstructor
@@ -51,9 +53,11 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
                     .filename(loadedFile.getFileId().getFileSystemName())
                     .build();
 
+            String filePath = loadedFile.getFileId().getFilePath();
             return new DownloadImageResult(
                     disposition.toString(),
-                    new UrlResource(loadedFile.getFileId().getFilePath()));
+                    MediaType.parseMediaType(Files.probeContentType(Path.of(filePath))),
+                    new UrlResource(filePath));
 
         } catch (IOException e) {
             throw new FileException(FileErrorCode.RETRIEVE_FILE_FAILED);

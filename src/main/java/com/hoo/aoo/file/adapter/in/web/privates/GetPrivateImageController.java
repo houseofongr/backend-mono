@@ -2,8 +2,11 @@ package com.hoo.aoo.file.adapter.in.web.privates;
 
 import com.hoo.aoo.file.application.port.in.DownloadImageResult;
 import com.hoo.aoo.file.application.port.in.DownloadPrivateImageUseCase;
+import com.hoo.aoo.file.domain.File;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ public class GetPrivateImageController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
+                .contentType(result.mediaType())
                 .body(result.resource());
     }
 
