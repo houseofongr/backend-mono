@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
@@ -24,6 +25,7 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort {
     private final HouseJpaRepository houseJpaRepository;
     private final UserJpaRepository userJpaRepository;
     private final HomeJpaRepository homeJpaRepository;
+    private final HomeMapper homeMapper;
 
     @Override
     public CreateHomeResult save(CreateHomeCommand command, Home home) {
@@ -39,6 +41,6 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort {
 
     @Override
     public Optional<QueryHomeResult> findHome(Long id) {
-        return Optional.empty();
+        return homeJpaRepository.findByIdWithHouseAndRooms(id).map(homeMapper::mapToQueryResult);
     }
 }

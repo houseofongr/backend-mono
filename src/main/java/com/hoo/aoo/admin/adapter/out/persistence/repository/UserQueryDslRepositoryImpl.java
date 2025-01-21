@@ -23,7 +23,7 @@ public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
     @Override
     public Page<UserJpaEntity> searchByCommand(QueryUserInfoCommand command) {
         List<UserJpaEntity> entities = query.selectFrom(userJpaEntity)
-                .leftJoin(userJpaEntity.snsAccountEntities, snsAccountJpaEntity)
+                .leftJoin(userJpaEntity.snsAccountEntities, snsAccountJpaEntity).fetchJoin()
                 .orderBy(userJpaEntity.createdTime.desc())
                 .offset(command.pageable().getOffset())
                 .limit(command.pageable().getPageSize())

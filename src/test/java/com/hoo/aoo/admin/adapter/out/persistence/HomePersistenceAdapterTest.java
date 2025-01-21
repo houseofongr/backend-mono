@@ -1,9 +1,11 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
+import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
@@ -19,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @PersistenceAdapterTest
-@Import(HomePersistenceAdapter.class)
+@Import({HomePersistenceAdapter.class, HomeMapper.class})
 class HomePersistenceAdapterTest {
 
     @Autowired
@@ -47,5 +49,37 @@ class HomePersistenceAdapterTest {
         assertThat(find.get().getName()).isEqualTo("leaf의 cozy house");
         assertThat(find.get().getUser().getId()).isEqualTo(10);
         assertThat(find.get().getHouse().getId()).isEqualTo(20);
+    }
+    
+    @Test
+    @Sql("HomePersistenceAdapter2.sql")
+    @DisplayName("홈 조회 테스트")
+    void testFindHome() {
+        // given
+        Long id = 1L;
+        Long notExistId = 123L;
+    
+        // when
+        Optional<QueryHomeResult> notExistHome = sut.findHome(notExistId);
+        Optional<QueryHomeResult> home = sut.findHome(id);
+
+        // then
+        assertThat(notExistHome).isEmpty();
+        assertThat(home).isNotEmpty();
+        assertThat(home.get().homeId()).isEqualTo(1L);
+        assertThat(home.get().homeName()).isEqualTo("leaf의 cozy house");
+        assertThat(home.get().house().width()).isEqualTo(5000F);
+        assertThat(home.get().house().height()).isEqualTo(5000F);
+        assertThat(home.get().house().borderImageId()).isEqualTo(2L);
+        assertThat(home.get().rooms()).anySatisfy(roomInfo -> {
+            assertThat(roomInfo.roomId()).isEqualTo(1L);
+            assertThat(roomInfo.imageId()).isEqualTo(5L);
+            assertThat(roomInfo.width()).isEqualTo(5000F);
+            assertThat(roomInfo.height()).isEqualTo(1000F);
+            assertThat(roomInfo.name()).isEqualTo("거실");
+            assertThat(roomInfo.x()).isEqualTo(0L);
+            assertThat(roomInfo.y()).isEqualTo(0L);
+            assertThat(roomInfo.z()).isEqualTo(0L);
+        });
     }
 }
