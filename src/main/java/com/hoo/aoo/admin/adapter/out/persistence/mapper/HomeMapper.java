@@ -4,6 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
+import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.stereotype.Component;
 
@@ -11,34 +12,16 @@ import java.util.List;
 
 @Component
 public class HomeMapper {
-    public QueryHomeResult mapToQueryResult(HomeJpaEntity homeJpaEntity) {
-        return new QueryHomeResult(
-                homeJpaEntity.getId(),
-                homeJpaEntity.getName(),
-                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(homeJpaEntity.getCreatedTime()),
-                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(homeJpaEntity.getUpdatedTime()),
-                mapToQueryResult(homeJpaEntity.getHouse()),
-                mapToQueryResult(homeJpaEntity.getHouse().getRooms())
-        );
+    public QueryHomeResult mapToQueryHomeResult(HomeJpaEntity homeJpaEntity) {
+        return QueryHomeResult.of(homeJpaEntity, mapToQueryResult(homeJpaEntity.getHouse().getRooms()));
     }
 
-    private QueryHomeResult.HouseInfo mapToQueryResult(HouseJpaEntity houseJpaEntity) {
-        return new QueryHomeResult.HouseInfo(
-                houseJpaEntity.getWidth(),
-                houseJpaEntity.getHeight(),
-                houseJpaEntity.getBorderImageFileId()
-        );
+    public QueryUserHomesResult mapToQueryUserHomesResult(List<HomeJpaEntity> homeJpaEntities) {
+        return new QueryUserHomesResult(homeJpaEntities.stream()
+                .map(QueryUserHomesResult.HomeInfo::of).toList());
     }
 
     private List<QueryHomeResult.RoomInfo> mapToQueryResult(List<RoomJpaEntity> roomJpaEntities) {
-        return roomJpaEntities.stream().map(roomJpaEntity ->
-                new QueryHomeResult.RoomInfo(roomJpaEntity.getId(),
-                        roomJpaEntity.getName(),
-                        roomJpaEntity.getX(),
-                        roomJpaEntity.getY(),
-                        roomJpaEntity.getZ(),
-                        roomJpaEntity.getWidth(),
-                        roomJpaEntity.getHeight(),
-                        roomJpaEntity.getImageFileId())).toList();
+        return roomJpaEntities.stream().map(QueryHomeResult.RoomInfo::of).toList();
     }
 }

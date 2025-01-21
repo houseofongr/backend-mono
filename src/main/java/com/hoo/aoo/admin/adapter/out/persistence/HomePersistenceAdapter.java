@@ -9,18 +9,21 @@ import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
+import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
+import com.hoo.aoo.admin.application.port.out.home.FindUserHomesPort;
 import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class HomePersistenceAdapter implements SaveHomePort, FindHomePort {
+public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, FindUserHomesPort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final UserJpaRepository userJpaRepository;
@@ -41,6 +44,11 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort {
 
     @Override
     public Optional<QueryHomeResult> findHome(Long id) {
-        return homeJpaRepository.findByIdWithHouseAndRooms(id).map(homeMapper::mapToQueryResult);
+        return homeJpaRepository.findByIdWithHouseAndRooms(id).map(homeMapper::mapToQueryHomeResult);
+    }
+
+    @Override
+    public QueryUserHomesResult findUserHomes(Long id) {
+        return homeMapper.mapToQueryUserHomesResult(homeJpaRepository.findAllByUserId(id));
     }
 }

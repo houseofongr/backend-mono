@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.application.port.in.house.HouseIdResult;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.service.house.Metadata;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -25,7 +25,7 @@ public class PostHouseController {
     private final CreateHouseUseCase createHouseUseCase;
 
     @PostMapping("/admin/houses")
-    public ResponseEntity<HouseIdResult> create(@RequestParam String metadata, HttpServletRequest request) {
+    public ResponseEntity<CreateHouseResult> create(@RequestParam String metadata, HttpServletRequest request) {
 
         Map<String, MultipartFile> fileMap = new HashMap<>();
 
@@ -35,7 +35,7 @@ public class PostHouseController {
         }
 
         Metadata metadata1 = gson.fromJson(metadata, Metadata.class);
-        HouseIdResult result = createHouseUseCase.create(metadata1, fileMap);
+        CreateHouseResult result = createHouseUseCase.create(metadata1, fileMap);
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

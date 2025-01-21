@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.service.house;
 
-import com.hoo.aoo.admin.application.port.in.house.HouseIdResult;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadImageResult;
@@ -42,7 +42,7 @@ class CreateHouseInfoServiceTest {
 
         // when
         when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadImageResult(List.of(new UploadImageResult.FileInfo(1L, "newfile.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
-        HouseIdResult result = sut.create(metadata, map);
+        CreateHouseResult result = sut.create(metadata, map);
 
         // then
         verify(uploadPrivateImageUseCase, times(4)).privateUpload((MultipartFile) any());

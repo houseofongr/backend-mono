@@ -585,7 +585,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 223
 
-{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNzQ1Mjk2MywidXNlcklkIjoxfQ.AMdjhB_QFIeJoU7wO9INNelvTHj32bCiTazNTCt1rzc"}</code></pre>
+{"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczNzQ3MTE0NCwidXNlcklkIjoxfQ.00VbIXEvDll6ReU4CkVUb0TLBECA3gf7wF0KkJEu-CU"}</code></pre>
 </div>
 </div>
 </div>
@@ -2024,7 +2024,7 @@ Content-Length: 451
 <h5 id="admin-user-get-home-list-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/users/1/homes HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/users/10/homes HTTP/1.1
 Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
@@ -2060,23 +2060,18 @@ Host: api.archiveofongr.site</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 402
+Content-Length: 232
 
 {
   "homes" : [ {
     "id" : 1,
-    "title" : "cozy house",
-    "author" : "leaf",
-    "description" : "this is cozy house.",
-    "createdDate" : "2025. 01. 19.",
-    "updatedDate" : "2025. 01. 19."
-  }, {
-    "id" : 2,
-    "title" : "not cozy house",
-    "author" : "leaf",
-    "description" : "this is not cozy house.",
-    "createdDate" : "2025. 01. 20.",
-    "updatedDate" : "2025. 01. 20."
+    "createdDate" : "2025. 01. 21.",
+    "updatedDate" : "2025. 01. 21.",
+    "baseHouse" : {
+      "title" : "cozy house",
+      "author" : "leaf",
+      "description" : "my cozy house"
+    }
   } ]
 }</code></pre>
 </div>
@@ -2104,17 +2099,17 @@ Content-Length: 402
 <td class="tableblock halign-left valign-top"><p class="tableblock">홈의 아이디입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homes[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homes[].baseHouse.title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 타이틀입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homes[].author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homes[].baseHouse.author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 작가입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homes[].description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homes[].baseHouse.description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스에 대한 설명입니다.<br>
 * 100자까지만 전송됩니다.</p></td>
@@ -2463,12 +2458,12 @@ Content-Length: 302
 {
   "fileInfos" : [ {
     "id" : 1,
-    "name" : "9b5814b5-61cb-40df-b7cc-1d142e9fa1a1.png",
+    "name" : "125ea3ff-8550-4695-bb84-7f21903133fa.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   }, {
     "id" : 2,
-    "name" : "5e541010-4ea1-44f9-b2ce-85f1c63b7c56.png",
+    "name" : "c0393175-0615-453e-9c98-413c3b6f250e.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   } ]
@@ -2893,7 +2888,7 @@ Host: file.archiveofongr.site</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-21 18:52:36 +0900
+Last updated 2025-01-21 23:52:01 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

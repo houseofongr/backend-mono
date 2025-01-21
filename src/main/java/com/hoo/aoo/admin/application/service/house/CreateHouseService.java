@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
-import com.hoo.aoo.admin.application.port.in.house.HouseIdResult;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -35,7 +35,7 @@ public class CreateHouseService implements CreateHouseUseCase {
 
     @Override
     @Transactional
-    public HouseIdResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
+    public CreateHouseResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
@@ -65,7 +65,7 @@ public class CreateHouseService implements CreateHouseUseCase {
 
             Long savedId = saveHousePort.save(newHouse, rooms, imageFileIdMap);
 
-            return new HouseIdResult(savedId);
+            return new CreateHouseResult(savedId);
 
         } catch (AxisLimitExceededException e) {
             throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);

@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
+import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
@@ -50,7 +51,7 @@ class HomePersistenceAdapterTest {
         assertThat(find.get().getUser().getId()).isEqualTo(10);
         assertThat(find.get().getHouse().getId()).isEqualTo(20);
     }
-    
+
     @Test
     @Sql("HomePersistenceAdapter2.sql")
     @DisplayName("홈 조회 테스트")
@@ -58,7 +59,7 @@ class HomePersistenceAdapterTest {
         // given
         Long id = 1L;
         Long notExistId = 123L;
-    
+
         // when
         Optional<QueryHomeResult> notExistHome = sut.findHome(notExistId);
         Optional<QueryHomeResult> home = sut.findHome(id);
@@ -80,6 +81,28 @@ class HomePersistenceAdapterTest {
             assertThat(roomInfo.x()).isEqualTo(0L);
             assertThat(roomInfo.y()).isEqualTo(0L);
             assertThat(roomInfo.z()).isEqualTo(0L);
+        });
+    }
+
+    @Test
+    @Sql("HomePersistenceAdapter3.sql")
+    @DisplayName("사용자의 홈 조회 테스트")
+    void testFindUserHomes() {
+        // given
+        Long id = 10L;
+
+        // when
+        QueryUserHomesResult userHomes = sut.findUserHomes(id);
+
+        // then
+        assertThat(userHomes.homes()).hasSize(6);
+        assertThat(userHomes.homes()).anySatisfy(home -> {
+            assertThat(home.id()).isEqualTo(1L);
+            assertThat(home.baseHouse().title()).isEqualTo("cozy house");
+            assertThat(home.baseHouse().author()).isEqualTo("leaf");
+            assertThat(home.baseHouse().description()).isEqualTo("my cozy house");
+            assertThat(home.createdDate()).matches("\\d{4}\\. \\d{2}\\. \\d{2}\\.");
+            assertThat(home.updatedDate()).matches("\\d{4}\\. \\d{2}\\. \\d{2}\\.");
         });
     }
 }

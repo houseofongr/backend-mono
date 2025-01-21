@@ -1,0 +1,41 @@
+package com.hoo.aoo.admin.application.port.in.home;
+
+import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+
+import java.util.List;
+
+public record QueryUserHomesResult(
+        List<HomeInfo> homes
+) {
+    public record HomeInfo(
+            Long id,
+            String createdDate,
+            String updatedDate,
+            HouseInfo baseHouse
+    ) {
+        public static HomeInfo of(HomeJpaEntity homeJpaEntity) {
+            return new HomeInfo(
+                    homeJpaEntity.getId(),
+                    DateTimeFormatters.DOT_DATE.getFormatter().format(homeJpaEntity.getCreatedTime()),
+                    DateTimeFormatters.DOT_DATE.getFormatter().format(homeJpaEntity.getUpdatedTime()),
+                    HouseInfo.of(homeJpaEntity.getHouse())
+            );
+        }
+
+        public record HouseInfo(
+                String title,
+                String author,
+                String description
+        ) {
+            public static HouseInfo of(HouseJpaEntity houseJpaEntity) {
+                return new HouseInfo(
+                        houseJpaEntity.getTitle(),
+                        houseJpaEntity.getAuthor(),
+                        houseJpaEntity.getDescription().length() > 100 ? houseJpaEntity.getDescription().substring(0, 100) + "..." : houseJpaEntity.getDescription()
+                );
+            }
+        }
+    }
+}

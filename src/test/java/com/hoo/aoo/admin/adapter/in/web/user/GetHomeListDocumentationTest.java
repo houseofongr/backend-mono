@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.user;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -18,9 +19,10 @@ class GetHomeListDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
+    @Sql("GetHomeListDocumentationTest.sql")
     @DisplayName("사용자 홈 조회 테스트")
     void testGetHomeList() throws Exception {
-        mockMvc.perform(get("/admin/users/{userId}/homes", 1L))
+        mockMvc.perform(get("/admin/users/{userId}/homes", 10L))
                 .andExpect(status().is(200))
                 .andDo(document("admin-user-get-home-list",
                         pathParameters(
@@ -28,9 +30,9 @@ class GetHomeListDocumentationTest extends AbstractDocumentationTest {
                         ),
                         responseFields(
                                 fieldWithPath("homes[].id").description("홈의 아이디입니다."),
-                                fieldWithPath("homes[].title").description("하우스의 타이틀입니다."),
-                                fieldWithPath("homes[].author").description("하우스의 작가입니다."),
-                                fieldWithPath("homes[].description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다."),
+                                fieldWithPath("homes[].baseHouse.title").description("하우스의 타이틀입니다."),
+                                fieldWithPath("homes[].baseHouse.author").description("하우스의 작가입니다."),
+                                fieldWithPath("homes[].baseHouse.description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다."),
                                 fieldWithPath("homes[].createdDate").description("홈이 생성된 날짜입니다."),
                                 fieldWithPath("homes[].updatedDate").description("홈이 수정된 날짜입니다.")
                         )

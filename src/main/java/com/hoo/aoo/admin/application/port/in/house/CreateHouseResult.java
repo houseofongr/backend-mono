@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.in.house;
 
-public record HouseIdResult(
+public record CreateHouseResult(
     Long houseId
 ) {
 
