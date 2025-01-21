@@ -11,7 +11,7 @@ public record Pagination(
 
     public static Pagination of(Page<?> page) {
         return new Pagination(page.getSize(),
-                page.getNumber(),
+                page.getNumber() + 1,
                 page.getTotalPages(),
                 page.getTotalElements());
     }

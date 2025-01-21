@@ -8,9 +8,7 @@ import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
