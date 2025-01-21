@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.*;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
@@ -45,14 +46,14 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
         return houseJpaEntity.getId();
     }
 
-    public Optional<HouseJpaEntity> findHouseJpaEntity(Long id) {
-        return houseJpaRepository.findById(id);
+    public Optional<QueryHouseResult> findQueryHouseResult(Long id) {
+        return houseJpaRepository.findById(id).map(houseMapper::mapToQueryResult);
     }
 
     @Override
     public Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
 
-        Optional<HouseJpaEntity> optional = findHouseJpaEntity(id);
+        Optional<HouseJpaEntity> optional = houseJpaRepository.findById(id);
 
         if (optional.isEmpty()) return Optional.empty();
 

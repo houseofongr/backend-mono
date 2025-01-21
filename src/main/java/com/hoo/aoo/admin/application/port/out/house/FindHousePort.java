@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.out.house;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface FindHousePort {
     Optional<House> find(Long id) throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException;
-    Optional<HouseJpaEntity> findHouseJpaEntity(Long id);
+    Optional<QueryHouseResult> findQueryHouseResult(Long id);
 }

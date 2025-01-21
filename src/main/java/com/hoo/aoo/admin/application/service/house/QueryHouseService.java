@@ -1,7 +1,6 @@
 package com.hoo.aoo.admin.application.service.house;
 
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
@@ -26,10 +25,8 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryHouseResult queryHouse(Long id) {
-        HouseJpaEntity entity = findHousePort.findHouseJpaEntity(id)
+        return findHousePort.findQueryHouseResult(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
-
-        return QueryHouseResult.of(entity);
     }
 
     @Override

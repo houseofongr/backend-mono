@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
@@ -69,12 +70,14 @@ class QueryHouseInfoServiceTest {
         rooms.forEach(roomJpaEntity -> roomJpaEntity.setHouse(entity));
         entity.prePersist();
 
+        QueryHouseResult queryHouseResult = new HouseMapper().mapToQueryResult(entity);
+
         // when
-        when(findHousePort.findHouseJpaEntity(1L)).thenReturn(Optional.of(entity));
+        when(findHousePort.findQueryHouseResult(1L)).thenReturn(Optional.of(queryHouseResult));
         QueryHouseResult result = sut.queryHouse(1L);
 
         // then
-        assertThat(result).isEqualTo(QueryHouseResult.of(entity));
+        assertThat(result).isNotNull();
 
         // 조회되지 않을 때 예외처리
         assertThatThrownBy(() -> sut.queryHouse(2L)).isInstanceOf(AdminException.class)

@@ -2,11 +2,13 @@ package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -76,5 +78,33 @@ public class HouseMapper {
         }
 
         return house;
+    }
+
+    public QueryHouseResult mapToQueryResult(HouseJpaEntity entity) {
+        QueryHouseResult.House house = new QueryHouseResult.House(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getAuthor(),
+                entity.getDescription(),
+                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(entity.getCreatedTime()),
+                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(entity.getUpdatedTime()),
+                entity.getWidth(),
+                entity.getHeight(),
+                entity.getBorderImageFileId()
+        );
+
+        List<QueryHouseResult.Room> list = entity.getRooms().stream().map(roomJpaEntity ->
+                        new QueryHouseResult.Room(
+                                roomJpaEntity.getId(),
+                                roomJpaEntity.getName(),
+                                roomJpaEntity.getX(),
+                                roomJpaEntity.getY(),
+                                roomJpaEntity.getZ(),
+                                roomJpaEntity.getWidth(),
+                                roomJpaEntity.getHeight(),
+                                roomJpaEntity.getImageFileId()))
+                .toList();
+
+        return new QueryHouseResult(house,list);
     }
 }

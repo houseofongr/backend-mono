@@ -6,6 +6,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
@@ -119,34 +120,32 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("HouseJpaEntity 단건 조회 테스트")
-    void testFindHouseJpaEntityHouse() {
+    void testFindHouseJpaEntityQueryHouse() {
         // given
         Long houseId = 1L;
 
         // when
-        Optional<HouseJpaEntity> query = sut.findHouseJpaEntity(houseId);
+        Optional<QueryHouseResult> query = sut.findQueryHouseResult(houseId);
 
         // then
         assertThat(query).isNotEmpty();
-        assertThat(query.get().getId()).isEqualTo(houseId);
-        assertThat(query.get().getTitle()).isEqualTo("cozy house");
-        assertThat(query.get().getAuthor()).isEqualTo("leaf");
-        assertThat(query.get().getDescription()).isEqualTo("this is cozy house");
-        assertThat(query.get().getWidth()).isEqualTo(5000f);
-        assertThat(query.get().getHeight()).isEqualTo(5000f);
-        assertThat(query.get().getBasicImageFileId()).isEqualTo(1L);
-        assertThat(query.get().getBorderImageFileId()).isEqualTo(2L);
-        assertThat(query.get().getRooms()).hasSize(2)
+        assertThat(query.get().house().houseId()).isEqualTo(houseId);
+        assertThat(query.get().house().title()).isEqualTo("cozy house");
+        assertThat(query.get().house().author()).isEqualTo("leaf");
+        assertThat(query.get().house().description()).isEqualTo("this is cozy house");
+        assertThat(query.get().house().width()).isEqualTo(5000f);
+        assertThat(query.get().house().height()).isEqualTo(5000f);
+        assertThat(query.get().house().borderImageId()).isEqualTo(2L);
+        assertThat(query.get().rooms()).hasSize(2)
                 .anySatisfy(room -> {
-                    assertThat(room.getId()).isEqualTo(1L);
-                    assertThat(room.getName()).isEqualTo("거실");
-                    assertThat(room.getX()).isEqualTo(0);
-                    assertThat(room.getY()).isEqualTo(0);
-                    assertThat(room.getZ()).isEqualTo(0);
-                    assertThat(room.getWidth()).isEqualTo(5000);
-                    assertThat(room.getHeight()).isEqualTo(1000);
-                    assertThat(room.getImageFileId()).isEqualTo(5L);
-                    assertThat(room.getHouse()).isEqualTo(query.get());
+                    assertThat(room.roomId()).isEqualTo(1L);
+                    assertThat(room.name()).isEqualTo("거실");
+                    assertThat(room.x()).isEqualTo(0);
+                    assertThat(room.y()).isEqualTo(0);
+                    assertThat(room.z()).isEqualTo(0);
+                    assertThat(room.width()).isEqualTo(5000);
+                    assertThat(room.height()).isEqualTo(1000);
+                    assertThat(room.imageId()).isEqualTo(5L);
                 });
     }
 
@@ -188,7 +187,7 @@ class HousePersistenceAdapterTest {
 
         // when
         sut.update(1L, houseWithRoom);
-        Optional<HouseJpaEntity> query = sut.findHouseJpaEntity(1L);
+        Optional<HouseJpaEntity> query = houseJpaRepository.findById(1L);
 
         // then
         assertThat(query).isNotEmpty();
