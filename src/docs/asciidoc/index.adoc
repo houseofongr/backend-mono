@@ -215,7 +215,7 @@ operation::admin-home-post[snippets='http-request,request-fields,http-response,r
 
 홈 정보를 조회하는 API 입니다.
 
-operation::admin-home-get[snippets='http-request,request-fields,http-response,response-fields']
+operation::admin-home-get[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API
