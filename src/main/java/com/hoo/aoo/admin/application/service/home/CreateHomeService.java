@@ -44,11 +44,14 @@ public class CreateHomeService implements CreateHomeUseCase {
             return saveHomePort.save(command, home);
 
         } catch (AreaLimitExceededException e) {
-            throw new RuntimeException(e);
+            throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
+
         } catch (AxisLimitExceededException e) {
-            throw new RuntimeException(e);
+            throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
+
         } catch (HouseRelationshipException e) {
-            throw new RuntimeException(e);
+            throw new AdminException(AdminErrorCode.ILLEGAL_HOUSE_RELATIONSHIP);
+
         }
     }
 }
