@@ -11,7 +11,7 @@ import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
-import com.hoo.aoo.file.application.port.in.UploadImageResult;
+import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,17 +46,17 @@ public class CreateHouseService implements CreateHouseUseCase {
         try {
             for (Metadata.Room room : metadata.rooms()) {
 
-                UploadImageResult uploadImageResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(room.form()));
+                UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(room.form()));
 
                 Room newRoom = Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height());
 
                 rooms.add(newRoom);
 
-                imageFileIdMap.put(room.name(), uploadImageResult.fileInfos().getFirst().id());
+                imageFileIdMap.put(room.name(), uploadFileResult.fileInfos().getFirst().id());
             }
 
-            UploadImageResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().houseForm()));
-            UploadImageResult borderUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().borderForm()));
+            UploadFileResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().houseForm()));
+            UploadFileResult borderUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().borderForm()));
 
             imageFileIdMap.put(BASIC_HOUSE_IMAGE_ID,houseUploadResult.fileInfos().getFirst().id());
             imageFileIdMap.put(HOUSE_BORDER_IMAGE_ID,borderUploadResult.fileInfos().getFirst().id());

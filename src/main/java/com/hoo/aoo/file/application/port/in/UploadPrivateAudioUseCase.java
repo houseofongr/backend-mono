@@ -5,6 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface UploadPrivateAudioUseCase {
-    UploadAudioResult privateUpload(List<MultipartFile> audios, Long ownerId);
-    UploadAudioResult privateUpload(MultipartFile audios, Long ownerId);
+    UploadFileResult privateUpload(List<MultipartFile> audios, Long ownerId);
+    UploadFileResult privateUpload(MultipartFile audios, Long ownerId);
 }

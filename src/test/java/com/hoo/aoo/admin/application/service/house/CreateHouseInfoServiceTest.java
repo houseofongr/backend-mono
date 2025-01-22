@@ -3,7 +3,7 @@ package com.hoo.aoo.admin.application.service.house;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.application.port.in.UploadImageResult;
+import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import com.hoo.aoo.file.domain.FileSize;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -41,7 +41,7 @@ class CreateHouseInfoServiceTest {
         Map<String, MultipartFile> map = getFileMap();
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadImageResult(List.of(new UploadImageResult.FileInfo(1L, "newfile.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
         CreateHouseResult result = sut.create(metadata, map);
 
         // then

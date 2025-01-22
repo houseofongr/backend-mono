@@ -3,7 +3,7 @@ package com.hoo.aoo.file.adapter.in.web.publics;
 import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
-import com.hoo.aoo.file.application.port.in.UploadImageResult;
+import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.domain.FileSize;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,11 +57,11 @@ public class PublicImageSystemTest {
         ResponseEntity<?> responseEntity = whenUpload(List.of(imageFile));
 
         assertThat(responseEntity.getStatusCode().value()).isEqualTo(201);
-        assertThat(responseEntity.getBody()).isNotNull().isInstanceOf(UploadImageResult.class);
+        assertThat(responseEntity.getBody()).isNotNull().isInstanceOf(UploadFileResult.class);
 
         /* 2. 응답에서 파일 정보 확인 */
 
-        UploadImageResult result = (UploadImageResult) responseEntity.getBody();
+        UploadFileResult result = (UploadFileResult) responseEntity.getBody();
 
         assertThat(result.fileInfos()).anySatisfy(fileInfo -> {
             assertThat(fileInfo.name()).contains(".png");
@@ -87,6 +87,6 @@ public class PublicImageSystemTest {
 
         HttpEntity<?> entity = new HttpEntity<>(body, headers);
 
-        return restTemplate.exchange("/public/images", HttpMethod.POST, entity, UploadImageResult.class);
+        return restTemplate.exchange("/public/images", HttpMethod.POST, entity, UploadFileResult.class);
     }
 }
