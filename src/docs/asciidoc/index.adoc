@@ -95,7 +95,7 @@ operation::aar-authn-regist[snippets='http-request,request-fields,http-response,
 
 하우스 관리를 위한 API 입니다.
 
-[[admin-house-create-api]]
+[[admin-house-post-api]]
 ==== 하우스 생성 API
 
 관리자가 지정한 하우스의 좌표에 맞게 하우스를 저장합니다.
@@ -106,31 +106,31 @@ include::{snippets}/admin-house-post/http-request.adoc[]
 ===== Request Form
 include::{snippets}/admin-house-post/request-parts.adoc[]
 
-> 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 <<Metadata>>와 일치해야 합니다.
+> 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 <<CreateHouseMetadata>>와 일치해야 합니다.
 
-===== Metadata
-include::{snippets}/admin-house-get-metadata/response-fields.adoc[]
+===== CreateHouseMetadata 예시
+include::{snippets}/admin-create-house-metadata/response-body.adoc[]
 
-===== Metadata 예시
-include::{snippets}/admin-house-get-metadata/response-body.adoc[]
+===== CreateHouseMetadata
+include::{snippets}/admin-create-house-metadata/response-fields.adoc[]
 
 operation::admin-house-post[snippets='http-response,response-fields']
 
-[[admin-house-read-list-api]]
+[[admin-house-get-list-api]]
 ==== 하우스 리스트 조회 API
 
 여러 건의 하우스를 검색 조건에 맞게 조회합니다.
 
 operation::admin-house-get-list[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[admin-house-read-detail-api]]
+[[admin-house-get-api]]
 ==== 하우스 상세 조회 API
 
 하우스와 내부 룸에 대한 상세 정보를 조회합니다.
 
 operation::admin-house-get[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[admin-house-update-api]]
+[[admin-house-patch-api]]
 ==== 하우스 정보 수정 API
 
 하우스의 기본 정보를 수정하는 API입니다.
@@ -155,7 +155,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 룸 관리를 위한 API 입니다.
 
-[[admin-room-load-api]]
+[[admin-room-get-api]]
 ==== 룸 정보 상세조회 API
 
 룸의 상세 정보를 조회하는 API입니다.
@@ -164,7 +164,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 operation::admin-house-get-room[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[admin-room-update-api]]
+[[admin-room-patch-api]]
 ==== 룸 정보 수정 API
 
 룸의 기본 정보를 수정하는 API입니다.
@@ -222,7 +222,7 @@ operation::admin-home-post[snippets='http-request,request-fields,http-response,r
 
 operation::admin-home-get[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[home-delete-api]]
+[[admin-home-delete-api]]
 ==== 홈 삭제 API
 
 홈을 삭제하는 API 입니다.
@@ -230,6 +230,32 @@ operation::admin-home-get[snippets='http-request,path-parameters,http-response,r
 > 차후 홈 내부에 아이템이 존재할 경우 함께 삭제할 예정입니다.
 
 operation::admin-home-delete[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[admin-item-api]]
+=== 아이템(item) API
+
+[[admin-item-post-api]]
+==== 아이템 생성 API
+
+관리자가 지정한 아이템의 좌표와 음원에 맞게 아이템을 저장합니다.
+
+===== Http Request
+include::{snippets}/admin-item-post/http-request.adoc[]
+
+===== Request Form
+include::{snippets}/admin-item-post/request-parts.adoc[]
+
+> 위 요청에서 각 음원 파일의 **Form 태그 name 속성값**은 아래 <<CreateItemMetadata>>의 **form 필드와 일치**해야 합니다.
+
+===== CreateItemMetadata 예시
+include::{snippets}/admin-create-item-metadata/response-body.adoc[]
+
+===== CreateItemMetadata
+include::{snippets}/admin-create-item-metadata/response-fields.adoc[]
+
+
+operation::admin-item-post[snippets='http-response,response-fields']
+
 
 [[file-api]]
 == 파일(File) API
@@ -241,14 +267,14 @@ operation::admin-home-delete[snippets='http-request,path-parameters,http-respons
 
 별도의 권한 없이 요청 가능한 API입니다.
 
-[[file-public-images-upload-api]]
+[[file-public-images-post-api]]
 ==== 이미지 업로드 API
 
 이미지 파일을 공개 서버에 업로드합니다.
 
 operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
 
-[[file-public-images-download-api]]
+[[file-public-images-get-api]]
 ==== 이미지 로드 API
 
 이미지 파일을 공개 서버로부터 로드합니다.
@@ -262,14 +288,14 @@ operation::file-public-images-download[snippets='http-request,path-parameters,re
 
 > 차후 해당 권한을 바탕으로 자원 접근을 제어할 예정입니다.
 
-[[file-private-images-download-api]]
+[[file-private-images-get-api]]
 ==== 이미지 로드 API
 
 이미지 파일을 비공개 서버로부터 로드합니다.
 
 operation::file-private-images-download[snippets='http-request,path-parameters,response-file']
 
-[[file-private-audios-download-api]]
+[[file-private-audios-get-api]]
 ==== 음원 로드 API
 
 음원 파일을 비공개 서버로부터 로드합니다.

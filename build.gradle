@@ -64,13 +64,9 @@ test {
     useJUnitPlatform()
 }
 
-task cleanSnippetsDir(type: Delete) {
-    delete file("./build/generated-snippets")
-}
-
 asciidoctor {
 
-    doFirst {cleanSnippetsDir}
+    delete file("./build/generated-snippets")
 
     inputs.dir snippetsDir
     sourceDir = file("src/docs/asciidoc/")

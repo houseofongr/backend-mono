@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.application.service.house;
 
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
@@ -57,7 +58,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                     imageFileIdMap.put(HOUSE_BORDER_IMAGE_ID, fileInfo.id());
 
                 else
-                    for (CreateHouseMetadata.Room room : metadata.rooms()) {
+                    for (CreateHouseMetadata.RoomData room : metadata.rooms()) {
                         if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
                             rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height()));
                             imageFileIdMap.put(room.name(), fileInfo.id());

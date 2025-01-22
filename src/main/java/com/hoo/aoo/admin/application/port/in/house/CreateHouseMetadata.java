@@ -1,12 +1,12 @@
-package com.hoo.aoo.admin.application.service.house;
+package com.hoo.aoo.admin.application.port.in.house;
 
 import java.util.List;
 
 public record CreateHouseMetadata(
-        House house,
-        List<Room> rooms
+        HouseData house,
+        List<RoomData> rooms
 ) {
-    public record House(
+    public record HouseData(
             String title,
             String author,
             String description,
@@ -17,7 +17,7 @@ public record CreateHouseMetadata(
     ) {
 
     }
-    public record Room(
+    public record RoomData(
             String form,
             String name,
             Float x,

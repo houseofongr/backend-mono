@@ -1,10 +1,12 @@
 package com.hoo.aoo.common;
 
-import com.hoo.aoo.admin.application.service.house.CreateHouseMetadata;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
+import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.admin.domain.user.User;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.springframework.mock.web.MockMultipartFile;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class FixtureRepository {
+
+    private static final Gson gson = new Gson();
 
     public static Room getRoom(HouseId houseId, String name) throws Exception {
         return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f);
@@ -40,67 +44,40 @@ public class FixtureRepository {
         return House.create(houseId, 5000f, 5000f, rooms);
     }
 
-    public static CreateHouseMetadata getMetadata() {
-        return new Gson().fromJson(getMetadataJson(), CreateHouseMetadata.class);
-    }
 
     public static User getUser() {
         return User.load("leaf","남상엽");
     }
 
-    public static String getMetadataJson() {
-        return  """
-                {
-                  "house": {
-                    "title": "cozy house",
-                    "author": "leaf",
-                    "description": "this is cozy house.",
-                    "width": 5000,
-                    "height": 5000,
-                    "houseForm": "house",
-                    "borderForm": "border"
-                  },
-                  "rooms": [
-                    {
-                      "form": "room1",
-                      "name": "거실",
-                      "x": 123,
-                      "y": 456,
-                      "z": 1,
-                      "width": 100,
-                      "height": 200
-                    },
-                    {
-                      "form": "room2",
-                      "name": "주방",
-                      "x": 234,
-                      "y": 345,
-                      "z": 2,
-                      "width": 200,
-                      "height": 200
-                    }
-                  ]
-                }
-                """;
-    }
-
-    public static Map<String, MultipartFile> getFileMap() {
-        MockMultipartFile house = new MockMultipartFile("house", "house.png", "image/png", "house file".getBytes());
-        MockMultipartFile border = new MockMultipartFile("border", "border.png", "image/png", "border file".getBytes());
-        MockMultipartFile room1 = new MockMultipartFile("room1", "livingRoom.png", "image/png", "livingRoom file".getBytes());
-        MockMultipartFile room2 = new MockMultipartFile("room2", "kitchen.png", "image/png", "kitchen file".getBytes());
-
-        Map<String, MultipartFile> map = new HashMap<>();
-
-        map.put("house", house);
-        map.put("border", border);
-        map.put("room1", room1);
-        map.put("room2", room2);
-
-        return map;
-    }
-
     public static Home getHome() throws Exception {
         return Home.create(getHouseWithRoom(),getUser());
+    }
+
+    public static CreateHouseMetadata getCreateHouseMetadata() {
+        return new CreateHouseMetadata(
+                new CreateHouseMetadata.HouseData("cozy house", "leaf", "this is cozy house.", "house", "border", 5000f, 5000f),
+                List.of(
+                        new CreateHouseMetadata.RoomData("room1", "거실", 123f, 456f, 1f, 100f, 200f),
+                        new CreateHouseMetadata.RoomData("room2", "주방", 234f, 345f, 2f, 200f, 200f)
+                )
+        );
+    }
+
+    public static CreateItemMetadata getCreateItemMetadata() {
+        return new CreateItemMetadata(
+                List.of(
+                        new CreateItemMetadata.ItemData("record1","강아지", ItemType.CIRCLE, new CreateItemMetadata.CircleData(10.5f,200f,200f),null,null),
+                        new CreateItemMetadata.ItemData("record2","설이", ItemType.RECTANGLE, null, new CreateItemMetadata.RectangleData(100f,100f,10f,10f,5f), null),
+                        new CreateItemMetadata.ItemData("record3","화분", ItemType.ELLIPSE, null, null, new CreateItemMetadata.EllipseData(500f,500f,15f,15f,90f))
+                        )
+                );
+    }
+
+    public static String getCreateHouseMetadataJson() {
+        return gson.toJson(getCreateHouseMetadata());
+    }
+
+    public static String getCreateItemMetadataJson() {
+        return gson.toJson(getCreateItemMetadata());
     }
 }

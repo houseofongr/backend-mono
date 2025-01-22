@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.application.service.house;
 
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.common.domain.Authority;
@@ -10,8 +11,10 @@ import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ import static com.hoo.aoo.common.FixtureRepository.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class CreateHouseInfoServiceTest {
+class CreateHouseServiceTest {
 
     CreateHouseService sut;
 
@@ -37,18 +40,33 @@ class CreateHouseInfoServiceTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws FileSizeLimitExceedException {
         // given
-        CreateHouseMetadata metadata = getMetadata();
-        Map<String, MultipartFile> map = getFileMap();
+        CreateHouseMetadata metadata = getCreateHouseMetadata();
+        Map<String, MultipartFile> map = getStringMultipartFileMap();
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload((List<MultipartFile>) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
         CreateHouseResult result = sut.create(metadata, map);
 
         // then
-        verify(uploadPrivateImageUseCase, times(1)).privateUpload((List<MultipartFile>) any());
+        verify(uploadPrivateImageUseCase, times(1)).privateUpload(any());
         verify(saveHousePort, times(1)).save(any(), any(), any());
 
         assertThat(result.houseId()).isNotNull();
+    }
+
+    private Map<String, MultipartFile> getStringMultipartFileMap() {
+        MockMultipartFile house = new MockMultipartFile("house", "house.png", "image/png", "house file".getBytes());
+        MockMultipartFile border = new MockMultipartFile("border", "border.png", "image/png", "border file".getBytes());
+        MockMultipartFile room1 = new MockMultipartFile("room1", "livingRoom.png", "image/png", "livingRoom file".getBytes());
+        MockMultipartFile room2 = new MockMultipartFile("room2", "kitchen.png", "image/png", "kitchen file".getBytes());
+
+        Map<String, MultipartFile> map = new HashMap<>();
+
+        map.put("house", house);
+        map.put("border", border);
+        map.put("room1", room1);
+        map.put("room2", room2);
+        return map;
     }
 
 }
