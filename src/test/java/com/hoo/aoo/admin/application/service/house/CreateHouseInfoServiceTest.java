@@ -37,11 +37,11 @@ class CreateHouseInfoServiceTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws FileSizeLimitExceedException {
         // given
-        Metadata metadata = getMetadata();
+        CreateHouseMetadata metadata = getMetadata();
         Map<String, MultipartFile> map = getFileMap();
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
         CreateHouseResult result = sut.create(metadata, map);
 
         // then

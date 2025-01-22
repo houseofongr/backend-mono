@@ -9,7 +9,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-public class MetadataDocumentationTest extends AbstractDocumentationTest {
+public class CreateHouseMetadataDocumentationTest extends AbstractDocumentationTest {
 
     @Override
     protected String getBaseUrl() {

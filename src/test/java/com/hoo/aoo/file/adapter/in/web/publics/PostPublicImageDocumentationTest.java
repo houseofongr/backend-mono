@@ -33,7 +33,8 @@ public class PostPublicImageDocumentationTest extends AbstractDocumentationTest 
                         responseFields(
                                 fieldWithPath("fileInfos[].id").description("등록된 파일의 아이디입니다."),
                                 fieldWithPath("fileInfos[].ownerId").description("등록된 파일의 소유자 식별자입니다.(공개 이미지이므로 소유자는 없습니다.)"),
-                                fieldWithPath("fileInfos[].name").description("등록된 파일명입니다."),
+                                fieldWithPath("fileInfos[].fileSystemName").description("저장된 파일명입니다."),
+                                fieldWithPath("fileInfos[].realName").description("실제 파일명입니다."),
                                 fieldWithPath("fileInfos[].size").description("등록된 파일의 용량입니다."),
                                 fieldWithPath("fileInfos[].authority").description("등록된 파일의 접근 권한입니다. +" + "\n" + " - PUBLIC_FILE_ACCESS : 공개된 파일 +" + "\n" + " - PRIVATE_FILE_ACCESS : 비공개 파일(권한이 있는 사용자만 접근 가능)")
                         )));

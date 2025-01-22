@@ -1,9 +1,6 @@
 package com.hoo.aoo.common;
 
-import com.hoo.aoo.admin.application.service.house.Metadata;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
+import com.hoo.aoo.admin.application.service.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
@@ -43,8 +40,8 @@ public class FixtureRepository {
         return House.create(houseId, 5000f, 5000f, rooms);
     }
 
-    public static Metadata getMetadata() {
-        return new Gson().fromJson(getMetadataJson(), Metadata.class);
+    public static CreateHouseMetadata getMetadata() {
+        return new Gson().fromJson(getMetadataJson(), CreateHouseMetadata.class);
     }
 
     public static User getUser() {

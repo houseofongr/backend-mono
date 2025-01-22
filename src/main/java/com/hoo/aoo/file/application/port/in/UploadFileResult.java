@@ -11,7 +11,8 @@ public record UploadFileResult(
     public record FileInfo(
             Long id,
             Long ownerId,
-            String name,
+            String realName,
+            String fileSystemName,
             String size,
             Authority authority
     ) {
@@ -19,6 +20,7 @@ public record UploadFileResult(
             this(
                     id,
                     file.getOwner().getId(),
+                    file.getFileId().getRealFileName(),
                     file.getFileId().getFileSystemName(),
                     file.getSize().getUnitSize(),
                     file.getFileId().getAuthority()

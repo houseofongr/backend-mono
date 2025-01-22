@@ -35,7 +35,7 @@ public class CreateHouseService implements CreateHouseUseCase {
 
     @Override
     @Transactional
-    public CreateHouseResult create(Metadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
+    public CreateHouseResult create(CreateHouseMetadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
@@ -44,13 +44,10 @@ public class CreateHouseService implements CreateHouseUseCase {
         Map<String, Long> imageFileIdMap = new HashMap<>();
 
         try {
-            for (Metadata.Room room : metadata.rooms()) {
-
+            for (CreateHouseMetadata.Room room : metadata.rooms()) {
                 UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(room.form()));
 
-                Room newRoom = Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height());
-
-                rooms.add(newRoom);
+                rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height()));
 
                 imageFileIdMap.put(room.name(), uploadFileResult.fileInfos().getFirst().id());
             }

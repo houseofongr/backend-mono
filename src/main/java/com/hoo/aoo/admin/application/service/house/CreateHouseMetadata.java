@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.application.service.house;
 
 import java.util.List;
 
-public record Metadata(
+public record CreateHouseMetadata(
         House house,
         List<Room> rooms
 ) {

@@ -2,7 +2,9 @@ package com.hoo.aoo.admin.adapter.in.web.house;
 
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
-import com.hoo.aoo.admin.application.service.house.Metadata;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.admin.application.service.AdminException;
+import com.hoo.aoo.admin.application.service.house.CreateHouseMetadata;
 import com.nimbusds.jose.shaded.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +29,13 @@ public class PostHouseController {
     @PostMapping("/admin/houses")
     public ResponseEntity<CreateHouseResult> create(@RequestParam String metadata, HttpServletRequest request) {
 
-        Map<String, MultipartFile> fileMap = new HashMap<>();
+        if (request instanceof MultipartHttpServletRequest multipartRequest) {
 
-        if (request instanceof MultipartHttpServletRequest) {
-            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-            fileMap = multiRequest.getFileMap();
+            return new ResponseEntity<>(
+                    createHouseUseCase.create(gson.fromJson(metadata, CreateHouseMetadata.class), multipartRequest.getFileMap()),
+                    HttpStatus.CREATED);
         }
 
-        Metadata metadata1 = gson.fromJson(metadata, Metadata.class);
-        CreateHouseResult result = createHouseUseCase.create(metadata1, fileMap);
-
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        else throw new AdminException(AdminErrorCode.INVALID_METADATA);
     }
 }

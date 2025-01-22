@@ -52,7 +52,7 @@ public class PublicImageSystemTest {
         /* 1. 파일 이미지 업로드[/test/resources/logo.png] */
 
         Resource imageResource = new ClassPathResource("public/images/logo.png");
-        MockMultipartFile imageFile = new MockMultipartFile("public/images/logo.png", "public/images/logo.png", "image/png", imageResource.getContentAsByteArray());
+        MockMultipartFile imageFile = new MockMultipartFile("public/images/logo.png", "logo.png", "image/png", imageResource.getContentAsByteArray());
 
         ResponseEntity<?> responseEntity = whenUpload(List.of(imageFile));
 
@@ -64,7 +64,8 @@ public class PublicImageSystemTest {
         UploadFileResult result = (UploadFileResult) responseEntity.getBody();
 
         assertThat(result.fileInfos()).anySatisfy(fileInfo -> {
-            assertThat(fileInfo.name()).contains(".png");
+            assertThat(fileInfo.realName()).isEqualTo("logo.png");
+            assertThat(fileInfo.fileSystemName()).contains(".png");
             assertThat(fileInfo.size()).isEqualTo(new FileSize(20682L, 100000L).getUnitSize());
             assertThat(fileInfo.id()).isNotNull();
         });
