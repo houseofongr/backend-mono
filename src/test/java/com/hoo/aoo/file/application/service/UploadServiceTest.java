@@ -117,13 +117,14 @@ class UploadServiceTest {
         BasicFileIdCreateStrategy fileIdCreateStrategy = new BasicFileIdCreateStrategy("/tmp", Authority.PRIVATE_FILE_ACCESS, FileType.AUDIO);
 
         // when
-        UploadFileResult result = sut.upload(files, fileIdCreateStrategy);
+        UploadFileResult result = sut.upload(files, 123L, fileIdCreateStrategy);
 
         // then
         assertThat(result.fileInfos()).hasSize(1);
         assertThat(result.fileInfos())
                 .anySatisfy(fileInfo -> {
                     assertThat(fileInfo.id()).isNotNull();
+                    assertThat(fileInfo.ownerId()).isEqualTo(123L);
                     assertThat(fileInfo.realName()).isEqualTo("test.mp3");
                     assertThat(fileInfo.fileSystemName()).contains(".mp3");
                     assertThat(fileInfo.size()).matches("^\\d{1,3}.\\d{1,2}KB$");
