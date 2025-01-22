@@ -14,8 +14,7 @@ public class FileId {
     private final String realFileName;
     private final String fileSystemName;
 
-    private FileId(String baseDir, Authority authority, FileType fileType, String realFileName, String fileSystemName) throws FileExtensionMismatchException {
-        verifyExtension(fileType, realFileName);
+    private FileId(String baseDir, Authority authority, FileType fileType, String realFileName, String fileSystemName) {
         this.baseDir = baseDir;
         this.authority = authority;
         this.fileType = fileType;
@@ -27,7 +26,11 @@ public class FileId {
         if (baseDir.charAt(baseDir.length() - 1) == '/')
             baseDir = baseDir.substring(0, baseDir.length() - 1);
 
-        return new FileId(baseDir, authority, fileType, realFileName, fileSystemName);
+        FileId fileId = new FileId(baseDir, authority, fileType, realFileName, fileSystemName);
+
+        fileId.verifyExtension(fileType, realFileName);
+
+        return fileId;
     }
 
     public static FileId load(String parentDir, String realFileName, String fileSystemName) throws IllegalFileTypeDirException, IllegalFileAuthorityDirException, FileExtensionMismatchException {
@@ -61,7 +64,11 @@ public class FileId {
                 if (!fileName.matches(".*\\.(?:png|jpe?g|svg|gif)$"))
                     throw new FileExtensionMismatchException(fileType, fileName);
             }
-            case AUDIO, VIDEO -> {
+            case AUDIO -> {
+                if (!fileName.matches(".*\\.(?:mp3|wav)$"))
+                    throw new FileExtensionMismatchException(fileType, fileName);
+            }
+            case VIDEO -> {
                 throw new UnsupportedOperationException();
             }
         }

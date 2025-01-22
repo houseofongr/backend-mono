@@ -10,6 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.Optional;
 
 public interface
-FindImageFilePort {
+FindFilePort {
     Optional<File> find(Long fileId) throws FileSizeLimitExceedException, FileNotFoundException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException;
 }

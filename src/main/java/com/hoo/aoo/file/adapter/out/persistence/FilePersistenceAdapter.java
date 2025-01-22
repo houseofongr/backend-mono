@@ -2,7 +2,7 @@ package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
-import com.hoo.aoo.file.application.port.out.database.FindImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.FindFilePort;
 import com.hoo.aoo.file.application.port.out.database.SaveImageFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class FilePersistenceAdapter implements SaveImageFilePort, FindImageFilePort {
+public class FilePersistenceAdapter implements SaveImageFilePort, FindFilePort {
 
     private final FileJpaRepository fileJpaRepository;
     private final FileMapper fileMapper;

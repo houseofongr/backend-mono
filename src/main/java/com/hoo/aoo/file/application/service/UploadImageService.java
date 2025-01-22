@@ -63,6 +63,7 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
 
                 FileId fileId = fileIdCreateStrategy.create(originalFilename, fileSystemName);
                 FileSize fileSize = new FileSize(multipartFile.getSize(), fileAttribute.getFileSizeLimit());
+
                 File file = File.create(fileId, FileStatus.CREATED, Owner.empty(), fileSize);
 
                 writeFilePort.write(file, multipartFile);
@@ -72,13 +73,13 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
                 fileInfos.add(new UploadImageResult.FileInfo(file, savedId));
 
             } catch (IOException e) {
-                throw new FileException(FileErrorCode.NEW_FILE_CREATION_FAILED);
+                throw new FileException(e, FileErrorCode.NEW_FILE_CREATION_FAILED);
 
             } catch (FileSizeLimitExceedException e) {
-                throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
+                throw new FileException(e, FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
 
             } catch (FileExtensionMismatchException e) {
-                throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
+                throw new FileException(e, FileErrorCode.INVALID_FILE_EXTENSION);
 
             }
         }

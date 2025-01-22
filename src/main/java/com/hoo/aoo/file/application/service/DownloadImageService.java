@@ -4,8 +4,10 @@ import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.DownloadFileResult;
 import com.hoo.aoo.file.application.port.in.DownloadPrivateImageUseCase;
 import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
-import com.hoo.aoo.file.application.port.out.database.FindImageFilePort;
+import com.hoo.aoo.file.application.port.out.database.FindFilePort;
 import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.FileId;
+import com.hoo.aoo.file.domain.FileType;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
@@ -25,7 +27,7 @@ import java.nio.file.Path;
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadPublicImageUseCase, DownloadPrivateImageUseCase {
 
-    private final FindImageFilePort findImageFilePort;
+    private final FindFilePort findFilePort;
 
     @Override
     @Transactional(readOnly = true)
@@ -41,36 +43,33 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
 
     private DownloadFileResult download(Long fileId, Authority authority) {
         try {
-            File loadedFile = findImageFilePort.find(fileId)
+            File loadedFile = findFilePort.find(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
-            if (loadedFile.getFileId().getAuthority() != authority)
+            FileId imageFileId = loadedFile.getFileId();
+
+            if (imageFileId.getFileType() != FileType.IMAGE)
+                throw new FileException(FileErrorCode.INVALID_FILE_TYPE);
+
+            if (imageFileId.getAuthority() != authority)
                 throw new FileException(FileErrorCode.INVALID_AUTHORITY);
 
             ContentDisposition disposition = ContentDisposition.inline()
-                    .filename(loadedFile.getFileId().getFileSystemName())
+                    .filename(imageFileId.getFileSystemName())
                     .build();
 
-            String filePath = loadedFile.getFileId().getFilePath();
             return new DownloadFileResult(
                     disposition.toString(),
-                    MediaType.parseMediaType(Files.probeContentType(Path.of(filePath))),
-                    new UrlResource(filePath));
+                    MediaType.parseMediaType(Files.probeContentType(Path.of(imageFileId.getFilePath()))),
+                    new UrlResource(imageFileId.getFilePath()));
 
-        } catch (IOException e) {
-            throw new FileException(FileErrorCode.RETRIEVE_FILE_FAILED);
+        } catch (IOException |
+                 FileSizeLimitExceedException |
+                 FileExtensionMismatchException |
+                 IllegalFileTypeDirException |
+                 IllegalFileAuthorityDirException e) {
 
-        } catch (FileSizeLimitExceedException e) {
-            throw new FileException(FileErrorCode.FILE_SIZE_LIMIT_EXCEED);
-
-        } catch (FileExtensionMismatchException e) {
-            throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
-
-        } catch (IllegalFileTypeDirException e) {
-            throw new FileException(FileErrorCode.ILLEGAL_FILE_TYPE_DIR);
-
-        } catch (IllegalFileAuthorityDirException e) {
-            throw new FileException(FileErrorCode.ILLEGAL_FILE_AUTHORITY_DIR);
+            throw new FileException(e, FileErrorCode.RETRIEVE_FILE_FAILED);
 
         }
     }

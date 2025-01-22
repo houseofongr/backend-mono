@@ -35,7 +35,7 @@ class GetPrivateAudioDocumentationTest extends AbstractDocumentationTest {
     void testDownloadAudio() throws Exception {
         ClassPathResource resource = new ClassPathResource("private/audios/sample.mp3");
         byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        FileJpaEntity entity = new FileJpaEntity(null, "sample.mp3", "secret.jpeg", resource.getFile().getParent(), false, (long) bytes.length, null);
+        FileJpaEntity entity = new FileJpaEntity(null, "sample.mp3", "sample.mp3", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
         mockMvc.perform(get("/private/audios/{audioId}", entity.getId()))

@@ -7,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileException extends ApplicationException {
 
-    public FileException(FileErrorCode error) {
+    public FileException(Exception e,  FileErrorCode error) {
         super(error);
-        log.error("File error has been constructed : {}", error.getMessage());
+        log.error("File error has been constructed with Exception : {}", e.getMessage());
     }
 
-    public FileException(FileErrorCode error, String message) {
-        super(error, message);
+    public FileException(FileErrorCode error) {
+        super(error);
+        log.error("File error has been constructed.");
     }
+
 }
