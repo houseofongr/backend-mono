@@ -150,7 +150,12 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 > 차후 사용자의 홈이 생성된 하우스는 삭제할 수 없도록 할 예정입니다.
 
-[[admin-house-room-load-api]]
+[[admin-room-api]]
+=== 룸(Room) API
+
+룸 관리를 위한 API 입니다.
+
+[[admin-room-load-api]]
 ==== 룸 정보 상세조회 API
 
 룸의 상세 정보를 조회하는 API입니다.
@@ -159,7 +164,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 operation::admin-house-get-room[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[admin-house-room-update-api]]
+[[admin-room-update-api]]
 ==== 룸 정보 수정 API
 
 룸의 기본 정보를 수정하는 API입니다.
@@ -168,7 +173,7 @@ operation::admin-house-get-room[snippets='http-request,path-parameters,http-resp
 
 operation::admin-house-patch-room[snippets='http-request,request-fields,http-response,response-fields']
 
-[[admin-house-room-delete-api]]
+[[admin-room-delete-api]]
 ==== 룸 삭제 API
 
 하우스의 룸을 삭제하는 API입니다.
