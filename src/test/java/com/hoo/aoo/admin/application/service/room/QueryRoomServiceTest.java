@@ -36,7 +36,7 @@ class QueryRoomServiceTest {
 
         // then
         verify(findRoomPort, times(1)).findResult(1L);
-
+        assertThat(result).isNotNull();
     }
 
 }
