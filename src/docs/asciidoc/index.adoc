@@ -222,6 +222,8 @@ operation::admin-home-get[snippets='http-request,path-parameters,http-response,r
 
 홈을 삭제하는 API 입니다.
 
+> 차후 홈 내부에 아이템이 존재할 경우 함께 삭제할 예정입니다.
+
 operation::admin-home-delete[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[file-api]]
