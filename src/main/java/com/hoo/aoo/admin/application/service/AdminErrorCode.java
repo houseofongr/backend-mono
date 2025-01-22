@@ -21,8 +21,8 @@ public enum AdminErrorCode implements ErrorCode {
 
     USER_NOT_FOUND("ADMIN-USER-1", NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
 
-    HOME_NOT_FOUND("ADMIN-HOME-2", NOT_FOUND, "해당 홈을 찾을 수 없습니다."),
-    ALREADY_CREATED_HOME("ADMIN-HOME-1", CONFLICT, "이미 동일한 요청으로 생성된 홈이 존재합니다.");
+    HOME_NOT_FOUND("ADMIN-HOME-1", NOT_FOUND, "해당 홈을 찾을 수 없습니다."),
+    ALREADY_CREATED_HOME("ADMIN-HOME-2", CONFLICT, "이미 동일한 요청으로 생성된 홈이 존재합니다.");
 
     private final String code;
     private final HttpStatus status;

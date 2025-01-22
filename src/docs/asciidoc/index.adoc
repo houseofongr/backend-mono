@@ -203,19 +203,26 @@ operation::admin-user-get-home-list[snippets='http-request,path-parameters,http-
 
 소리기록실의 홈 정보 관리를 위한 API 입니다.
 
-[[user-post-home-api]]
+[[admin-home-post-api]]
 ==== 홈 생성 API
 
 홈을 생성하는 API 입니다.
 
 operation::admin-home-post[snippets='http-request,request-fields,http-response,response-fields']
 
-[[user-get-home-api]]
+[[admin-home-get-api]]
 ==== 홈 조회 API
 
 홈 정보를 조회하는 API 입니다.
 
 operation::admin-home-get[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[home-delete-api]]
+==== 홈 삭제 API
+
+홈을 삭제하는 API 입니다.
+
+operation::admin-home-delete[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API
