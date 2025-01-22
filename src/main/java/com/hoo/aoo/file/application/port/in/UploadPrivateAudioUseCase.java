@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface UploadPrivateAudioUseCase {
     UploadFileResult privateUpload(List<MultipartFile> audios, Long ownerId);
-    UploadFileResult privateUpload(MultipartFile audios, Long ownerId);
 }

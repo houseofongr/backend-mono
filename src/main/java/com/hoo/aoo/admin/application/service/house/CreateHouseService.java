@@ -39,22 +39,16 @@ public class CreateHouseService implements CreateHouseUseCase {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
+        Map<String, Long> imageFileIdMap = new HashMap<>();
         List<Room> rooms = new ArrayList<>();
 
-        Map<String, Long> imageFileIdMap = new HashMap<>();
-
         try {
-
-            List<MultipartFile> uploadingFiles = new ArrayList<>(metadata.rooms().stream().map(
-                    room -> fileMap.get(room.form())).toList()
-            );
-
+            List<MultipartFile> uploadingFiles = new ArrayList<>(metadata.rooms().stream().map(room -> fileMap.get(room.form())).toList());
             uploadingFiles.add(fileMap.get(metadata.house().houseForm()));
             uploadingFiles.add(fileMap.get(metadata.house().borderForm()));
 
             UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(uploadingFiles);
 
-            loop:
             for (UploadFileResult.FileInfo fileInfo : uploadFileResult.fileInfos()) {
                 if (fileInfo.realName().equals(fileMap.get(metadata.house().houseForm()).getOriginalFilename()))
                     imageFileIdMap.put(BASIC_HOUSE_IMAGE_ID, fileInfo.id());
@@ -67,13 +61,11 @@ public class CreateHouseService implements CreateHouseUseCase {
                         if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
                             rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height()));
                             imageFileIdMap.put(room.name(), fileInfo.id());
-                            continue loop;
                         }
                     }
             }
 
             House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(), rooms);
-
             Long savedId = saveHousePort.save(newHouse, rooms, imageFileIdMap);
 
             return new CreateHouseResult(savedId);
