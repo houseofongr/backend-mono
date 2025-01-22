@@ -1,6 +1,6 @@
-package com.hoo.aoo.admin.adapter.in.web.house;
+package com.hoo.aoo.admin.adapter.in.web.room;
 
-import com.hoo.aoo.admin.application.port.in.house.DeleteRoomUseCase;
+import com.hoo.aoo.admin.application.port.in.room.DeleteRoomUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

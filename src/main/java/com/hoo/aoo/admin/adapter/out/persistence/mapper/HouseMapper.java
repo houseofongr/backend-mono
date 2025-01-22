@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
+import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
@@ -80,7 +81,7 @@ public class HouseMapper {
         return house;
     }
 
-    public QueryHouseResult mapToQueryResult(HouseJpaEntity entity) {
+    public QueryHouseResult mapToQueryHouseResult(HouseJpaEntity entity) {
         QueryHouseResult.House house = new QueryHouseResult.House(
                 entity.getId(),
                 entity.getTitle(),
@@ -106,5 +107,9 @@ public class HouseMapper {
                 .toList();
 
         return new QueryHouseResult(house,list);
+    }
+
+    public QueryRoomResult mapToQueryRoomResult(RoomJpaEntity roomJpaEntity) {
+        return QueryRoomResult.of(roomJpaEntity);
     }
 }

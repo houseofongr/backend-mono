@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.application.port.in.house;
+package com.hoo.aoo.admin.application.port.in.room;
 
 import java.util.List;
 

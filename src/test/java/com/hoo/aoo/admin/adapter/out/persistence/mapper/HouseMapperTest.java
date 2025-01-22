@@ -29,7 +29,7 @@ class HouseMapperTest {
 
         // when
         entity.prePersist();
-        QueryHouseResult result = sut.mapToQueryResult(entity);
+        QueryHouseResult result = sut.mapToQueryHouseResult(entity);
 
         // then
         assertThat(result.house().title()).isEqualTo("cozy house");

@@ -1,10 +1,8 @@
 package com.hoo.aoo.admin.application.service.house;
 
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
-import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -14,16 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCase, QueryRoomInfoUseCase {
+public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCase {
 
     private final SearchHousePort searchHousePort;
     private final FindHousePort findHousePort;
-    private final FindRoomPort findRoomPort;
 
     @Override
     @Transactional(readOnly = true)
     public QueryHouseResult queryHouse(Long id) {
-        return findHousePort.findQueryHouseResult(id)
+        return findHousePort.findResult(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
     }
 
@@ -33,12 +30,4 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
         return searchHousePort.search(command);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public QueryRoomResult queryRoom(Long id) {
-        RoomJpaEntity jpaEntity = findRoomPort.findRoomJpaEntity(id)
-                .orElseThrow(() -> new AdminException(AdminErrorCode.ROOM_NOT_FOUND));
-
-        return QueryRoomResult.of(jpaEntity);
-    }
 }

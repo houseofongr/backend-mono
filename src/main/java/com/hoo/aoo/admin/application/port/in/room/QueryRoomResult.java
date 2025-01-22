@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.application.port.in.house;
+package com.hoo.aoo.admin.application.port.in.room;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 

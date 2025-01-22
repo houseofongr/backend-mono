@@ -5,7 +5,6 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
-import com.hoo.aoo.admin.application.port.out.house.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -13,30 +12,25 @@ import com.hoo.aoo.common.application.port.in.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class QueryHouseInfoServiceTest {
+class QueryHouseServiceTest {
 
     QueryHouseService sut;
 
     SearchHousePort searchHousePort;
     FindHousePort findHousePort;
-    FindRoomPort findRoomPort;
 
     @BeforeEach
     void init() {
         searchHousePort = mock();
         findHousePort = mock();
-        findRoomPort = mock();
-        sut = new QueryHouseService(searchHousePort, findHousePort, findRoomPort);
+        sut = new QueryHouseService(searchHousePort, findHousePort);
     }
 
     @Test
@@ -76,10 +70,10 @@ class QueryHouseInfoServiceTest {
         rooms.forEach(roomJpaEntity -> roomJpaEntity.setHouse(entity));
         entity.prePersist();
 
-        QueryHouseResult queryHouseResult = new HouseMapper().mapToQueryResult(entity);
+        QueryHouseResult queryHouseResult = new HouseMapper().mapToQueryHouseResult(entity);
 
         // when
-        when(findHousePort.findQueryHouseResult(1L)).thenReturn(Optional.of(queryHouseResult));
+        when(findHousePort.findResult(1L)).thenReturn(Optional.of(queryHouseResult));
         QueryHouseResult result = sut.queryHouse(1L);
 
         // then
@@ -90,20 +84,4 @@ class QueryHouseInfoServiceTest {
                         .hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
     }
 
-    @Test
-    @DisplayName("룸 조회 서비스 테스트")
-    void testQueryRoomService() {
-        // given
-        RoomJpaEntity entity = new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 1000f, 1000f, 1L, null);
-
-        // when
-        when(findRoomPort.findRoomJpaEntity(1L)).thenReturn(Optional.of(entity));
-        QueryRoomResult result = sut.queryRoom(1L);
-
-        // then
-        assertThat(result.room().name()).isEqualTo("거실");
-        assertThat(result.room().width()).isEqualTo(1000f);
-        assertThat(result.room().height()).isEqualTo(1000f);
-        assertThat(result.room().imageId()).isEqualTo(1L);
-    }
 }

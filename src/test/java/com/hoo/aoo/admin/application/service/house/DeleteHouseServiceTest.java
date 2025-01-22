@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
-import com.hoo.aoo.admin.application.port.out.house.DeleteRoomPort;
+import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,18 +10,16 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class DeleteHouseInfoServiceTest {
+class DeleteHouseServiceTest {
 
     DeleteHouseService sut;
 
     DeleteHousePort deleteHousePort;
-    DeleteRoomPort deleteRoomPort;
 
     @BeforeEach
     void init() {
         deleteHousePort = mock();
-        deleteRoomPort = mock();
-        sut = new DeleteHouseService(deleteHousePort, deleteRoomPort);
+        sut = new DeleteHouseService(deleteHousePort);
     }
 
     @Test
@@ -36,20 +34,6 @@ class DeleteHouseInfoServiceTest {
         // then
         verify(deleteHousePort, times(1)).deleteHouse(id);
         assertThat(messageDto.message()).isEqualTo("1번 하우스가 삭제되었습니다.");
-    }
-
-    @Test
-    @DisplayName("룸 삭제 서비스 테스트")
-    void testDeleteRoomRoom() {
-        // given
-        Long id = 1L;
-
-        // when
-        MessageDto messageDto = sut.deleteRoom(id);
-
-        // then
-        verify(deleteRoomPort, times(1)).deleteRoom(id);
-        assertThat(messageDto.message()).isEqualTo("1번 룸이 삭제되었습니다.");
     }
 
 }

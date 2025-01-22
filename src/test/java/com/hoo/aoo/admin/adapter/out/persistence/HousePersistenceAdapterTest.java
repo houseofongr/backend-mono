@@ -1,14 +1,12 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
-import com.hoo.aoo.admin.application.port.in.house.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
@@ -24,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
@@ -50,8 +47,9 @@ class HousePersistenceAdapterTest {
 
     @Autowired
     EntityManager em;
+
     @Autowired
-    private RoomJpaRepository roomJpaRepository;
+    RoomJpaRepository roomJpaRepository;
 
     @Test
     @DisplayName("House 저장 테스트")
@@ -124,7 +122,7 @@ class HousePersistenceAdapterTest {
         Long houseId = 1L;
 
         // when
-        Optional<QueryHouseResult> query = sut.findQueryHouseResult(houseId);
+        Optional<QueryHouseResult> query = sut.findResult(houseId);
 
         // then
         assertThat(query).isNotEmpty();
@@ -195,47 +193,6 @@ class HousePersistenceAdapterTest {
         assertThat(query.get().getDescription()).isEqualTo("this is not cozy house");
     }
 
-    @Test
-    @Sql("HousePersistenceAdapterTest.sql")
-    @DisplayName("룸 수정 테스트")
-    void testUpdateRoomInfo() throws AxisLimitExceededException, AreaLimitExceededException {
-        // given
-        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(
-                new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")
-        ));
-
-        // when
-        sut.update(command);
-        Optional<RoomJpaEntity> query = sut.findRoomJpaEntity(1L);
-
-        // then
-        assertThat(query).isNotEmpty();
-        assertThat(query.get().getName()).isEqualTo("욕실");
-    }
-
-    @Test
-    @Sql("HousePersistenceAdapterTest.sql")
-    @DisplayName("룸 조회 테스트")
-    void testFindRoomJpaEntity() {
-        // given
-        Long id = 2L;
-
-        // when
-        Optional<RoomJpaEntity> jpaEntity = sut.findRoomJpaEntity(id);
-        Optional<RoomJpaEntity> jpaEntity2 = sut.findRoomJpaEntity(id);
-
-        // then
-        assertThat(jpaEntity).isNotEmpty();
-        assertThat(jpaEntity.get().getName()).isEqualTo("주방");
-        assertThat(jpaEntity.get().getX()).isEqualTo(0);
-        assertThat(jpaEntity.get().getY()).isEqualTo(1000);
-        assertThat(jpaEntity.get().getZ()).isEqualTo(0);
-        assertThat(jpaEntity.get().getWidth()).isEqualTo(5000);
-        assertThat(jpaEntity.get().getHeight()).isEqualTo(1000);
-
-        // not found
-        assertThat(jpaEntity2.isEmpty());
-    }
 
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
@@ -252,18 +209,4 @@ class HousePersistenceAdapterTest {
         assertThat(roomJpaRepository.findAllByHouseId(id)).isEmpty();
     }
 
-
-    @Test
-    @Sql("HousePersistenceAdapterTest.sql")
-    @DisplayName("룸 삭제 테스트")
-    void testDeleteHouseRoomRoom() {
-        // given
-        Long roomId = 1L;
-
-        // when
-        sut.deleteRoom(roomId);
-
-        // then
-        assertThat(roomJpaRepository.findById(roomId)).isEmpty();
-    }
 }
