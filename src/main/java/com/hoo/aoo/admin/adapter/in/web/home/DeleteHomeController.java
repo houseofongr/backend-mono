@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.home;
 
+import com.hoo.aoo.admin.application.port.in.home.DeleteHomeUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DeleteHomeController {
 
+    private final DeleteHomeUseCase deleteHomeUseCase;
+
     @DeleteMapping("/admin/homes/{homeId}")
     public ResponseEntity<MessageDto> delete(@PathVariable Long homeId) {
-        return new ResponseEntity<>(new MessageDto(homeId + "번 홈이 삭제되었습니다."), HttpStatus.OK);
+        return new ResponseEntity<>(deleteHomeUseCase.delete(homeId), HttpStatus.OK);
     }
 
 }

@@ -10,6 +10,7 @@ import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
+import com.hoo.aoo.admin.application.port.out.home.DeleteHomePort;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.home.FindUserHomesPort;
 import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
@@ -27,7 +28,7 @@ import static com.hoo.aoo.admin.adapter.out.persistence.entity.QHomeJpaEntity.ho
 
 @Component
 @RequiredArgsConstructor
-public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, FindUserHomesPort {
+public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, FindUserHomesPort, DeleteHomePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final UserJpaRepository userJpaRepository;
@@ -57,5 +58,13 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, FindU
     @Override
     public QueryUserHomesResult findUserHomes(Long id) {
         return homeMapper.mapToQueryUserHomesResult(homeJpaRepository.findAllByUserId(id));
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (!homeJpaRepository.existsById(id))
+            throw new AdminException(AdminErrorCode.HOME_NOT_FOUND);
+
+        homeJpaRepository.deleteById(id);
     }
 }

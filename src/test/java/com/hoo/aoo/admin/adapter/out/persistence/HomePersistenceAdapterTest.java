@@ -109,4 +109,19 @@ class HomePersistenceAdapterTest {
         });
     }
 
+    @Test
+    @Sql("HomePersistenceAdapter3.sql")
+    @DisplayName("홈 삭제 테스트")
+    void testDeleteHome() {
+        // given
+        Long id = 1L;
+        Long notExistId = 123L;
+
+        // when
+        sut.delete(id);
+
+        // then
+        assertThat(homeJpaRepository.findById(id)).isEmpty();
+        assertThatThrownBy(() -> sut.delete(notExistId)).hasMessage(AdminErrorCode.HOME_NOT_FOUND.getMessage());
+    }
 }
