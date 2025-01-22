@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service.house;
 
-import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -44,19 +44,33 @@ public class CreateHouseService implements CreateHouseUseCase {
         Map<String, Long> imageFileIdMap = new HashMap<>();
 
         try {
-            for (CreateHouseMetadata.Room room : metadata.rooms()) {
-                UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(room.form()));
 
-                rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height()));
+            List<MultipartFile> uploadingFiles = new ArrayList<>(metadata.rooms().stream().map(
+                    room -> fileMap.get(room.form())).toList()
+            );
 
-                imageFileIdMap.put(room.name(), uploadFileResult.fileInfos().getFirst().id());
+            uploadingFiles.add(fileMap.get(metadata.house().houseForm()));
+            uploadingFiles.add(fileMap.get(metadata.house().borderForm()));
+
+            UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(uploadingFiles);
+
+            loop:
+            for (UploadFileResult.FileInfo fileInfo : uploadFileResult.fileInfos()) {
+                if (fileInfo.realName().equals(fileMap.get(metadata.house().houseForm()).getOriginalFilename()))
+                    imageFileIdMap.put(BASIC_HOUSE_IMAGE_ID, fileInfo.id());
+
+                else if (fileInfo.realName().equals(fileMap.get(metadata.house().borderForm()).getOriginalFilename()))
+                    imageFileIdMap.put(HOUSE_BORDER_IMAGE_ID, fileInfo.id());
+
+                else
+                    for (CreateHouseMetadata.Room room : metadata.rooms()) {
+                        if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
+                            rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height()));
+                            imageFileIdMap.put(room.name(), fileInfo.id());
+                            continue loop;
+                        }
+                    }
             }
-
-            UploadFileResult houseUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().houseForm()));
-            UploadFileResult borderUploadResult = uploadPrivateImageUseCase.privateUpload(fileMap.get(metadata.house().borderForm()));
-
-            imageFileIdMap.put(BASIC_HOUSE_IMAGE_ID,houseUploadResult.fileInfos().getFirst().id());
-            imageFileIdMap.put(HOUSE_BORDER_IMAGE_ID,borderUploadResult.fileInfos().getFirst().id());
 
             House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(), rooms);
 

@@ -2,12 +2,18 @@ package com.hoo.aoo.admin.adapter.in.web.house;
 
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
+import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -15,7 +21,10 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PostHouseInfoDocumentationTest extends AbstractDocumentationTest {
+class PostHouseDocumentationTest extends AbstractDocumentationTest {
+
+    @Autowired
+    FileJpaRepository fileJpaRepository;
 
     @Override
     protected String getBaseUrl() {
@@ -53,5 +62,13 @@ class PostHouseInfoDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("houseId").description("생성된 하우스의 아이디입니다.")
                         )
                 ));
+
+        List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
+        assertThat(fileInDB).hasSize(4);
+        assertThat(fileInDB)
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("image.png"))
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("image2.png"))
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("image3.png"))
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("image4.png"));
     }
 }

@@ -41,11 +41,11 @@ class CreateHouseInfoServiceTest {
         Map<String, MultipartFile> map = getFileMap();
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload((MultipartFile) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload((List<MultipartFile>) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
         CreateHouseResult result = sut.create(metadata, map);
 
         // then
-        verify(uploadPrivateImageUseCase, times(4)).privateUpload((MultipartFile) any());
+        verify(uploadPrivateImageUseCase, times(1)).privateUpload((List<MultipartFile>) any());
         verify(saveHousePort, times(1)).save(any(), any(), any());
 
         assertThat(result.houseId()).isNotNull();
