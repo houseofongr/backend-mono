@@ -14,14 +14,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static com.hoo.aoo.admin.application.service.house.CreateHouseService.*;
 
 @Component
 public class HouseMapper {
 
-    public HouseJpaEntity mapToNewJpaEntity(House house, List<RoomJpaEntity> roomJpaEntities, Map<String, Long> imageIdMap) {
+    public HouseJpaEntity mapToNewJpaEntity(House house, List<RoomJpaEntity> roomJpaEntities) {
 
         HouseJpaEntity houseJpaEntity = new HouseJpaEntity(null,
                 house.getId().getTitle(),
@@ -29,8 +26,8 @@ public class HouseMapper {
                 house.getId().getDescription(),
                 house.getArea().getWidth(),
                 house.getArea().getHeight(),
-                imageIdMap.get(BASIC_HOUSE_IMAGE_ID),
-                imageIdMap.get(HOUSE_BORDER_IMAGE_ID),
+                house.getBasicImageFile().getFileId().getId(),
+                house.getBorderImageFile().getFileId().getId(),
                 roomJpaEntities
         );
 
@@ -39,7 +36,7 @@ public class HouseMapper {
         return houseJpaEntity;
     }
 
-    public RoomJpaEntity mapToNewJpaEntity(Room room, Long imageId) {
+    public RoomJpaEntity mapToNewJpaEntity(Room room) {
         return new RoomJpaEntity(null,
                 room.getId().getName(),
                 room.getAxis().getX(),
@@ -47,7 +44,7 @@ public class HouseMapper {
                 room.getAxis().getZ(),
                 room.getArea().getWidth(),
                 room.getArea().getHeight(),
-                imageId,
+                room.getImageFile().getFileId().getId(),
                 null
         );
     }

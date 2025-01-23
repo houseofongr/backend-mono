@@ -1,7 +1,10 @@
 package com.hoo.aoo.admin.domain.file;
 
+import lombok.Getter;
+
+@Getter
 public class File {
-    
+
     private final FileId fileId;
     private final FileType fileType;
 

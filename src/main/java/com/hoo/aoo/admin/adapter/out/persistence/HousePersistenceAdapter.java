@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 @RequiredArgsConstructor
 public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, UpdateHousePort,  FindHousePort, DeleteHousePort {
@@ -32,15 +34,11 @@ public class HousePersistenceAdapter implements SaveHousePort, SearchHousePort, 
     private final HouseMapper houseMapper;
 
     @Override
-    public Long save(House house, List<Room> rooms, Map<String, Long> imageFileIdMap) {
+    public Long save(House house) {
 
-        List<RoomJpaEntity> roomJpaEntities = rooms.stream().map(
-                room -> houseMapper.mapToNewJpaEntity(
-                        room, imageFileIdMap.get(room.getId().getName())
-                )
-        ).toList();
+        List<RoomJpaEntity> roomJpaEntities = house.getRooms().stream().map(houseMapper::mapToNewJpaEntity).toList();
 
-        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewJpaEntity(house, roomJpaEntities, imageFileIdMap);
+        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewJpaEntity(house, roomJpaEntities);
 
         houseJpaRepository.save(houseJpaEntity);
 

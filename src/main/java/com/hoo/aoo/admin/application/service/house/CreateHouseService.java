@@ -28,9 +28,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CreateHouseService implements CreateHouseUseCase {
 
-    public static final String BASIC_HOUSE_IMAGE_ID = "basicImageId";
-    public static final String HOUSE_BORDER_IMAGE_ID = "borderImageId";
-
     private final SaveHousePort saveHousePort;
     private final UploadPrivateImageUseCase uploadPrivateImageUseCase;
 
@@ -40,7 +37,6 @@ public class CreateHouseService implements CreateHouseUseCase {
 
         HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
-        Map<String, Long> imageFileIdMap = new HashMap<>();
         List<Room> rooms = new ArrayList<>();
 
         try {
@@ -50,24 +46,24 @@ public class CreateHouseService implements CreateHouseUseCase {
 
             UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(uploadingFiles);
 
+            Long basicImageId = null, borderImageId = null;
             for (UploadFileResult.FileInfo fileInfo : uploadFileResult.fileInfos()) {
                 if (fileInfo.realName().equals(fileMap.get(metadata.house().houseForm()).getOriginalFilename()))
-                    imageFileIdMap.put(BASIC_HOUSE_IMAGE_ID, fileInfo.id());
+                    basicImageId = fileInfo.id();
 
                 else if (fileInfo.realName().equals(fileMap.get(metadata.house().borderForm()).getOriginalFilename()))
-                    imageFileIdMap.put(HOUSE_BORDER_IMAGE_ID, fileInfo.id());
+                    borderImageId = fileInfo.id();
 
                 else
                     for (CreateHouseMetadata.RoomData room : metadata.rooms()) {
                         if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
                             rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), fileInfo.id()));
-                            imageFileIdMap.put(room.name(), fileInfo.id());
                         }
                     }
             }
 
-            House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(),  1L, 1L, rooms);
-            Long savedId = saveHousePort.save(newHouse, rooms, imageFileIdMap);
+            House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(),  basicImageId, borderImageId, rooms);
+            Long savedId = saveHousePort.save(newHouse);
 
             return new CreateHouseResult(savedId);
 

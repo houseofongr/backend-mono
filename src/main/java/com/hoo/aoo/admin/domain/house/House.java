@@ -22,15 +22,15 @@ public class House {
     private final Area area;
     private final BaseTime baseTime;
     private final List<Room> rooms;
-    private final File defaultImageFile;
+    private final File basicImageFile;
     private final File borderImageFile;
 
-    private House(HouseId id, Area area, BaseTime baseTime, List<Room> rooms, File defaultImageFile, File borderImageFile) {
+    private House(HouseId id, Area area, BaseTime baseTime, List<Room> rooms, File basicImageFile, File borderImageFile) {
         this.area = area;
         this.id = id;
         this.baseTime = baseTime;
         this.rooms = rooms;
-        this.defaultImageFile = defaultImageFile;
+        this.basicImageFile = basicImageFile;
         this.borderImageFile = borderImageFile;
     }
 

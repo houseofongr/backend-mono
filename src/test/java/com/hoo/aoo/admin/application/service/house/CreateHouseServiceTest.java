@@ -49,7 +49,7 @@ class CreateHouseServiceTest {
 
         // then
         verify(uploadPrivateImageUseCase, times(1)).privateUpload(any());
-        verify(saveHousePort, times(1)).save(any(), any(), any());
+        verify(saveHousePort, times(1)).save(any());
 
         assertThat(result.houseId()).isNotNull();
     }

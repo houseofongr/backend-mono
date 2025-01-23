@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface SaveHousePort {
-    Long save(House house, List<Room> rooms, Map<String, Long> imageFileIdMap);
+    Long save(House house);
 }

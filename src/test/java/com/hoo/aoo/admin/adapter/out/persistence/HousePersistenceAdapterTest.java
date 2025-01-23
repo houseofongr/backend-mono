@@ -59,10 +59,9 @@ class HousePersistenceAdapterTest {
 
         Room newRoom = Room.create(houseId, "거실", 0F, 0F, 0F, 100F, 100F, 1L);
         House newHouse = House.create(houseId, 5000F, 5000F, 1L, 1L, List.of(newRoom));
-        Map<String, Long> imageFileIdMap = Map.of(BASIC_HOUSE_IMAGE_ID, 2L, HOUSE_BORDER_IMAGE_ID, 3L, newRoom.getId().getName(), 1L);
 
         // when
-        Long savedId = sut.save(newHouse, List.of(newRoom), imageFileIdMap);
+        Long savedId = sut.save(newHouse);
         em.flush();
         em.clear();
 
