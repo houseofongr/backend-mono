@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import static com.hoo.aoo.common.util.GsonUtil.gson;
+
 @RestController
 @RequiredArgsConstructor
 public class PostHouseController {
 
-    private final Gson gson = new Gson();
     private final CreateHouseUseCase createHouseUseCase;
 
     @PostMapping("/admin/houses")

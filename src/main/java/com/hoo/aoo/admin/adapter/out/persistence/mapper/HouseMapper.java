@@ -8,6 +8,7 @@ import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,16 @@ public class HouseMapper {
         );
     }
 
+    public Room mapToDomainEntity(RoomJpaEntity roomJpaEntity) throws AreaLimitExceededException, AxisLimitExceededException {
+        return Room.load(roomJpaEntity.getName(),
+                roomJpaEntity.getX(),
+                roomJpaEntity.getY(),
+                roomJpaEntity.getZ(),
+                roomJpaEntity.getWidth(),
+                roomJpaEntity.getHeight(),
+                roomJpaEntity.getImageFileId());
+    }
+
     public House mapToDomainEntity(HouseJpaEntity houseJpaEntity, List<RoomJpaEntity> roomJpaEntities) throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
 
         House house = House.load(
@@ -66,7 +77,6 @@ public class HouseMapper {
 
         for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
             Room loadedRoom = Room.load(
-                    house.getId(),
                     roomJpaEntity.getName(),
                     roomJpaEntity.getX(),
                     roomJpaEntity.getY(),

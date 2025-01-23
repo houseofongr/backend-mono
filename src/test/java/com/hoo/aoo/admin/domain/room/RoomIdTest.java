@@ -13,9 +13,9 @@ class RoomIdTest {
     @DisplayName("룸 아이디 수정 테스트")
     void testUpdateInfo() {
         // given
-        RoomId roomId = new RoomId(new HouseId("", "", ""), "거실");
-        RoomId roomId2 = new RoomId(new HouseId("", "", ""), "거실");
-        RoomId roomId3 = new RoomId(new HouseId("", "", ""), "거실");
+        RoomId roomId = new RoomId("거실");
+        RoomId roomId2 = new RoomId("거실");
+        RoomId roomId3 = new RoomId("거실");
 
         // when
         roomId.update("현관");

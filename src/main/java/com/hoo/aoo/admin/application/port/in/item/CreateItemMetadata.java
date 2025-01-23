@@ -5,15 +5,24 @@ import com.hoo.aoo.admin.domain.item.ItemType;
 import java.util.List;
 
 public record CreateItemMetadata(
-    List<ItemData> items
+        List<ItemData> items
 ) {
     public record ItemData(
-            String form,
             String name,
             ItemType itemType,
+            SoundSourceData soundSourceData,
             CircleData circleData,
             RectangleData rectangleData,
             EllipseData ellipseData
+    ) {
+
+    }
+
+    public record SoundSourceData(
+            String form,
+            String name,
+            String description,
+            Boolean active
     ) {
 
     }

@@ -27,7 +27,12 @@ public class AdminUserPersistenceAdapter implements SearchUserPort, FindUserPort
     }
 
     @Override
-    public Optional<User> find(Long id) {
+    public Optional<User> load(Long id) {
         return userJpaRepository.findById(id).map(adminUserMapper::mapToDomainEntity);
+    }
+
+    @Override
+    public boolean exist(Long id) {
+        return userJpaRepository.existsById(id);
     }
 }

@@ -8,6 +8,8 @@ import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -44,8 +46,17 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
     }
 
     @Override
-    public Optional<Room> load(Long id) {
-        return Optional.empty();
+    public boolean exist(Long id) {
+        return roomJpaRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<Room> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
+
+        Optional<RoomJpaEntity> optional = roomJpaRepository.findById(id);
+
+        if (optional.isEmpty()) return Optional.empty();
+        else return Optional.ofNullable(houseMapper.mapToDomainEntity(optional.get()));
     }
 
     @Override

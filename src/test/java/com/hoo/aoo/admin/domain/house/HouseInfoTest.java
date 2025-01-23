@@ -23,7 +23,7 @@ class HouseInfoTest {
     void testCreateHouse() throws Exception {
         // given
         HouseId houseId = new HouseId(title, author, description);
-        List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
+        List<Room> rooms = List.of(FixtureRepository.getRoom("거실"));
 
         // when
         House newHouse = House.create(houseId, width, height, 1L, 1L, rooms);
@@ -44,8 +44,8 @@ class HouseInfoTest {
 
         // when
         List<Room> rooms = List.of(
-                FixtureRepository.getRoom(houseId, "거실"),
-                FixtureRepository.getRoom(houseId, "주방")
+                FixtureRepository.getRoom("거실"),
+                FixtureRepository.getRoom("주방")
         );
 
         // then
@@ -53,44 +53,11 @@ class HouseInfoTest {
     }
 
     @Test
-    @DisplayName("방 참조관계 테스트")
-    void testRoomRelationship() throws Exception {
-        // given
-        HouseId houseId = new HouseId(title, author, description);
-
-        // when
-        List<Room> rooms = List.of(
-                FixtureRepository.getRoom(houseId, "거실")
-        );
-
-        List<Room> noHouseRoom = List.of(
-                FixtureRepository.getRoom(null, "거실")
-        );
-
-
-        List<Room> roomsToAnotherHouse = List.of(
-                FixtureRepository.getRoom(new HouseId("test", "tester","test house id"), "거실")
-        );
-
-
-        // then
-        House.create(houseId,width,height,1L, 1L, rooms);
-
-        assertThatThrownBy(() -> House.create(houseId, width, height,1L,1L, noHouseRoom))
-                .isInstanceOf(HouseRelationshipException.class)
-                .hasMessage("Room name 거실 doesn't related to " + houseId);
-
-        assertThatThrownBy(() -> House.create(houseId, width, height, 1L,1L,roomsToAnotherHouse))
-                .isInstanceOf(HouseRelationshipException.class)
-                .hasMessage("Room name 거실 doesn't related to " + houseId);
-    }
-
-    @Test
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfo() throws Exception {
         // given
         HouseId houseId = new HouseId(title, author, description);
-        List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
+        List<Room> rooms = List.of(FixtureRepository.getRoom("거실"));
 
         House newHouse = House.create(houseId, width, height, 1L,1L,rooms);
 

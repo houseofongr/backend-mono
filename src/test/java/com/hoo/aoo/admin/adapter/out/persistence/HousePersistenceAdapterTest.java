@@ -55,7 +55,7 @@ class HousePersistenceAdapterTest {
         // given
         HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
 
-        Room newRoom = Room.create(houseId, "거실", 0F, 0F, 0F, 100F, 100F, 1L);
+        Room newRoom = Room.create( "거실", 0F, 0F, 0F, 100F, 100F, 1L);
         House newHouse = House.create(houseId, 5000F, 5000F, 1L, 1L, List.of(newRoom));
 
         // when
@@ -162,7 +162,6 @@ class HousePersistenceAdapterTest {
         assertThat(house.get().getArea().getHeight()).isEqualTo(5000f);
         assertThat(house.get().getRooms()).hasSize(2)
                 .anySatisfy(room -> {
-                    assertThat(room.getId().getHouseId()).isEqualTo(house.get().getId());
                     assertThat(room.getId().getName()).isEqualTo("거실");
                     assertThat(room.getAxis().getX()).isEqualTo(0);
                     assertThat(room.getAxis().getY()).isEqualTo(0);

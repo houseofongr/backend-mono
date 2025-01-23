@@ -23,13 +23,18 @@ public class PostItemMetadataDocumentationTest extends AbstractDocumentationTest
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(document("admin-create-item-metadata",
                         responseFields(
-                                fieldWithPath("items[].form").description("아이템의 음원으로 사용할 오디오 파일의 Form 태그 name 속성값입니다. +" + "\n" + "* 지원 파일형식 : [mp3, wav]"),
                                 fieldWithPath("items[].name").description("생성할 아이템의 이름입니다."),
                                 fieldWithPath("items[].itemType").description("생성할 아이템의 타입입니다. +" + "\n" + "* 타입 : [CIRCLE, RECTANGLE, ELLIPSE]"),
 
+                                fieldWithPath("items[].soundSourceData").optional().description("음원을 생성하기 위한 데이터입니다."),
                                 fieldWithPath("items[].circleData").optional().description("원형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 생성하지 않으면 비워서(null) 전송합니다."),
                                 fieldWithPath("items[].rectangleData").optional().description("직사각형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 생성하지 않으면 비워서(null) 전송합니다."),
                                 fieldWithPath("items[].ellipseData").optional().description("타원형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 생성하지 않으면 비워서(null) 전송합니다."),
+
+                                fieldWithPath("items[].soundSourceData.form").description("아이템의 음원으로 사용할 오디오 파일의 Form 태그 name 속성값입니다. +" + "\n" + "* 지원 파일형식 : [mp3, wav]"),
+                                fieldWithPath("items[].soundSourceData.name").description("음원 이름입니다."),
+                                fieldWithPath("items[].soundSourceData.description").description("음원에 대한 설명입니다."),
+                                fieldWithPath("items[].soundSourceData.active").description("음원 활성화 여부입니다. 활성화되지 않으면 사용자에게 보여지지 않습니다. +" + "\n" + "* 값이 비워져 있을 경우 [True]로 초기화합니다."),
 
                                 fieldWithPath("items[].circleData.x").description("원형의 x좌표입니다."),
                                 fieldWithPath("items[].circleData.y").description("원형의 y좌표입니다."),

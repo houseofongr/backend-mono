@@ -3,12 +3,14 @@ package com.hoo.aoo.admin.application.service.item;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemUseCase;
+import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
+import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.*;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateAudioUseCase;
 import lombok.RequiredArgsConstructor;
@@ -24,30 +26,36 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CreateItemService implements CreateItemUseCase {
 
+    private final FindUserPort findUserPort;
+    private final FindHomePort findHomePort;
     private final FindRoomPort findRoomPort;
     private final SaveItemPort saveItemPort;
     private final UploadPrivateAudioUseCase uploadPrivateAudioUseCase;
 
     @Override
     @Transactional
-    public CreateItemResult create(Long userId, Long roomId, CreateItemMetadata metadata, Map<String, MultipartFile> fileMap) {
+    public CreateItemResult create(Long userId, Long homeId, Long roomId, CreateItemMetadata metadata, Map<String, MultipartFile> fileMap) {
 
-        findRoomPort.load(roomId).orElseThrow(() -> new AdminException(AdminErrorCode.ROOM_NOT_FOUND));
+        if (!findUserPort.exist(userId)) throw new AdminException(AdminErrorCode.USER_NOT_FOUND);
+        if (!findHomePort.exist(homeId)) throw new AdminException(AdminErrorCode.HOME_NOT_FOUND);
+        if (!findRoomPort.exist(roomId)) throw new AdminException(AdminErrorCode.ROOM_NOT_FOUND);
 
         UploadFileResult uploadFileResult = uploadPrivateAudioUseCase.privateUpload(
-                metadata.items().stream().map(itemData -> fileMap.get(itemData.form())).toList(), userId);
+                metadata.items().stream().map(itemData -> fileMap.get(itemData.soundSourceData().form())).toList(), userId);
 
         List<Item> newItems = new ArrayList<>();
         for (CreateItemMetadata.ItemData itemData : metadata.items()) {
 
+            CreateItemMetadata.SoundSourceData soundSourceData = itemData.soundSourceData();
             UploadFileResult.FileInfo fileInfo = uploadFileResult.fileInfos().stream()
-                    .filter(fi -> fi.realName().equals(fileMap.get(itemData.form()).getOriginalFilename())).findFirst()
+                    .filter(fi -> fi.realName().equals(fileMap.get(soundSourceData.form()).getOriginalFilename())).findFirst()
                     .orElseThrow(() -> new AdminException(AdminErrorCode.INVALID_CREATE_ITEM_METADATA));
 
-            newItems.add(Item.create(roomId, itemData.name(), createShape(itemData), List.of(fileInfo.id())));
+            SoundSource soundSource = SoundSource.create(fileInfo.id(), soundSourceData.name(), soundSourceData.description(), null, null, soundSourceData.active());
+            newItems.add(Item.create(roomId, itemData.name(), createShape(itemData), List.of(soundSource)));
         }
 
-        return new CreateItemResult(saveItemPort.save(newItems));
+        return new CreateItemResult(saveItemPort.save(userId, homeId, roomId, newItems));
     }
 
     private Shape createShape(CreateItemMetadata.ItemData itemData) {
@@ -61,7 +69,8 @@ public class CreateItemService implements CreateItemUseCase {
             case ELLIPSE -> {
                 return new Ellipse(itemData.ellipseData().x(), itemData.ellipseData().y(), itemData.ellipseData().width(), itemData.ellipseData().height(), itemData.ellipseData().angle());
             }
-            default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE, "잘못된 아이템 형태 : " + itemData.itemType());
+            default ->
+                    throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE, "잘못된 아이템 형태 : " + itemData.itemType());
         }
     }
 }

@@ -57,7 +57,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                 else
                     for (CreateHouseMetadata.RoomData room : metadata.rooms()) {
                         if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
-                            rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), fileInfo.id()));
+                            rooms.add(Room.create(room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), fileInfo.id()));
                         }
                     }
             }

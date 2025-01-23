@@ -2,8 +2,10 @@ package com.hoo.aoo.admin.application.service.item;
 
 import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
+import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
+import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateAudioUseCase;
@@ -25,16 +27,20 @@ class CreateItemServiceTest {
 
     CreateItemService sut;
 
+    FindUserPort findUserPort;
+    FindHomePort findHomePort;
     FindRoomPort findRoomPort;
     SaveItemPort saveItemPort;
     UploadPrivateAudioUseCase uploadPrivateAudioUseCase;
 
     @BeforeEach
     void init() {
+        findUserPort = mock();
+        findHomePort = mock();
         findRoomPort = mock();
         saveItemPort = mock();
         uploadPrivateAudioUseCase = mock();
-        sut = new CreateItemService(findRoomPort, saveItemPort, uploadPrivateAudioUseCase);
+        sut = new CreateItemService(findUserPort, findHomePort, findRoomPort, saveItemPort, uploadPrivateAudioUseCase);
     }
 
     @Test
@@ -49,19 +55,20 @@ class CreateItemServiceTest {
         map.put("record3", new MockMultipartFile("record3", "화분.mp3", "audio/mpeg", "i'm flower bottle.".getBytes()));
 
         // when
-        when(findRoomPort.load(1L)).thenReturn(Optional.of(FixtureRepository.getRoom()));
+        when(findUserPort.exist(1L)).thenReturn(true);
+        when(findHomePort.exist(1L)).thenReturn(true);
+        when(findRoomPort.exist(1L)).thenReturn(true);
         when(uploadPrivateAudioUseCase.privateUpload(any(), any())).thenReturn(new UploadFileResult(List.of(
                 new UploadFileResult.FileInfo(1L, 1L, "강아지.mp3", null, null, null),
                 new UploadFileResult.FileInfo(2L, 2L, "설이.mp3", null, null, null),
                 new UploadFileResult.FileInfo(3L, 3L, "화분.mp3", null, null, null)
         )));
-        when(saveItemPort.save(any())).thenReturn(List.of(1L, 2L, 3L));
-        CreateItemResult createItemResult = sut.create(1L, 1L, createItemMetadata, map);
+        when(saveItemPort.save(any(), any(), any(), any())).thenReturn(List.of(1L, 2L, 3L));
+        CreateItemResult createItemResult = sut.create(1L, 1L, 1L, createItemMetadata, map);
 
         // then
-        verify(findRoomPort, times(1)).load(any());
         verify(uploadPrivateAudioUseCase, times(1)).privateUpload(any(), any());
-        verify(saveItemPort, times(1)).save(any());
+        verify(saveItemPort, times(1)).save(any(), any(), any(), any());
 
         assertThat(createItemResult).isNotNull();
         assertThat(createItemResult.createdItemIds()).hasSize(3);

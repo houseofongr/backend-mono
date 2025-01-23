@@ -42,8 +42,6 @@ public class House {
 
         House house = new House(houseId, area, null, rooms, defaultImageFile, borderImageFile);
 
-        house.verifyRoom();
-
         return house;
     }
 
@@ -58,19 +56,7 @@ public class House {
 
         House house = new House(houseId, area, baseTime, rooms, borderImageFile, defaultImageFile);
 
-        house.verifyRoom();
-
         return house;
-    }
-
-    private void verifyRoom() throws HouseRelationshipException {
-        for (Room room : rooms) {
-
-            RoomId roomId = room.getId();
-
-            if (roomId.getHouseId() == null || !roomId.getHouseId().equals(this.id))
-                throw new HouseRelationshipException(roomId, this.id);
-        }
     }
 
     public void updateInfo(String title, String author, String description) {

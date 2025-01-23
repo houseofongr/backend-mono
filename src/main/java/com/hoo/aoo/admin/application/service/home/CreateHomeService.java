@@ -33,7 +33,7 @@ public class CreateHomeService implements CreateHomeUseCase {
             House house = findHousePort.load(command.houseId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-            User user = findUserPort.find(command.userId())
+            User user = findUserPort.load(command.userId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
             Home home = Home.create(house, user);
