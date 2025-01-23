@@ -52,7 +52,7 @@ class RoomTest {
         Float width = 100F;
         Float height = 200F;
 
-        Room newRoom = Room.create(houseId, name, x, y, z, width, height);
+        Room newRoom = Room.create(houseId, name, x, y, z, width, height, 1L);
         return newRoom;
     }
 }

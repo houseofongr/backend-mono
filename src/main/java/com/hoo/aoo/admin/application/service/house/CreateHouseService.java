@@ -60,13 +60,13 @@ public class CreateHouseService implements CreateHouseUseCase {
                 else
                     for (CreateHouseMetadata.RoomData room : metadata.rooms()) {
                         if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
-                            rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height()));
+                            rooms.add(Room.create(houseId, room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), fileInfo.id()));
                             imageFileIdMap.put(room.name(), fileInfo.id());
                         }
                     }
             }
 
-            House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(), rooms);
+            House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(),  1L, 1L, rooms);
             Long savedId = saveHousePort.save(newHouse, rooms, imageFileIdMap);
 
             return new CreateHouseResult(savedId);

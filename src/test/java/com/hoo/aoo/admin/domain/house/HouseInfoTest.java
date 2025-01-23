@@ -26,7 +26,7 @@ class HouseInfoTest {
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
 
         // when
-        House newHouse = House.create(houseId, width, height, rooms);
+        House newHouse = House.create(houseId, width, height, 1L, 1L, rooms);
 
         // then
         assertThat(newHouse.getRooms()).hasSize(1);
@@ -49,7 +49,7 @@ class HouseInfoTest {
         );
 
         // then
-        assertThat(House.create(houseId, width, height, rooms)).isNotNull();
+        assertThat(House.create(houseId, width, height, 1L, 1L, rooms)).isNotNull();
     }
 
     @Test
@@ -74,13 +74,13 @@ class HouseInfoTest {
 
 
         // then
-        House.create(houseId,width,height,rooms);
+        House.create(houseId,width,height,1L, 1L, rooms);
 
-        assertThatThrownBy(() -> House.create(houseId, width, height, noHouseRoom))
+        assertThatThrownBy(() -> House.create(houseId, width, height,1L,1L, noHouseRoom))
                 .isInstanceOf(HouseRelationshipException.class)
                 .hasMessage("Room name 거실 doesn't related to " + houseId);
 
-        assertThatThrownBy(() -> House.create(houseId, width, height, roomsToAnotherHouse))
+        assertThatThrownBy(() -> House.create(houseId, width, height, 1L,1L,roomsToAnotherHouse))
                 .isInstanceOf(HouseRelationshipException.class)
                 .hasMessage("Room name 거실 doesn't related to " + houseId);
     }
@@ -92,7 +92,7 @@ class HouseInfoTest {
         HouseId houseId = new HouseId(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom(houseId, "거실"));
 
-        House newHouse = House.create(houseId, width, height, rooms);
+        House newHouse = House.create(houseId, width, height, 1L,1L,rooms);
 
         String title = "not cozy house";
         String author = null;

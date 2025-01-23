@@ -62,6 +62,8 @@ public class HouseMapper {
                 houseJpaEntity.getHeight(),
                 houseJpaEntity.getCreatedTime(),
                 houseJpaEntity.getUpdatedTime(),
+                houseJpaEntity.getBasicImageFileId(),
+                houseJpaEntity.getBorderImageFileId(),
                 new ArrayList<>()
         );
 
@@ -73,7 +75,8 @@ public class HouseMapper {
                     roomJpaEntity.getY(),
                     roomJpaEntity.getZ(),
                     roomJpaEntity.getWidth(),
-                    roomJpaEntity.getHeight());
+                    roomJpaEntity.getHeight(),
+                    roomJpaEntity.getImageFileId());
 
             house.getRooms().add(loadedRoom);
         }
