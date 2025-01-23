@@ -13,6 +13,7 @@ Sangyeop. Nam <spearoad15@gmail.com>
 :stylesheet: stylesheet.css
 :imagesdir: {docdir}/images
 :stylesdir: {docdir}/styles
+:favicon: {docdir}/images/favicon.ico
 // :sectlinks:
 
 아카이브 오브 옹알 공식 API 문서입니다.

@@ -92,7 +92,8 @@ asciidoctor {
                   'imagesdir'         : './images',
                   'linkcss'           : true,
                   'stylesdir'         : './styles',
-                  'stylesheet'        : 'stylesheet.css',]
+                  'stylesheet'        : 'stylesheet.css',
+                  'favicon'           : './images/favicon.ico']
 
     dependsOn test
 }
