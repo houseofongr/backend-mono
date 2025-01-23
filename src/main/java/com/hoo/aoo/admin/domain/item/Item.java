@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.domain.item;
 
-import com.hoo.aoo.admin.domain.file.FileId;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import lombok.Getter;
 
 import java.util.List;
@@ -9,17 +9,15 @@ import java.util.List;
 public class Item {
     private final ItemId itemId;
     private final Shape shape;
-    private final List<FileId> audioFileIds;
+    private final List<SoundSource> soundSources;
 
-    private Item(ItemId itemId, Shape shape, List<FileId> audioFileIds) {
+    private Item(ItemId itemId, Shape shape, List<SoundSource> soundSources) {
         this.itemId = itemId;
         this.shape = shape;
-        this.audioFileIds = audioFileIds;
+        this.soundSources = soundSources;
     }
 
-    public static Item create(Long roomId, String itemName, Shape shape, List<Long> audioFileIds) {
-        List<FileId> itemIds = audioFileIds.stream().map(FileId::new).toList();
-
-        return new Item(new ItemId(roomId, itemName), shape, itemIds);
+    public static Item create(Long roomId, String itemName, Shape shape, List<SoundSource> soundSources) {
+        return new Item(new ItemId(roomId, itemName), shape, soundSources);
     }
 }

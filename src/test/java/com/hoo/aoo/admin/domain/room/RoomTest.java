@@ -25,7 +25,6 @@ class RoomTest {
         assertThat(newRoom.getAxis().getZ()).isEqualTo(1);
         assertThat(newRoom.getArea().getWidth()).isEqualTo(100);
         assertThat(newRoom.getArea().getHeight()).isEqualTo(200);
-
     }
 
     @Test
