@@ -6,7 +6,7 @@ import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
-import com.hoo.aoo.admin.domain.item.ItemType;
+import com.hoo.aoo.admin.domain.item.*;
 import com.hoo.aoo.admin.domain.user.User;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.springframework.mock.web.MockMultipartFile;
@@ -24,10 +24,6 @@ public class FixtureRepository {
         return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f);
     }
 
-    public static Room getRoom(String roomName) throws Exception {
-        return getRoom(getHouseId(),roomName);
-    }
-
     public static House getHouseWithRoom() throws Exception {
         return getHouseWithRoom(getHouseId());
     }
@@ -42,6 +38,23 @@ public class FixtureRepository {
 
     public static House getHouse(HouseId houseId, List<Room> rooms) throws Exception {
         return House.create(houseId, 5000f, 5000f, rooms);
+    }
+
+
+
+    public static Shape getShape(ItemType itemType) {
+        switch (itemType) {
+            case RECTANGLE -> {
+                return new Rectangle(100f, 100f, 10f, 10f, 5f);
+            }
+            case CIRCLE -> {
+                return new Circle(200f, 200f, 10.5f);
+            }
+            case ELLIPSE -> {
+                return new Ellipse(500f, 500f, 15f, 15f, 90f);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + itemType);
+        }
     }
 
 
@@ -66,7 +79,7 @@ public class FixtureRepository {
     public static CreateItemMetadata getCreateItemMetadata() {
         return new CreateItemMetadata(
                 List.of(
-                        new CreateItemMetadata.ItemData("record1","강아지", ItemType.CIRCLE, new CreateItemMetadata.CircleData(10.5f,200f,200f),null,null),
+                        new CreateItemMetadata.ItemData("record1","강아지", ItemType.CIRCLE, new CreateItemMetadata.CircleData(200f,200f,10.5f),null,null),
                         new CreateItemMetadata.ItemData("record2","설이", ItemType.RECTANGLE, null, new CreateItemMetadata.RectangleData(100f,100f,10f,10f,5f), null),
                         new CreateItemMetadata.ItemData("record3","화분", ItemType.ELLIPSE, null, null, new CreateItemMetadata.EllipseData(500f,500f,15f,15f,90f))
                         )
