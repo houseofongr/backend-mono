@@ -8,6 +8,7 @@ import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +41,11 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
         }
 
         return updateCount;
+    }
+
+    @Override
+    public Optional<Room> load(Long id) {
+        return Optional.empty();
     }
 
     @Override

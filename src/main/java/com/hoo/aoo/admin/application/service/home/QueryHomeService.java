@@ -5,7 +5,6 @@ import com.hoo.aoo.admin.application.port.in.home.QueryHomeUseCase;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesUseCase;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
-import com.hoo.aoo.admin.application.port.out.home.FindUserHomesPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class QueryHomeService implements QueryHomeUseCase, QueryUserHomesUseCase {
 
     private final FindHomePort findHomePort;
-    private final FindUserHomesPort findUserHomesPort;
 
     @Override
     @Transactional(readOnly = true)
@@ -28,7 +26,7 @@ public class QueryHomeService implements QueryHomeUseCase, QueryUserHomesUseCase
 
     @Override
     @Transactional(readOnly = true)
-    public QueryUserHomesResult queryUserHomes(Long id) {
-        return findUserHomesPort.findUserHomes(id);
+    public QueryUserHomesResult queryUserHomes(Long userId) {
+        return findHomePort.findUserHomes(userId);
     }
 }

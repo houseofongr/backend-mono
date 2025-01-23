@@ -51,7 +51,7 @@ public class UploadService {
 
                 Long savedId = saveImageFilePort.save(file);
 
-                fileInfos.add(new UploadFileResult.FileInfo(file, savedId));
+                fileInfos.add(UploadFileResult.FileInfo.from(file, savedId));
 
             } catch (IOException e) {
                 throw new FileException(e, FileErrorCode.NEW_FILE_CREATION_FAILED);

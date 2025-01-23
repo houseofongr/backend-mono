@@ -3,7 +3,6 @@ package com.hoo.aoo.admin.application.service.home;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
-import com.hoo.aoo.admin.application.port.out.home.FindUserHomesPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,13 +19,11 @@ class QueryHomeServiceTest {
     QueryHomeService sut;
 
     FindHomePort findHomePort;
-    FindUserHomesPort findUserHomesPort;
 
     @BeforeEach
     void init() {
         findHomePort = mock();
-        findUserHomesPort = mock();
-        sut = new QueryHomeService(findHomePort, findUserHomesPort);
+        sut = new QueryHomeService(findHomePort);
     }
 
     @Test
@@ -53,11 +50,11 @@ class QueryHomeServiceTest {
         Long id = 1L;
 
         // when
-        when(findUserHomesPort.findUserHomes(1L)).thenReturn(new QueryUserHomesResult(null));
+        when(findHomePort.findUserHomes(1L)).thenReturn(new QueryUserHomesResult(null));
         QueryUserHomesResult queryUserHomesResult = sut.queryUserHomes(id);
 
         // then
-        verify(findUserHomesPort, times(1)).findUserHomes(1L);
+        verify(findHomePort, times(1)).findUserHomes(1L);
         assertThat(queryUserHomesResult).isNotNull();
     }
 

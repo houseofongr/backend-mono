@@ -28,10 +28,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import static com.hoo.aoo.admin.application.service.house.CreateHouseService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -148,12 +146,12 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 조회 테스트")
-    void testFind() throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
+    void testLoad() throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
         // given
         Long houseId = 1L;
 
         // when
-        Optional<House> house = sut.find(houseId);
+        Optional<House> house = sut.load(houseId);
 
         // then
         assertThat(house).isNotEmpty();

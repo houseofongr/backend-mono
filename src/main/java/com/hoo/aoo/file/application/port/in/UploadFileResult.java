@@ -16,8 +16,8 @@ public record UploadFileResult(
             String size,
             Authority authority
     ) {
-        public FileInfo(File file, Long id) {
-            this(
+        public static FileInfo from(File file, Long id) {
+            return new FileInfo(
                     id,
                     file.getOwner().getId(),
                     file.getFileId().getRealFileName(),

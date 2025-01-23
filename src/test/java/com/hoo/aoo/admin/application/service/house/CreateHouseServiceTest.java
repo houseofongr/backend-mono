@@ -41,7 +41,13 @@ class CreateHouseServiceTest {
     void testCreateHouse() throws FileSizeLimitExceedException {
         // given
         CreateHouseMetadata metadata = getCreateHouseMetadata();
-        Map<String, MultipartFile> map = getStringMultipartFileMap();
+
+        Map<String, MultipartFile> map = new HashMap<>();
+
+        map.put("house", new MockMultipartFile("house", "house.png", "image/png", "house file".getBytes()));
+        map.put("border", new MockMultipartFile("border", "border.png", "image/png", "border file".getBytes()));
+        map.put("room1", new MockMultipartFile("room1", "livingRoom.png", "image/png", "livingRoom file".getBytes()));
+        map.put("room2", new MockMultipartFile("room2", "kitchen.png", "image/png", "kitchen file".getBytes()));
 
         // when
         when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
@@ -52,21 +58,6 @@ class CreateHouseServiceTest {
         verify(saveHousePort, times(1)).save(any());
 
         assertThat(result.houseId()).isNotNull();
-    }
-
-    private Map<String, MultipartFile> getStringMultipartFileMap() {
-        MockMultipartFile house = new MockMultipartFile("house", "house.png", "image/png", "house file".getBytes());
-        MockMultipartFile border = new MockMultipartFile("border", "border.png", "image/png", "border file".getBytes());
-        MockMultipartFile room1 = new MockMultipartFile("room1", "livingRoom.png", "image/png", "livingRoom file".getBytes());
-        MockMultipartFile room2 = new MockMultipartFile("room2", "kitchen.png", "image/png", "kitchen file".getBytes());
-
-        Map<String, MultipartFile> map = new HashMap<>();
-
-        map.put("house", house);
-        map.put("border", border);
-        map.put("room1", room1);
-        map.put("room2", room2);
-        return map;
     }
 
 }

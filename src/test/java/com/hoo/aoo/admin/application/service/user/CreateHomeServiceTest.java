@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.application.service.user;
 
-import com.hoo.aoo.admin.adapter.out.persistence.HomePersistenceAdapter;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
@@ -42,7 +41,7 @@ class CreateHomeServiceTest {
         CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
 
         // when
-        when(findHousePort.find(20L)).thenReturn(Optional.of(FixtureRepository.getHouseWithRoom()));
+        when(findHousePort.load(20L)).thenReturn(Optional.of(FixtureRepository.getHouseWithRoom()));
         when(findUserPort.find(10L)).thenReturn(Optional.of(FixtureRepository.getUser()));
         when(saveHomePort.save(any(), any())).thenReturn(new CreateHomeResult(100L, null));
         CreateHomeResult createHomeResult = sut.create(command);

@@ -5,7 +5,6 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
-import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.common.application.port.in.Pagination;
@@ -23,14 +22,12 @@ class QueryHouseServiceTest {
 
     QueryHouseService sut;
 
-    SearchHousePort searchHousePort;
     FindHousePort findHousePort;
 
     @BeforeEach
     void init() {
-        searchHousePort = mock();
         findHousePort = mock();
-        sut = new QueryHouseService(searchHousePort, findHousePort);
+        sut = new QueryHouseService(findHousePort);
     }
 
     @Test
@@ -51,7 +48,7 @@ class QueryHouseServiceTest {
         ), new Pagination(1, 1, 1, 1L));
 
         // when
-        when(searchHousePort.search(any())).thenReturn(result);
+        when(findHousePort.search(any())).thenReturn(result);
         QueryHouseListResult list = sut.query(any());
 
         // then

@@ -3,7 +3,6 @@ package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
-import com.hoo.aoo.admin.application.port.out.house.SearchHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCase {
 
-    private final SearchHousePort searchHousePort;
     private final FindHousePort findHousePort;
 
     @Override
@@ -27,7 +25,7 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryHouseListResult query(QueryHouseListCommand command) {
-        return searchHousePort.search(command);
+        return findHousePort.search(command);
     }
 
 }

@@ -30,7 +30,7 @@ public class CreateHomeService implements CreateHomeUseCase {
     @Transactional
     public CreateHomeResult create(CreateHomeCommand command) {
         try {
-            House house = findHousePort.find(command.houseId())
+            House house = findHousePort.load(command.houseId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
             User user = findUserPort.find(command.userId())

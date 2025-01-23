@@ -32,6 +32,6 @@ public class PostHouseController {
                     HttpStatus.CREATED);
         }
 
-        else throw new AdminException(AdminErrorCode.INVALID_METADATA);
+        else throw new AdminException(AdminErrorCode.INVALID_CREATE_HOUSE_METADATA);
     }
 }

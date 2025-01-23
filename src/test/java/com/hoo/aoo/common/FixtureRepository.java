@@ -20,6 +20,10 @@ public class FixtureRepository {
         return Room.create(houseId, name, 0f, 0f, 0f, 1f, 1f, 1L);
     }
 
+    public static Room getRoom() throws Exception {
+        return getRoom(getHouseId(), "거실");
+    }
+
     public static House getHouseWithRoom() throws Exception {
         return getHouseWithRoom(getHouseId());
     }

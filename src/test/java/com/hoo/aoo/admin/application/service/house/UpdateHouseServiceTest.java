@@ -1,10 +1,8 @@
 package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.UpdateHouseInfoCommand;
-import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
-import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
@@ -41,11 +39,11 @@ class UpdateHouseServiceTest {
         UpdateHouseInfoCommand command = new UpdateHouseInfoCommand(1L, "not cozy house", "arang", "this is not cozy house.");
 
         // when
-        when(findHousePort.find(1L)).thenReturn(Optional.of(house));
+        when(findHousePort.load(1L)).thenReturn(Optional.of(house));
         MessageDto message = sut.update(command);
 
         // then
-        verify(findHousePort, times(1)).find(1L);
+        verify(findHousePort, times(1)).load(1L);
         verify(updateHousePort, times(1)).update(any(),any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 정보 수정이 완료되었습니다.");

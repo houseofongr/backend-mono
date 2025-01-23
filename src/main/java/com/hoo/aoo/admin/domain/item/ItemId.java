@@ -5,9 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class ItemId {
-    private final Long id;
+    private final Long roomId;
+    private final String name;
 
-    public ItemId(Long id) {
-        this.id = id;
+    public ItemId(Long roomId, String name) {
+        this.roomId = roomId;
+        this.name = name;
     }
 }
