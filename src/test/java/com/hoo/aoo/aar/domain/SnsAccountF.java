@@ -4,7 +4,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.account.SnsAccountId;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.PhoneNumber;
+import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.account.SnsDomain;
 import lombok.AllArgsConstructor;
 
@@ -33,7 +33,7 @@ public enum SnsAccountF {
                 email,
                 new SnsAccountId(snsDomain, snsId),
                 new Name(name, nickname),
-                phoneNumber == null? null : new PhoneNumber(phoneNumber),
+                phoneNumber == null? null : new UserId(phoneNumber),
                 new DateInfo(createdTime,updatedTime)
         );
     }

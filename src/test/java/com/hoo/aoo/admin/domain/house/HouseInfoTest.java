@@ -22,44 +22,25 @@ class HouseInfoTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws Exception {
         // given
-        HouseId houseId = new HouseId(title, author, description);
+        Detail detail = new Detail(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom("거실"));
 
         // when
-        House newHouse = House.create(houseId, width, height, 1L, 1L, rooms);
+        House newHouse = FixtureRepository.getHouse();
 
         // then
-        assertThat(newHouse.getRooms()).hasSize(1);
-        assertThat(newHouse.getId().getTitle()).isEqualTo("cozy house");
-        assertThat(newHouse.getId().getAuthor()).isEqualTo("leaf");
+        assertThat(newHouse.getRooms()).hasSize(2);
+        assertThat(newHouse.getDetail().getTitle()).isEqualTo("cozy house");
+        assertThat(newHouse.getDetail().getAuthor()).isEqualTo("leaf");
         assertThat(newHouse.getArea().getWidth()).isEqualTo(5000);
         assertThat(newHouse.getArea().getHeight()).isEqualTo(5000);
-    }
-
-    @Test
-    @DisplayName("방 ID 중복 테스트")
-    void testRoomIdDuplication() throws Exception {
-        // given
-        HouseId houseId = new HouseId(title, author, description);
-
-        // when
-        List<Room> rooms = List.of(
-                FixtureRepository.getRoom("거실"),
-                FixtureRepository.getRoom("주방")
-        );
-
-        // then
-        assertThat(House.create(houseId, width, height, 1L, 1L, rooms)).isNotNull();
     }
 
     @Test
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfo() throws Exception {
         // given
-        HouseId houseId = new HouseId(title, author, description);
-        List<Room> rooms = List.of(FixtureRepository.getRoom("거실"));
-
-        House newHouse = House.create(houseId, width, height, 1L,1L,rooms);
+        House newHouse = FixtureRepository.getHouse();
 
         String title = "not cozy house";
         String author = null;
@@ -69,16 +50,16 @@ class HouseInfoTest {
         newHouse.updateInfo(title, author, description);
 
         // then
-        assertThat(newHouse.getId().getTitle()).isEqualTo(title);
-        assertThat(newHouse.getId().getAuthor()).isEqualTo("leaf");
-        assertThat(newHouse.getId().getDescription()).isEqualTo(description);
+        assertThat(newHouse.getDetail().getTitle()).isEqualTo(title);
+        assertThat(newHouse.getDetail().getAuthor()).isEqualTo("leaf");
+        assertThat(newHouse.getDetail().getDescription()).isEqualTo(description);
     }
 
     @Test
     @DisplayName("룸 수정 테스트")
     void testUpdateRoomInfo() throws Exception {
         // given
-        House houseWithRoom = FixtureRepository.getHouseWithRoom();
+        House houseWithRoom = FixtureRepository.getHouse();
         String originalName = "거실";
         String newName = "욕실";
 

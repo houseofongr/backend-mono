@@ -3,8 +3,8 @@ package com.hoo.aoo.admin.application.service.house;
 import com.hoo.aoo.admin.application.port.in.house.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
+import com.hoo.aoo.admin.domain.house.Detail;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +35,7 @@ class UpdateHouseServiceTest {
     @DisplayName("하우스 업데이트 서비스 테스트")
     void testUpdateHouseInfo() throws Exception {
         // given
-        House house = getHouse(new HouseId("cozy house", "leaf", "this is cozy house"), List.of());
+        House house = getHouse(new Detail("cozy house", "leaf", "this is cozy house"), List.of());
         UpdateHouseInfoCommand command = new UpdateHouseInfoCommand(1L, "not cozy house", "arang", "this is not cozy house.");
 
         // when

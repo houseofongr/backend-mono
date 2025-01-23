@@ -10,14 +10,13 @@ import java.util.List;
 
 @Getter
 public class User {
-    public static final String DEFAULT_PHONE_NUMBER = "010-0000-0000";
 
-    private final PhoneNumber phoneNumber;
+    private final UserId phoneNumber;
     private final Agreement agreement;
     private final List<SnsAccountId> snsAccounts;
-    private Name name;
+    private final Name name;
 
-    public User(Agreement agreement, PhoneNumber phoneNumber, List<SnsAccountId> snsAccounts, Name name) {
+    public User(Agreement agreement, UserId phoneNumber, List<SnsAccountId> snsAccounts, Name name) {
         this.agreement = agreement;
         this.phoneNumber = phoneNumber;
         this.snsAccounts = snsAccounts;
@@ -28,7 +27,7 @@ public class User {
 
         return new User(
                 new Agreement(termsOfUseAgreement,personalInformationAgreement),
-                new PhoneNumber(DEFAULT_PHONE_NUMBER),
+                new UserId(null),
                 List.of(snsAccount.getSnsAccountId()),
                 snsAccount.getName()
         );

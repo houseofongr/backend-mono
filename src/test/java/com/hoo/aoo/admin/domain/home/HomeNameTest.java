@@ -14,13 +14,13 @@ class HomeNameTest {
     @DisplayName("홈 이름 생성 테스트")
     void testCreateHomeName() throws Exception {
         // given
-        House house = FixtureRepository.getHouseWithRoom();
+        House house = FixtureRepository.getHouse();
         User user = FixtureRepository.getUser();
 
         // when
         HomeName homeName = new HomeName(house, user);
 
         // then
-        assertThat(homeName.getName()).isEqualTo(user.getUserName().getNickName() + "의 " + house.getId().getTitle());
+        assertThat(homeName.getName()).isEqualTo(user.getUserName().getNickName() + "의 " + house.getDetail().getTitle());
     }
 }

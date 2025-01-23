@@ -14,7 +14,7 @@ class HomeTest {
     @DisplayName("하우스와 유저로부터 홈 생성")
     void testCreateHome() throws Exception {
         // given
-        House house = FixtureRepository.getHouseWithRoom();
+        House house = FixtureRepository.getHouse();
         User user = FixtureRepository.getUser();
 
         // when

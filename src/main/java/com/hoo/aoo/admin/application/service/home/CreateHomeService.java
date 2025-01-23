@@ -10,7 +10,6 @@ import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
@@ -45,9 +44,6 @@ public class CreateHomeService implements CreateHomeUseCase {
 
         } catch (AxisLimitExceededException e) {
             throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
-
-        } catch (HouseRelationshipException e) {
-            throw new AdminException(AdminErrorCode.ILLEGAL_HOUSE_RELATIONSHIP);
 
         }
     }

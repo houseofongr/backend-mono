@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.application.service.house;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
+import com.hoo.aoo.common.application.port.in.CreateHousePort;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
@@ -28,12 +29,14 @@ class CreateHouseServiceTest {
 
     SaveHousePort saveHousePort;
     UploadPrivateImageUseCase uploadPrivateImageUseCase;
+    CreateHousePort createHousePort;
 
     @BeforeEach
     void init() {
         saveHousePort = mock();
         uploadPrivateImageUseCase = mock();
-        sut = new CreateHouseService(saveHousePort, uploadPrivateImageUseCase);
+        createHousePort = mock();
+        sut = new CreateHouseService(saveHousePort, uploadPrivateImageUseCase, createHousePort);
     }
 
     @Test

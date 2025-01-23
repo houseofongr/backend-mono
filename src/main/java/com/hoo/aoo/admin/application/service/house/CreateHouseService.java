@@ -8,10 +8,10 @@ import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseId;
+import com.hoo.aoo.admin.domain.house.Detail;
 import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.common.application.port.in.CreateHousePort;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,12 +29,13 @@ public class CreateHouseService implements CreateHouseUseCase {
 
     private final SaveHousePort saveHousePort;
     private final UploadPrivateImageUseCase uploadPrivateImageUseCase;
+    private final CreateHousePort createHousePort;
 
     @Override
     @Transactional
     public CreateHouseResult create(CreateHouseMetadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
-        HouseId houseId = new HouseId(metadata.house().title(), metadata.house().author(), metadata.house().description());
+        Detail detail = new Detail(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
         List<Room> rooms = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                     }
             }
 
-            House newHouse = House.create(houseId, metadata.house().width(), metadata.house().height(),  basicImageId, borderImageId, rooms);
+            House newHouse = createHousePort.createHouse(detail, metadata.house().width(), metadata.house().height(),  basicImageId, borderImageId, rooms);
             Long savedId = saveHousePort.save(newHouse);
 
             return new CreateHouseResult(savedId);
@@ -72,9 +72,6 @@ public class CreateHouseService implements CreateHouseUseCase {
 
         } catch (AreaLimitExceededException e) {
             throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
-
-        } catch (HouseRelationshipException e) {
-            throw new AdminException(AdminErrorCode.ILLEGAL_HOUSE_RELATIONSHIP);
 
         }
     }

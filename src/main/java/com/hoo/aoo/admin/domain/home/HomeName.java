@@ -9,6 +9,6 @@ public class HomeName {
     private final String name;
 
     public HomeName(House house, User user) {
-        this.name = user.getUserName().getNickName() + "의 " + house.getId().getTitle();
+        this.name = user.getUserName().getNickName() + "의 " + house.getDetail().getTitle();
     }
 }

@@ -7,7 +7,6 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.file.File;
 import com.hoo.aoo.admin.domain.file.FileId;
 import com.hoo.aoo.admin.domain.file.FileType;
-import com.hoo.aoo.admin.domain.house.HouseId;
 import lombok.Getter;
 
 @Getter

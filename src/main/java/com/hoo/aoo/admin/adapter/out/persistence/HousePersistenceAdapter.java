@@ -11,7 +11,6 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.*;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +45,7 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
     }
 
     @Override
-    public Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
+    public Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
 
         Optional<HouseJpaEntity> optional = houseJpaRepository.findById(id);
 
@@ -68,7 +67,7 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
 
         HouseJpaEntity entity = houseJpaRepository.findById(id).orElseThrow();
 
-        entity.updateInfo(house.getId().getTitle(), house.getId().getAuthor(), house.getId().getDescription());
+        entity.updateInfo(house.getDetail().getTitle(), house.getDetail().getAuthor(), house.getDetail().getDescription());
     }
 
     @Override

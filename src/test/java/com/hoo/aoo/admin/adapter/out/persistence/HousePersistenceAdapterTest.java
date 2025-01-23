@@ -9,10 +9,8 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.HouseRelationshipException;
+import com.hoo.aoo.admin.domain.house.Detail;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseId;
-import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import jakarta.persistence.EntityManager;
@@ -27,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,12 +48,11 @@ class HousePersistenceAdapterTest {
 
     @Test
     @DisplayName("House 저장 테스트")
-    void testSaveHouse() throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
+    void testSaveHouse() throws Exception {
         // given
-        HouseId houseId = new HouseId("cozy house", "leaf", "it's very cozy.");
+        Detail detail = new Detail("cozy house", "leaf", "it's very cozy.");
 
-        Room newRoom = Room.create( "거실", 0F, 0F, 0F, 100F, 100F, 1L);
-        House newHouse = House.create(houseId, 5000F, 5000F, 1L, 1L, List.of(newRoom));
+        House newHouse = FixtureRepository.getHouse(detail);
 
         // when
         Long savedId = sut.save(newHouse);
@@ -71,7 +67,7 @@ class HousePersistenceAdapterTest {
         assertThat(entity.get().getTitle()).isEqualTo("cozy house");
         assertThat(entity.get().getAuthor()).isEqualTo("leaf");
         assertThat(entity.get().getDescription()).isEqualTo("it's very cozy.");
-        assertThat(entity.get().getRooms()).hasSize(1);
+        assertThat(entity.get().getRooms()).hasSize(2);
     }
 
     @Test
@@ -146,7 +142,7 @@ class HousePersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 조회 테스트")
-    void testLoad() throws AreaLimitExceededException, AxisLimitExceededException, HouseRelationshipException {
+    void testLoad() throws AreaLimitExceededException, AxisLimitExceededException {
         // given
         Long houseId = 1L;
 
@@ -155,9 +151,9 @@ class HousePersistenceAdapterTest {
 
         // then
         assertThat(house).isNotEmpty();
-        assertThat(house.get().getId().getTitle()).isEqualTo("cozy house");
-        assertThat(house.get().getId().getAuthor()).isEqualTo("leaf");
-        assertThat(house.get().getId().getDescription()).isEqualTo("this is cozy house");
+        assertThat(house.get().getDetail().getTitle()).isEqualTo("cozy house");
+        assertThat(house.get().getDetail().getAuthor()).isEqualTo("leaf");
+        assertThat(house.get().getDetail().getDescription()).isEqualTo("this is cozy house");
         assertThat(house.get().getArea().getWidth()).isEqualTo(5000f);
         assertThat(house.get().getArea().getHeight()).isEqualTo(5000f);
         assertThat(house.get().getRooms()).hasSize(2)
@@ -176,7 +172,7 @@ class HousePersistenceAdapterTest {
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfoHouse() throws Exception {
         // given
-        House houseWithRoom = FixtureRepository.getHouseWithRoom(new HouseId("not cozy house", "arang", "this is not cozy house"));
+        House houseWithRoom = FixtureRepository.getHouse(new Detail("not cozy house", "arang", "this is not cozy house"));
 
         // when
         sut.update(1L, houseWithRoom);

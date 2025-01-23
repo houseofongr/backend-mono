@@ -10,7 +10,7 @@ import com.hoo.aoo.aar.domain.Name;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.account.SnsAccountId;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.PhoneNumber;
+import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.account.SnsDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -55,8 +55,8 @@ public class SnsAccountPersistenceAdapter implements FindSnsAccountPort, SaveSns
 
         Name name = new Name(jpaEntity.getRealName(), jpaEntity.getNickname());
 
-        PhoneNumber userId = jpaEntity.getUserEntity() == null? null :
-                new PhoneNumber(jpaEntity.getUserEntity().getPhoneNumber());
+        UserId userId = jpaEntity.getUserEntity() == null? null :
+                new UserId(jpaEntity.getUserEntity().getPhoneNumber());
 
         DateInfo dateInfo = new DateInfo(jpaEntity.getCreatedTime(),jpaEntity.getUpdatedTime());
 

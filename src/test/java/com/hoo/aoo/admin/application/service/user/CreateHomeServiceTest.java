@@ -41,7 +41,7 @@ class CreateHomeServiceTest {
         CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
 
         // when
-        when(findHousePort.load(20L)).thenReturn(Optional.of(FixtureRepository.getHouseWithRoom()));
+        when(findHousePort.load(20L)).thenReturn(Optional.of(FixtureRepository.getHouse()));
         when(findUserPort.load(10L)).thenReturn(Optional.of(FixtureRepository.getUser()));
         when(saveHomePort.save(any(), any())).thenReturn(new CreateHomeResult(100L, null));
         CreateHomeResult createHomeResult = sut.create(command);

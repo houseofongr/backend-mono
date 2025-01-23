@@ -2,7 +2,6 @@ package com.hoo.aoo.admin.domain.room;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

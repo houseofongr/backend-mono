@@ -7,7 +7,7 @@ import com.hoo.aoo.aar.domain.Name;
 import com.hoo.aoo.aar.domain.account.SnsAccount;
 import com.hoo.aoo.aar.domain.account.SnsAccountId;
 import com.hoo.aoo.aar.domain.user.Agreement;
-import com.hoo.aoo.aar.domain.user.PhoneNumber;
+import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.user.User;
 import org.springframework.stereotype.Component;
 
@@ -51,11 +51,11 @@ public class UserMapper {
         );
     }
 
-    public SnsAccount mapToDomainEntity(String email, SnsAccountId snsAccountId, Name name, PhoneNumber userId, DateInfo dateInfo) {
+    public SnsAccount mapToDomainEntity(String email, SnsAccountId snsAccountId, Name name, UserId userId, DateInfo dateInfo) {
         return new SnsAccount(email, snsAccountId, name, userId, dateInfo);
     }
 
-    public User mapToDomainEntity(Agreement agreement, PhoneNumber phoneNumber, List<SnsAccountId> snsAccountIds, Name name) {
+    public User mapToDomainEntity(Agreement agreement, UserId phoneNumber, List<SnsAccountId> snsAccountIds, Name name) {
         return new User(agreement,phoneNumber,snsAccountIds,name);
     }
 }

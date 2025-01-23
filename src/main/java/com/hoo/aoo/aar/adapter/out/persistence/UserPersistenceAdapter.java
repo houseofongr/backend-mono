@@ -11,7 +11,7 @@ import com.hoo.aoo.aar.domain.Name;
 import com.hoo.aoo.aar.domain.account.SnsAccountId;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.Agreement;
-import com.hoo.aoo.aar.domain.user.PhoneNumber;
+import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort {
 
         Agreement agreement = new Agreement(jpaEntity.getPersonalInformationAgreement(), jpaEntity.getTermsOfUseAgreement());
 
-        PhoneNumber phoneNumber = new PhoneNumber(jpaEntity.getPhoneNumber());
+        UserId phoneNumber = new UserId(jpaEntity.getPhoneNumber());
 
         List<SnsAccountId> snsAccountIds = snsAccountJpaEntities.stream()
                 .map(snsAccountJpaEntity -> new SnsAccountId(snsAccountJpaEntity.getSnsDomain(), snsAccountJpaEntity.getSnsId())).toList();

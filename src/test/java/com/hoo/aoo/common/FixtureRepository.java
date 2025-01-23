@@ -3,12 +3,15 @@ package com.hoo.aoo.common;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.domain.home.Home;
+import com.hoo.aoo.admin.domain.house.Detail;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseId;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.*;
 import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.common.adapter.MockIdAdapter;
+import com.hoo.aoo.common.application.port.out.IssueIdPort;
+import com.hoo.aoo.common.application.service.EntityFactoryService;
 import com.nimbusds.jose.shaded.gson.Gson;
 
 import java.time.ZonedDateTime;
@@ -17,6 +20,8 @@ import java.util.List;
 public class FixtureRepository {
 
     private static final Gson gson = new Gson();
+    private static final IssueIdPort mockIdPort = new MockIdAdapter();
+    private static final EntityFactoryService entityFactoryService = new EntityFactoryService(mockIdPort);
 
     public static Room getRoom(String name) throws Exception {
         return Room.create(name, 0f, 0f, 0f, 1f, 1f, 1L);
@@ -26,20 +31,20 @@ public class FixtureRepository {
         return getRoom("거실");
     }
 
-    public static House getHouseWithRoom() throws Exception {
-        return getHouseWithRoom(getHouseId());
+    public static House getHouse() throws Exception {
+        return getHouse(getHouseId());
     }
 
-    public static HouseId getHouseId() {
-        return new HouseId("cozy house", "leaf", "this is cozy house");
+    public static Detail getHouseId() {
+        return new Detail("cozy house", "leaf", "this is cozy house");
     }
 
-    public static House getHouseWithRoom(HouseId houseId) throws Exception {
-        return House.create(houseId, 5000f, 5000f, 1L, 1L, List.of(getRoom("거실"), getRoom("주방")));
+    public static House getHouse(Detail detail) throws Exception {
+        return getHouse(detail, List.of(getRoom("거실"), getRoom("주방")));
     }
 
-    public static House getHouse(HouseId houseId, List<Room> rooms) throws Exception {
-        return House.create(houseId, 5000f, 5000f, 1L, 1L, rooms);
+    public static House getHouse(Detail detail, List<Room> rooms) throws Exception {
+        return entityFactoryService.createHouse(detail, 5000f, 5000f, 1L, 1L, rooms);
     }
 
 
@@ -81,7 +86,7 @@ public class FixtureRepository {
     }
 
     public static Home getHome() throws Exception {
-        return Home.create(getHouseWithRoom(), getUser());
+        return Home.create(getHouse(), getUser());
     }
 
     public static CreateHouseMetadata getCreateHouseMetadata() {
