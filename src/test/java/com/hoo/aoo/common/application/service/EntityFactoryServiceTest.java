@@ -1,8 +1,10 @@
 package com.hoo.aoo.common.application.service;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.Detail;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,5 +39,19 @@ class EntityFactoryServiceTest {
         // then
         assertThat(house).isNotNull();
         assertThat(house.getHouseId().getId()).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("룸 생성 테스트")
+    void testCreateRoom() throws AxisLimitExceededException, AreaLimitExceededException {
+        // given
+
+        // when
+        when(issueIdPort.issueRoomId()).thenReturn(1L);
+        Room room = sut.createRoom("name", 0f, 0f, 0f, 1f, 1f, 1L);
+
+        // then
+        assertThat(room).isNotNull();
+        assertThat(room.getRoomId().getId()).isEqualTo(1L);
     }
 }

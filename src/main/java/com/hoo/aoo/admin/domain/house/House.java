@@ -34,8 +34,9 @@ public class House {
         this.borderImageFile = borderImageFile;
     }
 
-    public static House create(HouseId houseId, Detail detail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
+    public static House create(Long id, Detail detail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
 
+        HouseId houseId = new HouseId(id);
         Area area = new Area(width, height);
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
@@ -63,8 +64,8 @@ public class House {
     public void updateRoomInfo(String originalName, String newName) throws RoomNameNotFoundException {
 
         for (Room room : rooms) {
-            if (room.getId().getName().equals(originalName)) {
-                room.getId().update(newName);
+            if (room.getDetail().getName().equals(originalName)) {
+                room.getDetail().update(newName);
                 return;
             }
         }

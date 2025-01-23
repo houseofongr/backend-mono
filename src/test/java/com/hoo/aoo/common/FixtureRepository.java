@@ -24,23 +24,23 @@ public class FixtureRepository {
     private static final EntityFactoryService entityFactoryService = new EntityFactoryService(mockIdPort);
 
     public static Room getRoom(String name) throws Exception {
-        return Room.create(name, 0f, 0f, 0f, 1f, 1f, 1L);
+        return entityFactoryService.createRoom(name, 0f, 0f, 0f, 1f, 1f, 1L);
     }
 
     public static Room getRoom() throws Exception {
         return getRoom("거실");
     }
 
-    public static House getHouse() throws Exception {
-        return getHouse(getHouseId());
-    }
-
-    public static Detail getHouseId() {
+    public static Detail getHouseDetail() {
         return new Detail("cozy house", "leaf", "this is cozy house");
     }
 
     public static House getHouse(Detail detail) throws Exception {
         return getHouse(detail, List.of(getRoom("거실"), getRoom("주방")));
+    }
+
+    public static House getHouse() throws Exception {
+        return getHouse(getHouseDetail());
     }
 
     public static House getHouse(Detail detail, List<Room> rooms) throws Exception {

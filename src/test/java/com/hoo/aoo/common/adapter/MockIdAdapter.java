@@ -11,4 +11,9 @@ public class MockIdAdapter implements IssueIdPort {
     public Long issueHouseId() {
         return Random.from(RandomGenerator.getDefault()).nextLong();
     }
+
+    @Override
+    public Long issueRoomId() {
+        return Random.from(RandomGenerator.getDefault()).nextLong();
+    }
 }

@@ -11,7 +11,8 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.Detail;
 import com.hoo.aoo.admin.domain.house.room.Room;
-import com.hoo.aoo.common.application.port.in.CreateHousePort;
+import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
+import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class CreateHouseService implements CreateHouseUseCase {
     private final SaveHousePort saveHousePort;
     private final UploadPrivateImageUseCase uploadPrivateImageUseCase;
     private final CreateHousePort createHousePort;
+    private final CreateRoomPort createRoomPort;
 
     @Override
     @Transactional
@@ -57,7 +59,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                 else
                     for (CreateHouseMetadata.RoomData room : metadata.rooms()) {
                         if (fileInfo.realName().equals(fileMap.get(room.form()).getOriginalFilename())) {
-                            rooms.add(Room.create(room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), fileInfo.id()));
+                            rooms.add(createRoomPort.createRoom(room.name(), room.x(), room.y(), room.z(), room.width(), room.height(), fileInfo.id()));
                         }
                     }
             }

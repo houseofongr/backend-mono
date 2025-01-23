@@ -4,14 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class RoomId {
+    private final Long id;
 
-    private String name;
-
-    public RoomId(String name) {
-        this.name = name;
-    }
-
-    public void update(String name) {
-        this.name = name == null ? this.name : name;
+    public RoomId(Long id) {
+        this.id = id;
     }
 }

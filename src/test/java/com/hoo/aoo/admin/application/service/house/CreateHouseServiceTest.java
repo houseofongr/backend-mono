@@ -2,8 +2,9 @@ package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
+import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
-import com.hoo.aoo.common.application.port.in.CreateHousePort;
+import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
@@ -30,13 +31,15 @@ class CreateHouseServiceTest {
     SaveHousePort saveHousePort;
     UploadPrivateImageUseCase uploadPrivateImageUseCase;
     CreateHousePort createHousePort;
+    CreateRoomPort createRoomPort;
 
     @BeforeEach
     void init() {
         saveHousePort = mock();
         uploadPrivateImageUseCase = mock();
         createHousePort = mock();
-        sut = new CreateHouseService(saveHousePort, uploadPrivateImageUseCase, createHousePort);
+        createRoomPort = mock();
+        sut = new CreateHouseService(saveHousePort, uploadPrivateImageUseCase, createHousePort, createRoomPort);
     }
 
     @Test

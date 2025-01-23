@@ -20,6 +20,11 @@ public class IdPersistenceAdapter implements IssueIdPort {
         return issue("HOUSE");
     }
 
+    @Override
+    public Long issueRoomId() {
+        return issue("ROOM");
+    }
+
     private Long issue(String tableName) {
         Object singleResult = entityManager.createNativeQuery(
                         """

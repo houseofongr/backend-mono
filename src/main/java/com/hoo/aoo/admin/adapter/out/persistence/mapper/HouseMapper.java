@@ -37,7 +37,7 @@ public class HouseMapper {
 
     public RoomJpaEntity mapToNewJpaEntity(Room room) {
         return new RoomJpaEntity(null,
-                room.getId().getName(),
+                room.getDetail().getName(),
                 room.getAxis().getX(),
                 room.getAxis().getY(),
                 room.getAxis().getZ(),
@@ -49,7 +49,9 @@ public class HouseMapper {
     }
 
     public Room mapToDomainEntity(RoomJpaEntity roomJpaEntity) throws AreaLimitExceededException, AxisLimitExceededException {
-        return Room.load(roomJpaEntity.getName(),
+        return Room.load(
+                roomJpaEntity.getId(),
+                roomJpaEntity.getName(),
                 roomJpaEntity.getX(),
                 roomJpaEntity.getY(),
                 roomJpaEntity.getZ(),
@@ -76,6 +78,7 @@ public class HouseMapper {
 
         for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
             Room loadedRoom = Room.load(
+                    roomJpaEntity.getId(),
                     roomJpaEntity.getName(),
                     roomJpaEntity.getX(),
                     roomJpaEntity.getY(),

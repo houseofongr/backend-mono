@@ -158,7 +158,7 @@ class HousePersistenceAdapterTest {
         assertThat(house.get().getArea().getHeight()).isEqualTo(5000f);
         assertThat(house.get().getRooms()).hasSize(2)
                 .anySatisfy(room -> {
-                    assertThat(room.getId().getName()).isEqualTo("거실");
+                    assertThat(room.getDetail().getName()).isEqualTo("거실");
                     assertThat(room.getAxis().getX()).isEqualTo(0);
                     assertThat(room.getAxis().getY()).isEqualTo(0);
                     assertThat(room.getAxis().getZ()).isEqualTo(0);

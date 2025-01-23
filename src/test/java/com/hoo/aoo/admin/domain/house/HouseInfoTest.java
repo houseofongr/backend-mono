@@ -68,7 +68,7 @@ class HouseInfoTest {
 
         // then
         assertThat(houseWithRoom.getRooms()).anySatisfy(
-                room -> assertThat(room.getId().getName()).isEqualTo("욕실")
+                room -> assertThat(room.getDetail().getName()).isEqualTo("욕실")
         );
 
         assertThatThrownBy(() -> houseWithRoom.updateRoomInfo(originalName, originalName))
