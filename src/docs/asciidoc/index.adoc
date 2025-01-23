@@ -240,11 +240,7 @@ operation::admin-home-delete[snippets='http-request,path-parameters,http-respons
 
 관리자가 지정한 아이템의 좌표와 음원에 맞게 아이템을 저장합니다.
 
-===== Http Request
-include::{snippets}/admin-item-post/http-request.adoc[]
-
-===== Request Form
-include::{snippets}/admin-item-post/request-parts.adoc[]
+operation::admin-item-post[snippets='http-request,path-parameters,request-parts']
 
 > 위 요청에서 각 음원 파일의 **Form 태그 name 속성값**은 아래 <<CreateItemMetadata>>의 **form 필드와 일치**해야 합니다.
 
