@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetItemController {
 
-    @GetMapping("/admin/items/{itemId}")
+    @GetMapping("/admin/items/{itemId}/sound-sources")
     public ResponseEntity<QueryItemResult> getItem() {
         QueryItemResult result = new QueryItemResult(
           "설이", List.of(new QueryItemResult.SoundSourceInfo(

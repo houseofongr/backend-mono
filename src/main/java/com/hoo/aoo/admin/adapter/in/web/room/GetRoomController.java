@@ -15,10 +15,8 @@ public class GetRoomController {
 
     private final QueryRoomInfoUseCase queryRoomInfoUseCase;
 
-    @GetMapping("/admin/houses/rooms/{roomId}")
-    ResponseEntity<QueryRoomResult> load(
-            @PathVariable Long roomId
-    ) {
+    @GetMapping("/admin/houses/rooms/{roomId}/items")
+    ResponseEntity<QueryRoomResult> load(@PathVariable Long roomId) {
         return new ResponseEntity<>(queryRoomInfoUseCase.queryRoom(roomId), HttpStatus.OK);
     }
 

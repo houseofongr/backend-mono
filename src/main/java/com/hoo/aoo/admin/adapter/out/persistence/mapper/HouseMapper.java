@@ -9,6 +9,7 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -33,31 +34,6 @@ public class HouseMapper {
         roomJpaEntities.forEach(roomJpaEntity -> roomJpaEntity.setHouse(houseJpaEntity));
 
         return houseJpaEntity;
-    }
-
-    public RoomJpaEntity mapToNewJpaEntity(Room room) {
-        return new RoomJpaEntity(null,
-                room.getRoomName().getName(),
-                room.getAxis().getX(),
-                room.getAxis().getY(),
-                room.getAxis().getZ(),
-                room.getArea().getWidth(),
-                room.getArea().getHeight(),
-                room.getImageFile().getFileId().getId(),
-                null
-        );
-    }
-
-    public Room mapToDomainEntity(RoomJpaEntity roomJpaEntity) throws AreaLimitExceededException, AxisLimitExceededException {
-        return Room.load(
-                roomJpaEntity.getId(),
-                roomJpaEntity.getName(),
-                roomJpaEntity.getX(),
-                roomJpaEntity.getY(),
-                roomJpaEntity.getZ(),
-                roomJpaEntity.getWidth(),
-                roomJpaEntity.getHeight(),
-                roomJpaEntity.getImageFileId());
     }
 
     public House mapToDomainEntity(HouseJpaEntity houseJpaEntity, List<RoomJpaEntity> roomJpaEntities) throws AreaLimitExceededException, AxisLimitExceededException {
@@ -121,7 +97,4 @@ public class HouseMapper {
         return new QueryHouseResult(house,list);
     }
 
-    public QueryRoomResult mapToQueryRoomResult(RoomJpaEntity roomJpaEntity) {
-        return QueryRoomResult.of(roomJpaEntity);
-    }
 }

@@ -26,7 +26,7 @@ class ShapeTest {
         assertThat(rectangle.getY()).isEqualTo(100f);
         assertThat(((Rectangle) rectangle).getWidth()).isEqualTo(10f);
         assertThat(((Rectangle) rectangle).getHeight()).isEqualTo(10f);
-        assertThat(((Rectangle) rectangle).getAngle()).isEqualTo(5f);
+        assertThat(((Rectangle) rectangle).getRotation()).isEqualTo(5f);
 
     }
 
@@ -65,9 +65,9 @@ class ShapeTest {
         assertThat(ellipse.getItemType()).isEqualTo(ItemType.ELLIPSE);
         assertThat(ellipse.getX()).isEqualTo(500f);
         assertThat(ellipse.getY()).isEqualTo(500f);
-        assertThat(((Ellipse) ellipse).getWidth()).isEqualTo(15f);
-        assertThat(((Ellipse) ellipse).getHeight()).isEqualTo(15f);
-        assertThat(((Ellipse) ellipse).getAngle()).isEqualTo(90f);
+        assertThat(((Ellipse) ellipse).getRadiusX()).isEqualTo(15f);
+        assertThat(((Ellipse) ellipse).getRadiusY()).isEqualTo(15f);
+        assertThat(((Ellipse) ellipse).getRotation()).isEqualTo(90f);
     }
 
 }

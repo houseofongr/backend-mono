@@ -25,7 +25,6 @@ public enum AdminErrorCode implements ErrorCode {
     ALREADY_CREATED_HOME("ADMIN-HOME-2", CONFLICT, "이미 동일한 요청으로 생성된 홈이 존재합니다."),
 
     ILLEGAL_SHAPE_TYPE("ADMIN-ITEM-1", BAD_REQUEST, "잘못된 아이템 형태입니다."),
-    INVALID_CREATE_ITEM_METADATA("ADMIN-ITEM-2", BAD_REQUEST, "아이템 생성 메타데이터를 읽을 수 없습니다."),
 
     LOAD_ENTITY_FAILED("ADMIN-COMMON-1", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
 

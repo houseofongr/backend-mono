@@ -35,6 +35,13 @@ spring:
 logging:
   level:
     root: debug
+    org:
+      hibernate:
+        sql: debug
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
 
 security:
   frontend-redirect-uri: http://localhost:8080

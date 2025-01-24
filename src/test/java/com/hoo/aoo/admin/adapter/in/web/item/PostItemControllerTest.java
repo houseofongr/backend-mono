@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.item;
 
 import com.hoo.aoo.admin.application.port.in.item.CreateItemCommand;
+import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
@@ -31,9 +32,9 @@ class PostItemControllerTest extends AbstractControllerTest {
 
         CreateItemCommand command = new CreateItemCommand(
                 List.of(
-                        new CreateItemCommand.ItemData("강아지", ItemType.CIRCLE, new CreateItemCommand.CircleData(200f, 200f, 10.5f), null, null),
-                        new CreateItemCommand.ItemData("설이", ItemType.RECTANGLE, null, new CreateItemCommand.RectangleData(100f, 100f, 10f, 10f, 5f), null),
-                        new CreateItemCommand.ItemData("화분", ItemType.ELLIPSE, null, null, new CreateItemCommand.EllipseData(500f, 500f, 15f, 15f, 90f))
+                        new ItemData(null,"강아지", ItemType.CIRCLE, new ItemData.CircleData(200f, 200f, 10.5f), null, null),
+                        new ItemData(null,"설이", ItemType.RECTANGLE, null, new ItemData.RectangleData(100f, 100f, 10f, 10f, 5f), null),
+                        new ItemData(null,"화분", ItemType.ELLIPSE, null, null, new ItemData.EllipseData(500f, 500f, 15f, 15f, 90f))
                 )
         );
 

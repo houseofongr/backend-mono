@@ -1,27 +1,19 @@
 package com.hoo.aoo.admin.application.service.item;
 
 import com.hoo.aoo.admin.application.port.in.item.CreateItemCommand;
-import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
+import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.domain.item.ItemType;
-import com.hoo.aoo.common.FixtureRepository;
-import com.hoo.aoo.file.application.port.in.UploadFileResult;
-import com.hoo.aoo.file.application.port.in.UploadPrivateAudioUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -52,9 +44,9 @@ class CreateItemServiceTest {
         // given
         CreateItemCommand command = new CreateItemCommand(
                 List.of(
-                        new CreateItemCommand.ItemData("강아지", ItemType.CIRCLE, new CreateItemCommand.CircleData(200f, 200f, 10.5f), null, null),
-                        new CreateItemCommand.ItemData("설이", ItemType.RECTANGLE, null, new CreateItemCommand.RectangleData(100f, 100f, 10f, 10f, 5f), null),
-                        new CreateItemCommand.ItemData("화분", ItemType.ELLIPSE, null, null, new CreateItemCommand.EllipseData(500f, 500f, 15f, 15f, 90f))
+                        new ItemData(1L,"강아지", ItemType.CIRCLE, new ItemData.CircleData(200f, 200f, 10.5f), null, null),
+                        new ItemData(2L,"설이", ItemType.RECTANGLE, null, new ItemData.RectangleData(100f, 100f, 10f, 10f, 5f), null),
+                        new ItemData(3L,"화분", ItemType.ELLIPSE, null, null, new ItemData.EllipseData(500f, 500f, 15f, 15f, 90f))
                 )
         );
 

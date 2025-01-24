@@ -31,7 +31,7 @@ class QueryRoomServiceTest {
         Long id = 1L;
 
         // when
-        when(findRoomPort.findResult(1L)).thenReturn(Optional.of(new QueryRoomResult(null)));
+        when(findRoomPort.findResult(1L)).thenReturn(Optional.of(new QueryRoomResult(null, null)));
         QueryRoomResult result = sut.queryRoom(id);
 
         // then

@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
@@ -22,7 +23,7 @@ import java.util.Optional;
 public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, DeleteRoomPort {
 
     private final RoomJpaRepository roomJpaRepository;
-    private final HouseMapper houseMapper;
+    private final RoomMapper roomMapper;
 
     @Override
     public int update(UpdateRoomInfoCommand command) {
@@ -56,12 +57,12 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
         Optional<RoomJpaEntity> optional = roomJpaRepository.findById(id);
 
         if (optional.isEmpty()) return Optional.empty();
-        else return Optional.ofNullable(houseMapper.mapToDomainEntity(optional.get()));
+        else return Optional.of(roomMapper.mapToDomainEntity(optional.get()));
     }
 
     @Override
     public Optional<QueryRoomResult> findResult(Long id) {
-        return roomJpaRepository.findById(id).map(houseMapper::mapToQueryRoomResult);
+        return roomJpaRepository.findById(id).map(roomMapper::mapToQueryRoomResult);
     }
 
 

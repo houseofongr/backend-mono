@@ -157,11 +157,9 @@ operation::admin-house-delete[snippets='path-parameters,http-request,http-respon
 룸 관리를 위한 API 입니다.
 
 [[admin-room-get-api]]
-==== 룸 정보 상세조회 API
+==== 룸 조회 API
 
-룸의 상세 정보를 조회하는 API입니다.
-
-> 차후 아이템 관련 정보를 추가할 예정입니다.
+룸과 해당 룸 안의 아이템 정보를 조회하는 API입니다.
 
 operation::admin-house-get-room[snippets='path-parameters,http-request,http-response,response-fields']
 

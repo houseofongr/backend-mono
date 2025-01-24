@@ -2,6 +2,8 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
@@ -31,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({HousePersistenceAdapter.class, HouseMapper.class})
+@Import({HousePersistenceAdapter.class, HouseMapper.class, RoomMapper.class, ItemMapper.class})
 class HousePersistenceAdapterTest {
 
     @Autowired

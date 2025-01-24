@@ -20,7 +20,7 @@ class GetItemControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("아이템 조회 API")
     void testGetItem() throws Exception {
-        mockMvc.perform(get("/admin/items/{itemId}", 1L))
+        mockMvc.perform(get("/admin/items/{itemId}/sound-sources", 1L))
                 .andExpect(status().is(200))
                 .andDo(document("admin-item-get",
                         pathParameters(

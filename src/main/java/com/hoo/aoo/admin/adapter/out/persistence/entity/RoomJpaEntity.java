@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "ROOM")
 @Getter
@@ -43,7 +46,27 @@ public class RoomJpaEntity {
     @JoinColumn(name = "HOUSE_ID")
     private HouseJpaEntity house;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<RectangleItemJpaEntity> rectangleItems;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<CircleItemJpaEntity> circleItems;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<EllipseItemJpaEntity> ellipseItems;
+
     public void updateInfo(String name) {
         this.name = name;
+    }
+
+    public List<ItemJpaEntity> getItems() {
+
+        List<ItemJpaEntity> ret = new ArrayList<>();
+
+        ret.addAll(rectangleItems);
+        ret.addAll(circleItems);
+        ret.addAll(ellipseItems);
+
+        return ret;
     }
 }

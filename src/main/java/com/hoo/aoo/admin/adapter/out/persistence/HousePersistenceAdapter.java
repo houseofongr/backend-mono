@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
@@ -27,11 +28,12 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
     private final HouseJpaRepository houseJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
     private final HouseMapper houseMapper;
+    private final RoomMapper roomMapper;
 
     @Override
     public Long save(House house) {
 
-        List<RoomJpaEntity> roomJpaEntities = house.getRooms().stream().map(houseMapper::mapToNewJpaEntity).toList();
+        List<RoomJpaEntity> roomJpaEntities = house.getRooms().stream().map(roomMapper::mapToNewJpaEntity).toList();
 
         HouseJpaEntity houseJpaEntity = houseMapper.mapToNewJpaEntity(house, roomJpaEntities);
 

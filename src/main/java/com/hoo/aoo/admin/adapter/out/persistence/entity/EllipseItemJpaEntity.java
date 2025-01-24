@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,21 +24,21 @@ public class EllipseItemJpaEntity extends ItemJpaEntity {
     private Float y;
 
     @Column(nullable = false)
-    private Float width;
+    private Float radiusX;
 
     @Column(nullable = false)
-    private Float height;
+    private Float radiusY;
 
     @Column(nullable = false)
-    private Float angle;
+    private Float rotation;
 
-    public EllipseItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, List<SoundSourceJpaEntity> soundSources, Float x, Float y, Float width, Float height, Float angle) {
+    public EllipseItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, List<SoundSourceJpaEntity> soundSources, Float x, Float y, Float radiusX, Float radiusY, Float rotation) {
         super(id, name, home, room, user, soundSources);
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        this.angle = angle;
+        this.radiusX = radiusX;
+        this.radiusY = radiusY;
+        this.rotation = rotation;
     }
 
 }

@@ -4,4 +4,8 @@ truncate table SNS_ACCOUNT;
 truncate table HOUSE;
 truncate table ROOM;
 truncate table HOME;
+truncate table ITEM;
+truncate table RECTANGLE_ITEM;
+truncate table CIRCLE_ITEM;
+truncate table ELLIPSE_ITEM;
 set foreign_key_checks = 1;

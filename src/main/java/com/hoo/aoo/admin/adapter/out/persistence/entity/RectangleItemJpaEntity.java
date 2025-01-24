@@ -30,14 +30,14 @@ public class RectangleItemJpaEntity extends ItemJpaEntity {
     private Float height;
 
     @Column(nullable = false)
-    private Float angle;
+    private Float rotation;
 
-    public RectangleItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, List<SoundSourceJpaEntity> soundSources, Float x, Float y, Float height, Float width, Float angle) {
+    public RectangleItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, List<SoundSourceJpaEntity> soundSources, Float x, Float y, Float height, Float width, Float rotation) {
         super(id, name, home, room, user, soundSources);
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.angle = angle;
+        this.rotation = rotation;
     }
 }

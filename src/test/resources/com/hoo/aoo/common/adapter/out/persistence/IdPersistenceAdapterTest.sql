@@ -29,5 +29,5 @@ values (1, 10, 1, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, USER_ID, DTYPE)
 values (1, '설이', 1, 1, 10, 'RECTANGLE');
 
-insert into RECTANGLE_ITEM(ID, X, Y, WIDTH, HEIGHT, ANGLE)
+insert into RECTANGLE_ITEM(ID, X, Y, WIDTH, HEIGHT, ROTATION)
 values (1, 100, 100,  10, 10, 5);

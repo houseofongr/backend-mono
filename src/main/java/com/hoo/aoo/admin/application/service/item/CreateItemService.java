@@ -1,9 +1,9 @@
 package com.hoo.aoo.admin.application.service.item;
 
 import com.hoo.aoo.admin.application.port.in.item.CreateItemCommand;
-import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemUseCase;
+import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.hoo.aoo.admin.domain.item.ItemType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +45,7 @@ public class CreateItemService implements CreateItemUseCase {
         return new CreateItemResult(saveItemPort.save(userId, homeId, roomId, newItems));
     }
 
-    private Shape createShape(CreateItemCommand.ItemData itemData) {
+    private Shape createShape(ItemData itemData) {
         switch (itemData.itemType()) {
             case RECTANGLE -> {
                 return new Rectangle(itemData.rectangleData().x(), itemData.rectangleData().y(), itemData.rectangleData().width(), itemData.rectangleData().height(), itemData.rectangleData().rotation());
