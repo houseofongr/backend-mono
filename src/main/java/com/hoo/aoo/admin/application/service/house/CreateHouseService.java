@@ -9,8 +9,8 @@ import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.Detail;
-import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.house.HouseDetail;
+import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
@@ -37,7 +37,7 @@ public class CreateHouseService implements CreateHouseUseCase {
     @Transactional
     public CreateHouseResult create(CreateHouseMetadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
-        Detail detail = new Detail(metadata.house().title(), metadata.house().author(), metadata.house().description());
+        HouseDetail houseDetail = new HouseDetail(metadata.house().title(), metadata.house().author(), metadata.house().description());
 
         List<Room> rooms = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                     }
             }
 
-            House newHouse = createHousePort.createHouse(detail, metadata.house().width(), metadata.house().height(),  basicImageId, borderImageId, rooms);
+            House newHouse = createHousePort.createHouse(houseDetail, metadata.house().width(), metadata.house().height(),  basicImageId, borderImageId, rooms);
             Long savedId = saveHousePort.save(newHouse);
 
             return new CreateHouseResult(savedId);

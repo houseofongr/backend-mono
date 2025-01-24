@@ -6,16 +6,19 @@ import lombok.Getter;
 
 @Getter
 public class Home {
-    private final HomeName homeName;
+    private final HomeId homeId;
+    private final HomeDetail detail;
 
-    private Home(HomeName homeName) {
-        this.homeName = homeName;
+    private Home(HomeId homeId, HomeDetail detail) {
+        this.homeId = homeId;
+        this.detail = detail;
     }
 
-    public static Home create(House house, User user) {
+    public static Home create(Long id, House house, User user) {
 
-        HomeName homeName = new HomeName(house, user);
+        HomeId homeId = new HomeId(id);
+        HomeDetail detail = new HomeDetail(house, user);
 
-        return new Home(homeName);
+        return new Home(homeId, detail);
     }
 }

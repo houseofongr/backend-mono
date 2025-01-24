@@ -5,10 +5,10 @@ import com.hoo.aoo.admin.domain.user.User;
 import lombok.Getter;
 
 @Getter
-public class HomeName {
+public class HomeDetail {
     private final String name;
 
-    public HomeName(House house, User user) {
-        this.name = user.getUserName().getNickName() + "의 " + house.getDetail().getTitle();
+    public HomeDetail(House house, User user) {
+        this.name = user.getUserName().getNickName() + "의 " + house.getHouseDetail().getTitle();
     }
 }

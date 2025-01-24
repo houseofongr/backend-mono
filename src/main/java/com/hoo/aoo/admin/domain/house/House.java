@@ -5,7 +5,7 @@ import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.RoomNameNotFoundException;
 import com.hoo.aoo.admin.domain.file.File;
 import com.hoo.aoo.admin.domain.file.FileType;
-import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.domain.BaseTime;
 import com.hoo.aoo.admin.domain.file.FileId;
 import lombok.Getter;
@@ -17,60 +17,60 @@ import java.util.List;
 public class House {
 
     private final HouseId houseId;
-    private final Detail detail;
+    private final HouseDetail houseDetail;
     private final Area area;
     private final BaseTime baseTime;
     private final List<Room> rooms;
     private final File basicImageFile;
     private final File borderImageFile;
 
-    private House(HouseId houseId, Detail detail, Area area, BaseTime baseTime, List<Room> rooms, File basicImageFile, File borderImageFile) {
+    private House(HouseId houseId, HouseDetail houseDetail, Area area, BaseTime baseTime, List<Room> rooms, File basicImageFile, File borderImageFile) {
         this.houseId = houseId;
         this.area = area;
-        this.detail = detail;
+        this.houseDetail = houseDetail;
         this.baseTime = baseTime;
         this.rooms = rooms;
         this.basicImageFile = basicImageFile;
         this.borderImageFile = borderImageFile;
     }
 
-    public static House create(Long id, Detail detail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
+    public static House create(Long id, HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
 
         HouseId houseId = new HouseId(id);
         Area area = new Area(width, height);
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
 
-        return new House(houseId, detail, area, null, rooms, defaultImageFile, borderImageFile);
+        return new House(houseId, houseDetail, area, null, rooms, defaultImageFile, borderImageFile);
     }
 
     public static House load(Long houseId, String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
 
-        Detail detail = new Detail(title, author, description);
+        HouseDetail houseDetail = new HouseDetail(title, author, description);
         BaseTime baseTime = new BaseTime(createdTime, updatedTime);
 
         Area area = new Area(width, height);
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
 
-        return new House(new HouseId(houseId), detail, area, baseTime, rooms, borderImageFile, defaultImageFile);
+        return new House(new HouseId(houseId), houseDetail, area, baseTime, rooms, borderImageFile, defaultImageFile);
     }
 
     public void updateInfo(String title, String author, String description) {
-        detail.update(title, author, description);
+        houseDetail.update(title, author, description);
     }
 
 
     public void updateRoomInfo(String originalName, String newName) throws RoomNameNotFoundException {
 
         for (Room room : rooms) {
-            if (room.getDetail().getName().equals(originalName)) {
-                room.getDetail().update(newName);
+            if (room.getRoomName().getName().equals(originalName)) {
+                room.getRoomName().update(newName);
                 return;
             }
         }
 
-        throw new RoomNameNotFoundException(detail.getTitle(), originalName);
+        throw new RoomNameNotFoundException(houseDetail.getTitle(), originalName);
     }
 
 }

@@ -1,13 +1,13 @@
-package com.hoo.aoo.admin.domain.house.room;
+package com.hoo.aoo.admin.domain.room;
 
 import lombok.Getter;
 
 @Getter
-public class Detail {
+public class RoomName {
 
     private String name;
 
-    public Detail(String name) {
+    public RoomName(String name) {
         this.name = name;
     }
 

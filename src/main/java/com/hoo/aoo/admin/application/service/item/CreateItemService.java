@@ -4,13 +4,14 @@ import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemUseCase;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
+import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.item.*;
-import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateAudioUseCase;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class CreateItemService implements CreateItemUseCase {
     private final FindHomePort findHomePort;
     private final FindRoomPort findRoomPort;
     private final SaveItemPort saveItemPort;
+    private final CreateItemPort createItemPort;
     private final UploadPrivateAudioUseCase uploadPrivateAudioUseCase;
 
     @Override
@@ -51,8 +53,7 @@ public class CreateItemService implements CreateItemUseCase {
                     .filter(fi -> fi.realName().equals(fileMap.get(soundSourceData.form()).getOriginalFilename())).findFirst()
                     .orElseThrow(() -> new AdminException(AdminErrorCode.INVALID_CREATE_ITEM_METADATA));
 
-            SoundSource soundSource = SoundSource.create(fileInfo.id(), soundSourceData.name(), soundSourceData.description(), null, null, soundSourceData.active());
-            newItems.add(Item.create(roomId, itemData.name(), createShape(itemData), List.of(soundSource)));
+            newItems.add(createItemPort.createItem(roomId, itemData.name(), createShape(itemData), List.of()));
         }
 
         return new CreateItemResult(saveItemPort.save(userId, homeId, roomId, newItems));

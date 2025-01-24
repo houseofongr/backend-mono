@@ -2,14 +2,12 @@ package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.*;
 import com.hoo.aoo.admin.domain.item.*;
-import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.FixtureRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ItemMapperTest {
 
@@ -46,7 +44,7 @@ class ItemMapperTest {
         // then
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
-        assertThat(itemJpaEntity.getName()).isEqualTo(설이.getItemId().getName());
+        assertThat(itemJpaEntity.getName()).isEqualTo(설이.getItemName().getName());
         assertThat(((RectangleItemJpaEntity) itemJpaEntity).getX()).isEqualTo(설이.getShape().getX());
         assertThat(((RectangleItemJpaEntity) itemJpaEntity).getY()).isEqualTo(설이.getShape().getX());
         assertThat(((RectangleItemJpaEntity) itemJpaEntity).getWidth()).isEqualTo(((Rectangle)설이.getShape()).getWidth());
@@ -67,7 +65,7 @@ class ItemMapperTest {
         // then
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
-        assertThat(itemJpaEntity.getName()).isEqualTo(강아지.getItemId().getName());
+        assertThat(itemJpaEntity.getName()).isEqualTo(강아지.getItemName().getName());
         assertThat(((CircleItemJpaEntity) itemJpaEntity).getX()).isEqualTo(강아지.getShape().getX());
         assertThat(((CircleItemJpaEntity) itemJpaEntity).getY()).isEqualTo(강아지.getShape().getX());
         assertThat(((CircleItemJpaEntity) itemJpaEntity).getRadius()).isEqualTo(((Circle)강아지.getShape()).getRadius());
@@ -86,7 +84,7 @@ class ItemMapperTest {
         // then
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
-        assertThat(itemJpaEntity.getName()).isEqualTo(화분.getItemId().getName());
+        assertThat(itemJpaEntity.getName()).isEqualTo(화분.getItemName().getName());
         assertThat(((EllipseItemJpaEntity) itemJpaEntity).getX()).isEqualTo(화분.getShape().getX());
         assertThat(((EllipseItemJpaEntity) itemJpaEntity).getY()).isEqualTo(화분.getShape().getX());
         assertThat(((EllipseItemJpaEntity) itemJpaEntity).getWidth()).isEqualTo(((Ellipse)화분.getShape()).getWidth());

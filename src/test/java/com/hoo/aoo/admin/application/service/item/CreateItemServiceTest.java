@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.application.service.item;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
+import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
@@ -31,6 +32,7 @@ class CreateItemServiceTest {
     FindHomePort findHomePort;
     FindRoomPort findRoomPort;
     SaveItemPort saveItemPort;
+    CreateItemPort createItemPort;
     UploadPrivateAudioUseCase uploadPrivateAudioUseCase;
 
     @BeforeEach
@@ -39,8 +41,9 @@ class CreateItemServiceTest {
         findHomePort = mock();
         findRoomPort = mock();
         saveItemPort = mock();
+        createItemPort = mock();
         uploadPrivateAudioUseCase = mock();
-        sut = new CreateItemService(findUserPort, findHomePort, findRoomPort, saveItemPort, uploadPrivateAudioUseCase);
+        sut = new CreateItemService(findUserPort, findHomePort, findRoomPort, saveItemPort, createItemPort, uploadPrivateAudioUseCase);
     }
 
     @Test

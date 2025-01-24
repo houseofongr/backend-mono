@@ -28,10 +28,10 @@ class PatchRoomInfoDocumentationTest extends AbstractDocumentationTest {
         String requestBody = """
                 [
                     {
-                      "detail" : "1",
+                      "houseDetail" : "1",
                       "newName" : "욕실"
                     }, {
-                      "detail" : "2",
+                      "houseDetail" : "2",
                       "newName" : "베란다"
                     }
                 ]
@@ -44,7 +44,7 @@ class PatchRoomInfoDocumentationTest extends AbstractDocumentationTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-house-patch-room",
                         requestFields(
-                                fieldWithPath("[].detail").description("수정할 룸의 식별자입니다."),
+                                fieldWithPath("[].houseDetail").description("수정할 룸의 식별자입니다."),
                                 fieldWithPath("[].newName").description("수정할 이름입니다.")
                         ),
                         responseFields(

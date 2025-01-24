@@ -1,14 +1,20 @@
 package com.hoo.aoo.common.application.service;
 
+import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
+import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
+import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
+import com.hoo.aoo.admin.application.port.out.soundsource.CreateSoundSourcePort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseId;
-import com.hoo.aoo.admin.domain.house.room.Detail;
-import com.hoo.aoo.admin.domain.house.room.Room;
-import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
-import com.hoo.aoo.admin.domain.house.room.RoomId;
+import com.hoo.aoo.admin.domain.house.HouseDetail;
+import com.hoo.aoo.admin.domain.item.Item;
+import com.hoo.aoo.admin.domain.item.Shape;
+import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,19 +23,37 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateHousePort, CreateRoomPort {
+public class EntityFactoryService implements CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort {
 
     private final IssueIdPort issueIdPort;
 
     @Override
-    public House createHouse(com.hoo.aoo.admin.domain.house.Detail detail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
+    public House createHouse(HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
         Long newId = issueIdPort.issueHouseId();
-        return House.create(newId, detail, width, height, defaultImageFileId, borderImageFileId, rooms);
+        return House.create(newId, houseDetail, width, height, defaultImageFileId, borderImageFileId, rooms);
     }
 
     @Override
     public Room createRoom(String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException {
         Long newId = issueIdPort.issueRoomId();
-        return Room.create(newId,name,x,y,z,width,height, imageFileId);
+        return Room.create(newId, name, x, y, z, width, height, imageFileId);
+    }
+
+    @Override
+    public Home createHome(House house, User user) {
+        Long newId = issueIdPort.issueHomeId();
+        return Home.create(newId, house, user);
+    }
+
+    @Override
+    public Item createItem(Long roomId, String name, Shape shape, List<SoundSource> soundSources) {
+        Long newId = issueIdPort.issueItemId();
+        return Item.create(newId, roomId, name, shape, soundSources);
+    }
+
+    @Override
+    public SoundSource createSoundSource(Long audioFileId, String name, String description, Boolean active) {
+        Long newId = issueIdPort.issueSoundSourceId();
+        return SoundSource.create(newId, audioFileId, name, description, active);
     }
 }

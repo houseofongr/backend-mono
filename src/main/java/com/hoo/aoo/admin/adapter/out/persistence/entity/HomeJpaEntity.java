@@ -29,7 +29,4 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private UserJpaEntity user;
 
-    public static HomeJpaEntity create(HouseJpaEntity house, UserJpaEntity user, String homeName) {
-        return new HomeJpaEntity(null, homeName, house, user);
-    }
 }

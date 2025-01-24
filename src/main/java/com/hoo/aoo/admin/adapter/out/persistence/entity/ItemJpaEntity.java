@@ -4,6 +4,7 @@ import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DiscriminatorOptions;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "ITEM")
 @Getter
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorOptions(force = true)
 @DiscriminatorColumn
 @NoArgsConstructor
 public abstract class ItemJpaEntity {

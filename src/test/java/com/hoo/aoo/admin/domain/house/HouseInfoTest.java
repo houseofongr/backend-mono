@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.domain.house;
 
 import com.hoo.aoo.admin.domain.exception.*;
 import com.hoo.aoo.common.FixtureRepository;
-import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.room.Room;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ class HouseInfoTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws Exception {
         // given
-        Detail detail = new Detail(title, author, description);
+        HouseDetail houseDetail = new HouseDetail(title, author, description);
         List<Room> rooms = List.of(FixtureRepository.getRoom("거실"));
 
         // when
@@ -30,8 +30,8 @@ class HouseInfoTest {
 
         // then
         assertThat(newHouse.getRooms()).hasSize(2);
-        assertThat(newHouse.getDetail().getTitle()).isEqualTo("cozy house");
-        assertThat(newHouse.getDetail().getAuthor()).isEqualTo("leaf");
+        assertThat(newHouse.getHouseDetail().getTitle()).isEqualTo("cozy house");
+        assertThat(newHouse.getHouseDetail().getAuthor()).isEqualTo("leaf");
         assertThat(newHouse.getArea().getWidth()).isEqualTo(5000);
         assertThat(newHouse.getArea().getHeight()).isEqualTo(5000);
     }
@@ -50,9 +50,9 @@ class HouseInfoTest {
         newHouse.updateInfo(title, author, description);
 
         // then
-        assertThat(newHouse.getDetail().getTitle()).isEqualTo(title);
-        assertThat(newHouse.getDetail().getAuthor()).isEqualTo("leaf");
-        assertThat(newHouse.getDetail().getDescription()).isEqualTo(description);
+        assertThat(newHouse.getHouseDetail().getTitle()).isEqualTo(title);
+        assertThat(newHouse.getHouseDetail().getAuthor()).isEqualTo("leaf");
+        assertThat(newHouse.getHouseDetail().getDescription()).isEqualTo(description);
     }
 
     @Test
@@ -68,7 +68,7 @@ class HouseInfoTest {
 
         // then
         assertThat(houseWithRoom.getRooms()).anySatisfy(
-                room -> assertThat(room.getDetail().getName()).isEqualTo("욕실")
+                room -> assertThat(room.getRoomName().getName()).isEqualTo("욕실")
         );
 
         assertThatThrownBy(() -> houseWithRoom.updateRoomInfo(originalName, originalName))

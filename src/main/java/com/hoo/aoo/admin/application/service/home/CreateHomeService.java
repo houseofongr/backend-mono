@@ -13,6 +13,7 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class CreateHomeService implements CreateHomeUseCase {
 
     private final FindHousePort findHousePort;
     private final FindUserPort findUserPort;
+    private final CreateHomePort createHomePort;
     private final SaveHomePort saveHomePort;
 
     @Override
@@ -35,7 +37,7 @@ public class CreateHomeService implements CreateHomeUseCase {
             User user = findUserPort.load(command.userId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
-            Home home = Home.create(house, user);
+            Home home = createHomePort.createHome(house, user);
 
             return saveHomePort.save(command, home);
 

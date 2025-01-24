@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.application.service.user;
 
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
+import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
 import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
@@ -21,17 +22,17 @@ class CreateHomeServiceTest {
     CreateHomeService sut;
 
     FindHousePort findHousePort;
-
     FindUserPort findUserPort;
-
+    CreateHomePort createHomePort;
     SaveHomePort saveHomePort;
 
     @BeforeEach
     void init() {
         findHousePort = mock();
         findUserPort = mock();
+        createHomePort = mock();
         saveHomePort = mock();
-        sut = new CreateHomeService(findHousePort, findUserPort, saveHomePort);
+        sut = new CreateHomeService(findHousePort, findUserPort, createHomePort, saveHomePort);
     }
 
     @Test

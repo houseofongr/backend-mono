@@ -2,9 +2,15 @@ package com.hoo.aoo.common.application.service;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.house.Detail;
+import com.hoo.aoo.admin.domain.home.Home;
+import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.item.Item;
+import com.hoo.aoo.admin.domain.item.Rectangle;
+import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,11 +36,11 @@ class EntityFactoryServiceTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws AreaLimitExceededException {
         // given
-        Detail detail = new Detail("title", "author", "description");
+        HouseDetail houseDetail = new HouseDetail("title", "author", "description");
 
         // when
         when(issueIdPort.issueHouseId()).thenReturn(1L);
-        House house = sut.createHouse(detail, 5000f, 5000f, 1L, 1L, List.of());
+        House house = sut.createHouse(houseDetail, 5000f, 5000f, 1L, 1L, List.of());
 
         // then
         assertThat(house).isNotNull();
@@ -53,5 +59,36 @@ class EntityFactoryServiceTest {
         // then
         assertThat(room).isNotNull();
         assertThat(room.getRoomId().getId()).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("홈 생성 테스트")
+    void testCreateHome() throws Exception {
+        // given
+        House house = FixtureRepository.getHouse();
+        User user = FixtureRepository.getUser();
+
+        // when
+        when(issueIdPort.issueHomeId()).thenReturn(1L);
+        Home home = sut.createHome(house, user);
+
+        // then
+        assertThat(home).isNotNull();
+        assertThat(home.getHomeId().getId()).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("아이템 생성 테스트")
+    void testCreateItem() {
+        // given
+        List<SoundSource> soundSource = List.of(FixtureRepository.getSoundSource());
+
+        // when
+        when(issueIdPort.issueItemId()).thenReturn(1L);
+        Item 설이 = sut.createItem(1L, "설이", new Rectangle(0f, 0f, 1f, 1f, 0f), soundSource);
+
+        // then
+        assertThat(설이).isNotNull();
+        assertThat(설이.getItemId().getId()).isEqualTo(1L);
     }
 }

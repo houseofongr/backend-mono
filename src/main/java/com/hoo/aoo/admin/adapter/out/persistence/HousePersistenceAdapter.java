@@ -67,7 +67,7 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
 
         HouseJpaEntity entity = houseJpaRepository.findById(id).orElseThrow();
 
-        entity.updateInfo(house.getDetail().getTitle(), house.getDetail().getAuthor(), house.getDetail().getDescription());
+        entity.updateInfo(house.getHouseDetail().getTitle(), house.getHouseDetail().getAuthor(), house.getHouseDetail().getDescription());
     }
 
     @Override

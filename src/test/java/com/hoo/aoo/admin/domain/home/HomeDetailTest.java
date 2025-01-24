@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HomeNameTest {
+class HomeDetailTest {
 
     @Test
     @DisplayName("홈 이름 생성 테스트")
@@ -18,9 +18,9 @@ class HomeNameTest {
         User user = FixtureRepository.getUser();
 
         // when
-        HomeName homeName = new HomeName(house, user);
+        HomeDetail detail = new HomeDetail(house, user);
 
         // then
-        assertThat(homeName.getName()).isEqualTo(user.getUserName().getNickName() + "의 " + house.getDetail().getTitle());
+        assertThat(detail.getName()).isEqualTo(user.getUserName().getNickName() + "의 " + house.getHouseDetail().getTitle());
     }
 }

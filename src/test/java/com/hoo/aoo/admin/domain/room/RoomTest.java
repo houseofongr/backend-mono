@@ -2,7 +2,6 @@ package com.hoo.aoo.admin.domain.room;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.house.room.Room;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ class RoomTest {
         Room newRoom = getRoom();
 
         // then
-        assertThat(newRoom.getDetail().getName()).isEqualTo("거실");
+        assertThat(newRoom.getRoomName().getName()).isEqualTo("거실");
         assertThat(newRoom.getAxis().getX()).isEqualTo(123);
         assertThat(newRoom.getAxis().getY()).isEqualTo(456);
         assertThat(newRoom.getAxis().getZ()).isEqualTo(1);
@@ -37,7 +36,7 @@ class RoomTest {
         room.updateInfo(name);
 
         // then
-        assertThat(room.getDetail().getName()).isEqualTo(name);
+        assertThat(room.getRoomName().getName()).isEqualTo(name);
     }
 
     private Room getRoom() throws AxisLimitExceededException, AreaLimitExceededException {

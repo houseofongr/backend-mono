@@ -7,7 +7,7 @@ import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.room.Room;
+import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +20,9 @@ public class HouseMapper {
     public HouseJpaEntity mapToNewJpaEntity(House house, List<RoomJpaEntity> roomJpaEntities) {
 
         HouseJpaEntity houseJpaEntity = new HouseJpaEntity(null,
-                house.getDetail().getTitle(),
-                house.getDetail().getAuthor(),
-                house.getDetail().getDescription(),
+                house.getHouseDetail().getTitle(),
+                house.getHouseDetail().getAuthor(),
+                house.getHouseDetail().getDescription(),
                 house.getArea().getWidth(),
                 house.getArea().getHeight(),
                 house.getBasicImageFile().getFileId().getId(),
@@ -37,7 +37,7 @@ public class HouseMapper {
 
     public RoomJpaEntity mapToNewJpaEntity(Room room) {
         return new RoomJpaEntity(null,
-                room.getDetail().getName(),
+                room.getRoomName().getName(),
                 room.getAxis().getX(),
                 room.getAxis().getY(),
                 room.getAxis().getZ(),

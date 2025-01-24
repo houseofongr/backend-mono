@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.domain.house.room;
+package com.hoo.aoo.admin.domain.room;
 
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.Axis;
@@ -13,15 +13,15 @@ import lombok.Getter;
 public class Room {
 
     private final RoomId roomId;
-    private final Detail detail;
+    private final RoomName roomName;
     private final Area area;
     private final Axis axis;
     private final File imageFile;
 
-    private Room(RoomId roomId, Detail detail, Area area, Axis axis, File imageFile) {
+    private Room(RoomId roomId, RoomName roomName, Area area, Axis axis, File imageFile) {
         this.roomId = roomId;
         this.area = area;
-        this.detail = detail;
+        this.roomName = roomName;
         this.axis = axis;
         this.imageFile = imageFile;
     }
@@ -29,26 +29,26 @@ public class Room {
     public static Room create(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException {
 
         RoomId roomId = new RoomId(id);
-        Detail detail = new Detail(name);
+        RoomName roomName = new RoomName(name);
         Axis axis = new Axis(x, y, z);
         Area area = new Area(width, height);
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 
-        return new Room(roomId, detail, area, axis, imageFile);
+        return new Room(roomId, roomName, area, axis, imageFile);
     }
 
     public static Room load(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AreaLimitExceededException, AxisLimitExceededException {
 
         RoomId roomId = new RoomId(id);
-        Detail detail = new Detail(name);
+        RoomName roomName = new RoomName(name);
         Axis axis = new Axis(x, y, z);
         Area area = new Area(width, height);
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 
-        return new Room(roomId, detail, area, axis, imageFile);
+        return new Room(roomId, roomName, area, axis, imageFile);
     }
 
     public void updateInfo(String name) {
-        detail.update(name);
+        roomName.update(name);
     }
 }

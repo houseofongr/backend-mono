@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.domain.house.room;
+package com.hoo.aoo.admin.domain.room;
 
 import lombok.Getter;
 

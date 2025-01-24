@@ -5,11 +5,9 @@ import com.hoo.aoo.admin.domain.item.Circle;
 import com.hoo.aoo.admin.domain.item.Ellipse;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Rectangle;
-import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class ItemMapper {
@@ -19,7 +17,7 @@ public class ItemMapper {
             case RECTANGLE -> {
                 Rectangle shape = (Rectangle) item.getShape();
                 return new RectangleItemJpaEntity(null,
-                        item.getItemId().getName(),
+                        item.getItemName().getName(),
                         home,
                         room,
                         user,
@@ -33,7 +31,7 @@ public class ItemMapper {
             case CIRCLE -> {
                 Circle shape = (Circle) item.getShape();
                 return new CircleItemJpaEntity(null,
-                        item.getItemId().getName(),
+                        item.getItemName().getName(),
                         home,
                         room,
                         user,
@@ -45,7 +43,7 @@ public class ItemMapper {
             case ELLIPSE -> {
                 Ellipse shape = (Ellipse) item.getShape();
                 return new EllipseItemJpaEntity(null,
-                        item.getItemId().getName(),
+                        item.getItemName().getName(),
                         home,
                         room,
                         user,

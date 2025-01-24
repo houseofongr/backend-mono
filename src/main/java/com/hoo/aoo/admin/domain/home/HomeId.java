@@ -1,12 +1,12 @@
-package com.hoo.aoo.admin.domain.item;
+package com.hoo.aoo.admin.domain.home;
 
 import lombok.Getter;
 
 @Getter
-public class ItemId {
+public class HomeId {
     private final Long id;
 
-    public ItemId(Long id) {
+    public HomeId(Long id) {
         this.id = id;
     }
 }

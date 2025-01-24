@@ -18,10 +18,10 @@ class HomeTest {
         User user = FixtureRepository.getUser();
 
         // when
-        Home home = Home.create(house, user);
+        Home home = Home.create(1L, house, user);
 
         // then
         assertThat(home).isNotNull();
-        assertThat(home.getHomeName().getName()).isEqualTo("leaf의 cozy house");
+        assertThat(home.getDetail().getName()).isEqualTo("leaf의 cozy house");
     }
 }

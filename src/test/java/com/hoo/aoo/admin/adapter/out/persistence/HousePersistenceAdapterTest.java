@@ -9,7 +9,7 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.house.Detail;
+import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
@@ -50,9 +50,9 @@ class HousePersistenceAdapterTest {
     @DisplayName("House 저장 테스트")
     void testSaveHouse() throws Exception {
         // given
-        Detail detail = new Detail("cozy house", "leaf", "it's very cozy.");
+        HouseDetail houseDetail = new HouseDetail("cozy house", "leaf", "it's very cozy.");
 
-        House newHouse = FixtureRepository.getHouse(detail);
+        House newHouse = FixtureRepository.getHouse(houseDetail);
 
         // when
         Long savedId = sut.save(newHouse);
@@ -151,14 +151,14 @@ class HousePersistenceAdapterTest {
 
         // then
         assertThat(house).isNotEmpty();
-        assertThat(house.get().getDetail().getTitle()).isEqualTo("cozy house");
-        assertThat(house.get().getDetail().getAuthor()).isEqualTo("leaf");
-        assertThat(house.get().getDetail().getDescription()).isEqualTo("this is cozy house");
+        assertThat(house.get().getHouseDetail().getTitle()).isEqualTo("cozy house");
+        assertThat(house.get().getHouseDetail().getAuthor()).isEqualTo("leaf");
+        assertThat(house.get().getHouseDetail().getDescription()).isEqualTo("this is cozy house");
         assertThat(house.get().getArea().getWidth()).isEqualTo(5000f);
         assertThat(house.get().getArea().getHeight()).isEqualTo(5000f);
         assertThat(house.get().getRooms()).hasSize(2)
                 .anySatisfy(room -> {
-                    assertThat(room.getDetail().getName()).isEqualTo("거실");
+                    assertThat(room.getRoomName().getName()).isEqualTo("거실");
                     assertThat(room.getAxis().getX()).isEqualTo(0);
                     assertThat(room.getAxis().getY()).isEqualTo(0);
                     assertThat(room.getAxis().getZ()).isEqualTo(0);
@@ -172,7 +172,7 @@ class HousePersistenceAdapterTest {
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfoHouse() throws Exception {
         // given
-        House houseWithRoom = FixtureRepository.getHouse(new Detail("not cozy house", "arang", "this is not cozy house"));
+        House houseWithRoom = FixtureRepository.getHouse(new HouseDetail("not cozy house", "arang", "this is not cozy house"));
 
         // when
         sut.update(1L, houseWithRoom);

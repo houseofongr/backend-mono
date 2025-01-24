@@ -2,7 +2,9 @@ package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
+@Table(name = "ELLIPSE_ITEM")
+@DiscriminatorValue("ELLIPSE")
 @Getter
 @NoArgsConstructor
 public class EllipseItemJpaEntity extends ItemJpaEntity {

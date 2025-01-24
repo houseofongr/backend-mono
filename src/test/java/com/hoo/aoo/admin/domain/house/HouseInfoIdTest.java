@@ -11,23 +11,23 @@ class HouseInfoIdTest {
     @DisplayName("업데이트 테스트")
     void testUpdateInfo() {
         // given
-        Detail detail = new Detail("cozy house", "leaf", "this is cozy house.");
-        Detail detail2 = new Detail("cozy house", "leaf", "this is cozy house.");
+        HouseDetail houseDetail = new HouseDetail("cozy house", "leaf", "this is cozy house.");
+        HouseDetail houseDetail2 = new HouseDetail("cozy house", "leaf", "this is cozy house.");
 
         String title = "not cozy house";
         String author = null;
         String description = "this is not cozy house.";
 
         // when
-        detail.update(title, author, description);
-        detail2.update(title, "", description);
+        houseDetail.update(title, author, description);
+        houseDetail2.update(title, "", description);
 
         // then
-        assertThat(detail.getTitle()).isEqualTo(title);
-        assertThat(detail.getAuthor()).isEqualTo("leaf");
-        assertThat(detail.getDescription()).isEqualTo(description);
+        assertThat(houseDetail.getTitle()).isEqualTo(title);
+        assertThat(houseDetail.getAuthor()).isEqualTo("leaf");
+        assertThat(houseDetail.getDescription()).isEqualTo(description);
 
-        assertThat(detail2.getAuthor()).isEqualTo("");
+        assertThat(houseDetail2.getAuthor()).isEqualTo("");
     }
 
 }

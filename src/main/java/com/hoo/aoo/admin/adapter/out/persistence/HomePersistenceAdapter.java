@@ -39,7 +39,7 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Delet
         if (homeJpaRepository.existsByHouseIdAndUserId(command.houseId(), command.userId()))
             throw new AdminException(AdminErrorCode.ALREADY_CREATED_HOME);
 
-        HomeJpaEntity homeJpaEntity = HomeJpaEntity.create(houseJpaEntity, userJpaEntity, home.getHomeName().getName());
+        HomeJpaEntity homeJpaEntity = homeMapper.mapToNewJpaEntity(home, houseJpaEntity, userJpaEntity);
 
         homeJpaRepository.save(homeJpaEntity);
 
