@@ -73,7 +73,7 @@ image::regist.png[regist flow]
 
 - **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
 
-operation::aar-authn-login[snippets='http-request,path-parameters,http-response,response-headers']
+operation::aar-authn-login[snippets='path-parameters,http-request,http-response,response-headers']
 
 > 파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.
 
@@ -122,14 +122,14 @@ operation::admin-house-post[snippets='http-response,response-fields']
 
 여러 건의 하우스를 검색 조건에 맞게 조회합니다.
 
-operation::admin-house-get-list[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-get-list[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-house-get-api]]
 ==== 하우스 상세 조회 API
 
 하우스와 내부 룸에 대한 상세 정보를 조회합니다.
 
-operation::admin-house-get[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-get[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-house-patch-api]]
 ==== 하우스 정보 수정 API
@@ -138,7 +138,7 @@ operation::admin-house-get[snippets='http-request,path-parameters,http-response,
 
 > 하우스의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
-operation::admin-house-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+operation::admin-house-patch[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
 
 [[admin-house-delete-api]]
 ==== 하우스 삭제 API
@@ -147,7 +147,7 @@ operation::admin-house-patch[snippets='http-request,path-parameters,request-fiel
 
 > 하우스 내부에 포함된 룸과 아이템을 함께 삭제합니다.
 
-operation::admin-house-delete[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 > 차후 사용자의 홈이 생성된 하우스는 삭제할 수 없도록 할 예정입니다.
 
@@ -163,7 +163,7 @@ operation::admin-house-delete[snippets='http-request,path-parameters,http-respon
 
 > 차후 아이템 관련 정보를 추가할 예정입니다.
 
-operation::admin-house-get-room[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-get-room[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-room-patch-api]]
 ==== 룸 정보 수정 API
@@ -181,7 +181,7 @@ operation::admin-house-patch-room[snippets='http-request,request-fields,http-res
 
 > 룸 내부에 포함된 아이템을 함께 삭제합니다.
 
-operation::admin-house-delete-room[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-house-delete-room[snippets='path-parameters,http-request,http-response,response-fields']
 
 > 차후 사용자의 음원이 담긴 룸은 삭제할 수 없도록 할 예정입니다.
 
@@ -195,14 +195,14 @@ operation::admin-house-delete-room[snippets='http-request,path-parameters,http-r
 
 소리기록실 사용자를 조회하는 API 입니다.
 
-operation::admin-user-get-list[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-user-get-list[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-user-get-home-list-api]]
 ==== 사용자 홈 조회 API
 
 사용자가 보유한 홈을 조회하는 API 입니다.
 
-operation::admin-user-get-home-list[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-user-get-home-list[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-home-api]]
 === 홈(Home) API
@@ -221,7 +221,7 @@ operation::admin-home-post[snippets='http-request,request-fields,http-response,r
 
 홈 정보를 조회하는 API 입니다.
 
-operation::admin-home-get[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-home-get[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-home-delete-api]]
 ==== 홈 삭제 API
@@ -230,7 +230,7 @@ operation::admin-home-get[snippets='http-request,path-parameters,http-response,r
 
 > 차후 홈 내부에 아이템이 존재할 경우 함께 삭제할 예정입니다.
 
-operation::admin-home-delete[snippets='http-request,path-parameters,http-response,response-fields']
+operation::admin-home-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-item-api]]
 === 아이템(item) API
@@ -238,20 +238,30 @@ operation::admin-home-delete[snippets='http-request,path-parameters,http-respons
 [[admin-item-post-api]]
 ==== 아이템 생성 API
 
-관리자가 지정한 아이템의 좌표와 음원에 맞게 아이템을 저장합니다.
+관리자가 지정한 아이템의 좌표에 맞게 아이템을 저장합니다.
 
-operation::admin-item-post[snippets='http-request,path-parameters,request-parts']
+operation::admin-item-post[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
 
-> 위 요청에서 각 음원 파일의 **Form 태그 name 속성값**은 아래 <<CreateItemMetadata>>의 **form 필드와 일치**해야 합니다.
+[[admin-item-get-api]]
+==== 아이템 조회 API
 
-===== CreateItemMetadata 예시
-include::{snippets}/admin-create-item-metadata/response-body.adoc[]
+아이템에 저장된 음원 리스트를 불러옵니다.
 
-===== CreateItemMetadata
-include::{snippets}/admin-create-item-metadata/response-fields.adoc[]
+operation::admin-item-get[snippets='path-parameters,http-request,http-response,response-fields']
 
+[[admin-item-patch-api]]
+==== 아이템 수정 API
 
-operation::admin-item-post[snippets='http-response,response-fields']
+아이템의 이름과 좌표, 형태를 수정합니다.
+
+operation::admin-item-patch[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
+
+[[admin-item-delete-api]]
+==== 아이템 삭제 API
+
+아이템을 삭제합니다.
+
+operation::admin-item-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 
 [[file-api]]
@@ -276,7 +286,7 @@ operation::file-public-images-upload[snippets='http-request,http-response,respon
 
 이미지 파일을 공개 서버로부터 로드합니다.
 
-operation::file-public-images-download[snippets='http-request,path-parameters,response-file']
+operation::file-public-images-download[snippets='path-parameters,http-request,response-file']
 
 [[file-private-api]]
 === 비공개(Private) API
@@ -290,14 +300,14 @@ operation::file-public-images-download[snippets='http-request,path-parameters,re
 
 이미지 파일을 비공개 서버로부터 로드합니다.
 
-operation::file-private-images-download[snippets='http-request,path-parameters,response-file']
+operation::file-private-images-download[snippets='path-parameters,http-request,response-file']
 
 [[file-private-audios-get-api]]
 ==== 음원 로드 API
 
 음원 파일을 비공개 서버로부터 로드합니다.
 
-operation::file-private-audios-download[snippets='http-request,path-parameters,response-file']
+operation::file-private-audios-download[snippets='path-parameters,http-request,response-file']
 
 [[error-code]]
 == 에러코드
