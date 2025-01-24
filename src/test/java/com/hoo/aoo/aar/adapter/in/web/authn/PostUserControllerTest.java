@@ -1,7 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
 import com.hoo.aoo.common.adapter.in.web.config.DocumentationTest;
-import com.nimbusds.jose.shaded.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DocumentationTest
-public class PostUserInfoDocumentationTest {
+public class PostUserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @Test
-    @Sql("RegisterUserDocumentationTest.sql")
+    @Sql("PostUserControllerTest.sql")
     @DisplayName("회원가입 API")
     void testRegisterWithDefaultPhoneNumber() throws Exception {
 

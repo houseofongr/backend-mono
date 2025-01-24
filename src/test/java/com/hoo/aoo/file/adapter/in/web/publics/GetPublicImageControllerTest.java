@@ -1,6 +1,6 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class GetPublicImageDocumentationTest extends AbstractDocumentationTest {
+public class GetPublicImageControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;

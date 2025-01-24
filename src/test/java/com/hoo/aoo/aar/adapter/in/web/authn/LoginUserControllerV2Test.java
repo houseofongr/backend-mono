@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @MockDocumentationTest
 @Import(LoginDocumentationOAuth2ControllerV2.class)
-public class LoginUserInfoDocumentationV2Test {
+public class LoginUserControllerV2Test {
 
     MockMvc mockMvc;
 

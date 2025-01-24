@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.authn;
+package com.hoo.aoo.aar;
 
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.common.adapter.in.web.config.SystemTest;

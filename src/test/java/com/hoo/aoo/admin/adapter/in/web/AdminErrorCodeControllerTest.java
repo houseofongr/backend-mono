@@ -1,7 +1,7 @@
-package com.hoo.aoo.aar.adapter.in.web;
+package com.hoo.aoo.admin.adapter.in.web;
 
-import com.hoo.aoo.aar.application.service.AarErrorCode;
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AarErrorCodeDocumentationTest extends AbstractDocumentationTest {
+class AdminErrorCodeControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,9 +21,9 @@ class AarErrorCodeDocumentationTest extends AbstractDocumentationTest {
     @Test
     @DisplayName("에러코드 문서화")
     void testErrorCodeDocumentation() throws Exception {
-        mockMvc.perform(get("/aar/error-codes"))
+        mockMvc.perform(get("/admin/error-codes"))
                 .andExpect(status().is(200))
-                .andDo(document("aar-error-code",
+                .andDo(document("admin-error-code",
                         responseFields(
                                 fieldWithPath("*.code").description("에러코드 이름입니다."),
                                 fieldWithPath("*.message").description("에러코드에 대한 설명입니다."),
@@ -31,7 +31,7 @@ class AarErrorCodeDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("*.httpStatusReason").description("상태 코드의 발생 원인입니다.")
                         )
                         , errorCodeResponseFields("error-code-response",
-                                errorCodeFieldDescriptors(AarErrorCode.values())
+                                errorCodeFieldDescriptors(AdminErrorCode.values())
                         )
                 ));
     }

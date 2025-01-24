@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.home;
 
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class DeleteHomeDocumentationTest extends AbstractDocumentationTest {
+class DeleteHomeControllerTest extends AbstractControllerTest {
 
     @Autowired
     HomeJpaRepository homeJpaRepository;
@@ -25,7 +25,7 @@ class DeleteHomeDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("DeleteHomeDocumentationTest.sql")
+    @Sql("DeleteHomeControllerTest.sql")
     @DisplayName("홈 삭제 API")
     void testDeleteHomeAPI() throws Exception {
         mockMvc.perform(delete("/admin/homes/{homeId}", 1L))

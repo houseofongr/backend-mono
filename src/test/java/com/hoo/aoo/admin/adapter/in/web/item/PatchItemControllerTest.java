@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 
 import com.hoo.aoo.admin.application.port.in.item.UpdateItemCommand;
 import com.hoo.aoo.admin.domain.item.ItemType;
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -14,7 +14,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PatchItemControllerTest extends AbstractDocumentationTest {
+class PatchItemControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {

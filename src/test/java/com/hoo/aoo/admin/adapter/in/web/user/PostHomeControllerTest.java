@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.user;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -11,7 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PostHomeDocumentationTest extends AbstractDocumentationTest {
+class PostHomeControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -19,7 +19,7 @@ class PostHomeDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("PostHomeDocumentationTest.sql")
+    @Sql("PostHomeControllerTest.sql")
     @DisplayName("Home 생성 테스트")
     void testCreateHome() throws Exception {
 

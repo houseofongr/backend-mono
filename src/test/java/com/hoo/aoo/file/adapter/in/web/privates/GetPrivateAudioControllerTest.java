@@ -1,6 +1,6 @@
 package com.hoo.aoo.file.adapter.in.web.privates;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +10,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.restdocs.RestDocumentationContext;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
@@ -20,7 +19,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetPrivateAudioDocumentationTest extends AbstractDocumentationTest {
+class GetPrivateAudioControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;

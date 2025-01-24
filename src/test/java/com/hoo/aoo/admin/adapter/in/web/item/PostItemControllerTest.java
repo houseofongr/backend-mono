@@ -1,17 +1,11 @@
 package com.hoo.aoo.admin.adapter.in.web.item;
 
 import com.hoo.aoo.admin.application.port.in.item.CreateItemCommand;
-import com.hoo.aoo.admin.application.port.in.item.CreateItemMetadata;
 import com.hoo.aoo.admin.domain.item.ItemType;
-import com.hoo.aoo.common.FixtureRepository;
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
-import com.hoo.aoo.common.util.GsonUtil;
-import com.nimbusds.jose.shaded.gson.Gson;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
@@ -23,7 +17,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PostItemDocumentationTest extends AbstractDocumentationTest {
+class PostItemControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -31,7 +25,7 @@ class PostItemDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("PostItemDocumentationTest.sql")
+    @Sql("PostItemControllerTest.sql")
     @DisplayName("아이템 생성 API")
     void testCreateItemAPI() throws Exception {
 

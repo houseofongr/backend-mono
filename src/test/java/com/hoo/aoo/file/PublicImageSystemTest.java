@@ -1,4 +1,4 @@
-package com.hoo.aoo.file.adapter.in.web.publics;
+package com.hoo.aoo.file;
 
 import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;

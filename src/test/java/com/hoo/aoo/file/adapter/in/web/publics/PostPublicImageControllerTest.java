@@ -1,6 +1,6 @@
 package com.hoo.aoo.file.adapter.in.web.publics;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class PostPublicImageDocumentationTest extends AbstractDocumentationTest {
+public class PostPublicImageControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {

@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.user;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -11,7 +11,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetUserHomesDocumentationTest extends AbstractDocumentationTest {
+class GetUserHomesControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -19,7 +19,7 @@ class GetUserHomesDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("GetUserHomesDocumentationTest.sql")
+    @Sql("GetUserHomesControllerTest.sql")
     @DisplayName("사용자 홈 조회 테스트")
     void testGetHomeList() throws Exception {
         mockMvc.perform(get("/admin/users/{userId}/homes", 10L))

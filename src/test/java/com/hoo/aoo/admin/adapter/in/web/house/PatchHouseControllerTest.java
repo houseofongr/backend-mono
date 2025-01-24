@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PatchHouseInfoInfoDocumentationTest extends AbstractDocumentationTest {
+class PatchHouseControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,7 +21,7 @@ class PatchHouseInfoInfoDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("PatchHouseDocumentationTest.sql")
+    @Sql("PatchHouseControllerTest.sql")
     @DisplayName("하우스 수정 문서화")
     void testHouseUpdateInfo() throws Exception {
 

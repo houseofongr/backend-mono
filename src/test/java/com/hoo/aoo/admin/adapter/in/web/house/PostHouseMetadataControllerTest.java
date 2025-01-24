@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -9,7 +9,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-public class PostHouseMetadataDocumentationTest extends AbstractDocumentationTest {
+public class PostHouseMetadataControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {

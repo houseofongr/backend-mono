@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -8,12 +8,11 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PatchRoomInfoDocumentationTest extends AbstractDocumentationTest {
+class PatchRoomControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,7 +20,7 @@ class PatchRoomInfoDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("PatchRoomInfoDocumentationTest.sql")
+    @Sql("PatchRoomControllerTest.sql")
     @DisplayName("룸 정보 수정 API")
     void testRoomInfoUpdate() throws Exception {
 

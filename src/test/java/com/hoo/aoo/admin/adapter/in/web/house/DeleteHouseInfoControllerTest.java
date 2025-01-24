@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -10,10 +10,10 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetRoomDocumentationTest extends AbstractDocumentationTest {
+class DeleteHouseInfoControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,22 +21,19 @@ class GetRoomDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("GetRoomDocumentationTest.sql")
-    @DisplayName("방 정보 조회 API")
-    void testLoadRoomData() throws Exception {
-        mockMvc.perform(get("/admin/houses/rooms/{roomId}", 1L)
+    @Sql("DeleteHouseControllerTest.sql")
+    @DisplayName("하우스 삭제 API")
+    void testDeleteHouse() throws Exception {
+        mockMvc.perform(delete("/admin/houses/{houseId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-get-room",
+                .andDo(document("admin-house-delete",
                         pathParameters(
-                                parameterWithName("roomId").description("조회할 방의 식별자입니다.")
+                                parameterWithName("houseId").description("삭제할 하우스의 식별자입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("room.name").description("방의 이름입니다."),
-                                fieldWithPath("room.width").description("방의 가로 길이입니다."),
-                                fieldWithPath("room.height").description("방의 높이입니다."),
-                                fieldWithPath("room.imageId").description("방의 이미지 식별자입니다.")
+                                fieldWithPath("message").description("삭제 완료 메시지 : 0번 하우스가 삭제되었습니다.")
                         )
                 ));
     }

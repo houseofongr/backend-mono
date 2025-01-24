@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class DeleteRoomDocumentationTest extends AbstractDocumentationTest {
+class DeleteRoomControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -21,7 +21,7 @@ class DeleteRoomDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("DeleteRoomDocumentationTest.sql")
+    @Sql("DeleteRoomControllerTest.sql")
     @DisplayName("룸 삭제 API")
     void testDeleteRoom() throws Exception {
         mockMvc.perform(delete("/admin/houses/rooms/{roomId}", 1L)

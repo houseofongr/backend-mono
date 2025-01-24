@@ -6,7 +6,6 @@ import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -19,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @DocumentationTest
 @Sql(value = "classpath:sql/clear.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
-public abstract class AbstractDocumentationTest {
+public abstract class AbstractControllerTest {
 
     protected MockMvc mockMvc;
 

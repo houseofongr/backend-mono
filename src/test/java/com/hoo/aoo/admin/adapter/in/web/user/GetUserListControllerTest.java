@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.user;
 
-import com.hoo.aoo.common.adapter.in.web.config.AbstractDocumentationTest;
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -11,7 +11,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetUserInfoListDocumentationTest extends AbstractDocumentationTest {
+class GetUserListControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -19,7 +19,7 @@ class GetUserInfoListDocumentationTest extends AbstractDocumentationTest {
     }
 
     @Test
-    @Sql("GetUserInfoListDocumentationTest.sql")
+    @Sql("GetUserListControllerTest.sql")
     @DisplayName("사용자 리스트 조회 API")
     void testGetUserList() throws Exception {
         mockMvc.perform(get("/admin/users?page=1&size=9"))
