@@ -31,12 +31,16 @@ class GetUserHomesDocumentationTest extends AbstractDocumentationTest {
                         responseFields(
                                 fieldWithPath("homes[].id").description("홈의 아이디입니다."),
                                 fieldWithPath("homes[].name").description("홈의 이름입니다."),
+                                fieldWithPath("homes[].createdDate").description("홈이 생성된 날짜입니다."),
+                                fieldWithPath("homes[].updatedDate").description("홈이 수정된 날짜입니다."),
+
+                                fieldWithPath("homes[].user.id").description("홈을 소유한 사용자의 식별자입니다."),
+                                fieldWithPath("homes[].user.nickname").description("홈을 소유한 사용자의 닉네임입니다."),
+
                                 fieldWithPath("homes[].baseHouse.id").description("하우스의 식별자입니다."),
                                 fieldWithPath("homes[].baseHouse.title").description("하우스의 타이틀입니다."),
                                 fieldWithPath("homes[].baseHouse.author").description("하우스의 작가입니다."),
-                                fieldWithPath("homes[].baseHouse.description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다."),
-                                fieldWithPath("homes[].createdDate").description("홈이 생성된 날짜입니다."),
-                                fieldWithPath("homes[].updatedDate").description("홈이 수정된 날짜입니다.")
+                                fieldWithPath("homes[].baseHouse.description").description("하우스에 대한 설명입니다. +" + "\n" + "* 100자까지만 전송됩니다.")
                         )
                 ));
     }

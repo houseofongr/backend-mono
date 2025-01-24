@@ -33,7 +33,7 @@ class QueryHomeServiceTest {
         Long id = 1L;
 
         // when
-        when(findHomePort.findHome(1L)).thenReturn(Optional.of(new QueryHomeResult(null,null,null,null,null,null)));
+        when(findHomePort.findHome(1L)).thenReturn(Optional.of(new QueryHomeResult(null,null,null,null,null,null,null)));
         QueryHomeResult queryHomeResult = sut.queryHome(id);
 
         // then

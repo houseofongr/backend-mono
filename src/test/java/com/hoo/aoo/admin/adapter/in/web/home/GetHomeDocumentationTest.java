@@ -40,6 +40,10 @@ class GetHomeDocumentationTest extends AbstractDocumentationTest {
                                 fieldWithPath("house.width").description("하우스의 가로 길이입니다."),
                                 fieldWithPath("house.height").description("하우스의 높이입니다."),
                                 fieldWithPath("house.borderImageId").description("하우스 테두리 이미지의 식별자입니다."),
+
+                                fieldWithPath("user.id").description("홈 소유자의 식별자입니다."),
+                                fieldWithPath("user.nickname").description("홈 소유자의 닉네임입니다."),
+
                                 fieldWithPath("rooms[].roomId").description("방의 식별자입니다."),
                                 fieldWithPath("rooms[].name").description("방의 이름입니다."),
                                 fieldWithPath("rooms[].x").description("방의 시작점(X좌표)입니다."),
