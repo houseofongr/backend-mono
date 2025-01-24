@@ -21,7 +21,6 @@ public class PostUserInfoDocumentationTest {
 
     @Autowired
     MockMvc mockMvc;
-    Gson gson = new Gson();
 
     @Test
     @Sql("RegisterUserDocumentationTest.sql")

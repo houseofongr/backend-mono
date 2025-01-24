@@ -7,5 +7,5 @@ import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import java.util.List;
 
 public interface CreateItemPort {
-    Item createItem(Long roomId, String name, Shape shape, List<SoundSource> soundSources);
+    Item createItem(Long roomId, String name, Shape shape);
 }

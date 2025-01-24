@@ -13,11 +13,12 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.hoo.aoo.common.util.GsonUtil.gson;
+
 @Component
 @AllArgsConstructor
 public class KakaoLoadUserService implements LoadUserService {
 
-    private final Gson gson = new Gson();
     private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final JwtUtil jwtUtil;
 

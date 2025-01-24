@@ -46,9 +46,9 @@ public class EntityFactoryService implements CreateHousePort, CreateRoomPort, Cr
     }
 
     @Override
-    public Item createItem(Long roomId, String name, Shape shape, List<SoundSource> soundSources) {
+    public Item createItem(Long roomId, String name, Shape shape) {
         Long newId = issueIdPort.issueItemId();
-        return Item.create(newId, roomId, name, shape, soundSources);
+        return Item.create(newId, roomId, name, shape);
     }
 
     @Override

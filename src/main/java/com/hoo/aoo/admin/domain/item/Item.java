@@ -22,10 +22,10 @@ public class Item {
         this.soundSources = soundSources;
     }
 
-    public static Item create(Long id, Long roomId, String name, Shape shape, List<SoundSource> soundSources) {
+    public static Item create(Long id, Long roomId, String name, Shape shape) {
         ItemId itemId = new ItemId(id);
         RoomId roomId1 = new RoomId(roomId);
         ItemName itemName = new ItemName(name);
-        return new Item(itemId, roomId1, itemName, shape, soundSources);
+        return new Item(itemId, roomId1, itemName, shape, List.of());
     }
 }

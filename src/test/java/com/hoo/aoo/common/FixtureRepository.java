@@ -12,13 +12,14 @@ import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.MockIdAdapter;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import com.hoo.aoo.common.application.service.EntityFactoryService;
-import com.nimbusds.jose.shaded.gson.Gson;
+import com.hoo.aoo.common.util.GsonUtil;
 
 import java.util.List;
 
+import static com.hoo.aoo.common.util.GsonUtil.gson;
+
 public class FixtureRepository {
 
-    private static final Gson gson = new Gson();
     private static final IssueIdPort mockIdPort = new MockIdAdapter();
     private static final EntityFactoryService entityFactoryService = new EntityFactoryService(mockIdPort);
 
@@ -63,11 +64,11 @@ public class FixtureRepository {
     }
 
     public static Item getItem() {
-        return entityFactoryService.createItem(1L, "설이", getShape(ItemType.RECTANGLE), List.of(getSoundSource(), getSoundSource(), getSoundSource()));
+        return getItem("설이", ItemType.RECTANGLE);
     }
 
     public static Item getItem(String itemName, ItemType itemType) {
-        return entityFactoryService.createItem(1L, itemName, getShape(itemType), List.of(getSoundSource(), getSoundSource(), getSoundSource()));
+        return entityFactoryService.createItem(1L, itemName, getShape(itemType));
     }
 
     public static SoundSource getSoundSource() {

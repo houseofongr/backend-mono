@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.hoo.aoo.common.util.GsonUtil.gson;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.BOOLEAN;
 import static org.mockito.Mockito.*;
@@ -69,7 +70,6 @@ class KakaoLoadUserInfoServiceTest {
         OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo(entity.getSnsId(),
                 new OAuth2Dto.KakaoUserInfo.KakaoAccount(entity.getEmail(), true, true, true,
                         new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getNickname(),true)));
-        Gson gson = new Gson();
         Map<String, Object> attributes = gson.fromJson(gson.toJsonTree(userInfo), Map.class);
 
         // when

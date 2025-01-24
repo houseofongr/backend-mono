@@ -18,16 +18,14 @@ class ItemTest {
         Long roomId = 1L;
         String itemName = "설이";
         Shape rectangle = new Rectangle(100f, 100f, 10f, 10f, 5f);
-        List<SoundSource> soundSources = List.of(FixtureRepository.getSoundSource(), FixtureRepository.getSoundSource());
 
         // when
-        Item item = Item.create(1L, roomId, itemName, rectangle, soundSources);
+        Item item = Item.create(1L, roomId, itemName, rectangle);
 
         // then
         assertThat(item).isNotNull();
         assertThat(item.getRoomId().getId()).isEqualTo(roomId);
         assertThat(item.getItemName().getName()).isEqualTo(itemName);
         assertThat(item.getShape()).isEqualTo(rectangle);
-        assertThat(item.getSoundSources()).hasSize(2);
     }
 }

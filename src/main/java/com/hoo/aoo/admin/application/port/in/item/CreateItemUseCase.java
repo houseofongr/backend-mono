@@ -5,5 +5,5 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 public interface CreateItemUseCase {
-    CreateItemResult create(Long userId, Long homeId, Long roomId, CreateItemMetadata metadata, Map<String, MultipartFile> fileMap);
+    CreateItemResult create(Long userId, Long homeId, Long roomId, CreateItemCommand command);
 }
