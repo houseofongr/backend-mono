@@ -40,13 +40,13 @@ class PatchItemControllerTest extends AbstractControllerTest {
                                 fieldWithPath("name").optional().description("수정할 아이템의 이름입니다."),
                                 fieldWithPath("itemType").optional().description("수정할 아이템의 타입입니다. +" + "\n" + "* 타입 : [CIRCLE, RECTANGLE, ELLIPSE]"),
 
-                                fieldWithPath("circleData").optional().description("원형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 수정하지 않으면 비워서(null) 전송합니다.").type(Object.class),
+                                fieldWithPath("circleData").optional().description("원형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 수정하지 않으면 비워서(null) 전송합니다.").type("Object"),
                                 fieldWithPath("rectangleData").optional().description("직사각형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 수정하지 않으면 비워서(null) 전송합니다."),
-                                fieldWithPath("ellipseData").optional().description("타원형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 수정하지 않으면 비워서(null) 전송합니다.").type(Object.class),
+                                fieldWithPath("ellipseData").optional().description("타원형 타입의 데이터입니다. +" + "\n" + "* 해당 타입으로 수정하지 않으면 비워서(null) 전송합니다.").type("Object"),
 
-                                fieldWithPath("circleData.x").optional().description("원형의 x좌표입니다.").type(Number.class),
-                                fieldWithPath("circleData.y").optional().description("원형의 y좌표입니다.").type(Number.class),
-                                fieldWithPath("circleData.radius").optional().description("원형의 반지름입니다.").type(Number.class),
+                                fieldWithPath("circleData.x").optional().description("원형의 x좌표입니다.").type("Number"),
+                                fieldWithPath("circleData.y").optional().description("원형의 y좌표입니다.").type("Number"),
+                                fieldWithPath("circleData.radius").optional().description("원형의 반지름입니다.").type("Number"),
 
                                 fieldWithPath("rectangleData.x").optional().description("직사각형의 x좌표입니다."),
                                 fieldWithPath("rectangleData.y").optional().description("직사각형의 y좌표입니다."),
@@ -54,11 +54,11 @@ class PatchItemControllerTest extends AbstractControllerTest {
                                 fieldWithPath("rectangleData.height").optional().description("직사각형의 세로 높이입니다."),
                                 fieldWithPath("rectangleData.rotation").optional().description("직사각형의 회전 각도입니다."),
 
-                                fieldWithPath("ellipseData.x").optional().description("타원형의 x좌표입니다.").type(Number.class),
-                                fieldWithPath("ellipseData.y").optional().description("타원형의 y좌표입니다.").type(Number.class),
-                                fieldWithPath("ellipseData.radiusX").optional().description("타원형의 x축 반지름입니다.").type(Number.class),
-                                fieldWithPath("ellipseData.radiusY").optional().description("타원형의 y축 반지름입니다.").type(Number.class),
-                                fieldWithPath("ellipseData.rotation").optional().description("타원형의 회전 각도입니다.").type(Number.class)
+                                fieldWithPath("ellipseData.x").optional().description("타원형의 x좌표입니다.").type("Number"),
+                                fieldWithPath("ellipseData.y").optional().description("타원형의 y좌표입니다.").type("Number"),
+                                fieldWithPath("ellipseData.radiusX").optional().description("타원형의 x축 반지름입니다.").type("Number"),
+                                fieldWithPath("ellipseData.radiusY").optional().description("타원형의 y축 반지름입니다.").type("Number"),
+                                fieldWithPath("ellipseData.rotation").optional().description("타원형의 회전 각도입니다.").type("Number")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : 0번 아이템의 정보가 수정되었습니다.")
