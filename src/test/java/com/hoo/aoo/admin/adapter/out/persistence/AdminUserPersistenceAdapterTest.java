@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
 
-import static com.hoo.aoo.aar.domain.account.SnsDomain.KAKAO;
+import static com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain.KAKAO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest

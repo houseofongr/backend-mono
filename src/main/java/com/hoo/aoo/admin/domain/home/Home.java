@@ -16,9 +16,6 @@ public class Home {
 
     public static Home create(Long id, House house, User user) {
 
-        HomeId homeId = new HomeId(id);
-        HomeDetail detail = new HomeDetail(house, user);
-
-        return new Home(homeId, detail);
+        return new Home(new HomeId(id), new HomeDetail(house, user));
     }
 }

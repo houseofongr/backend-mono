@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.out.database;
+package com.hoo.aoo.aar.application.port.out.database.user;
 
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.User;

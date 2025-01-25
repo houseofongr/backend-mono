@@ -1,5 +1,10 @@
 package com.hoo.aoo.common.application.service;
 
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.user.CreateUserPort;
+import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
@@ -14,18 +19,30 @@ import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Shape;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
-import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort {
 
     private final IssueIdPort issueIdPort;
+
+    @Override
+    public User createUser(SnsAccount snsAccount, Boolean termsOfUseAgreement, Boolean personalInformationAgreement) {
+        Long newId = issueIdPort.issueUserId();
+        return User.register(newId, termsOfUseAgreement, personalInformationAgreement, snsAccount);
+    }
+
+    @Override
+    public SnsAccount createSnsAccount(SnsDomain snsDomain, String snsId, String realName, String nickname, String email) {
+        Long newId = issueIdPort.issueSnsAccountId();
+        return SnsAccount.register(newId, snsDomain, snsId, realName, nickname, email);
+    }
 
     @Override
     public House createHouse(HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
@@ -40,7 +57,7 @@ public class EntityFactoryService implements CreateHousePort, CreateRoomPort, Cr
     }
 
     @Override
-    public Home createHome(House house, User user) {
+    public Home createHome(House house, com.hoo.aoo.admin.domain.user.User user) {
         Long newId = issueIdPort.issueHomeId();
         return Home.create(newId, house, user);
     }

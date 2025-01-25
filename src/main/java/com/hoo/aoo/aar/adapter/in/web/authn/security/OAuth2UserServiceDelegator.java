@@ -1,5 +1,6 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
+package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
+import com.hoo.aoo.aar.application.service.LoadKakaoSnsAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OAuth2UserServiceDelegator extends DefaultOAuth2UserService {
 
-    private final KakaoLoadUserService kakaoLoadUserService;
+    private final LoadKakaoSnsAccountService loadKakaoSnsAccountService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -20,7 +21,7 @@ public class OAuth2UserServiceDelegator extends DefaultOAuth2UserService {
 
         switch (userRequest.getClientRegistration().getRegistrationId()) {
             case "kakao":
-                return kakaoLoadUserService.load(user);
+                return loadKakaoSnsAccountService.load(user);
             default:
                 throw new UnsupportedOperationException();
         }

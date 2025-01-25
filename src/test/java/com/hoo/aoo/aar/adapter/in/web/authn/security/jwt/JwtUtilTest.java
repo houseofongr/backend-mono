@@ -2,11 +2,10 @@ package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.aar.domain.SnsAccountF;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -29,7 +28,6 @@ class JwtUtilTest {
 
     JwtUtil sut;
     JwtDecoder jwtDecoder;
-    UserMapper userMapper = new UserMapper();
     SnsAccountJpaRepository repository;
 
     @BeforeEach
@@ -69,9 +67,9 @@ class JwtUtilTest {
 
     @Test
     @DisplayName("SNS Account 토큰 생성 테스트")
-    void testSnsAccountAccessToken() throws InvalidPhoneNumberException {
+    void testSnsAccountAccessToken() {
         // given
-        SnsAccount snsAccount = SnsAccountF.NOT_REGISTERED_KAKAO.get();
+        SnsAccount snsAccount = MockEntityFactoryService.getSnsAccount();
         SnsAccountJpaEntity snsAccountJpaEntity = mock(SnsAccountJpaEntity.class);
         UserJpaEntity userJpaEntity = mock(UserJpaEntity.class);
 

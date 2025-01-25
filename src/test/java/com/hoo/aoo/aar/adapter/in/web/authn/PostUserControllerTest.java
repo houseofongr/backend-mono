@@ -24,7 +24,7 @@ public class PostUserControllerTest {
     @Test
     @Sql("PostUserControllerTest.sql")
     @DisplayName("회원가입 API")
-    void testRegisterWithDefaultPhoneNumber() throws Exception {
+    void testRegister() throws Exception {
 
         String body = "{\"termsOfUseAgreement\":true, \"personalInformationAgreement\":true}";
 
@@ -40,6 +40,7 @@ public class PostUserControllerTest {
                                 fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수하우스 및 활용에 대한 동의여부입니다.")
                         ),
                         responseFields(
+                                fieldWithPath("userId").description("회원가입한 사용자의 식별자입니다."),
                                 fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다."),
                                 fieldWithPath("accessToken").description("회원가입한 사용자의 JWT 액세스 토큰입니다. +" + "\n" + "Claim : [userId, snsId, nickname, role]"))));
     }

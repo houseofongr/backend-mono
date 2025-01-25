@@ -107,7 +107,7 @@ include::{snippets}/admin-house-post/http-request.adoc[]
 ===== Request Form
 include::{snippets}/admin-house-post/request-parts.adoc[]
 
-> 위 요청에서 각 이미지 파일의 **Form 태그 name 속성값**은 아래 <<CreateHouseMetadata>>와 일치해야 합니다.
+> 위 요청에서 각 이미지 파일의 **Form 태그 snsAccountInfo 속성값**은 아래 <<CreateHouseMetadata>>와 일치해야 합니다.
 
 ===== CreateHouseMetadata 예시
 include::{snippets}/admin-create-house-metadata/response-body.adoc[]

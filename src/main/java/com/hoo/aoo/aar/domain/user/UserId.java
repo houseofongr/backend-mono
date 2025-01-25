@@ -1,21 +1,13 @@
 package com.hoo.aoo.aar.domain.user;
 
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import lombok.Getter;
 
+@Getter
 public class UserId {
-    public static final String DEFAULT_PHONE_NUMBER = "010-0000-0000";
 
-    @Getter
-    private final String number;
+    private final Long id;
 
-    public UserId(String number) throws InvalidPhoneNumberException {
-        if (number == null)
-            this.number = DEFAULT_PHONE_NUMBER;
-        else if (!number.matches("^010-\\d{4}-\\d{4}$")) {
-            throw new InvalidPhoneNumberException(number);
-        }
-        else this.number = number;
+    public UserId(Long id) {
+        this.id = id;
     }
-
 }

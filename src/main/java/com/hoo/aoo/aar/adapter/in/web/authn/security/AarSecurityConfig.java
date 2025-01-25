@@ -1,7 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.handler.OAuth2SuccessHandler;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.service.OAuth2UserServiceDelegator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;

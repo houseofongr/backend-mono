@@ -1,7 +1,6 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
+package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.service.KakaoLoadUserService;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.service.OAuth2UserServiceDelegator;
+import com.hoo.aoo.aar.application.service.LoadKakaoSnsAccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,15 +12,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class OAuth2UserInfoJpaEntityServiceDelegatorTest {
+class OAuth2UserServiceDelegatorTest {
 
     OAuth2UserServiceDelegator sut;
-    KakaoLoadUserService kakaoLoadUserService;
+    LoadKakaoSnsAccountService loadKakaoSnsAccountService;
 
     @BeforeEach
     void init() {
-        kakaoLoadUserService = mock(KakaoLoadUserService.class);
-        sut = spy(new OAuth2UserServiceDelegator(kakaoLoadUserService));
+        loadKakaoSnsAccountService = mock(LoadKakaoSnsAccountService.class);
+        sut = spy(new OAuth2UserServiceDelegator(loadKakaoSnsAccountService));
     }
 
     @Test
@@ -56,6 +55,6 @@ class OAuth2UserInfoJpaEntityServiceDelegatorTest {
         sut.loadUser(request);
 
         // then
-        verify(kakaoLoadUserService, times(1)).load(user);
+        verify(loadKakaoSnsAccountService, times(1)).load(user);
     }
 }

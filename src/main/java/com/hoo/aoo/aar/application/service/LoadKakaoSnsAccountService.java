@@ -1,12 +1,11 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
+package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.SNSLoginResponse;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.domain.account.SnsDomain;
-import com.nimbusds.jose.shaded.gson.Gson;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -17,7 +16,7 @@ import static com.hoo.aoo.common.util.GsonUtil.gson;
 
 @Component
 @AllArgsConstructor
-public class KakaoLoadUserService implements LoadUserService {
+public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
 
     private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final JwtUtil jwtUtil;

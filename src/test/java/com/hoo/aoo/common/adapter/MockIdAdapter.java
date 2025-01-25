@@ -31,4 +31,14 @@ public class MockIdAdapter implements IssueIdPort {
     public Long issueSoundSourceId() {
         return Random.from(RandomGenerator.getDefault()).nextLong();
     }
+
+    @Override
+    public Long issueUserId() {
+        return Random.from(RandomGenerator.getDefault()).nextLong();
+    }
+
+    @Override
+    public Long issueSnsAccountId() {
+        return Random.from(RandomGenerator.getDefault()).nextLong();
+    }
 }

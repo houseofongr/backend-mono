@@ -1,9 +1,9 @@
 package com.hoo.aoo.common.adapter.out.persistence.entity;
 
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
+import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.domain.SnsAccountF;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,12 +24,12 @@ class DateColumnBaseEntityTest {
     @Autowired
     SnsAccountJpaRepository repository;
 
-    UserMapper mapper = new UserMapper();
+    SnsAccountMapper mapper = new SnsAccountMapper();
 
     @Test
     @DisplayName("DB 시간과 동기화 확인")
-    void testSyncTime() throws InvalidPhoneNumberException {
-        SnsAccountJpaEntity entity = mapper.mapToNewJpaEntity(SnsAccountF.NOT_REGISTERED_KAKAO.get());
+    void testSyncTime() {
+        SnsAccountJpaEntity entity = mapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
         ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
 
         repository.save(entity);

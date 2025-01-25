@@ -2,4 +2,4 @@ insert into AAR_USER(ID, REAL_NAME, NICKNAME, PHONE_NUMBER) values
 ('1', '남상엽', 'leaf','010-0000-0000');
 
 insert into SNS_ACCOUNT(ID, REAL_NAME, NICKNAME, EMAIL, SNS_ID, SNS_DOMAIN, CREATED_TIME, UPDATED_TIME, USER_ID) values
-('1', '남상엽', 'leaf','leaf@example.com', 'SNS_ID', 'KAKAO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1');
+('1', '남상엽', 'leaf','test@example.com', 'SNS_ID', 'KAKAO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1');

@@ -1,22 +1,18 @@
 package com.hoo.aoo.admin.adapter.in.web.authn.security;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.handler.OAuth2SuccessHandler;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.service.OAuth2UserServiceDelegator;
+import com.hoo.aoo.aar.adapter.in.web.authn.security.OAuth2UserServiceDelegator;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
-
-import static org.springframework.http.HttpMethod.*;
 
 public class AdminSecurityConfig {
 

@@ -4,7 +4,7 @@ import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.aar.domain.account.SnsDomain;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +124,7 @@ public class AuthnSystemTest {
 
         RegisterUserResult responseBody = (RegisterUserResult) registResponse.getBody();
 
-        assertThat(userJpaRepository.findByPhoneNumber("010-0000-0000")).isNotEmpty();
+        assertThat(userJpaRepository.findById(responseBody.userId())).isNotEmpty();
         assertThat(responseBody.nickname()).isNotEmpty();
         assertThat(responseBody.accessToken()).isNotEmpty();
 

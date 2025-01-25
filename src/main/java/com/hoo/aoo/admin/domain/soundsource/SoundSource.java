@@ -26,11 +26,8 @@ public class SoundSource {
 
     public static SoundSource create(Long id, Long fileId, String name, String description, Boolean isActive) {
 
-        SoundSourceId soundSourceId = new SoundSourceId(id);
         File file = new File(new FileId(fileId), FileType.AUDIO);
-        Detail detail = new Detail(name, description);
-        Active active = new Active(isActive);
 
-        return new SoundSource(soundSourceId, file, detail, null, active);
+        return new SoundSource(new SoundSourceId(id), file, new Detail(name, description), null, new Active(isActive));
     }
 }

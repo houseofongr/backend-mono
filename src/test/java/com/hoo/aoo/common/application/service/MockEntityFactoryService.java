@@ -1,28 +1,39 @@
 package com.hoo.aoo.common.application.service;
 
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.Agreement;
+import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.aar.domain.user.UserId;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccountId;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
-import com.hoo.aoo.admin.domain.item.*;
+import com.hoo.aoo.admin.domain.item.Circle;
+import com.hoo.aoo.admin.domain.item.Ellipse;
+import com.hoo.aoo.admin.domain.item.Item;
+import com.hoo.aoo.admin.domain.item.Rectangle;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
-import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.MockIdAdapter;
-import com.hoo.aoo.common.application.port.out.IssueIdPort;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class MockEntityFactoryService{
+public class MockEntityFactoryService {
 
     private static final EntityFactoryService factory = new EntityFactoryService(new MockIdAdapter());
 
+    public static SnsAccount getSnsAccount() {
+        return factory.createSnsAccount(SnsDomain.KAKAO, "SNS_ID", "남상엽", "leaf", "test@example.com");
+    }
+
+    public static User getUser() {
+        return factory.createUser(getSnsAccount(), true, true);
+    }
+
     public static House getHouse() throws Exception {
-        return factory.createHouse(new HouseDetail("cozy house","leaf","this is cozy house"), 5000f, 5000f, 1L, 2L, List.of(getRoom(), getRoom2()));
+        return factory.createHouse(new HouseDetail("cozy house", "leaf", "this is cozy house"), 5000f, 5000f, 1L, 2L, List.of(getRoom(), getRoom2()));
     }
 
     public static Room getRoom() throws Exception {
@@ -37,19 +48,19 @@ public class MockEntityFactoryService{
         return factory.createHome(getHouse(), getAdminUser());
     }
 
-    public static User getAdminUser() {
-        return User.load("leaf", "남상엽");
+    public static com.hoo.aoo.admin.domain.user.User getAdminUser() {
+        return com.hoo.aoo.admin.domain.user.User.load("leaf", "남상엽");
     }
 
-    public static Item getRectangleItem() throws Exception{
+    public static Item getRectangleItem() throws Exception {
         return factory.createItem(getRoom().getRoomId().getId(), "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
     }
 
-    public static Item getCircleItem() throws Exception{
+    public static Item getCircleItem() throws Exception {
         return factory.createItem(getRoom().getRoomId().getId(), "강아지", new Circle(200f, 200f, 10.5f));
     }
 
-    public static Item getEllipseItem() throws Exception{
+    public static Item getEllipseItem() throws Exception {
         return factory.createItem(getRoom().getRoomId().getId(), "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
     }
 

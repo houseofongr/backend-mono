@@ -4,11 +4,11 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;
-import com.hoo.aoo.aar.application.port.out.database.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.SaveUserPort;
-import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.user.CreateUserPort;
+import com.hoo.aoo.aar.application.port.out.database.user.SaveUserPort;
 import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegisterUserService implements RegisterUserUseCase {
 
     private final FindSnsAccountPort findSnsAccountPort;
+    private final CreateUserPort createUserPort;
     private final SaveUserPort saveUserPort;
     private final JwtUtil jwtUtil;
 
@@ -25,25 +26,15 @@ public class RegisterUserService implements RegisterUserUseCase {
     @Transactional
     public RegisterUserResult register(RegisterUserCommand command) {
 
-        try {
-            SnsAccount snsAccount = findSnsAccountPort.find(command.snsId())
-                    .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
+        SnsAccount snsAccount = findSnsAccountPort.find(command.snsId())
+                .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
-            if (snsAccount.getUserId() != null)
-                throw new AarException(AarErrorCode.ALREADY_REGISTERED_SNS_ACCOUNT);
+        if (snsAccount.getUserId().getId() != null)
+            throw new AarException(AarErrorCode.ALREADY_REGISTERED_SNS_ACCOUNT);
 
+        User user = createUserPort.createUser(snsAccount, command.termsOfUseAgreement(), command.personalInformationAgreement());
+        Long userId = saveUserPort.save(user);
 
-            User user = User.registerWithDefaultPhoneNumber(snsAccount, command.termsOfUseAgreement(), command.personalInformationAgreement());
-
-            saveUserPort.save(user);
-
-            String nickname = user.getName().getNickname();
-            String accessToken = jwtUtil.getAccessToken(snsAccount);
-
-            return new RegisterUserResult(nickname, accessToken);
-
-        } catch (InvalidPhoneNumberException e) {
-            throw new AarException(AarErrorCode.INVALID_PHONE_NUMBER_ERROR, e.getMessage());
-        }
+        return new RegisterUserResult(userId, user.getUserInfo().getNickname(), jwtUtil.getAccessToken(snsAccount));
     }
 }

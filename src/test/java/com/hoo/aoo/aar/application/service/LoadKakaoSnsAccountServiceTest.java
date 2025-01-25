@@ -1,16 +1,14 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.service;
+package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
+import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.domain.DomainFixtureRepository;
-import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.aar.domain.SnsAccountF;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.nimbusds.jose.shaded.gson.Gson;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,28 +22,28 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.BOOLEAN;
 import static org.mockito.Mockito.*;
 
-class KakaoLoadUserInfoServiceTest {
+class LoadKakaoSnsAccountServiceTest {
 
-    KakaoLoadUserService sut;
+    LoadKakaoSnsAccountService sut;
     SnsAccountJpaRepository repository;
     JwtUtil jwtUtil;
-    UserMapper userMapper;
+    SnsAccountMapper snsAccountMapper;
 
     @BeforeEach
     void init() {
         repository = mock(SnsAccountJpaRepository.class);
         jwtUtil = mock(JwtUtil.class);
-        sut = new KakaoLoadUserService(repository, jwtUtil);
-        userMapper = new UserMapper();
+        sut = new LoadKakaoSnsAccountService(repository, jwtUtil);
+        snsAccountMapper = new SnsAccountMapper();
     }
 
     @Test
     @DisplayName("DB에 존재하는 계정은 isFirstLogin = false")
-    void testExistUser() throws InvalidPhoneNumberException {
+    void testExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccount registeredSnsAccount = DomainFixtureRepository.getRegisteredSnsAccount();
-        SnsAccountJpaEntity snsAccount = userMapper.mapToNewJpaEntity(registeredSnsAccount);
+        SnsAccount registeredSnsAccount = MockEntityFactoryService.getSnsAccount();
+        SnsAccountJpaEntity snsAccount = snsAccountMapper.mapToNewJpaEntity(registeredSnsAccount);
         UserJpaEntity jpaEntity = mock(UserJpaEntity.class);
         snsAccount.setUserEntity(jpaEntity);
 
@@ -63,13 +61,13 @@ class KakaoLoadUserInfoServiceTest {
 
     @Test
     @DisplayName("DB에 존재하지 않는 계정은 회원가입, isFirstLogin = true")
-    void testNotExistUser() throws InvalidPhoneNumberException {
+    void testNotExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccountJpaEntity entity = userMapper.mapToNewJpaEntity(SnsAccountF.REGISTERED_KAKAO_2.get());
+        SnsAccountJpaEntity entity = snsAccountMapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
         OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo(entity.getSnsId(),
                 new OAuth2Dto.KakaoUserInfo.KakaoAccount(entity.getEmail(), true, true, true,
-                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getNickname(),true)));
+                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getNickname(), true)));
         Map<String, Object> attributes = gson.fromJson(gson.toJsonTree(userInfo), Map.class);
 
         // when
@@ -80,16 +78,16 @@ class KakaoLoadUserInfoServiceTest {
 
         // then
         verify(repository, times(1)).save(any());
-        assertThat(loadUser.getAttributes()).extractingByKey("nickname").isEqualTo("spearoad");
+        assertThat(loadUser.getAttributes()).extractingByKey("nickname").isEqualTo("leaf");
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
 
     @Test
     @DisplayName("DB에 존재하지만 사용자와 연동되지 않은 계정은 isFirstLogin = true")
-    void testNotRegisteredSnsAccount() throws InvalidPhoneNumberException {
+    void testNotRegisteredSnsAccount() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccountJpaEntity snsAccount = userMapper.mapToNewJpaEntity(DomainFixtureRepository.getRegisteredSnsAccount());
+        SnsAccountJpaEntity snsAccount = snsAccountMapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
 
         // when
         when(repository.findWithUserEntity(any(), any())).thenReturn(Optional.of(snsAccount));

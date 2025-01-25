@@ -1,10 +1,10 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
+import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aoo.aar.domain.DomainFixtureRepository;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +13,12 @@ import static org.mockito.Mockito.*;
 
 class SNSLoginResponseTest {
 
-    UserMapper userMapper = new UserMapper();
+    SnsAccountMapper snsAccountMapper = new SnsAccountMapper();
 
     @Test
     @DisplayName("사용자 등록 여부에 따른 닉네임 테스트")
     void testBeforeRegister() throws InvalidPhoneNumberException {
-        SnsAccountJpaEntity registeredSnsAccount = userMapper.mapToNewJpaEntity(DomainFixtureRepository.getRegisteredSnsAccount());
+        SnsAccountJpaEntity registeredSnsAccount = snsAccountMapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
 
         SNSLoginResponse notRegisteredResponse = SNSLoginResponse.of(registeredSnsAccount, null, true);
 

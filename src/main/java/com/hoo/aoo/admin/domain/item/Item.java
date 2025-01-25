@@ -23,9 +23,11 @@ public class Item {
     }
 
     public static Item create(Long id, Long roomId, String name, Shape shape) {
-        ItemId itemId = new ItemId(id);
-        RoomId roomId1 = new RoomId(roomId);
-        ItemName itemName = new ItemName(name);
-        return new Item(itemId, roomId1, itemName, shape, List.of());
+        return new Item(
+                new ItemId(id),
+                new RoomId(roomId),
+                new ItemName(name),
+                shape,
+                List.of());
     }
 }

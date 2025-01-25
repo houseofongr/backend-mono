@@ -28,24 +28,26 @@ public class Room {
 
     public static Room create(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException {
 
-        RoomId roomId = new RoomId(id);
-        RoomName roomName = new RoomName(name);
-        Axis axis = new Axis(x, y, z);
-        Area area = new Area(width, height);
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 
-        return new Room(roomId, roomName, area, axis, imageFile);
+        return new Room(
+                new RoomId(id),
+                new RoomName(name),
+                new Area(width, height),
+                new Axis(x, y, z),
+                imageFile);
     }
 
     public static Room load(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AreaLimitExceededException, AxisLimitExceededException {
 
-        RoomId roomId = new RoomId(id);
-        RoomName roomName = new RoomName(name);
-        Axis axis = new Axis(x, y, z);
-        Area area = new Area(width, height);
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 
-        return new Room(roomId, roomName, area, axis, imageFile);
+        return new Room(
+                new RoomId(id),
+                new RoomName(name),
+                new Area(width, height),
+                new Axis(x, y, z),
+                imageFile);
     }
 
     public void updateInfo(String name) {

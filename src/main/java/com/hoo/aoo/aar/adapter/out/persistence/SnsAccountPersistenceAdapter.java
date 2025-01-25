@@ -1,17 +1,13 @@
 package com.hoo.aoo.aar.adapter.out.persistence;
 
+import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.application.port.out.database.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.SaveSnsAccountPort;
-import com.hoo.aoo.aar.domain.DateInfo;
-import com.hoo.aoo.aar.domain.Name;
-import com.hoo.aoo.aar.domain.account.SnsAccount;
-import com.hoo.aoo.aar.domain.account.SnsAccountId;
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.UserId;
-import com.hoo.aoo.aar.domain.account.SnsDomain;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,44 +18,24 @@ import java.util.Optional;
 public class SnsAccountPersistenceAdapter implements FindSnsAccountPort, SaveSnsAccountPort {
 
     private final SnsAccountJpaRepository snsAccountJpaRepository;
-    private final UserMapper userMapper;
+    private final SnsAccountMapper snsAccountMapper;
 
     @Override
-    public Optional<SnsAccount> find(SnsDomain domain, String snsId) throws InvalidPhoneNumberException {
-
-        return getSnsAccountFromJpaEntity(snsAccountJpaRepository.findWithUserEntity(domain, snsId));
+    public Optional<SnsAccount> find(SnsDomain domain, String snsId) {
+        return snsAccountJpaRepository.findWithUserEntity(domain, snsId)
+                .map(snsAccountMapper::mapToDomainEntity);
     }
 
     @Override
-    public Optional<SnsAccount> find(Long id) throws InvalidPhoneNumberException {
-
-        return getSnsAccountFromJpaEntity(snsAccountJpaRepository.findById(id));
+    public Optional<SnsAccount> find(Long id) {
+        return snsAccountJpaRepository.findById(id)
+                .map(snsAccountMapper::mapToDomainEntity);
     }
 
     @Override
     public void save(SnsAccount snsAccount) {
-
-        SnsAccountJpaEntity newSnsAccountJpaEntity = userMapper.mapToNewJpaEntity(snsAccount);
-
+        SnsAccountJpaEntity newSnsAccountJpaEntity = snsAccountMapper.mapToNewJpaEntity(snsAccount);
         snsAccountJpaRepository.save(newSnsAccountJpaEntity);
     }
 
-    private Optional<SnsAccount> getSnsAccountFromJpaEntity(Optional<SnsAccountJpaEntity> optional) throws InvalidPhoneNumberException {
-        if (optional.isEmpty()) return Optional.empty();
-
-        SnsAccountJpaEntity jpaEntity = optional.get();
-
-        String email = jpaEntity.getEmail();
-
-        SnsAccountId snsAccountId = new SnsAccountId(jpaEntity.getSnsDomain(), jpaEntity.getSnsId());
-
-        Name name = new Name(jpaEntity.getRealName(), jpaEntity.getNickname());
-
-        UserId userId = jpaEntity.getUserEntity() == null? null :
-                new UserId(jpaEntity.getUserEntity().getPhoneNumber());
-
-        DateInfo dateInfo = new DateInfo(jpaEntity.getCreatedTime(),jpaEntity.getUpdatedTime());
-
-        return Optional.of(userMapper.mapToDomainEntity(email, snsAccountId, name, userId, dateInfo));
-    }
 }

@@ -36,30 +36,24 @@ public class House {
 
     public static House create(Long id, HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
 
-        HouseId houseId = new HouseId(id);
-        Area area = new Area(width, height);
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
 
-        return new House(houseId, houseDetail, area, null, rooms, defaultImageFile, borderImageFile);
+        return new House(new HouseId(id), houseDetail, new Area(width, height), null, rooms, defaultImageFile, borderImageFile);
     }
 
     public static House load(Long houseId, String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
 
-        HouseDetail houseDetail = new HouseDetail(title, author, description);
-        BaseTime baseTime = new BaseTime(createdTime, updatedTime);
-
         Area area = new Area(width, height);
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
 
-        return new House(new HouseId(houseId), houseDetail, area, baseTime, rooms, borderImageFile, defaultImageFile);
+        return new House(new HouseId(houseId), new HouseDetail(title, author, description), area, new BaseTime(createdTime, updatedTime), rooms, borderImageFile, defaultImageFile);
     }
 
     public void updateInfo(String title, String author, String description) {
         houseDetail.update(title, author, description);
     }
-
 
     public void updateRoomInfo(String originalName, String newName) throws RoomNameNotFoundException {
 

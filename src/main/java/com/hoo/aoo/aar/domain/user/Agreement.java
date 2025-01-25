@@ -7,8 +7,8 @@ public class Agreement {
     private final Boolean termsOfUseAgreement;
     private final Boolean personalInformationAgreement;
 
-    public Agreement(Boolean personalInformationAgreement, Boolean termsOfUseAgreement) {
-        this.personalInformationAgreement = personalInformationAgreement;
+    public Agreement(Boolean termsOfUseAgreement, Boolean personalInformationAgreement) {
         this.termsOfUseAgreement = termsOfUseAgreement;
+        this.personalInformationAgreement = personalInformationAgreement;
     }
 }
