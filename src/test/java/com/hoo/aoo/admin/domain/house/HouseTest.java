@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HouseInfoIdTest {
+class HouseTest {
 
     @Test
     @DisplayName("업데이트 테스트")
@@ -26,7 +26,6 @@ class HouseInfoIdTest {
         assertThat(houseDetail.getTitle()).isEqualTo(title);
         assertThat(houseDetail.getAuthor()).isEqualTo("leaf");
         assertThat(houseDetail.getDescription()).isEqualTo(description);
-
         assertThat(houseDetail2.getAuthor()).isEqualTo("");
     }
 
