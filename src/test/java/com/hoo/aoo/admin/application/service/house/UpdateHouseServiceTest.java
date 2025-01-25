@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hoo.aoo.common.FixtureRepository.*;
+import static com.hoo.aoo.common.application.service.MockEntityFactoryService.getHouse;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -35,7 +35,7 @@ class UpdateHouseServiceTest {
     @DisplayName("하우스 업데이트 서비스 테스트")
     void testUpdateHouseInfo() throws Exception {
         // given
-        House house = getHouse(new HouseDetail("cozy house", "leaf", "this is cozy house"), List.of());
+        House house = getHouse();
         UpdateHouseInfoCommand command = new UpdateHouseInfoCommand(1L, "not cozy house", "arang", "this is not cozy house.");
 
         // when

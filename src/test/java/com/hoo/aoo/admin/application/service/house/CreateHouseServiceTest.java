@@ -2,9 +2,9 @@ package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
+import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
-import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.hoo.aoo.common.FixtureRepository.*;
+import static com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadataTest.getCreateHouseMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -56,7 +56,7 @@ class CreateHouseServiceTest {
         map.put("room2", new MockMultipartFile("room2", "kitchen.png", "image/png", "kitchen file".getBytes()));
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null,"newfile.png","newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
         CreateHouseResult result = sut.create(metadata, map);
 
         // then

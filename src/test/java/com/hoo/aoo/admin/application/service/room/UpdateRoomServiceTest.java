@@ -3,15 +3,14 @@ package com.hoo.aoo.admin.application.service.room;
 import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.hoo.aoo.common.FixtureRepository.getHouse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -30,9 +29,9 @@ class UpdateRoomServiceTest {
 
     @Test
     @DisplayName("룸 업데이트 서비스 테스트")
-    void testUpdateRoomInfo() throws Exception{
+    void testUpdateRoomInfo() throws Exception {
         // given
-        House houseWithRoom = FixtureRepository.getHouse();
+        House houseWithRoom = MockEntityFactoryService.getHouse();
         UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")));
         UpdateRoomInfoCommand notFoundCommand = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(100L, "욕실")));
 

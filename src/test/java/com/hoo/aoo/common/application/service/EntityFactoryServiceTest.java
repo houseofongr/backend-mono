@@ -10,7 +10,6 @@ import com.hoo.aoo.admin.domain.item.Rectangle;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.user.User;
-import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -65,8 +64,8 @@ class EntityFactoryServiceTest {
     @DisplayName("홈 생성 테스트")
     void testCreateHome() throws Exception {
         // given
-        House house = FixtureRepository.getHouse();
-        User user = FixtureRepository.getUser();
+        House house = MockEntityFactoryService.getHouse();
+        User user = MockEntityFactoryService.getAdminUser();
 
         // when
         when(issueIdPort.issueHomeId()).thenReturn(1L);
@@ -81,7 +80,7 @@ class EntityFactoryServiceTest {
     @DisplayName("아이템 생성 테스트")
     void testCreateItem() {
         // given
-        List<SoundSource> soundSource = List.of(FixtureRepository.getSoundSource());
+        List<SoundSource> soundSource = List.of(MockEntityFactoryService.getSoundSource());
 
         // when
         when(issueIdPort.issueItemId()).thenReturn(1L);

@@ -1,6 +1,6 @@
 insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IMAGE_FILE_ID, WIDTH, HEIGHT,
                   CREATED_TIME, UPDATED_TIME)
-values (2, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+values (2, 'not cozy house', 'arang', 'this is not cozy house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (3, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (4, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (5, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

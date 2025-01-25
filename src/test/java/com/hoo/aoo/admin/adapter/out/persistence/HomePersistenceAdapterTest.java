@@ -9,8 +9,8 @@ import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.home.Home;
-import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ class HomePersistenceAdapterTest {
     void testSaveHome() throws Exception {
         // given
         CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
-        Home home = FixtureRepository.getHome();
+        Home home = MockEntityFactoryService.getHome();
 
         // when
         CreateHomeResult result = sut.save(command, home);

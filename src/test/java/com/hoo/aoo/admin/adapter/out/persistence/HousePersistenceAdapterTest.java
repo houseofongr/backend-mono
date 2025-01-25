@@ -11,10 +11,9 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.common.FixtureRepository;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,9 +51,7 @@ class HousePersistenceAdapterTest {
     @DisplayName("House 저장 테스트")
     void testSaveHouse() throws Exception {
         // given
-        HouseDetail houseDetail = new HouseDetail("cozy house", "leaf", "it's very cozy.");
-
-        House newHouse = FixtureRepository.getHouse(houseDetail);
+        House newHouse = MockEntityFactoryService.getHouse();
 
         // when
         Long savedId = sut.save(newHouse);
@@ -68,7 +65,7 @@ class HousePersistenceAdapterTest {
         assertThat(entity).isNotEmpty();
         assertThat(entity.get().getTitle()).isEqualTo("cozy house");
         assertThat(entity.get().getAuthor()).isEqualTo("leaf");
-        assertThat(entity.get().getDescription()).isEqualTo("it's very cozy.");
+        assertThat(entity.get().getDescription()).isEqualTo("this is cozy house");
         assertThat(entity.get().getRooms()).hasSize(2);
     }
 
@@ -103,9 +100,9 @@ class HousePersistenceAdapterTest {
         });
 
         // keyword search
-        assertThat(searchResult.houses()).hasSize(1);
+        assertThat(searchResult.houses()).hasSize(2);
         assertThat(searchResult2.houses()).hasSize(1);
-        assertThat(searchResult3.houses()).hasSize(1);
+        assertThat(searchResult3.houses()).hasSize(2);
         assertThat(noResult.houses()).hasSize(0);
     }
 
@@ -174,17 +171,17 @@ class HousePersistenceAdapterTest {
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfoHouse() throws Exception {
         // given
-        House houseWithRoom = FixtureRepository.getHouse(new HouseDetail("not cozy house", "arang", "this is not cozy house"));
+        House houseWithRoom = MockEntityFactoryService.getHouse();
 
         // when
-        sut.update(1L, houseWithRoom);
-        Optional<HouseJpaEntity> query = houseJpaRepository.findById(1L);
+        sut.update(2L, houseWithRoom);
+        Optional<HouseJpaEntity> query = houseJpaRepository.findById(2L);
 
         // then
         assertThat(query).isNotEmpty();
-        assertThat(query.get().getTitle()).isEqualTo("not cozy house");
-        assertThat(query.get().getAuthor()).isEqualTo("arang");
-        assertThat(query.get().getDescription()).isEqualTo("this is not cozy house");
+        assertThat(query.get().getTitle()).isEqualTo("cozy house");
+        assertThat(query.get().getAuthor()).isEqualTo("leaf");
+        assertThat(query.get().getDescription()).isEqualTo("this is cozy house");
     }
 
 

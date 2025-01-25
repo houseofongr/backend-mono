@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.domain.home;
 
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
-import com.hoo.aoo.common.FixtureRepository;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +14,8 @@ class HomeTest {
     @DisplayName("하우스와 유저로부터 홈 생성")
     void testCreateHome() throws Exception {
         // given
-        House house = FixtureRepository.getHouse();
-        User user = FixtureRepository.getUser();
+        House house = MockEntityFactoryService.getHouse();
+        User user = MockEntityFactoryService.getAdminUser();
 
         // when
         Home home = Home.create(1L, house, user);

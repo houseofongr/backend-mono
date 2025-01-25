@@ -1,11 +1,7 @@
 package com.hoo.aoo.admin.domain.item;
 
-import com.hoo.aoo.admin.domain.soundsource.SoundSource;
-import com.hoo.aoo.common.FixtureRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

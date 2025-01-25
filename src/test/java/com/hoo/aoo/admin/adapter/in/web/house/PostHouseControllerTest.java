@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.common.FixtureRepository;
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadataTest;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
@@ -35,7 +35,7 @@ class PostHouseControllerTest extends AbstractControllerTest {
     @DisplayName("하우스 생성 API")
     void testCreateHouse() throws Exception {
 
-        String metadata = FixtureRepository.getCreateHouseMetadataJson();
+        String metadata = CreateHouseMetadataTest.getCreateHouseMetadataJson();
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 

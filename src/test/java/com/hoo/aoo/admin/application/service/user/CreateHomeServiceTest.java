@@ -7,7 +7,7 @@ import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.home.CreateHomeService;
-import com.hoo.aoo.common.FixtureRepository;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,8 +42,8 @@ class CreateHomeServiceTest {
         CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
 
         // when
-        when(findHousePort.load(20L)).thenReturn(Optional.of(FixtureRepository.getHouse()));
-        when(findUserPort.load(10L)).thenReturn(Optional.of(FixtureRepository.getUser()));
+        when(findHousePort.load(20L)).thenReturn(Optional.of(MockEntityFactoryService.getHouse()));
+        when(findUserPort.load(10L)).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         when(saveHomePort.save(any(), any())).thenReturn(new CreateHomeResult(100L, null));
         CreateHomeResult createHomeResult = sut.create(command);
 

@@ -1,12 +1,9 @@
 package com.hoo.aoo.admin.domain.house;
 
 import com.hoo.aoo.admin.domain.exception.*;
-import com.hoo.aoo.common.FixtureRepository;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -22,11 +19,9 @@ class HouseInfoTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws Exception {
         // given
-        HouseDetail houseDetail = new HouseDetail(title, author, description);
-        List<Room> rooms = List.of(FixtureRepository.getRoom("거실"));
 
         // when
-        House newHouse = FixtureRepository.getHouse();
+        House newHouse = MockEntityFactoryService.getHouse();
 
         // then
         assertThat(newHouse.getRooms()).hasSize(2);
@@ -40,7 +35,7 @@ class HouseInfoTest {
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfo() throws Exception {
         // given
-        House newHouse = FixtureRepository.getHouse();
+        House newHouse = MockEntityFactoryService.getHouse();
 
         String title = "not cozy house";
         String author = null;
@@ -59,7 +54,7 @@ class HouseInfoTest {
     @DisplayName("룸 수정 테스트")
     void testUpdateRoomInfo() throws Exception {
         // given
-        House houseWithRoom = FixtureRepository.getHouse();
+        House houseWithRoom = MockEntityFactoryService.getHouse();
         String originalName = "거실";
         String newName = "욕실";
 
