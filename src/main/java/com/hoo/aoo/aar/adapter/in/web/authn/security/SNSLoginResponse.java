@@ -23,7 +23,7 @@ public record SNSLoginResponse(
 
     public static SNSLoginResponse of(SnsAccountJpaEntity snsAccountJpaEntity, String accessToken, boolean isFirstLogin) {
 
-        String nickname = isFirstLogin? snsAccountJpaEntity.getNickname() : snsAccountJpaEntity.getUserEntity().getNickname();
+        String nickname = isFirstLogin ? snsAccountJpaEntity.getNickname() : snsAccountJpaEntity.getUserEntity().getNickname();
         String provider = snsAccountJpaEntity.getSnsDomain().name().toUpperCase();
 
         return new SNSLoginResponse(

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class QueryHomeServiceTest {
@@ -33,7 +33,7 @@ class QueryHomeServiceTest {
         Long id = 1L;
 
         // when
-        when(findHomePort.findHome(1L)).thenReturn(Optional.of(new QueryHomeResult(null,null,null,null,null,null,null)));
+        when(findHomePort.findHome(1L)).thenReturn(Optional.of(new QueryHomeResult(null, null, null, null, null, null, null)));
         QueryHomeResult queryHomeResult = sut.queryHome(id);
 
         // then

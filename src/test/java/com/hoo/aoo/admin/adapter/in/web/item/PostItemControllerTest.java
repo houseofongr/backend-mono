@@ -15,7 +15,7 @@ import static com.hoo.aoo.common.util.GsonUtil.gson;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PostItemControllerTest extends AbstractControllerTest {
@@ -32,9 +32,9 @@ class PostItemControllerTest extends AbstractControllerTest {
 
         CreateItemCommand command = new CreateItemCommand(
                 List.of(
-                        new ItemData(null,"강아지", ItemType.CIRCLE, new ItemData.CircleData(200f, 200f, 10.5f), null, null),
-                        new ItemData(null,"설이", ItemType.RECTANGLE, null, new ItemData.RectangleData(100f, 100f, 10f, 10f, 5f), null),
-                        new ItemData(null,"화분", ItemType.ELLIPSE, null, null, new ItemData.EllipseData(500f, 500f, 15f, 15f, 90f))
+                        new ItemData(null, "강아지", ItemType.CIRCLE, new ItemData.CircleData(200f, 200f, 10.5f), null, null),
+                        new ItemData(null, "설이", ItemType.RECTANGLE, null, new ItemData.RectangleData(100f, 100f, 10f, 10f, 5f), null),
+                        new ItemData(null, "화분", ItemType.ELLIPSE, null, null, new ItemData.EllipseData(500f, 500f, 15f, 15f, 90f))
                 )
         );
 

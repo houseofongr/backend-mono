@@ -3,7 +3,7 @@ package com.hoo.aoo.admin.domain.item;
 import lombok.Getter;
 
 @Getter
-public class Circle extends Shape{
+public class Circle extends Shape {
 
     private final Float radius;
 

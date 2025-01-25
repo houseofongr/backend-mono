@@ -7,7 +7,7 @@ import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class BasicFileIdCreateStrategy implements FileIdCreateStrategy{
+public class BasicFileIdCreateStrategy implements FileIdCreateStrategy {
 
     private final String baseDir;
     private final Authority authority;

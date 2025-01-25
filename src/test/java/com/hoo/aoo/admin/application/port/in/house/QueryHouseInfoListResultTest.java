@@ -41,10 +41,10 @@ class QueryHouseInfoListResultTest {
     void testDescription100() {
         // given
         char[] _100Description = new char[100];
-        Arrays.fill(_100Description,'a');
+        Arrays.fill(_100Description, 'a');
 
         char[] _101Description = new char[101];
-        Arrays.fill(_101Description,'a');
+        Arrays.fill(_101Description, 'a');
 
         HouseJpaEntity shortDescription = new HouseJpaEntity(1L, "new house", "leaf", "this is short.", 5000F, 5000F, 1L, 2L, null);
         HouseJpaEntity fitDescription = new HouseJpaEntity(1L, "new house", "leaf", new String(_100Description), 5000F, 5000F, 1L, 2L, null);

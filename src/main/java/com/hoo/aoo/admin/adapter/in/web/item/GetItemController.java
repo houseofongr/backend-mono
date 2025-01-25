@@ -15,8 +15,8 @@ public class GetItemController {
     @GetMapping("/admin/items/{itemId}/sound-sources")
     public ResponseEntity<QueryItemResult> getItem() {
         QueryItemResult result = new QueryItemResult(
-          "설이", List.of(new QueryItemResult.SoundSourceInfo(
-                  1L, "골골송", "2025년 골골송", "2025.01.24.", "2025.01.24.", 1L)
+                "설이", List.of(new QueryItemResult.SoundSourceInfo(
+                1L, "골골송", "2025년 골골송", "2025.01.24.", "2025.01.24.", 1L)
         ));
         return ResponseEntity.ok(result);
     }

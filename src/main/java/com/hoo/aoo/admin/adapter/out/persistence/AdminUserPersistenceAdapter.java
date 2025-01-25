@@ -2,13 +2,11 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.AdminUserMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.UserQueryDslRepository;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.port.out.user.SearchUserPort;
 import com.hoo.aoo.admin.domain.user.User;
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

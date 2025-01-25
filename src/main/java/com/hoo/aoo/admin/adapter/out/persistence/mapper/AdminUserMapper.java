@@ -1,15 +1,13 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
+import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
-import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.application.port.in.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class AdminUserMapper {

@@ -45,6 +45,6 @@ class GetUserListControllerTest extends AbstractControllerTest {
                                 fieldWithPath("pagination.totalElements").description("조회된 전체 개수입니다."),
                                 fieldWithPath("pagination.totalPages").description("조회된 전체 페이지 개수입니다.")
                         )
-                        ));
+                ));
     }
 }

@@ -4,5 +4,5 @@ import org.springframework.data.domain.Pageable;
 
 public record QueryUserInfoCommand(
         Pageable pageable
-        ) {
+) {
 }

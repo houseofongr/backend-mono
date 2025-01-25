@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.handler.OAuth2SuccessHandler;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.OAuth2UserServiceDelegator;
+import com.hoo.aoo.aar.adapter.in.web.authn.security.handler.OAuth2SuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;

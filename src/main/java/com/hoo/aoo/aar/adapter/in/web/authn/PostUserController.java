@@ -31,5 +31,6 @@ public class PostUserController {
     private record Request(
             Boolean termsOfUseAgreement,
             Boolean personalInformationAgreement
-    ) {}
+    ) {
+    }
 }

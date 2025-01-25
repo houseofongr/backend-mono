@@ -59,7 +59,7 @@ class PostHouseControllerTest extends AbstractControllerTest {
                                 partWithName("room2").description("두번째 방의 기본 이미지입니다.")
                         ),
                         responseFields(
-                                  fieldWithPath("houseId").description("생성된 하우스의 아이디입니다.")
+                                fieldWithPath("houseId").description("생성된 하우스의 아이디입니다.")
                         )
                 ));
 

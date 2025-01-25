@@ -3,6 +3,8 @@ package com.hoo.aoo.admin.application.service.house;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
+import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
+import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -11,8 +13,6 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.room.Room;
-import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
-import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +64,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                     }
             }
 
-            House newHouse = createHousePort.createHouse(houseDetail, metadata.house().width(), metadata.house().height(),  basicImageId, borderImageId, rooms);
+            House newHouse = createHousePort.createHouse(houseDetail, metadata.house().width(), metadata.house().height(), basicImageId, borderImageId, rooms);
             Long savedId = saveHousePort.save(newHouse);
 
             return new CreateHouseResult(savedId);

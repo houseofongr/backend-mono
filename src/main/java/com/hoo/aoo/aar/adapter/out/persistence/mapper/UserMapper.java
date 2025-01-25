@@ -1,8 +1,8 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;

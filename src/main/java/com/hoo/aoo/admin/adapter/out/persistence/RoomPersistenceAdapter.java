@@ -1,7 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
@@ -36,7 +35,7 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
 
         for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
             for (UpdateRoomInfoCommand.RoomInfo roomInfo : command.roomInfos()) {
-                if (roomJpaEntity.getId().equals(roomInfo.roomId())){
+                if (roomJpaEntity.getId().equals(roomInfo.roomId())) {
                     roomJpaEntity.updateInfo(roomInfo.newName());
                     updateCount++;
                 }

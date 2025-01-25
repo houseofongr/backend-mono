@@ -1,10 +1,10 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
 import com.hoo.aoo.aar.application.service.AarException;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.domain.Role;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;

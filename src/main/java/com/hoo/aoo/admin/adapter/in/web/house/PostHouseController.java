@@ -1,11 +1,10 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
+import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.in.house.CreateHouseUseCase;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
-import com.nimbusds.jose.shaded.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,6 @@ public class PostHouseController {
             return new ResponseEntity<>(
                     createHouseUseCase.create(gson.fromJson(metadata, CreateHouseMetadata.class), multipartRequest.getFileMap()),
                     HttpStatus.CREATED);
-        }
-
-        else throw new AdminException(AdminErrorCode.INVALID_CREATE_HOUSE_METADATA);
+        } else throw new AdminException(AdminErrorCode.INVALID_CREATE_HOUSE_METADATA);
     }
 }

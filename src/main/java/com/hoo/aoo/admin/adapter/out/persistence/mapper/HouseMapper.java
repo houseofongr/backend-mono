@@ -3,13 +3,11 @@ package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
-import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -94,7 +92,7 @@ public class HouseMapper {
                                 roomJpaEntity.getImageFileId()))
                 .toList();
 
-        return new QueryHouseResult(house,list);
+        return new QueryHouseResult(house, list);
     }
 
 }

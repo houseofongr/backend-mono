@@ -1,7 +1,6 @@
 package com.hoo.aoo.admin.domain;
 
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.FloatBoundaryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,15 +48,15 @@ class AreaTest {
         Area area = new Area(5000F, 5000F);
 
         // when
-        area.update(4500F,null);
+        area.update(4500F, null);
 
         // then
         assertThat(area.getWidth()).isEqualTo(4500F);
         assertThat(area.getHeight()).isEqualTo(5000F);
 
-        assertThatThrownBy(() -> area.update(32767.1F,null))
+        assertThatThrownBy(() -> area.update(32767.1F, null))
                 .isInstanceOf(AreaLimitExceededException.class);
-        assertThatThrownBy(() -> area.update(0F,null))
+        assertThatThrownBy(() -> area.update(0F, null))
                 .isInstanceOf(AreaLimitExceededException.class);
     }
 

@@ -1,9 +1,9 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,8 +45,7 @@ public class MockOAuth2Controller {
                     .build().toUriString();
 
             response.sendRedirect(redirectUrl);
-        }
-        else if (snsAccountId == 2L) {
+        } else if (snsAccountId == 2L) {
             SnsAccountJpaEntity snsAccount = mock(SnsAccountJpaEntity.class);
             UserJpaEntity entity = mock(UserJpaEntity.class);
 
@@ -96,7 +95,6 @@ public class MockOAuth2Controller {
                     .build().toUriString();
 
             response.sendRedirect(redirectUrl);
-        }
-        else throw new UnsupportedOperationException("SNS Account Id 허용범위 초과");
+        } else throw new UnsupportedOperationException("SNS Account Id 허용범위 초과");
     }
 }

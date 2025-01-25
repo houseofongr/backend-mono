@@ -1,8 +1,5 @@
 package com.hoo.aoo.admin.application.port.in.house;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
-
 import java.util.List;
 
 public record QueryHouseResult(

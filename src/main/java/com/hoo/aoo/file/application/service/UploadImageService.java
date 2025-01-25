@@ -5,7 +5,7 @@ import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import com.hoo.aoo.file.application.port.in.UploadPublicImageUseCase;
-import com.hoo.aoo.file.domain.*;
+import com.hoo.aoo.file.domain.FileType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

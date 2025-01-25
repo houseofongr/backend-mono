@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.adapter.out.persistence.entity;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

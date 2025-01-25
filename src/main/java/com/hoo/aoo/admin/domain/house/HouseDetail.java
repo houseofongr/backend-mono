@@ -16,8 +16,8 @@ public class HouseDetail {
     }
 
     public void update(String title, String author, String description) {
-        this.title = title == null? this.title : title;
-        this.author = author == null? this.author : author;
-        this.description = description == null? this.description : description;
+        this.title = title == null ? this.title : title;
+        this.author = author == null ? this.author : author;
+        this.description = description == null ? this.description : description;
     }
 }

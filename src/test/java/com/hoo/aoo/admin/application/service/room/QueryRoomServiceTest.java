@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.application.service.room;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import org.junit.jupiter.api.BeforeEach;

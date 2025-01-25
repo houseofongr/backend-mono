@@ -3,11 +3,10 @@ package com.hoo.aoo.aar.application.service;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.hoo.aoo.aar.application.port.in.RegisterUserCommand;
 import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
-import com.hoo.aoo.aar.application.port.out.database.user.CreateUserPort;
 import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.user.CreateUserPort;
 import com.hoo.aoo.aar.application.port.out.database.user.SaveUserPort;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +42,7 @@ class RegisterUserServiceTest {
 
         // when
         when(findSnsAccountPort.find(1L)).thenReturn(Optional.of(MockEntityFactoryService.getSnsAccount()));
-        when(createUserPort.createUser(any(),any(),any())).thenReturn(MockEntityFactoryService.getUser());
+        when(createUserPort.createUser(any(), any(), any())).thenReturn(MockEntityFactoryService.getUser());
         RegisterUserResult register = sut.register(command);
 
         // then

@@ -1,10 +1,10 @@
 package com.hoo.aoo.aar;
 
-import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
-import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+import com.hoo.aoo.aar.application.port.in.RegisterUserResult;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.http.client.ClientHttpRequestFactorySettings.Redirects.DONT_FOLLOW;
 
 @SystemTest
 @Sql("classpath:/sql/clear.sql")
@@ -58,14 +58,14 @@ public class AuthnSystemTest {
 
         Map<String, String> queryParams = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
 
-        assertThat(snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO,"SNS_ID")).isNotEmpty();
+        assertThat(snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO, "SNS_ID")).isNotEmpty();
         assertThat(queryParams).containsKey("nickname");
         assertThat(queryParams).containsKey("accessToken");
 
         String tempAccessToken = queryParams.get("accessToken");
         Jwt jwt = jwtDecoder.decode(tempAccessToken);
 
-        assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
+        assertThat((String) jwt.getClaim("role")).isEqualTo("TEMP_USER");
 
         /* 3. 토큰과 응답 바디로 사용자 회원가입 시도 */
 
@@ -86,7 +86,7 @@ public class AuthnSystemTest {
         String userAccessToken = responseBody.accessToken();
         Jwt jwt2 = jwtDecoder.decode(userAccessToken);
 
-        assertThat((String)jwt2.getClaim("role")).isEqualTo("USER");
+        assertThat((String) jwt2.getClaim("role")).isEqualTo("USER");
     }
 
     @Test
@@ -110,7 +110,7 @@ public class AuthnSystemTest {
         String tempAccessToken = queryParams.get("accessToken");
         Jwt jwt = jwtDecoder.decode(tempAccessToken);
 
-        assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
+        assertThat((String) jwt.getClaim("role")).isEqualTo("TEMP_USER");
 
         /* 3. 사용자 회원가입 시도 */
 
@@ -131,7 +131,7 @@ public class AuthnSystemTest {
         String userAccessToken = responseBody.accessToken();
         Jwt jwt2 = jwtDecoder.decode(userAccessToken);
 
-        assertThat((String)jwt2.getClaim("role")).isEqualTo("USER");
+        assertThat((String) jwt2.getClaim("role")).isEqualTo("USER");
     }
 
     @Test
@@ -155,7 +155,7 @@ public class AuthnSystemTest {
         String tempAccessToken = queryParams.get("accessToken");
         Jwt jwt = jwtDecoder.decode(tempAccessToken);
 
-        assertThat((String)jwt.getClaim("role")).isEqualTo("TEMP_USER");
+        assertThat((String) jwt.getClaim("role")).isEqualTo("TEMP_USER");
 
         /* 3. 사용자 회원가입 없이 재로그인 시도 */
 
@@ -167,7 +167,7 @@ public class AuthnSystemTest {
 
         Map<String, String> queryParams2 = UriComponentsBuilder.fromUri(loginResponse.getHeaders().getLocation()).build().getQueryParams().toSingleValueMap();
 
-        snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO,"SNS_ID"); // SNS Entity 중복여부 확인
+        snsAccountJpaRepository.findWithUserEntity(SnsDomain.KAKAO, "SNS_ID"); // SNS Entity 중복여부 확인
         String tempAccessToken2 = queryParams2.get("accessToken");
         Jwt jwt2 = jwtDecoder.decode(tempAccessToken2);
 
@@ -182,10 +182,10 @@ public class AuthnSystemTest {
                 .withRequestFactorySettings(
                         clientHttpRequestFactorySettings.withRedirects(DONT_FOLLOW))
                 .exchange(
-                "/mock/authn/login/" + userId,
-                HttpMethod.GET,
-                request,
-                Void.class);
+                        "/mock/authn/login/" + userId,
+                        HttpMethod.GET,
+                        request,
+                        Void.class);
     }
 
     private ResponseEntity<?> whenRegist(String accessToken, String body) {

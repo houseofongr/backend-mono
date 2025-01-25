@@ -35,7 +35,7 @@ public class SnsAccountMapper {
                 snsAccountJpaEntity.getEmail(),
                 snsAccountJpaEntity.getCreatedTime(),
                 snsAccountJpaEntity.getUpdatedTime(),
-                snsAccountJpaEntity.getUserEntity() == null? null : snsAccountJpaEntity.getUserEntity().getId()
+                snsAccountJpaEntity.getUserEntity() == null ? null : snsAccountJpaEntity.getUserEntity().getId()
         );
     }
 }

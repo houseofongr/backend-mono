@@ -20,7 +20,7 @@ class DeleteItemControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("아이템 삭제 API")
     void testDeleteItemAPI() throws Exception {
-        mockMvc.perform(delete("/admin/items/{itemId}",1L))
+        mockMvc.perform(delete("/admin/items/{itemId}", 1L))
                 .andExpect(status().is(200))
                 .andDo(document("admin-item-delete",
                         pathParameters(

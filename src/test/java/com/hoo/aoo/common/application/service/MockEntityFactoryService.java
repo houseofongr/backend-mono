@@ -1,11 +1,7 @@
 package com.hoo.aoo.common.application.service;
 
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.Agreement;
 import com.hoo.aoo.aar.domain.user.User;
-import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccountId;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;

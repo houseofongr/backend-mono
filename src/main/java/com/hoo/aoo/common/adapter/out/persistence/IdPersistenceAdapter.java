@@ -62,6 +62,6 @@ public class IdPersistenceAdapter implements IssueIdPort {
                 .setParameter("tableName", tableName)
                 .getSingleResult();
 
-        return (singleResult == null)? 1L : (long) singleResult;
+        return (singleResult == null) ? 1L : (long) singleResult;
     }
 }

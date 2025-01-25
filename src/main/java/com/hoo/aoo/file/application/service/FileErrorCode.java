@@ -1,7 +1,6 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.common.application.service.ErrorCode;
-import com.hoo.aoo.file.domain.FileSize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

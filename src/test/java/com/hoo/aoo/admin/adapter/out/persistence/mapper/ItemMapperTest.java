@@ -1,7 +1,10 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.*;
-import com.hoo.aoo.admin.domain.item.*;
+import com.hoo.aoo.admin.domain.item.Circle;
+import com.hoo.aoo.admin.domain.item.Ellipse;
+import com.hoo.aoo.admin.domain.item.Item;
+import com.hoo.aoo.admin.domain.item.Rectangle;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;

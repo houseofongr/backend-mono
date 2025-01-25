@@ -1,7 +1,5 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtAttribute;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 

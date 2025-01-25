@@ -3,18 +3,16 @@ package com.hoo.aoo.admin.application.service.house;
 import com.hoo.aoo.admin.application.port.in.house.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
-import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.hoo.aoo.common.application.service.MockEntityFactoryService.getHouse;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class UpdateHouseServiceTest {
@@ -44,7 +42,7 @@ class UpdateHouseServiceTest {
 
         // then
         verify(findHousePort, times(1)).load(1L);
-        verify(updateHousePort, times(1)).update(any(),any());
+        verify(updateHousePort, times(1)).update(any(), any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 정보 수정이 완료되었습니다.");
     }

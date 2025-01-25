@@ -3,7 +3,8 @@ package com.hoo.aoo.admin.application.service.house;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
-import com.hoo.aoo.admin.application.port.in.house.*;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -78,7 +79,7 @@ class QueryHouseServiceTest {
 
         // 조회되지 않을 때 예외처리
         assertThatThrownBy(() -> sut.queryHouse(2L)).isInstanceOf(AdminException.class)
-                        .hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
+                .hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
     }
 
 }

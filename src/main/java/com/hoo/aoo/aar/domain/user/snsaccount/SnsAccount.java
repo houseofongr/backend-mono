@@ -24,7 +24,7 @@ public class SnsAccount {
         return new SnsAccount(
                 new SnsAccountId(persistenceId, snsDomain, snsId),
                 new SnsAccountInfo(realName, nickname, email),
-                new BaseTime(null,null),
+                new BaseTime(null, null),
                 new UserId(null)
         );
     }

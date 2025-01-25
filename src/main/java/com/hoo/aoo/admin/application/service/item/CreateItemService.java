@@ -18,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.hoo.aoo.admin.domain.item.ItemType.*;
-
 @Service
 @RequiredArgsConstructor
 public class CreateItemService implements CreateItemUseCase {

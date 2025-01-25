@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface FindRoomPort {
     boolean exist(Long id);
+
     Optional<Room> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException;
+
     Optional<QueryRoomResult> findResult(Long id);
 }

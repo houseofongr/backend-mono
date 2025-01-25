@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.domain.user;
 
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
 
@@ -29,7 +29,7 @@ public class User {
         return new User(
                 new UserId(id),
                 new UserInfo(snsAccount.getSnsAccountInfo().getRealName(), snsAccount.getSnsAccountInfo().getNickname()),
-                new Agreement(termsOfUseAgreement,personalInformationAgreement),
+                new Agreement(termsOfUseAgreement, personalInformationAgreement),
                 null,
                 List.of(snsAccount)
         );

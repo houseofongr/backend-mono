@@ -1,9 +1,7 @@
 package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.DeleteHouseUseCase;
-import com.hoo.aoo.admin.application.port.in.room.DeleteRoomUseCase;
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
-import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

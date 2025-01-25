@@ -17,6 +17,7 @@ public record CreateHouseMetadata(
     ) {
 
     }
+
     public record RoomData(
             String form,
             String name,

@@ -1,7 +1,5 @@
 package com.hoo.aoo.admin.application.port.in.house;
 
-import com.hoo.aoo.common.application.service.EntityFactoryService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +7,6 @@ import java.util.List;
 
 import static com.hoo.aoo.common.util.GsonUtil.gson;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateHouseMetadataTest {
 

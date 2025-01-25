@@ -2,7 +2,6 @@ package com.hoo.aoo.file.domain;
 
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.Getter;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 
 @Getter
 public class FileSize {

@@ -29,7 +29,7 @@ public class Area {
         else if (height != null) validateLimit(height);
         else return;
 
-        this.width = width == null? this.width : width;
-        this.height = height == null? this.height : height;
+        this.width = width == null ? this.width : width;
+        this.height = height == null ? this.height : height;
     }
 }

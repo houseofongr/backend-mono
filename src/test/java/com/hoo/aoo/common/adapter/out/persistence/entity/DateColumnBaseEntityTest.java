@@ -2,7 +2,6 @@ package com.hoo.aoo.common.adapter.out.persistence.entity;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;

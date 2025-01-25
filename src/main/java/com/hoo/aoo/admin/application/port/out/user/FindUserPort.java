@@ -6,5 +6,6 @@ import java.util.Optional;
 
 public interface FindUserPort {
     Optional<User> load(Long id);
+
     boolean exist(Long id);
 }

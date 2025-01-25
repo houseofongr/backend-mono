@@ -18,7 +18,7 @@ public enum FileF {
         switch (fileType) {
             case IMAGE -> {
                 try {
-                    return File.create(FileId.create(baseDir,Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE, realFileName, fileSystemName),FileStatus.CREATED,Owner.empty(),new FileSize(size, 100 * 1024 * 1024L));
+                    return File.create(FileId.create(baseDir, Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE, realFileName, fileSystemName), FileStatus.CREATED, Owner.empty(), new FileSize(size, 100 * 1024 * 1024L));
                 } catch (FileSizeLimitExceedException | FileExtensionMismatchException e) {
                     throw new RuntimeException(e);
                 }

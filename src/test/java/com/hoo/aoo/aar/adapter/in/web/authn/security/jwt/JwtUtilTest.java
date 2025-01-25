@@ -1,10 +1,9 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -74,7 +73,7 @@ class JwtUtilTest {
         UserJpaEntity userJpaEntity = mock(UserJpaEntity.class);
 
         // when
-        when(repository.findWithUserEntity(any(),any())).thenReturn(Optional.of(snsAccountJpaEntity));
+        when(repository.findWithUserEntity(any(), any())).thenReturn(Optional.of(snsAccountJpaEntity));
         when(snsAccountJpaEntity.getId()).thenReturn(1L);
         when(snsAccountJpaEntity.getNickname()).thenReturn("leaf");
         when(snsAccountJpaEntity.getUserEntity()).thenReturn(userJpaEntity);

@@ -2,7 +2,6 @@ package com.hoo.aoo.file.adapter.out.filesystem;
 
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FileSystemAdapterTest {
 

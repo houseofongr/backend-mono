@@ -44,9 +44,9 @@ class CreateItemServiceTest {
         // given
         CreateItemCommand command = new CreateItemCommand(
                 List.of(
-                        new ItemData(1L,"강아지", ItemType.CIRCLE, new ItemData.CircleData(200f, 200f, 10.5f), null, null),
-                        new ItemData(2L,"설이", ItemType.RECTANGLE, null, new ItemData.RectangleData(100f, 100f, 10f, 10f, 5f), null),
-                        new ItemData(3L,"화분", ItemType.ELLIPSE, null, null, new ItemData.EllipseData(500f, 500f, 15f, 15f, 90f))
+                        new ItemData(1L, "강아지", ItemType.CIRCLE, new ItemData.CircleData(200f, 200f, 10.5f), null, null),
+                        new ItemData(2L, "설이", ItemType.RECTANGLE, null, new ItemData.RectangleData(100f, 100f, 10f, 10f, 5f), null),
+                        new ItemData(3L, "화분", ItemType.ELLIPSE, null, null, new ItemData.EllipseData(500f, 500f, 15f, 15f, 90f))
                 )
         );
 

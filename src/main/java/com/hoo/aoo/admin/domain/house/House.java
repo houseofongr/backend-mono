@@ -4,10 +4,10 @@ import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.RoomNameNotFoundException;
 import com.hoo.aoo.admin.domain.file.File;
+import com.hoo.aoo.admin.domain.file.FileId;
 import com.hoo.aoo.admin.domain.file.FileType;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.domain.BaseTime;
-import com.hoo.aoo.admin.domain.file.FileId;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;

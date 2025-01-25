@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.domain.house;
 
-import com.hoo.aoo.admin.domain.exception.*;
+import com.hoo.aoo.admin.domain.exception.RoomNameNotFoundException;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

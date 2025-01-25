@@ -1,7 +1,6 @@
 package com.hoo.aoo.file.adapter.in.web;
 
 import com.hoo.aoo.common.adapter.in.web.ErrorResponse;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import com.hoo.aoo.file.application.service.FileException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

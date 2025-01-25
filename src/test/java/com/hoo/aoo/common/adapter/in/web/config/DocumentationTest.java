@@ -5,7 +5,6 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -6,8 +6,6 @@ import com.hoo.aoo.admin.domain.file.FileType;
 import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
 
-import java.time.ZonedDateTime;
-
 @Getter
 public class SoundSource {
     private final SoundSourceId soundSourceId;

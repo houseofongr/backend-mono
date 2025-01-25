@@ -3,7 +3,6 @@ package com.hoo.aoo.aar.adapter.out.persistence;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ class SnsAccountPersistenceAdapterTest {
     @Test
     @Sql("SnsAccountPersistenceAdapterTest.sql")
     @DisplayName("SNS Account 조회")
-    void testFindSnsAccount()  {
+    void testFindSnsAccount() {
         // given
         SnsAccount snsAccount = MockEntityFactoryService.getSnsAccount();
 

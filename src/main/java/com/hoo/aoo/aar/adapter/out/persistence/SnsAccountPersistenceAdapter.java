@@ -1,13 +1,12 @@
 package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
-import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.database.snsaccount.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

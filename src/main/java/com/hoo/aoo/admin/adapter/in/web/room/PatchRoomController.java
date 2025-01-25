@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class PatchRoomInfoController {
+public class PatchRoomController {
 
     private final UpdateRoomInfoUseCase updateRoomInfoUseCase;
 

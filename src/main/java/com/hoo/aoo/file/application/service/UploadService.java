@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UploadService {
+class UploadService {
 
     private final FileAttribute fileAttribute;
     private final SaveImageFilePort saveImageFilePort;
@@ -26,7 +26,7 @@ public class UploadService {
     private final RandomFileNamePort randomFileNamePort;
 
     UploadFileResult upload(List<MultipartFile> files, FileIdCreateStrategy fileIdCreateStrategy) {
-        return upload(files,null,fileIdCreateStrategy);
+        return upload(files, null, fileIdCreateStrategy);
     }
 
     UploadFileResult upload(List<MultipartFile> files, Long ownerId, FileIdCreateStrategy idCreateStrategy) {
