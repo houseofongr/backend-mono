@@ -8,6 +8,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.admin.application.port.out.item.DeleteItemPort;
 import com.hoo.aoo.admin.application.port.out.item.FindItemPort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.domain.item.Item;
@@ -20,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class ItemPersistenceAdapter implements FindItemPort, SaveItemPort {
+public class ItemPersistenceAdapter implements FindItemPort, SaveItemPort, DeleteItemPort {
 
     private final HomeJpaRepository homeJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
@@ -46,5 +47,10 @@ public class ItemPersistenceAdapter implements FindItemPort, SaveItemPort {
         itemJpaRepository.saveAll(itemJpaEntities);
 
         return itemJpaEntities.stream().map(ItemJpaEntity::getId).toList();
+    }
+
+    @Override
+    public void deleteItem(Long id) {
+        itemJpaRepository.deleteById(id);
     }
 }

@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -18,6 +19,7 @@ class DeleteItemControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Sql("DeleteItemControllerTest.sql")
     @DisplayName("아이템 삭제 API")
     void testDeleteItemAPI() throws Exception {
         mockMvc.perform(delete("/admin/items/{itemId}", 1L))

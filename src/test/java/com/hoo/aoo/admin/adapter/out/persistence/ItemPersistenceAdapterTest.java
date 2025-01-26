@@ -24,6 +24,8 @@ class ItemPersistenceAdapterTest {
 
     @Autowired
     ItemPersistenceAdapter sut;
+    @Autowired
+    private ItemJpaRepository itemJpaRepository;
 
     @Test
     @Sql("ItemPersistenceAdapterTest.sql")
@@ -64,4 +66,17 @@ class ItemPersistenceAdapterTest {
         );
     }
 
+    @Test
+    @Sql("ItemPersistenceAdapterTest2.sql")
+    @DisplayName("아이템 삭제 테스트")
+    void testDeleteItem() {
+        // given
+        Long id = 2L;
+
+        // when
+        sut.deleteItem(id);
+
+        // then
+        assertThat(itemJpaRepository.findById(id)).isEmpty();
+    }
 }

@@ -47,4 +47,20 @@ class ItemTest {
         assertThat(설이2.getItemDetail().getName()).isEqualTo("설이");
         assertThat(설이2.getShape()).isEqualTo(rectangle);
     }
+
+    @Test
+    @DisplayName("아이템 음원 보유여부 테스트")
+    void testHasSoundSource() throws Exception {
+        // given
+        Item rectangleItem = MockEntityFactoryService.getRectangleItem();
+        Item rectangleItemWithSoundSource = MockEntityFactoryService.loadRectangleItem();
+
+        // when
+        boolean hasSoundSource1 = rectangleItem.hasSoundSource();
+        boolean hasSoundSource2 = rectangleItemWithSoundSource.hasSoundSource();
+
+        // then
+        assertThat(hasSoundSource1).isFalse();
+        assertThat(hasSoundSource2).isTrue();
+    }
 }

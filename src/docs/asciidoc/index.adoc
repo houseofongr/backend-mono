@@ -250,15 +250,18 @@ operation::admin-item-get[snippets='path-parameters,http-request,http-response,r
 [[admin-item-patch-api]]
 ==== 아이템 수정 API
 
-아이템의 이름과 좌표, 형태를 수정합니다.
+아이템의 정보를 수정합니다.
+
+> 해당 아이템의 이름과 형태(좌표 + 모양)를 수정할 수 있습니다.
 
 operation::admin-item-patch[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
 
 [[admin-item-delete-api]]
 ==== 아이템 삭제 API
 
-아이템을 삭제합니다.
+> 음원이 포함된 아이템은 삭제할 수 없습니다.
 
+아이템을 삭제합니다.
 operation::admin-item-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 

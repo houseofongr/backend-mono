@@ -45,4 +45,8 @@ public class Item {
         if (name != null) this.itemDetail.updateName(name);
         if (shape != null) this.shape = shape;
     }
+
+    public boolean hasSoundSource() {
+        return soundSources != null && !soundSources.isEmpty();
+    }
 }
