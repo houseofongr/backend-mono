@@ -8,4 +8,5 @@ truncate table ITEM;
 truncate table RECTANGLE_ITEM;
 truncate table CIRCLE_ITEM;
 truncate table ELLIPSE_ITEM;
+truncate table SOUND_SOURCE;
 set foreign_key_checks = 1;
