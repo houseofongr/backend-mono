@@ -99,6 +99,29 @@ public class ItemMapper {
         }
     }
 
+    public Shape mapToShape(ItemData itemData) {
+        return switch (itemData.itemType()) {
+            case RECTANGLE -> new Rectangle(
+                    itemData.rectangleData().x(),
+                    itemData.rectangleData().y(),
+                    itemData.rectangleData().width(),
+                    itemData.rectangleData().height(),
+                    itemData.rectangleData().rotation());
+            case CIRCLE -> new Circle(
+                    itemData.circleData().x(),
+                    itemData.circleData().y(),
+                    itemData.circleData().radius()
+            );
+            case ELLIPSE -> new Ellipse(
+                    itemData.ellipseData().x(),
+                    itemData.ellipseData().y(),
+                    itemData.ellipseData().radiusX(),
+                    itemData.ellipseData().radiusY(),
+                    itemData.ellipseData().rotation()
+            );
+        };
+    }
+
     public ItemData mapToItemData(ItemJpaEntity itemJpaEntity) {
         return switch (itemJpaEntity) {
             case RectangleItemJpaEntity rectangleItemJpaEntity -> new ItemData(

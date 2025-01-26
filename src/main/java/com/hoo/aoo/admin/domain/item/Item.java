@@ -11,7 +11,7 @@ public class Item {
     private final ItemId itemId;
     private final RoomId roomId;
     private final ItemDetail itemDetail;
-    private final Shape shape;
+    private Shape shape;
     private final List<SoundSource> soundSources;
 
     private Item(ItemId itemId, RoomId roomId, ItemDetail itemDetail, Shape shape, List<SoundSource> soundSources) {
@@ -39,5 +39,10 @@ public class Item {
                 shape,
                 soundSources
         );
+    }
+
+    public void update(String name, Shape shape) {
+        if (name != null) this.itemDetail.updateName(name);
+        if (shape != null) this.shape = shape;
     }
 }

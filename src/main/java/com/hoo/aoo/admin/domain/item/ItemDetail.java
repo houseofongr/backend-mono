@@ -4,9 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class ItemDetail {
-    private final String name;
+    private String name;
 
     public ItemDetail(String name) {
+        this.name = name;
+    }
+
+    public void updateName(String name) {
         this.name = name;
     }
 }
