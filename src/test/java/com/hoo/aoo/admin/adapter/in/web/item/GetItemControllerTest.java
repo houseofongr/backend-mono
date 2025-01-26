@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -18,6 +19,7 @@ class GetItemControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Sql("GetItemControllerTest.sql")
     @DisplayName("아이템 조회 API")
     void testGetItem() throws Exception {
         mockMvc.perform(get("/admin/items/{itemId}/sound-sources", 1L))

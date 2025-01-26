@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ItemMapperTest {
 
-    ItemMapper sut = new ItemMapper();
+    ItemMapper sut = new ItemMapper(new SoundSourceMapper());
 
     @Test
     @DisplayName("음원 엔티티 도메인 => JPA 변환 테스트")
@@ -28,8 +28,8 @@ class ItemMapperTest {
         // then
         assertThat(soundSourceJpaEntity).isNotNull();
         assertThat(soundSourceJpaEntity.getId()).isEqualTo(null);
-        assertThat(soundSourceJpaEntity.getName()).isEqualTo(soundSource.getDetail().getName());
-        assertThat(soundSourceJpaEntity.getDescription()).isEqualTo(soundSource.getDetail().getDescription());
+        assertThat(soundSourceJpaEntity.getName()).isEqualTo(soundSource.getSoundSourceDetail().getName());
+        assertThat(soundSourceJpaEntity.getDescription()).isEqualTo(soundSource.getSoundSourceDetail().getDescription());
         assertThat(soundSourceJpaEntity.getAudioFileId()).isEqualTo(soundSource.getFile().getFileId().getId());
         assertThat(soundSourceJpaEntity.getItem()).isEqualTo(null);
         assertThat(soundSourceJpaEntity.getIsActive()).isEqualTo(true);
@@ -47,7 +47,7 @@ class ItemMapperTest {
         // then
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
-        assertThat(itemJpaEntity.getName()).isEqualTo(설이.getItemName().getName());
+        assertThat(itemJpaEntity.getName()).isEqualTo(설이.getItemDetail().getName());
         assertThat(((RectangleItemJpaEntity) itemJpaEntity).getX()).isEqualTo(설이.getShape().getX());
         assertThat(((RectangleItemJpaEntity) itemJpaEntity).getY()).isEqualTo(설이.getShape().getX());
         assertThat(((RectangleItemJpaEntity) itemJpaEntity).getWidth()).isEqualTo(((Rectangle) 설이.getShape()).getWidth());
@@ -67,7 +67,7 @@ class ItemMapperTest {
         // then
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
-        assertThat(itemJpaEntity.getName()).isEqualTo(강아지.getItemName().getName());
+        assertThat(itemJpaEntity.getName()).isEqualTo(강아지.getItemDetail().getName());
         assertThat(((CircleItemJpaEntity) itemJpaEntity).getX()).isEqualTo(강아지.getShape().getX());
         assertThat(((CircleItemJpaEntity) itemJpaEntity).getY()).isEqualTo(강아지.getShape().getX());
         assertThat(((CircleItemJpaEntity) itemJpaEntity).getRadius()).isEqualTo(((Circle) 강아지.getShape()).getRadius());
@@ -85,7 +85,7 @@ class ItemMapperTest {
         // then
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
-        assertThat(itemJpaEntity.getName()).isEqualTo(화분.getItemName().getName());
+        assertThat(itemJpaEntity.getName()).isEqualTo(화분.getItemDetail().getName());
         assertThat(((EllipseItemJpaEntity) itemJpaEntity).getX()).isEqualTo(화분.getShape().getX());
         assertThat(((EllipseItemJpaEntity) itemJpaEntity).getY()).isEqualTo(화분.getShape().getX());
         assertThat(((EllipseItemJpaEntity) itemJpaEntity).getRadiusX()).isEqualTo(((Ellipse) 화분.getShape()).getRadiusX());

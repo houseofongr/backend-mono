@@ -1,6 +1,9 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
@@ -11,11 +14,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
-@Import({ItemPersistenceAdapter.class, ItemMapper.class})
+@Import({ItemPersistenceAdapter.class, ItemMapper.class, SoundSourceMapper.class})
 class ItemPersistenceAdapterTest {
 
     @Autowired
@@ -33,6 +37,31 @@ class ItemPersistenceAdapterTest {
 
         // then
         assertThat(savedItemId).hasSize(3);
+    }
+
+    @Test
+    @Sql("ItemPersistenceAdapterTest2.sql")
+    @DisplayName("아이템 조회 테스트")
+    void testFindItem() {
+        // given
+
+        // when
+        Optional<Item> item1 = sut.load(1L);
+        Optional<Item> item2 = sut.load(2L);
+        Optional<Item> item3 = sut.load(3L);
+
+        // then
+        assertThat(item1).isNotEmpty();
+        assertThat(item2).isNotEmpty();
+        assertThat(item3).isNotEmpty();
+
+        assertThat(item1.get().getItemDetail().getName()).isEqualTo("설이");
+        assertThat(item2.get().getItemDetail().getName()).isEqualTo("강아지");
+        assertThat(item3.get().getItemDetail().getName()).isEqualTo("화분");
+
+        assertThat(item1.get().getSoundSources()).anySatisfy(soundSource ->
+            assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo("골골송")
+        );
     }
 
 }

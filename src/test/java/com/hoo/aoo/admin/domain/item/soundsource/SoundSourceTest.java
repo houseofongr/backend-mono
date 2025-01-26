@@ -23,8 +23,8 @@ class SoundSourceTest {
         // then
         assertThat(soundSource.getFile().getFileId().getId()).isEqualTo(fileId);
         assertThat(soundSource.getFile().getFileType()).isEqualTo(FileType.AUDIO);
-        assertThat(soundSource.getDetail().getName()).isEqualTo(name);
-        assertThat(soundSource.getDetail().getDescription()).isEqualTo(description);
+        assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo(name);
+        assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(description);
         assertThat(soundSource.getActive().isActive()).isTrue();
     }
 

@@ -21,7 +21,7 @@ class ItemTest {
         // then
         assertThat(item).isNotNull();
         assertThat(item.getRoomId().getId()).isEqualTo(roomId);
-        assertThat(item.getItemName().getName()).isEqualTo(itemName);
+        assertThat(item.getItemDetail().getName()).isEqualTo(itemName);
         assertThat(item.getShape()).isEqualTo(rectangle);
     }
 }

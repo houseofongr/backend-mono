@@ -10,14 +10,14 @@ import java.util.List;
 public class Item {
     private final ItemId itemId;
     private final RoomId roomId;
-    private final ItemName itemName;
+    private final ItemDetail itemDetail;
     private final Shape shape;
     private final List<SoundSource> soundSources;
 
-    private Item(ItemId itemId, RoomId roomId, ItemName itemName, Shape shape, List<SoundSource> soundSources) {
+    private Item(ItemId itemId, RoomId roomId, ItemDetail itemDetail, Shape shape, List<SoundSource> soundSources) {
         this.itemId = itemId;
         this.roomId = roomId;
-        this.itemName = itemName;
+        this.itemDetail = itemDetail;
         this.shape = shape;
         this.soundSources = soundSources;
     }
@@ -26,8 +26,18 @@ public class Item {
         return new Item(
                 new ItemId(id),
                 new RoomId(roomId),
-                new ItemName(name),
+                new ItemDetail(name),
                 shape,
                 List.of());
+    }
+
+    public static Item load(Long id, Long roomId, String name, Shape shape, List<SoundSource> soundSources) {
+        return new Item(
+                new ItemId(id),
+                new RoomId(roomId),
+                new ItemDetail(name),
+                shape,
+                soundSources
+        );
     }
 }

@@ -3,9 +3,9 @@ package com.hoo.aoo.admin.domain.soundsource;
 import lombok.Getter;
 
 @Getter
-public class Detail {
+public class SoundSourceDetail {
 
-    public Detail(String name, String description) {
+    public SoundSourceDetail(String name, String description) {
         this.name = name;
         this.description = description;
     }

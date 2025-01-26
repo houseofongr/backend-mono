@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SoundSourceJpaEntity {
+public class SoundSourceJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

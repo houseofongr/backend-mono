@@ -8,6 +8,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.admin.application.port.out.item.FindItemPort;
 import com.hoo.aoo.admin.application.port.out.item.SaveItemPort;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
@@ -15,16 +16,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class ItemPersistenceAdapter implements SaveItemPort {
+public class ItemPersistenceAdapter implements FindItemPort, SaveItemPort {
 
     private final HomeJpaRepository homeJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
     private final UserJpaRepository userJpaRepository;
     private final ItemJpaRepository itemJpaRepository;
     private final ItemMapper itemMapper;
+
+    @Override
+    public Optional<Item> load(Long id) {
+        return itemJpaRepository.findById(id)
+                .map(itemMapper::mapToDomainEntity);
+    }
 
     @Override
     public List<Long> save(Long userId, Long homeId, Long roomId, List<Item> items) {

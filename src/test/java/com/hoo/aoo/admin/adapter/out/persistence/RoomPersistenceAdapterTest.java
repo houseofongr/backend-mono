@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
@@ -20,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({RoomPersistenceAdapter.class, RoomMapper.class, ItemMapper.class})
+@Import({RoomPersistenceAdapter.class, RoomMapper.class, ItemMapper.class, SoundSourceMapper.class})
 class RoomPersistenceAdapterTest {
 
     @Autowired

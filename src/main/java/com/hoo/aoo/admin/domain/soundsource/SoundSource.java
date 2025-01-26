@@ -6,26 +6,35 @@ import com.hoo.aoo.admin.domain.file.FileType;
 import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
 
+import java.time.ZonedDateTime;
+
 @Getter
 public class SoundSource {
     private final SoundSourceId soundSourceId;
     private final File file;
-    private final Detail detail;
+    private final SoundSourceDetail soundSourceDetail;
     private final BaseTime baseTime;
     private final Active active;
 
-    private SoundSource(SoundSourceId soundSourceId, File file, Detail detail, BaseTime baseTime, Active active) {
+    private SoundSource(SoundSourceId soundSourceId, File file, SoundSourceDetail soundSourceDetail, BaseTime baseTime, Active active) {
         this.soundSourceId = soundSourceId;
         this.file = file;
-        this.detail = detail;
+        this.soundSourceDetail = soundSourceDetail;
         this.baseTime = baseTime;
         this.active = active;
     }
 
-    public static SoundSource create(Long id, Long fileId, String name, String description, Boolean isActive) {
+    public static SoundSource create(Long id, Long audioFileId, String name, String description, Boolean isActive) {
 
-        File file = new File(new FileId(fileId), FileType.AUDIO);
+        File file = new File(new FileId(audioFileId), FileType.AUDIO);
 
-        return new SoundSource(new SoundSourceId(id), file, new Detail(name, description), null, new Active(isActive));
+        return new SoundSource(new SoundSourceId(id), file, new SoundSourceDetail(name, description), null, new Active(isActive));
+    }
+
+    public static SoundSource load(Long id, Long audioFileId, String name, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Boolean isActive) {
+
+        File file = new File(new FileId(audioFileId), FileType.AUDIO);
+
+        return new SoundSource(new SoundSourceId(id), file, new SoundSourceDetail(name, description), new BaseTime(createdTime, updatedTime), new Active(isActive));
     }
 }

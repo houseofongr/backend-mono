@@ -104,8 +104,8 @@ class HomePersistenceAdapterTest {
             assertThat(home.baseHouse().title()).isEqualTo("cozy house");
             assertThat(home.baseHouse().author()).isEqualTo("leaf");
             assertThat(home.baseHouse().description()).isEqualTo("my cozy house");
-            assertThat(home.createdDate()).matches("\\d{4}\\. \\d{2}\\. \\d{2}\\.");
-            assertThat(home.updatedDate()).matches("\\d{4}\\. \\d{2}\\. \\d{2}\\.");
+            assertThat(home.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+            assertThat(home.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
         });
     }
 
