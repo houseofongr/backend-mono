@@ -14,6 +14,7 @@ import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.MockIdAdapter;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class MockEntityFactoryService {
@@ -67,6 +68,11 @@ public class MockEntityFactoryService {
     public static Item loadRectangleItem() throws Exception {
         Item rectangleItem = getRectangleItem();
         return Item.load(rectangleItem.getItemId().getId(), rectangleItem.getUserId().getId(), rectangleItem.getRoomId().getId(), rectangleItem.getItemDetail().getName(), rectangleItem.getShape(), List.of(getSoundSource()));
+    }
+
+    public static SoundSource loadSoundSource() {
+        SoundSource soundSource = getSoundSource();
+        return SoundSource.load(soundSource.getSoundSourceId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(),soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(),ZonedDateTime.now(),soundSource.getActive().isActive());
     }
 
 }

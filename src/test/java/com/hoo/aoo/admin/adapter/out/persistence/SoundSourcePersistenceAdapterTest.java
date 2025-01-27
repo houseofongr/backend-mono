@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.SoundSourceJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
@@ -9,13 +10,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
-@Import(SoundSourcePersistenceAdapter.class)
+@Import({SoundSourcePersistenceAdapter.class, SoundSourceMapper.class})
 class SoundSourcePersistenceAdapterTest {
 
     @Autowired
@@ -43,6 +45,23 @@ class SoundSourcePersistenceAdapterTest {
         assertThat(soundSourceJpaEntity.getIsActive()).isEqualTo(soundSource.getActive().isActive());
         assertThat(soundSourceJpaEntity.getAudioFileId()).isEqualTo(soundSource.getFile().getFileId().getId());
         assertThat(savedSoundSourceId).isNotNull();
+    }
+
+    @Test
+    @Sql("SoundSourcePersistenceAdapterTest.sql")
+    @DisplayName("음원 조회 테스트")
+    void testLoadSoundSource() {
+        // given
+        Long soundSourceId = 1L;
+
+        // when
+        Optional<SoundSource> soundSource = sut.loadSoundSource(soundSourceId);
+        Optional<SoundSource> nullSound = sut.loadSoundSource(1234L);
+
+        // then
+        assertThat(nullSound).isEmpty();
+        assertThat(soundSource).isNotEmpty();
+        assertThat(soundSource.get().getSoundSourceDetail().getName()).isEqualTo("골골송");
     }
 
 }

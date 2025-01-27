@@ -28,6 +28,8 @@ public enum AdminErrorCode implements ErrorCode {
     ITEM_HAS_SOUND_SOURCE("ADMIN-ITEM-2", BAD_REQUEST, "음원이 포함된 아이템은 해당 요청을 수행할 수 없습니다."),
     ITEM_NOT_FOUND("ADMIN-ITEM-3", NOT_FOUND, "해당 아이템을 찾을 수 없습니다."),
 
+    SOUND_SOURCE_NOT_FOUND("ADMIN-SOUNDSOURCE-1", NOT_FOUND, "해당 음원을 찾을 수 없습니다."),
+
     LOAD_ENTITY_FAILED("ADMIN-COMMON-1", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
 
     private final String code;
