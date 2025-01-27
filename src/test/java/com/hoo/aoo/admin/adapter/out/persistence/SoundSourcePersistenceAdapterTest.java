@@ -76,7 +76,6 @@ class SoundSourcePersistenceAdapterTest {
     void testUpdateSoundSource() throws InterruptedException {
         // given
         SoundSource soundSource = SoundSource.create(1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
 
         // when
         sut.updateSoundSource(soundSource);
@@ -91,5 +90,19 @@ class SoundSourcePersistenceAdapterTest {
         assertThat(soundSourceInDB.getName()).isEqualTo("골골골송");
         assertThat(soundSourceInDB.getDescription()).isEqualTo("2026년 설이가 보내는 골골골송");
         assertThat(soundSourceInDB.getIsActive()).isFalse();
+    }
+
+    @Test
+    @Sql("SoundSourcePersistenceAdapterTest.sql")
+    @DisplayName("음원 삭제 테스트")
+    void testDeleteSoundSource() {
+        // given
+        SoundSource soundSource = SoundSource.create(1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
+
+        // when
+        sut.deleteSoundSource(soundSource);
+
+        // then
+        assertThat(soundSourceJpaRepository.findById(1L)).isEmpty();
     }
 }

@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.soundsource;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -18,6 +19,7 @@ class DeleteSoundSourceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Sql("DeleteSoundSourceControllerTest.sql")
     @DisplayName("음원 삭제 API")
     void testDeleteSoundSourceAPI() throws Exception {
         mockMvc.perform(delete("/admin/sound-sources/{soundSourceId}", 1L))

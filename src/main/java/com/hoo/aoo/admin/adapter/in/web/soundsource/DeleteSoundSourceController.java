@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.soundsource;
 
+import com.hoo.aoo.admin.application.port.in.soundsource.DeleteSoundSourceUseCase;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DeleteSoundSourceController {
 
+    private final DeleteSoundSourceUseCase deleteSoundSourceUseCase;
+
     @DeleteMapping("/admin/sound-sources/{soundSourceId}")
     public ResponseEntity<MessageDto> deleteSoundSource(@PathVariable Long soundSourceId) {
-        return ResponseEntity.ok(new MessageDto(soundSourceId + "번 음원이 삭제되었습니다."));
+        return ResponseEntity.ok(deleteSoundSourceUseCase.deleteSoundSource(soundSourceId));
     }
 }
