@@ -33,10 +33,11 @@ class SoundSourcePersistenceAdapterTest {
     EntityManager entityManager;
 
     @Test
+    @Sql("SoundSourcePersistenceAdapterTest.sql")
     @DisplayName("음원 저장 테스트")
     void testSaveSoundSource() {
         // given
-        SoundSource soundSource = MockEntityFactoryService.getSoundSource();
+        SoundSource soundSource = SoundSource.create(1L, 1L, 1L, "골골송", "2025년 골골송 V1", true);
 
         // when
         Long savedSoundSourceId = sut.saveSoundSource(soundSource);
@@ -46,6 +47,9 @@ class SoundSourcePersistenceAdapterTest {
         SoundSourceJpaEntity soundSourceJpaEntity = optional.get();
 
         // then
+        assertThat(soundSourceJpaEntity.getItem().getId()).isEqualTo(1L);
+        assertThat(soundSourceJpaEntity.getItem().getSoundSources().getLast()).usingRecursiveComparison().isEqualTo(soundSourceJpaEntity);
+
         assertThat(soundSourceJpaEntity.getName()).isEqualTo(soundSource.getSoundSourceDetail().getName());
         assertThat(soundSourceJpaEntity.getDescription()).isEqualTo(soundSource.getSoundSourceDetail().getDescription());
         assertThat(soundSourceJpaEntity.getIsActive()).isEqualTo(soundSource.getActive().isActive());
@@ -75,7 +79,7 @@ class SoundSourcePersistenceAdapterTest {
     @DisplayName("음원 수정 테스트")
     void testUpdateSoundSource() throws InterruptedException {
         // given
-        SoundSource soundSource = SoundSource.create(1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
+        SoundSource soundSource = SoundSource.create(1L, 1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
 
         // when
         sut.updateSoundSource(soundSource);
@@ -97,7 +101,7 @@ class SoundSourcePersistenceAdapterTest {
     @DisplayName("음원 삭제 테스트")
     void testDeleteSoundSource() {
         // given
-        SoundSource soundSource = SoundSource.create(1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
+        SoundSource soundSource = SoundSource.create(1L, 1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
 
         // when
         sut.deleteSoundSource(soundSource);

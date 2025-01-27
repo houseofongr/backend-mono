@@ -19,7 +19,7 @@ class SoundSourceTest {
         String description = "음원 설명";
 
         // when
-        SoundSource soundSource = SoundSource.create(1L, fileId, name, description, null);
+        SoundSource soundSource = SoundSource.create(1L, 1L, fileId, name, description, null);
 
         // then
         assertThat(soundSource.getFile().getFileId().getId()).isEqualTo(fileId);
@@ -31,7 +31,7 @@ class SoundSourceTest {
 
     @Test
     @DisplayName("음원 수정 테스트")
-    void testUpdateSoundSource() {
+    void testUpdateSoundSource() throws Exception {
         // given
         String nullName = null;
         String emptyName = " ";

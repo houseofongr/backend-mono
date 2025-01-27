@@ -5,6 +5,9 @@ import com.hoo.aoo.admin.application.port.in.house.*;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.house.House;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +21,16 @@ public class QueryHouseService implements QueryHouseListUseCase, QueryHouseUseCa
     @Override
     @Transactional(readOnly = true)
     public QueryHouseResult queryHouse(Long id) {
-        return findHousePort.findResult(id)
-                .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
+        try {
+            House house = findHousePort.load(id)
+                    .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
+
+            return QueryHouseResult.of(house);
+
+        } catch (AreaLimitExceededException | AxisLimitExceededException e) {
+            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
+
+        }
     }
 
     @Override

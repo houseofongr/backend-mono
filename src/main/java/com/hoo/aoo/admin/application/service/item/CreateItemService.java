@@ -36,11 +36,9 @@ public class CreateItemService implements CreateItemUseCase {
         if (!findHomePort.exist(homeId)) throw new AdminException(AdminErrorCode.HOME_NOT_FOUND);
         if (!findRoomPort.exist(roomId)) throw new AdminException(AdminErrorCode.ROOM_NOT_FOUND);
 
-        List<Item> newItems = command.items().stream().map(itemData ->
-                createItemPort.createItem(userId, roomId, itemData.name(), createShape(itemData))
-        ).toList();
+        List<Item> newItems = command.items().stream().map(itemData -> createItemPort.createItem(userId, roomId, itemData.name(), createShape(itemData))).toList();
 
-        return new CreateItemResult(saveItemPort.save(userId, homeId, roomId, newItems));
+        return new CreateItemResult(saveItemPort.save(userId, homeId, newItems));
     }
 
     private Shape createShape(ItemData itemData) {

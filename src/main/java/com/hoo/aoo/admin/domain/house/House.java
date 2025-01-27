@@ -51,7 +51,7 @@ public class House {
         return new House(new HouseId(houseId), new HouseDetail(title, author, description), area, new BaseTime(createdTime, updatedTime), rooms, borderImageFile, defaultImageFile);
     }
 
-    public void updateInfo(String title, String author, String description) {
+    public void updateDetail(String title, String author, String description) {
         houseDetail.update(title, author, description);
     }
 

@@ -30,7 +30,7 @@ class UpdateSoundSourceServiceTest {
 
     @Test
     @DisplayName("음원 수정 서비스 테스트")
-    void testUpdateSoundSourceService() {
+    void testUpdateSoundSourceService() throws Exception {
         // given
         Long soundSourceId = 1L;
         UpdateSoundSourceCommand command = new UpdateSoundSourceCommand("골골골송", "2026년 설이가 보내는 골골골송", false);

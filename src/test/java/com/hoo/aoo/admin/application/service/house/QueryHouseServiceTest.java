@@ -8,7 +8,10 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.common.application.port.in.Pagination;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,21 +61,13 @@ class QueryHouseServiceTest {
 
     @Test
     @DisplayName("하우스 단건 조회 서비스 테스트")
-    void testQueryHouseService() {
+    void testQueryHouseService() throws Exception {
         // given
-        List<RoomJpaEntity> rooms = List.of(
-                new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 5000f, 1000f, 3L, null, null),
-                new RoomJpaEntity(2L, "주방", 0f, 1000f, 0f, 5000f, 1000f, 4L, null, null)
-        );
-        HouseJpaEntity entity = new HouseJpaEntity(1L, "cozy house", "leaf", "this is cozy house", 5000f, 5000f, 1L, 2L, rooms);
-        rooms.forEach(roomJpaEntity -> roomJpaEntity.setHouse(entity));
-        entity.prePersist();
-
-        QueryHouseResult queryHouseResult = new HouseMapper().mapToQueryHouseResult(entity);
+        Long houseId = 1L;
 
         // when
-        when(findHousePort.findResult(1L)).thenReturn(Optional.of(queryHouseResult));
-        QueryHouseResult result = sut.queryHouse(1L);
+        when(findHousePort.load(houseId)).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
+        QueryHouseResult result = sut.queryHouse(houseId);
 
         // then
         assertThat(result).isNotNull();

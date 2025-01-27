@@ -8,13 +8,17 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class HouseMapper {
+
+    private final RoomMapper roomMapper;
 
     public HouseJpaEntity mapToNewJpaEntity(House house, List<RoomJpaEntity> roomJpaEntities) {
 
@@ -51,48 +55,10 @@ public class HouseMapper {
         );
 
         for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
-            Room loadedRoom = Room.load(
-                    roomJpaEntity.getId(),
-                    roomJpaEntity.getName(),
-                    roomJpaEntity.getX(),
-                    roomJpaEntity.getY(),
-                    roomJpaEntity.getZ(),
-                    roomJpaEntity.getWidth(),
-                    roomJpaEntity.getHeight(),
-                    roomJpaEntity.getImageFileId());
-
+            Room loadedRoom = roomMapper.mapToDomainEntity(roomJpaEntity);
             house.getRooms().add(loadedRoom);
         }
 
         return house;
     }
-
-    public QueryHouseResult mapToQueryHouseResult(HouseJpaEntity entity) {
-        QueryHouseResult.House house = new QueryHouseResult.House(
-                entity.getId(),
-                entity.getTitle(),
-                entity.getAuthor(),
-                entity.getDescription(),
-                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(entity.getCreatedTime()),
-                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(entity.getUpdatedTime()),
-                entity.getWidth(),
-                entity.getHeight(),
-                entity.getBorderImageFileId()
-        );
-
-        List<QueryHouseResult.Room> list = entity.getRooms().stream().map(roomJpaEntity ->
-                        new QueryHouseResult.Room(
-                                roomJpaEntity.getId(),
-                                roomJpaEntity.getName(),
-                                roomJpaEntity.getX(),
-                                roomJpaEntity.getY(),
-                                roomJpaEntity.getZ(),
-                                roomJpaEntity.getWidth(),
-                                roomJpaEntity.getHeight(),
-                                roomJpaEntity.getImageFileId()))
-                .toList();
-
-        return new QueryHouseResult(house, list);
-    }
-
 }

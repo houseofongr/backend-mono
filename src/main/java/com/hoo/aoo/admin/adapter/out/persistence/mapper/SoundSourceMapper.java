@@ -10,6 +10,7 @@ public class SoundSourceMapper {
     public SoundSource mapToDomainEntity(SoundSourceJpaEntity soundSourceJpaEntity) {
         return SoundSource.load(
                 soundSourceJpaEntity.getId(),
+                soundSourceJpaEntity.getItem().getId(),
                 soundSourceJpaEntity.getAudioFileId(),
                 soundSourceJpaEntity.getName(),
                 soundSourceJpaEntity.getDescription(),

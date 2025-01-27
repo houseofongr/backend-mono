@@ -29,19 +29,15 @@ public class UpdateHouseService implements UpdateHouseInfoUseCase {
             House house = findHousePort.load(command.persistenceId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-            house.updateInfo(command.title(), command.author(), command.description());
-            updateHousePort.update(command.persistenceId(), house);
+            house.updateDetail(command.title(), command.author(), command.description());
+            updateHousePort.update(house);
 
             return new MessageDto(command.persistenceId() + "번 하우스 정보 수정이 완료되었습니다.");
 
-        } catch (AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
-
-        } catch (AreaLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
+        } catch (AxisLimitExceededException | AreaLimitExceededException e) {
+            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
 
         }
-
     }
 
 }

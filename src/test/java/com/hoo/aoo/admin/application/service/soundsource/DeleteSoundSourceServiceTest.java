@@ -29,7 +29,7 @@ class DeleteSoundSourceServiceTest {
 
     @Test
     @DisplayName("음원 삭제 서비스 테스트")
-    void testDeleteService() {
+    void testDeleteService() throws Exception {
         // given
         Long soundSourceId = 1L;
 

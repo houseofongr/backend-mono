@@ -68,8 +68,8 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public SoundSource createSoundSource(Long audioFileId, String name, String description, Boolean active) {
+    public SoundSource createSoundSource(Long itemId, Long audioFileId, String name, String description, Boolean active) {
         Long newId = issueIdPort.issueSoundSourceId();
-        return SoundSource.create(newId, audioFileId, name, description, active);
+        return SoundSource.create(newId, itemId, audioFileId, name, description, active);
     }
 }

@@ -6,7 +6,7 @@ values (1, '남상엽', 'leaf', 'test@example.com', 'SNS_ID', 'KAKAO', 10);
 
 insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IMAGE_FILE_ID, WIDTH, HEIGHT,
                   CREATED_TIME, UPDATED_TIME)
-values (20, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+values (20, 'cozy houseInfo', 'leaf', 'my cozy houseInfo', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into ROOM(ID, NAME, X, Y, Z, WIDTH, HEIGHT, IMAGE_FILE_ID, HOUSE_ID)
 values (1, "거실", 0, 0, 0, 5000, 10000, 5, 20),

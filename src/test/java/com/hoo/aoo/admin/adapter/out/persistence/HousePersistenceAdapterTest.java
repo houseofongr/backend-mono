@@ -13,6 +13,8 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.house.HouseDetail;
+import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
@@ -27,6 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,7 +55,7 @@ class HousePersistenceAdapterTest {
     @DisplayName("House 저장 테스트")
     void testSaveHouse() throws Exception {
         // given
-        House newHouse = MockEntityFactoryService.getHouse();
+        House newHouse = MockEntityFactoryService.loadHouse();
 
         // when
         Long savedId = sut.save(newHouse);
@@ -109,38 +112,6 @@ class HousePersistenceAdapterTest {
 
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
-    @DisplayName("HouseJpaEntity 단건 조회 테스트")
-    void testFindHouseJpaEntityQueryHouse() {
-        // given
-        Long houseId = 1L;
-
-        // when
-        Optional<QueryHouseResult> query = sut.findResult(houseId);
-
-        // then
-        assertThat(query).isNotEmpty();
-        assertThat(query.get().house().houseId()).isEqualTo(houseId);
-        assertThat(query.get().house().title()).isEqualTo("cozy house");
-        assertThat(query.get().house().author()).isEqualTo("leaf");
-        assertThat(query.get().house().description()).isEqualTo("this is cozy house");
-        assertThat(query.get().house().width()).isEqualTo(5000f);
-        assertThat(query.get().house().height()).isEqualTo(5000f);
-        assertThat(query.get().house().borderImageId()).isEqualTo(2L);
-        assertThat(query.get().rooms()).hasSize(2)
-                .anySatisfy(room -> {
-                    assertThat(room.roomId()).isEqualTo(1L);
-                    assertThat(room.name()).isEqualTo("거실");
-                    assertThat(room.x()).isEqualTo(0);
-                    assertThat(room.y()).isEqualTo(0);
-                    assertThat(room.z()).isEqualTo(0);
-                    assertThat(room.width()).isEqualTo(5000);
-                    assertThat(room.height()).isEqualTo(1000);
-                    assertThat(room.imageId()).isEqualTo(5L);
-                });
-    }
-
-    @Test
-    @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("하우스 조회 테스트")
     void testLoad() throws AreaLimitExceededException, AxisLimitExceededException {
         // given
@@ -172,10 +143,10 @@ class HousePersistenceAdapterTest {
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfoHouse() throws Exception {
         // given
-        House houseWithRoom = MockEntityFactoryService.getHouse();
+        House houseWithRoom = House.create(2L,new HouseDetail("cozy house", "leaf", "this is cozy house"), 5000f, 5000f, 3L, 4L, List.of(MockEntityFactoryService.getRoom()));
 
         // when
-        sut.update(2L, houseWithRoom);
+        sut.update(houseWithRoom);
         Optional<HouseJpaEntity> query = houseJpaRepository.findById(2L);
 
         // then

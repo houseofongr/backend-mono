@@ -1,7 +1,9 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import com.hoo.aoo.admin.application.port.out.soundsource.DeleteSoundSourcePort;
 import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
@@ -17,13 +19,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindSoundSourcePort, UpdateSoundSourcePort, DeleteSoundSourcePort {
 
+    private final ItemJpaRepository itemJpaRepository;
     private final SoundSourceJpaRepository soundSourceJpaRepository;
     private final SoundSourceMapper soundSourceMapper;
 
     @Override
     public Long saveSoundSource(SoundSource soundSource) {
+        ItemJpaEntity itemJpaEntity = itemJpaRepository.findById(soundSource.getItemId().getId()).orElseThrow();
+
         SoundSourceJpaEntity soundSourceJpaEntity = SoundSourceJpaEntity.create(soundSource);
         soundSourceJpaRepository.save(soundSourceJpaEntity);
+
+        soundSourceJpaEntity.setRelationship(itemJpaEntity);
 
         return soundSourceJpaEntity.getId();
     }

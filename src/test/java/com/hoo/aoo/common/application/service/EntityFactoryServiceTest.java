@@ -78,7 +78,7 @@ class EntityFactoryServiceTest {
 
     @Test
     @DisplayName("아이템 생성 테스트")
-    void testCreateItem() {
+    void testCreateItem() throws Exception {
         // given
         List<SoundSource> soundSource = List.of(MockEntityFactoryService.getSoundSource());
 

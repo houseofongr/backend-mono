@@ -11,8 +11,5 @@ import java.util.Optional;
 
 public interface FindHousePort {
     Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException;
-
-    Optional<QueryHouseResult> findResult(Long id);
-
     QueryHouseListResult search(QueryHouseListCommand command);
 }

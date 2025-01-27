@@ -1,13 +1,34 @@
 package com.hoo.aoo.admin.application.port.in.house;
 
+import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+
 import java.util.List;
 
 public record QueryHouseResult(
-        House house,
-        List<Room> rooms
+        HouseInfo house,
+        List<RoomInfo> rooms
 ) {
 
-    public record House(
+    public static QueryHouseResult of(House house) {
+        return new QueryHouseResult(
+                new HouseInfo(
+                        house.getHouseId().getId(),
+                        house.getHouseDetail().getTitle(),
+                        house.getHouseDetail().getAuthor(),
+                        house.getHouseDetail().getDescription(),
+                        DateTimeFormatters.ENGLISH_DATE.getFormatter().format(house.getBaseTime().getCreatedTime()),
+                        DateTimeFormatters.ENGLISH_DATE.getFormatter().format(house.getBaseTime().getUpdatedTime()),
+                        house.getArea().getWidth(),
+                        house.getArea().getHeight(),
+                        house.getBorderImageFile().getFileId().getId()
+                ),
+                house.getRooms().stream().map(RoomInfo::of).toList()
+        );
+    }
+
+    public record HouseInfo(
             Long houseId,
             String title,
             String author,
@@ -20,7 +41,7 @@ public record QueryHouseResult(
     ) {
     }
 
-    public record Room(
+    public record RoomInfo(
             Long roomId,
             String name,
             Float x,
@@ -31,5 +52,17 @@ public record QueryHouseResult(
             Long imageId
     ) {
 
+        public static RoomInfo of(Room room) {
+            return new RoomInfo(
+                    room.getRoomId().getId(),
+                    room.getRoomName().getName(),
+                    room.getAxis().getX(),
+                    room.getAxis().getY(),
+                    room.getAxis().getZ(),
+                    room.getArea().getWidth(),
+                    room.getArea().getHeight(),
+                    room.getImageFile().getFileId().getId()
+            );
+        }
     }
 }

@@ -42,7 +42,7 @@ class HouseInfoTest {
         String description = "this is not cozy house.";
 
         // when
-        newHouse.updateInfo(title, author, description);
+        newHouse.updateDetail(title, author, description);
 
         // then
         assertThat(newHouse.getHouseDetail().getTitle()).isEqualTo(title);

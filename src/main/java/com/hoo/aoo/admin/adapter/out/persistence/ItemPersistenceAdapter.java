@@ -25,15 +25,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemPersistenceAdapter implements SaveItemPort, FindItemPort, UpdateItemPort, DeleteItemPort {
 
-    private final HomeJpaRepository homeJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
     private final UserJpaRepository userJpaRepository;
     private final ItemJpaRepository itemJpaRepository;
     private final ItemMapper itemMapper;
-    private final SoundSourceMapper soundSourceMapper;
 
     @Override
-    public List<Long> save(Long userId, Long homeId, Long roomId, List<Item> items) {
+    public List<Long> save(Long userId, Long roomId, List<Item> items) {
 
         UserJpaEntity userJpaEntity = userJpaRepository.findById(userId).orElseThrow();
         RoomJpaEntity roomJpaEntity = roomJpaRepository.findById(roomId).orElseThrow();

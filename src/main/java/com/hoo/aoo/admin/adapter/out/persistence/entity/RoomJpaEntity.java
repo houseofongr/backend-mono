@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.room.Room;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,8 +50,26 @@ public class RoomJpaEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<ItemJpaEntity> items;
 
+    public static RoomJpaEntity create(Room room) {
+        return new RoomJpaEntity(
+                null,
+                room.getRoomName().getName(),
+                room.getAxis().getX(),
+                room.getAxis().getY(),
+                room.getAxis().getZ(),
+                room.getArea().getWidth(),
+                room.getArea().getHeight(),
+                room.getImageFile().getFileId().getId(),
+                null,
+                null);
+    }
+
     public void updateInfo(String name) {
         this.name = name;
     }
 
+    public void setRelationship(HouseJpaEntity houseJpaEntity) {
+        if (!houseJpaEntity.getRooms().contains(this)) houseJpaEntity.getRooms().add(this);
+        this.house = houseJpaEntity;
+    }
 }

@@ -33,6 +33,11 @@ public class MockEntityFactoryService {
         return factory.createHouse(new HouseDetail("cozy house", "leaf", "this is cozy house"), 5000f, 5000f, 1L, 2L, List.of(getRoom(), getRoom2()));
     }
 
+    public static House loadHouse() throws Exception {
+        House house = getHouse();
+        return House.load(house.getHouseId().getId(), house.getHouseDetail().getTitle(), house.getHouseDetail().getAuthor(), house.getHouseDetail().getDescription(), house.getArea().getWidth(), house.getArea().getHeight(), ZonedDateTime.now(), ZonedDateTime.now(), house.getBasicImageFile().getFileId().getId(), house.getBorderImageFile().getFileId().getId(), List.of(getRoom(), getRoom2()));
+    }
+
     public static Room getRoom() throws Exception {
         return factory.createRoom("거실", 0f, 0f, 0f, 5000f, 1000f, 3L);
     }
@@ -61,8 +66,8 @@ public class MockEntityFactoryService {
         return factory.createItem(getRoom().getRoomId().getId(), getAdminUser().getUserId().getId(), "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
     }
 
-    public static SoundSource getSoundSource() {
-        return factory.createSoundSource(1L, "골골송", "2025년 설이가 보내는 골골송", null);
+    public static SoundSource getSoundSource() throws Exception {
+        return factory.createSoundSource(getEllipseItem().getItemId().getId(), 1L, "골골송", "2025년 설이가 보내는 골골송", null);
     }
 
     public static Item loadRectangleItem() throws Exception {
@@ -70,9 +75,9 @@ public class MockEntityFactoryService {
         return Item.load(rectangleItem.getItemId().getId(), rectangleItem.getUserId().getId(), rectangleItem.getRoomId().getId(), rectangleItem.getItemDetail().getName(), rectangleItem.getShape(), List.of(getSoundSource()));
     }
 
-    public static SoundSource loadSoundSource() {
+    public static SoundSource loadSoundSource() throws Exception {
         SoundSource soundSource = getSoundSource();
-        return SoundSource.load(soundSource.getSoundSourceId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(),soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(),ZonedDateTime.now(),soundSource.getActive().isActive());
+        return SoundSource.load(soundSource.getSoundSourceId().getId(), getRectangleItem().getItemId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(),soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(),ZonedDateTime.now(),soundSource.getActive().isActive());
     }
 
 }

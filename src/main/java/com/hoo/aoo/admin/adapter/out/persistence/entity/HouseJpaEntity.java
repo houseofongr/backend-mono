@@ -1,17 +1,20 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "HOUSE")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class HouseJpaEntity extends DateColumnBaseEntity {
 
@@ -40,12 +43,27 @@ public class HouseJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Long borderImageFileId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
     private List<RoomJpaEntity> rooms;
 
-    public void updateInfo(String title, String author, String description) {
-        this.title = title;
-        this.author = author;
-        this.description = description;
+    public static HouseJpaEntity create(House house) {
+        return new HouseJpaEntity(
+                null,
+                house.getHouseDetail().getTitle(),
+                house.getHouseDetail().getAuthor(),
+                house.getHouseDetail().getDescription(),
+                house.getArea().getWidth(),
+                house.getArea().getHeight(),
+                house.getBasicImageFile().getFileId().getId(),
+                house.getBorderImageFile().getFileId().getId(),
+                new ArrayList<>()
+        );
     }
+
+    public void update(House house) {
+        this.title = house.getHouseDetail().getTitle();
+        this.author = house.getHouseDetail().getAuthor();
+        this.description = house.getHouseDetail().getDescription();
+    }
+
 }

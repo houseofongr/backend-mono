@@ -3,12 +3,10 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
-import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
@@ -31,22 +29,19 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
     private final HouseJpaRepository houseJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
     private final HouseMapper houseMapper;
-    private final RoomMapper roomMapper;
 
     @Override
     public Long save(House house) {
 
-        List<RoomJpaEntity> roomJpaEntities = house.getRooms().stream().map(roomMapper::mapToNewJpaEntity).toList();
+        List<RoomJpaEntity> roomJpaEntities = house.getRooms().stream().map(RoomJpaEntity::create).toList();
+        HouseJpaEntity houseJpaEntity = HouseJpaEntity.create(house);
 
-        HouseJpaEntity houseJpaEntity = houseMapper.mapToNewJpaEntity(house, roomJpaEntities);
+        roomJpaEntities.forEach(roomJpaEntity -> roomJpaEntity.setRelationship(houseJpaEntity));
 
         houseJpaRepository.save(houseJpaEntity);
+        roomJpaRepository.saveAll(roomJpaEntities);
 
         return houseJpaEntity.getId();
-    }
-
-    public Optional<QueryHouseResult> findResult(Long id) {
-        return houseJpaRepository.findById(id).map(houseMapper::mapToQueryHouseResult);
     }
 
     @Override
@@ -55,10 +50,9 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
         Optional<HouseJpaEntity> optional = houseJpaRepository.findById(id);
 
         if (optional.isEmpty()) return Optional.empty();
-
         List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllByHouseId(id);
 
-        return Optional.ofNullable(houseMapper.mapToDomainEntity(optional.get(), roomJpaEntities));
+        return Optional.of(houseMapper.mapToDomainEntity(optional.get(), roomJpaEntities));
     }
 
     @Override
@@ -68,11 +62,9 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
     }
 
     @Override
-    public void update(Long id, House house) {
-
-        HouseJpaEntity entity = houseJpaRepository.findById(id).orElseThrow();
-
-        entity.updateInfo(house.getHouseDetail().getTitle(), house.getHouseDetail().getAuthor(), house.getHouseDetail().getDescription());
+    public void update(House house) {
+        HouseJpaEntity entity = houseJpaRepository.findById(house.getHouseId().getId()).orElseThrow();
+        entity.update(house);
     }
 
     @Override

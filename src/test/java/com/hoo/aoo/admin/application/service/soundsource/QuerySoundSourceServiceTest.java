@@ -28,7 +28,7 @@ class QuerySoundSourceServiceTest {
 
     @Test
     @DisplayName("음원 조회 서비스 테스트")
-    void testQuerySoundSource() {
+    void testQuerySoundSource() throws Exception {
         // given
         Long id = 1L;
 

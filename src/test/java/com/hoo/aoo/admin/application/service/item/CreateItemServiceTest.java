@@ -54,11 +54,11 @@ class CreateItemServiceTest {
         when(findUserPort.exist(1L)).thenReturn(true);
         when(findHomePort.exist(1L)).thenReturn(true);
         when(findRoomPort.exist(1L)).thenReturn(true);
-        when(saveItemPort.save(any(), any(), any(), any())).thenReturn(List.of(1L, 2L, 3L));
+        when(saveItemPort.save(any(), any(), any())).thenReturn(List.of(1L, 2L, 3L));
         CreateItemResult createItemResult = sut.create(1L, 1L, 1L, command);
 
         // then
-        verify(saveItemPort, times(1)).save(any(), any(), any(), any());
+        verify(saveItemPort, times(1)).save(any(), any(), any());
 
         assertThat(createItemResult).isNotNull();
         assertThat(createItemResult.createdItemIds()).hasSize(3);

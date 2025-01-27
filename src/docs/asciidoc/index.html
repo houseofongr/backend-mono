@@ -727,7 +727,7 @@ Content-Type: image/png
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 하우스의 정보를 포함하는 Json 형태의 문자열입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 하우스의 기본 이미지입니다.</p></td>
 </tr>
 <tr>
@@ -757,11 +757,11 @@ Content-Type: image/png
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
-  "house" : {
-    "title" : "cozy house",
+  "houseInfo" : {
+    "title" : "cozy houseInfo",
     "author" : "leaf",
-    "description" : "this is cozy house.",
-    "houseForm" : "house",
+    "description" : "this is cozy houseInfo.",
+    "houseForm" : "houseInfo",
     "borderForm" : "border",
     "width" : 5000.0,
     "height" : 5000.0
@@ -804,39 +804,39 @@ Content-Type: image/png
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 하우스의 제목입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 하우스의 작가입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 하우스에 대한 설명입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.houseForm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.houseForm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">기본 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다.<br>
 * 지원 파일형식 : [jpg, jpeg, png, svg, gif]</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.borderForm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.borderForm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">테두리 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다.<br>
 * 지원 파일형식 : [jpg, jpeg, png, svg, gif]</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.width</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.width</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 가로 길이입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.height</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.height</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 높이입니다.</p></td>
 </tr>
@@ -919,12 +919,12 @@ Content-Length: 19
 </div>
 </div>
 <div class="sect3">
-<h4 id="admin-house-get-list-api">하우스 리스트 조회 API</h4>
+<h4 id="admin-houseInfo-get-list-api">하우스 리스트 조회 API</h4>
 <div class="paragraph">
 <p>여러 건의 하우스를 검색 조건에 맞게 조회합니다.</p>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-list-api_path_parameters">Path parameters</h5>
+<h5 id="admin-houseInfo-get-list-api_path_parameters">Path parameters</h5>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /admin/houses</caption>
 <colgroup>
@@ -966,7 +966,7 @@ Content-Length: 19
 </table>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-list-api_http_request">HTTP request</h5>
+<h5 id="admin-houseInfo-get-list-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/houses?page=1&amp;size=9 HTTP/1.1
@@ -976,7 +976,7 @@ Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-list-api_http_response">HTTP response</h5>
+<h5 id="admin-houseInfo-get-list-api_http_response">HTTP response</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -986,73 +986,73 @@ Content-Length: 1983
 {
   "houses" : [ {
     "id" : 1,
-    "title" : "cozy house",
+    "title" : "cozy houseInfo",
     "author" : "leaf",
-    "description" : "my cozy house",
+    "description" : "my cozy houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 1
   }, {
     "id" : 2,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 3,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 4,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 5,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 6,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 7,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 8,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
   }, {
     "id" : 9,
-    "title" : "temp house",
+    "title" : "temp houseInfo",
     "author" : "tester",
-    "description" : "temp house",
+    "description" : "temp houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "imageId" : 3
@@ -1068,7 +1068,7 @@ Content-Length: 1983
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-list-api_response_fields">Response fields</h5>
+<h5 id="admin-houseInfo-get-list-api_response_fields">Response fields</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1144,12 +1144,12 @@ Content-Length: 1983
 </div>
 </div>
 <div class="sect3">
-<h4 id="admin-house-get-api">하우스 상세 조회 API</h4>
+<h4 id="admin-houseInfo-get-api">하우스 상세 조회 API</h4>
 <div class="paragraph">
 <p>하우스와 내부 룸에 대한 상세 정보를 조회합니다.</p>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-api_path_parameters">Path parameters</h5>
+<h5 id="admin-houseInfo-get-api_path_parameters">Path parameters</h5>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /admin/houses/{houseId}</caption>
 <colgroup>
@@ -1174,7 +1174,7 @@ Content-Length: 1983
 </table>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-api_http_request">HTTP request</h5>
+<h5 id="admin-houseInfo-get-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /admin/houses/1 HTTP/1.1
@@ -1184,7 +1184,7 @@ Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-api_http_response">HTTP response</h5>
+<h5 id="admin-houseInfo-get-api_http_response">HTTP response</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1192,11 +1192,11 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 605
 
 {
-  "house" : {
+  "houseInfo" : {
     "houseId" : 1,
-    "title" : "cozy house",
+    "title" : "cozy houseInfo",
     "author" : "leaf",
-    "description" : "my cozy house",
+    "description" : "my cozy houseInfo",
     "createdDate" : "January.27. 2025",
     "updatedDate" : "January.27. 2025",
     "width" : 5000.0,
@@ -1227,7 +1227,7 @@ Content-Length: 605
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-get-api_response_fields">Response fields</h5>
+<h5 id="admin-houseInfo-get-api_response_fields">Response fields</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1243,48 +1243,48 @@ Content-Length: 605
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.houseId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.houseId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 식별자입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 제목입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 작가입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스에 대한 설명입니다.<br>
 * 100자까지만 전송됩니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.createdDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.createdDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스가 생성된 날짜입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.updatedDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.updatedDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스가 최종 수정된 날짜입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.borderImageId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.borderImageId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스 테두리 이미지의 식별자입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.width</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.width</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 가로 길이입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.height</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.height</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 높이입니다.</p></td>
 </tr>
@@ -1333,7 +1333,7 @@ Content-Length: 605
 </div>
 </div>
 <div class="sect3">
-<h4 id="admin-house-patch-api">하우스 정보 수정 API</h4>
+<h4 id="admin-houseInfo-patch-api">하우스 정보 수정 API</h4>
 <div class="paragraph">
 <p>하우스의 기본 정보를 수정하는 API입니다.</p>
 </div>
@@ -1345,7 +1345,7 @@ Content-Length: 605
 </blockquote>
 </div>
 <div class="sect4">
-<h5 id="admin-house-patch-api_path_parameters">Path parameters</h5>
+<h5 id="admin-houseInfo-patch-api_path_parameters">Path parameters</h5>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /admin/houses/{houseId}</caption>
 <colgroup>
@@ -1370,7 +1370,7 @@ Content-Length: 605
 </table>
 </div>
 <div class="sect4">
-<h5 id="admin-house-patch-api_http_request">HTTP request</h5>
+<h5 id="admin-houseInfo-patch-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /admin/houses/1 HTTP/1.1
@@ -1379,15 +1379,15 @@ Content-Length: 101
 Host: api.archiveofongr.site
 
 {
-  "title" : "not cozy house",
+  "title" : "not cozy houseInfo",
   "author" : "arang",
-  "description" : "this is not cozy house!!!"
+  "description" : "this is not cozy houseInfo!!!"
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-patch-api_request_fields">Request fields</h5>
+<h5 id="admin-houseInfo-patch-api_request_fields">Request fields</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1426,7 +1426,7 @@ Host: api.archiveofongr.site
 </table>
 </div>
 <div class="sect4">
-<h5 id="admin-house-patch-api_http_response">HTTP response</h5>
+<h5 id="admin-houseInfo-patch-api_http_response">HTTP response</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1440,7 +1440,7 @@ Content-Length: 74
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-patch-api_response_fields">Response fields</h5>
+<h5 id="admin-houseInfo-patch-api_response_fields">Response fields</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1465,7 +1465,7 @@ Content-Length: 74
 </div>
 </div>
 <div class="sect3">
-<h4 id="admin-house-delete-api">하우스 삭제 API</h4>
+<h4 id="admin-houseInfo-delete-api">하우스 삭제 API</h4>
 <div class="paragraph">
 <p>하우스를 삭제하는 API입니다.</p>
 </div>
@@ -1477,7 +1477,7 @@ Content-Length: 74
 </blockquote>
 </div>
 <div class="sect4">
-<h5 id="admin-house-delete-api_path_parameters">Path parameters</h5>
+<h5 id="admin-houseInfo-delete-api_path_parameters">Path parameters</h5>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /admin/houses/{houseId}</caption>
 <colgroup>
@@ -1502,7 +1502,7 @@ Content-Length: 74
 </table>
 </div>
 <div class="sect4">
-<h5 id="admin-house-delete-api_http_request">HTTP request</h5>
+<h5 id="admin-houseInfo-delete-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /admin/houses/1 HTTP/1.1
@@ -1512,7 +1512,7 @@ Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-delete-api_http_response">HTTP response</h5>
+<h5 id="admin-houseInfo-delete-api_http_response">HTTP response</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1526,7 +1526,7 @@ Content-Length: 60
 </div>
 </div>
 <div class="sect4">
-<h5 id="admin-house-delete-api_response_fields">Response fields</h5>
+<h5 id="admin-houseInfo-delete-api_response_fields">Response fields</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -2211,7 +2211,7 @@ Content-Length: 345
 {
   "homes" : [ {
     "id" : 1,
-    "name" : "leaf의 cozy house",
+    "name" : "leaf의 cozy houseInfo",
     "createdDate" : "2025.01.27.",
     "updatedDate" : "2025.01.27.",
     "user" : {
@@ -2220,9 +2220,9 @@ Content-Length: 345
     },
     "baseHouse" : {
       "id" : 20,
-      "title" : "cozy house",
+      "title" : "cozy houseInfo",
       "author" : "leaf",
-      "description" : "my cozy house"
+      "description" : "my cozy houseInfo"
     }
   } ]
 }</code></pre>
@@ -2370,7 +2370,7 @@ Content-Length: 69
 
 {
   "createdHomeId" : 1,
-  "createdHomeName" : "leaf의 cozy house"
+  "createdHomeName" : "leaf의 cozy houseInfo"
 }</code></pre>
 </div>
 </div>
@@ -2455,10 +2455,10 @@ Content-Length: 607
 
 {
   "homeId" : 1,
-  "homeName" : "leaf의 cozy house",
+  "homeName" : "leaf의 cozy houseInfo",
   "createdDate" : "January.27. 2025",
   "updatedDate" : "January.27. 2025",
-  "house" : {
+  "houseInfo" : {
     "width" : 5000.0,
     "height" : 5000.0,
     "borderImageId" : 2
@@ -2527,17 +2527,17 @@ Content-Length: 607
 <td class="tableblock halign-left valign-top"><p class="tableblock">홈이 최종 수정된 날짜입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.width</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.width</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 가로 길이입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.height</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.height</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스의 높이입니다.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>house.borderImageId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>houseInfo.borderImageId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">하우스 테두리 이미지의 식별자입니다.</p></td>
 </tr>

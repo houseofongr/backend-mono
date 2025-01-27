@@ -37,7 +37,7 @@ public class CreateSoundSourceService implements CreateSoundSourceUseCase {
 
         UploadFileResult uploadFileResult = uploadPrivateAudioUseCase.privateUpload(List.of(soundFile), item.getUserId().getId());
 
-        SoundSource soundSource = createSoundSourcePort.createSoundSource(uploadFileResult.fileInfos().getFirst().id(), metadata.name(), metadata.description(), metadata.isActive());
+        SoundSource soundSource = createSoundSourcePort.createSoundSource(itemId, uploadFileResult.fileInfos().getFirst().id(), metadata.name(), metadata.description(), metadata.isActive());
 
         Long savedSoundSourceId = saveSoundSourcePort.saveSoundSource(soundSource);
 

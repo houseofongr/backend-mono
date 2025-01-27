@@ -42,7 +42,7 @@ class UpdateHouseServiceTest {
 
         // then
         verify(findHousePort, times(1)).load(1L);
-        verify(updateHousePort, times(1)).update(any(), any());
+        verify(updateHousePort, times(1)).update(any());
 
         assertThat(message.message()).isEqualTo("1번 하우스 정보 수정이 완료되었습니다.");
     }
