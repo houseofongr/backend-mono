@@ -3,15 +3,15 @@ package com.hoo.aoo.admin.domain.room;
 import lombok.Getter;
 
 @Getter
-public class RoomName {
+public class RoomDetail {
 
     private String name;
 
-    public RoomName(String name) {
+    public RoomDetail(String name) {
         this.name = name;
     }
 
     public void update(String name) {
-        this.name = name == null ? this.name : name;
+        this.name = (name == null || name.isBlank())? this.name : name;
     }
 }

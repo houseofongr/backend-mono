@@ -50,9 +50,8 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
         Optional<HouseJpaEntity> optional = houseJpaRepository.findById(id);
 
         if (optional.isEmpty()) return Optional.empty();
-        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllByHouseId(id);
 
-        return Optional.of(houseMapper.mapToDomainEntity(optional.get(), roomJpaEntities));
+        return Optional.of(houseMapper.mapToDomainEntity(optional.get()));
     }
 
     @Override

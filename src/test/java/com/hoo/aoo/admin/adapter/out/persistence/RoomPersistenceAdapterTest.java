@@ -1,11 +1,15 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
-import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,38 +37,38 @@ class RoomPersistenceAdapterTest {
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("룸 수정 테스트")
-    void testUpdateRoomInfo() {
+    void testUpdateRoomInfo() throws Exception {
         // given
-        UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(
-                new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")
-        ));
+        List<Room> rooms = List.of(Room.create(1L,"욕실",1f,1f,1f,5000f,1000f,1L),
+                Room.create(2L,"주방",1f,1f,1f,5000f,1000f,1L));
 
         // when
-        sut.update(command);
-        Optional<QueryRoomResult> query = sut.findResult(1L);
+        int update = sut.update(rooms);
+        Optional<RoomJpaEntity> query = roomJpaRepository.findById(1L);
 
         // then
         assertThat(query).isNotEmpty();
-        assertThat(query.get().room().name()).isEqualTo("욕실");
+        assertThat(query.get().getName()).isEqualTo("욕실");
+        assertThat(update).isEqualTo(1);
     }
 
     @Test
     @Sql("HousePersistenceAdapterTest.sql")
     @DisplayName("룸 조회 테스트")
-    void testFindResult() {
+    void testFindResult() throws AreaLimitExceededException, AxisLimitExceededException {
         // given
         Long id = 2L;
 
         // when
-        Optional<QueryRoomResult> result = sut.findResult(id);
-        Optional<QueryRoomResult> result2 = sut.findResult(id);
+        Optional<Room> result = sut.load(id);
+        Optional<Room> result2 = sut.load(1234L);
 
         // then
         assertThat(result).isNotEmpty();
-        assertThat(result.get().room().name()).isEqualTo("주방");
-        assertThat(result.get().room().width()).isEqualTo(5000);
-        assertThat(result.get().room().height()).isEqualTo(1000);
-        assertThat(result.get().room().imageId()).isEqualTo(6);
+        assertThat(result.get().getRoomDetail().getName()).isEqualTo("주방");
+        assertThat(result.get().getArea().getWidth()).isEqualTo(5000);
+        assertThat(result.get().getArea().getHeight()).isEqualTo(1000);
+        assertThat(result.get().getImageFile().getFileId().getId()).isEqualTo(6);
 
         // not found
         assertThat(result2.isEmpty());

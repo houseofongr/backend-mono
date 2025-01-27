@@ -2,6 +2,9 @@ package com.hoo.aoo.admin.application.service.room;
 
 import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,16 +28,15 @@ class QueryRoomServiceTest {
 
     @Test
     @DisplayName("룸 조회 서비스 테스트")
-    void testQueryRoomService() {
+    void testQueryRoomService() throws Exception {
         // given
         Long id = 1L;
 
         // when
-        when(findRoomPort.findResult(1L)).thenReturn(Optional.of(new QueryRoomResult(null, null)));
+        when(findRoomPort.load(1L)).thenReturn(Optional.of(MockEntityFactoryService.getRoom()));
         QueryRoomResult result = sut.queryRoom(id);
 
         // then
-        verify(findRoomPort, times(1)).findResult(1L);
         assertThat(result).isNotNull();
     }
 

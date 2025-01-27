@@ -16,7 +16,7 @@ class RoomTest {
         Room newRoom = getRoom();
 
         // then
-        assertThat(newRoom.getRoomName().getName()).isEqualTo("거실");
+        assertThat(newRoom.getRoomDetail().getName()).isEqualTo("거실");
         assertThat(newRoom.getAxis().getX()).isEqualTo(123);
         assertThat(newRoom.getAxis().getY()).isEqualTo(456);
         assertThat(newRoom.getAxis().getZ()).isEqualTo(1);
@@ -33,10 +33,10 @@ class RoomTest {
         String name = "현관";
 
         // when
-        room.updateInfo(name);
+        room.updateDetail(name);
 
         // then
-        assertThat(room.getRoomName().getName()).isEqualTo(name);
+        assertThat(room.getRoomDetail().getName()).isEqualTo(name);
     }
 
     private Room getRoom() throws AxisLimitExceededException, AreaLimitExceededException {

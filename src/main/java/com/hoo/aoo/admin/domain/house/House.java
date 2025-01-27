@@ -58,8 +58,8 @@ public class House {
     public void updateRoomInfo(String originalName, String newName) throws RoomNameNotFoundException {
 
         for (Room room : rooms) {
-            if (room.getRoomName().getName().equals(originalName)) {
-                room.getRoomName().update(newName);
+            if (room.getRoomDetail().getName().equals(originalName)) {
+                room.getRoomDetail().update(newName);
                 return;
             }
         }

@@ -3,8 +3,6 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
-import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
-import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
@@ -14,6 +12,7 @@ import com.hoo.aoo.admin.domain.room.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,27 +22,6 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
 
     private final RoomJpaRepository roomJpaRepository;
     private final RoomMapper roomMapper;
-
-    @Override
-    public int update(UpdateRoomInfoCommand command) {
-
-        List<Long> roomIds = command.roomInfos().stream().map(UpdateRoomInfoCommand.RoomInfo::roomId).toList();
-
-        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllById(roomIds);
-
-        int updateCount = 0;
-
-        for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
-            for (UpdateRoomInfoCommand.RoomInfo roomInfo : command.roomInfos()) {
-                if (roomJpaEntity.getId().equals(roomInfo.roomId())) {
-                    roomJpaEntity.updateInfo(roomInfo.newName());
-                    updateCount++;
-                }
-            }
-        }
-
-        return updateCount;
-    }
 
     @Override
     public boolean exist(Long id) {
@@ -60,10 +38,36 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
     }
 
     @Override
-    public Optional<QueryRoomResult> findResult(Long id) {
-        return roomJpaRepository.findById(id).map(roomMapper::mapToQueryRoomResult);
+    public List<Room> loadAll(List<Long> ids) throws AreaLimitExceededException, AxisLimitExceededException {
+
+        List<Room> list = new ArrayList<>();
+
+        for (RoomJpaEntity roomJpaEntity : roomJpaRepository.findAllById(ids))
+            list.add(roomMapper.mapToDomainEntity(roomJpaEntity));
+
+        return list;
     }
 
+    @Override
+    public int update(List<Room> rooms) {
+
+        List<Long> roomIds = rooms.stream().map(room -> room.getRoomId().getId()).toList();
+        List<RoomJpaEntity> roomJpaEntities = roomJpaRepository.findAllById(roomIds);
+
+        int updateCount = 0;
+
+        loop:
+        for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {
+            for (Room room : rooms) {
+                if (!room.getRoomId().getId().equals(roomJpaEntity.getId())) continue;
+                roomJpaEntity.update(room.getRoomDetail().getName());
+                updateCount++;
+                break loop;
+            }
+        }
+
+        return updateCount;
+    }
 
     @Override
     public void deleteRoom(Long id) {

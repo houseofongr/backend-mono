@@ -5,12 +5,11 @@ import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.room.Room;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface FindRoomPort {
     boolean exist(Long id);
-
     Optional<Room> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException;
-
-    Optional<QueryRoomResult> findResult(Long id);
+    List<Room> loadAll(List<Long> ids) throws AreaLimitExceededException, AxisLimitExceededException;
 }

@@ -1,12 +1,14 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
-import com.hoo.aoo.admin.application.port.in.room.QueryRoomResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.room.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class RoomMapper {
 
     public RoomJpaEntity mapToNewJpaEntity(Room room) {
         return new RoomJpaEntity(null,
-                room.getRoomName().getName(),
+                room.getRoomDetail().getName(),
                 room.getAxis().getX(),
                 room.getAxis().getY(),
                 room.getAxis().getZ(),
@@ -28,15 +30,8 @@ public class RoomMapper {
         );
     }
 
-    public QueryRoomResult mapToQueryRoomResult(RoomJpaEntity roomJpaEntity) {
-        return QueryRoomResult.of(
-                roomJpaEntity,
-                roomJpaEntity.getItems().stream().map(itemMapper::mapToItemData).toList()
-        );
-    }
-
     public Room mapToDomainEntity(RoomJpaEntity roomJpaEntity) throws AreaLimitExceededException, AxisLimitExceededException {
-        return Room.load(
+        Room room = Room.load(
                 roomJpaEntity.getId(),
                 roomJpaEntity.getName(),
                 roomJpaEntity.getX(),
@@ -44,6 +39,12 @@ public class RoomMapper {
                 roomJpaEntity.getZ(),
                 roomJpaEntity.getWidth(),
                 roomJpaEntity.getHeight(),
-                roomJpaEntity.getImageFileId());
+                roomJpaEntity.getImageFileId(),
+                new ArrayList<>());
+
+        for (ItemJpaEntity itemJpaEntity : roomJpaEntity.getItems())
+            room.getItems().add(itemMapper.mapToDomainEntity(itemJpaEntity));
+
+        return room;
     }
 }

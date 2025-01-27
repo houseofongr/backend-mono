@@ -1,8 +1,10 @@
 package com.hoo.aoo.admin.application.service.room;
 
 import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
+import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.MessageDto;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,24 +22,27 @@ class UpdateRoomServiceTest {
 
     UpdateRoomService sut;
 
+    FindRoomPort findRoomPort;
     UpdateRoomPort updateRoomPort;
 
     @BeforeEach
     void init() {
+        findRoomPort = mock();
         updateRoomPort = mock();
-        sut = new UpdateRoomService(updateRoomPort);
+        sut = new UpdateRoomService(findRoomPort, updateRoomPort);
     }
 
     @Test
     @DisplayName("룸 업데이트 서비스 테스트")
     void testUpdateRoomInfo() throws Exception {
         // given
-        House houseWithRoom = MockEntityFactoryService.getHouse();
         UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")));
         UpdateRoomInfoCommand notFoundCommand = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(100L, "욕실")));
+        List<Room> rooms = List.of(MockEntityFactoryService.getRoom());
 
         // when
-        when(updateRoomPort.update(command)).thenReturn(1);
+        when(updateRoomPort.update(rooms)).thenReturn(1);
+        when(findRoomPort.loadAll(List.of(1L))).thenReturn(rooms);
         MessageDto message = sut.update(command);
 
         // then

@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -53,7 +52,7 @@ public class RoomJpaEntity {
     public static RoomJpaEntity create(Room room) {
         return new RoomJpaEntity(
                 null,
-                room.getRoomName().getName(),
+                room.getRoomDetail().getName(),
                 room.getAxis().getX(),
                 room.getAxis().getY(),
                 room.getAxis().getZ(),
@@ -64,7 +63,7 @@ public class RoomJpaEntity {
                 null);
     }
 
-    public void updateInfo(String name) {
+    public void update(String name) {
         this.name = name;
     }
 

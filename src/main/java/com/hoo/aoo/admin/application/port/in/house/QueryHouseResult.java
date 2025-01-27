@@ -55,7 +55,7 @@ public record QueryHouseResult(
         public static RoomInfo of(Room room) {
             return new RoomInfo(
                     room.getRoomId().getId(),
-                    room.getRoomName().getName(),
+                    room.getRoomDetail().getName(),
                     room.getAxis().getX(),
                     room.getAxis().getY(),
                     room.getAxis().getZ(),

@@ -9,12 +9,10 @@ import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
-import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
-import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
@@ -129,7 +127,7 @@ class HousePersistenceAdapterTest {
         assertThat(house.get().getArea().getHeight()).isEqualTo(5000f);
         assertThat(house.get().getRooms()).hasSize(2)
                 .anySatisfy(room -> {
-                    assertThat(room.getRoomName().getName()).isEqualTo("거실");
+                    assertThat(room.getRoomDetail().getName()).isEqualTo("거실");
                     assertThat(room.getAxis().getX()).isEqualTo(0);
                     assertThat(room.getAxis().getY()).isEqualTo(0);
                     assertThat(room.getAxis().getZ()).isEqualTo(0);

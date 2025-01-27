@@ -83,47 +83,4 @@ public class ItemMapper {
             );
         };
     }
-
-    public ItemData mapToItemData(ItemJpaEntity itemJpaEntity) {
-        return switch (itemJpaEntity.getShape()) {
-            case ItemShapeRectangleJpaEntity itemShapeRectangleJpaEntity -> new ItemData(
-                    itemJpaEntity.getId(),
-                    itemJpaEntity.getName(),
-                    ItemType.RECTANGLE,
-                    null,
-                    new ItemData.RectangleData(
-                            itemShapeRectangleJpaEntity.getX(),
-                            itemShapeRectangleJpaEntity.getY(),
-                            itemShapeRectangleJpaEntity.getWidth(),
-                            itemShapeRectangleJpaEntity.getHeight(),
-                            itemShapeRectangleJpaEntity.getRotation()),
-                    null
-            );
-            case ItemShapeCircleJpaEntity itemShapeCircleJpaEntity -> new ItemData(
-                    itemJpaEntity.getId(),
-                    itemJpaEntity.getName(),
-                    ItemType.CIRCLE,
-                    new ItemData.CircleData(
-                            itemShapeCircleJpaEntity.getX(),
-                            itemShapeCircleJpaEntity.getY(),
-                            itemShapeCircleJpaEntity.getRadius()),
-                    null,
-                    null
-            );
-            case ItemShapeEllipseJpaEntity itemShapeEllipseJpaEntity -> new ItemData(
-                    itemJpaEntity.getId(),
-                    itemJpaEntity.getName(),
-                    ItemType.ELLIPSE,
-                    null,
-                    null,
-                    new ItemData.EllipseData(
-                            itemShapeEllipseJpaEntity.getX(),
-                            itemShapeEllipseJpaEntity.getY(),
-                            itemShapeEllipseJpaEntity.getRadiusX(),
-                            itemShapeEllipseJpaEntity.getRadiusY(),
-                            itemShapeEllipseJpaEntity.getRotation())
-            );
-            case null, default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
-        };
-    }
 }

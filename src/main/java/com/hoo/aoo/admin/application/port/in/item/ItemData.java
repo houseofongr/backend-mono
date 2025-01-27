@@ -1,6 +1,11 @@
 package com.hoo.aoo.admin.application.port.in.item;
 
-import com.hoo.aoo.admin.domain.item.ItemType;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeCircleJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeRectangleJpaEntity;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.admin.application.service.AdminException;
+import com.hoo.aoo.admin.domain.item.*;
 
 public record ItemData(
         Long id,
@@ -10,6 +15,49 @@ public record ItemData(
         RectangleData rectangleData,
         EllipseData ellipseData
 ) {
+
+    public static ItemData of(Item item) {
+        return switch (item.getShape()) {
+            case Rectangle rectangle -> new ItemData(
+                    item.getItemId().getId(),
+                    item.getItemDetail().getName(),
+                    ItemType.RECTANGLE,
+                    null,
+                    new ItemData.RectangleData(
+                            rectangle.getX(),
+                            rectangle.getY(),
+                            rectangle.getWidth(),
+                            rectangle.getHeight(),
+                            rectangle.getRotation()),
+                    null
+            );
+            case Circle circle -> new ItemData(
+                    item.getItemId().getId(),
+                    item.getItemDetail().getName(),
+                    ItemType.CIRCLE,
+                    new ItemData.CircleData(
+                            circle.getX(),
+                            circle.getY(),
+                            circle.getRadius()),
+                    null,
+                    null
+            );
+            case Ellipse ellipse -> new ItemData(
+                    item.getItemId().getId(),
+                    item.getItemDetail().getName(),
+                    ItemType.ELLIPSE,
+                    null,
+                    null,
+                    new ItemData.EllipseData(
+                            ellipse.getX(),
+                            ellipse.getY(),
+                            ellipse.getRadiusX(),
+                            ellipse.getRadiusY(),
+                            ellipse.getRotation())
+            );
+            case null, default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
+        };
+    }
 
     public record CircleData(
             Float x,
