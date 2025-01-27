@@ -4,13 +4,15 @@ import lombok.Getter;
 
 @Getter
 public class User {
+    private final UserId userId;
     private final UserName userName;
 
-    private User(String nickName, String realName) {
+    private User(UserId userId, String nickName, String realName) {
+        this.userId = userId;
         this.userName = new UserName(nickName, realName);
     }
 
-    public static User load(String nickName, String realName) {
-        return new User(nickName, realName);
+    public static User load(Long userId, String nickName, String realName) {
+        return new User(new UserId(userId), nickName, realName);
     }
 }

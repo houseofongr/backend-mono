@@ -13,11 +13,12 @@ class ItemTest {
     void testCreateItem() {
         // given
         Long roomId = 1L;
+        Long userId = 10L;
         String itemName = "설이";
         Shape rectangle = new Rectangle(100f, 100f, 10f, 10f, 5f);
 
         // when
-        Item item = Item.create(1L, roomId, itemName, rectangle);
+        Item item = Item.create(1L, userId, roomId, itemName, rectangle);
 
         // then
         assertThat(item).isNotNull();

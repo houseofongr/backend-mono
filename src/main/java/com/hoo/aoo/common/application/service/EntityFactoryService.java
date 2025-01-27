@@ -62,9 +62,9 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public Item createItem(Long roomId, String name, Shape shape) {
+    public Item createItem(Long userId, Long roomId, String name, Shape shape) {
         Long newId = issueIdPort.issueItemId();
-        return Item.create(newId, roomId, name, shape);
+        return Item.create(newId, userId, roomId, name, shape);
     }
 
     @Override

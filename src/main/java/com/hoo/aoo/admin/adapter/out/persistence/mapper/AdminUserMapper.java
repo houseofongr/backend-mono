@@ -39,6 +39,6 @@ public class AdminUserMapper {
     }
 
     public User mapToDomainEntity(UserJpaEntity userJpaEntity) {
-        return User.load(userJpaEntity.getNickname(), userJpaEntity.getRealName());
+        return User.load(userJpaEntity.getId(), userJpaEntity.getNickname(), userJpaEntity.getRealName());
     }
 }

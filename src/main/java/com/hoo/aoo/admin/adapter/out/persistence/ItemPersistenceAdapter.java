@@ -36,11 +36,10 @@ public class ItemPersistenceAdapter implements SaveItemPort, FindItemPort, Updat
     public List<Long> save(Long userId, Long homeId, Long roomId, List<Item> items) {
 
         UserJpaEntity userJpaEntity = userJpaRepository.findById(userId).orElseThrow();
-        HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(homeId).orElseThrow();
         RoomJpaEntity roomJpaEntity = roomJpaRepository.findById(roomId).orElseThrow();
 
         List<ItemJpaEntity> itemJpaEntities = items.stream().map(ItemJpaEntity::create).toList();
-        itemJpaEntities.forEach(itemJpaEntity -> itemJpaEntity.setRelationship(userJpaEntity, homeJpaEntity, roomJpaEntity));
+        itemJpaEntities.forEach(itemJpaEntity -> itemJpaEntity.setRelationship(userJpaEntity, roomJpaEntity));
 
         itemJpaRepository.saveAll(itemJpaEntities);
 

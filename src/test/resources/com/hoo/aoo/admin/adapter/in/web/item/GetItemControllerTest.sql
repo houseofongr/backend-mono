@@ -29,10 +29,10 @@ values (2, 10.5);
 insert into ITEM_SHAPE_ELLIPSE(ID, RADIUSX, RADIUSY, ROTATION)
 values (3, 15, 15, 90);
 
-insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, USER_ID, ITEM_SHAPE_ID)
-values (1, '설이', 1, 1, 10, 1),
-       (2, '강아지', 1, 1, 10, 2),
-       (3, '화분', 1, 1, 10, 3);
+insert into ITEM(ID, NAME, ROOM_ID, USER_ID, ITEM_SHAPE_ID)
+values (1, '설이', 1, 10, 1),
+       (2, '강아지',  1, 10, 2),
+       (3, '화분',  1, 10, 3);
 
 insert into SOUND_SOURCE(ID, NAME, DESCRIPTION, AUDIO_FILE_ID, IS_ACTIVE, CREATED_TIME, UPDATED_TIME, ITEM_ID)
 values (1, "골골송","2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,1);

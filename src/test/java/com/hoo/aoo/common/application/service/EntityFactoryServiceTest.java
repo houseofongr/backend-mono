@@ -84,7 +84,7 @@ class EntityFactoryServiceTest {
 
         // when
         when(issueIdPort.issueItemId()).thenReturn(1L);
-        Item 설이 = sut.createItem(1L, "설이", new Rectangle(0f, 0f, 1f, 1f, 0f));
+        Item 설이 = sut.createItem(1L, 10L, "설이", new Rectangle(0f, 0f, 1f, 1f, 0f));
 
         // then
         assertThat(설이).isNotNull();

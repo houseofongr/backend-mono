@@ -22,6 +22,7 @@ public class ItemMapper {
         return switch (itemJpaEntity.getShape()) {
             case ItemShapeRectangleJpaEntity itemShapeRectangleJpaEntity -> Item.load(
                     itemJpaEntity.getId(),
+                    itemJpaEntity.getUser().getId(),
                     itemJpaEntity.getRoom().getId(),
                     itemJpaEntity.getName(),
                     new Rectangle(itemShapeRectangleJpaEntity.getX(),
@@ -33,6 +34,7 @@ public class ItemMapper {
             );
             case ItemShapeCircleJpaEntity itemShapeCircleJpaEntity -> Item.load(
                     itemJpaEntity.getId(),
+                    itemJpaEntity.getUser().getId(),
                     itemJpaEntity.getRoom().getId(),
                     itemJpaEntity.getName(),
                     new Circle(itemShapeCircleJpaEntity.getX(),
@@ -42,6 +44,7 @@ public class ItemMapper {
             );
             case ItemShapeEllipseJpaEntity itemShapeEllipseJpaEntity -> Item.load(
                     itemJpaEntity.getId(),
+                    itemJpaEntity.getUser().getId(),
                     itemJpaEntity.getRoom().getId(),
                     itemJpaEntity.getName(),
                     new Ellipse(itemShapeEllipseJpaEntity.getX(),
