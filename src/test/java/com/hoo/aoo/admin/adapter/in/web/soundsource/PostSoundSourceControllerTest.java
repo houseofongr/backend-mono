@@ -32,6 +32,7 @@ class PostSoundSourceControllerTest extends AbstractControllerTest {
                   "isActive" : true
                 }
                 """;
+
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 

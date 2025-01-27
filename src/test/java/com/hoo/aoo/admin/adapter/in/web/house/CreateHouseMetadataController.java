@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PostHouseMetadataController {
+public class CreateHouseMetadataController {
 
     @GetMapping("/mock/admin/create-house-metadata")
     ResponseEntity<CreateHouseMetadata> getMetadata() {

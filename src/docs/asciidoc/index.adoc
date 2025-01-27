@@ -231,7 +231,7 @@ operation::admin-home-get[snippets='path-parameters,http-request,http-response,r
 operation::admin-home-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-item-api]]
-=== 아이템(item) API
+=== 아이템(Item) API
 
 [[admin-item-post-api]]
 ==== 아이템 생성 API
@@ -273,7 +273,17 @@ operation::admin-item-delete[snippets='path-parameters,http-request,http-respons
 
 관리자가 아이템 내부에 음원을 추가합니다.
 
-operation::admin-soundsource-post[snippets='path-parameters,http-request,request-parts,http-response,response-fields']
+operation::admin-soundsource-post[snippets='path-parameters,http-request,request-parts']
+
+> 음원 생성 시 메타데이터 정보는 아래 <<CreateSoundSourceMetadata>>를 참고하시기 바랍니다.
+
+===== CreateSoundSourceMetadata 예시
+include::{snippets}/admin-create-soundsource-metadata/response-body.adoc[]
+
+===== CreateSoundSourceMetadata
+include::{snippets}/admin-create-soundsource-metadata/response-fields.adoc[]
+
+operation::admin-soundsource-post[snippets='http-response,response-fields']
 
 [[admin-soundsource-get-api]]
 ==== 음원 조회 API
@@ -296,7 +306,7 @@ operation::admin-soundsource-patch[snippets='path-parameters,http-request,reques
 
 음원을 삭제합니다.
 
-operation::admin-item-delete[snippets='path-parameters,http-request,http-response,response-fields']
+operation::admin-soundsource-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 
 [[file-api]]

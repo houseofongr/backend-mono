@@ -36,12 +36,26 @@ class PatchItemControllerTest extends AbstractControllerTest {
     @DisplayName("아이템 수정 API")
     void testPatchItemAPI() throws Exception {
 
-        UpdateItemCommand command = new UpdateItemCommand(new ItemData(null,"고양이", ItemType.RECTANGLE, null,
-                new ItemData.RectangleData(300f, 300f, 20f, 20f, 10f), null));
+        //language=JSON
+        String content = """
+                {
+                  "updateData": {
+                    "name" : "고양이",
+                    "itemType" : "RECTANGLE",
+                    "rectangleData" : {
+                      "x" : 300,
+                      "y" : 200,
+                      "width" : 20,
+                      "height" : 20,
+                      "rotation" : 10
+                    }
+                  }
+                }
+                """;
 
         mockMvc.perform(patch("/admin/items/{itemId}", 2L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(command)))
+                        .content(content))
                 .andExpect(status().is(200))
                 .andDo(document("admin-item-patch",
                         pathParameters(
