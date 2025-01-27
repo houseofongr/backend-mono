@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,20 @@ public class SoundSourceJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "ITEM_ID")
     private ItemJpaEntity item;
 
+    public static SoundSourceJpaEntity create(SoundSource soundSource) {
+        return new SoundSourceJpaEntity(
+                null,
+                soundSource.getSoundSourceDetail().getName(),
+                soundSource.getSoundSourceDetail().getDescription(),
+                soundSource.getFile().getFileId().getId(),
+                soundSource.getActive().isActive(),
+                null
+        );
+    }
+
+    public void setRelationship(ItemJpaEntity itemJpaEntity) {
+        this.item = itemJpaEntity;
+        if (!itemJpaEntity.getSoundSources().contains(this))
+            itemJpaEntity.getSoundSources().add(this);
+    }
 }

@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
+import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
@@ -29,6 +30,7 @@ public class ItemPersistenceAdapter implements SaveItemPort, FindItemPort, Updat
     private final UserJpaRepository userJpaRepository;
     private final ItemJpaRepository itemJpaRepository;
     private final ItemMapper itemMapper;
+    private final SoundSourceMapper soundSourceMapper;
 
     @Override
     public List<Long> save(Long userId, Long homeId, Long roomId, List<Item> items) {
@@ -37,7 +39,8 @@ public class ItemPersistenceAdapter implements SaveItemPort, FindItemPort, Updat
         HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(homeId).orElseThrow();
         RoomJpaEntity roomJpaEntity = roomJpaRepository.findById(roomId).orElseThrow();
 
-        List<ItemJpaEntity> itemJpaEntities = items.stream().map(item -> itemMapper.mapToNewJpaEntity(item, userJpaEntity, homeJpaEntity, roomJpaEntity)).toList();
+        List<ItemJpaEntity> itemJpaEntities = items.stream().map(ItemJpaEntity::create).toList();
+        itemJpaEntities.forEach(itemJpaEntity -> itemJpaEntity.setRelationship(userJpaEntity, homeJpaEntity, roomJpaEntity));
 
         itemJpaRepository.saveAll(itemJpaEntities);
 

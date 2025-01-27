@@ -10,6 +10,8 @@ import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ItemMapper {
@@ -54,61 +56,6 @@ public class ItemMapper {
                 throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
             }
         };
-    }
-
-    public ItemJpaEntity mapToNewJpaEntity(Item item, UserJpaEntity user, HomeJpaEntity home, RoomJpaEntity room) {
-        switch (item.getShape().getItemType()) {
-            case RECTANGLE -> {
-                Rectangle shape = (Rectangle) item.getShape();
-                return new ItemJpaEntity(null,
-                        item.getItemDetail().getName(),
-                        home,
-                        room,
-                        user,
-                        new ItemShapeRectangleJpaEntity(
-                                null,
-                                shape.getX(),
-                                shape.getY(),
-                                shape.getWidth(),
-                                shape.getHeight(),
-                                shape.getRotation()),
-                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList()
-                );
-            }
-            case CIRCLE -> {
-                Circle shape = (Circle) item.getShape();
-                return new ItemJpaEntity(null,
-                        item.getItemDetail().getName(),
-                        home,
-                        room,
-                        user,
-                        new ItemShapeCircleJpaEntity(
-                                null,
-                                shape.getX(),
-                                shape.getY(),
-                                shape.getRadius()),
-                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList()
-                );
-            }
-            case ELLIPSE -> {
-                Ellipse shape = (Ellipse) item.getShape();
-                return new ItemJpaEntity(null,
-                        item.getItemDetail().getName(),
-                        home,
-                        room,
-                        user,
-                        new ItemShapeEllipseJpaEntity(
-                                null,
-                                shape.getX(),
-                                shape.getY(),
-                                shape.getRadiusX(),
-                                shape.getRadiusY(),
-                                shape.getRotation()),
-                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList()
-                );
-            }
-            default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
-        }
     }
 
     public Shape mapToShape(ItemData itemData) {
@@ -175,14 +122,5 @@ public class ItemMapper {
             );
             case null, default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
         };
-    }
-
-    public SoundSourceJpaEntity mapToNewJpaEntity(SoundSource soundSource) {
-        return new SoundSourceJpaEntity(null,
-                soundSource.getSoundSourceDetail().getName(),
-                soundSource.getSoundSourceDetail().getDescription(),
-                soundSource.getFile().getFileId().getId(),
-                soundSource.getActive().isActive(),
-                null);
     }
 }

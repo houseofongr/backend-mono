@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DiscriminatorOptions;
 
+import java.security.Provider;
 import java.util.List;
 
 @Entity
@@ -24,16 +25,16 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private UserJpaEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOME_ID")
     private HomeJpaEntity home;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROOM_ID")
     private RoomJpaEntity room;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private UserJpaEntity user;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ITEM_SHAPE_ID")
@@ -42,20 +43,36 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
     List<SoundSourceJpaEntity> soundSources;
 
-    public ItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, ItemShapeJpaEntity shape, List<SoundSourceJpaEntity> soundSources) {
+    public ItemJpaEntity(Long id, String name, Shape shape) {
         this.id = id;
         this.name = name;
-        this.home = home;
-        this.room = room;
-        this.user = user;
-        this.shape = shape;
-        this.soundSources = soundSources;
+        this.shape = getShapeEntity(shape);
+    }
+
+    public static ItemJpaEntity create(Item item) {
+        return new ItemJpaEntity(
+                null,
+                item.getItemDetail().getName(),
+                item.getShape());
+    }
+
+    public void setRelationship(UserJpaEntity userJpaEntity, HomeJpaEntity homeJpaEntity, RoomJpaEntity roomJpaEntity) {
+        this.user = userJpaEntity;
+        this.home = homeJpaEntity;
+        this.room = roomJpaEntity;
+
+        if (!roomJpaEntity.getItems().contains(this))
+            roomJpaEntity.getItems().add(this);
     }
 
     public void update(Item item) {
        this.name = item.getItemDetail().getName();
-        switch (item.getShape()) {
-           case Rectangle rectangle -> {
+       this.shape = getShapeEntity(item.getShape());
+    }
+
+    private ItemShapeJpaEntity getShapeEntity(Shape shape) {
+        return switch (shape) {
+           case Rectangle rectangle ->
                this.shape = new ItemShapeRectangleJpaEntity(
                        null,
                        rectangle.getX(),
@@ -64,16 +81,14 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
                        rectangle.getHeight(),
                        rectangle.getRotation()
                );
-           }
-           case Circle circle -> {
+           case Circle circle ->
                this.shape = new ItemShapeCircleJpaEntity(
                        null,
                        circle.getX(),
                        circle.getY(),
                        circle.getRadius()
                );
-           }
-           case Ellipse ellipse -> {
+           case Ellipse ellipse ->
                this.shape = new ItemShapeEllipseJpaEntity(
                        null,
                        ellipse.getX(),
@@ -82,8 +97,7 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
                        ellipse.getRadiusY(),
                        ellipse.getRotation()
                );
-           }
-            default -> throw new IllegalStateException("Unexpected value: " + item.getShape());
-        }
+            default -> throw new IllegalStateException("Unexpected value: " + shape);
+        };
     }
 }

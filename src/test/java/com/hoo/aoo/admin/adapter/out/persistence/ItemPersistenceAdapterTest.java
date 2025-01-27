@@ -71,7 +71,7 @@ class ItemPersistenceAdapterTest {
     @Test
     @Sql("ItemPersistenceAdapterTest2.sql")
     @DisplayName("아이템 수정 테스트")
-    void testUpdateItem() throws Exception {
+    void testUpdateItem() {
         // given
         Item item = Item.create(1L, 1L, "고양이",
                 new Ellipse(10f,10f,70.5f,50f,10f)
