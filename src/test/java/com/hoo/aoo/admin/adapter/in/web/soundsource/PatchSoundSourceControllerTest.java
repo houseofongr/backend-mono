@@ -3,6 +3,8 @@ package com.hoo.aoo.admin.adapter.in.web.soundsource;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -18,20 +20,22 @@ class PatchSoundSourceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Sql("PatchSoundSourceControllerTest.sql")
     @DisplayName("음원 수정 API")
     void testUpdateSoundSourceAPI() throws Exception {
 
         //language=JSON
         String content = """
                 {
-                  "name" : "골골송2",
-                  "description" : "2026년 설이가 보내는 골골송",
+                  "name" : "골골골송",
+                  "description" : "2026년 설이가 보내는 골골골송",
                   "isActive" : false
                 }
                 """;
 
         mockMvc.perform(patch("/admin/sound-sources/{soundSourceId}", 1L)
-                        .content(content))
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andDo(document("admin-soundsource-patch",
                         pathParameters(

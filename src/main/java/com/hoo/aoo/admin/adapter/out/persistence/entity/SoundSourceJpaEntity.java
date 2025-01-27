@@ -50,4 +50,10 @@ public class SoundSourceJpaEntity extends DateColumnBaseEntity {
         if (!itemJpaEntity.getSoundSources().contains(this))
             itemJpaEntity.getSoundSources().add(this);
     }
+
+    public void update(SoundSource soundSource) {
+        this.name = soundSource.getSoundSourceDetail().getName();
+        this.description = soundSource.getSoundSourceDetail().getDescription();
+        this.isActive = soundSource.getActive().isActive();
+    }
 }

@@ -40,7 +40,7 @@ class UpdateItemServiceTest {
 
     @Test
     @DisplayName("아이템 업데이트 서비스 테스트")
-    void testUpdateItem() throws Exception {
+    void testUpdateItem() {
         // given
         Long id = 1L;
         Long notExistId = 1234L;

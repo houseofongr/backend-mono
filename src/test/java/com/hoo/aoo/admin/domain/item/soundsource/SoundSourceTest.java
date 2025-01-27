@@ -2,6 +2,7 @@ package com.hoo.aoo.admin.domain.item.soundsource;
 
 import com.hoo.aoo.admin.domain.file.FileType;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,4 +29,50 @@ class SoundSourceTest {
         assertThat(soundSource.getActive().isActive()).isTrue();
     }
 
+    @Test
+    @DisplayName("음원 수정 테스트")
+    void testUpdateSoundSource() {
+        // given
+        String nullName = null;
+        String emptyName = " ";
+        String newName = "골골골송";
+
+        String nullDescription = null;
+        String emptyDescription = " ";
+        String newDescription = "2026년 설이가 보내는 골골골송";
+
+        Boolean nullActive = null;
+        Boolean active = false;
+
+        SoundSource soundSource = MockEntityFactoryService.getSoundSource();
+        String originalName = soundSource.getSoundSourceDetail().getName();
+        String originalDesc = soundSource.getSoundSourceDetail().getDescription();
+        Boolean originalActive = soundSource.getActive().isActive();
+
+        soundSource.updateDetail(nullName, originalDesc, originalActive);
+        assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo(originalName);
+
+        soundSource.updateDetail(emptyName, originalDesc, originalActive);
+        assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo(originalName);
+
+        soundSource.updateDetail(newName, originalDesc, originalActive);
+        assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo(newName);
+
+        soundSource.updateDetail(originalName, nullDescription, originalActive);
+        assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(originalDesc);
+
+        soundSource.updateDetail(originalName, emptyDescription, originalActive);
+        assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(originalDesc);
+
+        soundSource.updateDetail(originalName, newDescription, originalActive);
+        assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(newDescription);
+
+        soundSource.updateDetail(originalName,originalDesc,nullActive);
+        assertThat(soundSource.getActive().isActive()).isEqualTo(originalActive);
+
+        soundSource.updateDetail(newName,newDescription, active);
+        assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo(newName);
+        assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(newDescription);
+        assertThat(soundSource.getActive().isActive()).isFalse();
+    }
 }

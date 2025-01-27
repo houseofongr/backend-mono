@@ -38,4 +38,5 @@ class DateColumnBaseEntityTest {
         assertThat(snsAccountJpaEntity.getCreatedTime()).isCloseTo(now, new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
         assertThat(snsAccountJpaEntity.getUpdatedTime()).isCloseTo(now, new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
     }
+
 }

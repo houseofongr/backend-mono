@@ -6,12 +6,15 @@ import com.hoo.aoo.admin.adapter.out.persistence.repository.SoundSourceJpaReposi
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +28,9 @@ class SoundSourcePersistenceAdapterTest {
 
     @Autowired
     SoundSourceJpaRepository soundSourceJpaRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Test
     @DisplayName("음원 저장 테스트")
@@ -64,4 +70,26 @@ class SoundSourcePersistenceAdapterTest {
         assertThat(soundSource.get().getSoundSourceDetail().getName()).isEqualTo("골골송");
     }
 
+    @Test
+    @Sql("SoundSourcePersistenceAdapterTest.sql")
+    @DisplayName("음원 수정 테스트")
+    void testUpdateSoundSource() throws InterruptedException {
+        // given
+        SoundSource soundSource = SoundSource.create(1L, 1L, "골골골송", "2026년 설이가 보내는 골골골송", false);
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
+
+        // when
+        sut.updateSoundSource(soundSource);
+        entityManager.flush();
+        entityManager.clear();
+
+        Optional<SoundSourceJpaEntity> optional = soundSourceJpaRepository.findById(1L);
+        assertThat(optional).isNotEmpty();
+        SoundSourceJpaEntity soundSourceInDB = optional.get();
+
+        // then
+        assertThat(soundSourceInDB.getName()).isEqualTo("골골골송");
+        assertThat(soundSourceInDB.getDescription()).isEqualTo("2026년 설이가 보내는 골골골송");
+        assertThat(soundSourceInDB.getIsActive()).isFalse();
+    }
 }

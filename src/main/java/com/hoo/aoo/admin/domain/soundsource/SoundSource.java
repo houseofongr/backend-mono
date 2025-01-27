@@ -12,9 +12,9 @@ import java.time.ZonedDateTime;
 public class SoundSource {
     private final SoundSourceId soundSourceId;
     private final File file;
-    private final SoundSourceDetail soundSourceDetail;
+    private SoundSourceDetail soundSourceDetail;
     private final BaseTime baseTime;
-    private final Active active;
+    private Active active;
 
     private SoundSource(SoundSourceId soundSourceId, File file, SoundSourceDetail soundSourceDetail, BaseTime baseTime, Active active) {
         this.soundSourceId = soundSourceId;
@@ -36,5 +36,15 @@ public class SoundSource {
         File file = new File(new FileId(audioFileId), FileType.AUDIO);
 
         return new SoundSource(new SoundSourceId(id), file, new SoundSourceDetail(name, description), new BaseTime(createdTime, updatedTime), new Active(isActive));
+    }
+
+    public void updateDetail(String name, String description, Boolean isActive) {
+
+        String newName = name != null && !name.isBlank()? name : this.soundSourceDetail.getName();
+        String newDescription = description != null && !description.isBlank()? description : this.soundSourceDetail.getDescription();
+
+        this.soundSourceDetail = new SoundSourceDetail(newName, newDescription);
+
+        if (isActive != null) this.active = new Active(isActive);
     }
 }

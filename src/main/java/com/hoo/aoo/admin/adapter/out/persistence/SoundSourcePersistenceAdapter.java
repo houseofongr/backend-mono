@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
 import com.hoo.aoo.admin.application.port.out.soundsource.SaveSoundSourcePort;
+import com.hoo.aoo.admin.application.port.out.soundsource.UpdateSoundSourcePort;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindSoundSourcePort {
+public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindSoundSourcePort, UpdateSoundSourcePort {
 
     private final SoundSourceJpaRepository soundSourceJpaRepository;
     private final SoundSourceMapper soundSourceMapper;
@@ -30,5 +31,11 @@ public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindS
     public Optional<SoundSource> loadSoundSource(Long id) {
         return soundSourceJpaRepository.findById(id)
                 .map(soundSourceMapper::mapToDomainEntity);
+    }
+
+    @Override
+    public void updateSoundSource(SoundSource soundSource) {
+        SoundSourceJpaEntity soundSourceJpaEntity = soundSourceJpaRepository.findById(soundSource.getSoundSourceId().getId()).orElseThrow();
+        soundSourceJpaEntity.update(soundSource);
     }
 }
