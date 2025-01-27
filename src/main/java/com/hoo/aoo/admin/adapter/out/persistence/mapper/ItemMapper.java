@@ -17,39 +17,42 @@ public class ItemMapper {
     private final SoundSourceMapper soundSourceMapper;
 
     public Item mapToDomainEntity(ItemJpaEntity itemJpaEntity) {
-        return switch (itemJpaEntity) {
-            case RectangleItemJpaEntity rectangleItemJpaEntity -> Item.load(
+        return switch (itemJpaEntity.getShape()) {
+            case ItemShapeRectangleJpaEntity itemShapeRectangleJpaEntity -> Item.load(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getRoom().getId(),
                     itemJpaEntity.getName(),
-                    new Rectangle(rectangleItemJpaEntity.getX(),
-                            rectangleItemJpaEntity.getY(),
-                            rectangleItemJpaEntity.getWidth(),
-                            rectangleItemJpaEntity.getHeight(),
-                            rectangleItemJpaEntity.getRotation()),
+                    new Rectangle(itemShapeRectangleJpaEntity.getX(),
+                            itemShapeRectangleJpaEntity.getY(),
+                            itemShapeRectangleJpaEntity.getWidth(),
+                            itemShapeRectangleJpaEntity.getHeight(),
+                            itemShapeRectangleJpaEntity.getRotation()),
                     itemJpaEntity.getSoundSources().stream().map(soundSourceMapper::mapToDomainEntity).toList()
             );
-            case CircleItemJpaEntity circleItemJpaEntity -> Item.load(
+            case ItemShapeCircleJpaEntity itemShapeCircleJpaEntity -> Item.load(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getRoom().getId(),
                     itemJpaEntity.getName(),
-                    new Circle(circleItemJpaEntity.getX(),
-                            circleItemJpaEntity.getY(),
-                            circleItemJpaEntity.getRadius()),
+                    new Circle(itemShapeCircleJpaEntity.getX(),
+                            itemShapeCircleJpaEntity.getY(),
+                            itemShapeCircleJpaEntity.getRadius()),
                     itemJpaEntity.getSoundSources().stream().map(soundSourceMapper::mapToDomainEntity).toList()
             );
-            case EllipseItemJpaEntity ellipseItemJpaEntity -> Item.load(
+            case ItemShapeEllipseJpaEntity itemShapeEllipseJpaEntity -> Item.load(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getRoom().getId(),
                     itemJpaEntity.getName(),
-                    new Ellipse(ellipseItemJpaEntity.getX(),
-                            ellipseItemJpaEntity.getY(),
-                            ellipseItemJpaEntity.getRadiusX(),
-                            ellipseItemJpaEntity.getRadiusY(),
-                            ellipseItemJpaEntity.getRotation()),
+                    new Ellipse(itemShapeEllipseJpaEntity.getX(),
+                            itemShapeEllipseJpaEntity.getY(),
+                            itemShapeEllipseJpaEntity.getRadiusX(),
+                            itemShapeEllipseJpaEntity.getRadiusY(),
+                            itemShapeEllipseJpaEntity.getRotation()),
                     itemJpaEntity.getSoundSources().stream().map(soundSourceMapper::mapToDomainEntity).toList()
             );
-            case null, default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
+            case null, default -> {
+
+                throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
+            }
         };
     }
 
@@ -57,43 +60,52 @@ public class ItemMapper {
         switch (item.getShape().getItemType()) {
             case RECTANGLE -> {
                 Rectangle shape = (Rectangle) item.getShape();
-                return new RectangleItemJpaEntity(null,
+                return new ItemJpaEntity(null,
                         item.getItemDetail().getName(),
                         home,
                         room,
                         user,
-                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList(),
-                        shape.getX(),
-                        shape.getY(),
-                        shape.getWidth(),
-                        shape.getHeight(),
-                        shape.getRotation());
+                        new ItemShapeRectangleJpaEntity(
+                                null,
+                                shape.getX(),
+                                shape.getY(),
+                                shape.getWidth(),
+                                shape.getHeight(),
+                                shape.getRotation()),
+                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList()
+                );
             }
             case CIRCLE -> {
                 Circle shape = (Circle) item.getShape();
-                return new CircleItemJpaEntity(null,
+                return new ItemJpaEntity(null,
                         item.getItemDetail().getName(),
                         home,
                         room,
                         user,
-                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList(),
-                        shape.getX(),
-                        shape.getY(),
-                        shape.getRadius());
+                        new ItemShapeCircleJpaEntity(
+                                null,
+                                shape.getX(),
+                                shape.getY(),
+                                shape.getRadius()),
+                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList()
+                );
             }
             case ELLIPSE -> {
                 Ellipse shape = (Ellipse) item.getShape();
-                return new EllipseItemJpaEntity(null,
+                return new ItemJpaEntity(null,
                         item.getItemDetail().getName(),
                         home,
                         room,
                         user,
-                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList(),
-                        shape.getX(),
-                        shape.getY(),
-                        shape.getRadiusX(),
-                        shape.getRadiusY(),
-                        shape.getRotation());
+                        new ItemShapeEllipseJpaEntity(
+                                null,
+                                shape.getX(),
+                                shape.getY(),
+                                shape.getRadiusX(),
+                                shape.getRadiusY(),
+                                shape.getRotation()),
+                        item.getSoundSources().stream().map(this::mapToNewJpaEntity).toList()
+                );
             }
             default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
         }
@@ -123,43 +135,43 @@ public class ItemMapper {
     }
 
     public ItemData mapToItemData(ItemJpaEntity itemJpaEntity) {
-        return switch (itemJpaEntity) {
-            case RectangleItemJpaEntity rectangleItemJpaEntity -> new ItemData(
+        return switch (itemJpaEntity.getShape()) {
+            case ItemShapeRectangleJpaEntity itemShapeRectangleJpaEntity -> new ItemData(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getName(),
                     ItemType.RECTANGLE,
                     null,
                     new ItemData.RectangleData(
-                            rectangleItemJpaEntity.getX(),
-                            rectangleItemJpaEntity.getY(),
-                            rectangleItemJpaEntity.getWidth(),
-                            rectangleItemJpaEntity.getHeight(),
-                            rectangleItemJpaEntity.getRotation()),
+                            itemShapeRectangleJpaEntity.getX(),
+                            itemShapeRectangleJpaEntity.getY(),
+                            itemShapeRectangleJpaEntity.getWidth(),
+                            itemShapeRectangleJpaEntity.getHeight(),
+                            itemShapeRectangleJpaEntity.getRotation()),
                     null
             );
-            case CircleItemJpaEntity circleItemJpaEntity -> new ItemData(
+            case ItemShapeCircleJpaEntity itemShapeCircleJpaEntity -> new ItemData(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getName(),
                     ItemType.CIRCLE,
                     new ItemData.CircleData(
-                            circleItemJpaEntity.getX(),
-                            circleItemJpaEntity.getY(),
-                            circleItemJpaEntity.getRadius()),
+                            itemShapeCircleJpaEntity.getX(),
+                            itemShapeCircleJpaEntity.getY(),
+                            itemShapeCircleJpaEntity.getRadius()),
                     null,
                     null
             );
-            case EllipseItemJpaEntity ellipseItemJpaEntity -> new ItemData(
+            case ItemShapeEllipseJpaEntity itemShapeEllipseJpaEntity -> new ItemData(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getName(),
                     ItemType.ELLIPSE,
                     null,
                     null,
                     new ItemData.EllipseData(
-                            ellipseItemJpaEntity.getX(),
-                            ellipseItemJpaEntity.getY(),
-                            ellipseItemJpaEntity.getRadiusX(),
-                            ellipseItemJpaEntity.getRadiusY(),
-                            ellipseItemJpaEntity.getRotation())
+                            itemShapeEllipseJpaEntity.getX(),
+                            itemShapeEllipseJpaEntity.getY(),
+                            itemShapeEllipseJpaEntity.getRadiusX(),
+                            itemShapeEllipseJpaEntity.getRadiusY(),
+                            itemShapeEllipseJpaEntity.getRotation())
             );
             case null, default -> throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);
         };

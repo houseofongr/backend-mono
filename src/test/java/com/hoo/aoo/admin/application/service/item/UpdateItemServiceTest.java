@@ -4,6 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.port.in.item.UpdateItemCommand;
 import com.hoo.aoo.admin.application.port.out.item.FindItemPort;
+import com.hoo.aoo.admin.application.port.out.item.UpdateItemPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.ItemType;
@@ -26,13 +27,15 @@ class UpdateItemServiceTest {
     UpdateItemService sut;
 
     FindItemPort findItemPort;
+    UpdateItemPort updateItemPort;
     ItemMapper itemMapper;
 
     @BeforeEach
     void init() {
         findItemPort = mock();
         itemMapper = mock();
-        sut = new UpdateItemService(findItemPort, itemMapper);
+        updateItemPort = mock();
+        sut = new UpdateItemService(findItemPort, updateItemPort, itemMapper);
     }
 
     @Test
@@ -52,6 +55,7 @@ class UpdateItemServiceTest {
 
         // then
         verify(item, times(1)).update(any(), any());
+        verify(updateItemPort, times(1)).updateItem(any());
         assertThatThrownBy(() -> sut.updateItem(notExistId, command)).hasMessage(AdminErrorCode.ITEM_NOT_FOUND.getMessage());
         assertThat(messageDto.message()).isEqualTo("1번 아이템의 정보가 수정되었습니다.");
     }

@@ -11,6 +11,6 @@ public class ItemDetail {
     }
 
     public void updateName(String name) {
-        this.name = name;
+        if (name != null && !name.isBlank()) this.name = name;
     }
 }

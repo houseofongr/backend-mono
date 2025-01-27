@@ -1,15 +1,20 @@
 package com.hoo.aoo.admin.adapter.in.web.item;
 
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeRectangleJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.port.in.item.UpdateItemCommand;
 import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
 import static com.hoo.aoo.common.util.GsonUtil.gson;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -17,6 +22,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PatchItemControllerTest extends AbstractControllerTest {
+
+    @Autowired
+    ItemJpaRepository itemJpaRepository;
 
     @Override
     protected String getBaseUrl() {
@@ -31,7 +39,7 @@ class PatchItemControllerTest extends AbstractControllerTest {
         UpdateItemCommand command = new UpdateItemCommand(new ItemData(null,"고양이", ItemType.RECTANGLE, null,
                 new ItemData.RectangleData(300f, 300f, 20f, 20f, 10f), null));
 
-        mockMvc.perform(patch("/admin/items/{itemId}", 1L)
+        mockMvc.perform(patch("/admin/items/{itemId}", 2L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(command)))
                 .andExpect(status().is(200))
@@ -67,5 +75,8 @@ class PatchItemControllerTest extends AbstractControllerTest {
                                 fieldWithPath("message").description("수정 완료 메시지 : 0번 아이템의 정보가 수정되었습니다.")
                         )
                 ));
+
+        assertThat(itemJpaRepository.findById(2L).get().getName()).isEqualTo("고양이");
+        assertThat(itemJpaRepository.findById(2L).get().getShape()).isInstanceOf(ItemShapeRectangleJpaEntity.class);
     }
 }

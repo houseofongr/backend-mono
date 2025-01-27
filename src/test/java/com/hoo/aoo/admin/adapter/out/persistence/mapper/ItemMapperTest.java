@@ -48,11 +48,11 @@ class ItemMapperTest {
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
         assertThat(itemJpaEntity.getName()).isEqualTo(설이.getItemDetail().getName());
-        assertThat(((RectangleItemJpaEntity) itemJpaEntity).getX()).isEqualTo(설이.getShape().getX());
-        assertThat(((RectangleItemJpaEntity) itemJpaEntity).getY()).isEqualTo(설이.getShape().getX());
-        assertThat(((RectangleItemJpaEntity) itemJpaEntity).getWidth()).isEqualTo(((Rectangle) 설이.getShape()).getWidth());
-        assertThat(((RectangleItemJpaEntity) itemJpaEntity).getHeight()).isEqualTo(((Rectangle) 설이.getShape()).getHeight());
-        assertThat(((RectangleItemJpaEntity) itemJpaEntity).getRotation()).isEqualTo(((Rectangle) 설이.getShape()).getRotation());
+        assertThat(itemJpaEntity.getShape().getX()).isEqualTo(설이.getShape().getX());
+        assertThat(itemJpaEntity.getShape().getY()).isEqualTo(설이.getShape().getX());
+        assertThat(((ItemShapeRectangleJpaEntity)itemJpaEntity.getShape()).getWidth()).isEqualTo(((Rectangle) 설이.getShape()).getWidth());
+        assertThat(((ItemShapeRectangleJpaEntity)itemJpaEntity.getShape()).getHeight()).isEqualTo(((Rectangle) 설이.getShape()).getHeight());
+        assertThat(((ItemShapeRectangleJpaEntity)itemJpaEntity.getShape()).getRotation()).isEqualTo(((Rectangle) 설이.getShape()).getRotation());
     }
 
     @Test
@@ -68,9 +68,9 @@ class ItemMapperTest {
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
         assertThat(itemJpaEntity.getName()).isEqualTo(강아지.getItemDetail().getName());
-        assertThat(((CircleItemJpaEntity) itemJpaEntity).getX()).isEqualTo(강아지.getShape().getX());
-        assertThat(((CircleItemJpaEntity) itemJpaEntity).getY()).isEqualTo(강아지.getShape().getX());
-        assertThat(((CircleItemJpaEntity) itemJpaEntity).getRadius()).isEqualTo(((Circle) 강아지.getShape()).getRadius());
+        assertThat(itemJpaEntity.getShape().getX()).isEqualTo(강아지.getShape().getX());
+        assertThat(itemJpaEntity.getShape().getY()).isEqualTo(강아지.getShape().getX());
+        assertThat(((ItemShapeCircleJpaEntity) itemJpaEntity.getShape()).getRadius()).isEqualTo(((Circle) 강아지.getShape()).getRadius());
     }
 
     @Test
@@ -86,11 +86,11 @@ class ItemMapperTest {
         assertThat(itemJpaEntity).isNotNull();
         assertThat(itemJpaEntity.getId()).isNull();
         assertThat(itemJpaEntity.getName()).isEqualTo(화분.getItemDetail().getName());
-        assertThat(((EllipseItemJpaEntity) itemJpaEntity).getX()).isEqualTo(화분.getShape().getX());
-        assertThat(((EllipseItemJpaEntity) itemJpaEntity).getY()).isEqualTo(화분.getShape().getX());
-        assertThat(((EllipseItemJpaEntity) itemJpaEntity).getRadiusX()).isEqualTo(((Ellipse) 화분.getShape()).getRadiusX());
-        assertThat(((EllipseItemJpaEntity) itemJpaEntity).getRadiusY()).isEqualTo(((Ellipse) 화분.getShape()).getRadiusY());
-        assertThat(((EllipseItemJpaEntity) itemJpaEntity).getRotation()).isEqualTo(((Ellipse) 화분.getShape()).getRotation());
+        assertThat(itemJpaEntity.getShape().getX()).isEqualTo(화분.getShape().getX());
+        assertThat(itemJpaEntity.getShape().getY()).isEqualTo(화분.getShape().getX());
+        assertThat(((ItemShapeEllipseJpaEntity) itemJpaEntity.getShape()).getRadiusX()).isEqualTo(((Ellipse) 화분.getShape()).getRadiusX());
+        assertThat(((ItemShapeEllipseJpaEntity) itemJpaEntity.getShape()).getRadiusY()).isEqualTo(((Ellipse) 화분.getShape()).getRadiusY());
+        assertThat(((ItemShapeEllipseJpaEntity) itemJpaEntity.getShape()).getRotation()).isEqualTo(((Ellipse) 화분.getShape()).getRotation());
     }
 
 }

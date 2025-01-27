@@ -47,26 +47,10 @@ public class RoomJpaEntity {
     private HouseJpaEntity house;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<RectangleItemJpaEntity> rectangleItems;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<CircleItemJpaEntity> circleItems;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<EllipseItemJpaEntity> ellipseItems;
+    private List<ItemJpaEntity> items;
 
     public void updateInfo(String name) {
         this.name = name;
     }
 
-    public List<ItemJpaEntity> getItems() {
-
-        List<ItemJpaEntity> ret = new ArrayList<>();
-
-        ret.addAll(rectangleItems);
-        ret.addAll(circleItems);
-        ret.addAll(ellipseItems);
-
-        return ret;
-    }
 }

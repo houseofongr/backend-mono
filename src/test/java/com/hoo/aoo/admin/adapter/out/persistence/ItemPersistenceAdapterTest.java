@@ -1,9 +1,11 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
+import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
+import com.hoo.aoo.admin.domain.item.Ellipse;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
@@ -64,6 +66,31 @@ class ItemPersistenceAdapterTest {
         assertThat(item1.get().getSoundSources()).anySatisfy(soundSource ->
             assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo("골골송")
         );
+    }
+
+    @Test
+    @Sql("ItemPersistenceAdapterTest2.sql")
+    @DisplayName("아이템 수정 테스트")
+    void testUpdateItem() throws Exception {
+        // given
+        Item item = Item.create(1L, 1L, "고양이",
+                new Ellipse(10f,10f,70.5f,50f,10f)
+        );
+
+        // when
+        sut.updateItem(item);
+        ItemJpaEntity itemJpaEntity = itemJpaRepository.findById(item.getItemId().getId()).get();
+
+        // then
+        assertThat(itemJpaEntity.getName()).isEqualTo("고양이");
+        assertThat(itemJpaEntity.getShape()).isInstanceOf(ItemShapeEllipseJpaEntity.class);
+
+        ItemShapeEllipseJpaEntity shape = (ItemShapeEllipseJpaEntity) itemJpaEntity.getShape();
+        assertThat(shape.getX()).isEqualTo(10f);
+        assertThat(shape.getY()).isEqualTo(10f);
+        assertThat(shape.getRadiusX()).isEqualTo(70.5f);
+        assertThat(shape.getRadiusY()).isEqualTo(50f);
+        assertThat(shape.getRotation()).isEqualTo(10f);
     }
 
     @Test

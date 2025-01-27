@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.item.*;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.*;
@@ -12,11 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "ITEM")
 @Getter
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorOptions(force = true)
-@DiscriminatorColumn
 @NoArgsConstructor
-public abstract class ItemJpaEntity extends DateColumnBaseEntity {
+public class ItemJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,12 +35,55 @@ public abstract class ItemJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID")
     private UserJpaEntity user;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ITEM_SHAPE_ID")
+    private ItemShapeJpaEntity shape;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
     List<SoundSourceJpaEntity> soundSources;
 
-    public ItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, List<SoundSourceJpaEntity> soundSources) {
+    public ItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, ItemShapeJpaEntity shape, List<SoundSourceJpaEntity> soundSources) {
         this.id = id;
         this.name = name;
+        this.home = home;
+        this.room = room;
+        this.user = user;
+        this.shape = shape;
         this.soundSources = soundSources;
+    }
+
+    public void update(Item item) {
+       this.name = item.getItemDetail().getName();
+        switch (item.getShape()) {
+           case Rectangle rectangle -> {
+               this.shape = new ItemShapeRectangleJpaEntity(
+                       null,
+                       rectangle.getX(),
+                       rectangle.getY(),
+                       rectangle.getWidth(),
+                       rectangle.getHeight(),
+                       rectangle.getRotation()
+               );
+           }
+           case Circle circle -> {
+               this.shape = new ItemShapeCircleJpaEntity(
+                       null,
+                       circle.getX(),
+                       circle.getY(),
+                       circle.getRadius()
+               );
+           }
+           case Ellipse ellipse -> {
+               this.shape = new ItemShapeEllipseJpaEntity(
+                       null,
+                       ellipse.getX(),
+                       ellipse.getY(),
+                       ellipse.getRadiusX(),
+                       ellipse.getRadiusY(),
+                       ellipse.getRotation()
+               );
+           }
+            default -> throw new IllegalStateException("Unexpected value: " + item.getShape());
+        }
     }
 }

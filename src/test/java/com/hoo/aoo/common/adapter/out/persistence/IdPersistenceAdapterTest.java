@@ -40,8 +40,6 @@ class IdPersistenceAdapterTest {
         long homeCount = homeJpaRepository.count();
         long itemCount = itemJpaRepository.count();
 
-        System.out.println(itemJpaRepository.findAll());
-
         // when
         Long houseId = sut.issueHouseId();
         Long roomId = sut.issueRoomId();

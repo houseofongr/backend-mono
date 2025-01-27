@@ -26,8 +26,24 @@ values (1, 10, 1, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (5, 10, 1, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (6, 10, 1, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, USER_ID, DTYPE)
-values (1, '설이', 1, 1, 10, 'RECTANGLE');
+insert into ITEM_SHAPE(ID, X, Y, DTYPE)
+values (1, 100, 100, 'RECTANGLE'),
+       (2, 200, 200, 'CIRCLE'),
+       (3,  500, 500, 'ELLIPSE');
 
-insert into RECTANGLE_ITEM(ID, X, Y, WIDTH, HEIGHT, ROTATION)
-values (1, 100, 100,  10, 10, 5);
+insert into ITEM_SHAPE_RECTANGLE(ID, WIDTH, HEIGHT, ROTATION)
+values (1, 10, 10, 5);
+
+insert into ITEM_SHAPE_CIRCLE(ID, RADIUS)
+values (2, 10.5);
+
+insert into ITEM_SHAPE_ELLIPSE(ID, RADIUSX, RADIUSY, ROTATION)
+values (3, 15, 15, 90);
+
+insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, USER_ID, ITEM_SHAPE_ID)
+values (1, '설이', 1, 1, 10, 1),
+       (2, '강아지', 1, 1, 10, 2),
+       (3, '화분', 1, 1, 10, 3);
+
+insert into SOUND_SOURCE(ID, NAME, DESCRIPTION, AUDIO_FILE_ID, IS_ACTIVE, CREATED_TIME, UPDATED_TIME, ITEM_ID)
+values (1, "골골송", "2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);

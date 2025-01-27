@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -11,17 +12,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "ELLIPSE_ITEM")
+@Table(name = "ITEM_SHAPE_ELLIPSE")
 @DiscriminatorValue("ELLIPSE")
 @Getter
 @NoArgsConstructor
-public class EllipseItemJpaEntity extends ItemJpaEntity {
-
-    @Column(nullable = false)
-    private Float x;
-
-    @Column(nullable = false)
-    private Float y;
+public class ItemShapeEllipseJpaEntity extends ItemShapeJpaEntity {
 
     @Column(nullable = false)
     private Float radiusX;
@@ -32,10 +27,8 @@ public class EllipseItemJpaEntity extends ItemJpaEntity {
     @Column(nullable = false)
     private Float rotation;
 
-    public EllipseItemJpaEntity(Long id, String name, HomeJpaEntity home, RoomJpaEntity room, UserJpaEntity user, List<SoundSourceJpaEntity> soundSources, Float x, Float y, Float radiusX, Float radiusY, Float rotation) {
-        super(id, name, home, room, user, soundSources);
-        this.x = x;
-        this.y = y;
+    public ItemShapeEllipseJpaEntity(Long id, Float x, Float y, Float radiusX, Float radiusY, Float rotation) {
+        super(id, x, y, null);
         this.radiusX = radiusX;
         this.radiusY = radiusY;
         this.rotation = rotation;

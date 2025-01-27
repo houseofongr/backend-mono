@@ -24,7 +24,7 @@ public class RoomMapper {
                 room.getArea().getHeight(),
                 room.getImageFile().getFileId().getId(),
                 null,
-                null, null, null
+                null
         );
     }
 

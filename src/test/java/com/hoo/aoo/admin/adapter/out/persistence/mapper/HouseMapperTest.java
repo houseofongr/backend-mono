@@ -21,8 +21,8 @@ class HouseMapperTest {
     void testMapToQueryHouse() {
         // given
         List<RoomJpaEntity> rooms = List.of(
-                new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 5000f, 1000f, 3L, null, null, null, null),
-                new RoomJpaEntity(2L, "주방", 0f, 1000f, 0f, 5000f, 1000f, 4L, null, null, null, null)
+                new RoomJpaEntity(1L, "거실", 0f, 0f, 0f, 5000f, 1000f, 3L, null, null),
+                new RoomJpaEntity(2L, "주방", 0f, 1000f, 0f, 5000f, 1000f, 4L, null, null)
         );
         HouseJpaEntity entity = new HouseJpaEntity(1L, "cozy house", "leaf", "this is cozy house", 5000f, 5000f, 1L, 2L, rooms);
         rooms.forEach(roomJpaEntity -> roomJpaEntity.setHouse(entity));
