@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security;
+package com.hoo.aoo.aar.application.port.in.authn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hoo.aoo.aar.domain.user.User;
@@ -8,24 +8,24 @@ import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import java.util.HashMap;
 import java.util.Map;
 
-public record SNSLoginResponse(
+public record SNSLoginResult(
         String nickname,
         String accessToken,
         String provider,
         Boolean isFirstLogin
 ) {
 
-    public static SNSLoginResponse from(Map<String, Object> attributes) {
-        return new SNSLoginResponse(
+    public static SNSLoginResult from(Map<String, Object> attributes) {
+        return new SNSLoginResult(
                 (String) attributes.get("nickname"),
                 (String) attributes.get("accessToken"),
                 (String) attributes.get("provider"),
                 (Boolean) attributes.get("isFirstLogin"));
     }
 
-    public static SNSLoginResponse from(SnsAccount snsAccount, String accessToken) {
+    public static SNSLoginResult from(SnsAccount snsAccount, String accessToken) {
 
-        return new SNSLoginResponse(
+        return new SNSLoginResult(
                 snsAccount.getSnsAccountInfo().getNickname(),
                 accessToken,
                 snsAccount.getSnsAccountId().getSnsDomain().name().toUpperCase(),
@@ -33,9 +33,9 @@ public record SNSLoginResponse(
         );
     }
 
-    public static SNSLoginResponse from(User user, String accessToken, SnsDomain snsDomain) {
+    public static SNSLoginResult from(User user, String accessToken, SnsDomain snsDomain) {
 
-        return new SNSLoginResponse(
+        return new SNSLoginResult(
                 user.getUserInfo().getNickname(),
                 accessToken,
                 snsDomain.name().toUpperCase(),

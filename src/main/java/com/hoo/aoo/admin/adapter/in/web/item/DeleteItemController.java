@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.item;
 
 import com.hoo.aoo.admin.application.port.in.item.DeleteItemUseCase;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

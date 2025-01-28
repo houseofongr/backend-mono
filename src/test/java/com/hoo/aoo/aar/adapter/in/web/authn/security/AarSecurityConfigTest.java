@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.application.port.in.RegisterUserUseCase;
+import com.hoo.aoo.aar.application.port.in.authn.RegisterUserUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.application.service.home;
 
 import com.hoo.aoo.admin.application.port.in.home.DeleteHomeUseCase;
 import com.hoo.aoo.admin.application.port.out.home.DeleteHomePort;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

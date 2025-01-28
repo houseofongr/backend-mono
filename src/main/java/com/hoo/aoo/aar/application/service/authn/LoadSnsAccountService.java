@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.service;
+package com.hoo.aoo.aar.application.service.authn;
 
 import org.springframework.security.oauth2.core.user.OAuth2User;
 

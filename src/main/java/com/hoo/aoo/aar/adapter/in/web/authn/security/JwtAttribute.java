@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
+package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 public record JwtAttribute(
         String secret,

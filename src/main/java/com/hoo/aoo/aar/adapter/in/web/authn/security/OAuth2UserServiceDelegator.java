@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.application.service.LoadKakaoSnsAccountService;
+import com.hoo.aoo.aar.application.service.authn.LoadSnsAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OAuth2UserServiceDelegator extends DefaultOAuth2UserService {
 
-    private final LoadKakaoSnsAccountService loadKakaoSnsAccountService;
+    private final LoadSnsAccountService loadKakaoSnsAccountService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.application.service.room;
 
 import com.hoo.aoo.admin.application.port.in.room.DeleteRoomUseCase;
 import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

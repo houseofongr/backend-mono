@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.application.service.soundsource;
 
 import com.hoo.aoo.admin.application.port.out.soundsource.DeleteSoundSourcePort;
 import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

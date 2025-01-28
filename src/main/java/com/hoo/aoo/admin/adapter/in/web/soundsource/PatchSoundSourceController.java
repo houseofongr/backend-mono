@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.adapter.in.web.soundsource;
 
 import com.hoo.aoo.admin.application.port.in.soundsource.UpdateSoundSourceCommand;
 import com.hoo.aoo.admin.application.port.in.soundsource.UpdateSoundSourceUseCase;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;

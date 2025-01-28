@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.out.database.snsaccount;
+package com.hoo.aoo.aar.application.port.out.snsaccount;
 
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 

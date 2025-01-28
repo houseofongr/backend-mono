@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.out.database.user;
+package com.hoo.aoo.aar.application.port.out.user;
 
 import com.hoo.aoo.aar.domain.user.User;
 

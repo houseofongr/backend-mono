@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.in;
+package com.hoo.aoo.aar.application.port.in.authn;
 
 public record RegisterUserResult(
         Long userId,

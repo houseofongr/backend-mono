@@ -11,7 +11,7 @@ public class SnsAccount {
     private final SnsAccountId snsAccountId;
     private final SnsAccountInfo snsAccountInfo;
     private final BaseTime baseTime;
-    private final UserId userId;
+    private UserId userId;
 
     private SnsAccount(SnsAccountId snsAccountId, SnsAccountInfo snsAccountInfo, BaseTime baseTime, UserId userId) {
         this.snsAccountId = snsAccountId;
@@ -36,5 +36,9 @@ public class SnsAccount {
                 new BaseTime(createdTime, updatedTime),
                 new UserId(userId)
         );
+    }
+
+    public void link(Long userId) {
+        this.userId = new UserId(userId);
     }
 }

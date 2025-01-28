@@ -2,8 +2,8 @@ package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;

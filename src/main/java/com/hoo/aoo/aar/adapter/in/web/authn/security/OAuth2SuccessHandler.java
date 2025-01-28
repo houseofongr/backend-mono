@@ -1,6 +1,6 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.handler;
+package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.SNSLoginResponse;
+import com.hoo.aoo.aar.application.port.in.authn.SNSLoginResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        SNSLoginResponse dto = SNSLoginResponse.from(
+        SNSLoginResult dto = SNSLoginResult.from(
                 ((DefaultOAuth2User) authentication.getPrincipal()).getAttributes());
 
         String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)

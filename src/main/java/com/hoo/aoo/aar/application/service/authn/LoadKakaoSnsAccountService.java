@@ -1,12 +1,12 @@
-package com.hoo.aoo.aar.application.service;
+package com.hoo.aoo.aar.application.service.authn;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.SNSLoginResponse;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.SaveSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.user.FindUserPort;
+import com.hoo.aoo.aar.application.port.in.authn.SNSLoginResult;
+import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
+import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.user.FindUserPort;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
@@ -29,7 +29,7 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
     private final FindUserPort findUserPort;
     private final CreateSnsAccountPort createSnsAccountPort;
     private final SaveSnsAccountPort saveSnsAccountPort;
-    private final JwtUtil jwtUtil;
+    private final IssueAccessTokenPort issueAccessTokenPort;
 
     @Override
     @Transactional
@@ -46,13 +46,13 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
 
                 // 사용자와 연동된 계정
                 if (userOptional.isPresent()) {
-                    SNSLoginResponse response = SNSLoginResponse.from(userOptional.get(), jwtUtil.getAccessToken(snsAccountInDB), SnsDomain.KAKAO);
+                    SNSLoginResult response = SNSLoginResult.from(userOptional.get(), issueAccessTokenPort.issueAccessToken(snsAccountInDB), SnsDomain.KAKAO);
                     return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
                 }
 
                 // 사용자외 연동되지 않은 계정
                 else {
-                    SNSLoginResponse response = SNSLoginResponse.from(snsAccountInDB, jwtUtil.getAccessToken(snsAccountInDB));
+                    SNSLoginResult response = SNSLoginResult.from(snsAccountInDB, issueAccessTokenPort.issueAccessToken(snsAccountInDB));
                     return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
                 }
 
@@ -60,7 +60,7 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
             // 등록되지 않은 SNS 계정
             } else {
                 SnsAccount newSnsAccount = saveNewAccount(userInfo);
-                SNSLoginResponse response = SNSLoginResponse.from(newSnsAccount, jwtUtil.getAccessToken(newSnsAccount));
+                SNSLoginResult response = SNSLoginResult.from(newSnsAccount, issueAccessTokenPort.issueAccessToken(newSnsAccount));
                 return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
             }
 

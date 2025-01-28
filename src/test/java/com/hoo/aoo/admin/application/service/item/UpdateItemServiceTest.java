@@ -1,25 +1,21 @@
 package com.hoo.aoo.admin.application.service.item;
 
-import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.port.in.item.UpdateItemCommand;
 import com.hoo.aoo.admin.application.port.out.item.FindItemPort;
+import com.hoo.aoo.admin.application.port.out.item.MappingItemShapePort;
 import com.hoo.aoo.admin.application.port.out.item.UpdateItemPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.ItemType;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
-import com.hoo.aoo.common.application.service.MockEntityFactoryService;
-import org.assertj.core.api.Assertions;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UpdateItemServiceTest {
@@ -28,14 +24,14 @@ class UpdateItemServiceTest {
 
     FindItemPort findItemPort;
     UpdateItemPort updateItemPort;
-    ItemMapper itemMapper;
+    MappingItemShapePort mappingItemShapePort;
 
     @BeforeEach
     void init() {
         findItemPort = mock();
-        itemMapper = mock();
         updateItemPort = mock();
-        sut = new UpdateItemService(findItemPort, updateItemPort, itemMapper);
+        mappingItemShapePort = mock();
+        sut = new UpdateItemService(findItemPort, updateItemPort, mappingItemShapePort);
     }
 
     @Test

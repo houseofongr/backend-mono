@@ -1,10 +1,8 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
+package com.hoo.aoo.aar.adapter.out.jwt;
 
-import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.application.service.AarErrorCode;
-import com.hoo.aoo.aar.application.service.AarException;
+import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtAttribute;
+import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.domain.Role;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -19,28 +17,21 @@ import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtUtil {
+public class JwtUtil implements IssueAccessTokenPort {
 
     private final MACSigner signer;
     private final JwtAttribute jwtAttribute;
-    private final SnsAccountJpaRepository snsAccountJpaRepository;
 
-    public String getAccessToken(SnsAccount snsAccount) {
-        SnsAccountJpaEntity snsAccountJpaEntity = snsAccountJpaRepository.findWithUserEntity(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId())
-                .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
+    @Override
+    public String issueAccessToken(SnsAccount snsAccount) {
 
-        return getAccessToken(snsAccountJpaEntity);
+        Long userId = (snsAccount.getUserId() != null && snsAccount.getUserId().getId() != null) ? snsAccount.getUserId().getId() : -1L;
+        Role role = (snsAccount.getUserId() != null && snsAccount.getUserId().getId() != null) ? Role.USER : Role.TEMP_USER;
+
+        return issueAccessToken(snsAccount.getSnsAccountInfo().getNickname(), userId, snsAccount.getSnsAccountId().getPersistenceId(), role);
     }
 
-    public String getAccessToken(SnsAccountJpaEntity snsAccount) {
-
-        if (snsAccount.getUserEntity() == null)
-            return getAccessToken(snsAccount.getNickname(), -1L, snsAccount.getId(), Role.TEMP_USER);
-        else
-            return getAccessToken(snsAccount.getNickname(), snsAccount.getUserEntity().getId(), snsAccount.getId(), Role.USER);
-    }
-
-    private String getAccessToken(String nickname, Long userId, Long snsId, Role role) {
+    private String issueAccessToken(String nickname, Long userId, Long snsId, Role role) {
         try {
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(nickname)

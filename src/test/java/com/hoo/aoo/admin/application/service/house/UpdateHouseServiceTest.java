@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.application.port.in.house.UpdateHouseInfoCommand;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

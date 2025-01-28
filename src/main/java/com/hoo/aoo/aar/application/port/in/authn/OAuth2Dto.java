@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.dto;
+package com.hoo.aoo.aar.application.port.in.authn;
 
 public record OAuth2Dto() {
     public record KakaoUserInfo(

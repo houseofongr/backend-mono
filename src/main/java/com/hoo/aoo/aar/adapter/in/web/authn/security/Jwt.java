@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.config;
+package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

@@ -1,17 +1,17 @@
 package com.hoo.aoo.aar.application.service;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.snsaccount.SaveSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.database.user.FindUserPort;
+import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.application.port.out.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.user.FindUserPort;
+import com.hoo.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.user.UserInfo;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

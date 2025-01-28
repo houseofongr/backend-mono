@@ -1,6 +1,6 @@
-package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
+package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +19,8 @@ public class JwtConfig {
                      @Value("${security.jwt.issuer}") String issuer,
                      @Value("${security.jwt.expire}") Long expire
     ) throws KeyLengthException {
-        this.macSigner = new MACSigner(secret);
         this.jwtAttribute = new JwtAttribute(secret, issuer, expire);
+        this.macSigner = new MACSigner(jwtAttribute.secret());
     }
 
     @Bean
@@ -29,7 +29,8 @@ public class JwtConfig {
     }
 
     @Bean
-    JwtUtil jwtUtil(SnsAccountJpaRepository snsAccountJpaRepository) {
-        return new JwtUtil(macSigner, jwtAttribute, snsAccountJpaRepository);
+    JwtUtil jwtUtil() {
+        return new JwtUtil(macSigner, jwtAttribute);
     }
+
 }

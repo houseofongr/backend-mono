@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.application.service.home;
 
 import com.hoo.aoo.admin.application.port.out.home.DeleteHomePort;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

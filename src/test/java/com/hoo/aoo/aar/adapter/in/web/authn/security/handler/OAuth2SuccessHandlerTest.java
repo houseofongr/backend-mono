@@ -1,5 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.handler;
 
+import com.hoo.aoo.aar.adapter.in.web.authn.security.OAuth2SuccessHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;

@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.application.port.out.item.DeleteItemPort;
 import com.hoo.aoo.admin.application.port.out.item.FindItemPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.item.Item;
-import com.hoo.aoo.common.adapter.in.web.MessageDto;
+import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
