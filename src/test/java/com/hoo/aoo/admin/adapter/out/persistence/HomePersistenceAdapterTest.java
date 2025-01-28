@@ -9,6 +9,9 @@ import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.home.Home;
+import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.house.HouseDetail;
+import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
@@ -38,21 +41,22 @@ class HomePersistenceAdapterTest {
     @DisplayName("홈 저장 테스트")
     void testSaveHome() throws Exception {
         // given
-        CreateHomeCommand command = new CreateHomeCommand(10L, 20L);
-        Home home = MockEntityFactoryService.getHome();
+        Home home = Home.create(1L,
+                House.create(20L,new HouseDetail("cozy house", "leaf", "this is cozy house"),5000f,5000f,null,null,null),
+                User.load(10L, "leaf", "남상엽"));
 
         // when
-        CreateHomeResult result = sut.save(command, home);
-        Optional<HomeJpaEntity> find = homeJpaRepository.findById(result.createdHomeId());
+        Long result = sut.save(home);
+        Optional<HomeJpaEntity> find = homeJpaRepository.findById(result);
 
         // then
-        assertThat(result.createdHomeId()).isNotNull();
+        assertThat(result).isNotNull();
         assertThat(find).isNotEmpty();
         assertThat(find.get().getName()).isEqualTo("leaf의 cozy house");
         assertThat(find.get().getUser().getId()).isEqualTo(10);
         assertThat(find.get().getHouse().getId()).isEqualTo(20);
 
-        assertThatThrownBy(() -> sut.save(command, home)).hasMessage(AdminErrorCode.ALREADY_CREATED_HOME.getMessage());
+        assertThatThrownBy(() -> sut.save(home)).hasMessage(AdminErrorCode.ALREADY_CREATED_HOME.getMessage());
     }
 
     @Test
@@ -64,49 +68,16 @@ class HomePersistenceAdapterTest {
         Long notExistId = 123L;
 
         // when
-        Optional<QueryHomeResult> notExistHome = sut.findHome(notExistId);
-        Optional<QueryHomeResult> home = sut.findHome(id);
+        Optional<Home> notExistHome = sut.loadHome(notExistId);
+        Optional<Home> home = sut.loadHome(id);
 
         // then
         assertThat(notExistHome).isEmpty();
         assertThat(home).isNotEmpty();
-        assertThat(home.get().homeId()).isEqualTo(1L);
-        assertThat(home.get().homeName()).isEqualTo("leaf의 cozy house");
-        assertThat(home.get().house().width()).isEqualTo(5000F);
-        assertThat(home.get().house().height()).isEqualTo(5000F);
-        assertThat(home.get().house().borderImageId()).isEqualTo(2L);
-        assertThat(home.get().rooms()).anySatisfy(roomInfo -> {
-            assertThat(roomInfo.roomId()).isEqualTo(1L);
-            assertThat(roomInfo.imageId()).isEqualTo(5L);
-            assertThat(roomInfo.width()).isEqualTo(5000F);
-            assertThat(roomInfo.height()).isEqualTo(1000F);
-            assertThat(roomInfo.name()).isEqualTo("거실");
-            assertThat(roomInfo.x()).isEqualTo(0L);
-            assertThat(roomInfo.y()).isEqualTo(0L);
-            assertThat(roomInfo.z()).isEqualTo(0L);
-        });
-    }
-
-    @Test
-    @Sql("HomePersistenceAdapter3.sql")
-    @DisplayName("사용자의 홈 조회 테스트")
-    void testFindUserHomes() {
-        // given
-        Long id = 10L;
-
-        // when
-        QueryUserHomesResult userHomes = sut.findUserHomes(id);
-
-        // then
-        assertThat(userHomes.homes()).hasSize(6);
-        assertThat(userHomes.homes()).anySatisfy(home -> {
-            assertThat(home.id()).isEqualTo(1L);
-            assertThat(home.baseHouse().title()).isEqualTo("cozy house");
-            assertThat(home.baseHouse().author()).isEqualTo("leaf");
-            assertThat(home.baseHouse().description()).isEqualTo("my cozy house");
-            assertThat(home.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
-            assertThat(home.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
-        });
+        assertThat(home.get().getHomeId().getId()).isEqualTo(1L);
+        assertThat(home.get().getHomeDetail().getName()).isEqualTo("leaf의 cozy house");
+        assertThat(home.get().getHouseId().getId()).isEqualTo(20L);
+        assertThat(home.get().getUserId().getId()).isEqualTo(10L);
     }
 
     @Test

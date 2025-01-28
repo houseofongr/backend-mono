@@ -1,11 +1,14 @@
 package com.hoo.aoo.admin.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.swing.plaf.synth.SynthViewportUI;
 
 @Entity
 @Table(name = "HOME")
@@ -29,4 +32,16 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private UserJpaEntity user;
 
+    public static HomeJpaEntity create(Home home) {
+        return new HomeJpaEntity(
+                null,
+                home.getHomeDetail().getName(),
+                null,
+                null);
+    }
+
+    public void setRelationship(UserJpaEntity userJpaEntity, HouseJpaEntity houseJpaEntity) {
+        this.user = userJpaEntity;
+        this.house = houseJpaEntity;
+    }
 }

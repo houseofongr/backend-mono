@@ -22,6 +22,6 @@ class HomeTest {
 
         // then
         assertThat(home).isNotNull();
-        assertThat(home.getDetail().getName()).isEqualTo("leaf의 cozy house");
+        assertThat(home.getHomeDetail().getName()).isEqualTo("leaf의 cozy house");
     }
 }

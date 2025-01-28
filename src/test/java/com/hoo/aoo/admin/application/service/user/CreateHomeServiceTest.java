@@ -44,11 +44,12 @@ class CreateHomeServiceTest {
         // when
         when(findHousePort.load(20L)).thenReturn(Optional.of(MockEntityFactoryService.getHouse()));
         when(findUserPort.load(10L)).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
-        when(saveHomePort.save(any(), any())).thenReturn(new CreateHomeResult(100L, null));
+        when(saveHomePort.save(any())).thenReturn(100L);
+        when(createHomePort.createHome(any(),any())).thenReturn(MockEntityFactoryService.getHome());
         CreateHomeResult createHomeResult = sut.create(command);
 
         // then
-        verify(saveHomePort, times(1)).save(any(), any());
+        verify(saveHomePort, times(1)).save(any());
         assertThat(createHomeResult.createdHomeId()).isEqualTo(100L);
     }
 }

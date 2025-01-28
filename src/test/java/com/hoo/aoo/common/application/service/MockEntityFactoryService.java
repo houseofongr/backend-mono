@@ -50,6 +50,11 @@ public class MockEntityFactoryService {
         return factory.createHome(getHouse(), getAdminUser());
     }
 
+    public static Home loadHome() throws Exception {
+        Home home = getHome();
+        return Home.load(home.getHomeId().getId(), home.getHouseId().getId(), home.getUserId().getId(), home.getHomeDetail().getName(), ZonedDateTime.now(), ZonedDateTime.now());
+    }
+
     public static com.hoo.aoo.admin.domain.user.User getAdminUser() {
         return com.hoo.aoo.admin.domain.user.User.load(10L, "leaf", "남상엽");
     }
@@ -79,5 +84,4 @@ public class MockEntityFactoryService {
         SoundSource soundSource = getSoundSource();
         return SoundSource.load(soundSource.getSoundSourceId().getId(), getRectangleItem().getItemId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(),soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(),ZonedDateTime.now(),soundSource.getActive().isActive());
     }
-
 }

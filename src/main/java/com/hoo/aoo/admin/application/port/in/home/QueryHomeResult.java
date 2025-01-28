@@ -1,10 +1,10 @@
 package com.hoo.aoo.admin.application.port.in.home;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.admin.domain.home.Home;
+import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 
 import java.util.List;
 
@@ -18,15 +18,15 @@ public record QueryHomeResult(
         List<RoomInfo> rooms
 ) {
 
-    public static QueryHomeResult of(HomeJpaEntity homeJpaEntity, List<RoomInfo> rooms) {
-        return new QueryHomeResult(
-                homeJpaEntity.getId(),
-                homeJpaEntity.getName(),
-                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(homeJpaEntity.getCreatedTime()),
-                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(homeJpaEntity.getUpdatedTime()),
-                HouseInfo.of(homeJpaEntity.getHouse()),
-                UserInfo.of(homeJpaEntity.getUser()),
-                rooms);
+    public static QueryHomeResult of(Home home, House house, User user) {
+        return new QueryHomeResult(home.getHomeId().getId(),
+                home.getHomeDetail().getName(),
+                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(home.getBaseTime().getCreatedTime()),
+                DateTimeFormatters.ENGLISH_DATE.getFormatter().format(home.getBaseTime().getUpdatedTime()),
+                HouseInfo.of(house),
+                UserInfo.of(user),
+                house.getRooms().stream().map(RoomInfo::of).toList()
+        );
     }
 
     public record UserInfo(
@@ -34,8 +34,8 @@ public record QueryHomeResult(
             String nickname
     ) {
 
-        public static UserInfo of(UserJpaEntity user) {
-            return new UserInfo(user.getId(), user.getNickname());
+        public static UserInfo of(User user) {
+            return new UserInfo(user.getUserId().getId(), user.getUserName().getNickName());
         }
     }
 
@@ -45,14 +45,13 @@ public record QueryHomeResult(
             Long borderImageId
     ) {
 
-        public static HouseInfo of(HouseJpaEntity houseJpaEntity) {
+        public static HouseInfo of(House house) {
             return new HouseInfo(
-                    houseJpaEntity.getWidth(),
-                    houseJpaEntity.getHeight(),
-                    houseJpaEntity.getBorderImageFileId()
+                    house.getArea().getWidth(),
+                    house.getArea().getHeight(),
+                    house.getBorderImageFile().getFileId().getId()
             );
         }
-
     }
 
     public record RoomInfo(
@@ -65,16 +64,16 @@ public record QueryHomeResult(
             Float height,
             Long imageId
     ) {
-        public static RoomInfo of(RoomJpaEntity roomJpaEntity) {
+        public static RoomInfo of(Room room) {
             return new RoomInfo(
-                    roomJpaEntity.getId(),
-                    roomJpaEntity.getName(),
-                    roomJpaEntity.getX(),
-                    roomJpaEntity.getY(),
-                    roomJpaEntity.getZ(),
-                    roomJpaEntity.getWidth(),
-                    roomJpaEntity.getHeight(),
-                    roomJpaEntity.getImageFileId()
+                    room.getRoomId().getId(),
+                    room.getRoomDetail().getName(),
+                    room.getAxis().getX(),
+                    room.getAxis().getY(),
+                    room.getAxis().getZ(),
+                    room.getArea().getWidth(),
+                    room.getArea().getHeight(),
+                    room.getImageFile().getFileId().getId()
             );
         }
     }

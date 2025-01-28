@@ -15,19 +15,11 @@ import java.util.List;
 public class HomeMapper {
 
     public HomeJpaEntity mapToNewJpaEntity(Home home, HouseJpaEntity houseJpaEntity, UserJpaEntity userJpaEntity) {
-        return new HomeJpaEntity(null, home.getDetail().getName(), houseJpaEntity, userJpaEntity);
+        return new HomeJpaEntity(null, home.getHomeDetail().getName(), houseJpaEntity, userJpaEntity);
     }
 
-    public QueryHomeResult mapToQueryHomeResult(HomeJpaEntity homeJpaEntity) {
-        return QueryHomeResult.of(homeJpaEntity, mapToQueryResult(homeJpaEntity.getHouse().getRooms()));
+    public Home mapToDomainEntity(HomeJpaEntity homeJpaEntity) {
+        return Home.load(homeJpaEntity.getId(), homeJpaEntity.getHouse().getId(), homeJpaEntity.getUser().getId(), homeJpaEntity.getName(), homeJpaEntity.getCreatedTime(), homeJpaEntity.getUpdatedTime());
     }
 
-    public QueryUserHomesResult mapToQueryUserHomesResult(List<HomeJpaEntity> homeJpaEntities) {
-        return new QueryUserHomesResult(homeJpaEntities.stream()
-                .map(QueryUserHomesResult.HomeInfo::of).toList());
-    }
-
-    private List<QueryHomeResult.RoomInfo> mapToQueryResult(List<RoomJpaEntity> roomJpaEntities) {
-        return roomJpaEntities.stream().map(QueryHomeResult.RoomInfo::of).toList();
-    }
 }

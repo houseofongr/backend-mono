@@ -3,7 +3,12 @@ package com.hoo.aoo.admin.application.service.home;
 import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
+import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
+import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,25 +24,30 @@ class QueryHomeServiceTest {
     QueryHomeService sut;
 
     FindHomePort findHomePort;
+    FindHousePort findHousePort;
+    FindUserPort findUserPort;
 
     @BeforeEach
     void init() {
         findHomePort = mock();
-        sut = new QueryHomeService(findHomePort);
+        findHousePort = mock();
+        findUserPort = mock();
+        sut = new QueryHomeService(findHomePort, findHousePort, findUserPort);
     }
 
     @Test
     @DisplayName("홈 조회 서비스 테스트")
-    void testQueryHome() {
+    void testQueryHome() throws Exception {
         // given
         Long id = 1L;
 
         // when
-        when(findHomePort.findHome(1L)).thenReturn(Optional.of(new QueryHomeResult(null, null, null, null, null, null, null)));
+        when(findHomePort.loadHome(1L)).thenReturn(Optional.of(MockEntityFactoryService.loadHome()));
+        when(findHousePort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
+        when(findUserPort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         QueryHomeResult queryHomeResult = sut.queryHome(id);
 
         // then
-        verify(findHomePort, times(1)).findHome(1L);
         assertThat(queryHomeResult).isNotNull();
         assertThatThrownBy(() -> sut.queryHome(2L)).hasMessage(AdminErrorCode.HOME_NOT_FOUND.getMessage());
     }
@@ -45,16 +55,17 @@ class QueryHomeServiceTest {
 
     @Test
     @DisplayName("사용자 홈 리스트 조회 서비스 테스트")
-    void testQueryUserHomes() {
+    void testQueryUserHomes() throws Exception {
         // given
         Long id = 1L;
 
         // when
-        when(findHomePort.findUserHomes(1L)).thenReturn(new QueryUserHomesResult(null));
+        when(findHomePort.loadHome(1L)).thenReturn(Optional.of(MockEntityFactoryService.loadHome()));
+        when(findHousePort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
+        when(findUserPort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         QueryUserHomesResult queryUserHomesResult = sut.queryUserHomes(id);
 
         // then
-        verify(findHomePort, times(1)).findUserHomes(1L);
         assertThat(queryUserHomesResult).isNotNull();
     }
 

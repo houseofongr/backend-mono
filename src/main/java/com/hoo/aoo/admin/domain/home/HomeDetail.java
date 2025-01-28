@@ -8,7 +8,12 @@ import lombok.Getter;
 public class HomeDetail {
     private final String name;
 
+    public HomeDetail(String name) {
+        this.name = name;
+    }
+
     public HomeDetail(House house, User user) {
         this.name = user.getUserName().getNickName() + "의 " + house.getHouseDetail().getTitle();
     }
+
 }

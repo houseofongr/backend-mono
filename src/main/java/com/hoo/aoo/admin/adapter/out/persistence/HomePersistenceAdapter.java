@@ -20,6 +20,7 @@ import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,18 +33,19 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Delet
     private final HomeMapper homeMapper;
 
     @Override
-    public CreateHomeResult save(CreateHomeCommand command, Home home) {
-        HouseJpaEntity houseJpaEntity = houseJpaRepository.findById(command.houseId()).orElseThrow();
-        UserJpaEntity userJpaEntity = userJpaRepository.findById(command.userId()).orElseThrow();
+    public Long save(Home home) {
+        UserJpaEntity userJpaEntity = userJpaRepository.findById(home.getUserId().getId()).orElseThrow();
+        HouseJpaEntity houseJpaEntity = houseJpaRepository.findById(home.getHouseId().getId()).orElseThrow();
 
-        if (homeJpaRepository.existsByHouseIdAndUserId(command.houseId(), command.userId()))
+        if (homeJpaRepository.existsByHouseIdAndUserId(home.getHouseId().getId(), home.getUserId().getId()))
             throw new AdminException(AdminErrorCode.ALREADY_CREATED_HOME);
 
-        HomeJpaEntity homeJpaEntity = homeMapper.mapToNewJpaEntity(home, houseJpaEntity, userJpaEntity);
+        HomeJpaEntity homeJpaEntity = HomeJpaEntity.create(home);
+        homeJpaEntity.setRelationship(userJpaEntity, houseJpaEntity);
 
         homeJpaRepository.save(homeJpaEntity);
 
-        return new CreateHomeResult(homeJpaEntity.getId(), homeJpaEntity.getName());
+        return homeJpaEntity.getId();
     }
 
     @Override
@@ -52,13 +54,15 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Delet
     }
 
     @Override
-    public Optional<QueryHomeResult> findHome(Long id) {
-        return homeJpaRepository.findByIdWithHouseAndRooms(id).map(homeMapper::mapToQueryHomeResult);
+    public Optional<Home> loadHome(Long id) {
+        return homeJpaRepository.findById(id)
+                .map(homeMapper::mapToDomainEntity);
     }
 
     @Override
-    public QueryUserHomesResult findUserHomes(Long id) {
-        return homeMapper.mapToQueryUserHomesResult(homeJpaRepository.findAllByUserId(id));
+    public List<Home> loadHomes(Long userId) {
+        return homeJpaRepository.findAllByUserId(userId)
+                .stream().map(homeMapper::mapToDomainEntity).toList();
     }
 
     @Override

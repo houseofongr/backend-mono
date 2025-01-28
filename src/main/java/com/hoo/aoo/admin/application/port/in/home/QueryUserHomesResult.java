@@ -1,31 +1,34 @@
 package com.hoo.aoo.admin.application.port.in.home;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.admin.domain.home.Home;
+import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 
 import java.util.List;
 
 public record QueryUserHomesResult(
         List<HomeInfo> homes
 ) {
+
     public record HomeInfo(
             Long id,
             String name,
             String createdDate,
             String updatedDate,
-            UserInfo user,
-            HouseInfo baseHouse
+            HouseInfo baseHouse,
+            UserInfo user
     ) {
-        public static HomeInfo of(HomeJpaEntity homeJpaEntity) {
+
+        public static HomeInfo of(Home home, House house, User user) {
             return new HomeInfo(
-                    homeJpaEntity.getId(),
-                    homeJpaEntity.getName(),
-                    DateTimeFormatters.DOT_DATE.getFormatter().format(homeJpaEntity.getCreatedTime()),
-                    DateTimeFormatters.DOT_DATE.getFormatter().format(homeJpaEntity.getUpdatedTime()),
-                    UserInfo.of(homeJpaEntity.getUser()),
-                    HouseInfo.of(homeJpaEntity.getHouse())
+                    home.getHomeId().getId(),
+                    home.getHomeDetail().getName(),
+                    DateTimeFormatters.DOT_DATE.getFormatter().format(home.getBaseTime().getCreatedTime()),
+                    DateTimeFormatters.DOT_DATE.getFormatter().format(home.getBaseTime().getUpdatedTime()),
+                    HouseInfo.of(house),
+                    UserInfo.of(user)
             );
         }
     }
@@ -35,8 +38,8 @@ public record QueryUserHomesResult(
             String nickname
     ) {
 
-        public static UserInfo of(UserJpaEntity userJpaEntity) {
-            return new UserInfo(userJpaEntity.getId(), userJpaEntity.getNickname());
+        public static UserInfo of(User user) {
+            return new UserInfo(user.getUserId().getId(), user.getUserName().getNickName());
         }
     }
 
@@ -46,12 +49,12 @@ public record QueryUserHomesResult(
             String author,
             String description
     ) {
-        public static HouseInfo of(HouseJpaEntity houseJpaEntity) {
+        public static HouseInfo of(House house) {
             return new HouseInfo(
-                    houseJpaEntity.getId(),
-                    houseJpaEntity.getTitle(),
-                    houseJpaEntity.getAuthor(),
-                    houseJpaEntity.getDescription().length() > 100 ? houseJpaEntity.getDescription().substring(0, 100) + "..." : houseJpaEntity.getDescription()
+                    house.getHouseId().getId(),
+                    house.getHouseDetail().getTitle(),
+                    house.getHouseDetail().getAuthor(),
+                    house.getHouseDetail().getDescription().length() > 100 ? house.getHouseDetail().getDescription().substring(0, 100) + "..." : house.getHouseDetail().getDescription()
             );
         }
     }

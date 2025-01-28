@@ -39,13 +39,12 @@ public class CreateHomeService implements CreateHomeUseCase {
 
             Home home = createHomePort.createHome(house, user);
 
-            return saveHomePort.save(command, home);
+            Long savedId = saveHomePort.save(home);
 
-        } catch (AreaLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
+            return new CreateHomeResult(savedId, home.getHomeDetail().getName());
 
-        } catch (AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.AXIS_PIXEL_LIMIT_EXCEED);
+        } catch (AreaLimitExceededException | AxisLimitExceededException e) {
+            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
 
         }
     }
