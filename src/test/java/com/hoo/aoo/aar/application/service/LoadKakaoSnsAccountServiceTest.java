@@ -2,11 +2,16 @@ package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.dto.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.jwt.JwtUtil;
-import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
-import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.database.user.FindUserPort;
+import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
+import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.aar.domain.user.UserId;
+import com.hoo.aoo.aar.domain.user.UserInfo;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,32 +29,38 @@ import static org.mockito.Mockito.*;
 class LoadKakaoSnsAccountServiceTest {
 
     LoadKakaoSnsAccountService sut;
-    SnsAccountJpaRepository repository;
+
+    FindSnsAccountPort findSnsAccountPort;
+    FindUserPort findUserPort;
+    CreateSnsAccountPort createSnsAccountPort;
+    SaveSnsAccountPort saveSnsAccountPort;
+
     JwtUtil jwtUtil;
-    SnsAccountMapper snsAccountMapper;
 
     @BeforeEach
     void init() {
-        repository = mock(SnsAccountJpaRepository.class);
+        findSnsAccountPort = mock();
+        findUserPort = mock();
+        createSnsAccountPort = mock();
+        saveSnsAccountPort = mock();
         jwtUtil = mock(JwtUtil.class);
-        sut = new LoadKakaoSnsAccountService(repository, jwtUtil);
-        snsAccountMapper = new SnsAccountMapper();
+        sut = new LoadKakaoSnsAccountService(findSnsAccountPort, findUserPort, createSnsAccountPort, saveSnsAccountPort, jwtUtil);
     }
 
     @Test
     @DisplayName("DB에 존재하는 계정은 isFirstLogin = false")
-    void testExistUser() {
+    void testExistUser() throws InvalidPhoneNumberException {
         // given
-        OAuth2User user = mock(OAuth2User.class);
-        SnsAccount registeredSnsAccount = MockEntityFactoryService.getSnsAccount();
-        SnsAccountJpaEntity snsAccount = snsAccountMapper.mapToNewJpaEntity(registeredSnsAccount);
-        UserJpaEntity jpaEntity = mock(UserJpaEntity.class);
-        snsAccount.setUserEntity(jpaEntity);
+        OAuth2User oAuth2User = mock();
+        SnsAccount snsAccount = mock();
+        User user = mock();
 
         // when
-        when(repository.findWithUserEntity(any(), any())).thenReturn(Optional.of(snsAccount));
-        when(jpaEntity.getNickname()).thenReturn("leaf");
-        OAuth2User loadUser = sut.load(user);
+        when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.of(snsAccount));
+        when(snsAccount.getUserId()).thenReturn(new UserId(1L));
+        when(findUserPort.load(1L)).thenReturn(Optional.of(user));
+        when(user.getUserInfo()).thenReturn(new UserInfo("남상엽","leaf"));
+        OAuth2User loadUser = sut.load(oAuth2User);
 
         // then
         assertThat(loadUser.getAttributes()).containsKey("nickname");
@@ -63,20 +74,20 @@ class LoadKakaoSnsAccountServiceTest {
     void testNotExistUser() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccountJpaEntity entity = snsAccountMapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
-        OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo(entity.getSnsId(),
-                new OAuth2Dto.KakaoUserInfo.KakaoAccount(entity.getEmail(), true, true, true,
-                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getNickname(), true)));
+        SnsAccount entity = MockEntityFactoryService.getSnsAccount();
+        OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo(entity.getSnsAccountId().getSnsId(),
+                new OAuth2Dto.KakaoUserInfo.KakaoAccount(entity.getSnsAccountInfo().getEmail(), true, true, true,
+                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getSnsAccountInfo().getNickname(), true)));
         Map<String, Object> attributes = gson.fromJson(gson.toJsonTree(userInfo), Map.class);
 
         // when
         when(user.getAttributes()).thenReturn(attributes);
-        when(repository.findWithUserEntity(any(), any())).thenReturn(Optional.empty());
-        when(repository.save(any())).thenReturn(entity);
+        when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.empty());
+        when(createSnsAccountPort.createSnsAccount(any(),any(),any(),any(),any())).thenReturn(MockEntityFactoryService.getSnsAccount());
         OAuth2User loadUser = sut.load(user);
 
         // then
-        verify(repository, times(1)).save(any());
+        verify(saveSnsAccountPort, times(1)).save(any());
         assertThat(loadUser.getAttributes()).extractingByKey("nickname").isEqualTo("leaf");
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
@@ -86,14 +97,14 @@ class LoadKakaoSnsAccountServiceTest {
     void testNotRegisteredSnsAccount() {
         // given
         OAuth2User user = mock(OAuth2User.class);
-        SnsAccountJpaEntity snsAccount = snsAccountMapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
+        SnsAccount snsAccount = MockEntityFactoryService.getSnsAccount();
 
         // when
-        when(repository.findWithUserEntity(any(), any())).thenReturn(Optional.of(snsAccount));
+        when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.of(snsAccount));
         OAuth2User loadUser = sut.load(user);
 
         // then
-        verify(repository, times(0)).save(any());
+        verify(saveSnsAccountPort, times(0)).save(any());
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
 }

@@ -6,7 +6,7 @@ import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import java.util.Optional;
 
 public interface FindSnsAccountPort {
-    Optional<SnsAccount> find(SnsDomain domain, String snsId);
+    Optional<SnsAccount> load(SnsDomain domain, String snsId);
 
-    Optional<SnsAccount> find(Long id);
+    Optional<SnsAccount> load(Long id);
 }

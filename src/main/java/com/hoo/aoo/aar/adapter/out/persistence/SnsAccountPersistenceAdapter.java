@@ -20,13 +20,13 @@ public class SnsAccountPersistenceAdapter implements FindSnsAccountPort, SaveSns
     private final SnsAccountMapper snsAccountMapper;
 
     @Override
-    public Optional<SnsAccount> find(SnsDomain domain, String snsId) {
+    public Optional<SnsAccount> load(SnsDomain domain, String snsId) {
         return snsAccountJpaRepository.findWithUserEntity(domain, snsId)
                 .map(snsAccountMapper::mapToDomainEntity);
     }
 
     @Override
-    public Optional<SnsAccount> find(Long id) {
+    public Optional<SnsAccount> load(Long id) {
         return snsAccountJpaRepository.findById(id)
                 .map(snsAccountMapper::mapToDomainEntity);
     }

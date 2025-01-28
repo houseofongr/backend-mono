@@ -1,7 +1,9 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,16 +23,24 @@ public record SNSLoginResponse(
                 (Boolean) attributes.get("isFirstLogin"));
     }
 
-    public static SNSLoginResponse of(SnsAccountJpaEntity snsAccountJpaEntity, String accessToken, boolean isFirstLogin) {
-
-        String nickname = isFirstLogin ? snsAccountJpaEntity.getNickname() : snsAccountJpaEntity.getUserEntity().getNickname();
-        String provider = snsAccountJpaEntity.getSnsDomain().name().toUpperCase();
+    public static SNSLoginResponse from(SnsAccount snsAccount, String accessToken) {
 
         return new SNSLoginResponse(
-                nickname,
+                snsAccount.getSnsAccountInfo().getNickname(),
                 accessToken,
-                provider,
-                isFirstLogin);
+                snsAccount.getSnsAccountId().getSnsDomain().name().toUpperCase(),
+                true
+        );
+    }
+
+    public static SNSLoginResponse from(User user, String accessToken, SnsDomain snsDomain) {
+
+        return new SNSLoginResponse(
+                user.getUserInfo().getNickname(),
+                accessToken,
+                snsDomain.name().toUpperCase(),
+                false
+        );
     }
 
     @JsonIgnore

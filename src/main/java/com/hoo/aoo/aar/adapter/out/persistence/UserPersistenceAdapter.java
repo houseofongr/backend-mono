@@ -26,7 +26,7 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort {
     private final UserMapper userMapper;
 
     @Override
-    public Optional<User> find(Long id) throws InvalidPhoneNumberException {
+    public Optional<User> load(Long id) throws InvalidPhoneNumberException {
         Optional<UserJpaEntity> optional = userJpaRepository.findById(id);
 
         if (optional.isEmpty())
