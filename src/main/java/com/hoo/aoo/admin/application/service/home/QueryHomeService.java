@@ -9,8 +9,6 @@ import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
@@ -33,10 +31,27 @@ public class QueryHomeService implements QueryHomeUseCase, QueryUserHomesUseCase
     @Transactional(readOnly = true)
     public QueryHomeResult queryHome(Long id) {
 
-        try {
+        Home home = findHomePort.loadHome(id)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.HOME_NOT_FOUND));
 
-            Home home = findHomePort.loadHome(id)
-                    .orElseThrow(() -> new AdminException(AdminErrorCode.HOME_NOT_FOUND));
+        House house = findHousePort.load(home.getHouseId().getId())
+                .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
+
+        User user = findUserPort.load(home.getUserId().getId())
+                .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+
+        return QueryHomeResult.of(home, house, user);
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public QueryUserHomesResult queryUserHomes(Long userId) {
+
+        List<Home> homes = findHomePort.loadHomes(userId);
+
+        List<QueryUserHomesResult.HomeInfo> homeInfos = new ArrayList<>();
+        for (Home home : homes) {
 
             House house = findHousePort.load(home.getHouseId().getId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
@@ -44,36 +59,10 @@ public class QueryHomeService implements QueryHomeUseCase, QueryUserHomesUseCase
             User user = findUserPort.load(home.getUserId().getId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
-            return QueryHomeResult.of(home, house, user);
-
-        } catch (AreaLimitExceededException | AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
+            homeInfos.add(QueryUserHomesResult.HomeInfo.of(home, house, user));
         }
+
+        return new QueryUserHomesResult(homeInfos);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public QueryUserHomesResult queryUserHomes(Long userId) {
-
-        try {
-            List<Home> homes = findHomePort.loadHomes(userId);
-
-            List<QueryUserHomesResult.HomeInfo> homeInfos = new ArrayList<>();
-            for (Home home : homes) {
-
-                House house = findHousePort.load(home.getHouseId().getId())
-                        .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
-
-                User user = findUserPort.load(home.getUserId().getId())
-                        .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
-
-                homeInfos.add(QueryUserHomesResult.HomeInfo.of(home, house, user));
-            }
-
-            return new QueryUserHomesResult(homeInfos);
-
-        } catch (AreaLimitExceededException | AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
-        }
-    }
 }

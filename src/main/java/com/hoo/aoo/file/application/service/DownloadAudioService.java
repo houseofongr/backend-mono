@@ -53,14 +53,8 @@ public class DownloadAudioService implements DownloadPrivateAudioUseCase {
                     MediaType.parseMediaType(Files.probeContentType(Path.of(audioFileId.getFilePath()))),
                     new UrlResource(audioFileId.getFilePath()));
 
-        } catch (IOException |
-                 FileSizeLimitExceedException |
-                 FileExtensionMismatchException |
-                 IllegalFileTypeDirException |
-                 IllegalFileAuthorityDirException e) {
-
+        } catch (IOException e) {
             throw new FileException(e, FileErrorCode.RETRIEVE_FILE_FAILED);
-
         }
     }
 }

@@ -9,8 +9,6 @@ import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
@@ -30,22 +28,18 @@ public class CreateHomeService implements CreateHomeUseCase {
     @Override
     @Transactional
     public CreateHomeResult create(CreateHomeCommand command) {
-        try {
-            House house = findHousePort.load(command.houseId())
-                    .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-            User user = findUserPort.load(command.userId())
-                    .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+        House house = findHousePort.load(command.houseId())
+                .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-            Home home = createHomePort.createHome(house, user);
+        User user = findUserPort.load(command.userId())
+                .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
-            Long savedId = saveHomePort.save(home);
+        Home home = createHomePort.createHome(house, user);
 
-            return new CreateHomeResult(savedId, home.getHomeDetail().getName());
+        Long savedId = saveHomePort.save(home);
 
-        } catch (AreaLimitExceededException | AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
-
-        }
+        return new CreateHomeResult(savedId, home.getHomeDetail().getName());
     }
+
 }

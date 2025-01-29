@@ -1,7 +1,6 @@
 package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateAudioUseCase;
 import com.hoo.aoo.file.domain.FileType;

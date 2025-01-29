@@ -10,6 +10,7 @@ import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.room.Room;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
     }
 
     @Override
-    public Optional<Room> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
+    @SneakyThrows({AreaLimitExceededException.class, AxisLimitExceededException.class})
+    public Optional<Room> load(Long id) {
 
         Optional<RoomJpaEntity> optional = roomJpaRepository.findById(id);
 
@@ -38,7 +40,8 @@ public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, Del
     }
 
     @Override
-    public List<Room> loadAll(List<Long> ids) throws AreaLimitExceededException, AxisLimitExceededException {
+    @SneakyThrows({AreaLimitExceededException.class, AxisLimitExceededException.class})
+    public List<Room> loadAll(List<Long> ids) {
 
         List<Room> list = new ArrayList<>();
 

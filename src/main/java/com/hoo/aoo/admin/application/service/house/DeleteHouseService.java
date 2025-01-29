@@ -5,8 +5,6 @@ import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -23,18 +21,13 @@ public class DeleteHouseService implements DeleteHouseUseCase {
     @Override
     @Transactional
     public MessageDto deleteHouse(Long id) {
-        try {
 
-            House house = findHousePort.load(id)
-                    .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
+        House house = findHousePort.load(id)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-            deleteHousePort.deleteHouse(house.getHouseId().getId());
+        deleteHousePort.deleteHouse(house.getHouseId().getId());
 
-            return new MessageDto(id + "번 하우스가 삭제되었습니다.");
-
-        } catch (AreaLimitExceededException | AxisLimitExceededException e) {
-            throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
-
-        }
+        return new MessageDto(id + "번 하우스가 삭제되었습니다.");
     }
+
 }

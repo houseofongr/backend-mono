@@ -2,6 +2,8 @@ package com.hoo.aoo.file.adapter.out.persistence.entity;
 
 import com.hoo.aoo.common.adapter.out.persistence.entity.DateColumnBaseEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
+import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.FileStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,4 +39,14 @@ public class FileJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "OWNER_ID")
     private UserJpaEntity owner;
 
+    public static FileJpaEntity create(File file) {
+        return new FileJpaEntity(
+                null,
+                file.getFileId().getRealFileName(),
+                file.getFileId().getFileSystemName(),
+                file.getFileId().getDirectory(),
+                file.getStatus() == FileStatus.DELETED,
+                file.getSize().getFileByte(),
+                null);
+    }
 }

@@ -1,4 +1,4 @@
-package com.hoo.aoo.file.adapter.out.filesystem;
+package com.hoo.aoo.file.application.service;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

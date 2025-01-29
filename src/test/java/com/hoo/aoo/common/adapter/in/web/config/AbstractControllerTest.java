@@ -1,6 +1,6 @@
 package com.hoo.aoo.common.adapter.in.web.config;
 
-import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
+import com.hoo.aoo.file.application.service.FileAttribute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;

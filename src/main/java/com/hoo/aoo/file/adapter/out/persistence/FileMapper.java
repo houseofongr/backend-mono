@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.file.adapter.out.filesystem.FileAttribute;
+import com.hoo.aoo.file.application.service.FileAttribute;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.domain.*;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
@@ -16,16 +16,6 @@ import org.springframework.stereotype.Component;
 public class FileMapper {
 
     private final FileAttribute fileAttribute;
-
-    public FileJpaEntity mapToNewJpaEntity(File file, UserJpaEntity owner) {
-        return new FileJpaEntity(null,
-                file.getFileId().getRealFileName(),
-                file.getFileId().getFileSystemName(),
-                file.getFileId().getDirectory(),
-                file.getStatus() == FileStatus.DELETED,
-                file.getSize().getFileByte(),
-                owner);
-    }
 
     public File mapToDomainEntity(FileJpaEntity fileJpaEntity) throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
 

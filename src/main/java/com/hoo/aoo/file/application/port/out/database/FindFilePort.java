@@ -11,5 +11,5 @@ import java.util.Optional;
 
 public interface
 FindFilePort {
-    Optional<File> find(Long fileId) throws FileSizeLimitExceedException, FileNotFoundException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException;
+    Optional<File> find(Long fileId);
 }

@@ -43,6 +43,7 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
 
     private DownloadFileResult download(Long fileId, Authority authority) {
         try {
+
             File loadedFile = findFilePort.find(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
@@ -63,11 +64,7 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
                     MediaType.parseMediaType(Files.probeContentType(Path.of(imageFileId.getFilePath()))),
                     new UrlResource(imageFileId.getFilePath()));
 
-        } catch (IOException |
-                 FileSizeLimitExceedException |
-                 FileExtensionMismatchException |
-                 IllegalFileTypeDirException |
-                 IllegalFileAuthorityDirException e) {
+        } catch (IOException e) {
 
             throw new FileException(e, FileErrorCode.RETRIEVE_FILE_FAILED);
 

@@ -11,11 +11,13 @@ import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
+import com.hoo.aoo.admin.domain.Axis;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -44,8 +46,9 @@ public class HousePersistenceAdapter implements SaveHousePort, UpdateHousePort, 
         return houseJpaEntity.getId();
     }
 
+    @SneakyThrows({AreaLimitExceededException.class, AxisLimitExceededException.class})
     @Override
-    public Optional<House> load(Long id) throws AreaLimitExceededException, AxisLimitExceededException {
+    public Optional<House> load(Long id) {
 
         Optional<HouseJpaEntity> optional = houseJpaRepository.findById(id);
 

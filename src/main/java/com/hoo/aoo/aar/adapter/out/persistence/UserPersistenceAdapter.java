@@ -12,6 +12,7 @@ import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,8 +26,9 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort {
     private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final UserMapper userMapper;
 
+    @SneakyThrows(InvalidPhoneNumberException.class)
     @Override
-    public Optional<User> load(Long id) throws InvalidPhoneNumberException {
+    public Optional<User> load(Long id) {
         Optional<UserJpaEntity> optional = userJpaRepository.findById(id);
 
         if (optional.isEmpty())

@@ -10,6 +10,7 @@ import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
 import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -24,22 +25,21 @@ public class FilePersistenceAdapter implements SaveImageFilePort, FindFilePort {
     @Override
     public Long save(File file) {
 
-        FileJpaEntity newEntity = fileMapper.mapToNewJpaEntity(file, null);
-
+        FileJpaEntity newEntity = FileJpaEntity.create(file);
         fileJpaRepository.save(newEntity);
 
         return newEntity.getId();
     }
 
+    @SneakyThrows({FileSizeLimitExceedException.class, FileExtensionMismatchException.class, IllegalFileTypeDirException.class, IllegalFileAuthorityDirException.class})
     @Override
-    public Optional<File> find(Long fileId) throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    public Optional<File> find(Long fileId) {
 
         Optional<FileJpaEntity> optional = fileJpaRepository.findById(fileId);
 
-        if (optional.isEmpty()) return Optional.empty();
-
-        FileJpaEntity fileJpaEntity = optional.get();
-
-        return Optional.of(fileMapper.mapToDomainEntity(fileJpaEntity));
+        if (optional.isPresent())
+            return Optional.of(fileMapper.mapToDomainEntity(optional.get()));
+        else
+            return Optional.empty();
     }
 }
