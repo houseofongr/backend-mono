@@ -7,7 +7,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum FileF {
-    IMAGE_FILE_1(FileType.IMAGE, "test.png", "test-1234.png", 1234L);
+    IMAGE_FILE_1(FileType.IMAGE, "test.png", "test-1234.png", 1234L),
+    IMAGE_FILE_2(FileType.IMAGE, "test2.png", "test-1235.png", 1234L);
 
     private final FileType fileType;
     private final String realFileName;

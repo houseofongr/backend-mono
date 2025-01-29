@@ -58,6 +58,15 @@ public class FileId {
         }
     }
 
+    @Override
+    public String toString() {
+        return "[" + getPath() + "] " +
+               "authority=" + authority +
+               ", fileType=" + fileType +
+               ", realFileName='" + realFileName + '\'' +
+               ", fileSystemName='" + fileSystemName;
+    }
+
     public void verifyExtension(FileType fileType, String fileName) throws FileExtensionMismatchException {
         switch (fileType) {
             case IMAGE -> {

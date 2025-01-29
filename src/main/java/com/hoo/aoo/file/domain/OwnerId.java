@@ -13,4 +13,11 @@ public class OwnerId {
     public static OwnerId empty() {
         return new OwnerId(null);
     }
+
+    @Override
+    public String toString() {
+        return "OwnerId{" +
+               "id=" + id +
+               '}';
+    }
 }

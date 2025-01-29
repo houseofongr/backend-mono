@@ -30,4 +30,11 @@ public class FileSize {
 
         return String.format("%.2f", (double) fileByte / unit) + suffix;
     }
+
+    @Override
+    public String toString() {
+        return "FileSize{" +
+               "fileByte=" + fileByte +
+               '}';
+    }
 }

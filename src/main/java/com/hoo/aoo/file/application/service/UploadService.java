@@ -8,6 +8,7 @@ import com.hoo.aoo.file.domain.*;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 class UploadService {
@@ -48,6 +50,8 @@ class UploadService {
                 writeFilePort.write(file, multipartFile);
 
                 Long savedId = saveImageFilePort.save(file);
+
+                log.info("파일 생성완료 : {}", file);
 
                 fileInfos.add(UploadFileResult.FileInfo.from(file, savedId));
 

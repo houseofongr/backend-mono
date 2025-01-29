@@ -20,4 +20,14 @@ public class File {
 
         return new File(fileId, fileStatus, ownerId, size);
     }
+
+    @Override
+    public String toString() {
+        return "File [" +
+               "id : " + fileId +
+               ", status : " + status +
+               ", ownerId : " + ownerId +
+               ", size : " + size +
+               ']';
+    }
 }

@@ -10,4 +10,5 @@ truncate table ITEM_SHAPE_CIRCLE;
 truncate table ITEM_SHAPE_RECTANGLE;
 truncate table ITEM_SHAPE_ELLIPSE;
 truncate table SOUND_SOURCE;
+truncate table FILE;
 set foreign_key_checks = 1;

@@ -6,10 +6,12 @@ import com.hoo.aoo.file.application.port.out.database.FindFilePort;
 import com.hoo.aoo.file.application.port.out.filesystem.EraseFilePort;
 import com.hoo.aoo.file.domain.File;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DeleteFileService implements DeleteFileUseCase {
@@ -28,6 +30,8 @@ public class DeleteFileService implements DeleteFileUseCase {
             eraseFilePort.erase(file);
 
             deleteFilePort.deleteFile(id);
+
+            log.info("파일 삭제완료 : {}", file);
 
         } catch (IOException e) {
             throw new FileException(e, FileErrorCode.DELETE_FILE_FAILED);

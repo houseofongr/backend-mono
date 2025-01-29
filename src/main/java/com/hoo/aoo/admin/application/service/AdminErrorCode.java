@@ -15,9 +15,10 @@ public enum AdminErrorCode implements ErrorCode {
     AREA_SIZE_LIMIT_EXCEED("ADMIN-HOUSE-2", BAD_REQUEST, "이미지 크기 한도를 초과했습니다."),
     INVALID_CREATE_HOUSE_METADATA("ADMIN-HOUSE-3", BAD_REQUEST, "하우스 생성 메타데이터를 읽을 수 없습니다."),
     IMAGE_FILE_NOT_FOUND("ADMIN-HOUSE-4", BAD_REQUEST, "하우스 생성 메타데이터에 등록된 이미지가 존재하지 않습니다."),
-    HOUSE_NOT_FOUND("ADMIN-HOUSE-5", NOT_FOUND, "해당 하우스를 찾을 수 없습니다."),
-    ROOM_NOT_FOUND("ADMIN-HOUSE-6", NOT_FOUND, "존재하지 않는 방입니다."),
-    ILLEGAL_HOUSE_RELATIONSHIP("ADMIN-HOUSE-7", INTERNAL_SERVER_ERROR, "하우스와 방 사이에 잘못된 참조 관계가 존재합니다."),
+    HOLDING_HOME_HOUSE_DELETE("ADMIN-HOUSE-5", BAD_REQUEST, "홈을 보유한 하우스는 삭제할 수 없습니다."),
+    HOUSE_NOT_FOUND("ADMIN-HOUSE-6", NOT_FOUND, "해당 하우스를 찾을 수 없습니다."),
+    ROOM_NOT_FOUND("ADMIN-HOUSE-7", NOT_FOUND, "존재하지 않는 방입니다."),
+    ILLEGAL_HOUSE_RELATIONSHIP("ADMIN-HOUSE-8", INTERNAL_SERVER_ERROR, "하우스와 방 사이에 잘못된 참조 관계가 존재합니다."),
 
     USER_NOT_FOUND("ADMIN-USER-1", NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
 

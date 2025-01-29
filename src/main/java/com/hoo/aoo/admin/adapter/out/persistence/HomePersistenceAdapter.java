@@ -54,6 +54,11 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Delet
     }
 
     @Override
+    public boolean existByHouseId(Long houseId) {
+        return homeJpaRepository.existsByHouseId(houseId);
+    }
+
+    @Override
     public Optional<Home> loadHome(Long id) {
         return homeJpaRepository.findById(id)
                 .map(homeMapper::mapToDomainEntity);
