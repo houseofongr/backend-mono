@@ -145,11 +145,11 @@ operation::admin-house-patch[snippets='path-parameters,http-request,request-fiel
 
 하우스를 삭제하는 API입니다.
 
-> 하우스 내부에 포함된 룸과 아이템을 함께 삭제합니다.
+> 삭제 시 해당 하우스의 기본 이미지, 보더 이미지를 함께 삭제합니다.
 
 operation::admin-house-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
-> 차후 사용자의 홈이 생성된 하우스는 삭제할 수 없도록 할 예정입니다.
+> 해당 하우스로 생성된 홈이 있을 경우, 삭제할 수 업습니다.
 
 [[admin-room-api]]
 === 룸(Room) API
