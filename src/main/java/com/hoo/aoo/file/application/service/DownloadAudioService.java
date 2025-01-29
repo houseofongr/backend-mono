@@ -7,10 +7,6 @@ import com.hoo.aoo.file.application.port.out.database.FindFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileId;
 import com.hoo.aoo.file.domain.FileType;
-import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
-import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;
-import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
-import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ContentDisposition;
@@ -33,7 +29,7 @@ public class DownloadAudioService implements DownloadPrivateAudioUseCase {
     public DownloadFileResult privateDownload(Long fileId) {
         try {
 
-            File file = findFilePort.find(fileId)
+            File file = findFilePort.load(fileId)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 
             FileId audioFileId = file.getFileId();

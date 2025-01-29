@@ -26,7 +26,7 @@ class FileTest {
         FileId fileId = FileId.create(baseDir, authority, fileType, fileName, fileName);
 
         // when
-        File file = File.create(fileId, FileStatus.CREATED, Owner.empty(), new FileSize(10000L, 100000L));
+        File file = File.create(fileId, FileStatus.CREATED, OwnerId.empty(), new FileSize(10000L, 100000L));
         java.io.File javaFile = new java.io.File(file.getFileId().getPath());
         javaFile.getParentFile().mkdirs();
         javaFile.createNewFile();

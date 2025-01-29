@@ -42,4 +42,22 @@ class FileSystemAdapterTest {
         assertThat(writtenFile).isReadable();
         assertThat(Files.readAllBytes(writtenFile.toPath())).isEqualTo(requestFile.getBytes());
     }
+
+    @Test
+    @DisplayName("파일 지우기 테스트")
+    void testEraseFile(@TempDir Path tempDir) throws IOException {
+        // given
+        File file = FileF.IMAGE_FILE_1.get(tempDir.toString());
+        java.io.File javaFile = new java.io.File(file.getFileId().getPath());
+        javaFile.getParentFile().mkdirs();
+        javaFile.createNewFile();
+        Files.writeString(javaFile.toPath(), "test file");
+
+        // when
+        assertThat(javaFile.exists()).isTrue();
+        sut.erase(file);
+
+        // then
+        assertThat(javaFile.exists()).isFalse();
+    }
 }

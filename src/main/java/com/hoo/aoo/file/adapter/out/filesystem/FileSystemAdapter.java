@@ -1,5 +1,6 @@
 package com.hoo.aoo.file.adapter.out.filesystem;
 
+import com.hoo.aoo.file.application.port.out.filesystem.EraseFilePort;
 import com.hoo.aoo.file.application.port.out.filesystem.RandomFileNamePort;
 import com.hoo.aoo.file.application.port.out.filesystem.WriteFilePort;
 import com.hoo.aoo.file.application.service.FileErrorCode;
@@ -9,13 +10,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.UUID;
 
 @Component
-public class FileSystemAdapter implements WriteFilePort, RandomFileNamePort {
+public class FileSystemAdapter implements WriteFilePort, EraseFilePort, RandomFileNamePort {
 
     @Override
     public void write(File file, MultipartFile multipartFile) throws IOException {
+
         java.io.File javaFile = new java.io.File(file.getFileId().getPath());
 
         javaFile.getParentFile().mkdirs();
@@ -35,5 +39,10 @@ public class FileSystemAdapter implements WriteFilePort, RandomFileNamePort {
             throw new FileException(FileErrorCode.INVALID_FILE_EXTENSION);
 
         return UUID.randomUUID() + "." + split[split.length - 1];
+    }
+
+    @Override
+    public void erase(File file) throws IOException {
+        Files.delete(Path.of(file.getFileId().getPath()));
     }
 }

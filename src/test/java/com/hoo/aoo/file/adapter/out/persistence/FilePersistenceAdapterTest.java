@@ -58,12 +58,12 @@ class FilePersistenceAdapterTest {
     @Test
     @Sql("FilePersistenceAdapterTest.sql")
     @DisplayName("이미지 파일 엔티티 조회")
-    void testFindPublicImageFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    void testLoadPublicImageFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
 
         // when
-        Optional<File> optional = sut.find(fileId);
+        Optional<File> optional = sut.load(fileId);
 
         // then
         assertThat(optional).isNotEmpty();
@@ -73,7 +73,7 @@ class FilePersistenceAdapterTest {
         assertThat(file.getFileId().getBaseDir()).isEqualTo("/tmp");
         assertThat(file.getFileId().getRealFileName()).isEqualTo("test.png");
         assertThat(file.getSize().getFileByte()).isEqualTo(1234);
-        assertThat(file.getOwner()).isNull();
+        assertThat(file.getOwnerId()).isNull();
         assertThat(file.getStatus()).isEqualTo(FileStatus.CREATED);
         assertThat(file.getFileId().getFileType()).isEqualTo(FileType.IMAGE);
         assertThat(file.getFileId().getAuthority()).isEqualTo(Authority.PUBLIC_FILE_ACCESS);
@@ -82,12 +82,12 @@ class FilePersistenceAdapterTest {
     @Test
     @Sql("FilePersistenceAdapterTest2.sql")
     @DisplayName("오디오 파일 엔티티 조회")
-    void testFindAudioFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    void testLoadAudioFile() throws FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
 
         // when
-        Optional<File> optional = sut.find(fileId);
+        Optional<File> optional = sut.load(fileId);
 
         // then
         assertThat(optional).isNotEmpty();
@@ -97,9 +97,23 @@ class FilePersistenceAdapterTest {
         assertThat(file.getFileId().getBaseDir()).isEqualTo("/tmp");
         assertThat(file.getFileId().getRealFileName()).isEqualTo("test.mp3");
         assertThat(file.getSize().getFileByte()).isEqualTo(1234);
-        assertThat(file.getOwner()).isNull();
+        assertThat(file.getOwnerId()).isNull();
         assertThat(file.getStatus()).isEqualTo(FileStatus.CREATED);
         assertThat(file.getFileId().getFileType()).isEqualTo(FileType.AUDIO);
         assertThat(file.getFileId().getAuthority()).isEqualTo(Authority.PRIVATE_FILE_ACCESS);
+    }
+
+    @Test
+    @Sql("FilePersistenceAdapterTest2.sql")
+    @DisplayName("파일 엔티티 삭제")
+    void deleteFileEntity() {
+        // given
+        Long id = 1L;
+
+        // when
+        sut.deleteFile(id);
+
+        // then
+        assertThat(fileJpaRepository.findById(id)).isEmpty();
     }
 }

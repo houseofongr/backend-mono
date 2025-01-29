@@ -1,6 +1,5 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.file.application.service.FileAttribute;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.domain.*;
@@ -23,10 +22,10 @@ public class FileMapper {
 
         FileStatus fileStatus = fileJpaEntity.getIsDeleted() ? FileStatus.DELETED : FileStatus.CREATED;
 
-        Owner owner = fileJpaEntity.getOwner() == null ? null : new Owner(fileJpaEntity.getOwner().getId());
+        OwnerId ownerId = fileJpaEntity.getOwner() == null ? null : new OwnerId(fileJpaEntity.getOwner().getId());
 
         FileSize fileSize = new FileSize(fileJpaEntity.getFileSize(), fileAttribute.getFileSizeLimit());
 
-        return File.create(fileId, fileStatus, owner, fileSize);
+        return File.create(fileId, fileStatus, ownerId, fileSize);
     }
 }

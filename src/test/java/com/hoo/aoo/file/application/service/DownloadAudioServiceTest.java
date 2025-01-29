@@ -48,7 +48,7 @@ class DownloadAudioServiceTest {
         Files.writeString(javaFile.toPath(), "test file");
 
         // when
-        when(findFilePort.find(fileId)).thenReturn(Optional.of(file));
+        when(findFilePort.load(fileId)).thenReturn(Optional.of(file));
         DownloadFileResult result = sut.privateDownload(fileId);
 
         // then

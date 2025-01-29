@@ -14,4 +14,5 @@ public interface IssueIdPort {
     Long issueItemId();
 
     Long issueSoundSourceId();
+
 }

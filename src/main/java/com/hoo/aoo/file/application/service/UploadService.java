@@ -42,9 +42,8 @@ class UploadService {
 
                 FileId fileId = idCreateStrategy.create(originalFilename, fileSystemName);
                 FileSize fileSize = new FileSize(multipartFile.getSize(), fileAttribute.getFileSizeLimit());
-                Owner owner = new Owner(ownerId);
 
-                File file = File.create(fileId, FileStatus.CREATED, owner, fileSize);
+                File file = File.create(fileId, FileStatus.CREATED, new OwnerId(ownerId), fileSize);
 
                 writeFilePort.write(file, multipartFile);
 

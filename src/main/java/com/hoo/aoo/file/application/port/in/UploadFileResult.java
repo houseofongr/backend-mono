@@ -19,7 +19,7 @@ public record UploadFileResult(
         public static FileInfo from(File file, Long id) {
             return new FileInfo(
                     id,
-                    file.getOwner().getId(),
+                    file.getOwnerId().getId(),
                     file.getFileId().getRealFileName(),
                     file.getFileId().getFileSystemName(),
                     file.getSize().getUnitSize(),

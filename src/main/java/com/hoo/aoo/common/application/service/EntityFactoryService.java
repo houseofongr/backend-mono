@@ -72,4 +72,5 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
         Long newId = issueIdPort.issueSoundSourceId();
         return SoundSource.create(newId, itemId, audioFileId, name, description, active);
     }
+
 }
