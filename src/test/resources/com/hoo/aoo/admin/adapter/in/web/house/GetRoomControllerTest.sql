@@ -26,7 +26,7 @@ values (2, 10.5);
 insert into ITEM_SHAPE_ELLIPSE(ID, RADIUSX, RADIUSY, ROTATION)
 values (3, 15, 15, 90);
 
-insert into ITEM(ID, NAME, ROOM_ID, USER_ID, ITEM_SHAPE_ID)
-values (1, '설이', 1, 10, 1),
-       (2, '강아지',  1, 10, 2),
-       (3, '화분',  1, 10, 3);
+insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, ITEM_SHAPE_ID)
+values (1, '설이', 1, 1, 1),
+       (2, '강아지',  1, 1, 2),
+       (3, '화분',  1, 1, 3);

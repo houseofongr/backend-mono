@@ -37,7 +37,7 @@ class ItemPersistenceAdapterTest {
         List<Item> items = List.of(MockEntityFactoryService.getCircleItem(), MockEntityFactoryService.getEllipseItem(), MockEntityFactoryService.getRectangleItem());
 
         // when
-        List<Long> savedItemId = sut.save(10L, 1L, items);
+        List<Long> savedItemId = sut.save(1L, 1L, items);
 
         // then
         assertThat(savedItemId).hasSize(3);
@@ -73,7 +73,7 @@ class ItemPersistenceAdapterTest {
     @DisplayName("아이템 수정 테스트")
     void testUpdateItem() {
         // given
-        Item item = Item.create(1L, 1L, 1L, "고양이",
+        Item item = Item.create(1L, 1L, 1L, 10L, "고양이",
                 new Ellipse(10f,10f,70.5f,50f,10f)
         );
 

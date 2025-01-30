@@ -25,8 +25,8 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private UserJpaEntity user;
+    @JoinColumn(name = "HOME_ID")
+    private HomeJpaEntity home;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROOM_ID")
@@ -52,9 +52,12 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
                 item.getShape());
     }
 
-    public void setRelationship(UserJpaEntity userJpaEntity, RoomJpaEntity roomJpaEntity) {
-        this.user = userJpaEntity;
+    public void setRelationship(HomeJpaEntity homeJpaEntity, RoomJpaEntity roomJpaEntity) {
+        this.home = homeJpaEntity;
         this.room = roomJpaEntity;
+
+        if (!homeJpaEntity.getItems().contains(this))
+            roomJpaEntity.getItems().add(this);
 
         if (!roomJpaEntity.getItems().contains(this))
             roomJpaEntity.getItems().add(this);

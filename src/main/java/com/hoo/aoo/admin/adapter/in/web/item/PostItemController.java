@@ -25,7 +25,7 @@ public class PostItemController {
             @PathVariable Long roomId,
             @RequestBody CreateItemCommand command) {
 
-        return new ResponseEntity<>(createItemUseCase.create(userId, homeId, roomId, command), CREATED);
+        return new ResponseEntity<>(createItemUseCase.create(homeId, roomId, userId, command), CREATED);
 
     }
 }

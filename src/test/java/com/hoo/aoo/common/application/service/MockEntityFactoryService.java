@@ -60,15 +60,18 @@ public class MockEntityFactoryService {
     }
 
     public static Item getRectangleItem() throws Exception {
-        return factory.createItem(getRoom().getRoomId().getId(), getAdminUser().getUserId().getId(), "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
+        Home home = getHome();
+        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
     }
 
     public static Item getCircleItem() throws Exception {
-        return factory.createItem(getRoom().getRoomId().getId(), getAdminUser().getUserId().getId(), "강아지", new Circle(200f, 200f, 10.5f));
+        Home home = getHome();
+        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(), "강아지", new Circle(200f, 200f, 10.5f));
     }
 
     public static Item getEllipseItem() throws Exception {
-        return factory.createItem(getRoom().getRoomId().getId(), getAdminUser().getUserId().getId(), "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
+        Home home = getHome();
+        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
     }
 
     public static SoundSource getSoundSource() throws Exception {
@@ -77,7 +80,7 @@ public class MockEntityFactoryService {
 
     public static Item loadRectangleItem() throws Exception {
         Item rectangleItem = getRectangleItem();
-        return Item.load(rectangleItem.getItemId().getId(), rectangleItem.getUserId().getId(), rectangleItem.getRoomId().getId(), rectangleItem.getItemDetail().getName(), rectangleItem.getShape(), List.of(getSoundSource()));
+        return Item.load(rectangleItem.getItemId().getId(), rectangleItem.getHomeId().getId(), rectangleItem.getRoomId().getId(), rectangleItem.getUserId().getId(), rectangleItem.getItemDetail().getName(), rectangleItem.getShape(), List.of(getSoundSource()));
     }
 
     public static SoundSource loadSoundSource() throws Exception {

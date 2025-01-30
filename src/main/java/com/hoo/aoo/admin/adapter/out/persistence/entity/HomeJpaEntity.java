@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.swing.plaf.synth.SynthViewportUI;
+import java.util.List;
 
 @Entity
 @Table(name = "HOME")
@@ -32,10 +33,14 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private UserJpaEntity user;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "home")
+    private List<ItemJpaEntity> items;
+
     public static HomeJpaEntity create(Home home) {
         return new HomeJpaEntity(
                 null,
                 home.getHomeDetail().getName(),
+                null,
                 null,
                 null);
     }

@@ -14,10 +14,6 @@ import java.util.List;
 @Component
 public class HomeMapper {
 
-    public HomeJpaEntity mapToNewJpaEntity(Home home, HouseJpaEntity houseJpaEntity, UserJpaEntity userJpaEntity) {
-        return new HomeJpaEntity(null, home.getHomeDetail().getName(), houseJpaEntity, userJpaEntity);
-    }
-
     public Home mapToDomainEntity(HomeJpaEntity homeJpaEntity) {
         return Home.load(homeJpaEntity.getId(), homeJpaEntity.getHouse().getId(), homeJpaEntity.getUser().getId(), homeJpaEntity.getName(), homeJpaEntity.getCreatedTime(), homeJpaEntity.getUpdatedTime());
     }

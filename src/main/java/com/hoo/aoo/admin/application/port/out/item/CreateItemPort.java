@@ -4,5 +4,5 @@ import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Shape;
 
 public interface CreateItemPort {
-    Item createItem(Long userId, Long roomId, String name, Shape shape);
+    Item createItem(Long homeId, Long roomId, Long userId, String name, Shape shape);
 }
