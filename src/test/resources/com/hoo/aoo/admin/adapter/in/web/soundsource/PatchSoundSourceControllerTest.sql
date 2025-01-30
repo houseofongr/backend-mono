@@ -1,6 +1,6 @@
 insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IMAGE_FILE_ID, WIDTH, HEIGHT,
                   CREATED_TIME, UPDATED_TIME)
-values (1, 'temp houseInfo', 'tester', 'temp houseInfo', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+values (1, 'temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into ROOM(ID, NAME, X, Y, Z, WIDTH, HEIGHT, IMAGE_FILE_ID, HOUSE_ID)
 values (1, "거실", 0, 0, 0, 5000, 0, 5, 1),
