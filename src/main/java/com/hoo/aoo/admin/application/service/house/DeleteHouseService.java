@@ -1,12 +1,14 @@
 package com.hoo.aoo.admin.application.service.house;
 
 import com.hoo.aoo.admin.application.port.in.house.DeleteHouseUseCase;
+import com.hoo.aoo.admin.application.port.in.room.DeleteRoomUseCase;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.file.application.port.in.DeleteFileUseCase;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class DeleteHouseService implements DeleteHouseUseCase {
     private final FindHousePort findHousePort;
     private final FindHomePort findHomePort;
     private final DeleteHousePort deleteHousePort;
+    private final DeleteRoomUseCase deleteRoomUseCase;
     private final DeleteFileUseCase deleteFileUseCase;
 
     @Override
@@ -31,6 +34,9 @@ public class DeleteHouseService implements DeleteHouseUseCase {
 
         if (findHomePort.existByHouseId(id))
             throw new AdminException(AdminErrorCode.HOLDING_HOME_HOUSE_DELETE);
+
+        for (Room room : house.getRooms())
+            deleteRoomUseCase.deleteRoom(room.getRoomId().getId());
 
         deleteFileUseCase.deleteFile(house.getBasicImageFile().getFileId().getId());
         deleteFileUseCase.deleteFile(house.getBorderImageFile().getFileId().getId());

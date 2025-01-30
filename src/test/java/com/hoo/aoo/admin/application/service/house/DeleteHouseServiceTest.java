@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.application.service.house;
 
+import com.hoo.aoo.admin.application.port.in.room.DeleteRoomUseCase;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
@@ -23,6 +24,7 @@ class DeleteHouseServiceTest {
     FindHousePort findHousePort;
     FindHomePort findHomePort;
     DeleteHousePort deleteHousePort;
+    DeleteRoomUseCase deleteRoomUseCase;
     DeleteFileUseCase deleteFileUseCase;
 
     @BeforeEach
@@ -30,8 +32,9 @@ class DeleteHouseServiceTest {
         findHousePort = mock();
         findHomePort = mock();
         deleteHousePort = mock();
+        deleteRoomUseCase = mock();
         deleteFileUseCase = mock();
-        sut = new DeleteHouseService(findHousePort, findHomePort, deleteHousePort, deleteFileUseCase);
+        sut = new DeleteHouseService(findHousePort, findHomePort, deleteHousePort, deleteRoomUseCase, deleteFileUseCase);
     }
 
     @Test
@@ -50,6 +53,7 @@ class DeleteHouseServiceTest {
         // then
         verify(deleteHousePort, times(1)).deleteHouse(anyLong());
         verify(deleteFileUseCase, times(2)).deleteFile(anyLong());
+        verify(deleteRoomUseCase, times(2)).deleteRoom(anyLong());
         assertThatThrownBy(() -> sut.deleteHouse(1234L)).hasMessage(AdminErrorCode.HOUSE_NOT_FOUND.getMessage());
         assertThatThrownBy(() -> sut.deleteHouse(existHomeHouseId)).hasMessage(AdminErrorCode.HOLDING_HOME_HOUSE_DELETE.getMessage());
         assertThat(messageDto.message()).isEqualTo("1번 하우스가 삭제되었습니다.");

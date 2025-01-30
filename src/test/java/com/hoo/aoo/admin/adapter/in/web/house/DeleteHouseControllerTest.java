@@ -43,6 +43,8 @@ class DeleteHouseControllerTest extends AbstractControllerTest {
 
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
         saveFile(FileF.IMAGE_FILE_2.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_3.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_4.get(tempDir.toString()));
 
         mockMvc.perform(delete("/admin/houses/{houseId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
