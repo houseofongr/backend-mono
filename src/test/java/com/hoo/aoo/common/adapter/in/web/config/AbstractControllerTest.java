@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.nio.file.Path;
+
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -23,7 +25,7 @@ public abstract class AbstractControllerTest {
     protected MockMvc mockMvc;
 
     @TempDir
-    protected java.io.File tempDir;
+    protected Path tempDir;
 
     @Autowired
     protected FileAttribute fileAttribute;
@@ -42,7 +44,7 @@ public abstract class AbstractControllerTest {
                         .withResponseDefaults(prettyPrint())
                 )
                 .build();
-        ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.getPath());
+        ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.toString());
     }
 
 }

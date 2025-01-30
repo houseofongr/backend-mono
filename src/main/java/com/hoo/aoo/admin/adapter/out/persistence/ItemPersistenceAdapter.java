@@ -53,6 +53,11 @@ public class ItemPersistenceAdapter implements SaveItemPort, FindItemPort, Updat
     }
 
     @Override
+    public boolean existByRoomId(Long roomId) {
+        return itemJpaRepository.existsByRoomId(roomId);
+    }
+
+    @Override
     public void updateItem(Item item) {
         ItemJpaEntity itemJpaEntity = itemJpaRepository.findById(item.getItemId().getId()).orElseThrow();
         itemJpaEntity.update(item);

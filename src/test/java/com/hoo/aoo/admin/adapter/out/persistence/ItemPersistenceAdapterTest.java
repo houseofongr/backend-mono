@@ -96,6 +96,17 @@ class ItemPersistenceAdapterTest {
 
     @Test
     @Sql("ItemPersistenceAdapterTest2.sql")
+    @DisplayName("룸 아이디로 아이템 존재여부 확인 테스트")
+    void testExistByRoomId() {
+        Long existId = 1L;
+        Long notExistId = 2L;
+
+        assertThat(sut.existByRoomId(existId)).isTrue();
+        assertThat(sut.existByRoomId(notExistId)).isFalse();
+    }
+
+    @Test
+    @Sql("ItemPersistenceAdapterTest2.sql")
     @DisplayName("아이템 수정 테스트")
     void testUpdateItem() {
         // given

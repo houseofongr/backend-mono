@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ItemJpaRepository extends JpaRepository<ItemJpaEntity, Long> {
     List<ItemJpaEntity> findAllByHomeIdAndRoomId(Long homeId, Long roomId);
+    boolean existsByRoomId(Long roomId);
 }

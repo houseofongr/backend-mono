@@ -39,7 +39,7 @@ class DeleteHouseControllerTest extends AbstractControllerTest {
     @Test
     @Sql("DeleteHouseControllerTest.sql")
     @DisplayName("하우스 삭제 API")
-    void testDeleteHouse(@TempDir Path tempDir) throws Exception {
+    void testDeleteHouse() throws Exception {
 
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
         saveFile(FileF.IMAGE_FILE_2.get(tempDir.toString()));

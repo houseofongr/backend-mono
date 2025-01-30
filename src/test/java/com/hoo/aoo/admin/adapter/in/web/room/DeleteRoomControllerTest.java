@@ -1,10 +1,19 @@
 package com.hoo.aoo.admin.adapter.in.web.room;
 
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
+import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
+import com.hoo.aoo.file.domain.File;
+import com.hoo.aoo.file.domain.FileF;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -15,6 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DeleteRoomControllerTest extends AbstractControllerTest {
 
+    @Autowired
+    FileJpaRepository fileJpaRepository;
+
     @Override
     protected String getBaseUrl() {
         return "api.archiveofongr.site";
@@ -24,6 +36,9 @@ class DeleteRoomControllerTest extends AbstractControllerTest {
     @Sql("DeleteRoomControllerTest.sql")
     @DisplayName("룸 삭제 API")
     void testDeleteRoom() throws Exception {
+
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+
         mockMvc.perform(delete("/admin/houses/rooms/{roomId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
@@ -36,5 +51,12 @@ class DeleteRoomControllerTest extends AbstractControllerTest {
                                 fieldWithPath("message").description("삭제 완료 메시지 : 0번 룸이 삭제되었습니다.")
                         )
                 ));
+    }
+
+    private void saveFile(File file) throws IOException {
+        java.io.File tempFile = new java.io.File(file.getFileId().getPath());
+        tempFile.mkdirs();
+        tempFile.createNewFile();
+        fileJpaRepository.save(FileJpaEntity.create(file));
     }
 }

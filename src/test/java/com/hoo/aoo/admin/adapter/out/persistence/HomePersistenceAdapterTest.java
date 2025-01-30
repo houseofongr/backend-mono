@@ -61,6 +61,17 @@ class HomePersistenceAdapterTest {
 
     @Test
     @Sql("HomePersistenceAdapter2.sql")
+    @DisplayName("하우스의 홈 존재여부 확인 테스트")
+    void testExistByHouseId() {
+        Long existId = 20L;
+        Long notExistId = 21L;
+
+        assertThat(sut.existByHouseId(existId)).isTrue();
+        assertThat(sut.existByHouseId(notExistId)).isFalse();
+    }
+
+    @Test
+    @Sql("HomePersistenceAdapter2.sql")
     @DisplayName("홈 조회 테스트")
     void testFindHome() {
         // given

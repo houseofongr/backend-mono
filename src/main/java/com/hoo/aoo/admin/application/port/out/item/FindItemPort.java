@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface FindItemPort {
     Optional<Item> load(Long id);
     List<Item> loadAllInHomeAndRoom(Long homeId, Long roomId);
+    boolean existByRoomId(Long roomId);
 }
