@@ -159,9 +159,17 @@ operation::admin-house-delete[snippets='path-parameters,http-request,http-respon
 [[admin-room-get-api]]
 ==== 룸 조회 API
 
+룸에 대한 정보를 조회하는 API입니다.
+
+operation::admin-room-get[snippets='path-parameters,http-request,http-response,response-fields']
+
+
+[[admin-room-get-items-api]]
+==== 룸 & 아이템 조회 API
+
 룸과 해당 룸 안의 아이템 정보를 조회하는 API입니다.
 
-operation::admin-house-get-room[snippets='path-parameters,http-request,http-response,response-fields']
+operation::admin-room-get-items[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-room-patch-api]]
 ==== 룸 정보 수정 API
@@ -170,7 +178,7 @@ operation::admin-house-get-room[snippets='path-parameters,http-request,http-resp
 
 > 룸의 이미지와 좌표는 최초 생성 이후 수정할 수 없습니다.
 
-operation::admin-house-patch-room[snippets='http-request,request-fields,http-response,response-fields']
+operation::admin-room-patch[snippets='http-request,request-fields,http-response,response-fields']
 
 [[admin-room-delete-api]]
 ==== 룸 삭제 API
@@ -179,7 +187,7 @@ operation::admin-house-patch-room[snippets='http-request,request-fields,http-res
 
 > 룸 내부에 포함된 아이템을 함께 삭제합니다.
 
-operation::admin-house-delete-room[snippets='path-parameters,http-request,http-response,response-fields']
+operation::admin-room-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
 > 차후 사용자의 음원이 담긴 룸은 삭제할 수 없도록 할 예정입니다.
 

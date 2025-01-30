@@ -47,6 +47,12 @@ public class ItemPersistenceAdapter implements SaveItemPort, FindItemPort, Updat
     }
 
     @Override
+    public List<Item> loadAllInHomeAndRoom(Long homeId, Long roomId) {
+        return itemJpaRepository.findAllByHomeIdAndRoomId(homeId, roomId)
+                .stream().map(itemMapper::mapToDomainEntity).toList();
+    }
+
+    @Override
     public void updateItem(Item item) {
         ItemJpaEntity itemJpaEntity = itemJpaRepository.findById(item.getItemId().getId()).orElseThrow();
         itemJpaEntity.update(item);

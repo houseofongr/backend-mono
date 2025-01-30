@@ -21,15 +21,13 @@ public class Room {
     private final Area area;
     private final Axis axis;
     private final File imageFile;
-    private final List<Item> items;
 
-    private Room(RoomId roomId, RoomDetail roomDetail, Area area, Axis axis, File imageFile, List<Item> items) {
+    private Room(RoomId roomId, RoomDetail roomDetail, Area area, Axis axis, File imageFile) {
         this.roomId = roomId;
         this.area = area;
         this.roomDetail = roomDetail;
         this.axis = axis;
         this.imageFile = imageFile;
-        this.items = items;
     }
 
     public static Room create(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException {
@@ -41,11 +39,10 @@ public class Room {
                 new RoomDetail(name),
                 new Area(width, height),
                 new Axis(x, y, z),
-                imageFile,
-                new ArrayList<>());
+                imageFile);
     }
 
-    public static Room load(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId, List<Item> items) throws AreaLimitExceededException, AxisLimitExceededException {
+    public static Room load(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AreaLimitExceededException, AxisLimitExceededException {
 
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 
@@ -54,8 +51,7 @@ public class Room {
                 new RoomDetail(name),
                 new Area(width, height),
                 new Axis(x, y, z),
-                imageFile,
-                items);
+                imageFile);
     }
 
     public void updateDetail(String name) {

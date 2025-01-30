@@ -46,7 +46,7 @@ class PostItemControllerTest extends AbstractControllerTest {
                         pathParameters(
                                 parameterWithName("userId").description("생성할 아이템을 소유할 사용자의 식별자입니다."),
                                 parameterWithName("homeId").description("생성할 아이템을 보유할 홈의 식별자입니다."),
-                                parameterWithName("roomId").description("생성할 아이템을 포함할 방의 식별자입니다.")
+                                parameterWithName("roomId").description("생성할 아이템을 포함할 룸의 식별자입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("items").description("생성할 아이템의 정보를 담은 배열입니다."),

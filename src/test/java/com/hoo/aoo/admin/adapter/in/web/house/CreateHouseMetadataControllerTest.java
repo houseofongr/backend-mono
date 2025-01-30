@@ -30,13 +30,13 @@ public class CreateHouseMetadataControllerTest extends AbstractControllerTest {
                                 fieldWithPath("house.borderForm").description("테두리 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다. +" + "\n" + "* 지원 파일형식 : [jpg, jpeg, png, svg, gif]"),
                                 fieldWithPath("house.width").description("하우스의 가로 길이입니다."),
                                 fieldWithPath("house.height").description("하우스의 높이입니다."),
-                                fieldWithPath("rooms[].form").description("방의 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다. +" + "\n" + "* 지원 파일형식 : [jpg, jpeg, png, svg, gif]"),
-                                fieldWithPath("rooms[].name").description("방의 이름입니다."),
-                                fieldWithPath("rooms[].x").description("방의 시작점(X좌표)입니다."),
-                                fieldWithPath("rooms[].y").description("방의 시작점(Y좌표)입니다."),
-                                fieldWithPath("rooms[].z").description("방의 시작점(Z좌표)입니다."),
-                                fieldWithPath("rooms[].width").description("방의 가로 길이입니다."),
-                                fieldWithPath("rooms[].height").description("방의 높이입니다.")
+                                fieldWithPath("rooms[].form").description("룸의 이미지로 사용할 이미지 파일의 Form 태그 name 속성값입니다. +" + "\n" + "* 지원 파일형식 : [jpg, jpeg, png, svg, gif]"),
+                                fieldWithPath("rooms[].name").description("룸의 이름입니다."),
+                                fieldWithPath("rooms[].x").description("룸의 시작점(X좌표)입니다."),
+                                fieldWithPath("rooms[].y").description("룸의 시작점(Y좌표)입니다."),
+                                fieldWithPath("rooms[].z").description("룸의 시작점(Z좌표)입니다."),
+                                fieldWithPath("rooms[].width").description("룸의 가로 길이입니다."),
+                                fieldWithPath("rooms[].height").description("룸의 높이입니다.")
                         )));
     }
 

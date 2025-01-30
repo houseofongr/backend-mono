@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.adapter.in.web.house;
+package com.hoo.aoo.admin.adapter.in.web.room;
 
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +41,7 @@ class PatchRoomControllerTest extends AbstractControllerTest {
                         .content(requestBody)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-patch-room",
+                .andDo(document("admin-room-patch",
                         requestFields(
                                 fieldWithPath("[].houseDetail").description("수정할 룸의 식별자입니다."),
                                 fieldWithPath("[].newName").description("수정할 이름입니다.")

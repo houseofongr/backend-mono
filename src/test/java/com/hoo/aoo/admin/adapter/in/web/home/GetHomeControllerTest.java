@@ -44,14 +44,14 @@ class GetHomeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("user.id").description("홈 소유자의 식별자입니다."),
                                 fieldWithPath("user.nickname").description("홈 소유자의 닉네임입니다."),
 
-                                fieldWithPath("rooms[].roomId").description("방의 식별자입니다."),
-                                fieldWithPath("rooms[].name").description("방의 이름입니다."),
-                                fieldWithPath("rooms[].x").description("방의 시작점(X좌표)입니다."),
-                                fieldWithPath("rooms[].y").description("방의 시작점(Y좌표)입니다."),
-                                fieldWithPath("rooms[].z").description("방의 시작점(Z좌표)입니다."),
-                                fieldWithPath("rooms[].width").description("방의 가로 길이입니다."),
-                                fieldWithPath("rooms[].height").description("방의 높이입니다."),
-                                fieldWithPath("rooms[].imageId").description("방의 이미지 식별자입니다.")
+                                fieldWithPath("rooms[].roomId").description("룸의 식별자입니다."),
+                                fieldWithPath("rooms[].name").description("룸의 이름입니다."),
+                                fieldWithPath("rooms[].x").description("룸의 시작점(X좌표)입니다."),
+                                fieldWithPath("rooms[].y").description("룸의 시작점(Y좌표)입니다."),
+                                fieldWithPath("rooms[].z").description("룸의 시작점(Z좌표)입니다."),
+                                fieldWithPath("rooms[].width").description("룸의 가로 길이입니다."),
+                                fieldWithPath("rooms[].height").description("룸의 높이입니다."),
+                                fieldWithPath("rooms[].imageId").description("룸의 이미지 식별자입니다.")
                         )));
     }
 

@@ -7,6 +7,8 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.domain.item.Ellipse;
 import com.hoo.aoo.admin.domain.item.Item;
+import com.hoo.aoo.admin.domain.item.ItemType;
+import com.hoo.aoo.admin.domain.item.Rectangle;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
@@ -66,6 +68,30 @@ class ItemPersistenceAdapterTest {
         assertThat(item1.get().getSoundSources()).anySatisfy(soundSource ->
             assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo("골골송")
         );
+    }
+
+    @Test
+    @Sql("ItemPersistenceAdapterTest2.sql")
+    @DisplayName("홈과 룸에 있는 아이템 조회 테스트")
+    void testFindItemInHomeAndRoom() {
+        // given
+        Long homeId = 5L;
+        Long roomId = 1L;
+
+        // when
+        List<Item> items = sut.loadAllInHomeAndRoom(homeId, roomId);
+
+        // then
+        assertThat(items).hasSize(3);
+        assertThat(items).anySatisfy(item -> {
+            assertThat(item.getShape().getItemType()).isEqualTo(ItemType.RECTANGLE);
+            assertThat(item.getItemDetail().getName()).isEqualTo("설이");
+            assertThat(item.getShape().getX()).isEqualTo(100);
+            assertThat(item.getShape().getY()).isEqualTo(100);
+            assertThat(((Rectangle)item.getShape()).getWidth()).isEqualTo(10);
+            assertThat(((Rectangle)item.getShape()).getHeight()).isEqualTo(10);
+            assertThat(((Rectangle)item.getShape()).getRotation()).isEqualTo(5);
+        });
     }
 
     @Test

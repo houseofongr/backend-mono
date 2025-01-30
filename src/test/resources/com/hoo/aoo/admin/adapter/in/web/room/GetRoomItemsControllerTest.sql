@@ -35,4 +35,4 @@ values (1, '설이', 5, 1, 1),
        (3, '화분',  5, 1, 3);
 
 insert into SOUND_SOURCE(ID, NAME, DESCRIPTION, AUDIO_FILE_ID, IS_ACTIVE, CREATED_TIME, UPDATED_TIME, ITEM_ID)
-values (1, "골골송", "2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+values (1, "골골송","2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,1);

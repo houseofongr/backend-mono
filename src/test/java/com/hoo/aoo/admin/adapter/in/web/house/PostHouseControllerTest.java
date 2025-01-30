@@ -55,8 +55,8 @@ class PostHouseControllerTest extends AbstractControllerTest {
                                 partWithName("metadata").description("생성할 하우스의 정보를 포함하는 Json 형태의 문자열입니다."),
                                 partWithName("house").description("생성할 하우스의 기본 이미지입니다."),
                                 partWithName("border").description("생성할 하우스의 기본 외곽 이미지입니다."),
-                                partWithName("room1").description("첫번째 방의 기본 이미지입니다."),
-                                partWithName("room2").description("두번째 방의 기본 이미지입니다.")
+                                partWithName("room1").description("첫번째 룸의 기본 이미지입니다."),
+                                partWithName("room2").description("두번째 룸의 기본 이미지입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("houseId").description("생성된 하우스의 아이디입니다.")

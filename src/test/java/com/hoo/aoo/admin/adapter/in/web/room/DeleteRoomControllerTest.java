@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.adapter.in.web.house;
+package com.hoo.aoo.admin.adapter.in.web.room;
 
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
@@ -28,9 +28,9 @@ class DeleteRoomControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-house-delete-room",
+                .andDo(document("admin-room-delete",
                         pathParameters(
-                                parameterWithName("roomId").description("삭제할 방의 식별자입니다.")
+                                parameterWithName("roomId").description("삭제할 룸의 식별자입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("삭제 완료 메시지 : 0번 룸이 삭제되었습니다.")
