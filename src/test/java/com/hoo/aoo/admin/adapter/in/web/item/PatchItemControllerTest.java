@@ -2,18 +2,13 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 
 import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeRectangleJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
-import com.hoo.aoo.admin.application.port.in.item.ItemData;
-import com.hoo.aoo.admin.application.port.in.item.UpdateItemCommand;
-import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
-import static com.hoo.aoo.common.util.GsonUtil.gson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;

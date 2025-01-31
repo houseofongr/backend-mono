@@ -73,6 +73,20 @@ public class MockEntityFactoryService {
         Home home = getHome();
         return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
     }
+    public static Item getRectangleItem(Long id) throws Exception {
+        Home home = getHome();
+        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
+    }
+
+    public static Item getCircleItem(Long id) throws Exception {
+        Home home = getHome();
+        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(), "강아지", new Circle(200f, 200f, 10.5f));
+    }
+
+    public static Item getEllipseItem(Long id) throws Exception {
+        Home home = getHome();
+        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
+    }
 
     public static SoundSource getSoundSource() throws Exception {
         return factory.createSoundSource(getEllipseItem().getItemId().getId(), 1L, "골골송", "2025년 설이가 보내는 골골송", null);
