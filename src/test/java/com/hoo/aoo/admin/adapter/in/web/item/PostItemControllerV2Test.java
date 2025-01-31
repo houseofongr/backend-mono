@@ -81,7 +81,7 @@ class PostItemControllerV2Test extends AbstractControllerTest {
                                 fieldWithPath("createItems[].ellipseData.rotation").optional().description("타원형의 회전 각도입니다."),
 
                                 fieldWithPath("updateItems").description("수정할 아이템의 정보를 담은 배열입니다."),
-                                fieldWithPath("updateItems[].id").description("수정할 아이템의 식별자입니다. +" + "\n" + "* 식별자가 없는 경우, 아이템을 생성합니다."),
+                                fieldWithPath("updateItems[].id").description("수정할 아이템의 식별자입니다."),
                                 fieldWithPath("updateItems[].name").description("수정할 아이템의 이름입니다."),
                                 fieldWithPath("updateItems[].itemType").description("수정할 아이템의 타입입니다. +" + "\n" + "* 타입 : [CIRCLE, RECTANGLE, ELLIPSE]"),
 
