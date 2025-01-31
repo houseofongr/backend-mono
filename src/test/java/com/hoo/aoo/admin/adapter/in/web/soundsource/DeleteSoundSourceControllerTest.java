@@ -1,10 +1,12 @@
 package com.hoo.aoo.admin.adapter.in.web.soundsource;
 
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import com.hoo.aoo.file.domain.FileF;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -22,6 +24,9 @@ class DeleteSoundSourceControllerTest extends AbstractControllerTest {
     @Sql("DeleteSoundSourceControllerTest.sql")
     @DisplayName("음원 삭제 API")
     void testDeleteSoundSourceAPI() throws Exception {
+
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+
         mockMvc.perform(delete("/admin/sound-sources/{soundSourceId}", 1L))
                 .andExpect(status().is(200))
                 .andDo(document("admin-soundsource-delete",
@@ -32,5 +37,7 @@ class DeleteSoundSourceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("message").description("삭제 완료 메시지 : 0번 음원이 삭제되었습니다.")
                         )
                 ));
+
+        assertThat(fileJpaRepository.findAll()).isEmpty();
     }
 }

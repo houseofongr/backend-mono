@@ -4,6 +4,7 @@ import com.hoo.aoo.admin.application.port.out.soundsource.DeleteSoundSourcePort;
 import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
+import com.hoo.aoo.file.application.port.in.DeleteFileUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,12 +20,14 @@ class DeleteSoundSourceServiceTest {
 
     FindSoundSourcePort findSoundSourcePort;
     DeleteSoundSourcePort deleteSoundSourcePort;
+    DeleteFileUseCase deleteFileUseCase;
 
     @BeforeEach
     void init() {
         findSoundSourcePort = mock();
         deleteSoundSourcePort = mock();
-        sut = new DeleteSoundSourceService(findSoundSourcePort, deleteSoundSourcePort);
+        deleteFileUseCase = mock();
+        sut = new DeleteSoundSourceService(findSoundSourcePort, deleteSoundSourcePort, deleteFileUseCase);
     }
 
     @Test
@@ -39,6 +42,7 @@ class DeleteSoundSourceServiceTest {
 
         // then
         verify(deleteSoundSourcePort, times(1)).deleteSoundSource(any());
+        verify(deleteFileUseCase, times(1)).deleteFile(any());
         assertThat(messageDto.message()).isEqualTo("1번 음원이 삭제되었습니다.");
     }
 }

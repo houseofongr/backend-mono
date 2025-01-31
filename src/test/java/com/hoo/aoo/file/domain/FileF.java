@@ -10,7 +10,8 @@ public enum FileF {
     IMAGE_FILE_1(FileType.IMAGE, "test.png", "test-1234.png", 1234L),
     IMAGE_FILE_2(FileType.IMAGE, "test2.png", "test-1235.png", 1234L),
     IMAGE_FILE_3(FileType.IMAGE, "test3.png", "test-1236.png", 1234L),
-    IMAGE_FILE_4(FileType.IMAGE, "test4.png", "test-1237.png", 1234L);
+    IMAGE_FILE_4(FileType.IMAGE, "test4.png", "test-1237.png", 1234L),
+    AUDIO_FILE_1(FileType.AUDIO, "test.mp3", "test-2345.mp3", 1234L);
 
     private final FileType fileType;
     private final String realFileName;

@@ -7,6 +7,7 @@ import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.application.port.in.MessageDto;
+import com.hoo.aoo.file.application.port.in.DeleteFileUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ public class DeleteSoundSourceService implements DeleteSoundSourceUseCase {
 
     private final FindSoundSourcePort findSoundSourcePort;
     private final DeleteSoundSourcePort deleteSoundSourcePort;
+    private final DeleteFileUseCase deleteFileUseCase;
 
     @Override
     @Transactional
@@ -24,6 +26,8 @@ public class DeleteSoundSourceService implements DeleteSoundSourceUseCase {
 
         SoundSource soundSource = findSoundSourcePort.loadSoundSource(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.SOUND_SOURCE_NOT_FOUND));
+
+        deleteFileUseCase.deleteFile(soundSource.getFile().getFileId().getId());
 
         deleteSoundSourcePort.deleteSoundSource(soundSource);
 

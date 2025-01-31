@@ -60,10 +60,4 @@ class DeleteHouseControllerTest extends AbstractControllerTest {
                 ));
     }
 
-    private void saveFile(File file) throws IOException {
-        java.io.File tempFile = new java.io.File(file.getFileId().getPath());
-        tempFile.mkdirs();
-        tempFile.createNewFile();
-        fileJpaRepository.save(FileJpaEntity.create(file));
-    }
 }
