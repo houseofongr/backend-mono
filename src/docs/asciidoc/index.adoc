@@ -246,6 +246,14 @@ operation::admin-home-delete[snippets='path-parameters,http-request,http-respons
 
 operation::admin-item-post[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
 
+[[admin-item-post-api-v2]]
+==== 아이템 생성 API V2
+
+아이템 생성과 수정을 함께 처리합니다.
+
+operation::admin-item-post-v2[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
+
+
 [[admin-item-get-api]]
 ==== 아이템 조회 API
 
