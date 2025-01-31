@@ -92,7 +92,7 @@ class CreateItemServiceTest {
         when(findHomePort.exist(1L)).thenReturn(true);
         when(findRoomPort.exist(1L)).thenReturn(true);
         when(saveItemPort.save(any(), any(), any())).thenReturn(new ArrayList<>(Arrays.asList(4L, 5L, 6L)));
-        when(findItemPort.loadAllInHomeAndRoom(1L,1L)).thenReturn(List.of(MockEntityFactoryService.getCircleItem(1L), MockEntityFactoryService.getRectangleItem(2L), MockEntityFactoryService.getEllipseItem(3L)));
+        when(findItemPort.loadAllItemsInHomeAndRoom(1L,1L)).thenReturn(List.of(MockEntityFactoryService.getCircleItem(1L), MockEntityFactoryService.getRectangleItem(2L), MockEntityFactoryService.getEllipseItem(3L)));
         CreateAndUpdateItemResult result = sut.createAndUpdate(1L, 1L, 1L, command);
 
         // then

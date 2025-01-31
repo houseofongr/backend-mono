@@ -46,7 +46,7 @@ class DeleteRoomServiceTest {
         // when
         when(findRoomPort.load(id)).thenReturn(Optional.of(MockEntityFactoryService.getRoom()));
         when(findRoomPort.load(existItemRoomId)).thenReturn(Optional.of(MockEntityFactoryService.getRoom2()));
-        when(findItemPort.existByRoomId(existItemRoomId)).thenReturn(true);
+        when(findItemPort.existItemByRoomId(existItemRoomId)).thenReturn(true);
         MessageDto messageDto = sut.deleteRoom(id);
 
         // then

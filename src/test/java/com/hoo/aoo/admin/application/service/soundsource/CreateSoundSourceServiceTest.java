@@ -57,7 +57,7 @@ class CreateSoundSourceServiceTest {
         MockMultipartFile soundFile = new MockMultipartFile("soundFile", "golgolSong.mp3", "audio/mpeg", "golgolgolgolgolgolgolgol".getBytes());
 
         // when
-        when(findItemPort.load(itemId)).thenReturn(Optional.of(MockEntityFactoryService.getRectangleItem()));
+        when(findItemPort.loadItem(itemId)).thenReturn(Optional.of(MockEntityFactoryService.getRectangleItem()));
         when(createSoundSourcePort.createSoundSource(any(), any(), any(), any(), any())).thenReturn(MockEntityFactoryService.getSoundSource());
         when(saveSoundSourcePort.saveSoundSource(any())).thenReturn(1L);
         when(uploadPrivateAudioUseCase.privateUpload(any(), any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, 1L, "golgol.mp3", "test1234.mp3", "1234KB", Authority.PRIVATE_FILE_ACCESS))));

@@ -39,7 +39,7 @@ public class QueryRoomService implements QueryRoomInfoUseCase, QueryRoomItemsUse
         Room room = findRoomPort.load(roomId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.ROOM_NOT_FOUND));
 
-        List<Item> items = findItemPort.loadAllInHomeAndRoom(homeId, roomId);
+        List<Item> items = findItemPort.loadAllItemsInHomeAndRoom(homeId, roomId);
 
         return QueryRoomItemsResult.of(room,items);
     }

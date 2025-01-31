@@ -3,17 +3,12 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
-import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
-import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
-import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
-import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,16 +89,16 @@ class HomePersistenceAdapterTest {
     @Test
     @Sql("HomePersistenceAdapter3.sql")
     @DisplayName("홈 삭제 테스트")
-    void testDeleteHome() {
+    void testDeleteHomeHome() {
         // given
         Long id = 1L;
         Long notExistId = 123L;
 
         // when
-        sut.delete(id);
+        sut.deleteHome(id);
 
         // then
         assertThat(homeJpaRepository.findById(id)).isEmpty();
-        assertThatThrownBy(() -> sut.delete(notExistId)).hasMessage(AdminErrorCode.HOME_NOT_FOUND.getMessage());
+        assertThatThrownBy(() -> sut.deleteHome(notExistId)).hasMessage(AdminErrorCode.HOME_NOT_FOUND.getMessage());
     }
 }

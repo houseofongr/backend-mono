@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FindItemPort {
-    Optional<Item> load(Long id);
-    List<Item> loadAllInHomeAndRoom(Long homeId, Long roomId);
-    boolean existByRoomId(Long roomId);
+    Optional<Item> loadItem(Long id);
+    List<Item> loadAllItemsInHome(Long homeId);
+    List<Item> loadAllItemsInHomeAndRoom(Long homeId, Long roomId);
+    boolean existItemByRoomId(Long roomId);
 }

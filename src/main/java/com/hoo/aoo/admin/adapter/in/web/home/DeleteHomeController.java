@@ -17,7 +17,7 @@ public class DeleteHomeController {
 
     @DeleteMapping("/admin/homes/{homeId}")
     public ResponseEntity<MessageDto> delete(@PathVariable Long homeId) {
-        return new ResponseEntity<>(deleteHomeUseCase.delete(homeId), HttpStatus.OK);
+        return new ResponseEntity<>(deleteHomeUseCase.deleteHome(homeId), HttpStatus.OK);
     }
 
 }

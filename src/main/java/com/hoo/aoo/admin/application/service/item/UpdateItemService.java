@@ -24,7 +24,7 @@ public class UpdateItemService implements UpdateItemUseCase {
     @Override
     @Transactional
     public MessageDto updateItem(Long id, UpdateItemCommand command) {
-        Item item = findItemPort.load(id)
+        Item item = findItemPort.loadItem(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.ITEM_NOT_FOUND));
 
         item.update(command.updateData().name(), mappingItemPort.mapToShape(command.updateData()));

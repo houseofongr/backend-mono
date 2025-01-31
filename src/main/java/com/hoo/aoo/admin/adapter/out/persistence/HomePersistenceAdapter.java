@@ -71,7 +71,7 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Delet
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteHome(Long id) {
         if (!homeJpaRepository.existsById(id))
             throw new AdminException(AdminErrorCode.HOME_NOT_FOUND);
 

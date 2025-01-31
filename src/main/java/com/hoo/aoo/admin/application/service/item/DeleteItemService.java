@@ -19,7 +19,7 @@ public class DeleteItemService implements DeleteItemUseCase {
 
     @Override
     public MessageDto deleteItem(Long id) {
-        Item item = findItemPort.load(id)
+        Item item = findItemPort.loadItem(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.ITEM_NOT_FOUND));
 
         if (item.hasSoundSource())

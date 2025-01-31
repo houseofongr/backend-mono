@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.home;
 
 import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
+import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,9 @@ class DeleteHomeControllerTest extends AbstractControllerTest {
 
     @Autowired
     HomeJpaRepository homeJpaRepository;
+
+    @Autowired
+    ItemJpaRepository itemJpaRepository;
 
     @Override
     protected String getBaseUrl() {
@@ -38,5 +42,6 @@ class DeleteHomeControllerTest extends AbstractControllerTest {
                 ));
 
         assertThat(homeJpaRepository.findById(1L)).isEmpty();
+        assertThat(itemJpaRepository.findAll()).isEmpty();
     }
 }

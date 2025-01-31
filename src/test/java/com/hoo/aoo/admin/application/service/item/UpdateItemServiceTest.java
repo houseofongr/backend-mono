@@ -46,7 +46,7 @@ class UpdateItemServiceTest {
         Item item = mock();
 
         // when
-        when(findItemPort.load(id)).thenReturn(Optional.ofNullable(item));
+        when(findItemPort.loadItem(id)).thenReturn(Optional.ofNullable(item));
         MessageDto messageDto = sut.updateItem(id, command);
 
         // then

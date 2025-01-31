@@ -32,7 +32,7 @@ public class CreateSoundSourceService implements CreateSoundSourceUseCase {
     @Transactional
     public CreateSoundSourceResult createSoundSource(Long itemId, CreateSoundSourceMetadata metadata, MultipartFile soundFile) {
 
-        Item item = findItemPort.load(itemId)
+        Item item = findItemPort.loadItem(itemId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.ITEM_NOT_FOUND));
 
         UploadFileResult uploadFileResult = uploadPrivateAudioUseCase.privateUpload(List.of(soundFile), item.getUserId().getId());

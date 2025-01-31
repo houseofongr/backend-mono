@@ -35,7 +35,7 @@ class QueryItemServiceTest {
         Item rectangleItem = MockEntityFactoryService.getRectangleItem();
 
         // when
-        when(findItemPort.load(itemId)).thenReturn(Optional.of(rectangleItem));
+        when(findItemPort.loadItem(itemId)).thenReturn(Optional.of(rectangleItem));
         QueryItemResult result = sut.queryItem(itemId);
 
         // then

@@ -50,7 +50,7 @@ public class CreateItemService implements CreateItemUseCase, CreateAndUpdateItem
         if (!findUserPort.exist(userId)) throw new AdminException(AdminErrorCode.USER_NOT_FOUND);
 
         List<Long> itemIds = new ArrayList<>();
-        List<Item> existItems = findItemPort.loadAllInHomeAndRoom(homeId, roomId);
+        List<Item> existItems = findItemPort.loadAllItemsInHomeAndRoom(homeId, roomId);
         for (Item item : existItems) {
             for (ItemData itemData : command.updateItems()) {
                 if (!item.getItemId().getId().equals(itemData.id())) continue;

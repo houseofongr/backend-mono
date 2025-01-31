@@ -39,8 +39,8 @@ class DeleteItemServiceTest {
         Item rectangleItemWithSoundSource = MockEntityFactoryService.loadRectangleItem();
 
         // when
-        when(findItemPort.load(id)).thenReturn(Optional.ofNullable(rectangleItem));
-        when(findItemPort.load(hasSoundSourceId)).thenReturn(Optional.ofNullable(rectangleItemWithSoundSource));
+        when(findItemPort.loadItem(id)).thenReturn(Optional.ofNullable(rectangleItem));
+        when(findItemPort.loadItem(hasSoundSourceId)).thenReturn(Optional.ofNullable(rectangleItemWithSoundSource));
         MessageDto messageDto = sut.deleteItem(id);
 
         // then

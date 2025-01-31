@@ -53,7 +53,7 @@ class QueryRoomServiceTest {
 
         // when
         when(findRoomPort.load(roomId)).thenReturn(Optional.of(MockEntityFactoryService.getRoom()));
-        when(findItemPort.loadAllInHomeAndRoom(homeId, roomId)).thenReturn(List.of(MockEntityFactoryService.getCircleItem()));
+        when(findItemPort.loadAllItemsInHomeAndRoom(homeId, roomId)).thenReturn(List.of(MockEntityFactoryService.getCircleItem()));
         QueryRoomItemsResult result = sut.queryRoomItems(homeId, roomId);
 
         // then

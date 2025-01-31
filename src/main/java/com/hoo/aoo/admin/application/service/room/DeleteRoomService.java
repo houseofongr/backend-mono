@@ -28,7 +28,7 @@ public class DeleteRoomService implements DeleteRoomUseCase {
         Room room = findRoomPort.load(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.ROOM_NOT_FOUND));
 
-        if (findItemPort.existByRoomId(id))
+        if (findItemPort.existItemByRoomId(id))
             throw new AdminException(AdminErrorCode.HOLDING_ITEM_ROOM_DELETE);
 
         deleteRoomPort.deleteRoom(id);
