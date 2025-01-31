@@ -1,8 +1,5 @@
 package com.hoo.aoo.admin.application.port.in.item;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeCircleJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeRectangleJpaEntity;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.item.*;

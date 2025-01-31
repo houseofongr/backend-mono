@@ -23,7 +23,7 @@ public class ItemShapeRectangleJpaEntity extends ItemShapeJpaEntity {
     @Column(nullable = false)
     private Float rotation;
 
-    public ItemShapeRectangleJpaEntity(Long id, Float x, Float y, Float height, Float width, Float rotation) {
+    public ItemShapeRectangleJpaEntity(Long id, Float x, Float y, Float width, Float height, Float rotation) {
         super(id, x, y, null);
         this.width = width;
         this.height = height;
