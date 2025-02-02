@@ -89,7 +89,20 @@ operation::aar-authn-regist[snippets='http-request,request-fields,http-response,
 [[admin-api]]
 == 관리자(Admin) API
 
-관리자페이지에서 소리기록실을 관리하기 위한 API 입니다.
+관리자페이지에서 소리기록실(Audio Archive Room)을 관리하기 위한 API 입니다.
+
+
+[[admin-Authn-api]]
+=== 인증(Authn) API
+
+관리자페이지의 보안(인증)을 위한 API입니다.
+
+[[admin-authn-login-api]]
+==== 관리자 로그인 API
+
+관리자 계정으로 로그인합니다.
+
+operation::admin-authn-login[snippets='http-request,form-parameters,http-response,response-headers']
 
 [[admin-house-api]]
 === 하우스(House) API
