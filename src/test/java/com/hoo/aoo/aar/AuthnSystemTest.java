@@ -45,7 +45,7 @@ public class AuthnSystemTest {
     private ClientHttpRequestFactorySettings clientHttpRequestFactorySettings;
 
     @Test
-    @DisplayName("tc : 정상 회원가입 플로우")
+    @DisplayName("case1 : 정상 회원가입 플로우")
     void testRegister() {
 
         /* 1. 사용자 로그인 시도 */
@@ -90,7 +90,7 @@ public class AuthnSystemTest {
     }
 
     @Test
-    @DisplayName("tc : 다른 SNS 계정이 DB에 있을 때 신규 SNS 계정으로 회원가입")
+    @DisplayName("case2 : 다른 SNS 계정이 DB에 있을 때 신규 SNS 계정으로 회원가입")
     void testNewSnsAccount() {
 
         /* 1. DB에 존재하지 않는 SNS 계정으로 로그인 시도 */
@@ -135,7 +135,7 @@ public class AuthnSystemTest {
     }
 
     @Test
-    @DisplayName("tc : 이미 DB에 등록된 SNS 계정 재로그인")
+    @DisplayName("case3 : 이미 DB에 등록된 SNS 계정 재로그인")
     void testAlreadyRegisteredUser() {
 
         /* 1. 사용자 로그인 시도 */

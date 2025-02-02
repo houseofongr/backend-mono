@@ -46,7 +46,7 @@ public class PublicImageSystemTest {
     }
 
     @Test
-    @DisplayName("tc : 정상 이미지 업로드")
+    @DisplayName("case1 : 정상 이미지 업로드")
     void testUpload() throws IOException {
 
         /* 1. 파일 이미지 업로드[/test/resources/logo.png] */
