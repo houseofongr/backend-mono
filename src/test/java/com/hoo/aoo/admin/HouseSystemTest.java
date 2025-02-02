@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @SystemTest
 @Sql("classpath:/sql/clear.sql")
-@Sql("HouseSystemTest.sql")
+//@Sql("HouseSystemTest.sql")
 public class HouseSystemTest {
 
     @Autowired

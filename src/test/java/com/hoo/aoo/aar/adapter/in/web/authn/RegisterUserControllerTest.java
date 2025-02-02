@@ -5,10 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.headers.HeaderDocumentation;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
@@ -16,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DocumentationTest
-public class PostUserControllerTest {
+public class RegisterUserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -32,7 +34,8 @@ public class PostUserControllerTest {
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(jwt().jwt(jwt -> jwt.claim("snsId", 1L))
-                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER"))))
+                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER")))
+                )
                 .andExpect(status().is(201))
                 .andDo(document("aar-authn-regist",
                         requestFields(

@@ -1,26 +1,45 @@
 package com.hoo.aoo.admin.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.OAuth2UserServiceDelegator;
-import com.hoo.aoo.aar.adapter.in.web.authn.security.OAuth2SuccessHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.sql.DataSource;
 import java.util.List;
 
+@Configuration
+@EnableWebSecurity
 public class AdminSecurityConfig {
 
     @Bean
-    public SecurityFilterChain aarFilterChain(HttpSecurity http, OAuth2UserServiceDelegator userService, OAuth2SuccessHandler oAuth2SuccessHandler, JwtDecoder jwtDecoder) throws Exception {
+    public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher("/admin/**")
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(adminCorsConfigurationSource()))
+
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/admin/authn/login")
+                        .defaultSuccessUrl("/")
+                )
 
                 // 로컬 테스트 간 임시 허용
                 .csrf(CsrfConfigurer::disable)
@@ -28,13 +47,41 @@ public class AdminSecurityConfig {
                 // 로컬 테스트 간 임시 허용
 
                 .authorizeHttpRequests(authorize ->
-                        authorize.anyRequest().permitAll())
+                        authorize.anyRequest().permitAll()
+                )
 
                 .build();
     }
 
     @Bean
-    protected CorsConfigurationSource corsConfigurationSource() {
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        return new ProviderManager(authenticationProvider);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails userDetails = User.builder()
+                .username("aoodmin")
+                .password("{bcrypt}$2a$16$rpE6oMrgar2zXw1FXXglUOKjF50Z4/tYTh8p2VSxDIxVirhAF8Qaa")
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(userDetails);
+    }
+
+    @Bean
+    protected CorsConfigurationSource adminCorsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         corsConfiguration.addAllowedOrigin("http://localhost:3000");
