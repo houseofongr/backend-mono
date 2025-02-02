@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web;
 
 import com.hoo.aoo.aar.application.service.AarException;
+import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.common.adapter.in.web.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AdminExceptionHandlerAdapter {
 
-    @ExceptionHandler(AarException.class)
-    public ResponseEntity<?> handler(AarException e) {
-        log.error("AAR Exception {} has been occurred {}", e.getError().getCode(), e.getMessage());
-        return ResponseEntity.status(e.getError().getStatus())
+    @ExceptionHandler(AdminException.class)
+    public ResponseEntity<?> handler(AdminException e) {
+        log.error("Admin Exception {} has been occurred {}", e.getError().getCode(), e.getMessage());
+        return ResponseEntity
+                .status(e.getError().getStatus())
                 .body(ErrorResponse.of(e.getError()));
     }
 }

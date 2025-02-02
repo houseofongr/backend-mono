@@ -14,7 +14,8 @@ public class FileExceptionHandlerAdapter {
     @ExceptionHandler(FileException.class)
     public ResponseEntity<?> handler(FileException e) {
         log.error("File Exception {} has been occurred {}", e.getError().getCode(), e.getMessage());
-        return ResponseEntity.status(e.getError().getStatus())
+        return ResponseEntity
+                .status(e.getError().getStatus())
                 .body(ErrorResponse.of(e.getError()));
     }
 }
