@@ -11,12 +11,14 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -37,6 +39,8 @@ public abstract class AbstractControllerTest {
     @Autowired
     protected FileAttribute fileAttribute;
 
+    protected MockMvcTester mockMvcTester;
+
     protected abstract String getBaseUrl();
 
     @BeforeEach
@@ -52,6 +56,8 @@ public abstract class AbstractControllerTest {
                 )
                 .build();
         ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.toString());
+
+        this.mockMvcTester = MockMvcTester.from(wac);
     }
 
     protected void saveFile(File file) throws IOException {

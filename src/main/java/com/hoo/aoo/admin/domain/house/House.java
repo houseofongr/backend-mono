@@ -48,7 +48,7 @@ public class House {
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
 
-        return new House(new HouseId(houseId), new HouseDetail(title, author, description), area, new BaseTime(createdTime, updatedTime), rooms, borderImageFile, defaultImageFile);
+        return new House(new HouseId(houseId), new HouseDetail(title, author, description), area, new BaseTime(createdTime, updatedTime), rooms, defaultImageFile, borderImageFile);
     }
 
     public void updateDetail(String title, String author, String description) {

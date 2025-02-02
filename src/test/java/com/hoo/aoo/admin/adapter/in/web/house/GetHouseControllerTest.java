@@ -1,11 +1,15 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
+import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import com.hoo.aoo.common.util.GsonUtil;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -24,7 +28,7 @@ class GetHouseControllerTest extends AbstractControllerTest {
     @Sql("GetHouseControllerTest.sql")
     @DisplayName("하우스 상세조회 테스트")
     void testGetHouse() throws Exception {
-        mockMvc.perform(get("/admin/houses/{houseId}", 1L)
+        String response = mockMvc.perform(get("/admin/houses/{houseId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
@@ -50,6 +54,10 @@ class GetHouseControllerTest extends AbstractControllerTest {
                                 fieldWithPath("rooms[].width").description("룸의 가로 길이입니다."),
                                 fieldWithPath("rooms[].height").description("룸의 높이입니다."),
                                 fieldWithPath("rooms[].imageId").description("룸의 이미지 식별자입니다.")
-                        )));
+                        ))).andReturn().getResponse().getContentAsString();
+
+        QueryHouseResult result = GsonUtil.gson.fromJson(response, QueryHouseResult.class);
+
+        assertThat(result.house().borderImageId()).isEqualTo(2);
     }
 }
