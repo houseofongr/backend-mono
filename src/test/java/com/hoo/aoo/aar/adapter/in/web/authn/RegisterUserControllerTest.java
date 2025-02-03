@@ -45,6 +45,6 @@ public class RegisterUserControllerTest {
                         responseFields(
                                 fieldWithPath("userId").description("회원가입한 사용자의 식별자입니다."),
                                 fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다."),
-                                fieldWithPath("accessToken").description("회원가입한 사용자의 JWT 액세스 토큰입니다. +" + "\n" + "Claim : [userId, snsId, nickname, role]"))));
+                                fieldWithPath("accessToken").description("회원가입한 사용자의 JWT 액세스 토큰입니다. +" + "\n" + "* Claims : [userId, snsId, nickname, role]"))));
     }
 }

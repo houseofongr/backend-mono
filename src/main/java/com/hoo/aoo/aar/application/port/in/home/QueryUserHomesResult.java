@@ -1,0 +1,14 @@
+package com.hoo.aoo.aar.application.port.in.home;
+
+import java.util.List;
+
+public record QueryUserHomesResult(
+        List<HomeInfo> homes
+) {
+    public record HomeInfo(
+            Long id,
+            String name
+    ) {
+
+    }
+}
