@@ -20,6 +20,8 @@ class GetHomeControllerTest extends AbstractControllerTest {
         return "api.archiveofongr.site";
     }
 
+
+
     @Test
     @Sql("GetHomeControllerTest.sql")
     @DisplayName("홈 상세조회 테스트")

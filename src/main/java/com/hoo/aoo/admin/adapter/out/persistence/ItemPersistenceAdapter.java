@@ -1,12 +1,12 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HomeJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.port.out.item.*;
 import com.hoo.aoo.admin.domain.item.Item;

@@ -1,9 +1,9 @@
 package com.hoo.aoo.common.adapter.out.persistence;
 
-import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

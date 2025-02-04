@@ -25,6 +25,8 @@ class PostItemControllerTest extends AbstractControllerTest {
         return "api.archiveofongr.site";
     }
 
+
+
     @Test
     @Sql("PostItemControllerTest.sql")
     @DisplayName("아이템 생성 API")

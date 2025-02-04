@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.adapter.out.persistence.entity;
+package com.hoo.aoo.common.adapter.out.persistence.entity;
 
 import com.hoo.aoo.admin.domain.room.Room;
 import jakarta.persistence.*;

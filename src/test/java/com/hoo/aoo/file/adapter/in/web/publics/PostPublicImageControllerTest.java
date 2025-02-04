@@ -18,6 +18,8 @@ public class PostPublicImageControllerTest extends AbstractControllerTest {
         return "file.archiveofongr.site";
     }
 
+
+
     @Test
     @DisplayName("이미지파일 업로드 API")
     void testFile() throws Exception {

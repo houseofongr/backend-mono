@@ -1,15 +1,10 @@
 package com.hoo.aoo.admin.application.service.house;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.common.application.port.in.Pagination;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;

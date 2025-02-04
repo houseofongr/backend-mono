@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.soundsource;
 
-import com.hoo.aoo.admin.adapter.out.persistence.repository.SoundSourceJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import com.hoo.aoo.admin.application.port.in.soundsource.CreateSoundSourceResult;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;

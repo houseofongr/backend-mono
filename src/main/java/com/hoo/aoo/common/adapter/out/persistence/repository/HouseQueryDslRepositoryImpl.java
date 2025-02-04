@@ -1,6 +1,6 @@
-package com.hoo.aoo.admin.adapter.out.persistence.repository;
+package com.hoo.aoo.common.adapter.out.persistence.repository;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
-import static com.hoo.aoo.admin.adapter.out.persistence.entity.QHouseJpaEntity.houseJpaEntity;
+import static com.hoo.aoo.common.adapter.out.persistence.entity.QHouseJpaEntity.houseJpaEntity;
 
 public class HouseQueryDslRepositoryImpl implements HouseQueryDslRepository {
 

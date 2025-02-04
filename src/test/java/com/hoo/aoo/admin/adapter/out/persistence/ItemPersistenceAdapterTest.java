@@ -1,10 +1,10 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.ItemJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.admin.domain.item.Ellipse;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.ItemType;

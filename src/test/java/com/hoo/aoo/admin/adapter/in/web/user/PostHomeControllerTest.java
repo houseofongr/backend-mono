@@ -18,6 +18,8 @@ class PostHomeControllerTest extends AbstractControllerTest {
         return "api.archiveofongr.site";
     }
 
+
+
     @Test
     @Sql("PostHomeControllerTest.sql")
     @DisplayName("Home 생성 테스트")

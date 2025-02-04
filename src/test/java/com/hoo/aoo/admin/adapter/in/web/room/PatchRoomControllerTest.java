@@ -19,6 +19,8 @@ class PatchRoomControllerTest extends AbstractControllerTest {
         return "api.archiveofongr.site";
     }
 
+
+
     @Test
     @Sql("PatchRoomControllerTest.sql")
     @DisplayName("룸 정보 수정 API")

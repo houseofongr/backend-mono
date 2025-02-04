@@ -18,6 +18,8 @@ public class FileErrorCodeControllerTest extends AbstractControllerTest {
         return "file.archiveofongr.site";
     }
 
+
+
     @Test
     @DisplayName("에러코드 문서화")
     void testErrorCodeDocumentation() throws Exception {

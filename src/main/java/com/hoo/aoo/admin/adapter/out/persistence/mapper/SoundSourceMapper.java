@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.SoundSourceJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import org.springframework.stereotype.Component;
 

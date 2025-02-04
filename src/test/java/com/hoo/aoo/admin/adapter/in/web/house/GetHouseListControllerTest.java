@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class GetHouseListControllerTest extends AbstractControllerTest {
+
     @Override
     protected String getBaseUrl() {
         return "api.archiveofongr.site";

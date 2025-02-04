@@ -1,8 +1,8 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;

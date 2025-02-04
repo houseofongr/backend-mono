@@ -29,6 +29,8 @@ public class GetPublicImageControllerTest extends AbstractControllerTest {
         return "file.archiveofongr.site";
     }
 
+
+
     @Test
     @DisplayName("이미지파일 다운로드 API")
     void testFile() throws Exception {

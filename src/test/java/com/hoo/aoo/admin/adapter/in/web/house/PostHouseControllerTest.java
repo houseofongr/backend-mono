@@ -27,6 +27,11 @@ class PostHouseControllerTest extends AbstractControllerTest {
     FileJpaRepository fileJpaRepository;
 
     @Override
+    public boolean useSpringSecurity() {
+        return false;
+    }
+
+    @Override
     protected String getBaseUrl() {
         return "api.archiveofongr.site";
     }

@@ -566,8 +566,11 @@ Claim : [userId, snsId, nickname, role]</p></td>
 <div class="paragraph">
 <p>소리기록실에 회원가입을 시도합니다.</p>
 </div>
+<div class="paragraph">
+<p>사용자 정보 식별을 위해 최초 로그인 시 받은 Access Token을 아래와 같이 포함하여 전송해야 합니다.</p>
+</div>
 <div class="sect4">
-<h5 id="_authorization">Authorization</h5>
+<h5 id="_authorization_header">Authorization Header</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -592,7 +595,7 @@ Claim : [userId, snsId, nickname, role]</p></td>
 </tbody>
 </table>
 <div class="sect5">
-<h6 id="_authorization_http_request">HTTP request</h6>
+<h6 id="_authorization_header_http_request">HTTP request</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /aar/authn/regist HTTP/1.1
@@ -605,7 +608,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect5">
-<h6 id="_authorization_request_fields">Request fields</h6>
+<h6 id="_authorization_header_request_fields">Request fields</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -638,7 +641,7 @@ Host: localhost:8080
 </table>
 </div>
 <div class="sect5">
-<h6 id="_authorization_http_response">HTTP response</h6>
+<h6 id="_authorization_header_http_response">HTTP response</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -654,12 +657,12 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 234
 
-{"userId":1,"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczODU5MTgzMywidXNlcklkIjoxfQ.m0AfrK8KhxALb-gOIxqDYw2x6yapPTZss37JQQZw1tc"}</code></pre>
+{"userId":1,"nickname":"leaf","accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhYXItYmFja2VuZC10ZXN0Iiwic3ViIjoibGVhZiIsInJvbGUiOiJVU0VSIiwic25zSWQiOjEsImV4cCI6MTczODY2NjE1OCwidXNlcklkIjoxfQ.inI783tQp5vHUBwI167l57JSCiHF3Jbypbiho__waGE"}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_authorization_response_fields">Response fields</h6>
+<h6 id="_authorization_header_response_fields">Response fields</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -707,7 +710,7 @@ Content-Length: 234
 <p>홈은 인증된 사용자만 조회가 가능하기 때문에, 로그인 시 획득한 AccessToken을 반드시 Authorization Header에 포함해야 합니다.</p>
 </div>
 <div class="sect4">
-<h5 id="_authorization_header">Authorization Header</h5>
+<h5 id="_authorization_header_2">Authorization Header</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -742,7 +745,7 @@ Content-Length: 234
 <h5 id="aar-home-get-list-api_http_request">HTTP request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/users/homes HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/homes HTTP/1.1
 Host: api.archiveofongr.site</code></pre>
 </div>
 </div>
@@ -752,7 +755,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 130
 
 {
@@ -837,7 +849,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 458
 
 {
@@ -957,229 +978,27 @@ Content-Length: 458
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-room-items-api_query_parameters">Query parameters</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>homeId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 홈의 식별자입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roomId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 룸의 식별자입니다.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet query-parameters not found for operation::aar-home-get-room-items</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-room-items-api_http_request">HTTP request</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/homes/rooms/items?homeId=1&amp;roomId=1 HTTP/1.1
-Host: api.archiveofongr.site</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::aar-home-get-room-items</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-room-items-api_http_response">HTTP response</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 861
-
-{
-  "room" : {
-    "name" : "거실",
-    "width" : 5000.0,
-    "height" : 1000.0,
-    "imageId" : 2
-  },
-  "items" : [ {
-    "id" : 1,
-    "name" : "설이",
-    "itemType" : "RECTANGLE",
-    "circleData" : null,
-    "rectangleData" : {
-      "x" : 100.0,
-      "y" : 100.0,
-      "width" : 15.0,
-      "height" : 15.0,
-      "rotation" : 5.0
-    },
-    "ellipseData" : null
-  }, {
-    "id" : 2,
-    "name" : "강아지",
-    "itemType" : "CIRCLE",
-    "circleData" : {
-      "x" : 200.0,
-      "y" : 200.0,
-      "radius" : 10.5
-    },
-    "rectangleData" : null,
-    "ellipseData" : null
-  }, {
-    "id" : 3,
-    "name" : "화분",
-    "itemType" : "ELLIPSE",
-    "circleData" : null,
-    "rectangleData" : null,
-    "ellipseData" : {
-      "x" : 500.0,
-      "y" : 500.0,
-      "radiusX" : 15.0,
-      "radiusY" : 10.0,
-      "rotation" : 90.0
-    }
-  } ]
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::aar-home-get-room-items</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-room-items-api_response_fields">Response fields</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>room.name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">룸의 이름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>room.width</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">룸의 가로 길이입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>room.height</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">룸의 높이입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>room.imageId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">룸의 이미지 식별자입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">아이템의 식별자입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">아이템의 이름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].itemType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">아이템의 타입입니다.<br>
-* 타입 : [CIRCLE, RECTANGLE, ELLIPSE]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].circleData</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">원형 타입의 데이터입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].rectangleData</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직사각형 타입의 데이터입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].ellipseData</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타원형 타입의 데이터입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].circleData.x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">원형의 x좌표입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].circleData.y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">원형의 y좌표입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].circleData.radius</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">원형의 반지름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].rectangleData.x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직사각형의 x좌표입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].rectangleData.y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직사각형의 y좌표입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].rectangleData.width</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직사각형의 가로 너비입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].rectangleData.height</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직사각형의 세로 높이입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].rectangleData.rotation</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직사각형의 회전 각도입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].ellipseData.x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타원형의 x좌표입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].ellipseData.y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타원형의 y좌표입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].ellipseData.radiusX</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타원형의 x축 반지름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].ellipseData.radiusY</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타원형의 y축 반지름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>items[].ellipseData.rotation</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타원형의 회전 각도입니다.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet response-fields not found for operation::aar-home-get-room-items</p>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1196,109 +1015,27 @@ Content-Length: 861
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-item-soundsources-api_query_parameters">Query parameters</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>itemId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 아이템의 식별자입니다.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet query-parameters not found for operation::aar-home-get-item-soundsources</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-item-soundsources-api_http_request">HTTP request</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/homes/items/sound-sources?itemId=1 HTTP/1.1
-Host: api.archiveofongr.site</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::aar-home-get-item-soundsources</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-item-soundsources-api_http_response">HTTP response</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 409
-
-{
-  "itemName" : "설이",
-  "soundSource" : [ {
-    "id" : 1,
-    "name" : "골골송",
-    "description" : "2025년 설이가 보내는 골골송",
-    "createdDate" : "2025.02.02.",
-    "updatedDate" : "2025.02.02."
-  }, {
-    "id" : 1,
-    "name" : "골골골송",
-    "description" : "2026년 설이가 보내는 골골골송",
-    "createdDate" : "2026.02.02.",
-    "updatedDate" : "2026.02.02."
-  } ]
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::aar-home-get-item-soundsources</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-item-soundsources-api_response_fields">Response fields</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>itemName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">아이템의 이름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>soundSource[].id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">음원의 식별자입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>soundSource[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">음원의 이름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>soundSource[].description</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">음원에 대한 설명입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>soundSource[].createdDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">음원의 생성일입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>soundSource[].updatedDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">음원의 최종 수정일입니다.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet response-fields not found for operation::aar-home-get-item-soundsources</p>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1315,95 +1052,27 @@ Content-Length: 409
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-soundsource-api_query_parameters">Query parameters</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>soundSourceId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회할 음원의 식별자입니다.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet query-parameters not found for operation::aar-home-get-soundsource</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-soundsource-api_http_request">HTTP request</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /aar/sound-sources?soundSourceId=1 HTTP/1.1
-Host: api.archiveofongr.site</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::aar-home-get-soundsource</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-soundsource-api_http_response">HTTP response</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 172
-
-{
-  "name" : "골골송",
-  "description" : "2025년 설이가 보내는 골골송",
-  "createdDate" : "2025.02.02.",
-  "updatedDate" : "2025.02.02.",
-  "audioFileId" : 1
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::aar-home-get-soundsource</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="aar-home-get-soundsource-api_response_fields">Response fields</h5>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 음원의 이름입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 음원의 상세설명입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 음원의 생성일입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 음원의 수정일입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>audioFileId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">해당 음원이 보유한 음악 파일의 식별자입니다.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet response-fields not found for operation::aar-home-get-soundsource</p>
+</div>
 </div>
 </div>
 </div>
@@ -1815,7 +1484,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 2009
 
 {
@@ -1824,72 +1502,72 @@ Content-Length: 2009
     "title" : "cozy houseInfo",
     "author" : "leaf",
     "description" : "my cozy houseInfo",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 1
   }, {
     "id" : 2,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 3,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 4,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 5,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 6,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 7,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 8,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   }, {
     "id" : 9,
     "title" : "temp house",
     "author" : "tester",
     "description" : "temp house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "imageId" : 3
   } ],
   "pagination" : {
@@ -2023,7 +1701,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 610
 
 {
@@ -2032,8 +1719,8 @@ Content-Length: 610
     "title" : "cozy house",
     "author" : "leaf",
     "description" : "my cozy house",
-    "createdDate" : "February.03. 2025",
-    "updatedDate" : "February.03. 2025",
+    "createdDate" : "February.04. 2025",
+    "updatedDate" : "February.04. 2025",
     "width" : 5000.0,
     "height" : 5000.0,
     "borderImageId" : 2
@@ -2265,7 +1952,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 74
 
 {
@@ -2351,7 +2047,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 60
 
 {
@@ -2443,7 +2148,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 81
 
 {
@@ -2544,7 +2258,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 862
 
 {
@@ -2801,7 +2524,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 71
 
 {
@@ -2880,7 +2612,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 54
 
 {
@@ -2978,7 +2719,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 449
 
 {
@@ -2987,7 +2737,7 @@ Content-Length: 449
     "realName" : "남상엽",
     "nickName" : "leaf",
     "phoneNumber" : "010-1234-5678",
-    "registeredDate" : "2025.02.03.",
+    "registeredDate" : "2025.02.04.",
     "termsOfUseAgreement" : false,
     "personalInformationAgreement" : false,
     "snsAccounts" : [ {
@@ -3134,15 +2884,24 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 345
 
 {
   "homes" : [ {
     "id" : 1,
     "name" : "leaf의 cozy house",
-    "createdDate" : "2025.02.03.",
-    "updatedDate" : "2025.02.03.",
+    "createdDate" : "2025.02.04.",
+    "updatedDate" : "2025.02.04.",
     "baseHouse" : {
       "id" : 20,
       "title" : "cozy house",
@@ -3294,7 +3053,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 69
 
 {
@@ -3379,14 +3147,23 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 609
 
 {
   "homeId" : 1,
   "homeName" : "leaf의 cozy house",
-  "createdDate" : "February.03. 2025",
-  "updatedDate" : "February.03. 2025",
+  "createdDate" : "February.04. 2025",
+  "updatedDate" : "February.04. 2025",
   "house" : {
     "width" : 5000.0,
     "height" : 5000.0,
@@ -3575,7 +3352,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 54
 
 {
@@ -3839,7 +3625,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 36
 
 {
@@ -4262,7 +4057,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 38
 
 {
@@ -4340,7 +4144,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 232
 
 {
@@ -4349,8 +4162,8 @@ Content-Length: 232
     "id" : 1,
     "name" : "골골송",
     "description" : "2025년 골골송 V1",
-    "createdDate" : "2025.02.03.",
-    "updatedDate" : "2025.02.03.",
+    "createdDate" : "2025.02.04.",
+    "updatedDate" : "2025.02.04.",
     "audioFileId" : 1
   } ]
 }</code></pre>
@@ -4612,7 +4425,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 70
 
 {
@@ -4697,7 +4519,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 60
 
 {
@@ -4875,7 +4706,16 @@ golgolgolgolgolgolgolgol
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 25
 
 {
@@ -4954,14 +4794,23 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 176
 
 {
   "name" : "골골송",
   "description" : "2025년 골골송 V1",
-  "createdDate" : "2025.02.03.",
-  "updatedDate" : "2025.02.03.",
+  "createdDate" : "2025.02.04.",
+  "updatedDate" : "2025.02.04.",
   "isActive" : true,
   "audioFileId" : 1
 }</code></pre>
@@ -5116,7 +4965,16 @@ Host: api.archiveofongr.site
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 67
 
 {
@@ -5194,7 +5052,16 @@ Host: api.archiveofongr.site</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 57
 
 {
@@ -5283,14 +5150,14 @@ Content-Length: 427
     "id" : 1,
     "ownerId" : null,
     "realName" : "image.png",
-    "fileSystemName" : "641b2178-192e-4fd1-88e6-4e8b71c19503.png",
+    "fileSystemName" : "afbdbcb5-8391-4574-b8a5-e99d69d84823.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   }, {
     "id" : 2,
     "ownerId" : null,
     "realName" : "image2.png",
-    "fileSystemName" : "e7615c18-6335-451b-b1e6-136549df0400.png",
+    "fileSystemName" : "e4f9662b-fdd6-42ed-ad5f-9c549e094f61.png",
     "size" : "14Byte",
     "authority" : "PUBLIC_FILE_ACCESS"
   } ]
@@ -5811,7 +5678,7 @@ Host: file.archiveofongr.site</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-03 23:14:55 +0900
+Last updated 2025-02-04 19:48:54 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -8,10 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -22,6 +25,8 @@ import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.securityContext;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @DocumentationTest
@@ -43,9 +48,13 @@ public abstract class AbstractControllerTest {
 
     protected abstract String getBaseUrl();
 
+    protected boolean useSpringSecurity() {
+        return true;
+    }
+
     @BeforeEach
     protected void init(WebApplicationContext wac, RestDocumentationContextProvider restDocumentation) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac)
+        DefaultMockMvcBuilder mockMvcBuilder = MockMvcBuilders.webAppContextSetup(wac)
                 .addFilter(new CharacterEncodingFilter("UTF-8", true))
                 .alwaysDo(print())
                 .apply(documentationConfiguration(restDocumentation)
@@ -53,8 +62,10 @@ public abstract class AbstractControllerTest {
                         .withRequestDefaults(
                                 modifyUris().scheme("https").host(getBaseUrl()).removePort(), prettyPrint())
                         .withResponseDefaults(prettyPrint())
-                )
-                .build();
+                );
+
+        mockMvc = useSpringSecurity()? mockMvcBuilder.apply(springSecurity()).build() : mockMvcBuilder.build();
+
         ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.toString());
 
         this.mockMvcTester = MockMvcTester.from(wac);

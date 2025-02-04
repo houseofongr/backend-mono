@@ -47,8 +47,13 @@ public class AarSecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize.requestMatchers(GET,
                                         "/aar/authn/login/**",
-                                        "/aar/authn/kakao/callback")
+                                        "/aar/authn/kakao/callback",
+                                        "/aar/error-codes")
                                 .permitAll()
+
+                                .requestMatchers(GET,
+                                        "/aar/homes/**")
+                                .hasRole("USER")
 
                                 .requestMatchers(POST,
                                         "/aar/authn/regist")

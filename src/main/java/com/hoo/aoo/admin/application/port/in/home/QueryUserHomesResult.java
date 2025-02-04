@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.application.port.in.home;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;

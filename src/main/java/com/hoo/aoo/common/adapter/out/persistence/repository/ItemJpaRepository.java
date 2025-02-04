@@ -1,10 +1,8 @@
-package com.hoo.aoo.admin.adapter.out.persistence.repository;
+package com.hoo.aoo.common.adapter.out.persistence.repository;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.ItemJpaEntity;
-import com.hoo.aoo.admin.domain.item.Item;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface ItemJpaRepository extends JpaRepository<ItemJpaEntity, Long> {

@@ -12,6 +12,8 @@ spring:
     username: aoo-local-user
     password: test1234
     url: jdbc:mysql://localhost:3306/aoo_test?serverTimezone=Asia/Seoul
+    hikari:
+      maximum-pool-size: 2 # for @SpringBootTest, @DataJpaTest connection leak
   security:
     oauth2:
       client:

@@ -18,6 +18,8 @@ class GetRoomItemsControllerTest extends AbstractControllerTest {
         return "api.archiveofongr.site";
     }
 
+
+
     @Test
     @Sql("GetRoomItemsControllerTest.sql")
     @DisplayName("룸 및 아이템 조회 API")

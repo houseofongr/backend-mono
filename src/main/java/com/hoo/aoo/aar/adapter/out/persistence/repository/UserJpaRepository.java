@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.out.persistence.repository;
 
-import com.hoo.aoo.admin.adapter.out.persistence.repository.UserQueryDslRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.UserQueryDslRepository;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

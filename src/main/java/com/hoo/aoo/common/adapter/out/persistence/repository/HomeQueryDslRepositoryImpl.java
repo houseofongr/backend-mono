@@ -1,14 +1,14 @@
-package com.hoo.aoo.admin.adapter.out.persistence.repository;
+package com.hoo.aoo.common.adapter.out.persistence.repository;
 
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HomeJpaEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.Optional;
 
-import static com.hoo.aoo.admin.adapter.out.persistence.entity.QHomeJpaEntity.homeJpaEntity;
-import static com.hoo.aoo.admin.adapter.out.persistence.entity.QHouseJpaEntity.houseJpaEntity;
-import static com.hoo.aoo.admin.adapter.out.persistence.entity.QRoomJpaEntity.roomJpaEntity;
+import static com.hoo.aoo.common.adapter.out.persistence.entity.QHomeJpaEntity.homeJpaEntity;
+import static com.hoo.aoo.common.adapter.out.persistence.entity.QHouseJpaEntity.houseJpaEntity;
+import static com.hoo.aoo.common.adapter.out.persistence.entity.QRoomJpaEntity.roomJpaEntity;
 
 public class HomeQueryDslRepositoryImpl implements HomeQueryDslRepository {
 

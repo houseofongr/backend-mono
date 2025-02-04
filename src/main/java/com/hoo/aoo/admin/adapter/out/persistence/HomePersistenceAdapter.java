@@ -1,15 +1,11 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HomeJpaEntity;
-import com.hoo.aoo.admin.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HomeJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HomeMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.HouseJpaRepository;
-import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
-import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
-import com.hoo.aoo.admin.application.port.in.home.QueryHomeResult;
-import com.hoo.aoo.admin.application.port.in.home.QueryUserHomesResult;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.admin.application.port.out.home.DeleteHomePort;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;

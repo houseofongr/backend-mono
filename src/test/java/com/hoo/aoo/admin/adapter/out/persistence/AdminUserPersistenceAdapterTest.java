@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.AdminUserMapper;
-import com.hoo.aoo.admin.adapter.out.persistence.repository.UserQueryDslRepositoryImpl;
+import com.hoo.aoo.common.adapter.out.persistence.repository.UserQueryDslRepositoryImpl;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import org.junit.jupiter.api.DisplayName;
