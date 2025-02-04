@@ -3,11 +3,13 @@ package com.hoo.aoo.aar.adapter.in.web.home;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,11 +21,14 @@ class GetSoundSourceControllerTest extends AbstractControllerTest {
     }
 
     @Test
-//    @Sql("GetSoundSourceControllerTest.sql")
+    @Sql("GetSoundSourceControllerTest.sql")
     @DisplayName("음원 조회 API")
     void testQuerySoundSource() throws Exception {
-        mockMvc.perform(get("/aar/sound-sources")
-                        .param("soundSourceId", "1"))
+        mockMvc.perform(get("/aar/homes/sound-sources")
+                        .param("soundSourceId", "1")
+                        .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
+                                .authorities(new SimpleGrantedAuthority("ROLE_USER"))
+                        ))
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-soundsource",
                         queryParameters(

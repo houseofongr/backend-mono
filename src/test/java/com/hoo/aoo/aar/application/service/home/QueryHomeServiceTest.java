@@ -92,4 +92,20 @@ class QueryHomeServiceTest {
         // then
         verify(queryHomePort, times(1)).queryItemSoundSources(itemId);
     }
+
+    @Test
+    @DisplayName("음원 조회 서비스 테스트")
+    void testQuerySoundSource() {
+        // given
+        Long userId = 10L;
+        Long soundSourceId = 1L;
+
+        // when
+        when(checkOwnerPort.checkSoundSource(userId, soundSourceId)).thenReturn(true);
+        assertThatThrownBy(() -> sut.querySoundSource(1234L, soundSourceId)).hasMessage(AarErrorCode.NOT_OWNED_SOUND_SOURCE.getMessage());
+        sut.querySoundSource(userId, soundSourceId);
+
+        // then
+        verify(queryHomePort, times(1)).querySoundSource(soundSourceId);
+    }
 }

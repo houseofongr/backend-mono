@@ -1,10 +1,7 @@
 package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.HomeMapper;
-import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourcesResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryRoomItemsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
+import com.hoo.aoo.aar.application.port.in.home.*;
 import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import org.junit.jupiter.api.DisplayName;
@@ -84,6 +81,19 @@ class HomePersistenceAdapterTest {
         // then
         assertThat(sut.checkItem(ownedHomeId, itemId)).isTrue();
         assertThat(sut.checkItem(ownedHomeId, notOwnedItemId)).isFalse();
+    }
+
+    @Test
+    @DisplayName("홈 음원 소유여부 확인 테스트")
+    void testCheckHomeOwnSoundSource() {
+        // given
+        Long ownedId = 10L;
+        Long soundSourceId = 2L;
+        Long notOwnedSoundSourceId = 5678L;
+
+        // then
+        assertThat(sut.checkSoundSource(ownedId, soundSourceId)).isTrue();
+        assertThat(sut.checkSoundSource(ownedId, notOwnedSoundSourceId)).isFalse();
     }
 
     @Test
@@ -174,5 +184,22 @@ class HomePersistenceAdapterTest {
                     assertThat(soundSourceInfo.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
                     assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
                 });
+    }
+
+    @Test
+    @DisplayName("음원 조회 테스트")
+    void testQuerySoundSources() {
+        // given
+        Long soundSourceId = 1L;
+
+        // when
+        QuerySoundSourceResult result = sut.querySoundSource(soundSourceId);
+
+        // then
+        assertThat(result.audioFileId()).isEqualTo(1);
+        assertThat(result.name()).isEqualTo("골골송");
+        assertThat(result.description()).isEqualTo("2025년 골골송 V1");
+        assertThat(result.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+        assertThat(result.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
     }
 }

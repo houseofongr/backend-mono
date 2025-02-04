@@ -1,15 +1,13 @@
 package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.HomeMapper;
-import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourcesResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryRoomItemsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
+import com.hoo.aoo.aar.application.port.in.home.*;
 import com.hoo.aoo.aar.application.port.out.home.CheckOwnerPort;
 import com.hoo.aoo.aar.application.port.out.home.QueryHomePort;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +18,7 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
     private final HomeJpaRepository homeJpaRepository;
     private final RoomJpaRepository roomJpaRepository;
     private final ItemJpaRepository itemJpaRepository;
+    private final SoundSourceJpaRepository soundSourceJpaRepository;
     private final HomeMapper homeMapper;
 
     @Override
@@ -43,6 +42,11 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
     }
 
     @Override
+    public QuerySoundSourceResult querySoundSource(Long soundSourceId) {
+        return homeMapper.mapToQuerySoundSource(soundSourceJpaRepository.findById(soundSourceId).orElseThrow());
+    }
+
+    @Override
     public boolean checkHome(Long userId, Long homeId) {
         return homeJpaRepository.existsByUserIdAndId(userId, homeId);
     }
@@ -56,5 +60,10 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
     @Override
     public boolean checkItem(Long homeId, Long itemId) {
         return itemJpaRepository.existsByHomeIdAndId(homeId, itemId);
+    }
+
+    @Override
+    public boolean checkSoundSource(Long userId, Long soundSourceId) {
+        return soundSourceJpaRepository.existsByUserIdAndId(userId, soundSourceId);
     }
 }

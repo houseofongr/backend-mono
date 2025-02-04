@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("AARQueryHomeService")
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUseCase, QueryRoomItemsUseCase, QueryItemSoundSourceUseCase {
+public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUseCase, QueryRoomItemsUseCase, QueryItemSoundSourceUseCase, QuerySoundSourceUseCase {
 
     private final CheckOwnerPort checkOwnerPort;
     private final QueryHomePort queryHomePort;
@@ -50,5 +50,14 @@ public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUs
             throw new AarException(AarErrorCode.NOT_OWNED_ITEM);
 
         return queryHomePort.queryItemSoundSources(itemId);
+    }
+
+    @Override
+    public QuerySoundSourceResult querySoundSource(Long userId, Long soundSourceId) {
+
+        if (!checkOwnerPort.checkSoundSource(userId, soundSourceId))
+            throw new AarException(AarErrorCode.NOT_OWNED_SOUND_SOURCE);
+
+        return queryHomePort.querySoundSource(soundSourceId);
     }
 }

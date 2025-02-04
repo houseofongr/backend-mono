@@ -1,9 +1,6 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourcesResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryRoomItemsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
+import com.hoo.aoo.aar.application.port.in.home.*;
 import com.hoo.aoo.admin.domain.item.ItemType;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.*;
@@ -138,6 +135,16 @@ public class HomeMapper {
                 soundSourceJpaEntity.getDescription(),
                 DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getCreatedTime()),
                 DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getUpdatedTime())
+        );
+    }
+
+    public QuerySoundSourceResult mapToQuerySoundSource(SoundSourceJpaEntity soundSourceJpaEntity) {
+        return new QuerySoundSourceResult(
+                soundSourceJpaEntity.getName(),
+                soundSourceJpaEntity.getDescription(),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getCreatedTime()),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getUpdatedTime()),
+                soundSourceJpaEntity.getAudioFileId()
         );
     }
 }
