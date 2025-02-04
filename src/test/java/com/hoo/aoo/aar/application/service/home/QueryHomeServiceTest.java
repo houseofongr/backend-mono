@@ -73,4 +73,23 @@ class QueryHomeServiceTest {
         verify(queryHomePort, times(1)).queryRoomItems(roomId);
     }
 
+    @Test
+    @DisplayName("아이템 음원 조회 서비스 테스트")
+    void testQueryItemSoundSources() {
+        // given
+        Long userId = 10L;
+        Long homeId = 1L;
+        Long itemId = 1L;
+
+        // when
+        when(checkOwnerPort.checkHome(userId, homeId)).thenReturn(true);
+        when(checkOwnerPort.checkItem(homeId, itemId)).thenReturn(true);
+        assertThatThrownBy(() -> sut.queryItemSoundSources(1234L, homeId, itemId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+        assertThatThrownBy(() -> sut.queryItemSoundSources(userId, 1234L, itemId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+        assertThatThrownBy(() -> sut.queryItemSoundSources(userId, homeId, 1234L)).hasMessage(AarErrorCode.NOT_OWNED_ITEM.getMessage());
+        sut.queryItemSoundSources(userId, homeId, itemId);
+
+        // then
+        verify(queryHomePort, times(1)).queryItemSoundSources(itemId);
+    }
 }

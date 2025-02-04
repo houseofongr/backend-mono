@@ -2,6 +2,7 @@ package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
+import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourcesResult;
 import com.hoo.aoo.aar.application.port.in.home.QueryRoomItemsResult;
 import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.domain.item.ItemType;
@@ -16,13 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
 @Import({HomePersistenceAdapter.class, HomeMapper.class})
+@Sql("HomePersistenceAdapterTest.sql")
 class HomePersistenceAdapterTest {
 
     @Autowired
     HomePersistenceAdapter sut;
 
     @Test
-    @Sql("HomePersistenceAdapterTest.sql")
     @DisplayName("사용자 홈 조회 테스트")
     void testQueryUserHomes() {
         // given
@@ -44,7 +45,6 @@ class HomePersistenceAdapterTest {
     }
 
     @Test
-    @Sql("HomePersistenceAdapterTest.sql")
     @DisplayName("사용자 홈 소유여부 확인 테스트")
     void testCheckUserOwnHome() {
         // given
@@ -61,7 +61,6 @@ class HomePersistenceAdapterTest {
     }
 
     @Test
-    @Sql("HomePersistenceAdapterTest.sql")
     @DisplayName("홈 룸 소유여부 확인 테스트")
     void testCheckHomeOwnRoom() {
         // given
@@ -69,13 +68,25 @@ class HomePersistenceAdapterTest {
         Long roomId = 2L;
         Long notOwnedRoomId = 5678L;
 
-        // when
+        // then
         assertThat(sut.checkRoom(ownedHomeId, roomId)).isTrue();
         assertThat(sut.checkRoom(ownedHomeId, notOwnedRoomId)).isFalse();
     }
 
     @Test
-    @Sql("HomePersistenceAdapterTest.sql")
+    @DisplayName("홈 아이템 소유여부 확인 테스트")
+    void testCheckHomeOwnItem() {
+        // given
+        Long ownedHomeId = 1L;
+        Long itemId = 2L;
+        Long notOwnedItemId = 5678L;
+
+        // then
+        assertThat(sut.checkItem(ownedHomeId, itemId)).isTrue();
+        assertThat(sut.checkItem(ownedHomeId, notOwnedItemId)).isFalse();
+    }
+
+    @Test
     @DisplayName("홈 룸 조회 테스트")
     void testQueryHomeRooms() {
         // given
@@ -113,7 +124,6 @@ class HomePersistenceAdapterTest {
     }
 
     @Test
-    @Sql("HomePersistenceAdapterTest.sql")
     @DisplayName("룸 아이템 조회 테스트")
     void testQueryRoomItems() {
         // given
@@ -128,7 +138,7 @@ class HomePersistenceAdapterTest {
         assertThat(queryRoomItemsResult.room().height()).isEqualTo(1000);
         assertThat(queryRoomItemsResult.room().imageId()).isEqualTo(5);
 
-        assertThat(queryRoomItemsResult.items()).hasSize(3)
+        assertThat(queryRoomItemsResult.items()).hasSize(1)
                 .anySatisfy(itemData -> {
                     assertThat(itemData.id()).isEqualTo(1);
                     assertThat(itemData.name()).isEqualTo("설이");
@@ -141,7 +151,28 @@ class HomePersistenceAdapterTest {
                     assertThat(itemData.circleData()).isNull();
                     assertThat(itemData.ellipseData()).isNull();
                 })
-                .noneMatch(itemData -> itemData != null && itemData.id().equals(2L))
-                .noneMatch(itemData -> itemData != null && itemData.id().equals(3L));
+                .noneMatch(itemData -> itemData.id().equals(2L))
+                .noneMatch(itemData -> itemData.id().equals(3L));
+    }
+
+    @Test
+    @DisplayName("아이템 음원 조회 테스트")
+    void testQueryItemSoundSources() {
+        // given
+        Long itemId = 1L;
+
+        // when
+        QueryItemSoundSourcesResult result = sut.queryItemSoundSources(itemId);
+
+        // then
+        assertThat(result.itemName()).isEqualTo("설이");
+        assertThat(result.soundSources()).hasSize(1)
+                .anySatisfy(soundSourceInfo -> {
+                    assertThat(soundSourceInfo.id()).isEqualTo(1L);
+                    assertThat(soundSourceInfo.name()).isEqualTo("골골송");
+                    assertThat(soundSourceInfo.description()).isEqualTo("2025년 골골송 V1");
+                    assertThat(soundSourceInfo.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                    assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                });
     }
 }

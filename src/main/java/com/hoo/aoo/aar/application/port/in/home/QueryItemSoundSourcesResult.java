@@ -8,7 +8,7 @@ import java.util.List;
 
 public record QueryItemSoundSourcesResult(
         String itemName,
-        List<SoundSourceInfo> soundSource
+        List<SoundSourceInfo> soundSources
 ) {
 
     public record SoundSourceInfo(

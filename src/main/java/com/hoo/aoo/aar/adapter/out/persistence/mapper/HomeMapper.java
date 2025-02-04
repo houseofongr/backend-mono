@@ -1,14 +1,16 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
+import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourcesResult;
 import com.hoo.aoo.aar.application.port.in.home.QueryRoomItemsResult;
 import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
 import com.hoo.aoo.admin.domain.item.ItemType;
+import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.*;
-import com.hoo.aoo.file.application.service.DownloadAudioService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component("AARHomeMapper")
 public class HomeMapper {
@@ -58,7 +60,7 @@ public class HomeMapper {
     public QueryRoomItemsResult mapToQueryRoomItems(RoomJpaEntity roomJpaEntity) {
         return new QueryRoomItemsResult(
                 mapToRoomInfo(roomJpaEntity),
-                roomJpaEntity.getItems().stream().map(this::mapToItemInfo).toList()
+                roomJpaEntity.getItems().stream().map(this::mapToItemInfo).filter(Objects::nonNull).toList()
         );
     }
 
@@ -117,5 +119,25 @@ public class HomeMapper {
             );
             default -> throw new IllegalStateException("Unexpected value: " + itemJpaEntity.getShape());
         };
+    }
+
+    public QueryItemSoundSourcesResult mapToQueryItemSoundSources(ItemJpaEntity itemJpaEntity) {
+        return new QueryItemSoundSourcesResult(
+                itemJpaEntity.getName(),
+                itemJpaEntity.getSoundSources().stream().map(this::mapToSoundSourceInfo).filter(Objects::nonNull).toList()
+        );
+    }
+
+    private QueryItemSoundSourcesResult.SoundSourceInfo mapToSoundSourceInfo(SoundSourceJpaEntity soundSourceJpaEntity) {
+
+        if (!soundSourceJpaEntity.getIsActive()) return null;
+
+        return new QueryItemSoundSourcesResult.SoundSourceInfo(
+                soundSourceJpaEntity.getId(),
+                soundSourceJpaEntity.getName(),
+                soundSourceJpaEntity.getDescription(),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getCreatedTime()),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getUpdatedTime())
+        );
     }
 }

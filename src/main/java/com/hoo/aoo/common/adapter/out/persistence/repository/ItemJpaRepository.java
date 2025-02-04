@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ItemJpaRepository extends JpaRepository<ItemJpaEntity, Long> {
     boolean existsByRoomId(Long roomId);
+    boolean existsByHomeIdAndId(Long homeId, Long id);
     List<ItemJpaEntity> findAllByHomeId(Long homeId);
     List<ItemJpaEntity> findAllByHomeIdAndRoomId(Long homeId, Long roomId);
 }
