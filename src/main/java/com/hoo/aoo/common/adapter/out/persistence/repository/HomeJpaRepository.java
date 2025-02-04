@@ -11,4 +11,6 @@ public interface HomeJpaRepository extends JpaRepository<HomeJpaEntity, Long>, H
     boolean existsByHouseIdAndUserId(Long houseId, Long userId);
 
     boolean existsByHouseId(Long houseId);
+
+    boolean existsByUserIdAndId(Long userId, Long id);
 }

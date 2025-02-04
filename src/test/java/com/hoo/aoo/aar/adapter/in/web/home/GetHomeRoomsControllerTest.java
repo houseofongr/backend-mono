@@ -4,6 +4,7 @@ import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -20,9 +21,10 @@ class GetHomeRoomsControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Sql("GetHomeRoomsControllerTest.sql")
     @DisplayName("룸 조회 API")
     void testGetHome() throws Exception {
-        mockMvc.perform(get("/aar/users/homes/rooms")
+        mockMvc.perform(get("/aar/homes/rooms")
                         .param("homeId", "1")
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_USER"))
