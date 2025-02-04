@@ -74,13 +74,13 @@ class HomePersistenceAdapterTest {
     @DisplayName("홈 아이템 소유여부 확인 테스트")
     void testCheckHomeOwnItem() {
         // given
-        Long ownedHomeId = 1L;
+        Long ownerId = 10L;
         Long itemId = 2L;
         Long notOwnedItemId = 5678L;
 
         // then
-        assertThat(sut.checkItem(ownedHomeId, itemId)).isTrue();
-        assertThat(sut.checkItem(ownedHomeId, notOwnedItemId)).isFalse();
+        assertThat(sut.checkItem(ownerId, itemId)).isTrue();
+        assertThat(sut.checkItem(ownerId, notOwnedItemId)).isFalse();
     }
 
     @Test

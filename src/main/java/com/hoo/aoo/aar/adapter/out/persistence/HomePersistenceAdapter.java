@@ -58,8 +58,8 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
     }
 
     @Override
-    public boolean checkItem(Long homeId, Long itemId) {
-        return itemJpaRepository.existsByHomeIdAndId(homeId, itemId);
+    public boolean checkItem(Long userId, Long itemId) {
+        return itemJpaRepository.existsByUserIdAndItemId(userId, itemId);
     }
 
     @Override

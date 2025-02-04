@@ -78,16 +78,13 @@ class QueryHomeServiceTest {
     void testQueryItemSoundSources() {
         // given
         Long userId = 10L;
-        Long homeId = 1L;
         Long itemId = 1L;
 
         // when
-        when(checkOwnerPort.checkHome(userId, homeId)).thenReturn(true);
-        when(checkOwnerPort.checkItem(homeId, itemId)).thenReturn(true);
-        assertThatThrownBy(() -> sut.queryItemSoundSources(1234L, homeId, itemId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
-        assertThatThrownBy(() -> sut.queryItemSoundSources(userId, 1234L, itemId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
-        assertThatThrownBy(() -> sut.queryItemSoundSources(userId, homeId, 1234L)).hasMessage(AarErrorCode.NOT_OWNED_ITEM.getMessage());
-        sut.queryItemSoundSources(userId, homeId, itemId);
+        when(checkOwnerPort.checkItem(userId, itemId)).thenReturn(true);
+        assertThatThrownBy(() -> sut.queryItemSoundSources(1234L, itemId)).hasMessage(AarErrorCode.NOT_OWNED_ITEM.getMessage());
+        assertThatThrownBy(() -> sut.queryItemSoundSources(userId, 1234L)).hasMessage(AarErrorCode.NOT_OWNED_ITEM.getMessage());
+        sut.queryItemSoundSources(userId, itemId);
 
         // then
         verify(queryHomePort, times(1)).queryItemSoundSources(itemId);
@@ -103,6 +100,7 @@ class QueryHomeServiceTest {
         // when
         when(checkOwnerPort.checkSoundSource(userId, soundSourceId)).thenReturn(true);
         assertThatThrownBy(() -> sut.querySoundSource(1234L, soundSourceId)).hasMessage(AarErrorCode.NOT_OWNED_SOUND_SOURCE.getMessage());
+        assertThatThrownBy(() -> sut.querySoundSource(userId, 1234L)).hasMessage(AarErrorCode.NOT_OWNED_SOUND_SOURCE.getMessage());
         sut.querySoundSource(userId, soundSourceId);
 
         // then

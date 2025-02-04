@@ -18,9 +18,8 @@ public class GetItemSoundSourcesController {
     @GetMapping("/aar/homes/items/sound-sources")
     public ResponseEntity<QueryItemSoundSourcesResult> getItemSoundSources(
             @Jwt("userId") Long userId,
-            @RequestParam Long homeId,
             @RequestParam Long itemId
     ) {
-        return ResponseEntity.ok(useCase.queryItemSoundSources(userId, homeId, itemId));
+        return ResponseEntity.ok(useCase.queryItemSoundSources(userId, itemId));
     }
 }

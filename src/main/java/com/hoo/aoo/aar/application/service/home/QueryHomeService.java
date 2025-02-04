@@ -42,11 +42,9 @@ public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUs
     }
 
     @Override
-    public QueryItemSoundSourcesResult queryItemSoundSources(Long userId, Long homeId, Long itemId) {
-        if (!checkOwnerPort.checkHome(userId, homeId))
-            throw new AarException(AarErrorCode.NOT_OWNED_HOME);
+    public QueryItemSoundSourcesResult queryItemSoundSources(Long userId, Long itemId) {
 
-        if (!checkOwnerPort.checkItem(homeId, itemId))
+        if (!checkOwnerPort.checkItem(userId, itemId))
             throw new AarException(AarErrorCode.NOT_OWNED_ITEM);
 
         return queryHomePort.queryItemSoundSources(itemId);
