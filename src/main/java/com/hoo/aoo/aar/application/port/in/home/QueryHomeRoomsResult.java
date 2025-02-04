@@ -5,7 +5,7 @@ import java.util.List;
 public record QueryHomeRoomsResult(
         String homeName,
         HouseInfo house,
-        List<RoomInfo> rooms
+        List<RoomData> rooms
 ) {
     public record HouseInfo(
             Float width,
@@ -15,7 +15,7 @@ public record QueryHomeRoomsResult(
 
     }
 
-    public record RoomInfo(
+    public record RoomData(
             Long roomId,
             String name,
             Float x,

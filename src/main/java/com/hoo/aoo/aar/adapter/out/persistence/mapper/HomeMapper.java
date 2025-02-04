@@ -1,10 +1,11 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
+import com.hoo.aoo.aar.application.port.in.home.QueryRoomItemsResult;
 import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
-import com.hoo.aoo.common.adapter.out.persistence.entity.HomeJpaEntity;
-import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.admin.domain.item.ItemType;
+import com.hoo.aoo.common.adapter.out.persistence.entity.*;
+import com.hoo.aoo.file.application.service.DownloadAudioService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class HomeMapper {
         return new QueryHomeRoomsResult(
                 homeJpaEntity.getName(),
                 mapToHouseInfo(homeJpaEntity.getHouse()),
-                homeJpaEntity.getHouse().getRooms().stream().map(this::mapToRoomInfo).toList()
+                homeJpaEntity.getHouse().getRooms().stream().map(this::mapToRoomData).toList()
         );
     }
 
@@ -41,8 +42,8 @@ public class HomeMapper {
         );
     }
 
-    private QueryHomeRoomsResult.RoomInfo mapToRoomInfo(RoomJpaEntity roomJpaEntity) {
-        return new QueryHomeRoomsResult.RoomInfo(
+    private QueryHomeRoomsResult.RoomData mapToRoomData(RoomJpaEntity roomJpaEntity) {
+        return new QueryHomeRoomsResult.RoomData(
                 roomJpaEntity.getId(),
                 roomJpaEntity.getName(),
                 roomJpaEntity.getX(),
@@ -52,5 +53,69 @@ public class HomeMapper {
                 roomJpaEntity.getHeight(),
                 roomJpaEntity.getImageFileId()
         );
+    }
+
+    public QueryRoomItemsResult mapToQueryRoomItems(RoomJpaEntity roomJpaEntity) {
+        return new QueryRoomItemsResult(
+                mapToRoomInfo(roomJpaEntity),
+                roomJpaEntity.getItems().stream().map(this::mapToItemInfo).toList()
+        );
+    }
+
+    private QueryRoomItemsResult.RoomInfo mapToRoomInfo(RoomJpaEntity roomJpaEntity) {
+        return new QueryRoomItemsResult.RoomInfo(
+                roomJpaEntity.getName(),
+                roomJpaEntity.getWidth(),
+                roomJpaEntity.getHeight(),
+                roomJpaEntity.getImageFileId()
+        );
+    }
+
+    private QueryRoomItemsResult.ItemData mapToItemInfo(ItemJpaEntity itemJpaEntity) {
+        if (itemJpaEntity.getSoundSources().isEmpty() || itemJpaEntity.getSoundSources().stream().noneMatch(SoundSourceJpaEntity::getIsActive)) return null;
+
+        return switch (itemJpaEntity.getShape()) {
+            case ItemShapeRectangleJpaEntity rectangle -> new QueryRoomItemsResult.ItemData(
+                    itemJpaEntity.getId(),
+                    itemJpaEntity.getName(),
+                    ItemType.RECTANGLE,
+                    null,
+                    new QueryRoomItemsResult.RectangleData(
+                            rectangle.getX(),
+                            rectangle.getY(),
+                            rectangle.getWidth(),
+                            rectangle.getHeight(),
+                            rectangle.getRotation()
+                    ),
+                    null
+            );
+            case ItemShapeCircleJpaEntity circle -> new QueryRoomItemsResult.ItemData(
+                    itemJpaEntity.getId(),
+                    itemJpaEntity.getName(),
+                    ItemType.RECTANGLE,
+                    new QueryRoomItemsResult.CircleData(
+                            circle.getX(),
+                            circle.getY(),
+                            circle.getRadius()
+                    ),
+                    null,
+                    null
+            );
+            case ItemShapeEllipseJpaEntity ellipse -> new QueryRoomItemsResult.ItemData(
+                    itemJpaEntity.getId(),
+                    itemJpaEntity.getName(),
+                    ItemType.RECTANGLE,
+                    null,
+                    null,
+                    new QueryRoomItemsResult.EllipseData(
+                            ellipse.getX(),
+                            ellipse.getY(),
+                            ellipse.getRadiusX(),
+                            ellipse.getRadiusY(),
+                            ellipse.getRotation()
+                    )
+            );
+            default -> throw new IllegalStateException("Unexpected value: " + itemJpaEntity.getShape());
+        };
     }
 }

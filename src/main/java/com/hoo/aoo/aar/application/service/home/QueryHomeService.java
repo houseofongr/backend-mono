@@ -1,9 +1,6 @@
 package com.hoo.aoo.aar.application.service.home;
 
-import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsUseCase;
-import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesResult;
-import com.hoo.aoo.aar.application.port.in.home.QueryUserHomesUseCase;
+import com.hoo.aoo.aar.application.port.in.home.*;
 import com.hoo.aoo.aar.application.port.out.home.CheckOwnerPort;
 import com.hoo.aoo.aar.application.port.out.home.QueryHomePort;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
@@ -15,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("AARQueryHomeService")
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUseCase {
+public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUseCase, QueryRoomItemsUseCase {
 
     private final CheckOwnerPort checkOwnerPort;
     private final QueryHomePort queryHomePort;
@@ -31,5 +28,16 @@ public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUs
             throw new AarException(AarErrorCode.NOT_OWNED_HOME);
 
         return queryHomePort.queryHomeRooms(homeId);
+    }
+
+    @Override
+    public QueryRoomItemsResult queryRoomItems(Long userId, Long homeId, Long roomId) {
+        if (!checkOwnerPort.checkHome(userId, homeId))
+            throw new AarException(AarErrorCode.NOT_OWNED_HOME);
+
+        if (!checkOwnerPort.checkRoom(homeId, roomId))
+            throw new AarException(AarErrorCode.NOT_OWNED_ROOM);
+
+        return queryHomePort.queryRoomItems(roomId);
     }
 }

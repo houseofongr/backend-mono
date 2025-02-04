@@ -3,13 +3,11 @@ package com.hoo.aoo.aar.application.service.home;
 import com.hoo.aoo.aar.application.port.out.home.CheckOwnerPort;
 import com.hoo.aoo.aar.application.port.out.home.QueryHomePort;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
-import com.hoo.aoo.admin.application.service.AdminErrorCode;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class QueryHomeServiceTest {
@@ -47,12 +45,32 @@ class QueryHomeServiceTest {
         Long homeId = 1L;
 
         // when
-        when(checkOwnerPort.checkHome(userId,homeId)).thenReturn(true);
-        assertThatThrownBy(() -> sut.queryHomeRooms(userId,123L)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
-        sut.queryHomeRooms(userId,homeId);
+        when(checkOwnerPort.checkHome(userId, homeId)).thenReturn(true);
+        assertThatThrownBy(() -> sut.queryHomeRooms(123L, homeId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+        sut.queryHomeRooms(userId, homeId);
 
         // then
         verify(queryHomePort, times(1)).queryHomeRooms(homeId);
+    }
+
+    @Test
+    @DisplayName("룸 아이템 조회 서비스 테스트")
+    void testQueryRoomItems() {
+        // given
+        Long userId = 10L;
+        Long homeId = 1L;
+        Long roomId = 2L;
+
+        // when
+        when(checkOwnerPort.checkHome(userId, homeId)).thenReturn(true);
+        when(checkOwnerPort.checkRoom(homeId, roomId)).thenReturn(true);
+        assertThatThrownBy(() -> sut.queryRoomItems(1234L, homeId, roomId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+        assertThatThrownBy(() -> sut.queryRoomItems(userId, 1234L, roomId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+        assertThatThrownBy(() -> sut.queryRoomItems(userId, homeId, 1234L)).hasMessage(AarErrorCode.NOT_OWNED_ROOM.getMessage());
+        sut.queryRoomItems(userId, homeId, roomId);
+
+        // then
+        verify(queryHomePort, times(1)).queryRoomItems(roomId);
     }
 
 }

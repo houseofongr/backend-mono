@@ -5,11 +5,11 @@ import com.hoo.aoo.admin.domain.item.ItemType;
 import java.util.List;
 
 public record QueryRoomItemsResult(
-        RoomData room,
+        RoomInfo room,
         List<ItemData> items
 ) {
 
-    public record RoomData(
+    public record RoomInfo(
             String name,
             Float width,
             Float height,
