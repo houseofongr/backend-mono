@@ -84,7 +84,9 @@ operation::aar-authn-login-2[snippets='response-fields']
 
 소리기록실에 회원가입을 시도합니다.
 
-===== Authorization
+사용자 정보 식별을 위해 최초 로그인 시 받은 Access Token을 아래와 같이 포함하여 전송해야 합니다.
+
+===== Authorization Header
 include::{snippets}/aar-access-token/response-fields.adoc[]
 
 operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
