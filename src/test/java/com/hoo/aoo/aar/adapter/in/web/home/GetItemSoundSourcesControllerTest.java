@@ -26,7 +26,6 @@ class GetItemSoundSourcesControllerTest extends AbstractControllerTest {
     @DisplayName("아이템 음원 조회 API")
     void testGetItem() throws Exception {
         mockMvc.perform(get("/aar/homes/items/sound-sources")
-                        .param("homeId", "1")
                         .param("itemId", "1")
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_USER"))
@@ -34,7 +33,6 @@ class GetItemSoundSourcesControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-item-soundsources",
                         queryParameters(
-                                parameterWithName("homeId").description("조회할 아이템이 포함된 홈의 식별자입니다."),
                                 parameterWithName("itemId").description("조회할 아이템의 식별자입니다.")
                         ),
                         responseFields(

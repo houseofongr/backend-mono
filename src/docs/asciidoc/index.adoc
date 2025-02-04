@@ -124,7 +124,7 @@ operation::aar-home-get-rooms[snippets='query-parameters,http-request,http-respo
 
 
 "빈 아이템*은 조회되지 않습니다."
--- * 내부에 활성화(``isActive = true``)된 음원이 존재하지 않은 아이템
+-- * 내부에 활성화(``isActive = true``)된 음원이 존재하지 않는 아이템
 
 operation::aar-home-get-room-items[snippets='query-parameters,http-request,http-response,response-fields']
 
