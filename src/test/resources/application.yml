@@ -21,7 +21,7 @@ spring:
         registration:
           kakao:
             client-id: kakao-client-id
-            client-secret: kakao-client-secret
+            client-secret: kakao-client-secret f
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/aar/authn/login/kakao
         provider:
