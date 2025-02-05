@@ -1,9 +1,13 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.AdminUserMapper;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.UserQueryDslRepositoryImpl;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +17,23 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.Optional;
+
 import static com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain.KAKAO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({AdminUserPersistenceAdapter.class, AdminUserMapper.class, UserQueryDslRepositoryImpl.class})
+@Sql("AdminUserPersistenceAdapterTest.sql")
 class AdminUserPersistenceAdapterTest {
 
     @Autowired
     AdminUserPersistenceAdapter sut;
+    @Autowired
+    private UserJpaRepository userJpaRepository;
 
     @Test
-    @Sql("AdminUserPersistenceAdapterTest.sql")
     @DisplayName("사용자 검색 기능 테스트")
     void testSearchUser() {
         // given
@@ -46,5 +54,21 @@ class AdminUserPersistenceAdapterTest {
                     assertThat(userInfo.snsAccounts().getFirst().email()).isEqualTo("test@example.com");
                 }
         );
+    }
+
+    @Test
+    @DisplayName("사용자 정보 업데이트 테스트")
+    void testUserInfoUpdate() {
+        // given
+        User user = sut.loadUser(1L).get();
+        user.updateNickname("leaf2");
+
+        // when
+        sut.updateUser(user);
+
+        // then
+        Optional<UserJpaEntity> optional = userJpaRepository.findById(user.getUserId().getId());
+        assertThat(optional).isPresent();
+        assertThat(optional.get().getNickname()).isEqualTo("leaf2");
     }
 }

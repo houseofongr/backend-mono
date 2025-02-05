@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,4 +42,8 @@ public class UserJpaEntity extends DateColumnBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<SnsAccountJpaEntity> snsAccountEntities;
+
+    public void update(User user) {
+        nickname = user.getUserName().getNickName();
+    }
 }

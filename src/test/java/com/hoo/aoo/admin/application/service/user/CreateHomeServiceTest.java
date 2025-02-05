@@ -43,7 +43,7 @@ class CreateHomeServiceTest {
 
         // when
         when(findHousePort.load(20L)).thenReturn(Optional.of(MockEntityFactoryService.getHouse()));
-        when(findUserPort.load(10L)).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
+        when(findUserPort.loadUser(10L)).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         when(saveHomePort.save(any())).thenReturn(100L);
         when(createHomePort.createHome(any(),any())).thenReturn(MockEntityFactoryService.getHome());
         CreateHomeResult createHomeResult = sut.create(command);

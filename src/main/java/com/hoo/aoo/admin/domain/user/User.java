@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class User {
     private final UserId userId;
-    private final UserName userName;
+    private UserName userName;
 
     private User(UserId userId, String nickName, String realName) {
         this.userId = userId;
@@ -14,5 +14,9 @@ public class User {
 
     public static User load(Long userId, String nickName, String realName) {
         return new User(new UserId(userId), nickName, realName);
+    }
+
+    public void updateNickname(String nickname) {
+        this.userName = new UserName(nickname, userName.getRealName());
     }
 }

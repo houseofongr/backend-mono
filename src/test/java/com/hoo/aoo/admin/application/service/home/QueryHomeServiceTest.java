@@ -6,8 +6,6 @@ import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.house.FindHousePort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +42,7 @@ class QueryHomeServiceTest {
         // when
         when(findHomePort.loadHome(1L)).thenReturn(Optional.of(MockEntityFactoryService.loadHome()));
         when(findHousePort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
-        when(findUserPort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
+        when(findUserPort.loadUser(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         QueryHomeResult queryHomeResult = sut.queryHome(id);
 
         // then
@@ -62,7 +60,7 @@ class QueryHomeServiceTest {
         // when
         when(findHomePort.loadHome(1L)).thenReturn(Optional.of(MockEntityFactoryService.loadHome()));
         when(findHousePort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
-        when(findUserPort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
+        when(findUserPort.loadUser(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         QueryUserHomesResult queryUserHomesResult = sut.queryUserHomes(id);
 
         // then

@@ -5,7 +5,7 @@ import com.hoo.aoo.admin.domain.user.User;
 import java.util.Optional;
 
 public interface FindUserPort {
-    Optional<User> load(Long id);
+    Optional<User> loadUser(Long id);
 
     boolean exist(Long id);
 }
