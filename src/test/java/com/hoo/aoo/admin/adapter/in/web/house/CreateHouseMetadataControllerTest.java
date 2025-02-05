@@ -11,10 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 public class CreateHouseMetadataControllerTest extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @DisplayName("Metadata 생성 테스트")

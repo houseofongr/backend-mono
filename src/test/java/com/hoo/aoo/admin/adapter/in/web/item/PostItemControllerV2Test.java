@@ -20,10 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PostItemControllerV2Test extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @Sql("PostItemControllerTestV2.sql")

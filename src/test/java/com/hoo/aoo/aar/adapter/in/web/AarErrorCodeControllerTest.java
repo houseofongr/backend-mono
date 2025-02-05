@@ -13,10 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AarErrorCodeControllerTest extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @DisplayName("에러코드 문서화")

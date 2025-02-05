@@ -14,10 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetMyInfoControllerTest extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @Sql("GetMyInfoControllerTest.sql")

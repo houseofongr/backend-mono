@@ -31,10 +31,7 @@ class PostHouseControllerTest extends AbstractControllerTest {
         return false;
     }
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @DisplayName("하우스 생성 API")

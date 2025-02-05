@@ -24,10 +24,7 @@ class PostSoundSourceControllerTest extends AbstractControllerTest {
     @Autowired
     SoundSourceJpaRepository soundSourceJpaRepository;
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @Sql("PostSoundSourceControllerTest.sql")

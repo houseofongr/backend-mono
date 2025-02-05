@@ -13,11 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AdminErrorCodeControllerTest extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
-
     @Test
     @DisplayName("에러코드 문서화")
     void testErrorCodeDocumentation() throws Exception {

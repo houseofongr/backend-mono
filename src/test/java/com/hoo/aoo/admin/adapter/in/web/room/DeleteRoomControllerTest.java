@@ -29,10 +29,7 @@ class DeleteRoomControllerTest extends AbstractControllerTest {
 
 
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @Sql("DeleteRoomControllerTest.sql")

@@ -13,10 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 class CreateSoundSourceMetadataControllerTest extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @DisplayName("음원 메타데이터 생성 테스트")

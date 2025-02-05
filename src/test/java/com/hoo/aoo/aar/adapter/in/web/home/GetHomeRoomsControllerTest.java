@@ -15,11 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetHomeRoomsControllerTest extends AbstractControllerTest {
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
-
     @Test
     @Sql("GetHomeRoomsControllerTest.sql")
     @DisplayName("룸 조회 API")

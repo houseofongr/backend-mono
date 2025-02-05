@@ -31,10 +31,7 @@ class DeleteHouseControllerTest extends AbstractControllerTest {
     @Autowired
     FileJpaRepository fileJpaRepository;
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @Sql("DeleteHouseControllerTest.sql")

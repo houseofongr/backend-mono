@@ -46,7 +46,9 @@ public abstract class AbstractControllerTest {
 
     protected MockMvcTester mockMvcTester;
 
-    protected abstract String getBaseUrl();
+    protected String getBaseUrl(){
+        return "api.archiveofongr.site";
+    }
 
     protected boolean useSpringSecurity() {
         return true;

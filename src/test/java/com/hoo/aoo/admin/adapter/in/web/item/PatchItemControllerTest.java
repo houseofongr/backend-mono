@@ -21,10 +21,7 @@ class PatchItemControllerTest extends AbstractControllerTest {
     @Autowired
     ItemJpaRepository itemJpaRepository;
 
-    @Override
-    protected String getBaseUrl() {
-        return "api.archiveofongr.site";
-    }
+
 
     @Test
     @Sql("PatchItemControllerTest.sql")
