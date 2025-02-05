@@ -226,7 +226,7 @@ include::{snippets}/admin-create-house-metadata/response-fields.adoc[]
 operation::admin-house-post[snippets='http-response,response-fields']
 
 [[admin-house-get-list-api]]
-==== 하우스 리스트 조회 API
+==== 하우스 검색 API
 
 여러 건의 하우스를 검색 조건에 맞게 조회합니다.
 
@@ -392,7 +392,7 @@ operation::admin-item-delete[snippets='path-parameters,http-request,http-respons
 === 음원(SoundSource) API
 
 [[admin-soundsource-get-list-api]]
-==== 음원 조회 API
+==== 전체음원 조회 API
 
 저장된 전체 음원을 불러옵니다.
 
