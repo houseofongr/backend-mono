@@ -8,7 +8,9 @@ import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component("AARHomePersistenceAdapter")
@@ -47,8 +49,9 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
     }
 
     @Override
-    public QuerySoundSourcesPathResult querySoundSourcesPath(Long userId) {
-        return homeMapper.mapToQuerySoundSourcesPathResult(soundSourceJpaRepository.findAllActivatedByIdWithPathEntity(userId));
+    public QuerySoundSourcesPathResult querySoundSourcesPath(QuerySoundSourcesPathCommand command) {
+        Page<QuerySoundSourcesPathResult.SoundSourcePathInfo> result = soundSourceJpaRepository.findAllActivatedByIdWithPathEntity(command).map(homeMapper::mapToSoundSourcePathInfo);
+        return new QuerySoundSourcesPathResult(result.getContent(), Pagination.of(result));
     }
 
     @Override

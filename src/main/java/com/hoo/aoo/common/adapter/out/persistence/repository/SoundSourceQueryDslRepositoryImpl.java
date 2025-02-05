@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence.repository;
 
+import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathCommand;
 import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
 import com.hoo.aoo.common.adapter.out.persistence.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -55,14 +56,25 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
     }
 
     @Override
-    public List<SoundSourceJpaEntity> findAllActivatedByIdWithPathEntity(Long userId) {
-        return query.selectFrom(soundSourceJpaEntity)
+    public Page<SoundSourceJpaEntity> findAllActivatedByIdWithPathEntity(QuerySoundSourcesPathCommand command) {
+        List<SoundSourceJpaEntity> entities = query.selectFrom(soundSourceJpaEntity)
                 .leftJoin(soundSourceJpaEntity.item, itemJpaEntity).fetchJoin()
                 .leftJoin(itemJpaEntity.home, homeJpaEntity).fetchJoin()
                 .leftJoin(itemJpaEntity.room, roomJpaEntity).fetchJoin()
                 .leftJoin(homeJpaEntity.user, userJpaEntity)
-                .where(userJpaEntity.id.eq(userId)
+                .where(userJpaEntity.id.eq(command.userId())
                         .and(soundSourceJpaEntity.isActive.isTrue()))
                 .fetch();
+
+        Long count = query.select(soundSourceJpaEntity.count())
+                .from(soundSourceJpaEntity)
+                .leftJoin(soundSourceJpaEntity.item, itemJpaEntity)
+                .leftJoin(itemJpaEntity.home, homeJpaEntity)
+                .leftJoin(homeJpaEntity.user, userJpaEntity)
+                .where(userJpaEntity.id.eq(command.userId())
+                        .and(soundSourceJpaEntity.isActive.isTrue()))
+                .fetchFirst();
+
+        return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);
     }
 }

@@ -1,9 +1,12 @@
 package com.hoo.aoo.aar.application.port.in.home;
 
+import com.hoo.aoo.common.application.port.in.Pagination;
+
 import java.util.List;
 
 public record QuerySoundSourcesPathResult(
-        List<SoundSourcePathInfo> soundSources
+        List<SoundSourcePathInfo> soundSources,
+        Pagination pagination
 ) {
     public record SoundSourcePathInfo(
             String name,

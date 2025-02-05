@@ -60,7 +60,7 @@ public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUs
     }
 
     @Override
-    public QuerySoundSourcesPathResult querySoundSourcesPath(Long userId) {
-        return queryHomePort.querySoundSourcesPath(userId);
+    public QuerySoundSourcesPathResult querySoundSourcesPath(QuerySoundSourcesPathCommand command) {
+        return queryHomePort.querySoundSourcesPath(command);
     }
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -216,10 +217,10 @@ class HomePersistenceAdapterTest {
     @DisplayName("전체음원 경로 조회 테스트")
     void testQuerySoundSourcesPath() {
         // given
-        Long userId = 10L;
+        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(1,3));
 
         // when
-        QuerySoundSourcesPathResult result = sut.querySoundSourcesPath(userId);
+        QuerySoundSourcesPathResult result = sut.querySoundSourcesPath(command);
 
         // then
         assertThat(result.soundSources()).hasSize(2)

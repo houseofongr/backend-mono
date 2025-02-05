@@ -148,13 +148,7 @@ public class HomeMapper {
         );
     }
 
-    public QuerySoundSourcesPathResult mapToQuerySoundSourcesPathResult(List<SoundSourceJpaEntity> soundSourceJpaEntities) {
-        return new QuerySoundSourcesPathResult(
-                soundSourceJpaEntities.stream().map(this::mapToSoundSourcePathInfo).toList()
-        );
-    }
-
-    private QuerySoundSourcesPathResult.SoundSourcePathInfo mapToSoundSourcePathInfo(SoundSourceJpaEntity soundSourceJpaEntity) {
+    public QuerySoundSourcesPathResult.SoundSourcePathInfo mapToSoundSourcePathInfo(SoundSourceJpaEntity soundSourceJpaEntity) {
         return new QuerySoundSourcesPathResult.SoundSourcePathInfo(
                 soundSourceJpaEntity.getName(),
                 soundSourceJpaEntity.getDescription(),

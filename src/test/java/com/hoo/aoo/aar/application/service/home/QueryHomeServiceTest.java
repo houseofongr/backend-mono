@@ -1,11 +1,13 @@
 package com.hoo.aoo.aar.application.service.home;
 
+import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathCommand;
 import com.hoo.aoo.aar.application.port.out.home.CheckOwnerPort;
 import com.hoo.aoo.aar.application.port.out.home.QueryHomePort;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -111,12 +113,12 @@ class QueryHomeServiceTest {
     @DisplayName("전체음원 경로 조회 서비스 테스트")
     void testQuerySoundSourcesPath() {
         // given
-        Long userId = 10L;
+        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(1,3));
 
         // when
-        sut.querySoundSourcesPath(userId);
+        sut.querySoundSourcesPath(command);
 
         // then
-        verify(queryHomePort, times(1)).querySoundSourcesPath(userId);
+        verify(queryHomePort, times(1)).querySoundSourcesPath(command);
     }
 }
