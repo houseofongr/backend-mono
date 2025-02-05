@@ -25,6 +25,9 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = true, length = 255)
     private String nickname;
 
+    @Column(nullable = true, length = 255)
+    private String email;
+
     @Column(length = 20)
     private String phoneNumber;
 

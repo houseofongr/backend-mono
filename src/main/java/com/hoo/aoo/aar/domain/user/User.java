@@ -28,17 +28,17 @@ public class User {
     public static User register(Long id, Boolean termsOfUseAgreement, Boolean personalInformationAgreement, SnsAccount snsAccount) {
         return new User(
                 new UserId(id),
-                new UserInfo(snsAccount.getSnsAccountInfo().getRealName(), snsAccount.getSnsAccountInfo().getNickname()),
+                new UserInfo(snsAccount.getSnsAccountInfo().getRealName(), snsAccount.getSnsAccountInfo().getNickname(), snsAccount.getSnsAccountInfo().getEmail()),
                 new Agreement(termsOfUseAgreement, personalInformationAgreement),
                 null,
                 List.of(snsAccount)
         );
     }
 
-    public static User load(Long id, String realName, String nickname, Boolean termsOfUseAgreement, Boolean personalInformationAgreement, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<SnsAccount> snsAccounts) throws InvalidPhoneNumberException {
+    public static User load(Long id, String realName, String nickname, String email, Boolean termsOfUseAgreement, Boolean personalInformationAgreement, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<SnsAccount> snsAccounts) throws InvalidPhoneNumberException {
         return new User(
                 new UserId(id),
-                new UserInfo(realName, nickname),
+                new UserInfo(realName, nickname, email),
                 new Agreement(termsOfUseAgreement, personalInformationAgreement),
                 new BaseTime(createdTime, updatedTime),
                 snsAccounts

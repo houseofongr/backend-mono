@@ -20,7 +20,7 @@ class SNSLoginResultTest {
 
         SNSLoginResult notRegisteredResponse = SNSLoginResult.from(snsAccount, null);
 
-        User user = User.load(1L, "남상엽", "LEAF", true, true, null,null , null);
+        User user = User.load(1L, "남상엽", "LEAF", "test@example.com", true, true, null,null , null);
 
         SNSLoginResult registeredResponse = SNSLoginResult.from(user, null, SnsDomain.KAKAO);
 

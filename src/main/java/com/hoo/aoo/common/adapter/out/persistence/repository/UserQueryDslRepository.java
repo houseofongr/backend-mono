@@ -6,4 +6,6 @@ import org.springframework.data.domain.Page;
 
 public interface UserQueryDslRepository {
     Page<UserJpaEntity> searchByCommand(QueryUserInfoCommand command);
+    Integer countHomeCountById(Long userId);
+    Integer countActiveSoundSourceCountById(Long userId);
 }

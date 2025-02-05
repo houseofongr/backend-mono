@@ -91,6 +91,31 @@ include::{snippets}/aar-access-token/response-fields.adoc[]
 
 operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
 
+[[aar-user-api]]
+=== 사용자(User) API
+
+==== 인증(Authorization)
+
+사용자 정보 조회 및 수정은 인증된 사용자만 가능하기 때문에, 로그인 시 획득한 AccessToken을 반드시 Authorization Header에 포함해야 합니다.
+
+===== Authorization Header
+include::{snippets}/aar-access-token/response-fields.adoc[]
+
+[[aar-user-get-me-api]]
+==== 본인정보 조회 API
+
+사용자가 본인의 정보를 조회하기 위한 API입니다.
+
+operation::aar-user-get-me[snippets='http-request,http-response,response-fields']
+
+[[aar-user-patch-me-api]]
+==== 본인정보 수정 API
+
+사용자가 본인의 정보를 수정하기 위한 API입니다.
+
+operation::aar-user-patch-me[snippets='http-request,request-fields,http-response,response-fields']
+
+
 [[aar-home-api]]
 === 홈(Home) API
 

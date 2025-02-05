@@ -1,0 +1,22 @@
+package com.hoo.aoo.aar.application.port.in.user;
+
+import java.util.List;
+
+public record QueryMyInfoResult(
+        String nickname,
+        String email,
+        String registeredDate,
+        Boolean termsOfUseAgreement,
+        Boolean personalInformationAgreement,
+        Integer myHomeCount,
+        Integer mySoundSourceCount,
+        List<SnsAccountInfo> snsAccountInfos
+) {
+
+    public record SnsAccountInfo(
+            String domain,
+            String email
+    ) {
+
+    }
+}

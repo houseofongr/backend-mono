@@ -59,7 +59,7 @@ class LoadKakaoSnsAccountServiceTest {
         when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.of(snsAccount));
         when(snsAccount.getUserId()).thenReturn(new UserId(1L));
         when(findUserPort.load(1L)).thenReturn(Optional.of(user));
-        when(user.getUserInfo()).thenReturn(new UserInfo("남상엽","leaf"));
+        when(user.getUserInfo()).thenReturn(new UserInfo("남상엽","leaf", "test@example.com"));
         OAuth2User loadUser = sut.load(oAuth2User);
 
         // then
