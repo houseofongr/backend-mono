@@ -230,17 +230,23 @@ class HomePersistenceAdapterTest {
                     assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
                     assertThat(soundSourceInfo.audioFileId()).isEqualTo(1);
                     assertThat(soundSourceInfo.homeName()).isEqualTo("leaf의 cozy house");
+                    assertThat(soundSourceInfo.homeId()).isEqualTo(1);
                     assertThat(soundSourceInfo.roomName()).isEqualTo("거실");
+                    assertThat(soundSourceInfo.roomId()).isEqualTo(1);
                     assertThat(soundSourceInfo.itemName()).isEqualTo("설이");
+                    assertThat(soundSourceInfo.itemId()).isEqualTo(1);
                 }).anySatisfy(soundSourceInfo -> {
                     assertThat(soundSourceInfo.name()).isEqualTo("멍멍송");
                     assertThat(soundSourceInfo.description()).isEqualTo("2025년 멍멍송 V1");
                     assertThat(soundSourceInfo.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
                     assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
                     assertThat(soundSourceInfo.audioFileId()).isEqualTo(2);
+                    assertThat(soundSourceInfo.homeId()).isEqualTo(1);
                     assertThat(soundSourceInfo.homeName()).isEqualTo("leaf의 cozy house");
                     assertThat(soundSourceInfo.roomName()).isEqualTo("거실");
+                    assertThat(soundSourceInfo.roomId()).isEqualTo(1);
                     assertThat(soundSourceInfo.itemName()).isEqualTo("강아지");
+                    assertThat(soundSourceInfo.itemId()).isEqualTo(2);
                 });
     }
 }

@@ -29,7 +29,7 @@ public class GetHouseListControllerTest extends AbstractControllerTest {
                         pathParameters(
                                 parameterWithName("page").description("보여줄 페이지 번호입니다. +" + "\n" + "* 기본값 : 1").optional(),
                                 parameterWithName("size").description("한 페이지에 보여줄 데이터 개수입니다. +" + "\n" + "* 기본값 : 10").optional(),
-                                parameterWithName("searchType").description("검색 룸법입니다.").optional(),
+                                parameterWithName("searchType").description("검색 방법입니다.").optional(),
                                 parameterWithName("keyword").description("검색 키워드입니다.").optional()
                         ),
                         responseFields(

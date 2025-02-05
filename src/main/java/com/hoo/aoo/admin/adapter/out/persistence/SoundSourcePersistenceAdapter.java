@@ -1,23 +1,24 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
+import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListResult;
+import com.hoo.aoo.admin.application.port.out.soundsource.*;
 import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
-import com.hoo.aoo.admin.application.port.out.soundsource.DeleteSoundSourcePort;
-import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
-import com.hoo.aoo.admin.application.port.out.soundsource.SaveSoundSourcePort;
-import com.hoo.aoo.admin.application.port.out.soundsource.UpdateSoundSourcePort;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindSoundSourcePort, UpdateSoundSourcePort, DeleteSoundSourcePort {
+public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindSoundSourcePort, UpdateSoundSourcePort, DeleteSoundSourcePort, QuerySoundSourcePort {
 
     private final ItemJpaRepository itemJpaRepository;
     private final SoundSourceJpaRepository soundSourceJpaRepository;
@@ -50,5 +51,11 @@ public class SoundSourcePersistenceAdapter implements SaveSoundSourcePort, FindS
     @Override
     public void deleteSoundSource(SoundSource soundSource) {
         soundSourceJpaRepository.deleteById(soundSource.getSoundSourceId().getId());
+    }
+
+    @Override
+    public QuerySoundSourceListResult querySoundSourceList(QuerySoundSourceListCommand command) {
+        Page<QuerySoundSourceListResult.SoundSourceInfo> result = soundSourceJpaRepository.findAllWithRelatedEntity(command).map(soundSourceMapper::mapToQuerySoundSourceListResult);
+        return new QuerySoundSourceListResult(result.getContent(), Pagination.of(result));
     }
 }

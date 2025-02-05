@@ -1,17 +1,18 @@
 package com.hoo.aoo.admin.application.service.soundsource;
 
+import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
 import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceResult;
 import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
+import com.hoo.aoo.admin.application.port.out.soundsource.QuerySoundSourcePort;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class QuerySoundSourceServiceTest {
@@ -19,11 +20,13 @@ class QuerySoundSourceServiceTest {
     QuerySoundSourceService sut;
 
     FindSoundSourcePort findSoundSourcePort;
+    QuerySoundSourcePort querySoundSourcePort;
 
     @BeforeEach
     void init() {
         findSoundSourcePort = mock();
-        sut = new QuerySoundSourceService(findSoundSourcePort);
+        querySoundSourcePort = mock();
+        sut = new QuerySoundSourceService(findSoundSourcePort,querySoundSourcePort);
     }
 
     @Test
@@ -39,5 +42,18 @@ class QuerySoundSourceServiceTest {
         // then
         assertThat(querySoundSourceResult).isNotNull();
         assertThat(querySoundSourceResult.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+    }
+
+    @Test
+    @DisplayName("음원 리스트 조회 서비스 테스트")
+    void testQuerySoundSourceListService() {
+        // given
+        QuerySoundSourceListCommand command = new QuerySoundSourceListCommand(PageRequest.of(1, 3));
+
+        // when
+        sut.querySoundSourceList(command);
+
+        // then
+        verify(querySoundSourcePort, times(1)).querySoundSourceList(command);
     }
 }

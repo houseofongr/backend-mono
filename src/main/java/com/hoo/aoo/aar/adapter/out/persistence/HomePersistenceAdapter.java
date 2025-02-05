@@ -48,7 +48,7 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
 
     @Override
     public QuerySoundSourcesPathResult querySoundSourcesPath(Long userId) {
-        return homeMapper.mapToQuerySoundSourcesPathResult(soundSourceJpaRepository.findAllByIdWithPathEntity(userId));
+        return homeMapper.mapToQuerySoundSourcesPathResult(soundSourceJpaRepository.findAllActivatedByIdWithPathEntity(userId));
     }
 
     @Override

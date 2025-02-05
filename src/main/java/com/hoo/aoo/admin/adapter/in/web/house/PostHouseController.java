@@ -30,6 +30,7 @@ public class PostHouseController {
             return new ResponseEntity<>(
                     createHouseUseCase.create(gson.fromJson(metadata, CreateHouseMetadata.class), multipartRequest.getFileMap()),
                     HttpStatus.CREATED);
-        } else throw new AdminException(AdminErrorCode.INVALID_CREATE_HOUSE_METADATA);
+
+        } else throw new AdminException(AdminErrorCode.INVALID_REQUEST_TYPE);
     }
 }

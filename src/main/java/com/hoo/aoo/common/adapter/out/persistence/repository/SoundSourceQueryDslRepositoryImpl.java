@@ -1,8 +1,11 @@
 package com.hoo.aoo.common.adapter.out.persistence.repository;
 
+import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
 import com.hoo.aoo.common.adapter.out.persistence.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -33,12 +36,31 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
     }
 
     @Override
-    public List<SoundSourceJpaEntity> findAllByIdWithPathEntity(Long userId) {
-        return query.selectFrom(soundSourceJpaEntity)
+    public Page<SoundSourceJpaEntity> findAllWithRelatedEntity(QuerySoundSourceListCommand command) {
+        List<SoundSourceJpaEntity> entities = query.selectFrom(soundSourceJpaEntity)
                 .leftJoin(soundSourceJpaEntity.item, itemJpaEntity).fetchJoin()
                 .leftJoin(itemJpaEntity.home, homeJpaEntity).fetchJoin()
                 .leftJoin(itemJpaEntity.room, roomJpaEntity).fetchJoin()
                 .leftJoin(homeJpaEntity.user, userJpaEntity).fetchJoin()
+                .orderBy(soundSourceJpaEntity.createdTime.desc())
+                .offset(command.pageable().getOffset())
+                .limit(command.pageable().getPageSize())
+                .fetch();
+
+        Long count = query.select(soundSourceJpaEntity.count())
+                .from(soundSourceJpaEntity)
+                .fetchFirst();
+
+        return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);
+    }
+
+    @Override
+    public List<SoundSourceJpaEntity> findAllActivatedByIdWithPathEntity(Long userId) {
+        return query.selectFrom(soundSourceJpaEntity)
+                .leftJoin(soundSourceJpaEntity.item, itemJpaEntity).fetchJoin()
+                .leftJoin(itemJpaEntity.home, homeJpaEntity).fetchJoin()
+                .leftJoin(itemJpaEntity.room, roomJpaEntity).fetchJoin()
+                .leftJoin(homeJpaEntity.user, userJpaEntity)
                 .where(userJpaEntity.id.eq(userId)
                         .and(soundSourceJpaEntity.isActive.isTrue()))
                 .fetch();

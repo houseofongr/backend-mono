@@ -1,15 +1,18 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
-import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
+import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
+import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListResult;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
@@ -18,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
 @Import({SoundSourcePersistenceAdapter.class, SoundSourceMapper.class})
+@Sql("SoundSourcePersistenceAdapterTest.sql")
 class SoundSourcePersistenceAdapterTest {
 
     @Autowired
@@ -30,7 +34,6 @@ class SoundSourcePersistenceAdapterTest {
     EntityManager entityManager;
 
     @Test
-    @Sql("SoundSourcePersistenceAdapterTest.sql")
     @DisplayName("음원 저장 테스트")
     void testSaveSoundSource() {
         // given
@@ -55,7 +58,38 @@ class SoundSourcePersistenceAdapterTest {
     }
 
     @Test
-    @Sql("SoundSourcePersistenceAdapterTest.sql")
+    @DisplayName("전체 음원 조회 테스트")
+    void testQueryAllSoundSource() {
+        // given
+        QuerySoundSourceListCommand command = new QuerySoundSourceListCommand(PageRequest.of(0, 3));
+
+        // when
+        QuerySoundSourceListResult result = sut.querySoundSourceList(command);
+
+        // then
+        assertThat(result.soundSources()).hasSize(3);
+        assertThat(result.soundSources()).anySatisfy(soundSourceInfo -> {
+            assertThat(soundSourceInfo.name()).isEqualTo("골골송");
+            assertThat(soundSourceInfo.description()).isEqualTo("2025년 골골송 V1");
+            assertThat(soundSourceInfo.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+            assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+            assertThat(soundSourceInfo.audioFileId()).isEqualTo(1);
+            assertThat(soundSourceInfo.homeName()).isEqualTo("leaf의 cozy house");
+            assertThat(soundSourceInfo.homeId()).isEqualTo(1);
+            assertThat(soundSourceInfo.roomName()).isEqualTo("거실");
+            assertThat(soundSourceInfo.roomId()).isEqualTo(1);
+            assertThat(soundSourceInfo.itemName()).isEqualTo("설이");
+            assertThat(soundSourceInfo.itemId()).isEqualTo(1);
+        }).anySatisfy(soundSourceInfo -> {
+            assertThat(soundSourceInfo.name()).isEqualTo("골골송2");
+            assertThat(soundSourceInfo.description()).isEqualTo("2025년 골골송 V2");
+        }).anySatisfy(soundSourceInfo -> {
+            assertThat(soundSourceInfo.name()).isEqualTo("골골송3");
+            assertThat(soundSourceInfo.description()).isEqualTo("2025년 골골송 V3");
+        });
+    }
+
+    @Test
     @DisplayName("음원 조회 테스트")
     void testLoadSoundSource() {
         // given
@@ -72,7 +106,6 @@ class SoundSourcePersistenceAdapterTest {
     }
 
     @Test
-    @Sql("SoundSourcePersistenceAdapterTest.sql")
     @DisplayName("음원 수정 테스트")
     void testUpdateSoundSource() throws InterruptedException {
         // given
@@ -94,7 +127,6 @@ class SoundSourcePersistenceAdapterTest {
     }
 
     @Test
-    @Sql("SoundSourcePersistenceAdapterTest.sql")
     @DisplayName("음원 삭제 테스트")
     void testDeleteSoundSource() {
         // given

@@ -391,6 +391,13 @@ operation::admin-item-delete[snippets='path-parameters,http-request,http-respons
 [[admin-soundsource-api]]
 === 음원(SoundSource) API
 
+[[admin-soundsource-get-list-api]]
+==== 음원 조회 API
+
+저장된 전체 음원을 불러옵니다.
+
+operation::admin-soundsource-get-list[snippets='http-request,http-response,response-fields']
+
 [[admin-soundsource-post-api]]
 ==== 음원 생성 API
 
