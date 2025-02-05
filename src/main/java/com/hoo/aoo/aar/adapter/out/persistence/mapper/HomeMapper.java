@@ -91,7 +91,7 @@ public class HomeMapper {
             case ItemShapeCircleJpaEntity circle -> new QueryRoomItemsResult.ItemData(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getName(),
-                    ItemType.RECTANGLE,
+                    ItemType.CIRCLE,
                     new QueryRoomItemsResult.CircleData(
                             circle.getX(),
                             circle.getY(),
@@ -103,7 +103,7 @@ public class HomeMapper {
             case ItemShapeEllipseJpaEntity ellipse -> new QueryRoomItemsResult.ItemData(
                     itemJpaEntity.getId(),
                     itemJpaEntity.getName(),
-                    ItemType.RECTANGLE,
+                    ItemType.ELLIPSE,
                     null,
                     null,
                     new QueryRoomItemsResult.EllipseData(
@@ -145,6 +145,28 @@ public class HomeMapper {
                 DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getCreatedTime()),
                 DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getUpdatedTime()),
                 soundSourceJpaEntity.getAudioFileId()
+        );
+    }
+
+    public QuerySoundSourcesPathResult mapToQuerySoundSourcesPathResult(List<SoundSourceJpaEntity> soundSourceJpaEntities) {
+        return new QuerySoundSourcesPathResult(
+                soundSourceJpaEntities.stream().map(this::mapToSoundSourcePathInfo).toList()
+        );
+    }
+
+    private QuerySoundSourcesPathResult.SoundSourcePathInfo mapToSoundSourcePathInfo(SoundSourceJpaEntity soundSourceJpaEntity) {
+        return new QuerySoundSourcesPathResult.SoundSourcePathInfo(
+                soundSourceJpaEntity.getName(),
+                soundSourceJpaEntity.getDescription(),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getCreatedTime()),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(soundSourceJpaEntity.getUpdatedTime()),
+                soundSourceJpaEntity.getAudioFileId(),
+                soundSourceJpaEntity.getItem().getHome().getName(),
+                soundSourceJpaEntity.getItem().getHome().getId(),
+                soundSourceJpaEntity.getItem().getRoom().getName(),
+                soundSourceJpaEntity.getItem().getRoom().getId(),
+                soundSourceJpaEntity.getItem().getName(),
+                soundSourceJpaEntity.getItem().getId()
         );
     }
 }

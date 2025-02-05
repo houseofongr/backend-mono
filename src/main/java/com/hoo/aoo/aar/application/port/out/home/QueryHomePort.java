@@ -8,4 +8,5 @@ public interface QueryHomePort {
     QueryRoomItemsResult queryRoomItems(Long roomId);
     QueryItemSoundSourcesResult queryItemSoundSources(Long itemId);
     QuerySoundSourceResult querySoundSource(Long soundSourceId);
+    QuerySoundSourcesPathResult querySoundSourcesPath(Long userId);
 }

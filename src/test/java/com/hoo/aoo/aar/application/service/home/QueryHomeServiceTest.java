@@ -106,4 +106,17 @@ class QueryHomeServiceTest {
         // then
         verify(queryHomePort, times(1)).querySoundSource(soundSourceId);
     }
+
+    @Test
+    @DisplayName("전체음원 경로 조회 서비스 테스트")
+    void testQuerySoundSourcesPath() {
+        // given
+        Long userId = 10L;
+
+        // when
+        sut.querySoundSourcesPath(userId);
+
+        // then
+        verify(queryHomePort, times(1)).querySoundSourcesPath(userId);
+    }
 }

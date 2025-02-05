@@ -148,7 +148,7 @@ class HomePersistenceAdapterTest {
         assertThat(queryRoomItemsResult.room().height()).isEqualTo(1000);
         assertThat(queryRoomItemsResult.room().imageId()).isEqualTo(5);
 
-        assertThat(queryRoomItemsResult.items()).hasSize(1)
+        assertThat(queryRoomItemsResult.items()).hasSize(2)
                 .anySatisfy(itemData -> {
                     assertThat(itemData.id()).isEqualTo(1);
                     assertThat(itemData.name()).isEqualTo("설이");
@@ -161,7 +161,16 @@ class HomePersistenceAdapterTest {
                     assertThat(itemData.circleData()).isNull();
                     assertThat(itemData.ellipseData()).isNull();
                 })
-                .noneMatch(itemData -> itemData.id().equals(2L))
+                .anySatisfy(itemData -> {
+                    assertThat(itemData.id()).isEqualTo(2);
+                    assertThat(itemData.name()).isEqualTo("강아지");
+                    assertThat(itemData.itemType()).isEqualTo(ItemType.CIRCLE);
+                    assertThat(itemData.circleData().x()).isEqualTo(200);
+                    assertThat(itemData.circleData().y()).isEqualTo(200);
+                    assertThat(itemData.circleData().radius()).isEqualTo(10.5f);
+                    assertThat(itemData.rectangleData()).isNull();
+                    assertThat(itemData.ellipseData()).isNull();
+                })
                 .noneMatch(itemData -> itemData.id().equals(3L));
     }
 
@@ -201,5 +210,37 @@ class HomePersistenceAdapterTest {
         assertThat(result.description()).isEqualTo("2025년 골골송 V1");
         assertThat(result.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
         assertThat(result.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+    }
+
+    @Test
+    @DisplayName("전체음원 경로 조회 테스트")
+    void testQuerySoundSourcesPath() {
+        // given
+        Long userId = 10L;
+
+        // when
+        QuerySoundSourcesPathResult result = sut.querySoundSourcesPath(userId);
+
+        // then
+        assertThat(result.soundSources()).hasSize(2)
+                .anySatisfy(soundSourceInfo -> {
+                    assertThat(soundSourceInfo.name()).isEqualTo("골골송");
+                    assertThat(soundSourceInfo.description()).isEqualTo("2025년 골골송 V1");
+                    assertThat(soundSourceInfo.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                    assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                    assertThat(soundSourceInfo.audioFileId()).isEqualTo(1);
+                    assertThat(soundSourceInfo.homeName()).isEqualTo("leaf의 cozy house");
+                    assertThat(soundSourceInfo.roomName()).isEqualTo("거실");
+                    assertThat(soundSourceInfo.itemName()).isEqualTo("설이");
+                }).anySatisfy(soundSourceInfo -> {
+                    assertThat(soundSourceInfo.name()).isEqualTo("멍멍송");
+                    assertThat(soundSourceInfo.description()).isEqualTo("2025년 멍멍송 V1");
+                    assertThat(soundSourceInfo.createdDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                    assertThat(soundSourceInfo.updatedDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                    assertThat(soundSourceInfo.audioFileId()).isEqualTo(2);
+                    assertThat(soundSourceInfo.homeName()).isEqualTo("leaf의 cozy house");
+                    assertThat(soundSourceInfo.roomName()).isEqualTo("거실");
+                    assertThat(soundSourceInfo.itemName()).isEqualTo("강아지");
+                });
     }
 }
