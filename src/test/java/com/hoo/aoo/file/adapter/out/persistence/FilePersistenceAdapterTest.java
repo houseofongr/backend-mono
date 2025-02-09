@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.application.service.FileAttribute;
+import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.domain.File;
@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({FilePersistenceAdapter.class, FileMapper.class, FileAttribute.class})
+@Import({FilePersistenceAdapter.class, FileMapper.class, FileProperties.class})
 class FilePersistenceAdapterTest {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.hoo.aoo.admin.application.service.user;
 
 import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;
+import com.hoo.aoo.admin.application.port.in.user.DeleteUserCommand;
 import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
 import com.hoo.aoo.admin.application.port.in.user.SaveDeletedUserPort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
@@ -40,12 +41,13 @@ class DeleteUserServiceTest {
     void testDeleteUser() {
         // given
         Long userId = 10L;
+        DeleteUserCommand command = new DeleteUserCommand(true, true);
 
         // when
         when(findUserPort.loadUser(userId)).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
         when(createDeletedUserPort.createDeletedUser(any(),anyBoolean(),anyBoolean())).thenReturn(MockEntityFactoryService.getDeletedUser());
-        assertThatThrownBy(() -> sut.deleteUser(1234L, true, true)).hasMessage(AdminErrorCode.USER_NOT_FOUND.getMessage());
-        MessageDto messageDto = sut.deleteUser(userId, true, true);
+        assertThatThrownBy(() -> sut.deleteUser(1234L, command)).hasMessage(AdminErrorCode.USER_NOT_FOUND.getMessage());
+        MessageDto messageDto = sut.deleteUser(userId, command);
 
         // then
         verify(saveDeletedUserPort, times(1)).saveDeletedUser(any());

@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.out.home;
+package com.hoo.aoo.aar.application.port.out.persistence.home;
 
 public interface CheckOwnerPort {
     boolean checkHome(Long userId, Long homeId);

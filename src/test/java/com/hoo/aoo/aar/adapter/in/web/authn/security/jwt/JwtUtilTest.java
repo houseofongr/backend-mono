@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtAttribute;
+import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
@@ -33,7 +33,7 @@ class JwtUtilTest {
 
         MACSigner macSigner = new MACSigner(sharedSecret);
 
-        sut = new JwtUtil(macSigner, new JwtAttribute(new String(sharedSecret), "aoo", 10000L));
+        sut = new JwtUtil(macSigner, new JwtProperties(new String(sharedSecret), "aoo", 10000L));
         jwtDecoder = NimbusJwtDecoder.withSecretKey(macSigner.getSecretKey()).build();
     }
 

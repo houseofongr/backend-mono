@@ -1,7 +1,7 @@
 package com.hoo.aoo.file;
 
 import com.hoo.aoo.common.adapter.in.web.config.SystemTest;
-import com.hoo.aoo.file.application.service.FileAttribute;
+import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.domain.FileSize;
@@ -38,11 +38,11 @@ public class PublicImageSystemTest {
     java.io.File tempDir;
 
     @Autowired
-    FileAttribute fileAttribute;
+    FileProperties fileProperties;
 
     @BeforeEach
     void init() {
-        ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.getPath());
+        ReflectionTestUtils.setField(fileProperties, "baseDir", tempDir.getPath());
     }
 
     @Test

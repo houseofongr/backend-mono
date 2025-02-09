@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-public record JwtAttribute(
+public record JwtProperties(
         String secret,
         String issuer,
         Long expire

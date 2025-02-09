@@ -1,9 +1,6 @@
 package com.hoo.aoo.admin.application.service.user;
 
-import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;
-import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
-import com.hoo.aoo.admin.application.port.in.user.DeleteUserUseCase;
-import com.hoo.aoo.admin.application.port.in.user.SaveDeletedUserPort;
+import com.hoo.aoo.admin.application.port.in.user.*;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
@@ -25,11 +22,11 @@ public class DeleteUserService implements DeleteUserUseCase {
     private final DeleteUserPort deleteUserPort;
 
     @Override
-    public MessageDto deleteUser(Long userId, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
+    public MessageDto deleteUser(Long userId, DeleteUserCommand command) {
         User user = findUserPort.loadUser(userId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
-        DeletedUser deletedUser = createDeletedUserPort.createDeletedUser(user, termsOfDeletionAgreement, personalInformationDeletionAgreement);
+        DeletedUser deletedUser = createDeletedUserPort.createDeletedUser(user, command.termsOfDeletionAgreement(), command.personalInformationDeletionAgreement());
 
         saveDeletedUserPort.saveDeletedUser(deletedUser);
 

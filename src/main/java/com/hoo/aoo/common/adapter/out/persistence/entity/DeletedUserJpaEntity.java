@@ -39,6 +39,14 @@ public class DeletedUserJpaEntity extends DateColumnBaseEntity {
     private Boolean personalInformationDeletionAgreement;
 
     public static DeletedUserJpaEntity create(DeletedUser deletedUser) {
-        return null;
+        return new DeletedUserJpaEntity(
+                null,
+                deletedUser.getUserInfo().getMaskedRealName(),
+                deletedUser.getUserInfo().getMaskedNickname(),
+                deletedUser.getUserInfo().getMaskedEmail(),
+                null,
+                deletedUser.getAgreement().getTermsOfDeletionAgreement(),
+                deletedUser.getAgreement().getPersonalInformationDeletionAgreement()
+        );
     }
 }

@@ -1,5 +1,8 @@
 package com.hoo.aoo.admin.domain.user;
 
+import lombok.Getter;
+
+@Getter
 public class DeleteAgreement {
 
     private final Boolean termsOfDeletionAgreement;

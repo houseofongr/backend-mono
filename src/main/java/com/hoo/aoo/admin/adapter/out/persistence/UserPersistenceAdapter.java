@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
@@ -14,6 +15,9 @@ import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.entity.DeletedUserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +28,11 @@ import java.util.Optional;
 public class UserPersistenceAdapter implements SaveDeletedUserPort, SearchUserPort, FindUserPort, UpdateUserPort, DeleteUserPort {
 
     private final UserJpaRepository userJpaRepository;
+    private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final DeletedUserJpaRepository deletedUserJpaRepository;
+    private final SoundSourceJpaRepository soundSourceJpaRepository;
+    private final ItemJpaRepository itemJpaRepository;
+    private final HomeJpaRepository homeJpaRepository;
     private final UserMapper userMapper;
 
     @Override
@@ -57,6 +65,13 @@ public class UserPersistenceAdapter implements SaveDeletedUserPort, SearchUserPo
 
     @Override
     public void deleteUser(User user) {
+        Long userId = user.getUserId().getId();
 
+        snsAccountJpaRepository.deleteAll(snsAccountJpaRepository.findAllByUserId(userId));
+        soundSourceJpaRepository.deleteAll(soundSourceJpaRepository.findAllByUserId(userId));
+        itemJpaRepository.deleteAll(itemJpaRepository.findAllByUserId(userId));
+        homeJpaRepository.deleteAll(homeJpaRepository.findAllByUserId(userId));
+
+        userJpaRepository.deleteById(userId);
     }
 }

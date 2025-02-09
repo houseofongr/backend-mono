@@ -13,14 +13,14 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 public class JwtConfig {
 
     private final MACSigner macSigner;
-    private final JwtAttribute jwtAttribute;
+    private final JwtProperties jwtProperties;
 
     public JwtConfig(@Value("${security.jwt.secret}") String secret,
                      @Value("${security.jwt.issuer}") String issuer,
                      @Value("${security.jwt.expire}") Long expire
     ) throws KeyLengthException {
-        this.jwtAttribute = new JwtAttribute(secret, issuer, expire);
-        this.macSigner = new MACSigner(jwtAttribute.secret());
+        this.jwtProperties = new JwtProperties(secret, issuer, expire);
+        this.macSigner = new MACSigner(jwtProperties.secret());
     }
 
     @Bean
@@ -30,7 +30,7 @@ public class JwtConfig {
 
     @Bean
     JwtUtil jwtUtil() {
-        return new JwtUtil(macSigner, jwtAttribute);
+        return new JwtUtil(macSigner, jwtProperties);
     }
 
 }

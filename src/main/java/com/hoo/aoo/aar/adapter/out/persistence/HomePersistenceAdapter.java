@@ -2,8 +2,8 @@ package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.aar.application.port.in.home.*;
-import com.hoo.aoo.aar.application.port.out.home.CheckOwnerPort;
-import com.hoo.aoo.aar.application.port.out.home.QueryHomePort;
+import com.hoo.aoo.aar.application.port.out.persistence.home.CheckOwnerPort;
+import com.hoo.aoo.aar.application.port.out.persistence.home.QueryHomePort;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;

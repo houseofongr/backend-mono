@@ -1,7 +1,7 @@
 package com.hoo.aoo.common.application.service;
 
-import com.hoo.aoo.aar.application.port.out.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.user.CreateUserPort;
+import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.persistence.user.CreateUserPort;
 import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;

@@ -1,11 +1,10 @@
 package com.hoo.aoo.aar.application.service.user;
 
-import com.hoo.aoo.aar.application.port.out.user.FindUserPort;
+import com.hoo.aoo.aar.application.port.out.persistence.user.FindUserPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class QueryMyInfoServiceTest {

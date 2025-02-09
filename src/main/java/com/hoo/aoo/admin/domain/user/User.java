@@ -40,8 +40,8 @@ public class User {
 
     public UserInfo getDeletedUserInfo() {
         return new UserInfo(
-                userInfo.getNickname(),
-                userInfo.getNickname(),
-                userInfo.getEmail());
+                userInfo.getMaskedRealName(),
+                userInfo.getMaskedNickname(),
+                userInfo.getMaskedEmail());
     }
 }

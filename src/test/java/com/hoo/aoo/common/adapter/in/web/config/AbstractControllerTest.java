@@ -2,14 +2,12 @@ package com.hoo.aoo.common.adapter.in.web.config;
 
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
-import com.hoo.aoo.file.application.service.FileAttribute;
+import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.domain.File;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,11 +19,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.securityContext;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -42,7 +38,7 @@ public abstract class AbstractControllerTest {
     protected FileJpaRepository fileJpaRepository;
 
     @Autowired
-    protected FileAttribute fileAttribute;
+    protected FileProperties fileProperties;
 
     protected MockMvcTester mockMvcTester;
 
@@ -68,7 +64,7 @@ public abstract class AbstractControllerTest {
 
         mockMvc = useSpringSecurity()? mockMvcBuilder.apply(springSecurity()).build() : mockMvcBuilder.build();
 
-        ReflectionTestUtils.setField(fileAttribute, "baseDir", tempDir.toString());
+        ReflectionTestUtils.setField(fileProperties, "baseDir", tempDir.toString());
 
         this.mockMvcTester = MockMvcTester.from(wac);
     }

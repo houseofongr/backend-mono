@@ -1,5 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.user;
 
+import com.hoo.aoo.aar.adapter.out.api.KakaoLoginApi;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
@@ -9,8 +10,10 @@ import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepos
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,16 +39,34 @@ class DeleteMyAccountControllerTest extends AbstractControllerTest {
     @Autowired
     DeletedUserJpaRepository deletedUserJpaRepository;
 
+    @MockitoBean
+    KakaoLoginApi mockLoginApi;
+
     @Test
     @Sql("DeleteMyAccountControllerTest.sql")
     @DisplayName("회원탈퇴 API")
-    void testDeleteMYAccountAPI() throws Exception {
+    void testDeleteMyAccountAPI() throws Exception {
+
+        //language=JSON
+        String content = """
+                {
+                  "termsOfDeletionAgreement" : true,
+                  "personalInformationDeletionAgreement" : true
+                }
+                """;
+
         mockMvc.perform(delete("/aar/users")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_USER"))
                         ))
                 .andExpect(status().is(200))
                 .andDo(MockMvcRestDocumentation.document("aar-user-delete",
+                        requestFields(
+                                fieldWithPath("termsOfDeletionAgreement").description("삭제 약관 동의여부입니다."),
+                                fieldWithPath("personalInformationDeletionAgreement").description("개인정보 삭제 동의여부입니다.")
+                        ),
                         responseFields(
                                 fieldWithPath("message").description("탈퇴 완료 메시지 : 회원탈퇴가 완료되었습니다.")
                         )

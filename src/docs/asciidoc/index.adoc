@@ -115,6 +115,14 @@ operation::aar-user-get-me[snippets='http-request,http-response,response-fields'
 
 operation::aar-user-patch-me[snippets='http-request,request-fields,http-response,response-fields']
 
+[[aar-user-delete-api]]
+==== 회원탈퇴 API
+
+사용자가 회원탈퇴를 하기 위한 API입니다.
+
+> 연관된 모든 홈, 아이템, 음원, SNS 계정이 삭제되며 삭제된 회원정보를 마스킹하여 별도로 저장합니다.
+
+operation::aar-user-delete[snippets='http-request,request-fields,http-response,response-fields']
 
 [[aar-home-api]]
 === 홈(Home) API

@@ -35,7 +35,7 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
     List<SoundSourceJpaEntity> soundSources;
 
-    public ItemJpaEntity(Long id, String name, Shape shape) {
+    private ItemJpaEntity(Long id, String name, Shape shape) {
         this.id = id;
         this.name = name;
         this.shape = getShapeEntity(shape);

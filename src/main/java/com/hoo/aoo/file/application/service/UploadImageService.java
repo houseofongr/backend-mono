@@ -16,19 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UploadImageService implements UploadPublicImageUseCase, UploadPrivateImageUseCase {
 
-    private final FileAttribute fileAttribute;
+    private final FileProperties fileProperties;
     private final UploadService uploadService;
 
     @Override
     @Transactional
     public UploadFileResult publicUpload(List<MultipartFile> images) {
-        return uploadService.upload(images, new BasicFileIdCreateStrategy(fileAttribute.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE));
+        return uploadService.upload(images, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE));
     }
 
     @Override
     @Transactional
     public UploadFileResult privateUpload(List<MultipartFile> images) {
-        return uploadService.upload(images, new BasicFileIdCreateStrategy(fileAttribute.getBaseDir(), Authority.PRIVATE_FILE_ACCESS, FileType.IMAGE));
+        return uploadService.upload(images, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PRIVATE_FILE_ACCESS, FileType.IMAGE));
     }
 
 }

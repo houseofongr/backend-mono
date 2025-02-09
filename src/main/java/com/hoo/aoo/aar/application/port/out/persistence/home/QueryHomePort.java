@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.out.home;
+package com.hoo.aoo.aar.application.port.out.persistence.home;
 
 import com.hoo.aoo.aar.application.port.in.home.*;
 

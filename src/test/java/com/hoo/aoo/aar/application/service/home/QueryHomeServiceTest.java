@@ -1,8 +1,8 @@
 package com.hoo.aoo.aar.application.service.home;
 
 import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathCommand;
-import com.hoo.aoo.aar.application.port.out.home.CheckOwnerPort;
-import com.hoo.aoo.aar.application.port.out.home.QueryHomePort;
+import com.hoo.aoo.aar.application.port.out.persistence.home.CheckOwnerPort;
+import com.hoo.aoo.aar.application.port.out.persistence.home.QueryHomePort;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

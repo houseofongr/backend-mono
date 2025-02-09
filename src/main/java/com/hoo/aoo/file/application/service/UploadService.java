@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class UploadService {
 
-    private final FileAttribute fileAttribute;
+    private final FileProperties fileProperties;
     private final SaveImageFilePort saveImageFilePort;
     private final WriteFilePort writeFilePort;
     private final RandomFileNamePort randomFileNamePort;
@@ -43,7 +43,7 @@ class UploadService {
                 String fileSystemName = randomFileNamePort.getName(originalFilename);
 
                 FileId fileId = idCreateStrategy.create(originalFilename, fileSystemName);
-                FileSize fileSize = new FileSize(multipartFile.getSize(), fileAttribute.getFileSizeLimit());
+                FileSize fileSize = new FileSize(multipartFile.getSize(), fileProperties.getFileSizeLimit());
 
                 File file = File.create(fileId, FileStatus.CREATED, new OwnerId(ownerId), fileSize);
 

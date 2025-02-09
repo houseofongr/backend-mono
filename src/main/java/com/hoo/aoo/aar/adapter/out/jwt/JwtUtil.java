@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.out.jwt;
 
-import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtAttribute;
+import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
 import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.domain.Role;
@@ -20,7 +20,7 @@ import java.util.Date;
 public class JwtUtil implements IssueAccessTokenPort {
 
     private final MACSigner signer;
-    private final JwtAttribute jwtAttribute;
+    private final JwtProperties jwtProperties;
 
     @Override
     public String issueAccessToken(SnsAccount snsAccount) {
@@ -35,11 +35,11 @@ public class JwtUtil implements IssueAccessTokenPort {
         try {
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(nickname)
-                    .issuer(jwtAttribute.issuer())
+                    .issuer(jwtProperties.issuer())
                     .claim("userId", userId)
                     .claim("snsId", snsId)
                     .claim("role", role)
-                    .expirationTime(new Date(System.currentTimeMillis() + jwtAttribute.expire()))
+                    .expirationTime(new Date(System.currentTimeMillis() + jwtProperties.expire()))
                     .build();
 
             SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);

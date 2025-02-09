@@ -26,7 +26,7 @@ class UploadServiceTest {
 
     UploadService sut;
 
-    FileAttribute fileAttribute;
+    FileProperties fileProperties;
 
     SaveImageFilePort saveImageFilePort;
 
@@ -41,10 +41,10 @@ class UploadServiceTest {
     @BeforeEach
     void init(@TempDir Path tempDir) {
         saveImageFilePort = mock();
-        fileAttribute = new FileAttribute(100 * 1024 * 1024L, tempDir.toString());
+        fileProperties = new FileProperties(100 * 1024 * 1024L, tempDir.toString());
         writeFilePort = mock();
         randomFileNamePort = new FileSystemAdapter();
-        sut = new UploadService(fileAttribute, saveImageFilePort, writeFilePort, randomFileNamePort);
+        sut = new UploadService(fileProperties, saveImageFilePort, writeFilePort, randomFileNamePort);
 
         char[] arr = new char[10 * 1024];
         Arrays.fill(arr, 'a');

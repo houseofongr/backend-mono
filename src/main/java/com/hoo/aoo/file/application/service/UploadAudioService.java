@@ -15,14 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UploadAudioService implements UploadPrivateAudioUseCase {
 
-    private final FileAttribute fileAttribute;
+    private final FileProperties fileProperties;
     private final UploadService uploadService;
 
 
     @Override
     @Transactional
     public UploadFileResult privateUpload(List<MultipartFile> audios, Long ownerId) {
-        return uploadService.upload(audios, ownerId, new BasicFileIdCreateStrategy(fileAttribute.getBaseDir(), Authority.PRIVATE_FILE_ACCESS, FileType.AUDIO));
+        return uploadService.upload(audios, ownerId, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PRIVATE_FILE_ACCESS, FileType.AUDIO));
     }
 
 }

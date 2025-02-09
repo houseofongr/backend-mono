@@ -52,10 +52,16 @@ security:
     secret: cANZLk0MJon8ETjGKatPwEGiKgNjLTaFoPrhp4RQkpc=
     issuer: aar-backend-test
     expire: 10000
+  oauth2:
+    kakao:
+      client-id: test1234
+      client-secret: test1234
+      unlink-url: https://kapi.kakao.com/v1/user/unlink
+      admin-key: admin1234
 
 file:
   size-limit: 104857600 # 100MB : 100 * 1024 * 1024 Byte
-  base-dir: "/archive"
+  base-dir: /archive
 
 database:
   mysql:

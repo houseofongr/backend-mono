@@ -1,7 +1,9 @@
 package com.hoo.aoo.admin.domain.user;
 
 import com.hoo.aoo.common.domain.BaseTime;
+import lombok.Getter;
 
+@Getter
 public class DeletedUser {
 
     private final DeletedUserId userId;

@@ -2,10 +2,10 @@ package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
-import com.hoo.aoo.aar.application.port.out.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.snsaccount.SaveSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.user.FindUserPort;
+import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.application.port.out.persistence.user.FindUserPort;
 import com.hoo.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
 import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
 import com.hoo.aoo.aar.domain.user.User;

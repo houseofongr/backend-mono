@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Getter
-public class FileAttribute {
+public class FileProperties {
 
     private final String baseDir;
     private final Long fileSizeLimit;
 
-    public FileAttribute(@Value("${file.size-limit}") Long fileSizeLimit,
-                         @Value("${file.base-dir}") String baseDir) {
+    public FileProperties(@Value("${file.size-limit}") Long fileSizeLimit,
+                          @Value("${file.base-dir}") String baseDir) {
         this.fileSizeLimit = fileSizeLimit;
         this.baseDir = baseDir;
     }
