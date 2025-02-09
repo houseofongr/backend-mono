@@ -9,6 +9,7 @@ import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ class HomePersistenceAdapterTest {
         // given
         Home home = Home.create(1L,
                 House.create(20L,new HouseDetail("cozy house", "leaf", "this is cozy house"),5000f,5000f,null,null,null),
-                User.load(10L, "leaf", "남상엽"));
+                MockEntityFactoryService.getAdminUser());
 
         // when
         Long result = sut.save(home);

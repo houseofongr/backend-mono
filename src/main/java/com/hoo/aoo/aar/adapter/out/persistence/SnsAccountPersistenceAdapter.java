@@ -5,7 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepositor
 import com.hoo.aoo.aar.application.port.out.snsaccount.FindSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.snsaccount.SaveSnsAccountPort;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

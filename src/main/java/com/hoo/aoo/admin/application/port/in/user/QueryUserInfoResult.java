@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.in.user;
 
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.application.port.in.Pagination;
 
 import java.util.List;

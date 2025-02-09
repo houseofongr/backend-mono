@@ -9,7 +9,7 @@ import com.hoo.aoo.aar.application.port.out.snsaccount.SaveSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.user.FindUserPort;
 import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;

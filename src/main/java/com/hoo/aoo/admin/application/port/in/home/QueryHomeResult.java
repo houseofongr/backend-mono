@@ -35,7 +35,7 @@ public record QueryHomeResult(
     ) {
 
         public static UserInfo of(User user) {
-            return new UserInfo(user.getUserId().getId(), user.getUserName().getNickName());
+            return new UserInfo(user.getUserId().getId(), user.getUserInfo().getNickname());
         }
     }
 

@@ -1,6 +1,5 @@
-package com.hoo.aoo.aar.domain.user.snsaccount;
+package com.hoo.aoo.admin.domain.user.snsaccount;
 
-import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import lombok.Getter;
 
 @Getter

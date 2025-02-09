@@ -21,6 +21,6 @@ class HomeDetailTest {
         HomeDetail detail = new HomeDetail(house, user);
 
         // then
-        assertThat(detail.getName()).isEqualTo(user.getUserName().getNickName() + "의 " + house.getHouseDetail().getTitle());
+        assertThat(detail.getName()).isEqualTo(user.getUserInfo().getNickname() + "의 " + house.getHouseDetail().getTitle());
     }
 }

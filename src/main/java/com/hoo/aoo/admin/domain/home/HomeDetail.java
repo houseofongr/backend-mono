@@ -13,7 +13,7 @@ public class HomeDetail {
     }
 
     public HomeDetail(House house, User user) {
-        this.name = user.getUserName().getNickName() + "의 " + house.getHouseDetail().getTitle();
+        this.name = user.getUserInfo().getNickname() + "의 " + house.getHouseDetail().getTitle();
     }
 
 }

@@ -1,22 +1,47 @@
 package com.hoo.aoo.admin.domain.user;
 
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 public class User {
-    private final UserId userId;
-    private UserName userName;
 
-    private User(UserId userId, String nickName, String realName) {
+    private final UserId userId;
+    private final UserInfo userInfo;
+    private final Agreement agreement;
+    private final BaseTime baseTime;
+    private final List<SnsAccount> snsAccounts;
+
+    private User(UserId userId, UserInfo userInfo, Agreement agreement, BaseTime baseTime, List<SnsAccount> snsAccounts) {
         this.userId = userId;
-        this.userName = new UserName(nickName, realName);
+        this.userInfo = userInfo;
+        this.agreement = agreement;
+        this.baseTime = baseTime;
+        this.snsAccounts = snsAccounts;
     }
 
-    public static User load(Long userId, String nickName, String realName) {
-        return new User(new UserId(userId), nickName, realName);
+    public static User load(Long id, String realName, String nickname, String email, Boolean termsOfUseAgreement, Boolean personalInformationAgreement, ZonedDateTime createdTime, ZonedDateTime updatedTime, List<SnsAccount> snsAccounts) {
+        return new User(
+                new UserId(id),
+                new UserInfo(realName, nickname, email),
+                new Agreement(termsOfUseAgreement, personalInformationAgreement),
+                new BaseTime(createdTime, updatedTime),
+                snsAccounts
+        );
     }
 
     public void updateNickname(String nickname) {
-        this.userName = new UserName(nickname, userName.getRealName());
+        this.userInfo.updateNickname(nickname);
+    }
+
+    public UserInfo getDeletedUserInfo() {
+        return new UserInfo(
+                userInfo.getNickname(),
+                userInfo.getNickname(),
+                userInfo.getEmail());
     }
 }

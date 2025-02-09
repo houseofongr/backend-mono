@@ -41,6 +41,11 @@ public class IdPersistenceAdapter implements IssueIdPort {
     }
 
     @Override
+    public Long issueDeletedUserId() {
+        return issue("DELETED_USER");
+    }
+
+    @Override
     public Long issueUserId() {
         return issue("AAR_USER");
     }

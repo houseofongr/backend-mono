@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.domain.user;
+package com.hoo.aoo.admin.domain.user;
 
 import lombok.Getter;
 
@@ -14,4 +14,7 @@ public class UserInfo {
         this.email = email;
     }
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

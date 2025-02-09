@@ -6,7 +6,7 @@ import com.hoo.aoo.aar.domain.user.UserId;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccountId;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccountInfo;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Component("AARUserPersistenceAdapter")
 @AllArgsConstructor
 public class UserPersistenceAdapter implements FindUserPort, SaveUserPort {
 

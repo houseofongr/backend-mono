@@ -2,7 +2,6 @@ package com.hoo.aoo.common.application.service;
 
 import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
@@ -12,6 +11,8 @@ import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Rectangle;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.user.DeletedUser;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.adapter.MockIdAdapter;
 
 import java.time.ZonedDateTime;
@@ -56,7 +57,7 @@ public class MockEntityFactoryService {
     }
 
     public static com.hoo.aoo.admin.domain.user.User getAdminUser() {
-        return com.hoo.aoo.admin.domain.user.User.load(10L, "leaf", "남상엽");
+        return com.hoo.aoo.admin.domain.user.User.load(10L, "남상엽", "leaf", "test@example.com", true, true, ZonedDateTime.now(), ZonedDateTime.now(), List.of());
     }
 
     public static Item getRectangleItem() throws Exception {
@@ -100,5 +101,9 @@ public class MockEntityFactoryService {
     public static SoundSource loadSoundSource() throws Exception {
         SoundSource soundSource = getSoundSource();
         return SoundSource.load(soundSource.getSoundSourceId().getId(), getRectangleItem().getItemId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(),soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(),ZonedDateTime.now(),soundSource.getActive().isActive());
+    }
+
+    public static DeletedUser getDeletedUser() {
+        return factory.createDeletedUser(getAdminUser(),true,true);
     }
 }

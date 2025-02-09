@@ -4,7 +4,7 @@ import com.hoo.aoo.aar.application.port.out.snsaccount.CreateSnsAccountPort;
 import com.hoo.aoo.aar.application.port.out.user.CreateUserPort;
 import com.hoo.aoo.aar.domain.user.User;
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;
 import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
@@ -19,6 +19,8 @@ import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Shape;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.user.DeletedUser;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.application.port.out.IssueIdPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort {
 
     private final IssueIdPort issueIdPort;
 
@@ -73,4 +75,9 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
         return SoundSource.create(newId, itemId, audioFileId, name, description, active);
     }
 
+    @Override
+    public DeletedUser createDeletedUser(com.hoo.aoo.admin.domain.user.User user, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
+        Long newId = issueIdPort.issueDeletedUserId();
+        return DeletedUser.create(newId, user, termsOfDeletionAgreement, personalInformationDeletionAgreement);
+    }
 }

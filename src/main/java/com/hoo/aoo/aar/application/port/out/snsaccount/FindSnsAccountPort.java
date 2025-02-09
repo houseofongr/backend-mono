@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.application.port.out.snsaccount;
 
 import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsDomain;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 
 import java.util.Optional;
 

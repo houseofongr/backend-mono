@@ -1,11 +1,11 @@
-package com.hoo.aoo.aar.adapter.out.persistence.mapper;
+package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import org.springframework.stereotype.Component;
 
-@Component("AARSnsAccountMapper")
+@Component
 public class SnsAccountMapper {
 
     public SnsAccountJpaEntity mapToNewJpaEntity(SnsAccount snsAccount) {

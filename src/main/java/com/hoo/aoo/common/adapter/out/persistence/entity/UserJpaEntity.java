@@ -44,6 +44,6 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     private List<SnsAccountJpaEntity> snsAccountEntities;
 
     public void update(User user) {
-        nickname = user.getUserName().getNickName();
+        nickname = user.getUserInfo().getNickname();
     }
 }

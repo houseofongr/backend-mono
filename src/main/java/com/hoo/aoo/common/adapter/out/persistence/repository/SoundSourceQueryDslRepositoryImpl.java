@@ -77,4 +77,14 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
 
         return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);
     }
+
+    @Override
+    public List<SoundSourceJpaEntity> findAllByUserId(Long userId) {
+        return query.selectFrom(soundSourceJpaEntity)
+                .leftJoin(soundSourceJpaEntity.item, itemJpaEntity)
+                .leftJoin(itemJpaEntity.home, homeJpaEntity)
+                .leftJoin(homeJpaEntity.user, userJpaEntity)
+                .where(userJpaEntity.id.eq(userId))
+                .fetch();
+    }
 }
