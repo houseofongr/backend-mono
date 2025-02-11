@@ -84,7 +84,7 @@ public class AdminSecurityConfig {
     protected CorsConfigurationSource adminCorsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedOrigin("*"); // TODO 관리자로그인 완료 후 cors 재설정 필요
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setExposedHeaders((List.of("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
