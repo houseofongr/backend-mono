@@ -12,7 +12,7 @@ public class LoginDocumentationController {
 
     @PostMapping("/admin/authn/login")
     public void login(HttpServletResponse response) throws IOException {
-        String redirectUrl = UriComponentsBuilder.fromUriString("https://admin.archiveofongr.site")
+        String redirectUrl = UriComponentsBuilder.fromUriString("https://admin.archiveofongr.site/login?success")
                 .build().toUriString();
 
         response.sendRedirect(redirectUrl);

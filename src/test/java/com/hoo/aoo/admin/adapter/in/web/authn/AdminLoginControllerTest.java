@@ -58,7 +58,7 @@ public class AdminLoginControllerTest {
                                     parameterWithName("password").description("로그인하는 관리자 계정 Password입니다.")
                             ),
                             responseHeaders(
-                                    headerWithName("location").description("로그인 시도 이후 이동하는 페이지입니다. +" + "\n" + "* 성공 시 : 메인페이지, 실패 시 : 로그인페이지")
+                                    headerWithName("location").description("로그인 시도 이후 이동하는 URL입니다. +" + "\n" + "* 성공 시 : /login?success, 실패 시 : /login?failure")
                             )
                         ));
     }

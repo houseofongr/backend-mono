@@ -39,7 +39,7 @@ public class AdminSecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/admin/authn/login")
                         .defaultSuccessUrl("/login?success")
-                        .failureForwardUrl("/login?failure")
+                        .failureUrl("/login?failure")
                 )
 
                 // 로컬 테스트 간 임시 허용
