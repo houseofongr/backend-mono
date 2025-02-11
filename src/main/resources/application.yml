@@ -87,3 +87,9 @@ spring:
 server:
   tomcat:
     max-http-form-post-size: 100MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
