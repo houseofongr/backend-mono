@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RefreshController {
 
-    @GetMapping({"/users/**", "/houses/**", "/soundsources/**", "/users/{path:.+}", "/houses/{path:.+}", "/soundsources/{path:.+}"})
+    @GetMapping({"/users/**", "/houses/**", "/soundsources/**"})
     public String refresh() {
-        return "index.html";
+        return "forward:/index.html";
     }
 }
