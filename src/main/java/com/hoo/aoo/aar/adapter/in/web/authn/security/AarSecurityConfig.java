@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.OAuth2AuthorizationFailureHandler;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
@@ -25,7 +26,7 @@ import static org.springframework.http.HttpMethod.*;
 public class AarSecurityConfig {
 
     @Bean
-    public SecurityFilterChain aarFilterChain(HttpSecurity http, OAuth2UserServiceDelegator userService, OAuth2SuccessHandler oAuth2SuccessHandler, JwtDecoder jwtDecoder) throws Exception {
+    public SecurityFilterChain aarFilterChain(HttpSecurity http, OAuth2UserServiceDelegator userService, OAuth2SuccessHandler oAuth2SuccessHandler, OAuth2FailureHandler failureHandler, JwtDecoder jwtDecoder) throws Exception {
         return http
                 .securityMatcher("/aar/**")
                 .csrf(CsrfConfigurer::disable)
@@ -39,7 +40,8 @@ public class AarSecurityConfig {
                                 redirection.baseUri("/aar/authn/code/**"))
                         .userInfoEndpoint(userInfo ->
                                 userInfo.userService(userService))
-                        .successHandler(oAuth2SuccessHandler))
+                        .successHandler(oAuth2SuccessHandler)
+                        .failureHandler(failureHandler))
 
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.decoder(jwtDecoder)))
