@@ -1,9 +1,6 @@
 package com.hoo.aoo.aar.application.port.out.persistence.user;
 
 import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
-import com.hoo.aoo.aar.domain.user.User;
-
-import java.util.Optional;
 
 public interface QueryUserPort {
     QueryMyInfoResult queryMyInfo(Long userId);
