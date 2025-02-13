@@ -41,12 +41,12 @@ class RegisterUserServiceTest {
         RegisterUserCommand command = new RegisterUserCommand(1L, true, true);
 
         // when
-        when(findSnsAccountPort.load(1L)).thenReturn(Optional.of(MockEntityFactoryService.getSnsAccount()));
+        when(findSnsAccountPort.loadSnsAccount(1L)).thenReturn(Optional.of(MockEntityFactoryService.getSnsAccount()));
         when(createUserPort.createUser(any(), any(), any())).thenReturn(MockEntityFactoryService.getUser());
         RegisterUserResult register = sut.register(command);
 
         // then
-        verify(findSnsAccountPort, times(1)).load(1L);
+        verify(findSnsAccountPort, times(1)).loadSnsAccount(1L);
         verify(saveUserPort, times(1)).save(any());
         verify(jwtUtil, times(1)).issueAccessToken((any()));
 

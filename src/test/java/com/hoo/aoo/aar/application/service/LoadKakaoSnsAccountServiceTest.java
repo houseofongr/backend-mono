@@ -1,16 +1,17 @@
 package com.hoo.aoo.aar.application.service;
 
-import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
-import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.admin.application.port.out.snsaccount.SaveSnsAccountPort;
+import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
+import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
+import com.hoo.aoo.aar.application.port.out.persistence.user.QueryUserPort;
 import com.hoo.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
-import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.application.port.in.snsaccount.CreateSnsAccountUseCase;
+import com.hoo.aoo.admin.application.port.in.snsaccount.LoadSnsAccountUseCase;
 import com.hoo.aoo.admin.domain.user.UserId;
-import com.hoo.aoo.admin.domain.user.UserInfo;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountId;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountInfo;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Map;
-import java.util.Optional;
 
 import static com.hoo.aoo.common.util.GsonUtil.gson;
 import static org.assertj.core.api.Assertions.*;
@@ -29,21 +29,18 @@ class LoadKakaoSnsAccountServiceTest {
 
     LoadKakaoSnsAccountService sut;
 
-    FindSnsAccountPort findSnsAccountPort;
-    FindUserPort findUserPort;
-    CreateSnsAccountPort createSnsAccountPort;
-    SaveSnsAccountPort saveSnsAccountPort;
-
+    LoadSnsAccountUseCase loadSnsAccountUseCase;
+    QueryUserPort queryUserPort;
+    CreateSnsAccountUseCase createSnsAccountUseCase;
     JwtUtil jwtUtil;
 
     @BeforeEach
     void init() {
-        findSnsAccountPort = mock();
-        findUserPort = mock();
-        createSnsAccountPort = mock();
-        saveSnsAccountPort = mock();
+        loadSnsAccountUseCase = mock();
+        queryUserPort = mock();
+        createSnsAccountUseCase = mock();
         jwtUtil = mock(JwtUtil.class);
-        sut = new LoadKakaoSnsAccountService(findSnsAccountPort, findUserPort, createSnsAccountPort, saveSnsAccountPort, jwtUtil);
+        sut = new LoadKakaoSnsAccountService(loadSnsAccountUseCase, queryUserPort, createSnsAccountUseCase, jwtUtil);
     }
 
     @Test
@@ -51,14 +48,13 @@ class LoadKakaoSnsAccountServiceTest {
     void testExistUser() {
         // given
         OAuth2User oAuth2User = mock();
-        SnsAccount snsAccount = mock();
-        User user = mock();
+        SnsAccount snsAccount = SnsAccount.load(1L, SnsDomain.KAKAO, "sns_id", "leaf", "leaf", "test@example.com", null, null, 1L);
+        QueryMyInfoResult result = mock();
 
         // when
-        when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.of(snsAccount));
-        when(snsAccount.getUserId()).thenReturn(new UserId(1L));
-        when(findUserPort.loadUser(1L)).thenReturn(Optional.of(user));
-        when(user.getUserInfo()).thenReturn(new UserInfo("남상엽","leaf", "test@example.com"));
+        when(loadSnsAccountUseCase.loadSnsAccount(any(), any())).thenReturn(snsAccount);
+        when(queryUserPort.queryMyInfo(1L)).thenReturn(result);
+        when(result.nickname()).thenReturn("leaf");
         OAuth2User loadUser = sut.load(oAuth2User);
 
         // then
@@ -81,12 +77,11 @@ class LoadKakaoSnsAccountServiceTest {
 
         // when
         when(user.getAttributes()).thenReturn(attributes);
-        when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.empty());
-        when(createSnsAccountPort.createSnsAccount(any(),any(),any(),any(),any())).thenReturn(MockEntityFactoryService.getSnsAccount());
+        when(loadSnsAccountUseCase.loadSnsAccount(any(), any())).thenReturn(null);
+        when(createSnsAccountUseCase.createSnsAccount(any(), any(), any(), any(), any())).thenReturn(MockEntityFactoryService.getSnsAccount());
         OAuth2User loadUser = sut.load(user);
 
         // then
-        verify(saveSnsAccountPort, times(1)).save(any());
         assertThat(loadUser.getAttributes()).extractingByKey("nickname").isEqualTo("leaf");
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
@@ -99,11 +94,10 @@ class LoadKakaoSnsAccountServiceTest {
         SnsAccount snsAccount = MockEntityFactoryService.getSnsAccount();
 
         // when
-        when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.of(snsAccount));
+        when(loadSnsAccountUseCase.loadSnsAccount(any(), any())).thenReturn(snsAccount);
         OAuth2User loadUser = sut.load(user);
 
         // then
-        verify(saveSnsAccountPort, times(0)).save(any());
         assertThat(loadUser.getAttributes()).extractingByKey("isFirstLogin", as(BOOLEAN)).isTrue();
     }
 }

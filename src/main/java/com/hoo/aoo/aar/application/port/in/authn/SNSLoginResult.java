@@ -1,7 +1,6 @@
 package com.hoo.aoo.aar.application.port.in.authn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 
@@ -21,26 +20,6 @@ public record SNSLoginResult(
                 (String) attributes.get("accessToken"),
                 (String) attributes.get("provider"),
                 (Boolean) attributes.get("isFirstLogin"));
-    }
-
-    public static SNSLoginResult from(SnsAccount snsAccount, String accessToken) {
-
-        return new SNSLoginResult(
-                snsAccount.getSnsAccountInfo().getNickname(),
-                accessToken,
-                snsAccount.getSnsAccountId().getSnsDomain().name().toUpperCase(),
-                true
-        );
-    }
-
-    public static SNSLoginResult from(User user, String accessToken, SnsDomain snsDomain) {
-
-        return new SNSLoginResult(
-                user.getUserInfo().getNickname(),
-                accessToken,
-                snsDomain.name().toUpperCase(),
-                false
-        );
     }
 
     @JsonIgnore

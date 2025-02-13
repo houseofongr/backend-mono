@@ -28,7 +28,7 @@ public class RegisterUserService implements RegisterUserUseCase {
     @Transactional
     public RegisterUserResult register(RegisterUserCommand command) {
 
-        SnsAccount snsAccount = findSnsAccountPort.load(command.snsId())
+        SnsAccount snsAccount = findSnsAccountPort.loadSnsAccount(command.snsId())
                 .orElseThrow(() -> new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND));
 
         if (snsAccount.getUserId() != null && snsAccount.getUserId().getId() != null)

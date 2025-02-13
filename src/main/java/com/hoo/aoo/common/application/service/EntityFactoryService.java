@@ -42,7 +42,7 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     @Override
     public SnsAccount createSnsAccount(SnsDomain snsDomain, String snsId, String realName, String nickname, String email) {
         Long newId = issueIdPort.issueSnsAccountId();
-        return SnsAccount.register(newId, snsDomain, snsId, realName, nickname, email);
+        return SnsAccount.create(newId, snsDomain, snsId, realName, nickname, email);
     }
 
     @Override

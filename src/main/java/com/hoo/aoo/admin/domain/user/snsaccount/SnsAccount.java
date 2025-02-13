@@ -5,6 +5,7 @@ import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
+import java.util.function.Predicate;
 
 @Getter
 public class SnsAccount {
@@ -20,7 +21,7 @@ public class SnsAccount {
         this.userId = userId;
     }
 
-    public static SnsAccount register(Long persistenceId, SnsDomain snsDomain, String snsId, String realName, String nickname, String email) {
+    public static SnsAccount create(Long persistenceId, SnsDomain snsDomain, String snsId, String realName, String nickname, String email) {
         return new SnsAccount(
                 new SnsAccountId(persistenceId, snsDomain, snsId),
                 new SnsAccountInfo(realName, nickname, email),
@@ -40,5 +41,9 @@ public class SnsAccount {
 
     public void link(Long userId) {
         this.userId = new UserId(userId);
+    }
+
+    public boolean isRegistered() {
+        return this.userId != null && getUserId().getId() != null;
     }
 }

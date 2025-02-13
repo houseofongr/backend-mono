@@ -3,13 +3,9 @@ package com.hoo.aoo.aar.application.service.authn;
 import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.hoo.aoo.aar.application.port.in.authn.SNSLoginResult;
 import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
-import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.admin.application.port.out.snsaccount.SaveSnsAccountPort;
-import com.hoo.aoo.aar.application.service.AarErrorCode;
-import com.hoo.aoo.aar.application.service.AarException;
-import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
-import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.aar.application.port.out.persistence.user.QueryUserPort;
+import com.hoo.aoo.admin.application.port.in.snsaccount.CreateSnsAccountUseCase;
+import com.hoo.aoo.admin.application.port.in.snsaccount.LoadSnsAccountUseCase;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import lombok.AllArgsConstructor;
@@ -18,64 +14,61 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static com.hoo.aoo.common.util.GsonUtil.gson;
 
 @Component
+@Transactional
 @AllArgsConstructor
 public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
 
-    private final FindSnsAccountPort findSnsAccountPort;
-    private final FindUserPort findUserPort;
-    private final CreateSnsAccountPort createSnsAccountPort;
-    private final SaveSnsAccountPort saveSnsAccountPort;
+    private final LoadSnsAccountUseCase loadSnsAccountUseCase;
+    private final QueryUserPort queryUserPort;
+    private final CreateSnsAccountUseCase createSnsAccountUseCase;
     private final IssueAccessTokenPort issueAccessTokenPort;
 
     @Override
-    @Transactional
     public OAuth2User load(OAuth2User user) {
 
         OAuth2Dto.KakaoUserInfo userInfo = gson.fromJson(gson.toJsonTree(user.getAttributes()), OAuth2Dto.KakaoUserInfo.class);
-        Optional<SnsAccount> snsAccountOptional = findSnsAccountPort.load(SnsDomain.KAKAO, userInfo.id());
+        SnsAccount snsAccount = loadSnsAccountUseCase.loadSnsAccount(SnsDomain.KAKAO, userInfo.id());
 
-        // 등록된 SNS 계정
-        if (snsAccountOptional.isPresent()) {
-            SnsAccount snsAccountInDB = snsAccountOptional.get();
+        if (snsAccount != null) {
 
-            // 사용자외 연동되지 않은 계정
-            if (snsAccountInDB.getUserId().getId() == null) {
-                SNSLoginResult response = SNSLoginResult.from(snsAccountInDB, issueAccessTokenPort.issueAccessToken(snsAccountInDB));
-                return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
-            }
+            SNSLoginResult response = snsAccount.isRegistered() ?
 
-            Optional<User> userOptional = findUserPort.loadUser(snsAccountInDB.getUserId().getId());
+                            new SNSLoginResult(
+                                    queryUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
+                                    issueAccessTokenPort.issueAccessToken(snsAccount),
+                                    SnsDomain.KAKAO.name(),
+                                    false
+                            ) :
 
-            // 사용자와 연동된 계정
-            if (userOptional.isPresent()) {
-                SNSLoginResult response = SNSLoginResult.from(userOptional.get(), issueAccessTokenPort.issueAccessToken(snsAccountInDB), SnsDomain.KAKAO);
-                return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
-            }
+                            new SNSLoginResult(
+                                    snsAccount.getSnsAccountInfo().getNickname(),
+                                    issueAccessTokenPort.issueAccessToken(snsAccount),
+                                    SnsDomain.KAKAO.name(),
+                                    true);
 
-            else throw new AarException(AarErrorCode.LOAD_ENTITY_FAILED);
+            return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
 
-        // 등록되지 않은 SNS 계정
-        } else {
-            SnsAccount newSnsAccount = saveNewAccount(userInfo);
-            SNSLoginResult response = SNSLoginResult.from(newSnsAccount, issueAccessTokenPort.issueAccessToken(newSnsAccount));
+
+        } else { //register
+
+            SnsAccount newSnsAccount = createSnsAccountUseCase.createSnsAccount(
+                    SnsDomain.KAKAO,
+                    userInfo.id(),
+                    userInfo.kakao_account().profile().nickname(),
+                    userInfo.kakao_account().profile().nickname(),
+                    userInfo.kakao_account().email());
+
+            SNSLoginResult response = new SNSLoginResult(
+                    newSnsAccount.getSnsAccountInfo().getNickname(),
+                    issueAccessTokenPort.issueAccessToken(newSnsAccount),
+                    SnsDomain.KAKAO.name(),
+                    true);
+
             return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
         }
-    }
-
-    private SnsAccount saveNewAccount(OAuth2Dto.KakaoUserInfo userInfo) {
-        String name = userInfo.kakao_account().profile().nickname();
-        String email = userInfo.kakao_account().email();
-        String snsId = userInfo.id();
-
-        SnsAccount newAccount = createSnsAccountPort.createSnsAccount(SnsDomain.KAKAO, snsId, name, name, email);
-        saveSnsAccountPort.save(newAccount);
-
-        return newAccount;
     }
 
 }

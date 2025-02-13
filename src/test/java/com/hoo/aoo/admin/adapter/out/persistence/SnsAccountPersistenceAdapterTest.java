@@ -36,8 +36,8 @@ class SnsAccountPersistenceAdapterTest {
         SnsAccount snsAccount = MockEntityFactoryService.getSnsAccount();
 
         // when
-        Optional<SnsAccount> entityById = sut.load(1L);
-        Optional<SnsAccount> entityBySnsId = sut.load(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId());
+        Optional<SnsAccount> entityById = sut.loadSnsAccount(1L);
+        Optional<SnsAccount> entityBySnsId = sut.loadSnsAccount(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId());
 
         // then
         assertThat(entityById).isNotEmpty();
