@@ -30,12 +30,4 @@ public abstract class ItemShapeJpaEntity {
     @OneToOne(mappedBy = "shape", fetch = FetchType.EAGER)
     private ItemJpaEntity item;
 
-    public ItemType getType() {
-        return switch (this) {
-            case ItemShapeRectangleJpaEntity rectangle -> ItemType.RECTANGLE;
-            case ItemShapeCircleJpaEntity circle -> ItemType.CIRCLE;
-            case ItemShapeEllipseJpaEntity ellipse -> ItemType.ELLIPSE;
-            default -> throw new UnsupportedOperationException();
-        };
-    }
 }

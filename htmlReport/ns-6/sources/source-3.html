@@ -1,0 +1,131 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PatchMyInfoController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.aar.adapter.in.web.user</a>
+</div>
+
+<h1>Coverage Summary for Class: PatchMyInfoController (com.hoo.aoo.aar.adapter.in.web.user)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PatchMyInfoController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.aar.adapter.in.web.user;
+&nbsp;
+&nbsp;import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.UpdateUserInfoCommand;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.UpdateUserInfoUseCase;
+&nbsp;import com.hoo.aoo.common.application.port.in.MessageDto;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.PatchMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestBody;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class PatchMyInfoController {
+&nbsp;
+&nbsp;    private final UpdateUserInfoUseCase useCase;
+&nbsp;
+&nbsp;    @PatchMapping(&quot;/aar/users/me&quot;)
+&nbsp;    public ResponseEntity&lt;MessageDto&gt; patchMyInfo(
+&nbsp;            @Jwt(&quot;userId&quot;) Long userId,
+&nbsp;            @RequestBody UpdateUserInfoCommand command
+&nbsp;    ) {
+<b class="fc">&nbsp;        return ResponseEntity.ok(useCase.updateUserInfo(userId, command));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

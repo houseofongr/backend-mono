@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.domain.user.snsaccount;
 
+import com.hoo.aoo.admin.domain.user.UserId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

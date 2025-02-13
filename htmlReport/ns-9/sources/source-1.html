@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > HomePersistenceAdapter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.aar.adapter.out.persistence</a>
+</div>
+
+<h1>Coverage Summary for Class: HomePersistenceAdapter (com.hoo.aoo.aar.adapter.out.persistence)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomePersistenceAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.aar.adapter.out.persistence;
+&nbsp;
+&nbsp;import com.hoo.aoo.aar.adapter.out.persistence.mapper.HomeMapper;
+&nbsp;import com.hoo.aoo.aar.application.port.in.home.*;
+&nbsp;import com.hoo.aoo.aar.application.port.out.persistence.home.CheckOwnerPort;
+&nbsp;import com.hoo.aoo.aar.application.port.out.persistence.home.QueryHomePort;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
+&nbsp;import com.hoo.aoo.common.application.port.in.Pagination;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.data.domain.Page;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;@Component(&quot;AARHomePersistenceAdapter&quot;)
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
+&nbsp;
+&nbsp;    private final HomeJpaRepository homeJpaRepository;
+&nbsp;    private final RoomJpaRepository roomJpaRepository;
+&nbsp;    private final ItemJpaRepository itemJpaRepository;
+&nbsp;    private final SoundSourceJpaRepository soundSourceJpaRepository;
+&nbsp;    private final HomeMapper homeMapper;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QueryUserHomesResult queryUserHomes(Long userId) {
+<b class="fc">&nbsp;        return homeMapper.mapToQueryUserHomes(homeJpaRepository.findAllByUserId(userId));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QueryHomeRoomsResult queryHomeRooms(Long homeId) {
+<b class="fc">&nbsp;        return homeMapper.mapToQueryHomeRooms(homeJpaRepository.findById(homeId).orElseThrow());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QueryRoomItemsResult queryRoomItems(Long roomId) {
+<b class="fc">&nbsp;        return homeMapper.mapToQueryRoomItems(roomJpaRepository.findById(roomId).orElseThrow());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QueryItemSoundSourcesResult queryItemSoundSources(Long itemId) {
+<b class="fc">&nbsp;        return homeMapper.mapToQueryItemSoundSources(itemJpaRepository.findById(itemId).orElseThrow());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QuerySoundSourceResult querySoundSource(Long soundSourceId) {
+<b class="fc">&nbsp;        return homeMapper.mapToQuerySoundSource(soundSourceJpaRepository.findById(soundSourceId).orElseThrow());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QuerySoundSourcesPathResult querySoundSourcesPath(QuerySoundSourcesPathCommand command) {
+<b class="fc">&nbsp;        Page&lt;QuerySoundSourcesPathResult.SoundSourcePathInfo&gt; result = soundSourceJpaRepository.findAllActivatedByIdWithPathEntity(command).map(homeMapper::mapToSoundSourcePathInfo);</b>
+<b class="fc">&nbsp;        return new QuerySoundSourcesPathResult(result.getContent(), Pagination.of(result));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean checkHome(Long userId, Long homeId) {
+<b class="fc">&nbsp;        return homeJpaRepository.existsByUserIdAndId(userId, homeId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean checkRoom(Long homeId, Long roomId) {
+<b class="fc">&nbsp;        Long houseId = homeJpaRepository.findById(homeId).orElseThrow().getHouse().getId();</b>
+<b class="fc">&nbsp;        return roomJpaRepository.existsByHouseIdAndId(houseId, roomId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean checkItem(Long userId, Long itemId) {
+<b class="fc">&nbsp;        return itemJpaRepository.existsByUserIdAndItemId(userId, itemId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean checkSoundSource(Long userId, Long soundSourceId) {
+<b class="fc">&nbsp;        return soundSourceJpaRepository.existsByUserIdAndId(userId, soundSourceId);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

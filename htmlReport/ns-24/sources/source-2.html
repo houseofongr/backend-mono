@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DeleteHomeService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.application.service.home</a>
+</div>
+
+<h1>Coverage Summary for Class: DeleteHomeService (com.hoo.aoo.admin.application.service.home)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DeleteHomeService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DeleteHomeService$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.application.service.home;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.application.port.in.home.DeleteHomeUseCase;
+&nbsp;import com.hoo.aoo.admin.application.port.out.home.DeleteHomePort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.item.DeleteItemPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.item.FindItemPort;
+&nbsp;import com.hoo.aoo.common.application.port.in.MessageDto;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.transaction.annotation.Transactional;
+&nbsp;
+&nbsp;@Service
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class DeleteHomeService implements DeleteHomeUseCase {
+&nbsp;
+&nbsp;    private final FindItemPort findItemPort;
+&nbsp;    private final DeleteItemPort deleteItemPort;
+&nbsp;    private final DeleteHomePort deleteHomePort;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    @Transactional
+&nbsp;    public MessageDto deleteHome(Long id) {
+&nbsp;
+<b class="fc">&nbsp;        findItemPort.loadAllItemsInHome(id).forEach(item -&gt;</b>
+<b class="fc">&nbsp;                deleteItemPort.deleteItem(item.getItemId().getId()));</b>
+&nbsp;
+<b class="fc">&nbsp;        deleteHomePort.deleteHome(id);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new MessageDto(id + &quot;번 홈이 삭제되었습니다.&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

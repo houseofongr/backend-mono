@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UserPersistenceAdapter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.adapter.out.persistence</a>
+</div>
+
+<h1>Coverage Summary for Class: UserPersistenceAdapter (com.hoo.aoo.admin.adapter.out.persistence)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserPersistenceAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.adapter.out.persistence;
+&nbsp;
+&nbsp;import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+&nbsp;import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+&nbsp;import com.hoo.aoo.aar.application.service.AarErrorCode;
+&nbsp;import com.hoo.aoo.aar.application.service.AarException;
+&nbsp;import com.hoo.aoo.admin.adapter.out.persistence.mapper.UserMapper;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.SaveDeletedUserPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.user.SaveUserPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.user.SearchUserPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.user.UpdateUserPort;
+&nbsp;import com.hoo.aoo.admin.domain.user.DeletedUser;
+&nbsp;import com.hoo.aoo.admin.domain.user.User;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.DeletedUserJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Component
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort, SearchUserPort, FindUserPort, UpdateUserPort, DeleteUserPort {
+&nbsp;
+&nbsp;    private final UserJpaRepository userJpaRepository;
+&nbsp;    private final SnsAccountJpaRepository snsAccountJpaRepository;
+&nbsp;    private final DeletedUserJpaRepository deletedUserJpaRepository;
+&nbsp;    private final SoundSourceJpaRepository soundSourceJpaRepository;
+&nbsp;    private final ItemJpaRepository itemJpaRepository;
+&nbsp;    private final HomeJpaRepository homeJpaRepository;
+&nbsp;    private final UserMapper userMapper;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long save(User user) {
+&nbsp;
+<b class="fc">&nbsp;        List&lt;SnsAccountJpaEntity&gt; snsAccountJpaEntities = user.getSnsAccounts().stream().map(snsAccount -&gt;</b>
+<b class="fc">&nbsp;                snsAccountJpaRepository.findWithUserEntity(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId())</b>
+<b class="fc">&nbsp;                        .orElseThrow(() -&gt; new AarException(AarErrorCode.SNS_ACCOUNT_NOT_FOUND))</b>
+<b class="fc">&nbsp;        ).toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        UserJpaEntity entity = UserJpaEntity.create(user, snsAccountJpaEntities);</b>
+&nbsp;
+<b class="fc">&nbsp;        userJpaRepository.save(entity);</b>
+&nbsp;
+<b class="fc">&nbsp;        return entity.getId();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long saveDeletedUser(DeletedUser deletedUser) {
+<b class="fc">&nbsp;        DeletedUserJpaEntity deletedUserJpaEntity = DeletedUserJpaEntity.create(deletedUser);</b>
+<b class="fc">&nbsp;        deletedUserJpaRepository.save(deletedUserJpaEntity);</b>
+<b class="fc">&nbsp;        return deletedUserJpaEntity.getId();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public QueryUserInfoResult search(QueryUserInfoCommand command) {
+<b class="fc">&nbsp;        return userMapper.mapToQueryResults(userJpaRepository.searchByCommand(command));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Optional&lt;User&gt; loadUser(Long id) {
+<b class="fc">&nbsp;        return userJpaRepository.findById(id).map(userMapper::mapToDomainEntity);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean exist(Long id) {
+<b class="fc">&nbsp;        return userJpaRepository.existsById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void updateUser(User user) {
+<b class="fc">&nbsp;        UserJpaEntity userJpaEntity = userJpaRepository.findById(user.getUserId().getId()).orElseThrow();</b>
+<b class="fc">&nbsp;        userJpaEntity.update(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void deleteUser(User user) {
+<b class="fc">&nbsp;        Long userId = user.getUserId().getId();</b>
+&nbsp;
+<b class="fc">&nbsp;        snsAccountJpaRepository.deleteAll(snsAccountJpaRepository.findAllByUserId(userId));</b>
+<b class="fc">&nbsp;        soundSourceJpaRepository.deleteAll(soundSourceJpaRepository.findAllByUserId(userId));</b>
+<b class="fc">&nbsp;        itemJpaRepository.deleteAll(itemJpaRepository.findAllByUserId(userId));</b>
+<b class="fc">&nbsp;        homeJpaRepository.deleteAll(homeJpaRepository.findAllByUserId(userId));</b>
+&nbsp;
+<b class="fc">&nbsp;        userJpaRepository.deleteById(userId);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

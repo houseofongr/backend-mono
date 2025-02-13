@@ -1,0 +1,195 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > RoomPersistenceAdapter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.adapter.out.persistence</a>
+</div>
+
+<h1>Coverage Summary for Class: RoomPersistenceAdapter (com.hoo.aoo.admin.adapter.out.persistence)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RoomPersistenceAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85%
+  </span>
+  <span class="absValue">
+    (17/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.adapter.out.persistence;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
+&nbsp;import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
+&nbsp;import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+&nbsp;import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+&nbsp;import com.hoo.aoo.admin.domain.room.Room;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import lombok.SneakyThrows;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Component
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class RoomPersistenceAdapter implements UpdateRoomPort, FindRoomPort, DeleteRoomPort {
+&nbsp;
+&nbsp;    private final RoomJpaRepository roomJpaRepository;
+&nbsp;    private final RoomMapper roomMapper;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean exist(Long id) {
+<b class="fc">&nbsp;        return roomJpaRepository.existsById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+<b class="nc">&nbsp;    @SneakyThrows({AreaLimitExceededException.class, AxisLimitExceededException.class})</b>
+&nbsp;    public Optional&lt;Room&gt; load(Long id) {
+&nbsp;
+<b class="fc">&nbsp;        Optional&lt;RoomJpaEntity&gt; optional = roomJpaRepository.findById(id);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (optional.isEmpty()) return Optional.empty();</b>
+<b class="fc">&nbsp;        else return Optional.of(roomMapper.mapToDomainEntity(optional.get()));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+<b class="nc">&nbsp;    @SneakyThrows({AreaLimitExceededException.class, AxisLimitExceededException.class})</b>
+&nbsp;    public List&lt;Room&gt; loadAll(List&lt;Long&gt; ids) {
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Room&gt; list = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="pc">&nbsp;        for (RoomJpaEntity roomJpaEntity : roomJpaRepository.findAllById(ids))</b>
+<b class="nc">&nbsp;            list.add(roomMapper.mapToDomainEntity(roomJpaEntity));</b>
+&nbsp;
+<b class="fc">&nbsp;        return list;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int update(List&lt;Room&gt; rooms) {
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Long&gt; roomIds = rooms.stream().map(room -&gt; room.getRoomId().getId()).toList();</b>
+<b class="fc">&nbsp;        List&lt;RoomJpaEntity&gt; roomJpaEntities = roomJpaRepository.findAllById(roomIds);</b>
+&nbsp;
+<b class="fc">&nbsp;        int updateCount = 0;</b>
+&nbsp;
+&nbsp;        loop:
+<b class="fc">&nbsp;        for (RoomJpaEntity roomJpaEntity : roomJpaEntities) {</b>
+<b class="pc">&nbsp;            for (Room room : rooms) {</b>
+<b class="pc">&nbsp;                if (!room.getRoomId().getId().equals(roomJpaEntity.getId())) continue;</b>
+<b class="fc">&nbsp;                roomJpaEntity.update(room.getRoomDetail().getName());</b>
+<b class="fc">&nbsp;                updateCount++;</b>
+&nbsp;                break loop;
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return updateCount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void deleteRoom(Long id) {
+<b class="fc">&nbsp;        roomJpaRepository.deleteById(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

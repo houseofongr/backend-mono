@@ -58,13 +58,16 @@ class ItemTest {
         // given
         Item rectangleItem = MockEntityFactoryService.getRectangleItem();
         Item rectangleItemWithSoundSource = MockEntityFactoryService.loadRectangleItem();
+        Item rectangleItemWithNull = Item.load(1L,1L,1L,1L,"test", null,null);
 
         // when
         boolean hasSoundSource1 = rectangleItem.hasSoundSource();
-        boolean hasSoundSource2 = rectangleItemWithSoundSource.hasSoundSource();
+        boolean hasSoundSource2 = rectangleItemWithNull.hasSoundSource();
+        boolean hasSoundSource3 = rectangleItemWithSoundSource.hasSoundSource();
 
         // then
         assertThat(hasSoundSource1).isFalse();
-        assertThat(hasSoundSource2).isTrue();
+        assertThat(hasSoundSource2).isFalse();
+        assertThat(hasSoundSource3).isTrue();
     }
 }

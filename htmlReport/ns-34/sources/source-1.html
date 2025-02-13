@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SnsAccount</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.domain.user.snsaccount</a>
+</div>
+
+<h1>Coverage Summary for Class: SnsAccount (com.hoo.aoo.admin.domain.user.snsaccount)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SnsAccount</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.domain.user.snsaccount;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.domain.user.UserId;
+&nbsp;import com.hoo.aoo.common.domain.BaseTime;
+&nbsp;import lombok.Getter;
+&nbsp;
+&nbsp;import java.time.ZonedDateTime;
+&nbsp;
+&nbsp;@Getter
+&nbsp;public class SnsAccount {
+&nbsp;    private final SnsAccountId snsAccountId;
+&nbsp;    private final SnsAccountInfo snsAccountInfo;
+&nbsp;    private final BaseTime baseTime;
+&nbsp;    private UserId userId;
+&nbsp;
+<b class="fc">&nbsp;    private SnsAccount(SnsAccountId snsAccountId, SnsAccountInfo snsAccountInfo, BaseTime baseTime, UserId userId) {</b>
+<b class="fc">&nbsp;        this.snsAccountId = snsAccountId;</b>
+<b class="fc">&nbsp;        this.snsAccountInfo = snsAccountInfo;</b>
+<b class="fc">&nbsp;        this.baseTime = baseTime;</b>
+<b class="fc">&nbsp;        this.userId = userId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static SnsAccount create(Long persistenceId, SnsDomain snsDomain, String snsId, String realName, String nickname, String email) {
+<b class="fc">&nbsp;        return new SnsAccount(</b>
+&nbsp;                new SnsAccountId(persistenceId, snsDomain, snsId),
+&nbsp;                new SnsAccountInfo(realName, nickname, email),
+&nbsp;                new BaseTime(null, null),
+&nbsp;                new UserId(null)
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    public static SnsAccount load(Long persistenceId, SnsDomain snsDomain, String snsId, String realName, String nickname, String email, ZonedDateTime createdTime, ZonedDateTime updatedTime, Long userId) {
+<b class="fc">&nbsp;        return new SnsAccount(</b>
+&nbsp;                new SnsAccountId(persistenceId, snsDomain, snsId),
+&nbsp;                new SnsAccountInfo(realName, nickname, email),
+&nbsp;                new BaseTime(createdTime, updatedTime),
+&nbsp;                new UserId(userId)
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    public void link(Long userId) {
+<b class="fc">&nbsp;        this.userId = new UserId(userId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isRegistered() {
+<b class="pc">&nbsp;        return this.userId != null &amp;&amp; getUserId().getId() != null;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

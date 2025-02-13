@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,15 @@ public class SnsAccountJpaEntity extends DateColumnBaseEntity {
     @Setter
     private UserJpaEntity userEntity;
 
-    public static SnsAccountJpaEntity regist(String name, String email, String snsId, SnsDomain snsDomain) {
-        return new SnsAccountJpaEntity(null, name, name, email, snsId, snsDomain, null);
+    public static SnsAccountJpaEntity create(SnsAccount snsAccount) {
+        return new SnsAccountJpaEntity(
+                null,
+                snsAccount.getSnsAccountInfo().getRealName(),
+                snsAccount.getSnsAccountInfo().getNickname(),
+                snsAccount.getSnsAccountInfo().getEmail(),
+                snsAccount.getSnsAccountId().getSnsId(),
+                snsAccount.getSnsAccountId().getSnsDomain(),
+                null
+        );
     }
 }

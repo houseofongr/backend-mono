@@ -33,7 +33,7 @@ public class SnsAccountPersistenceAdapter implements FindSnsAccountPort, SaveSns
 
     @Override
     public void save(SnsAccount snsAccount) {
-        SnsAccountJpaEntity newSnsAccountJpaEntity = snsAccountMapper.mapToNewJpaEntity(snsAccount);
+        SnsAccountJpaEntity newSnsAccountJpaEntity = SnsAccountJpaEntity.create(snsAccount);
         snsAccountJpaRepository.save(newSnsAccountJpaEntity);
     }
 

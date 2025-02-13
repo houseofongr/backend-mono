@@ -5,7 +5,6 @@ import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
 import com.hoo.aoo.admin.domain.room.Room;
 import com.hoo.aoo.common.application.port.in.MessageDto;
-import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ class UpdateRoomServiceTest {
         // given
         UpdateRoomInfoCommand command = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(1L, "욕실")));
         UpdateRoomInfoCommand notFoundCommand = new UpdateRoomInfoCommand(List.of(new UpdateRoomInfoCommand.RoomInfo(100L, "욕실")));
-        List<Room> rooms = List.of(MockEntityFactoryService.getRoom());
+        List<Room> rooms = List.of(Room.load(1L, "거실", 1000f, 1000f, 0f, 5000f, 1000f, 1L));
 
         // when
         when(updateRoomPort.update(rooms)).thenReturn(1);

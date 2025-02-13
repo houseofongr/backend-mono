@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > KakaoLoginApi</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.aar.adapter.out.api</a>
+</div>
+
+<h1>Coverage Summary for Class: KakaoLoginApi (com.hoo.aoo.aar.adapter.out.api)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">KakaoLoginApi</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    8.3%
+  </span>
+  <span class="absValue">
+    (1/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.aar.adapter.out.api;
+&nbsp;
+&nbsp;import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.http.HttpEntity;
+&nbsp;import org.springframework.http.HttpHeaders;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;import org.springframework.util.LinkedMultiValueMap;
+&nbsp;import org.springframework.util.MultiValueMap;
+&nbsp;import org.springframework.web.client.RestTemplate;
+&nbsp;
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@Component
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class KakaoLoginApi {
+&nbsp;
+&nbsp;    private final KakaoProperties kakaoProperties;
+&nbsp;
+&nbsp;    public void unlink(String snsId) {
+<b class="nc">&nbsp;        RestTemplate restTemplate = new RestTemplate();</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="nc">&nbsp;        headers.add(HttpHeaders.AUTHORIZATION, getKakaoAuthHeader());</b>
+<b class="nc">&nbsp;        headers.add(HttpHeaders.CONTENT_TYPE, &quot;application/x-www-form-urlencoded;charset=utf-8&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        MultiValueMap&lt;String, String&gt; body = new LinkedMultiValueMap&lt;&gt;();</b>
+<b class="nc">&nbsp;        body.add(&quot;target_id_type&quot;, &quot;user_id&quot;);</b>
+<b class="nc">&nbsp;        body.add(&quot;target_id&quot;, snsId);</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpEntity&lt;Object&gt; entity = new HttpEntity&lt;&gt;(body, headers);</b>
+&nbsp;
+<b class="nc">&nbsp;        ResponseEntity&lt;OAuth2Dto.KakaoUnlinkResponse&gt; response = restTemplate.postForEntity(kakaoProperties.getUnlinkUrl(), entity, OAuth2Dto.KakaoUnlinkResponse.class);</b>
+&nbsp;
+<b class="nc">&nbsp;        log.info(&quot;KAKAO 계정 연동 해제 : {}&quot;, response.getBody().id());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getKakaoAuthHeader() {
+<b class="nc">&nbsp;        return &quot;KakaoAK &quot; + kakaoProperties.getAdminKey();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

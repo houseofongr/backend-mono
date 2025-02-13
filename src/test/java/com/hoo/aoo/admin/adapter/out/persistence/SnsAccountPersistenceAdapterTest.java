@@ -4,6 +4,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,6 @@ class SnsAccountPersistenceAdapterTest {
         assertThat(repository.findWithUserEntity(snsAccount.getSnsAccountId().getSnsDomain(), snsAccount.getSnsAccountId().getSnsId()))
                 .get().usingRecursiveComparison()
                 .ignoringFields("id", "createdTime", "updatedTime")
-                .isEqualTo(snsAccountMapper.mapToNewJpaEntity(snsAccount));
+                .isEqualTo(SnsAccountJpaEntity.create(snsAccount));
     }
 }

@@ -1,0 +1,183 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UserQueryDslRepositoryImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.common.adapter.out.persistence.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: UserQueryDslRepositoryImpl (com.hoo.aoo.common.adapter.out.persistence.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserQueryDslRepositoryImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (27/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.common.adapter.out.persistence.repository;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
+&nbsp;import com.querydsl.jpa.impl.JPAQueryFactory;
+&nbsp;import jakarta.persistence.EntityManager;
+&nbsp;import org.springframework.data.domain.Page;
+&nbsp;import org.springframework.data.domain.PageImpl;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import static com.hoo.aoo.common.adapter.out.persistence.entity.QHomeJpaEntity.homeJpaEntity;
+&nbsp;import static com.hoo.aoo.common.adapter.out.persistence.entity.QItemJpaEntity.itemJpaEntity;
+&nbsp;import static com.hoo.aoo.common.adapter.out.persistence.entity.QSnsAccountJpaEntity.snsAccountJpaEntity;
+&nbsp;import static com.hoo.aoo.common.adapter.out.persistence.entity.QSoundSourceJpaEntity.soundSourceJpaEntity;
+&nbsp;import static com.hoo.aoo.common.adapter.out.persistence.entity.QUserJpaEntity.userJpaEntity;
+&nbsp;
+&nbsp;public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
+&nbsp;
+&nbsp;    private final JPAQueryFactory query;
+&nbsp;
+<b class="fc">&nbsp;    public UserQueryDslRepositoryImpl(EntityManager em) {</b>
+<b class="fc">&nbsp;        this.query = new JPAQueryFactory(em);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Page&lt;UserJpaEntity&gt; searchByCommand(QueryUserInfoCommand command) {
+<b class="fc">&nbsp;        List&lt;UserJpaEntity&gt; entities = query.selectFrom(userJpaEntity)</b>
+<b class="fc">&nbsp;                .leftJoin(userJpaEntity.snsAccountEntities, snsAccountJpaEntity).fetchJoin()</b>
+<b class="fc">&nbsp;                .orderBy(userJpaEntity.createdTime.desc())</b>
+<b class="fc">&nbsp;                .offset(command.pageable().getOffset())</b>
+<b class="fc">&nbsp;                .limit(command.pageable().getPageSize())</b>
+<b class="fc">&nbsp;                .fetch();</b>
+&nbsp;
+<b class="fc">&nbsp;        Long count = query.select(userJpaEntity.count())</b>
+<b class="fc">&nbsp;                .from(userJpaEntity)</b>
+<b class="fc">&nbsp;                .fetchFirst();</b>
+&nbsp;
+<b class="fc">&nbsp;        return new PageImpl&lt;&gt;(entities, command.pageable(), count);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Integer countHomeCountById(Long userId) {
+<b class="fc">&nbsp;        Long count = query.select(homeJpaEntity.count())</b>
+<b class="fc">&nbsp;                .from(homeJpaEntity)</b>
+<b class="fc">&nbsp;                .join(homeJpaEntity.user, userJpaEntity)</b>
+<b class="fc">&nbsp;                .where(userJpaEntity.id.eq(userId))</b>
+<b class="fc">&nbsp;                .fetchFirst();</b>
+&nbsp;
+<b class="pc">&nbsp;        return count == null? 0 : Math.toIntExact(count);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Integer countActiveSoundSourceCountById(Long userId) {
+<b class="fc">&nbsp;        Long count = query.select(soundSourceJpaEntity.count())</b>
+<b class="fc">&nbsp;                .from(soundSourceJpaEntity)</b>
+<b class="fc">&nbsp;                .join(soundSourceJpaEntity.item, itemJpaEntity)</b>
+<b class="fc">&nbsp;                .join(itemJpaEntity.home, homeJpaEntity)</b>
+<b class="fc">&nbsp;                .join(homeJpaEntity.user, userJpaEntity)</b>
+<b class="fc">&nbsp;                .where(userJpaEntity.id.eq(userId)</b>
+<b class="fc">&nbsp;                        .and(soundSourceJpaEntity.isActive.isTrue()))</b>
+<b class="fc">&nbsp;                .fetchFirst();</b>
+&nbsp;
+<b class="pc">&nbsp;        return count == null? 0 : Math.toIntExact(count);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

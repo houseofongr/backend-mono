@@ -1,0 +1,188 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > IdPersistenceAdapter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.common.adapter.out.persistence</a>
+</div>
+
+<h1>Coverage Summary for Class: IdPersistenceAdapter (com.hoo.aoo.common.adapter.out.persistence)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">IdPersistenceAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (8/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.common.adapter.out.persistence;
+&nbsp;
+&nbsp;import com.hoo.aoo.common.application.port.out.IssueIdPort;
+&nbsp;import jakarta.persistence.EntityManager;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.beans.factory.annotation.Value;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;@Component
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class IdPersistenceAdapter implements IssueIdPort {
+&nbsp;
+&nbsp;    private final EntityManager entityManager;
+&nbsp;
+&nbsp;    @Value(&quot;${database.mysql.scheme}&quot;)
+&nbsp;    private String schema;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueHouseId() {
+<b class="fc">&nbsp;        return issue(&quot;HOUSE&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueRoomId() {
+<b class="fc">&nbsp;        return issue(&quot;ROOM&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueHomeId() {
+<b class="fc">&nbsp;        return issue(&quot;HOME&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueItemId() {
+<b class="fc">&nbsp;        return issue(&quot;ITEM&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueSoundSourceId() {
+<b class="fc">&nbsp;        return issue(&quot;SOUND_SOURCE&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueDeletedUserId() {
+<b class="fc">&nbsp;        return issue(&quot;DELETED_USER&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueUserId() {
+<b class="fc">&nbsp;        return issue(&quot;AAR_USER&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Long issueSnsAccountId() {
+<b class="nc">&nbsp;        return issue(&quot;SNS_ACCOUNT&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Long issue(String tableName) {
+<b class="fc">&nbsp;        Object singleResult = entityManager.createNativeQuery(</b>
+&nbsp;                        &quot;&quot;&quot;
+&nbsp;                                SELECT AUTO_INCREMENT
+&nbsp;                                FROM information_schema.TABLES
+&nbsp;                                WHERE TABLE_SCHEMA = :schema
+&nbsp;                                AND TABLE_NAME = :tableName
+&nbsp;                                &quot;&quot;&quot;)
+<b class="fc">&nbsp;                .setParameter(&quot;schema&quot;, schema)</b>
+<b class="fc">&nbsp;                .setParameter(&quot;tableName&quot;, tableName)</b>
+<b class="fc">&nbsp;                .getSingleResult();</b>
+&nbsp;
+<b class="fc">&nbsp;        return (singleResult == null) ? 1L : (long) singleResult;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

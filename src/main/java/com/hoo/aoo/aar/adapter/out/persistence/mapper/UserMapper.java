@@ -1,37 +1,15 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
-import com.hoo.aoo.admin.domain.user.User;
-import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component("AARUserMapper")
 @RequiredArgsConstructor
 public class UserMapper {
-
-    private final SnsAccountMapper snsAccountMapper;
-
-    public User mapToDomainEntity(UserJpaEntity userJpaEntity) {
-        List<SnsAccount> snsAccounts = userJpaEntity.getSnsAccountEntities().stream().map(snsAccountMapper::mapToDomainEntity).toList();
-
-        return User.load(
-                userJpaEntity.getId(),
-                userJpaEntity.getRealName(),
-                userJpaEntity.getNickname(),
-                userJpaEntity.getEmail(),
-                userJpaEntity.getTermsOfUseAgreement(),
-                userJpaEntity.getPersonalInformationAgreement(),
-                userJpaEntity.getCreatedTime(),
-                userJpaEntity.getUpdatedTime(),
-                snsAccounts
-        );
-    }
 
     public QueryMyInfoResult mapToQueryMyInfoResult(UserJpaEntity userJpaEntity, Integer homeCount, Integer soundSourceCount) {
 

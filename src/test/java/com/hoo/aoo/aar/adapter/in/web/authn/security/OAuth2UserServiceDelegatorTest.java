@@ -19,7 +19,7 @@ class OAuth2UserServiceDelegatorTest {
 
     @BeforeEach
     void init() {
-        loadKakaoSnsAccountService = mock(LoadKakaoSnsAccountService.class);
+        loadKakaoSnsAccountService = mock();
         sut = spy(new OAuth2UserServiceDelegator(loadKakaoSnsAccountService));
     }
 
@@ -32,9 +32,9 @@ class OAuth2UserServiceDelegatorTest {
         ClientRegistration registration = mock(ClientRegistration.class);
 
         // when
-        doReturn(user).when(sut).loadSuperUser(any());
         when(request.getClientRegistration()).thenReturn(registration);
         when(registration.getRegistrationId()).thenReturn("not exist");
+        doReturn(user).when(sut).loadSuperUser(any());
 
         // then
         assertThatThrownBy(() -> sut.loadUser(request)).isInstanceOf(UnsupportedOperationException.class);

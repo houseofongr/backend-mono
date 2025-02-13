@@ -15,9 +15,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetHomeControllerTest extends AbstractControllerTest {
 
-
-
-
+    @Test
+    @DisplayName("조회할 홈이 없을때 테스트")
+    void testNotFound() throws Exception {
+        mockMvc.perform(get("/admin/homes/{homeId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user("admin").roles("ADMIN")))
+                .andExpect(status().is(404));
+    }
 
     @Test
     @Sql("GetHomeControllerTest.sql")

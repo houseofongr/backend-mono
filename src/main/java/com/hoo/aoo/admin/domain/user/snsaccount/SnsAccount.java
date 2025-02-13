@@ -43,6 +43,6 @@ public class SnsAccount {
     }
 
     public boolean isRegistered() {
-        return this.userId != null && getUserId().getId() != null;
+        return this.userId.getId() != null;
     }
 }

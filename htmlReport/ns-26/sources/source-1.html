@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CreateItemService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.application.service.item</a>
+</div>
+
+<h1>Coverage Summary for Class: CreateItemService (com.hoo.aoo.admin.application.service.item)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateItemService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (15/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.8%
+  </span>
+  <span class="absValue">
+    (23/24)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CreateItemService$$SpringCGLIB$$0</td>
+  </tr>
+  <tr>
+    <td class="name">CreateItemService$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (15/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96%
+  </span>
+  <span class="absValue">
+    (24/25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.application.service.item;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.application.port.in.item.*;
+&nbsp;import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.item.*;
+&nbsp;import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
+&nbsp;import com.hoo.aoo.admin.application.service.AdminErrorCode;
+&nbsp;import com.hoo.aoo.admin.application.service.AdminException;
+&nbsp;import com.hoo.aoo.admin.domain.item.*;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.transaction.annotation.Transactional;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class CreateItemService implements CreateItemUseCase, CreateAndUpdateItemUseCase {
+&nbsp;
+&nbsp;    private final FindUserPort findUserPort;
+&nbsp;    private final FindHomePort findHomePort;
+&nbsp;    private final FindRoomPort findRoomPort;
+&nbsp;    private final FindItemPort findItemPort;
+&nbsp;    private final UpdateItemPort updateItemPort;
+&nbsp;    private final SaveItemPort saveItemPort;
+&nbsp;    private final CreateItemPort createItemPort;
+&nbsp;    private final MappingItemShapePort mappingItemPort;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    @Transactional
+&nbsp;    public CreateItemResult create(Long homeId, Long roomId, Long userId, CreateItemCommand command) {
+&nbsp;
+<b class="pc">&nbsp;        if (!findHomePort.exist(homeId)) throw new AdminException(AdminErrorCode.HOME_NOT_FOUND);</b>
+<b class="pc">&nbsp;        if (!findRoomPort.exist(roomId)) throw new AdminException(AdminErrorCode.ROOM_NOT_FOUND);</b>
+<b class="pc">&nbsp;        if (!findUserPort.exist(userId)) throw new AdminException(AdminErrorCode.USER_NOT_FOUND);</b>
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Item&gt; newItems = command.items().stream().map(itemData -&gt; createItemPort.createItem(homeId, roomId, userId, itemData.name(), createShape(itemData))).toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        return new CreateItemResult(saveItemPort.save(homeId, roomId, newItems));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    @Transactional
+&nbsp;    public CreateAndUpdateItemResult createAndUpdate(Long homeId, Long roomId, Long userId, CreateAndUpdateItemCommand command) {
+&nbsp;
+<b class="pc">&nbsp;        if (!findHomePort.exist(homeId)) throw new AdminException(AdminErrorCode.HOME_NOT_FOUND);</b>
+<b class="pc">&nbsp;        if (!findRoomPort.exist(roomId)) throw new AdminException(AdminErrorCode.ROOM_NOT_FOUND);</b>
+<b class="pc">&nbsp;        if (!findUserPort.exist(userId)) throw new AdminException(AdminErrorCode.USER_NOT_FOUND);</b>
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Long&gt; itemIds = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        List&lt;Item&gt; existItems = findItemPort.loadAllItemsInHomeAndRoom(homeId, roomId);</b>
+<b class="fc">&nbsp;        for (Item item : existItems) {</b>
+<b class="fc">&nbsp;            for (ItemData itemData : command.updateItems()) {</b>
+<b class="fc">&nbsp;                if (!item.getItemId().getId().equals(itemData.id())) continue;</b>
+<b class="fc">&nbsp;                item.update(itemData.name(), mappingItemPort.mapToShape(itemData));</b>
+<b class="fc">&nbsp;                updateItemPort.updateItem(item);</b>
+<b class="fc">&nbsp;                itemIds.add(itemData.id());</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Item&gt; newItems = command.createItems().stream().map(itemData -&gt; createItemPort.createItem(homeId, roomId, userId, itemData.name(), createShape(itemData))).toList();</b>
+<b class="fc">&nbsp;        itemIds.addAll(saveItemPort.save(homeId, roomId, newItems));</b>
+&nbsp;
+<b class="fc">&nbsp;        return new CreateAndUpdateItemResult(itemIds);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Shape createShape(ItemData itemData) {
+<b class="pc">&nbsp;        switch (itemData.itemType()) {</b>
+&nbsp;            case RECTANGLE -&gt; {
+<b class="fc">&nbsp;                return new Rectangle(itemData.rectangleData().x(), itemData.rectangleData().y(), itemData.rectangleData().width(), itemData.rectangleData().height(), itemData.rectangleData().rotation());</b>
+&nbsp;            }
+&nbsp;            case CIRCLE -&gt; {
+<b class="fc">&nbsp;                return new Circle(itemData.circleData().x(), itemData.circleData().y(), itemData.circleData().radius());</b>
+&nbsp;            }
+&nbsp;            case ELLIPSE -&gt; {
+<b class="fc">&nbsp;                return new Ellipse(itemData.ellipseData().x(), itemData.ellipseData().y(), itemData.ellipseData().radiusX(), itemData.ellipseData().radiusY(), itemData.ellipseData().rotation());</b>
+&nbsp;            }
+&nbsp;            default -&gt;
+<b class="nc">&nbsp;                    throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE, &quot;잘못된 아이템 형태 : &quot; + itemData.itemType());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

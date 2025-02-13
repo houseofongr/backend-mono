@@ -9,31 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class HouseMapper {
 
     private final RoomMapper roomMapper;
-
-    public HouseJpaEntity mapToNewJpaEntity(House house, List<RoomJpaEntity> roomJpaEntities) {
-
-        HouseJpaEntity houseJpaEntity = new HouseJpaEntity(null,
-                house.getHouseDetail().getTitle(),
-                house.getHouseDetail().getAuthor(),
-                house.getHouseDetail().getDescription(),
-                house.getArea().getWidth(),
-                house.getArea().getHeight(),
-                house.getBasicImageFile().getFileId().getId(),
-                house.getBorderImageFile().getFileId().getId(),
-                roomJpaEntities
-        );
-
-        roomJpaEntities.forEach(roomJpaEntity -> roomJpaEntity.setHouse(houseJpaEntity));
-
-        return houseJpaEntity;
-    }
 
     public House mapToDomainEntity(HouseJpaEntity houseJpaEntity) throws AreaLimitExceededException, AxisLimitExceededException {
 

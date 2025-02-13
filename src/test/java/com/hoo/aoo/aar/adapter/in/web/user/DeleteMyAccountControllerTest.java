@@ -1,20 +1,25 @@
 package com.hoo.aoo.aar.adapter.in.web.user;
 
 import com.hoo.aoo.aar.adapter.out.api.KakaoLoginApi;
+import com.hoo.aoo.aar.adapter.out.api.KakaoProperties;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -39,8 +44,16 @@ class DeleteMyAccountControllerTest extends AbstractControllerTest {
     @Autowired
     DeletedUserJpaRepository deletedUserJpaRepository;
 
-    @MockitoBean
-    KakaoLoginApi mockLoginApi;
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    KakaoProperties kakaoProperties;
+
+    @BeforeEach
+    void init() {
+        ReflectionTestUtils.setField(kakaoProperties, "unlinkUrl", "http://localhost:" + port + "/unlink");
+    }
 
     @Test
     @Sql("DeleteMyAccountControllerTest.sql")

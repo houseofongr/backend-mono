@@ -28,7 +28,7 @@ class DateColumnBaseEntityTest {
     @Test
     @DisplayName("DB 시간과 동기화 확인")
     void testSyncTime() {
-        SnsAccountJpaEntity entity = mapper.mapToNewJpaEntity(MockEntityFactoryService.getSnsAccount());
+        SnsAccountJpaEntity entity = SnsAccountJpaEntity.create(MockEntityFactoryService.getSnsAccount());
         ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
 
         repository.save(entity);

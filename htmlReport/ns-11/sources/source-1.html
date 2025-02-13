@@ -1,0 +1,139 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DeleteMyInfoService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.aar.application.service.user</a>
+</div>
+
+<h1>Coverage Summary for Class: DeleteMyInfoService (com.hoo.aoo.aar.application.service.user)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DeleteMyInfoService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DeleteMyInfoService$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.aar.application.service.user;
+&nbsp;
+&nbsp;import com.hoo.aoo.aar.application.port.in.user.DeleteMyInfoUseCase;
+&nbsp;import com.hoo.aoo.aar.application.port.out.api.UnlinkKakaoLoginPort;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.DeleteUserCommand;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.DeleteUserUseCase;
+&nbsp;import com.hoo.aoo.common.application.port.in.MessageDto;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.transaction.annotation.Transactional;
+&nbsp;
+&nbsp;@Service
+&nbsp;@Transactional
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class DeleteMyInfoService implements DeleteMyInfoUseCase {
+&nbsp;
+&nbsp;    private final UnlinkKakaoLoginPort unlinkKakaoLoginPort;
+&nbsp;    private final DeleteUserUseCase deleteUserUseCase;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public MessageDto deleteMyInfo(Long userId, DeleteUserCommand command) {
+<b class="fc">&nbsp;        unlinkKakaoLoginPort.unlink(userId);</b>
+<b class="fc">&nbsp;        return deleteUserUseCase.deleteUser(userId, command);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

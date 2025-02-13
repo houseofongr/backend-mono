@@ -34,4 +34,11 @@ class AarSecurityConfigTest {
                 .andExpect(status().is(401));
     }
 
+    @Test
+    @DisplayName("등록되지 않은 URL 테스트")
+    void test403() throws Exception {
+        mockMvc.perform(get("/aar/invalid_url").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(401));
+    }
+
 }

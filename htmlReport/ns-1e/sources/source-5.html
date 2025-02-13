@@ -1,0 +1,217 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > QueryHouseResult</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.application.port.in.house</a>
+</div>
+
+<h1>Coverage Summary for Class: QueryHouseResult (com.hoo.aoo.admin.application.port.in.house)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">QueryHouseResult</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">QueryHouseResult$HouseInfo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">QueryHouseResult$RoomInfo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.application.port.in.house;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.domain.house.House;
+&nbsp;import com.hoo.aoo.admin.domain.room.Room;
+&nbsp;import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="fc">&nbsp;public record QueryHouseResult(</b>
+&nbsp;        HouseInfo house,
+&nbsp;        List&lt;RoomInfo&gt; rooms
+&nbsp;) {
+&nbsp;
+&nbsp;    public static QueryHouseResult of(House house) {
+<b class="fc">&nbsp;        return new QueryHouseResult(</b>
+&nbsp;                new HouseInfo(
+<b class="fc">&nbsp;                        house.getHouseId().getId(),</b>
+<b class="fc">&nbsp;                        house.getHouseDetail().getTitle(),</b>
+<b class="fc">&nbsp;                        house.getHouseDetail().getAuthor(),</b>
+<b class="fc">&nbsp;                        house.getHouseDetail().getDescription(),</b>
+<b class="fc">&nbsp;                        DateTimeFormatters.ENGLISH_DATE.getFormatter().format(house.getBaseTime().getCreatedTime()),</b>
+<b class="fc">&nbsp;                        DateTimeFormatters.ENGLISH_DATE.getFormatter().format(house.getBaseTime().getUpdatedTime()),</b>
+<b class="fc">&nbsp;                        house.getArea().getWidth(),</b>
+<b class="fc">&nbsp;                        house.getArea().getHeight(),</b>
+<b class="fc">&nbsp;                        house.getBorderImageFile().getFileId().getId()</b>
+&nbsp;                ),
+<b class="fc">&nbsp;                house.getRooms().stream().map(RoomInfo::of).toList()</b>
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public record HouseInfo(</b>
+&nbsp;            Long houseId,
+&nbsp;            String title,
+&nbsp;            String author,
+&nbsp;            String description,
+&nbsp;            String createdDate,
+&nbsp;            String updatedDate,
+&nbsp;            Float width,
+&nbsp;            Float height,
+&nbsp;            Long borderImageId
+&nbsp;    ) {
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public record RoomInfo(</b>
+&nbsp;            Long roomId,
+&nbsp;            String name,
+&nbsp;            Float x,
+&nbsp;            Float y,
+&nbsp;            Float z,
+&nbsp;            Float width,
+&nbsp;            Float height,
+&nbsp;            Long imageId
+&nbsp;    ) {
+&nbsp;
+&nbsp;        public static RoomInfo of(Room room) {
+<b class="fc">&nbsp;            return new RoomInfo(</b>
+<b class="fc">&nbsp;                    room.getRoomId().getId(),</b>
+<b class="fc">&nbsp;                    room.getRoomDetail().getName(),</b>
+<b class="fc">&nbsp;                    room.getAxis().getX(),</b>
+<b class="fc">&nbsp;                    room.getAxis().getY(),</b>
+<b class="fc">&nbsp;                    room.getAxis().getZ(),</b>
+<b class="fc">&nbsp;                    room.getArea().getWidth(),</b>
+<b class="fc">&nbsp;                    room.getArea().getHeight(),</b>
+<b class="fc">&nbsp;                    room.getImageFile().getFileId().getId()</b>
+&nbsp;            );
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

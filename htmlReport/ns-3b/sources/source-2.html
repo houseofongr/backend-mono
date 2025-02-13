@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > EntityFactoryService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.common.application.service</a>
+</div>
+
+<h1>Coverage Summary for Class: EntityFactoryService (com.hoo.aoo.common.application.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EntityFactoryService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.common.application.service;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.soundsource.CreateSoundSourcePort;
+&nbsp;import com.hoo.aoo.admin.application.port.out.user.CreateUserPort;
+&nbsp;import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
+&nbsp;import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
+&nbsp;import com.hoo.aoo.admin.domain.home.Home;
+&nbsp;import com.hoo.aoo.admin.domain.house.House;
+&nbsp;import com.hoo.aoo.admin.domain.house.HouseDetail;
+&nbsp;import com.hoo.aoo.admin.domain.item.Item;
+&nbsp;import com.hoo.aoo.admin.domain.item.Shape;
+&nbsp;import com.hoo.aoo.admin.domain.room.Room;
+&nbsp;import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+&nbsp;import com.hoo.aoo.admin.domain.user.DeletedUser;
+&nbsp;import com.hoo.aoo.admin.domain.user.User;
+&nbsp;import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
+&nbsp;import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
+&nbsp;import com.hoo.aoo.common.application.port.out.IssueIdPort;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort {
+&nbsp;
+&nbsp;    private final IssueIdPort issueIdPort;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public User createUser(SnsAccount snsAccount, Boolean termsOfUseAgreement, Boolean personalInformationAgreement) {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueUserId();</b>
+<b class="fc">&nbsp;        return User.register(newId, termsOfUseAgreement, personalInformationAgreement, snsAccount);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public SnsAccount createSnsAccount(SnsDomain snsDomain, String snsId, String realName, String nickname, String email) {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueSnsAccountId();</b>
+<b class="fc">&nbsp;        return SnsAccount.create(newId, snsDomain, snsId, realName, nickname, email);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public House createHouse(HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List&lt;Room&gt; rooms) throws AreaLimitExceededException {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueHouseId();</b>
+<b class="fc">&nbsp;        return House.create(newId, houseDetail, width, height, defaultImageFileId, borderImageFileId, rooms);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Room createRoom(String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueRoomId();</b>
+<b class="fc">&nbsp;        return Room.create(newId, name, x, y, z, width, height, imageFileId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Home createHome(House house, com.hoo.aoo.admin.domain.user.User user) {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueHomeId();</b>
+<b class="fc">&nbsp;        return Home.create(newId, house, user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Item createItem(Long homeId, Long roomId, Long userId, String name, Shape shape) {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueItemId();</b>
+<b class="fc">&nbsp;        return Item.create(newId, homeId, roomId, userId, name, shape);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public SoundSource createSoundSource(Long itemId, Long audioFileId, String name, String description, Boolean active) {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueSoundSourceId();</b>
+<b class="fc">&nbsp;        return SoundSource.create(newId, itemId, audioFileId, name, description, active);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public DeletedUser createDeletedUser(com.hoo.aoo.admin.domain.user.User user, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
+<b class="fc">&nbsp;        Long newId = issueIdPort.issueDeletedUserId();</b>
+<b class="fc">&nbsp;        return DeletedUser.create(newId, user, termsOfDeletionAgreement, personalInformationDeletionAgreement);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

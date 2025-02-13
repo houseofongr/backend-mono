@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UserInfo</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.domain.user</a>
+</div>
+
+<h1>Coverage Summary for Class: UserInfo (com.hoo.aoo.admin.domain.user)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserInfo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.domain.user;
+&nbsp;
+&nbsp;import lombok.Getter;
+&nbsp;
+&nbsp;@Getter
+&nbsp;public class UserInfo {
+&nbsp;    private final String realName;
+&nbsp;    private String nickname;
+&nbsp;    private final String email;
+&nbsp;
+<b class="fc">&nbsp;    public UserInfo(String realName, String nickname, String email) {</b>
+<b class="fc">&nbsp;        this.nickname = nickname;</b>
+<b class="fc">&nbsp;        this.realName = realName;</b>
+<b class="fc">&nbsp;        this.email = email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void updateNickname(String nickname) {
+<b class="fc">&nbsp;        this.nickname = nickname;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMaskedRealName() {
+<b class="fc">&nbsp;        return getMaskedName(realName);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMaskedNickname() {
+<b class="fc">&nbsp;        return getMaskedName(nickname);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getMaskedName(String name) {
+<b class="fc">&nbsp;        String[] splitName = name.split(&quot; &quot;);</b>
+<b class="fc">&nbsp;        StringBuilder stringBuilder = new StringBuilder();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 0; i &lt; splitName.length; i++) {</b>
+<b class="fc">&nbsp;            stringBuilder.append(maskingWord(splitName[i]));</b>
+<b class="fc">&nbsp;            if (i != splitName.length - 1) stringBuilder.append(&quot; &quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return stringBuilder.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String maskingWord(String name) {
+<b class="fc">&nbsp;        if (name.length() == 1)</b>
+<b class="fc">&nbsp;            return &quot;*&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        else if (name.length() == 2)</b>
+<b class="fc">&nbsp;            return name.charAt(0) + &quot;*&quot;;</b>
+&nbsp;
+&nbsp;        else
+<b class="fc">&nbsp;            return name.charAt(0) +</b>
+<b class="fc">&nbsp;               &quot;*&quot;.repeat(name.length() - 2) +</b>
+<b class="fc">&nbsp;               name.charAt(name.length() - 1);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMaskedEmail() {
+<b class="fc">&nbsp;        String[] splitName = email.split(&quot;@&quot;);</b>
+<b class="fc">&nbsp;        return maskingWord(splitName[0]) + &quot;@&quot; + splitName[1];</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

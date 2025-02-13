@@ -1,0 +1,238 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ItemMapper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.hoo.aoo.admin.adapter.out.persistence.mapper</a>
+</div>
+
+<h1>Coverage Summary for Class: ItemMapper (com.hoo.aoo.admin.adapter.out.persistence.mapper)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ItemMapper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98.1%
+  </span>
+  <span class="absValue">
+    (52/53)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ItemMapper$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98.1%
+  </span>
+  <span class="absValue">
+    (53/54)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.adapter.out.persistence.mapper;
+&nbsp;
+&nbsp;import com.hoo.aoo.admin.application.port.in.item.ItemData;
+&nbsp;import com.hoo.aoo.admin.application.service.AdminErrorCode;
+&nbsp;import com.hoo.aoo.admin.application.service.AdminException;
+&nbsp;import com.hoo.aoo.admin.domain.item.*;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeCircleJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeRectangleJpaEntity;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;@Component
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class ItemMapper {
+&nbsp;
+&nbsp;    private final SoundSourceMapper soundSourceMapper;
+&nbsp;
+&nbsp;    public Item mapToDomainEntity(ItemJpaEntity itemJpaEntity) {
+<b class="pc">&nbsp;        return switch (itemJpaEntity.getShape()) {</b>
+<b class="fc">&nbsp;            case ItemShapeRectangleJpaEntity itemShapeRectangleJpaEntity -&gt; Item.load(</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getHome().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getRoom().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getHome().getUser().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getName(),</b>
+<b class="fc">&nbsp;                    new Rectangle(itemShapeRectangleJpaEntity.getX(),</b>
+<b class="fc">&nbsp;                            itemShapeRectangleJpaEntity.getY(),</b>
+<b class="fc">&nbsp;                            itemShapeRectangleJpaEntity.getWidth(),</b>
+<b class="fc">&nbsp;                            itemShapeRectangleJpaEntity.getHeight(),</b>
+<b class="fc">&nbsp;                            itemShapeRectangleJpaEntity.getRotation()),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getSoundSources().stream().map(soundSourceMapper::mapToDomainEntity).toList()</b>
+&nbsp;            );
+<b class="fc">&nbsp;            case ItemShapeCircleJpaEntity itemShapeCircleJpaEntity -&gt; Item.load(</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getHome().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getRoom().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getHome().getUser().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getName(),</b>
+<b class="fc">&nbsp;                    new Circle(itemShapeCircleJpaEntity.getX(),</b>
+<b class="fc">&nbsp;                            itemShapeCircleJpaEntity.getY(),</b>
+<b class="fc">&nbsp;                            itemShapeCircleJpaEntity.getRadius()),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getSoundSources().stream().map(soundSourceMapper::mapToDomainEntity).toList()</b>
+&nbsp;            );
+<b class="fc">&nbsp;            case ItemShapeEllipseJpaEntity itemShapeEllipseJpaEntity -&gt; Item.load(</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getHome().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getRoom().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getHome().getUser().getId(),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getName(),</b>
+<b class="fc">&nbsp;                    new Ellipse(itemShapeEllipseJpaEntity.getX(),</b>
+<b class="fc">&nbsp;                            itemShapeEllipseJpaEntity.getY(),</b>
+<b class="fc">&nbsp;                            itemShapeEllipseJpaEntity.getRadiusX(),</b>
+<b class="fc">&nbsp;                            itemShapeEllipseJpaEntity.getRadiusY(),</b>
+<b class="fc">&nbsp;                            itemShapeEllipseJpaEntity.getRotation()),</b>
+<b class="fc">&nbsp;                    itemJpaEntity.getSoundSources().stream().map(soundSourceMapper::mapToDomainEntity).toList()</b>
+&nbsp;            );
+&nbsp;            case null, default -&gt; {
+&nbsp;
+<b class="nc">&nbsp;                throw new AdminException(AdminErrorCode.ILLEGAL_SHAPE_TYPE);</b>
+&nbsp;            }
+&nbsp;        };
+&nbsp;    }
+&nbsp;
+&nbsp;    public Shape mapToShape(ItemData itemData) {
+<b class="pc">&nbsp;        return switch (itemData.itemType()) {</b>
+<b class="fc">&nbsp;            case RECTANGLE -&gt; new Rectangle(</b>
+<b class="fc">&nbsp;                    itemData.rectangleData().x(),</b>
+<b class="fc">&nbsp;                    itemData.rectangleData().y(),</b>
+<b class="fc">&nbsp;                    itemData.rectangleData().width(),</b>
+<b class="fc">&nbsp;                    itemData.rectangleData().height(),</b>
+<b class="fc">&nbsp;                    itemData.rectangleData().rotation());</b>
+<b class="fc">&nbsp;            case CIRCLE -&gt; new Circle(</b>
+<b class="fc">&nbsp;                    itemData.circleData().x(),</b>
+<b class="fc">&nbsp;                    itemData.circleData().y(),</b>
+<b class="fc">&nbsp;                    itemData.circleData().radius()</b>
+&nbsp;            );
+<b class="fc">&nbsp;            case ELLIPSE -&gt; new Ellipse(</b>
+<b class="fc">&nbsp;                    itemData.ellipseData().x(),</b>
+<b class="fc">&nbsp;                    itemData.ellipseData().y(),</b>
+<b class="fc">&nbsp;                    itemData.ellipseData().radiusX(),</b>
+<b class="fc">&nbsp;                    itemData.ellipseData().radiusY(),</b>
+<b class="fc">&nbsp;                    itemData.ellipseData().rotation()</b>
+&nbsp;            );
+&nbsp;        };
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 22:58</div>
+</div>
+</body>
+</html>

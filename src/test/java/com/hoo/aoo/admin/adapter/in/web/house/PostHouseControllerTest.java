@@ -18,7 +18,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PostHouseControllerTest extends AbstractControllerTest {
@@ -31,7 +31,17 @@ class PostHouseControllerTest extends AbstractControllerTest {
         return false;
     }
 
+    @Test
+    @DisplayName("잘못된 파일 타입 테스트")
+    void testBadFileType() throws Exception {
 
+        String metadata = CreateHouseMetadataTest.getCreateHouseMetadataJson();
+
+        mockMvc.perform(post("/admin/houses")
+                        .param("metadata", metadata)
+                        .with(user("admin").roles("ADMIN")))
+                .andExpect(status().is(400));
+    }
 
     @Test
     @DisplayName("하우스 생성 API")

@@ -19,6 +19,7 @@ public record OAuth2Dto() {
             }
         }
     }
+
     public record KakaoUnlinkResponse(
             Long id
     ) {
