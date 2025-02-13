@@ -7,10 +7,7 @@ import com.hoo.aoo.aar.application.port.out.persistence.user.QueryUserPort;
 import com.hoo.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
 import com.hoo.aoo.admin.application.port.in.snsaccount.CreateSnsAccountUseCase;
 import com.hoo.aoo.admin.application.port.in.snsaccount.LoadSnsAccountUseCase;
-import com.hoo.aoo.admin.domain.user.UserId;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountId;
-import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountInfo;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +17,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Map;
 
-import static com.hoo.aoo.common.util.GsonUtil.gson;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.BOOLEAN;
 import static org.mockito.Mockito.*;
@@ -68,12 +64,10 @@ class LoadKakaoSnsAccountServiceTest {
     @DisplayName("DB에 존재하지 않는 계정은 회원가입, isFirstLogin = true")
     void testNotExistUser() {
         // given
-        OAuth2User user = mock(OAuth2User.class);
-        SnsAccount entity = MockEntityFactoryService.getSnsAccount();
-        OAuth2Dto.KakaoUserInfo userInfo = new OAuth2Dto.KakaoUserInfo(entity.getSnsAccountId().getSnsId(),
-                new OAuth2Dto.KakaoUserInfo.KakaoAccount(entity.getSnsAccountInfo().getEmail(), true, true, true,
-                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile(entity.getSnsAccountInfo().getNickname(), true)));
-        Map<String, Object> attributes = gson.fromJson(gson.toJsonTree(userInfo), Map.class);
+        OAuth2User user = mock();
+        Map<String, Object> attributes = Map.of("id", "sns_id",
+                "kakao_account", new OAuth2Dto.KakaoUserInfo.KakaoAccount(null, true, true, true,
+                        new OAuth2Dto.KakaoUserInfo.KakaoAccount.Profile("leaf", true)));
 
         // when
         when(user.getAttributes()).thenReturn(attributes);

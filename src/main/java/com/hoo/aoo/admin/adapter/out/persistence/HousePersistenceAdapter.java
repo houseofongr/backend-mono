@@ -1,10 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
-import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
-import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
-import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.out.house.DeleteHousePort;
@@ -14,6 +10,10 @@ import com.hoo.aoo.admin.application.port.out.house.UpdateHousePort;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

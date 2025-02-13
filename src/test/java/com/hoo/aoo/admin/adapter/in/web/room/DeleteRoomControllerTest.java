@@ -1,19 +1,13 @@
 package com.hoo.aoo.admin.adapter.in.web.room;
 
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
-import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
-import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
-
-import java.io.IOException;
-import java.nio.file.Path;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;

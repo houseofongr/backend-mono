@@ -2,7 +2,7 @@ package com.hoo.aoo.common.adapter.out.persistence.repository;
 
 import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathCommand;
 import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
-import com.hoo.aoo.common.adapter.out.persistence.entity.*;
+import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;

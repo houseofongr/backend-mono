@@ -3,7 +3,6 @@ package com.hoo.aoo.common.adapter.out.persistence.repository;
 import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface ItemQueryDslRepository {
     boolean existsByUserIdAndItemId(Long userId, Long itemId);

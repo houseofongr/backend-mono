@@ -2,22 +2,13 @@ package com.hoo.aoo.aar.adapter.out.persistence;
 
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
-import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
-import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.common.application.service.MockEntityFactoryService;
-import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
-
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -3,7 +3,6 @@ package com.hoo.aoo.admin.adapter.in.web.house;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseResult;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.common.util.GsonUtil;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;

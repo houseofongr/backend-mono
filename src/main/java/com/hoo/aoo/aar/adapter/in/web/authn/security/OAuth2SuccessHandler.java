@@ -1,7 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.hoo.aoo.aar.application.port.in.authn.SNSLoginResult;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;

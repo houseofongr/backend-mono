@@ -25,8 +25,8 @@ public class JwtUtil implements IssueAccessTokenPort {
     @Override
     public String issueAccessToken(SnsAccount snsAccount) {
 
-        Long userId = (snsAccount.getUserId() != null && snsAccount.getUserId().getId() != null) ? snsAccount.getUserId().getId() : -1L;
-        Role role = (snsAccount.getUserId() != null && snsAccount.getUserId().getId() != null) ? Role.USER : Role.TEMP_USER;
+        Long userId = snsAccount.isRegistered() ? snsAccount.getUserId().getId() : -1L;
+        Role role = snsAccount.isRegistered() ? Role.USER : Role.TEMP_USER;
 
         return issueAccessToken(snsAccount.getSnsAccountInfo().getNickname(), userId, snsAccount.getSnsAccountId().getPersistenceId(), role);
     }

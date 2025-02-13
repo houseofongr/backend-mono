@@ -4,7 +4,10 @@ import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.item.*;
-import com.hoo.aoo.common.adapter.out.persistence.entity.*;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeCircleJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeEllipseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemShapeRectangleJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

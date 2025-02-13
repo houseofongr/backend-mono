@@ -32,43 +32,46 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
         OAuth2Dto.KakaoUserInfo userInfo = gson.fromJson(gson.toJsonTree(user.getAttributes()), OAuth2Dto.KakaoUserInfo.class);
         SnsAccount snsAccount = loadSnsAccountUseCase.loadSnsAccount(SnsDomain.KAKAO, userInfo.id());
 
-        if (snsAccount != null) {
+        SNSLoginResult response = snsAccount != null?
+                getResponseByAccountInDB(snsAccount) :
+                getResponseByNewAccount(userInfo);
 
-            SNSLoginResult response = snsAccount.isRegistered() ?
+        return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
+    }
 
-                            new SNSLoginResult(
-                                    queryUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
-                                    issueAccessTokenPort.issueAccessToken(snsAccount),
-                                    SnsDomain.KAKAO.name(),
-                                    false
-                            ) :
+    private SNSLoginResult getResponseByAccountInDB(SnsAccount snsAccount) {
 
-                            new SNSLoginResult(
-                                    snsAccount.getSnsAccountInfo().getNickname(),
-                                    issueAccessTokenPort.issueAccessToken(snsAccount),
-                                    SnsDomain.KAKAO.name(),
-                                    true);
+        // account with user
+        if (snsAccount.isRegistered())
+            return new SNSLoginResult(
+                queryUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
+                issueAccessTokenPort.issueAccessToken(snsAccount),
+                SnsDomain.KAKAO.name(),
+                false
+        );
 
-            return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
+        // temp account
+        else return new SNSLoginResult(
+                snsAccount.getSnsAccountInfo().getNickname(),
+                issueAccessTokenPort.issueAccessToken(snsAccount),
+                SnsDomain.KAKAO.name(),
+                true);
+    }
 
+    private SNSLoginResult getResponseByNewAccount(OAuth2Dto.KakaoUserInfo userInfo) {
 
-        } else { //register
+        SnsAccount newSnsAccount = createSnsAccountUseCase.createSnsAccount(
+                SnsDomain.KAKAO,
+                userInfo.id(),
+                userInfo.kakao_account().profile().nickname(),
+                userInfo.kakao_account().profile().nickname(),
+                userInfo.kakao_account().email());
 
-            SnsAccount newSnsAccount = createSnsAccountUseCase.createSnsAccount(
-                    SnsDomain.KAKAO,
-                    userInfo.id(),
-                    userInfo.kakao_account().profile().nickname(),
-                    userInfo.kakao_account().profile().nickname(),
-                    userInfo.kakao_account().email());
-
-            SNSLoginResult response = new SNSLoginResult(
-                    newSnsAccount.getSnsAccountInfo().getNickname(),
-                    issueAccessTokenPort.issueAccessToken(newSnsAccount),
-                    SnsDomain.KAKAO.name(),
-                    true);
-
-            return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
-        }
+        return new SNSLoginResult(
+                newSnsAccount.getSnsAccountInfo().getNickname(),
+                issueAccessTokenPort.issueAccessToken(newSnsAccount),
+                SnsDomain.KAKAO.name(),
+                true);
     }
 
 }

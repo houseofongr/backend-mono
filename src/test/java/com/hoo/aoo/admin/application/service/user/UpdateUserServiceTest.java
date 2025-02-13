@@ -6,7 +6,6 @@ import com.hoo.aoo.admin.application.port.out.user.UpdateUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.application.port.in.MessageDto;
-import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

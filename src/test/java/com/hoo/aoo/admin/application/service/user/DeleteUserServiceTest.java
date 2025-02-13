@@ -6,7 +6,6 @@ import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
 import com.hoo.aoo.admin.application.port.in.user.SaveDeletedUserPort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
-import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;

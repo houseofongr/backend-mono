@@ -1,9 +1,9 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
 import com.hoo.aoo.common.domain.Authority;
-import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
+import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileF;
 import com.hoo.aoo.file.domain.FileStatus;

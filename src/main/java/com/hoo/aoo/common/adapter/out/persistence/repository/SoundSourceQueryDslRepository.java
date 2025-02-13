@@ -6,7 +6,6 @@ import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface SoundSourceQueryDslRepository {
     boolean existsByUserIdAndId(Long userId, Long soundSourceId);

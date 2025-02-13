@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.adapter.in.web;
 
-import com.hoo.aoo.aar.application.service.AarException;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.common.adapter.in.web.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package com.hoo.aoo.admin.adapter.in.web.home;
 
+import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
-import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

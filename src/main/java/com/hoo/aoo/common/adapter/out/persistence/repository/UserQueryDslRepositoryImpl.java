@@ -1,7 +1,7 @@
 package com.hoo.aoo.common.adapter.out.persistence.repository;
 
 import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
-import com.hoo.aoo.common.adapter.out.persistence.entity.*;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;

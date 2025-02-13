@@ -1,7 +1,7 @@
 package com.hoo.aoo.file.adapter.out.persistence;
 
-import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
+import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.domain.*;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.FileSizeLimitExceedException;

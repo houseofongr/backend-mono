@@ -1,12 +1,9 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
-import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.HouseMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
-import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
-import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
@@ -14,6 +11,9 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;

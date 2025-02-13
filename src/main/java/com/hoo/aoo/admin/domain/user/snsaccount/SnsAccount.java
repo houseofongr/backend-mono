@@ -5,7 +5,6 @@ import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
-import java.util.function.Predicate;
 
 @Getter
 public class SnsAccount {
