@@ -4,7 +4,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
-import com.hoo.aoo.aar.domain.user.User;
+import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
@@ -28,30 +28,6 @@ class UserPersistenceAdapterTest {
 
     @Autowired
     UserPersistenceAdapter sut;
-
-    @Autowired
-    UserJpaRepository repository;
-
-    @Test
-    @DisplayName("사용자 저장")
-    void testSaveUser() {
-        // given
-        User user = MockEntityFactoryService.getUser();
-
-        // when
-        Long savedId = sut.save(user);
-        Optional<UserJpaEntity> optional = repository.findById(savedId);
-
-        // then
-        assertThat(optional).isNotEmpty();
-        assertThat(optional.get().getNickname()).isEqualTo(user.getUserInfo().getNickname());
-        assertThat(optional.get().getRealName()).isEqualTo(user.getUserInfo().getRealName());
-        assertThat(optional.get().getPhoneNumber()).isNull();
-        assertThat(optional.get().getPersonalInformationAgreement()).isEqualTo(user.getAgreement().getPersonalInformationAgreement());
-        assertThat(optional.get().getTermsOfUseAgreement()).isEqualTo(user.getAgreement().getTermsOfUseAgreement());
-        assertThat(optional.get().getCreatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(1L, ChronoUnit.SECONDS));
-        assertThat(optional.get().getUpdatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(1L, ChronoUnit.SECONDS));
-    }
 
     @Test
     @DisplayName("본인정보 조회")

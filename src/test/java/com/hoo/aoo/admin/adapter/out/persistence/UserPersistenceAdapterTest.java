@@ -10,7 +10,10 @@ import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.entity.*;
 import com.hoo.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain.KAKAO;
@@ -64,6 +69,27 @@ class UserPersistenceAdapterTest {
                     assertThat(userInfo.snsAccounts().getFirst().email()).isEqualTo("test@example.com");
                 }
         );
+    }
+
+    @Test
+    @DisplayName("사용자 저장")
+    void testSaveUser() {
+        // given
+        User user = MockEntityFactoryService.getUser();
+
+        // when
+        Long savedId = sut.save(user);
+        Optional<UserJpaEntity> optional = userJpaRepository.findById(savedId);
+
+        // then
+        Assertions.assertThat(optional).isNotEmpty();
+        Assertions.assertThat(optional.get().getNickname()).isEqualTo(user.getUserInfo().getNickname());
+        Assertions.assertThat(optional.get().getRealName()).isEqualTo(user.getUserInfo().getRealName());
+        Assertions.assertThat(optional.get().getPhoneNumber()).isNull();
+        Assertions.assertThat(optional.get().getPersonalInformationAgreement()).isEqualTo(user.getAgreement().getPersonalInformationAgreement());
+        Assertions.assertThat(optional.get().getTermsOfUseAgreement()).isEqualTo(user.getAgreement().getTermsOfUseAgreement());
+        Assertions.assertThat(optional.get().getCreatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(1L, ChronoUnit.SECONDS));
+        Assertions.assertThat(optional.get().getUpdatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(1L, ChronoUnit.SECONDS));
     }
 
     @Test

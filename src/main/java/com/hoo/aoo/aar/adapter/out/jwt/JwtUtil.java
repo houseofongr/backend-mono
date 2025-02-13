@@ -2,7 +2,7 @@ package com.hoo.aoo.aar.adapter.out.jwt;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
 import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.domain.Role;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;

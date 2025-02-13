@@ -1,9 +1,8 @@
 package com.hoo.aoo.aar.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.User;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
@@ -18,23 +17,7 @@ public class UserMapper {
 
     private final SnsAccountMapper snsAccountMapper;
 
-    public UserJpaEntity mapToNewJpaEntity(User user, List<SnsAccountJpaEntity> snsAccountJpaEntities) {
-
-        UserJpaEntity userJpaEntity = new UserJpaEntity(null,
-                user.getUserInfo().getRealName(),
-                user.getUserInfo().getNickname(),
-                user.getUserInfo().getEmail(),
-                null,
-                user.getAgreement().getTermsOfUseAgreement(),
-                user.getAgreement().getPersonalInformationAgreement(),
-                snsAccountJpaEntities);
-
-        snsAccountJpaEntities.forEach(snsAccountJpaEntity -> snsAccountJpaEntity.setUserEntity(userJpaEntity));
-
-        return userJpaEntity;
-    }
-
-    public User mapToDomainEntity(UserJpaEntity userJpaEntity) throws InvalidPhoneNumberException {
+    public User mapToDomainEntity(UserJpaEntity userJpaEntity) {
         List<SnsAccount> snsAccounts = userJpaEntity.getSnsAccountEntities().stream().map(snsAccountMapper::mapToDomainEntity).toList();
 
         return User.load(

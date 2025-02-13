@@ -1,8 +1,8 @@
 package com.hoo.aoo.aar.application.port.in.authn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hoo.aoo.aar.domain.user.User;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 
 import java.util.HashMap;

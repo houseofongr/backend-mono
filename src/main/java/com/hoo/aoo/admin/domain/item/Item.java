@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.domain.item;
 
-import com.hoo.aoo.aar.domain.user.UserId;
+import com.hoo.aoo.admin.domain.user.UserId;
 import com.hoo.aoo.admin.domain.home.HomeId;
 import com.hoo.aoo.admin.domain.room.RoomId;
 import com.hoo.aoo.admin.domain.soundsource.SoundSource;

@@ -1,11 +1,10 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.UserId;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccountId;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccountInfo;
+import com.hoo.aoo.admin.domain.user.UserId;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountId;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountInfo;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class MockOAuth2Controller {
     private final JwtUtil jwtUtil;
 
     @GetMapping("/mock/authn/login/{snsAccountId}")
-    void mockLogin(HttpServletResponse response, @PathVariable Long snsAccountId) throws IOException, InvalidPhoneNumberException {
+    void mockLogin(HttpServletResponse response, @PathVariable Long snsAccountId) throws IOException {
 
         if (snsAccountId == 1L) {
 

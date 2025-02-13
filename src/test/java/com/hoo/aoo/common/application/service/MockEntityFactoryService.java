@@ -1,7 +1,7 @@
 package com.hoo.aoo.common.application.service;
 
-import com.hoo.aoo.aar.domain.user.User;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
@@ -56,8 +56,8 @@ public class MockEntityFactoryService {
         return Home.load(home.getHomeId().getId(), home.getHouseId().getId(), home.getUserId().getId(), home.getHomeDetail().getName(), ZonedDateTime.now(), ZonedDateTime.now());
     }
 
-    public static com.hoo.aoo.admin.domain.user.User getAdminUser() {
-        return com.hoo.aoo.admin.domain.user.User.load(10L, "남상엽", "leaf", "test@example.com", true, true, ZonedDateTime.now(), ZonedDateTime.now(), List.of());
+    public static User getAdminUser() {
+        return User.load(10L, "남상엽", "leaf", "test@example.com", true, true, ZonedDateTime.now(), ZonedDateTime.now(), List.of());
     }
 
     public static Item getRectangleItem() throws Exception {

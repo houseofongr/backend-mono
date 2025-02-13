@@ -1,8 +1,8 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
-import com.hoo.aoo.aar.application.port.in.authn.RegisterUserCommand;
-import com.hoo.aoo.aar.application.port.in.authn.RegisterUserUseCase;
+import com.hoo.aoo.admin.application.port.in.user.RegisterUserCommand;
+import com.hoo.aoo.admin.application.port.in.user.RegisterUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

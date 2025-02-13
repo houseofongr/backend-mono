@@ -5,7 +5,6 @@ import com.hoo.aoo.aar.domain.user.User;
 
 import java.util.Optional;
 
-public interface FindUserPort {
+public interface QueryUserPort {
     QueryMyInfoResult queryMyInfo(Long userId);
-    Optional<User> load(Long id);
 }

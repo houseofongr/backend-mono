@@ -1,5 +1,5 @@
 package com.hoo.aoo.aar.application.port.out.api;
 
-public interface UnlinkKakaoLogin {
+public interface UnlinkKakaoLoginPort {
     void unlink(Long userId);
 }

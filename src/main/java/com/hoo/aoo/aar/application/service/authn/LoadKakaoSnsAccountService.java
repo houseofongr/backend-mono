@@ -3,14 +3,14 @@ package com.hoo.aoo.aar.application.service.authn;
 import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.hoo.aoo.aar.application.port.in.authn.SNSLoginResult;
 import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.SaveSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.user.FindUserPort;
+import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.admin.application.port.out.snsaccount.SaveSnsAccountPort;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
 import com.hoo.aoo.aar.application.service.AarException;
-import com.hoo.aoo.aar.domain.user.User;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -49,7 +49,7 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
                 return new DefaultOAuth2User(user.getAuthorities(), response.getAttributes(), "nickname");
             }
 
-            Optional<User> userOptional = findUserPort.load(snsAccountInDB.getUserId().getId());
+            Optional<User> userOptional = findUserPort.loadUser(snsAccountInDB.getUserId().getId());
 
             // 사용자와 연동된 계정
             if (userOptional.isPresent()) {

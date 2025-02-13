@@ -2,7 +2,7 @@ package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;

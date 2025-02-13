@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.domain.user.snsaccount;
 
-import com.hoo.aoo.aar.domain.user.UserId;
+import com.hoo.aoo.admin.domain.user.UserId;
 import com.hoo.aoo.common.domain.BaseTime;
 import lombok.Getter;
 

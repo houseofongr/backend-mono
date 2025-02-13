@@ -1,13 +1,12 @@
 package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
-import com.hoo.aoo.aar.application.port.in.authn.RegisterUserCommand;
-import com.hoo.aoo.aar.application.port.in.authn.RegisterUserResult;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.user.CreateUserPort;
-import com.hoo.aoo.aar.application.port.out.persistence.user.SaveUserPort;
-import com.hoo.aoo.aar.application.service.authn.RegisterUserService;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.application.port.in.user.RegisterUserCommand;
+import com.hoo.aoo.admin.application.port.in.user.RegisterUserResult;
+import com.hoo.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.admin.application.port.out.user.CreateUserPort;
+import com.hoo.aoo.admin.application.port.out.user.SaveUserPort;
+import com.hoo.aoo.admin.application.service.user.RegisterUserService;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +48,7 @@ class RegisterUserServiceTest {
         // then
         verify(findSnsAccountPort, times(1)).load(1L);
         verify(saveUserPort, times(1)).save(any());
-        verify(jwtUtil, times(1)).issueAccessToken((SnsAccount) any());
+        verify(jwtUtil, times(1)).issueAccessToken((any()));
 
         assertThat(register.nickname()).isEqualTo("leaf");
     }

@@ -2,16 +2,15 @@ package com.hoo.aoo.aar.application.service;
 
 import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.CreateSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.FindSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.snsaccount.SaveSnsAccountPort;
-import com.hoo.aoo.aar.application.port.out.persistence.user.FindUserPort;
+import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
+import com.hoo.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
+import com.hoo.aoo.admin.application.port.out.snsaccount.SaveSnsAccountPort;
 import com.hoo.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
-import com.hoo.aoo.aar.domain.exception.InvalidPhoneNumberException;
-import com.hoo.aoo.aar.domain.user.User;
-import com.hoo.aoo.aar.domain.user.UserId;
-import com.hoo.aoo.aar.domain.user.UserInfo;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.User;
+import com.hoo.aoo.admin.domain.user.UserId;
+import com.hoo.aoo.admin.domain.user.UserInfo;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +48,7 @@ class LoadKakaoSnsAccountServiceTest {
 
     @Test
     @DisplayName("DB에 존재하는 계정은 isFirstLogin = false")
-    void testExistUser() throws InvalidPhoneNumberException {
+    void testExistUser() {
         // given
         OAuth2User oAuth2User = mock();
         SnsAccount snsAccount = mock();
@@ -58,7 +57,7 @@ class LoadKakaoSnsAccountServiceTest {
         // when
         when(findSnsAccountPort.load(any(), any())).thenReturn(Optional.of(snsAccount));
         when(snsAccount.getUserId()).thenReturn(new UserId(1L));
-        when(findUserPort.load(1L)).thenReturn(Optional.of(user));
+        when(findUserPort.loadUser(1L)).thenReturn(Optional.of(user));
         when(user.getUserInfo()).thenReturn(new UserInfo("남상엽","leaf", "test@example.com"));
         OAuth2User loadUser = sut.load(oAuth2User);
 

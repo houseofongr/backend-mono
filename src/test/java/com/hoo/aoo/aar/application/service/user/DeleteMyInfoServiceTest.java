@@ -1,28 +1,26 @@
 package com.hoo.aoo.aar.application.service.user;
 
-import com.hoo.aoo.aar.application.port.out.api.UnlinkKakaoLogin;
+import com.hoo.aoo.aar.application.port.out.api.UnlinkKakaoLoginPort;
 import com.hoo.aoo.admin.application.port.in.user.DeleteUserCommand;
 import com.hoo.aoo.admin.application.port.in.user.DeleteUserUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DeleteMyInfoServiceTest {
 
     DeleteMyInfoService sut;
 
-    UnlinkKakaoLogin unlinkKakaoLogin;
+    UnlinkKakaoLoginPort unlinkKakaoLoginPort;
     DeleteUserUseCase deleteUserUseCase;
 
     @BeforeEach
     void init() {
-        unlinkKakaoLogin = mock();
+        unlinkKakaoLoginPort = mock();
         deleteUserUseCase = mock();
-        sut = new DeleteMyInfoService(unlinkKakaoLogin, deleteUserUseCase);
+        sut = new DeleteMyInfoService(unlinkKakaoLoginPort, deleteUserUseCase);
     }
 
     @Test
@@ -36,7 +34,7 @@ class DeleteMyInfoServiceTest {
         sut.deleteMyInfo(userId, command);
 
         // then
-        verify(unlinkKakaoLogin, times(1)).unlink(userId);
+        verify(unlinkKakaoLoginPort, times(1)).unlink(userId);
         verify(deleteUserUseCase, times(1)).deleteUser(userId,command);
     }
 

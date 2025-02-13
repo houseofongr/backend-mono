@@ -43,6 +43,22 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<SnsAccountJpaEntity> snsAccountEntities;
 
+    public static UserJpaEntity create(User user, List<SnsAccountJpaEntity> snsAccountJpaEntities) {
+
+        UserJpaEntity userJpaEntity = new UserJpaEntity(null,
+                user.getUserInfo().getRealName(),
+                user.getUserInfo().getNickname(),
+                user.getUserInfo().getEmail(),
+                null,
+                user.getAgreement().getTermsOfUseAgreement(),
+                user.getAgreement().getPersonalInformationAgreement(),
+                snsAccountJpaEntities);
+
+        snsAccountJpaEntities.forEach(snsAccountJpaEntity -> snsAccountJpaEntity.setUserEntity(userJpaEntity));
+
+        return userJpaEntity;
+    }
+
     public void update(User user) {
         nickname = user.getUserInfo().getNickname();
     }

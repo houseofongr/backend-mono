@@ -1,17 +1,15 @@
 package com.hoo.aoo.aar.adapter.out.api;
 
 import com.hoo.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.hoo.aoo.aar.application.port.out.api.UnlinkKakaoLogin;
+import com.hoo.aoo.aar.application.port.out.api.UnlinkKakaoLoginPort;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
-public class KakaoLoginApiAdapter implements UnlinkKakaoLogin {
+public class KakaoLoginApiAdapter implements UnlinkKakaoLoginPort {
 
     private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final KakaoLoginApi kakaoLoginApi;

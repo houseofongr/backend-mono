@@ -19,7 +19,6 @@ public class UserMapper {
 
     private final SnsAccountMapper snsAccountMapper;
 
-
     public QueryUserInfoResult mapToQueryResults(Page<UserJpaEntity> userJpaEntities) {
         Page<QueryUserInfoResult.UserInfo> userInfosPages = userJpaEntities.map(this::mapToQueryResult);
         return new QueryUserInfoResult(userInfosPages.getContent(), Pagination.of(userInfosPages));

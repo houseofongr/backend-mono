@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.application.service.user;
 
-import com.hoo.aoo.aar.application.port.out.persistence.user.FindUserPort;
+import com.hoo.aoo.aar.application.port.out.persistence.user.QueryUserPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,12 +11,12 @@ class QueryMyInfoServiceTest {
 
     QueryMyInfoService sut;
 
-    FindUserPort findUserPort;
+    QueryUserPort queryUserPort;
 
     @BeforeEach
     void init() {
-        findUserPort = mock();
-        sut = new QueryMyInfoService(findUserPort);
+        queryUserPort = mock();
+        sut = new QueryMyInfoService(queryUserPort);
     }
 
     @Test
@@ -29,6 +29,6 @@ class QueryMyInfoServiceTest {
         sut.queryMyInfo(userId);
 
         // then
-        verify(findUserPort, times(1)).queryMyInfo(userId);
+        verify(queryUserPort, times(1)).queryMyInfo(userId);
     }
 }

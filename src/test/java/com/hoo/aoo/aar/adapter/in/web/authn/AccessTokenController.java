@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.in.web.authn;
 
 import com.hoo.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
-import com.hoo.aoo.aar.domain.user.snsaccount.SnsAccount;
+import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.hoo.aoo.aar.application.port.in.authn;
+package com.hoo.aoo.admin.application.port.in.user;
 
 public interface RegisterUserUseCase {
     RegisterUserResult register(RegisterUserCommand command);
