@@ -4,6 +4,8 @@ import com.hoo.aoo.aar.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.aar.application.port.in.home.*;
 import com.hoo.aoo.aar.application.port.out.persistence.home.CheckOwnerPort;
 import com.hoo.aoo.aar.application.port.out.persistence.home.QueryHomePort;
+import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
@@ -12,6 +14,9 @@ import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component("AARHomePersistenceAdapter")
 @RequiredArgsConstructor
@@ -35,7 +40,9 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
 
     @Override
     public QueryRoomItemsResult queryRoomItems(Long homeId, Long roomId) {
-        return homeMapper.mapToQueryRoomItems(roomJpaRepository.findByIdAndHomeIdWithItem(homeId, roomId).orElseThrow());
+        RoomJpaEntity roomJpaEntity = roomJpaRepository.findById(roomId).orElseThrow();
+        List<ItemJpaEntity> itemJpaEntities = itemJpaRepository.findAllByHomeIdAndRoomId(homeId, roomId);
+        return homeMapper.mapToQueryRoomItems(roomJpaEntity, itemJpaEntities);
     }
 
     @Override

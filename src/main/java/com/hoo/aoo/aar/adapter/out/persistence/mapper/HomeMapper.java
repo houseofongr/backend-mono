@@ -54,10 +54,10 @@ public class HomeMapper {
         );
     }
 
-    public QueryRoomItemsResult mapToQueryRoomItems(RoomJpaEntity roomJpaEntity) {
+    public QueryRoomItemsResult mapToQueryRoomItems(RoomJpaEntity roomJpaEntity, List<ItemJpaEntity> itemJpaEntities) {
         return new QueryRoomItemsResult(
                 mapToRoomInfo(roomJpaEntity),
-                roomJpaEntity.getItems().stream().map(this::mapToItemInfo).filter(Objects::nonNull).toList()
+                itemJpaEntities.stream().map(this::mapToItemInfo).filter(Objects::nonNull).toList()
         );
     }
 
