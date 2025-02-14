@@ -70,6 +70,7 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
                 .from(soundSourceJpaEntity)
                 .leftJoin(soundSourceJpaEntity.item, itemJpaEntity)
                 .leftJoin(itemJpaEntity.home, homeJpaEntity)
+                .leftJoin(itemJpaEntity.room, roomJpaEntity)
                 .leftJoin(homeJpaEntity.user, userJpaEntity)
                 .where(userJpaEntity.id.eq(command.userId())
                         .and(soundSourceJpaEntity.isActive.isTrue()))

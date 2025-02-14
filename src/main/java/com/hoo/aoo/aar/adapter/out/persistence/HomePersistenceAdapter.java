@@ -34,8 +34,8 @@ public class HomePersistenceAdapter implements QueryHomePort, CheckOwnerPort {
     }
 
     @Override
-    public QueryRoomItemsResult queryRoomItems(Long roomId) {
-        return homeMapper.mapToQueryRoomItems(roomJpaRepository.findById(roomId).orElseThrow());
+    public QueryRoomItemsResult queryRoomItems(Long homeId, Long roomId) {
+        return homeMapper.mapToQueryRoomItems(roomJpaRepository.findByIdAndHomeIdWithItem(homeId, roomId).orElseThrow());
     }
 
     @Override

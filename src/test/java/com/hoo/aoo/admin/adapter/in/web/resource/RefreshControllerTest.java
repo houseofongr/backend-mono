@@ -25,8 +25,8 @@ class RefreshControllerTest {
         mockMvc.perform(get("/users/123")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
         mockMvc.perform(get("/houses")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
         mockMvc.perform(get("/houses/123")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
-        mockMvc.perform(get("/soundsources")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
-        mockMvc.perform(get("/soundsources/123")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
+        mockMvc.perform(get("/sound-sources")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
+        mockMvc.perform(get("/sound-sources/123")).andExpect(status().is(200)).andExpect(forwardedUrl("/index.html"));
     }
 
 }

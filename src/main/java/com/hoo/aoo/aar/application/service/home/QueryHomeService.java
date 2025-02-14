@@ -38,7 +38,7 @@ public class QueryHomeService implements QueryUserHomesUseCase, QueryHomeRoomsUs
         if (!checkOwnerPort.checkRoom(homeId, roomId))
             throw new AarException(AarErrorCode.NOT_OWNED_ROOM);
 
-        return queryHomePort.queryRoomItems(roomId);
+        return queryHomePort.queryRoomItems(homeId, roomId);
     }
 
     @Override

@@ -138,10 +138,11 @@ class HomePersistenceAdapterTest {
     @DisplayName("룸 아이템 조회 테스트")
     void testQueryRoomItems() {
         // given
+        Long homeId = 1L;
         Long roomId = 1L;
 
         // when
-        QueryRoomItemsResult queryRoomItemsResult = sut.queryRoomItems(roomId);
+        QueryRoomItemsResult queryRoomItemsResult = sut.queryRoomItems(homeId, roomId);
 
         // then
         assertThat(queryRoomItemsResult.room().name()).isEqualTo("거실");
@@ -223,7 +224,7 @@ class HomePersistenceAdapterTest {
         QuerySoundSourcesPathResult result = sut.querySoundSourcesPath(command);
 
         // then
-        assertThat(result.soundSources()).hasSize(2)
+        assertThat(result.soundSources()).hasSize(3)
                 .anySatisfy(soundSourceInfo -> {
                     assertThat(soundSourceInfo.name()).isEqualTo("골골송");
                     assertThat(soundSourceInfo.description()).isEqualTo("2025년 골골송 V1");

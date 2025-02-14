@@ -72,7 +72,7 @@ class QueryHomeServiceTest {
         sut.queryRoomItems(userId, homeId, roomId);
 
         // then
-        verify(queryHomePort, times(1)).queryRoomItems(roomId);
+        verify(queryHomePort, times(1)).queryRoomItems(homeId, roomId);
     }
 
     @Test
