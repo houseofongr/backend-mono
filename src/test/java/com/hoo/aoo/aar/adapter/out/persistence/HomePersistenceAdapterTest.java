@@ -140,11 +140,17 @@ class HomePersistenceAdapterTest {
         // given
         Long homeId = 1L;
         Long roomId = 1L;
+        Long noItemHomeId = 2L;
+        Long noItemRoomId = 2L;
 
         // when
         QueryRoomItemsResult queryRoomItemsResult = sut.queryRoomItems(homeId, roomId);
+        QueryRoomItemsResult noItemResult = sut.queryRoomItems(noItemHomeId, noItemRoomId);
 
         // then
+        assertThat(noItemResult.room().name()).isEqualTo("주방");
+        assertThat(noItemResult.items()).isEmpty();
+
         assertThat(queryRoomItemsResult.room().name()).isEqualTo("거실");
         assertThat(queryRoomItemsResult.room().width()).isEqualTo(5000);
         assertThat(queryRoomItemsResult.room().height()).isEqualTo(1000);
