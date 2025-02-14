@@ -34,7 +34,7 @@
 
     <springProfile name="dev">
         <property name="LOG_PATH" value="/Users/hooserver/backend/aoo/log/dev"/>
-        <root level="INFO">
+        <root level="DEBUG">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
