@@ -83,7 +83,7 @@ public class AarSecurityConfig {
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "https://dev.archiveofongr.site"));
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setExposedHeaders((List.of("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
