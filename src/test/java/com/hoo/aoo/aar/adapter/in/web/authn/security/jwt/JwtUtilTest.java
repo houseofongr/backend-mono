@@ -4,6 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
 import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.assertj.core.api.InstanceOfAssertFactories;

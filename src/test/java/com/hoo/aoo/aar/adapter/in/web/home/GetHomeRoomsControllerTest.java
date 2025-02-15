@@ -19,6 +19,15 @@ class GetHomeRoomsControllerTest extends AbstractControllerTest {
     @Sql("GetHomeRoomsControllerTest.sql")
     @DisplayName("룸 조회 API")
     void testGetHome() throws Exception {
+
+        mockMvc.perform(get("/aar/homes/rooms")
+                        .param("homeId", "1234")
+                        .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
+                                .authorities(new SimpleGrantedAuthority("ROLE_USER"))
+                        )
+                )
+                .andExpect(status().is(403));
+
         mockMvc.perform(get("/aar/homes/rooms")
                         .param("homeId", "1")
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))

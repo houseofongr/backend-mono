@@ -17,8 +17,10 @@ public class KakaoLoginApiAdapter implements UnlinkKakaoLoginPort {
     @Override
     public void unlink(Long userId) {
         for (SnsAccountJpaEntity entity : snsAccountJpaRepository.findAllByUserId(userId)) {
-            if (entity.getSnsDomain().equals(SnsDomain.KAKAO)) kakaoLoginApi.unlink(entity.getSnsId());
-            return;
+            if (entity.getSnsDomain().equals(SnsDomain.KAKAO)) {
+                kakaoLoginApi.unlink(entity.getSnsId());
+                return;
+            }
         }
     }
 }

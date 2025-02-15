@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
+import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadataTest.getCreateHouseMetadata;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CreateHouseServiceTest {
