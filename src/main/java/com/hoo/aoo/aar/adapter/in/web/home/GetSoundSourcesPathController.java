@@ -4,6 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathCommand;
 import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathResult;
 import com.hoo.aoo.aar.application.port.in.home.QuerySoundSourcesPathUseCase;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class GetSoundSourcesPathController {
 
     @GetMapping("/aar/sound-sources/path")
     public ResponseEntity<QuerySoundSourcesPathResult> getSoundSourcesPath(
-            @Jwt("userId") Long userId,
+            @NotNull @Jwt("userId") Long userId,
             Pageable pageable) {
-        return ResponseEntity.ok(useCase.querySoundSourcesPath(new QuerySoundSourcesPathCommand(userId,pageable)));
+        return ResponseEntity.ok(useCase.querySoundSourcesPath(new QuerySoundSourcesPathCommand(userId, pageable)));
     }
 }

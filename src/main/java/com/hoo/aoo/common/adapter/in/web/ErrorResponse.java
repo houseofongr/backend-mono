@@ -1,6 +1,8 @@
 package com.hoo.aoo.common.adapter.in.web;
 
 import com.hoo.aoo.common.application.service.ErrorCode;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 public record ErrorResponse(
         String code,

@@ -15,12 +15,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class RegisterUserControllerTest extends AbstractControllerTest {
 
-
-
     @Test
     @Sql("PostUserControllerTest.sql")
     @DisplayName("회원가입 API")
     void testRegister() throws Exception {
+
+        String badBody = "{\"personalInformationAgreement\":true}";
+
+        mockMvc.perform(post("/aar/authn/regist")
+                        .content(badBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(jwt -> jwt.claim("snsId", 1L))
+                                .authorities(new SimpleGrantedAuthority("ROLE_TEMP_USER")))
+                )
+                .andExpect(status().is(400));
 
         String body = "{\"termsOfUseAgreement\":true, \"personalInformationAgreement\":true}";
 

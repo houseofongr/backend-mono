@@ -3,6 +3,8 @@ package com.hoo.aoo.aar.adapter.in.web.authn;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.hoo.aoo.admin.application.port.in.user.RegisterUserCommand;
 import com.hoo.aoo.admin.application.port.in.user.RegisterUserUseCase;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,8 @@ public class RegisterUserController {
     private final RegisterUserUseCase registerUserUseCase;
 
     @PostMapping("/aar/authn/regist")
-    ResponseEntity<?> regist(@RequestBody Request request,
-                             @Jwt("snsId") Long snsId) {
+    ResponseEntity<?> regist(@Valid @RequestBody Request request,
+                             @NotNull @Jwt("snsId") Long snsId) {
 
         RegisterUserCommand command = new RegisterUserCommand(
                 snsId,
@@ -29,8 +31,8 @@ public class RegisterUserController {
     }
 
     private record Request(
-            Boolean termsOfUseAgreement,
-            Boolean personalInformationAgreement
+            @NotNull Boolean termsOfUseAgreement,
+            @NotNull Boolean personalInformationAgreement
     ) {
     }
 }
