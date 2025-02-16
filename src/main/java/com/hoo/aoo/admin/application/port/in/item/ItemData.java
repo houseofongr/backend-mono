@@ -3,11 +3,12 @@ package com.hoo.aoo.admin.application.port.in.item;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.item.*;
+import jakarta.validation.constraints.NotNull;
 
 public record ItemData(
         Long id,
-        String name,
-        ItemType itemType,
+        @NotNull String name,
+        @NotNull ItemType itemType,
         CircleData circleData,
         RectangleData rectangleData,
         EllipseData ellipseData

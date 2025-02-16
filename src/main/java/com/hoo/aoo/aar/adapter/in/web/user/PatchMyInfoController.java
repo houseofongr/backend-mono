@@ -4,6 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.hoo.aoo.admin.application.port.in.user.UpdateUserInfoCommand;
 import com.hoo.aoo.admin.application.port.in.user.UpdateUserInfoUseCase;
 import com.hoo.aoo.common.application.port.in.MessageDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,7 +19,7 @@ public class PatchMyInfoController {
 
     @PatchMapping("/aar/users/me")
     public ResponseEntity<MessageDto> patchMyInfo(
-            @Jwt("userId") Long userId,
+            @NotNull @Jwt("userId") Long userId,
             @RequestBody UpdateUserInfoCommand command
     ) {
         return ResponseEntity.ok(useCase.updateUserInfo(userId, command));

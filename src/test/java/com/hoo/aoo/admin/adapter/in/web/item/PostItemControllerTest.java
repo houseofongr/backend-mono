@@ -20,9 +20,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PostItemControllerTest extends AbstractControllerTest {
 
-
-
-
+    @Test
+    @DisplayName("아이템 생성 시 데이터 없으면 오류")
+    void testNoDataExceptionHandler() throws Exception {
+        mockMvc.perform(post("/admin/users/{userId}/homes/{homeId}/rooms/{roomId}/items", 10L, 1L, 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"items\": []}"))
+                .andExpect(status().is(400));
+    }
 
     @Test
     @Sql("PostItemControllerTest.sql")

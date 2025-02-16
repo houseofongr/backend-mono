@@ -1,6 +1,10 @@
 package com.hoo.aoo.common.adapter.in.web;
 
+import jakarta.validation.ConstraintViolation;
 import org.springframework.validation.BindingResult;
+
+import java.util.List;
+import java.util.Set;
 
 public record ValidationErrorResponse(
         String fieldName,
@@ -14,5 +18,16 @@ public record ValidationErrorResponse(
                 bindingResult.getFieldError().getRejectedValue(),
                 bindingResult.getFieldError().getDefaultMessage()
         );
+    }
+
+    public static List<ValidationErrorResponse> of(Set<ConstraintViolation<?>> constraintViolations) {
+
+        return constraintViolations.stream().map(violation ->
+                new ValidationErrorResponse(
+                        violation.getPropertyPath().toString(),
+                        violation.getInvalidValue(),
+                        violation.getMessage()
+                )
+        ).toList();
     }
 }

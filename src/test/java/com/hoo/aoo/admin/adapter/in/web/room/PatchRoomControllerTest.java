@@ -14,9 +14,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PatchRoomControllerTest extends AbstractControllerTest {
 
-
-
-
+    @Test
+    @DisplayName("룸 정보 수정 시 빈값 요청")
+    void testEmptyRoomInfoExceptionHandler() throws Exception {
+        mockMvc.perform(patch("/admin/houses/rooms")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("[]")
+                        .with(user("admin").roles("ADMIN")))
+                .andExpect(status().is(400));
+    }
 
     @Test
     @Sql("PatchRoomControllerTest.sql")

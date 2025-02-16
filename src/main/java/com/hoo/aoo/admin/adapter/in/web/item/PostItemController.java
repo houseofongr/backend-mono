@@ -3,6 +3,8 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemCommand;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemResult;
 import com.hoo.aoo.admin.application.port.in.item.CreateItemUseCase;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,7 @@ public class PostItemController {
             @PathVariable Long userId,
             @PathVariable Long homeId,
             @PathVariable Long roomId,
-            @RequestBody CreateItemCommand command) {
+            @Valid @RequestBody CreateItemCommand command) {
 
         return new ResponseEntity<>(createItemUseCase.create(homeId, roomId, userId, command), CREATED);
 

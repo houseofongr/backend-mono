@@ -1,6 +1,8 @@
 package com.hoo.aoo.admin.application.port.in.item;
 
+import jakarta.validation.constraints.NotNull;
+
 public record UpdateItemCommand(
-        ItemData updateData
+        @NotNull ItemData updateData
 ) {
 }

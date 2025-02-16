@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 import com.hoo.aoo.admin.application.port.in.item.UpdateItemCommand;
 import com.hoo.aoo.admin.application.port.in.item.UpdateItemUseCase;
 import com.hoo.aoo.common.application.port.in.MessageDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,7 +20,7 @@ public class PatchItemController {
     @PatchMapping("/admin/items/{itemId}")
     public ResponseEntity<MessageDto> updateItem(
             @PathVariable Long itemId,
-            @RequestBody UpdateItemCommand command
+            @Valid @RequestBody UpdateItemCommand command
     ) {
         return ResponseEntity.ok(updateItemUseCase.updateItem(itemId, command));
     }

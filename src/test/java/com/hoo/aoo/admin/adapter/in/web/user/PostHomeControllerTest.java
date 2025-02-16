@@ -14,6 +14,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PostHomeControllerTest extends AbstractControllerTest {
 
     @Test
+    @DisplayName("Home 생성 시 식별자 예외처리")
+    void testValidateId() throws Exception {
+
+        String nullId = """
+                {
+                  "houseId": 20
+                }
+                """;
+
+        mockMvc.perform(post("/admin/homes")
+                        .content(nullId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(400));
+
+        String notFoundId = """
+                {
+                  "userId": -1,
+                  "houseId": 20
+                }
+                """;
+
+        mockMvc.perform(post("/admin/homes")
+                        .content(notFoundId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(404));
+    }
+
+    @Test
     @Sql("PostHomeControllerTest.sql")
     @DisplayName("Home 생성 테스트")
     void testCreateHome() throws Exception {

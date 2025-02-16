@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.item;
 import com.hoo.aoo.admin.application.port.in.item.CreateAndUpdateItemCommand;
 import com.hoo.aoo.admin.application.port.in.item.CreateAndUpdateItemResult;
 import com.hoo.aoo.admin.application.port.in.item.CreateAndUpdateItemUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -2,6 +2,7 @@ package com.hoo.aoo.file.adapter.in.web.publics;
 
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPublicImageUseCase;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class PostPublicImageController {
     private final UploadPublicImageUseCase uploadPublicImageUseCase;
 
     @PostMapping("/public/images")
-    public ResponseEntity<UploadFileResult> upload(@RequestParam("images") List<MultipartFile> images) {
+    public ResponseEntity<UploadFileResult> upload(@NotEmpty @RequestParam List<MultipartFile> images) {
         UploadFileResult response = uploadPublicImageUseCase.publicUpload(images);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

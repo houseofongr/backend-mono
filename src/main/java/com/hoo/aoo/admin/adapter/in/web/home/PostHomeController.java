@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.in.web.home;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeCommand;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeResult;
 import com.hoo.aoo.admin.application.port.in.home.CreateHomeUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class PostHomeController {
     private final CreateHomeUseCase createHomeUseCase;
 
     @PostMapping("/admin/homes")
-    ResponseEntity<CreateHomeResult> create(@RequestBody CreateHomeCommand command) {
+    ResponseEntity<CreateHomeResult> create(@Valid @RequestBody CreateHomeCommand command) {
         return new ResponseEntity<>(createHomeUseCase.create(command), HttpStatus.CREATED);
     }
 

@@ -21,7 +21,14 @@ class PatchItemControllerTest extends AbstractControllerTest {
     @Autowired
     ItemJpaRepository itemJpaRepository;
 
-
+    @Test
+    @DisplayName("아이템 수정 시 데이터 없을 경우 예외처리")
+    void testNoDataExceptionHandle() throws Exception {
+        mockMvc.perform(patch("/admin/items/{itemId}", 2L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"updateData\":null}"))
+                .andExpect(status().is(400));
+    }
 
     @Test
     @Sql("PatchItemControllerTest.sql")

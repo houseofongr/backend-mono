@@ -1,7 +1,9 @@
 package com.hoo.aoo.admin.application.port.in.home;
 
+import jakarta.validation.constraints.NotNull;
+
 public record CreateHomeCommand(
-        Long userId,
-        Long houseId
+        @NotNull Long userId,
+        @NotNull Long houseId
 ) {
 }

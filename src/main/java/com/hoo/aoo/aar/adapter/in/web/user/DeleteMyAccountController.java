@@ -4,6 +4,7 @@ import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.hoo.aoo.aar.application.port.in.user.DeleteMyInfoUseCase;
 import com.hoo.aoo.admin.application.port.in.user.DeleteUserCommand;
 import com.hoo.aoo.common.application.port.in.MessageDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +19,7 @@ public class DeleteMyAccountController {
 
     @DeleteMapping("/aar/users")
     public ResponseEntity<MessageDto> deleteMyAccount(
-            @Jwt("userId") Long userId,
+            @NotNull @Jwt("userId") Long userId,
             @RequestBody DeleteUserCommand command
     ) {
 
