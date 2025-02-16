@@ -15,7 +15,7 @@ class HomeTest {
     void testCreateHome() throws Exception {
         // given
         House house = MockEntityFactoryService.getHouse();
-        User user = MockEntityFactoryService.getAdminUser();
+        User user = MockEntityFactoryService.getUser();
 
         // when
         Home home = Home.create(1L, house, user);

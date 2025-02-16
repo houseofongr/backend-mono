@@ -14,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -32,12 +34,15 @@ class UploadService {
 
     UploadFileResult upload(List<MultipartFile> files, Long ownerId, FileIdCreateStrategy idCreateStrategy) {
 
+        // int[0] : total file name count | int[1] : name suffix(increase)
+        Map<String, int[]> fileNameMap = fileNameMap(files);
+
         List<UploadFileResult.FileInfo> fileInfos = new ArrayList<>();
 
         for (MultipartFile multipartFile : files) {
 
             try {
-                String originalFilename = multipartFile.getOriginalFilename();
+                String originalFilename = getOriginalFilename(multipartFile.getOriginalFilename(), fileNameMap);
                 if (originalFilename == null) throw new FileException(FileErrorCode.FILE_NAME_EMPTY);
 
                 String fileSystemName = randomFileNamePort.getName(originalFilename);
@@ -69,4 +74,25 @@ class UploadService {
 
         return new UploadFileResult(fileInfos);
     }
+
+    private Map<String, int[]> fileNameMap(List<MultipartFile> files) {
+
+        Map<String, int[]> map = new HashMap<>();
+
+        for (MultipartFile file : files) {
+            if (map.get(file.getOriginalFilename()) == null) map.put(file.getOriginalFilename(), new int[] {1, 1});
+            else map.get(file.getOriginalFilename())[0]++;
+        }
+
+        return map;
+    }
+
+    private String getOriginalFilename(String originalFileName, Map<String, int[]> fileNameMap) {
+        if (fileNameMap.get(originalFileName)[0] == 1) return originalFileName;
+        else {
+            String[] split = originalFileName.split("\\.");
+            return split[0] + "-" + fileNameMap.get(originalFileName)[1]++ + "." + split[1];
+        }
+    }
+
 }

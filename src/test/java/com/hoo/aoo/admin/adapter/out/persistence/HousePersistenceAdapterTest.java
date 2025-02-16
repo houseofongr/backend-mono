@@ -141,7 +141,7 @@ class HousePersistenceAdapterTest {
     @DisplayName("하우스 수정 테스트")
     void testUpdateInfoHouse() throws Exception {
         // given
-        House houseWithRoom = House.create(2L,new HouseDetail("cozy house", "leaf", "this is cozy house"), 5000f, 5000f, 3L, 4L, List.of(MockEntityFactoryService.getRoom()));
+        House houseWithRoom = House.create(2L,"cozy house", "leaf", "this is cozy house", 5000f, 5000f, 3L, 4L, List.of(MockEntityFactoryService.getRoom()));
 
         // when
         sut.update(houseWithRoom);

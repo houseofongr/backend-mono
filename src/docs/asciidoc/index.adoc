@@ -233,6 +233,22 @@ include::{snippets}/admin-create-house-metadata/response-fields.adoc[]
 
 operation::admin-house-post[snippets='http-response,response-fields']
 
+==== 하우스 생성 시 오류
+
+===== 전송타입 오류
+
+전송타입(``Content-Type``)이 ``Multipart-FormData``가 아닐 경우, 다음과 같은 오류가 발생합니다.
+
+include::{snippets}/admin-house-post-error-1/response-body.adoc[]
+
+===== 하우스 이미지 파일 중복 오류
+
+하우스 생성 시 기본 이미지 파일(``houseForm``)과 보더 이미지 파일(``borderForm``)이 중복되면 다음과 같은 오류가 발생합니다.
+
+> 업로드한 이미지 파일의 ``이름(파일명)``이 동일한지 검사합니다.
+
+include::{snippets}/admin-house-post-error-2/response-body.adoc[]
+
 [[admin-house-get-list-api]]
 ==== 하우스 검색 API
 

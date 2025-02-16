@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
@@ -41,6 +42,24 @@ class CreateHouseServiceTest {
         createHousePort = mock();
         createRoomPort = mock();
         sut = new CreateHouseService(saveHousePort, uploadPrivateImageUseCase, createHousePort, createRoomPort);
+    }
+
+    @Test
+    @DisplayName("하우스 생성 시 보더 이미지와 기본 이미지 중복 테스트")
+    void testCreateHouseDuplicateImages() throws FileSizeLimitExceedException {
+        // given
+        CreateHouseMetadata metadata = getCreateHouseMetadata();
+
+        Map<String, MultipartFile> map = new HashMap<>();
+
+        map.put("house", new MockMultipartFile("house", "house.png", "image/png", "house file".getBytes()));
+        map.put("border", new MockMultipartFile("border", "house.png", "image/png", "border file".getBytes()));
+
+        // when
+        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+
+        // then
+        assertThatThrownBy(() -> sut.create(metadata, map)).hasMessage(AdminErrorCode.HOUSE_BASIC_IMAGE_FILENAME_EQ_BORDER_IMAGE_FILENAME.getMessage());
     }
 
     @Test

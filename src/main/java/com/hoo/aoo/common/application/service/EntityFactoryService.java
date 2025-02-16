@@ -46,9 +46,9 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public House createHouse(HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
+    public House createHouse(String title, String author, String description, Float width, Float height, Long basicImageId, Long borderImageId, List<Room> rooms) throws AreaLimitExceededException {
         Long newId = issueIdPort.issueHouseId();
-        return House.create(newId, houseDetail, width, height, defaultImageFileId, borderImageFileId, rooms);
+        return House.create(newId, title, author, description, width, height, basicImageId, borderImageId, rooms);
     }
 
     @Override

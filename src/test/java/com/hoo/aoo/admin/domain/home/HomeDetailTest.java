@@ -15,7 +15,7 @@ class HomeDetailTest {
     void testCreateHomeName() throws Exception {
         // given
         House house = MockEntityFactoryService.getHouse();
-        User user = MockEntityFactoryService.getAdminUser();
+        User user = MockEntityFactoryService.getUser();
 
         // when
         HomeDetail detail = new HomeDetail(house, user);

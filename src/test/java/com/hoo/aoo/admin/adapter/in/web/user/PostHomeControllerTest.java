@@ -13,10 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PostHomeControllerTest extends AbstractControllerTest {
 
-
-
-
-
     @Test
     @Sql("PostHomeControllerTest.sql")
     @DisplayName("Home 생성 테스트")

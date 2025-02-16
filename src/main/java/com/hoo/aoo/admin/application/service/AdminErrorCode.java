@@ -14,9 +14,10 @@ public enum AdminErrorCode implements ErrorCode {
     AXIS_PIXEL_LIMIT_EXCEED("ADMIN-HOUSE-1", BAD_REQUEST, "좌표 픽셀 크기 한도를 초과했습니다."),
     AREA_SIZE_LIMIT_EXCEED("ADMIN-HOUSE-2", BAD_REQUEST, "이미지 크기 한도를 초과했습니다."),
     INVALID_REQUEST_TYPE("ADMIN-HOUSE-3", BAD_REQUEST, "하우스 생성 간 첨부파일을 읽을 수 없습니다.(Multipart FormData 헤더가 아닙니다.)"),
-    IMAGE_FILE_NOT_FOUND("ADMIN-HOUSE-4", BAD_REQUEST, "하우스 생성 메타데이터에 등록된 이미지가 존재하지 않습니다."),
-    HOLDING_HOME_HOUSE_DELETE("ADMIN-HOUSE-5", BAD_REQUEST, "홈을 보유한 하우스는 삭제할 수 없습니다."),
-    HOUSE_NOT_FOUND("ADMIN-HOUSE-6", NOT_FOUND, "해당 하우스를 찾을 수 없습니다."),
+    HOUSE_BASIC_IMAGE_FILENAME_EQ_BORDER_IMAGE_FILENAME("ADMIN-HOUSE-4", BAD_REQUEST, "하우스 이미지 파일명과 보더 이미지 파일명이 중복됩니다."),
+    IMAGE_FILE_NOT_FOUND("ADMIN-HOUSE-5", BAD_REQUEST, "하우스 생성 메타데이터에 등록된 이미지가 존재하지 않습니다."),
+    HOLDING_HOME_HOUSE_DELETE("ADMIN-HOUSE-6", BAD_REQUEST, "홈을 보유한 하우스는 삭제할 수 없습니다."),
+    HOUSE_NOT_FOUND("ADMIN-HOUSE-7", NOT_FOUND, "해당 하우스를 찾을 수 없습니다."),
 
     HOLDING_ITEM_ROOM_DELETE("ADMIN-ROOM-1", BAD_REQUEST, "아이템을 보유한 룸은 삭제할 수 없습니다."),
     ROOM_NOT_FOUND("ADMIN-ROOM-2", NOT_FOUND, "해당 룸을 찾을 수 없습니다."),

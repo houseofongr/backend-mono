@@ -31,7 +31,7 @@ public class MockEntityFactoryService {
     }
 
     public static House getHouse() throws Exception {
-        return factory.createHouse(new HouseDetail("cozy house", "leaf", "this is cozy house"), 5000f, 5000f, 1L, 2L, List.of(getRoom(), getRoom2()));
+        return factory.createHouse("cozy house", "leaf", "this is cozy house", 5000f, 5000f, 1L, 2L, List.of(getRoom(), getRoom2()));
     }
 
     public static House loadHouse() throws Exception {
@@ -48,16 +48,12 @@ public class MockEntityFactoryService {
     }
 
     public static Home getHome() throws Exception {
-        return factory.createHome(getHouse(), getAdminUser());
+        return factory.createHome(getHouse(), getUser());
     }
 
     public static Home loadHome() throws Exception {
         Home home = getHome();
         return Home.load(home.getHomeId().getId(), home.getHouseId().getId(), home.getUserId().getId(), home.getHomeDetail().getName(), ZonedDateTime.now(), ZonedDateTime.now());
-    }
-
-    public static User getAdminUser() {
-        return User.load(10L, "남상엽", "leaf", "test@example.com", true, true, ZonedDateTime.now(), ZonedDateTime.now(), List.of());
     }
 
     public static Item getRectangleItem() throws Exception {
@@ -104,6 +100,6 @@ public class MockEntityFactoryService {
     }
 
     public static DeletedUser getDeletedUser() {
-        return factory.createDeletedUser(getAdminUser(),true,true);
+        return factory.createDeletedUser(getUser(),true,true);
     }
 }

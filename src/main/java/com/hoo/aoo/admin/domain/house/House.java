@@ -26,20 +26,20 @@ public class House {
 
     private House(HouseId houseId, HouseDetail houseDetail, Area area, BaseTime baseTime, List<Room> rooms, File basicImageFile, File borderImageFile) {
         this.houseId = houseId;
-        this.area = area;
         this.houseDetail = houseDetail;
+        this.area = area;
         this.baseTime = baseTime;
         this.rooms = rooms;
         this.basicImageFile = basicImageFile;
         this.borderImageFile = borderImageFile;
     }
 
-    public static House create(Long id, HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
+    public static House create(Long id, String title, String author, String description, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {
 
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
         File borderImageFile = new File(new FileId(borderImageFileId), FileType.IMAGE);
 
-        return new House(new HouseId(id), houseDetail, new Area(width, height), null, rooms, defaultImageFile, borderImageFile);
+        return new House(new HouseId(id), new HouseDetail(title, author, description), new Area(width, height), null, rooms, defaultImageFile, borderImageFile);
     }
 
     public static House load(Long houseId, String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException {

@@ -35,11 +35,10 @@ class EntityFactoryServiceTest {
     @DisplayName("하우스 생성 테스트")
     void testCreateHouse() throws AreaLimitExceededException {
         // given
-        HouseDetail houseDetail = new HouseDetail("title", "author", "description");
 
         // when
         when(issueIdPort.issueHouseId()).thenReturn(1L);
-        House house = sut.createHouse(houseDetail, 5000f, 5000f, 1L, 1L, List.of());
+        House house = sut.createHouse("title", "author", "description", 5000f, 5000f, 1L, 1L, List.of());
 
         // then
         assertThat(house).isNotNull();
@@ -65,7 +64,7 @@ class EntityFactoryServiceTest {
     void testCreateHome() throws Exception {
         // given
         House house = MockEntityFactoryService.getHouse();
-        User user = MockEntityFactoryService.getAdminUser();
+        User user = MockEntityFactoryService.getUser();
 
         // when
         when(issueIdPort.issueHomeId()).thenReturn(1L);

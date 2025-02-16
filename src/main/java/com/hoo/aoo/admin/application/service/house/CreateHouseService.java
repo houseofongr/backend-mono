@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -37,18 +35,16 @@ public class CreateHouseService implements CreateHouseUseCase {
     @Transactional
     public CreateHouseResult create(CreateHouseMetadata metadata, Map<String, MultipartFile> fileMap) throws AdminException {
 
-        HouseDetail houseDetail = new HouseDetail(metadata.house().title(), metadata.house().author(), metadata.house().description());
+        if (!verifyDuplicateHouseImageFiles(metadata, fileMap))
+            throw new AdminException(AdminErrorCode.HOUSE_BASIC_IMAGE_FILENAME_EQ_BORDER_IMAGE_FILENAME);
 
-        List<Room> rooms = new ArrayList<>();
+        List<MultipartFile> uploadingFiles = getUploadingFiles(metadata, fileMap);
 
         try {
-            List<MultipartFile> uploadingFiles = new ArrayList<>(metadata.rooms().stream().map(room -> fileMap.get(room.form())).toList());
-            uploadingFiles.add(fileMap.get(metadata.house().houseForm()));
-            uploadingFiles.add(fileMap.get(metadata.house().borderForm()));
-
             UploadFileResult uploadFileResult = uploadPrivateImageUseCase.privateUpload(uploadingFiles);
 
             Long basicImageId = null, borderImageId = null;
+            List<Room> rooms = new ArrayList<>();
             for (UploadFileResult.FileInfo fileInfo : uploadFileResult.fileInfos()) {
                 if (fileInfo.realName().equals(fileMap.get(metadata.house().houseForm()).getOriginalFilename()))
                     basicImageId = fileInfo.id();
@@ -64,7 +60,7 @@ public class CreateHouseService implements CreateHouseUseCase {
                     }
             }
 
-            House newHouse = createHousePort.createHouse(houseDetail, metadata.house().width(), metadata.house().height(), basicImageId, borderImageId, rooms);
+            House newHouse = createHousePort.createHouse(metadata.house().title(), metadata.house().author(), metadata.house().description(), metadata.house().width(), metadata.house().height(), basicImageId, borderImageId, rooms);
             Long savedId = saveHousePort.save(newHouse);
 
             return new CreateHouseResult(savedId);
@@ -76,5 +72,16 @@ public class CreateHouseService implements CreateHouseUseCase {
             throw new AdminException(AdminErrorCode.AREA_SIZE_LIMIT_EXCEED);
 
         }
+    }
+
+    private boolean verifyDuplicateHouseImageFiles(CreateHouseMetadata metadata, Map<String, MultipartFile> fileMap) {
+        return !Objects.equals(fileMap.get(metadata.house().houseForm()).getOriginalFilename(), fileMap.get(metadata.house().borderForm()).getOriginalFilename());
+    }
+
+    private static List<MultipartFile> getUploadingFiles(CreateHouseMetadata metadata, Map<String, MultipartFile> fileMap) {
+        List<MultipartFile> uploadingFiles = new ArrayList<>(metadata.rooms().stream().map(room -> fileMap.get(room.form())).toList());
+        uploadingFiles.add(fileMap.get(metadata.house().houseForm()));
+        uploadingFiles.add(fileMap.get(metadata.house().borderForm()));
+        return uploadingFiles;
     }
 }

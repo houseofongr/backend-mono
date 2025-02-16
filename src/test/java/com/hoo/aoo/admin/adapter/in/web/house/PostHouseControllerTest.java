@@ -32,7 +32,7 @@ class PostHouseControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @DisplayName("잘못된 파일 타입 테스트")
+    @DisplayName("잘못된 전송 타입일 때 오류")
     void testBadFileType() throws Exception {
 
         String metadata = CreateHouseMetadataTest.getCreateHouseMetadataJson();
@@ -40,7 +40,30 @@ class PostHouseControllerTest extends AbstractControllerTest {
         mockMvc.perform(post("/admin/houses")
                         .param("metadata", metadata)
                         .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is(400));
+                .andExpect(status().is(400))
+                .andDo(document("admin-house-post-error-1"));
+    }
+
+    @Test
+    @DisplayName("보더, 기본이미지 같을 때 오류")
+    void testSameBorderAndImage() throws Exception {
+
+        String metadata = CreateHouseMetadataTest.getCreateHouseMetadataJson();
+        MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
+        metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+
+        MockMultipartFile houseImage = new MockMultipartFile("house", "image.png", "image/png", "<<png data 1>>".getBytes());
+        MockMultipartFile borderImage = new MockMultipartFile("border", "image.png", "image/png", "<<png data 1>>".getBytes());
+        MockMultipartFile roomImage1 = new MockMultipartFile("room1", "image3.png", "image/png", "<<png data 3>>".getBytes());
+        MockMultipartFile roomImage2 = new MockMultipartFile("room2", "image4.png", "image/png", "<<png data 4>>".getBytes());
+
+        mockMvc.perform(multipart("/admin/houses")
+                        .file(houseImage).file(borderImage).file(roomImage1).file(roomImage2)
+                        .part(metadataPart)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .with(user("admin").roles("ADMIN")))
+                .andExpect(status().is(400))
+                .andDo(document("admin-house-post-error-2"));
     }
 
     @Test
@@ -55,7 +78,7 @@ class PostHouseControllerTest extends AbstractControllerTest {
         MockMultipartFile borderImage = new MockMultipartFile("border", "image2.png", "image/png", "<<png data 2>>".getBytes());
         MockMultipartFile roomImage1 = new MockMultipartFile("room1", "image3.png", "image/png", "<<png data 3>>".getBytes());
         MockMultipartFile roomImage2 = new MockMultipartFile("room2", "image4.png", "image/png", "<<png data 4>>".getBytes());
-
+        
         mockMvc.perform(multipart("/admin/houses")
                         .file(houseImage).file(borderImage).file(roomImage1).file(roomImage2)
                         .part(metadataPart)

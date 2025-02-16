@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,6 +53,22 @@ class UploadServiceTest {
         imageFile = new MockMultipartFile("test.png", "test.png", "image/png", "<<png bin>>".getBytes(StandardCharsets.UTF_8));
         imageFile2 = new MockMultipartFile("test2.png", "test2.png", "image/png", new String(arr).getBytes(StandardCharsets.UTF_8));
         audioFile = new MockMultipartFile("test.mp3", "test.mp3", "audio/mpeg", new String(arr).getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Test
+    @DisplayName("파일명 중복될때 기본 파일명 변경 테스트")
+    void testChangeDuplicatedFileName() {
+        // given
+        List<MultipartFile> files = new ArrayList<>(List.of(imageFile, imageFile2));
+        BasicFileIdCreateStrategy fileIdCreateStrategy = new BasicFileIdCreateStrategy("/tmp", Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE);
+        files.add(new MockMultipartFile("test.png", "test.png", "image/png", "<<png bin>>".getBytes(StandardCharsets.UTF_8)));
+
+        // when
+        UploadFileResult result = sut.upload(files, fileIdCreateStrategy);
+
+        // then
+        assertThat(result.fileInfos()).anyMatch(fileInfo -> fileInfo.realName().equals("test-1.png"));
+        assertThat(result.fileInfos()).anyMatch(fileInfo -> fileInfo.realName().equals("test-2.png"));
     }
 
     @Test

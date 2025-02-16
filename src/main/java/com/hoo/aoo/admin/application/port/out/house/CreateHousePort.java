@@ -8,5 +8,5 @@ import com.hoo.aoo.admin.domain.room.Room;
 import java.util.List;
 
 public interface CreateHousePort {
-    House createHouse(HouseDetail houseDetail, Float width, Float height, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) throws AreaLimitExceededException;
+    House createHouse(String title, String author, String description, Float width, Float height, Long basicImageId, Long borderImageId, List<Room> rooms) throws AreaLimitExceededException;
 }

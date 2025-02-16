@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.house.HouseDetail;
+import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
@@ -37,8 +38,8 @@ class HomePersistenceAdapterTest {
     void testSaveHome() throws Exception {
         // given
         Home home = Home.create(1L,
-                House.create(20L,new HouseDetail("cozy house", "leaf", "this is cozy house"),5000f,5000f,null,null,null),
-                MockEntityFactoryService.getAdminUser());
+                House.create(20L,"cozy house", "leaf", "this is cozy house",5000f,5000f,null,null,null),
+                User.load(10L, "남상엽","leaf","test@example.com",true,true,null,null,null));
 
         // when
         Long result = sut.save(home);

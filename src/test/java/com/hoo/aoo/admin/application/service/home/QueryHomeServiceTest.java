@@ -42,7 +42,7 @@ class QueryHomeServiceTest {
         // when
         when(findHomePort.loadHome(1L)).thenReturn(Optional.of(MockEntityFactoryService.loadHome()));
         when(findHousePort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
-        when(findUserPort.loadUser(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
+        when(findUserPort.loadUser(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getUser()));
         QueryHomeResult queryHomeResult = sut.queryHome(id);
 
         // then
@@ -60,7 +60,7 @@ class QueryHomeServiceTest {
         // when
         when(findHomePort.loadHome(1L)).thenReturn(Optional.of(MockEntityFactoryService.loadHome()));
         when(findHousePort.load(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.loadHouse()));
-        when(findUserPort.loadUser(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getAdminUser()));
+        when(findUserPort.loadUser(anyLong())).thenReturn(Optional.of(MockEntityFactoryService.getUser()));
         QueryUserHomesResult queryUserHomesResult = sut.queryUserHomes(id);
 
         // then
