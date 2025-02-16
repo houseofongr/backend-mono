@@ -6,7 +6,6 @@ import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.house.SaveHousePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
 import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
@@ -59,7 +58,7 @@ class CreateHouseServiceTest {
         when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
 
         // then
-        assertThatThrownBy(() -> sut.create(metadata, map)).hasMessage(AdminErrorCode.HOUSE_BASIC_IMAGE_FILENAME_EQ_BORDER_IMAGE_FILENAME.getMessage());
+        assertThatThrownBy(() -> sut.create(metadata, map)).hasMessage(AdminErrorCode.DUPLICATE_HOUSE_PROFILE_IMAGE_AND_BORDER_IMAGE.getMessage());
     }
 
     @Test
