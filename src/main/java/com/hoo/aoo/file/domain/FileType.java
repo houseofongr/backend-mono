@@ -11,7 +11,7 @@ public enum FileType {
 
     private final String path;
 
-    public static FileType of(String dir) throws IllegalFileTypeDirException {
+    public static FileType of(String dir) {
         for (FileType type : FileType.values()) {
             if (type.path.equals(dir)) return type;
         }

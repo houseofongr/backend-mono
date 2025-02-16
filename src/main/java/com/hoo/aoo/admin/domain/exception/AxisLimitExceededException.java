@@ -1,4 +1,4 @@
 package com.hoo.aoo.admin.domain.exception;
 
-public class AxisLimitExceededException extends Exception {
+public class AxisLimitExceededException extends RuntimeException {
 }

@@ -5,5 +5,5 @@ import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.room.Room;
 
 public interface CreateRoomPort {
-    Room createRoom(String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException;
+    Room createRoom(String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId);
 }

@@ -22,7 +22,7 @@ public class FileId {
         this.fileSystemName = fileSystemName;
     }
 
-    public static FileId create(String baseDir, Authority authority, FileType fileType, String realFileName, String fileSystemName) throws FileExtensionMismatchException {
+    public static FileId create(String baseDir, Authority authority, FileType fileType, String realFileName, String fileSystemName)  {
         if (baseDir.charAt(baseDir.length() - 1) == '/')
             baseDir = baseDir.substring(0, baseDir.length() - 1);
 
@@ -33,7 +33,7 @@ public class FileId {
         return fileId;
     }
 
-    public static FileId load(String parentDir, String realFileName, String fileSystemName) throws IllegalFileTypeDirException, IllegalFileAuthorityDirException, FileExtensionMismatchException {
+    public static FileId load(String parentDir, String realFileName, String fileSystemName)  {
         String[] dirs = parentDir.split("/");
 
         String fileTypeDir = dirs[dirs.length - 1];
@@ -47,7 +47,7 @@ public class FileId {
         return new FileId(baseDir, authority, fileType, realFileName, fileSystemName);
     }
 
-    private static Authority pathToAuthority(String authorityDir) throws IllegalFileAuthorityDirException {
+    private static Authority pathToAuthority(String authorityDir) {
         switch (authorityDir) {
             case "public":
                 return Authority.PUBLIC_FILE_ACCESS;
@@ -67,7 +67,7 @@ public class FileId {
                ", fileSystemName='" + fileSystemName;
     }
 
-    public void verifyExtension(FileType fileType, String fileName) throws FileExtensionMismatchException {
+    public void verifyExtension(FileType fileType, String fileName) {
         switch (fileType) {
             case IMAGE -> {
                 if (!fileName.matches(".*\\.(?:png|jpe?g|svg|gif)$"))

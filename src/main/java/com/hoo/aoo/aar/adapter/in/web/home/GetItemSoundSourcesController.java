@@ -3,6 +3,7 @@ package com.hoo.aoo.aar.adapter.in.web.home;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourceUseCase;
 import com.hoo.aoo.aar.application.port.in.home.QueryItemSoundSourcesResult;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class GetItemSoundSourcesController {
 
     @GetMapping("/aar/homes/items/sound-sources")
     public ResponseEntity<QueryItemSoundSourcesResult> getItemSoundSources(
-            @Jwt("userId") Long userId,
+            @NotNull @Jwt("userId") Long userId,
             @RequestParam Long itemId
     ) {
         return ResponseEntity.ok(useCase.queryItemSoundSources(userId, itemId));

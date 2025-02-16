@@ -13,18 +13,18 @@ public class Axis {
     private Float y;
     private Float z;
 
-    public Axis(Float x, Float y, Float z) throws AxisLimitExceededException {
+    public Axis(Float x, Float y, Float z) {
         validateLimit(x, y, z);
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public static Axis from(Float x, Float y) throws AxisLimitExceededException {
+    public static Axis from(Float x, Float y) {
         return new Axis(x, y, 0f);
     }
 
-    private void validateLimit(Float... params) throws AxisLimitExceededException {
+    private void validateLimit(Float... params) {
         for (Float param : params) {
             if (param < 0 || param > Short.MAX_VALUE) throw new AxisLimitExceededException();
         }

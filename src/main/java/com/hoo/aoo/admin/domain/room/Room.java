@@ -26,7 +26,7 @@ public class Room {
         this.imageFile = imageFile;
     }
 
-    public static Room create(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AxisLimitExceededException, AreaLimitExceededException {
+    public static Room create(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) {
 
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 
@@ -38,7 +38,7 @@ public class Room {
                 imageFile);
     }
 
-    public static Room load(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) throws AreaLimitExceededException, AxisLimitExceededException {
+    public static Room load(Long id, String name, Float x, Float y, Float z, Float width, Float height, Long imageFileId) {
 
         File imageFile = new File(new FileId(imageFileId), FileType.IMAGE);
 

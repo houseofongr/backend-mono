@@ -3,6 +3,7 @@ package com.hoo.aoo.aar.adapter.in.web.home;
 import com.hoo.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsResult;
 import com.hoo.aoo.aar.application.port.in.home.QueryHomeRoomsUseCase;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class GetHomeRoomsController {
 
     @GetMapping("/aar/homes/rooms")
     public ResponseEntity<QueryHomeRoomsResult> getHomeRooms(
-            @Jwt("userId") Long userId,
+            @NotNull @Jwt("userId") Long userId,
             @RequestParam Long homeId
     ) {
         return ResponseEntity.ok(useCase.queryHomeRooms(userId, homeId));

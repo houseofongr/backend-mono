@@ -9,13 +9,13 @@ public class Area {
     private Float width;
     private Float height;
 
-    public Area(Float width, Float height) throws AreaLimitExceededException {
+    public Area(Float width, Float height) {
         validateLimit(height, width);
         this.height = height;
         this.width = width;
     }
 
-    private void validateLimit(Float... params) throws AreaLimitExceededException {
+    private void validateLimit(Float... params) {
         for (Float param : params) {
             if (param <= 0 || param > Short.MAX_VALUE) throw new AreaLimitExceededException();
         }

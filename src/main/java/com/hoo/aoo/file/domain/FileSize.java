@@ -7,9 +7,8 @@ import lombok.Getter;
 public class FileSize {
     private final Long fileByte;
 
-    public FileSize(Long fileByte, Long limit) throws FileSizeLimitExceedException {
-        if (fileByte > limit)
-            throw new FileSizeLimitExceedException(fileByte, limit);
+    public FileSize(Long fileByte, Long limit) {
+        if (fileByte > limit) throw new FileSizeLimitExceedException(fileByte, limit);
 
         this.fileByte = fileByte;
     }
