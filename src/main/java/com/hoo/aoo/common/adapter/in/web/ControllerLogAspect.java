@@ -38,6 +38,7 @@ public class ControllerLogAspect {
             log.info(" - PARAMETERS : {}", paramMapToString(request.getParameterMap()));
             log.info(" - REQUEST BODY : {}", requestBodyToString(request.getInputStream()));
             log.info(" - AUTHENTICATION : {}", request.getHeader(HttpHeaders.AUTHORIZATION));
+            log.info("[API REQUEST]");
         }
 
         long startAt = System.currentTimeMillis();
@@ -45,9 +46,11 @@ public class ControllerLogAspect {
         Object result = joinPoint.proceed();
 
         if (result != null) {
+            log.info("-----------------------");
             log.info("[API RESPONSE]");
             log.info(" - RESPONSE BODY : {}", omit(result.toString()));
             log.info(" - RESPONSE TIME : {}ms", System.currentTimeMillis() - startAt);
+            log.info("[API RESPONSE]");
         }
 
         return result;
