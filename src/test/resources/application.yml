@@ -21,7 +21,7 @@ spring:
         registration:
           kakao:
             client-id: kakao-client-id
-            client-secret: kakao-client-secret f
+            client-secret: kakao-client-secret
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/aar/authn/login/kakao
         provider:
@@ -48,6 +48,7 @@ logging:
 
 security:
   frontend-redirect-uri: http://localhost:8080
+  backend-base-uri: http://localhost:28080
   jwt:
     secret: cANZLk0MJon8ETjGKatPwEGiKgNjLTaFoPrhp4RQkpc=
     issuer: aar-backend-test

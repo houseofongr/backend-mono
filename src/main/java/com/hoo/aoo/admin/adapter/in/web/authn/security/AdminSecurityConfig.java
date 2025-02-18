@@ -1,5 +1,7 @@
 package com.hoo.aoo.admin.adapter.in.web.authn.security;
 
+import com.hoo.aoo.aar.adapter.in.web.authn.security.OAuth2UserServiceDelegator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,17 +34,28 @@ import java.util.List;
 public class AdminSecurityConfig {
 
     @Bean
-    public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain adminFilterChain(HttpSecurity http, AdminOAuth2UserService userService, AdminOAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
         return http
                 .securityMatcher("/admin/**")
                 .cors(cors -> cors.configurationSource(adminCorsConfigurationSource()))
 
                 .formLogin(form -> form
-                        .loginPage("/login")
                         .loginProcessingUrl("/admin/authn/login")
-                        .defaultSuccessUrl("/login?success")
+                        .defaultSuccessUrl("/login?form-success")
                         .failureUrl("/login?failure")
                 )
+
+                .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(authorization ->
+                                authorization.baseUri("/admin/authn/login/sns/**"))
+                        .redirectionEndpoint(redirection ->
+                                redirection.baseUri("/admin/authn/code/**"))
+                        .userInfoEndpoint(userInfo ->
+                                userInfo.userService(userService))
+                        .successHandler(oAuth2SuccessHandler)
+                        .failureUrl("/login?failure")
+                )
+
 
                 // 로컬 테스트 간 임시 허용
                 .csrf(CsrfConfigurer::disable)
