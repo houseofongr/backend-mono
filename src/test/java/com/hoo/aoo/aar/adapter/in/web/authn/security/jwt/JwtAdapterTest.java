@@ -1,10 +1,9 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
-import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -21,9 +20,9 @@ import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.*;
 
-class JwtUtilTest {
+class JwtAdapterTest {
 
-    JwtUtil sut;
+    JwtAdapter sut;
     JwtDecoder jwtDecoder;
 
     @BeforeEach
@@ -34,7 +33,7 @@ class JwtUtilTest {
 
         MACSigner macSigner = new MACSigner(sharedSecret);
 
-        sut = new JwtUtil(macSigner, new JwtProperties(new String(sharedSecret), "aoo", 10000L));
+        sut = new JwtAdapter(macSigner, new JwtProperties(new String(sharedSecret), "aoo", 10000L));
         jwtDecoder = NimbusJwtDecoder.withSecretKey(macSigner.getSecretKey()).build();
     }
 

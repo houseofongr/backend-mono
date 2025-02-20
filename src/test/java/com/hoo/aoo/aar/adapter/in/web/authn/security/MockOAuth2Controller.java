@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.hoo.aoo.admin.domain.user.UserId;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccountId;
@@ -27,7 +27,7 @@ public class MockOAuth2Controller {
     @Value("${security.frontend-redirect-uri}")
     private String redirectUri;
 
-    private final JwtUtil jwtUtil;
+    private final JwtAdapter jwtAdapter;
 
     @GetMapping("/mock/authn/login/{snsAccountId}")
     void mockLogin(HttpServletResponse response, @PathVariable Long snsAccountId) throws IOException {
@@ -42,7 +42,7 @@ public class MockOAuth2Controller {
 
             String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                     .queryParam("nickname", URLEncoder.encode(snsAccount.getSnsAccountInfo().getNickname(), StandardCharsets.UTF_8))
-                    .queryParam("accessToken", jwtUtil.issueAccessToken(snsAccount))
+                    .queryParam("accessToken", jwtAdapter.issueAccessToken(snsAccount))
                     .queryParam("provider", snsAccount.getSnsAccountId().getSnsDomain())
                     .queryParam("isFirstLogin", "true")
                     .build().toUriString();
@@ -59,7 +59,7 @@ public class MockOAuth2Controller {
 
             String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                     .queryParam("nickname", URLEncoder.encode(snsAccount.getSnsAccountInfo().getNickname(), StandardCharsets.UTF_8))
-                    .queryParam("accessToken", jwtUtil.issueAccessToken(snsAccount))
+                    .queryParam("accessToken", jwtAdapter.issueAccessToken(snsAccount))
                     .queryParam("provider", snsAccount.getSnsAccountId().getSnsDomain())
                     .queryParam("isFirstLogin", "true")
                     .build().toUriString();
@@ -76,7 +76,7 @@ public class MockOAuth2Controller {
 
             String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                     .queryParam("nickname", URLEncoder.encode(snsAccount.getSnsAccountInfo().getNickname(), StandardCharsets.UTF_8))
-                    .queryParam("accessToken", jwtUtil.issueAccessToken(snsAccount))
+                    .queryParam("accessToken", jwtAdapter.issueAccessToken(snsAccount))
                     .queryParam("provider", snsAccount.getSnsAccountId().getSnsDomain())
                     .queryParam("isFirstLogin", "true")
                     .build().toUriString();
@@ -92,7 +92,7 @@ public class MockOAuth2Controller {
 
             String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                     .queryParam("nickname", URLEncoder.encode(snsAccount.getSnsAccountInfo().getNickname(), StandardCharsets.UTF_8))
-                    .queryParam("accessToken", jwtUtil.issueAccessToken(snsAccount))
+                    .queryParam("accessToken", jwtAdapter.issueAccessToken(snsAccount))
                     .queryParam("provider", snsAccount.getSnsAccountId().getSnsDomain())
                     .queryParam("isFirstLogin", "true")
                     .build().toUriString();

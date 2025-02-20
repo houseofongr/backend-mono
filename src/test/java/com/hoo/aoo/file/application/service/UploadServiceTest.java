@@ -103,7 +103,7 @@ class UploadServiceTest {
     void testPrivateUploadImage() {
         // given
         List<MultipartFile> files = List.of(imageFile, imageFile2);
-        BasicFileIdCreateStrategy fileIdCreateStrategy = new BasicFileIdCreateStrategy("/tmp", Authority.PRIVATE_ALL_IMAGE_ACCESS, FileType.IMAGE);
+        BasicFileIdCreateStrategy fileIdCreateStrategy = new BasicFileIdCreateStrategy("/tmp", Authority.ALL_PRIVATE_IMAGE_ACCESS, FileType.IMAGE);
 
         // when
         UploadFileResult result = sut.upload(files, fileIdCreateStrategy);
@@ -121,7 +121,7 @@ class UploadServiceTest {
                     assertThat(fileInfo.realName()).isEqualTo("test2.png");
                     assertThat(fileInfo.fileSystemName()).contains(".png");
                     assertThat(fileInfo.size()).matches("^\\d{1,3}.\\d{1,2}KB$");
-                    assertThat(fileInfo.authority()).isEqualTo(Authority.PRIVATE_ALL_IMAGE_ACCESS);
+                    assertThat(fileInfo.authority()).isEqualTo(Authority.ALL_PRIVATE_IMAGE_ACCESS);
                 });
     }
 
@@ -130,7 +130,7 @@ class UploadServiceTest {
     void testPrivateUploadAudio() {
         // given
         List<MultipartFile> files = List.of(audioFile);
-        BasicFileIdCreateStrategy fileIdCreateStrategy = new BasicFileIdCreateStrategy("/tmp", Authority.PRIVATE_ALL_IMAGE_ACCESS, FileType.AUDIO);
+        BasicFileIdCreateStrategy fileIdCreateStrategy = new BasicFileIdCreateStrategy("/tmp", Authority.ALL_PRIVATE_IMAGE_ACCESS, FileType.AUDIO);
 
         // when
         UploadFileResult result = sut.upload(files, 123L, fileIdCreateStrategy);
@@ -144,7 +144,7 @@ class UploadServiceTest {
                     assertThat(fileInfo.realName()).isEqualTo("test.mp3");
                     assertThat(fileInfo.fileSystemName()).contains(".mp3");
                     assertThat(fileInfo.size()).matches("^\\d{1,3}.\\d{1,2}KB$");
-                    assertThat(fileInfo.authority()).isEqualTo(Authority.PRIVATE_ALL_IMAGE_ACCESS);
+                    assertThat(fileInfo.authority()).isEqualTo(Authority.ALL_PRIVATE_IMAGE_ACCESS);
                 });
     }
 }

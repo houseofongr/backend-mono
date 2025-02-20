@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtUtil implements IssueAccessTokenPort {
+public class JwtAdapter implements IssueAccessTokenPort {
 
     private final MACSigner signer;
     private final JwtProperties jwtProperties;

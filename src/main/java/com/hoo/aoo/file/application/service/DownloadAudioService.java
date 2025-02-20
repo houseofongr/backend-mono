@@ -34,7 +34,7 @@ public class DownloadAudioService implements DownloadPrivateAudioUseCase {
 
             FileId audioFileId = file.getFileId();
 
-            if (audioFileId.getAuthority() != Authority.PRIVATE_ALL_IMAGE_ACCESS)
+            if (audioFileId.getAuthority() != Authority.ALL_PRIVATE_IMAGE_ACCESS)
                 throw new FileException(FileErrorCode.INVALID_AUTHORITY);
 
             if (audioFileId.getFileType() != FileType.AUDIO)

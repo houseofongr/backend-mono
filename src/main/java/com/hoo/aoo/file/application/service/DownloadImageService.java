@@ -2,7 +2,7 @@ package com.hoo.aoo.file.application.service;
 
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.DownloadFileResult;
-import com.hoo.aoo.file.application.port.in.DownloadPrivateImageUseCase;
+import com.hoo.aoo.file.application.port.in.DownloadImageUseCase;
 import com.hoo.aoo.file.application.port.in.DownloadPublicImageUseCase;
 import com.hoo.aoo.file.application.port.out.database.FindFilePort;
 import com.hoo.aoo.file.domain.File;
@@ -21,14 +21,14 @@ import java.nio.file.Path;
 
 @Component
 @RequiredArgsConstructor
-public class DownloadImageService implements DownloadPublicImageUseCase, DownloadPrivateImageUseCase {
+public class DownloadImageService implements DownloadPublicImageUseCase, DownloadImageUseCase {
 
     private final FindFilePort findFilePort;
 
     @Override
     @Transactional(readOnly = true)
     public DownloadFileResult privateDownload(Long fileId) {
-        return download(fileId, Authority.PRIVATE_ALL_IMAGE_ACCESS);
+        return download(fileId, Authority.ALL_PRIVATE_IMAGE_ACCESS);
     }
 
     @Override

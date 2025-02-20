@@ -51,7 +51,7 @@ public class FileId {
             case "public":
                 return Authority.PUBLIC_FILE_ACCESS;
             case "private":
-                return Authority.PRIVATE_ALL_IMAGE_ACCESS;
+                return Authority.ALL_PRIVATE_IMAGE_ACCESS;
             default:
                 throw new IllegalFileAuthorityDirException(authorityDir);
         }
@@ -95,7 +95,7 @@ public class FileId {
             case PUBLIC_FILE_ACCESS -> {
                 return "public";
             }
-            case PRIVATE_ALL_IMAGE_ACCESS -> {
+            case ALL_PRIVATE_IMAGE_ACCESS -> {
                 return "private";
             }
             default -> throw new IllegalStateException("Unexpected value: " + authority);

@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.application.service;
 
-import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.hoo.aoo.admin.application.port.in.user.RegisterUserCommand;
 import com.hoo.aoo.admin.application.port.in.user.RegisterUserResult;
 import com.hoo.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
@@ -23,15 +23,15 @@ class RegisterUserServiceTest {
     FindSnsAccountPort findSnsAccountPort;
     CreateUserPort createUserPort;
     SaveUserPort saveUserPort;
-    JwtUtil jwtUtil;
+    JwtAdapter jwtAdapter;
 
     @BeforeEach
     void init() {
         findSnsAccountPort = mock();
         createUserPort = mock();
         saveUserPort = mock();
-        jwtUtil = mock();
-        sut = new RegisterUserService(findSnsAccountPort, createUserPort, saveUserPort, jwtUtil);
+        jwtAdapter = mock();
+        sut = new RegisterUserService(findSnsAccountPort, createUserPort, saveUserPort, jwtAdapter);
     }
 
     @Test
@@ -48,7 +48,7 @@ class RegisterUserServiceTest {
         // then
         verify(findSnsAccountPort, times(1)).loadSnsAccount(1L);
         verify(saveUserPort, times(1)).save(any());
-        verify(jwtUtil, times(1)).issueAccessToken((any()));
+        verify(jwtAdapter, times(1)).issueAccessToken((any()));
 
         assertThat(register.nickname()).isEqualTo("leaf");
     }

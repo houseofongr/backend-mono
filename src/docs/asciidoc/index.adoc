@@ -514,6 +514,15 @@ operation::file-public-images-download[snippets='path-parameters,http-request,re
 
 operation::file-private-images-download[snippets='path-parameters,http-request,response-file']
 
+[[file-private-images-get-api-v2]]
+==== 이미지 로드 API(인증)
+
+이미지 파일을 비공개 서버로부터 로드합니다. 요청 시 해당 사용자의 권한을 함께 검사합니다.
+
+operation::file-private-images-download-v2[snippets='path-parameters,query-parameters,http-request']
+
+> 응답은 <<file-private-api>>와 동일합니다.
+
 [[file-private-audios-get-api]]
 ==== 음원 로드 API
 

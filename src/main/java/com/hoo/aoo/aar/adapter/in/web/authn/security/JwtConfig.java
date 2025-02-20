@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security;
 
-import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +29,8 @@ public class JwtConfig {
     }
 
     @Bean
-    JwtUtil jwtUtil() {
-        return new JwtUtil(macSigner, jwtProperties);
+    JwtAdapter jwtUtil() {
+        return new JwtAdapter(macSigner, jwtProperties);
     }
 
 }

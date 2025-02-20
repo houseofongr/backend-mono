@@ -1,7 +1,7 @@
 package com.hoo.aoo.aar.adapter.in.web.authn.security.jwt;
 
 import com.hoo.aoo.aar.adapter.in.web.authn.security.JwtProperties;
-import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 
@@ -9,12 +9,12 @@ import java.security.SecureRandom;
 
 public class MockJwtUtil {
 
-    public static JwtUtil getJwtUtil() {
+    public static JwtAdapter getJwtUtil() {
         byte[] secretKey = new byte[32];
         new SecureRandom().nextBytes(secretKey);
 
         try {
-            return new JwtUtil(new MACSigner(secretKey),
+            return new JwtAdapter(new MACSigner(secretKey),
                     new JwtProperties(
                             new String(secretKey),
                             "mock_jwt_util",

@@ -1,6 +1,6 @@
 package com.hoo.aoo.aar.application.service;
 
-import com.hoo.aoo.aar.adapter.out.jwt.JwtUtil;
+import com.hoo.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.hoo.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.hoo.aoo.aar.application.port.in.user.QueryMyInfoResult;
 import com.hoo.aoo.aar.application.port.out.persistence.user.QueryUserPort;
@@ -28,15 +28,15 @@ class LoadKakaoSnsAccountServiceTest {
     LoadSnsAccountUseCase loadSnsAccountUseCase;
     QueryUserPort queryUserPort;
     CreateSnsAccountUseCase createSnsAccountUseCase;
-    JwtUtil jwtUtil;
+    JwtAdapter jwtAdapter;
 
     @BeforeEach
     void init() {
         loadSnsAccountUseCase = mock();
         queryUserPort = mock();
         createSnsAccountUseCase = mock();
-        jwtUtil = mock(JwtUtil.class);
-        sut = new LoadKakaoSnsAccountService(loadSnsAccountUseCase, queryUserPort, createSnsAccountUseCase, jwtUtil);
+        jwtAdapter = mock(JwtAdapter.class);
+        sut = new LoadKakaoSnsAccountService(loadSnsAccountUseCase, queryUserPort, createSnsAccountUseCase, jwtAdapter);
     }
 
     @Test
