@@ -55,7 +55,7 @@ class CreateHouseServiceTest {
         map.put("border", new MockMultipartFile("border", "house.png", "image/png", "border file".getBytes()));
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_ALL_IMAGE_ACCESS))));
 
         // then
         assertThatThrownBy(() -> sut.create(metadata, map)).hasMessage(AdminErrorCode.DUPLICATE_HOUSE_PROFILE_IMAGE_AND_BORDER_IMAGE.getMessage());
@@ -75,7 +75,7 @@ class CreateHouseServiceTest {
         map.put("room2", new MockMultipartFile("room2", "kitchen.png", "image/png", "kitchen file".getBytes()));
 
         // when
-        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_FILE_ACCESS))));
+        when(uploadPrivateImageUseCase.privateUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "newfile.png", "newfile1241325.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PRIVATE_ALL_IMAGE_ACCESS))));
         CreateHouseResult result = sut.create(metadata, map);
 
         // then

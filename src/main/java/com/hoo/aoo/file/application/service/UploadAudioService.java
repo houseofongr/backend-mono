@@ -22,7 +22,7 @@ public class UploadAudioService implements UploadPrivateAudioUseCase {
     @Override
     @Transactional
     public UploadFileResult privateUpload(List<MultipartFile> audios, Long ownerId) {
-        return uploadService.upload(audios, ownerId, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PRIVATE_FILE_ACCESS, FileType.AUDIO));
+        return uploadService.upload(audios, ownerId, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PRIVATE_ALL_IMAGE_ACCESS, FileType.AUDIO));
     }
 
 }

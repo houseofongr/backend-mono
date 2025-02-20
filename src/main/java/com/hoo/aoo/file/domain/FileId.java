@@ -3,7 +3,6 @@ package com.hoo.aoo.file.domain;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.hoo.aoo.file.domain.exception.IllegalFileAuthorityDirException;
-import com.hoo.aoo.file.domain.exception.IllegalFileTypeDirException;
 import lombok.Getter;
 
 @Getter
@@ -52,7 +51,7 @@ public class FileId {
             case "public":
                 return Authority.PUBLIC_FILE_ACCESS;
             case "private":
-                return Authority.PRIVATE_FILE_ACCESS;
+                return Authority.PRIVATE_ALL_IMAGE_ACCESS;
             default:
                 throw new IllegalFileAuthorityDirException(authorityDir);
         }
@@ -96,7 +95,7 @@ public class FileId {
             case PUBLIC_FILE_ACCESS -> {
                 return "public";
             }
-            case PRIVATE_FILE_ACCESS -> {
+            case PRIVATE_ALL_IMAGE_ACCESS -> {
                 return "private";
             }
             default -> throw new IllegalStateException("Unexpected value: " + authority);

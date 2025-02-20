@@ -200,12 +200,25 @@ operation::aar-home-get-soundsource-path[snippets='http-request,http-response,re
 
 관리자페이지의 보안(인증)을 위한 API입니다.
 
-[[admin-authn-login-api]]
-==== 관리자 로그인 API
+[[admin-authn-id-pw-login-api]]
+==== 1차 : 관리자 ID/PW 로그인 API
 
-관리자 계정으로 로그인합니다.
+관리자의 아이디와 비밀번호로 로그인합니다.
 
 operation::admin-authn-login[snippets='http-request,form-parameters,http-response,response-headers']
+
+> 성공 시 로그인 페이지로 다시 이동하며, URL에 ``?form-success``라는 파라미터가 함께 도착합니다.
+
+[[admin-authn-sns-login-api]]
+==== 2차 : 관리자 SNS 로그인 API
+
+관리자가 소유한 SNS ID로 로그인을 시도합니다.
+
+- **서드파티 인증 페이지로 이동**하여 정상 인증이 완료되면 해당 계정으로 로그인합니다.
+
+operation::admin-authn-sns-login[snippets='path-parameters,http-request,http-response,response-headers']
+
+> 성공 시 로그인 페이지로 다시 이동하며, URL에 ``?sns-success``라는 파라미터가 함께 도착합니다.
 
 [[admin-house-api]]
 === 하우스(House) API

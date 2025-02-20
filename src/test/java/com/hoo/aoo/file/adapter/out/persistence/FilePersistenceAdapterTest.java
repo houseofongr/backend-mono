@@ -100,7 +100,7 @@ class FilePersistenceAdapterTest {
         assertThat(file.getOwnerId()).isNull();
         assertThat(file.getStatus()).isEqualTo(FileStatus.CREATED);
         assertThat(file.getFileId().getFileType()).isEqualTo(FileType.AUDIO);
-        assertThat(file.getFileId().getAuthority()).isEqualTo(Authority.PRIVATE_FILE_ACCESS);
+        assertThat(file.getFileId().getAuthority()).isEqualTo(Authority.PRIVATE_ALL_IMAGE_ACCESS);
     }
 
     @Test

@@ -59,7 +59,7 @@ class DownloadImageServiceTest {
     void testDownloadPrivate(@TempDir Path tempDir) throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
-        File file = File.create(FileId.create(tempDir.toString(), Authority.PRIVATE_FILE_ACCESS, FileType.IMAGE, "test.png", "test.png"), FileStatus.CREATED, null, new FileSize(1234L, 10000L));
+        File file = File.create(FileId.create(tempDir.toString(), Authority.PRIVATE_ALL_IMAGE_ACCESS, FileType.IMAGE, "test.png", "test.png"), FileStatus.CREATED, null, new FileSize(1234L, 10000L));
         java.io.File javaFile = new java.io.File(file.getFileId().getPath());
         javaFile.getParentFile().mkdirs();
         javaFile.createNewFile();

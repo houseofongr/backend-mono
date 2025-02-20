@@ -86,17 +86,6 @@ public class AdminSecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.builder()
-                .username("aoodmin")
-                .password("{bcrypt}$2a$16$rpE6oMrgar2zXw1FXXglUOKjF50Z4/tYTh8p2VSxDIxVirhAF8Qaa")
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(userDetails);
-    }
-
-    @Bean
     protected CorsConfigurationSource adminCorsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 

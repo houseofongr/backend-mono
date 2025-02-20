@@ -28,7 +28,7 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
     @Override
     @Transactional(readOnly = true)
     public DownloadFileResult privateDownload(Long fileId) {
-        return download(fileId, Authority.PRIVATE_FILE_ACCESS);
+        return download(fileId, Authority.PRIVATE_ALL_IMAGE_ACCESS);
     }
 
     @Override
