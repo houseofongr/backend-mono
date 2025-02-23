@@ -64,6 +64,8 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
                 .leftJoin(homeJpaEntity.user, userJpaEntity)
                 .where(userJpaEntity.id.eq(command.userId())
                         .and(soundSourceJpaEntity.isActive.isTrue()))
+                .offset(command.pageable().getOffset())
+                .limit(command.pageable().getPageSize())
                 .fetch();
 
         Long count = query.select(soundSourceJpaEntity.count())
@@ -74,6 +76,8 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
                 .leftJoin(homeJpaEntity.user, userJpaEntity)
                 .where(userJpaEntity.id.eq(command.userId())
                         .and(soundSourceJpaEntity.isActive.isTrue()))
+                .offset(command.pageable().getOffset())
+                .limit(command.pageable().getPageSize())
                 .fetchFirst();
 
         return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);

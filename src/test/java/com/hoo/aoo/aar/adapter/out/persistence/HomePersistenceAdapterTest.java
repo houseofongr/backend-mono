@@ -224,12 +224,15 @@ class HomePersistenceAdapterTest {
     @DisplayName("전체음원 경로 조회 테스트")
     void testQuerySoundSourcesPath() {
         // given
-        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(1,3));
+        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(0,3));
+        QuerySoundSourcesPathCommand fourSourceCommand = new QuerySoundSourcesPathCommand(10L, PageRequest.of(0,4));
 
         // when
         QuerySoundSourcesPathResult result = sut.querySoundSourcesPath(command);
+        QuerySoundSourcesPathResult fourSourceResult = sut.querySoundSourcesPath(fourSourceCommand);
 
         // then
+        assertThat(fourSourceResult.soundSources()).hasSize(4);
         assertThat(result.soundSources()).hasSize(3)
                 .anySatisfy(soundSourceInfo -> {
                     assertThat(soundSourceInfo.name()).isEqualTo("골골송");

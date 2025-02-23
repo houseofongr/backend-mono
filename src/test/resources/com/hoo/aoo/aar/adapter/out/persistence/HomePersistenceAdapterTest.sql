@@ -49,4 +49,5 @@ values (1, "골골송", "2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURR
        (2, "멍멍송", "2025년 멍멍송 V1", 2, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2),
        (3, "골골송 V2", "2025년 골골송 V2", 3, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
        (4, "다른집 화분송", "다른집 화분송 V1", 4, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 4),
-       (5, "다른사람의 화분송", "다른사람의 화분송 V1", 5, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 5);
+       (5, "다른사람의 화분송", "다른사람의 화분송 V1", 5, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 5),
+       (6, "테스트용 새 음원", "테스트용 음원", 6, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2);
