@@ -30,7 +30,7 @@ class UpdateHomeServiceTest {
 
     @Test
     @DisplayName("홈 수정 서비스 테스트")
-    void testUpdateHomeService() {
+    void testUpdateHomeNameService() {
         // given
         Long homeId = 1L;
         String homeName = "수정할 이름";
@@ -40,11 +40,25 @@ class UpdateHomeServiceTest {
         // when
         when(findHomePort.loadHome(homeId)).thenReturn(Optional.of(home));
         doThrow(new BadHomeNameFormatException(badName)).when(home).updateName(badName);
-        sut.updateHome(homeId, homeName);
+        sut.updateHomeName(homeId, homeName);
 
         // then
-        verify(updateHomePort, times(1)).updateHome(home);
-        assertThatThrownBy(() -> sut.updateHome(homeId, badName)).hasMessage(AdminErrorCode.ILLEGAL_HOME_NAME_FORMAT.getMessage());
+        verify(updateHomePort, times(1)).updateHomeName(home);
+        assertThatThrownBy(() -> sut.updateHomeName(homeId, badName)).hasMessage(AdminErrorCode.ILLEGAL_HOME_NAME_FORMAT.getMessage());
+    }
+
+    @Test
+    @DisplayName("메인 홈 수정 테스트")
+    void testUpdateMainHome() {
+        // given
+        Long userId = 1L;
+        Long homeId = 1L;
+
+        // when
+        sut.updateMainHome(userId, homeId);
+
+        // then
+        verify(updateHomePort, times(1)).updateMainHome(userId, homeId);
     }
 
 }

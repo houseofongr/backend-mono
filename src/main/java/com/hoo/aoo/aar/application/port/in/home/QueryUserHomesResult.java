@@ -8,7 +8,8 @@ public record QueryUserHomesResult(
     public record HomeInfo(
             Long id,
             Long basicImageId,
-            String name
+            String name,
+            Boolean isMain
     ) {
 
     }

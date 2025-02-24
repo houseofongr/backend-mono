@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UpdateHomeNameServiceTest {
+class UpdateMyHomeServiceTest {
 
-    UpdateHomeNameService sut;
+    UpdateMyHomeService sut;
 
     CheckOwnerPort checkOwnerPort;
     UpdateHomeUseCase updateHomeUseCase;
@@ -23,7 +23,7 @@ class UpdateHomeNameServiceTest {
     void init() {
         checkOwnerPort = mock();
         updateHomeUseCase = mock();
-        sut = new UpdateHomeNameService(checkOwnerPort, updateHomeUseCase);
+        sut = new UpdateMyHomeService(checkOwnerPort, updateHomeUseCase);
     }
 
     @Test
@@ -42,7 +42,29 @@ class UpdateHomeNameServiceTest {
 
         // then
         assertThatThrownBy(() -> sut.updateHomeName(notOwnedUserId, homeId, newName)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+
+        verify(updateHomeUseCase, times(1)).updateHomeName(homeId, newName);
         assertThat(message.message()).isEqualTo("1번 홈의 이름이 수정되었습니다.");
+    }
+
+    @Test
+    @DisplayName("메인 홈 수정 서비스 테스트")
+    void testUpdateMainHomeService() {
+        // given
+        Long userId = 1L;
+        Long notOwnedUserId = 2L;
+        Long homeId = 1L;
+
+        // when
+        when(checkOwnerPort.checkHome(userId, homeId)).thenReturn(true);
+        when(checkOwnerPort.checkHome(notOwnedUserId, homeId)).thenReturn(false);
+        MessageDto message = sut.updateMainHome(userId, homeId);
+
+        // then
+        assertThatThrownBy(() -> sut.updateMainHome(notOwnedUserId, homeId)).hasMessage(AarErrorCode.NOT_OWNED_HOME.getMessage());
+
+        verify(updateHomeUseCase, times(1)).updateMainHome(userId, homeId);
+        assertThat(message.message()).isEqualTo("1번 홈이 메인으로 수정되었습니다.");
     }
 
 }

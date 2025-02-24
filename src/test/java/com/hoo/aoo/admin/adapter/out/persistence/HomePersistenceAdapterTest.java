@@ -4,12 +4,10 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HomeJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,18 +87,40 @@ class HomePersistenceAdapterTest {
 
     @Test
     @Sql("HomePersistenceAdapter2.sql")
-    @DisplayName("홈 수정 테스트")
+    @DisplayName("홈 이름 수정 테스트")
     void testUpdateHomeName() {
         // given
         Home home = Home.load(1L, 20L, 10L, "수정된 이름", null, null);
 
         // when
-        sut.updateHome(home);
+        sut.updateHomeName(home);
         HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(home.getHomeId().getId()).orElseThrow();
 
         // then
         assertThat(homeJpaEntity.getName()).isEqualTo("수정된 이름");
 
+    }
+
+    @Test
+    @Sql("HomePersistenceAdapter3.sql")
+    @DisplayName("메인 홈 수정 테스트")
+    void testUpdateMainHome() {
+        // given
+        Long userId = 10L;
+        Long originalMainHomeId = 1L;
+        Long newMainHomeId = 2L;
+        Long notMyHomeId = 7L;
+
+        // when
+        sut.updateMainHome(userId, newMainHomeId);
+        HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(originalMainHomeId).orElseThrow();
+        HomeJpaEntity homeJpaEntity2 = homeJpaRepository.findById(newMainHomeId).orElseThrow();
+        HomeJpaEntity homeJpaEntity3 = homeJpaRepository.findById(notMyHomeId).orElseThrow();
+
+        // then
+        assertThat(homeJpaEntity.getIsMain()).isFalse();
+        assertThat(homeJpaEntity2.getIsMain()).isTrue();
+        assertThat(homeJpaEntity3.getIsMain()).isTrue();
     }
 
     @Test

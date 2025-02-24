@@ -13,4 +13,5 @@ values (1, "거실", 0, 0, 0, 5000, 1000, 5, 20),
        (2, "주방", 0, 1000, 0, 5000, 1000, 6, 20);
 
 insert into HOME(ID, USER_ID, HOUSE_ID, NAME, CREATED_TIME, UPDATED_TIME)
-values (1, 10, 20, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+values (1, 10, 20, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+ (2, 10, 20, "leaf의 cozy house2", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

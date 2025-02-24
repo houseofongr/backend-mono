@@ -20,7 +20,7 @@ public class UpdateHomeService implements UpdateHomeUseCase {
     private final UpdateHomePort updateHomePort;
 
     @Override
-    public void updateHome(Long homeId, String homeName) {
+    public void updateHomeName(Long homeId, String homeName) {
         Home home = findHomePort.loadHome(homeId).orElseThrow(() -> new AdminException(AdminErrorCode.HOME_NOT_FOUND));
 
         try {
@@ -29,6 +29,11 @@ public class UpdateHomeService implements UpdateHomeUseCase {
             throw new AdminException(AdminErrorCode.ILLEGAL_HOME_NAME_FORMAT);
         }
 
-        updateHomePort.updateHome(home);
+        updateHomePort.updateHomeName(home);
+    }
+
+    @Override
+    public void updateMainHome(Long userId, Long homeId) {
+        updateHomePort.updateMainHome(userId, homeId);
     }
 }

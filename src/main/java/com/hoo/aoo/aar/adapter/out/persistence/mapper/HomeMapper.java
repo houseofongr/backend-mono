@@ -22,7 +22,8 @@ public class HomeMapper {
         return new QueryUserHomesResult.HomeInfo(
                 homeJpaEntity.getId(),
                 homeJpaEntity.getHouse().getBasicImageFileId(),
-                homeJpaEntity.getName());
+                homeJpaEntity.getName(),
+                homeJpaEntity.getIsMain());
     }
 
     public QueryHomeRoomsResult mapToQueryHomeRooms(HomeJpaEntity homeJpaEntity) {

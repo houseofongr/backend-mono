@@ -196,7 +196,20 @@ operation::aar-home-get-soundsource-path[snippets='http-request,http-response,re
 
 > 본인이 보유하지 않은 홈을 수정할 경우 403 오류가 발생합니다.
 
+> 빈 값(Null, 공백)만 전송될 경우 400 오류가 발생합니다.
+
 operation::aar-home-patch-name[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
+
+[[aar-home-main-patch-api]]
+==== 메인 홈 수정 API
+
+사용자가 보유한 메인 홈을 수정합니다.
+
+> 본인이 보유하지 않은 홈을 수정할 경우 403 오류가 발생합니다.
+
+> 메인 홈은 1개만 존재할 수 있으므로, 기존 메인 홈은 더이상 메인이 아니게 됩니다.
+
+operation::aar-home-patch-main[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-api]]
 == 관리자(Admin) API

@@ -22,6 +22,9 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @Column
     private String name;
 
+    @Column
+    private Boolean isMain;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSE_ID", nullable = false)
     private HouseJpaEntity house;
@@ -37,6 +40,7 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
         return new HomeJpaEntity(
                 null,
                 home.getHomeDetail().getName(),
+                false,
                 null,
                 null,
                 null);
@@ -49,5 +53,9 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    public void isMainHome(boolean isMain) {
+        this.isMain = isMain;
     }
 }

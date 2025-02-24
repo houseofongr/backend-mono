@@ -68,9 +68,15 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Updat
     }
 
     @Override
-    public void updateHome(Home home) {
+    public void updateHomeName(Home home) {
         HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(home.getHomeId().getId()).orElseThrow();
         homeJpaEntity.updateName(home.getHomeDetail().getName());
+    }
+
+    @Override
+    public void updateMainHome(Long userId, Long homeId) {
+        homeJpaRepository.findByUserIdAndIsMain(userId, true).ifPresent(homeJpaEntity -> homeJpaEntity.isMainHome(false));
+        homeJpaRepository.findById(homeId).orElseThrow().isMainHome(true);
     }
 
     @Override
