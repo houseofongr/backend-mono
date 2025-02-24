@@ -46,4 +46,8 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
         this.user = userJpaEntity;
         this.house = houseJpaEntity;
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
 }

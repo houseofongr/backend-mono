@@ -88,6 +88,22 @@ class HomePersistenceAdapterTest {
     }
 
     @Test
+    @Sql("HomePersistenceAdapter2.sql")
+    @DisplayName("홈 수정 테스트")
+    void testUpdateHomeName() {
+        // given
+        Home home = Home.load(1L, 20L, 10L, "수정된 이름", null, null);
+
+        // when
+        sut.updateHome(home);
+        HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(home.getHomeId().getId()).orElseThrow();
+
+        // then
+        assertThat(homeJpaEntity.getName()).isEqualTo("수정된 이름");
+
+    }
+
+    @Test
     @Sql("HomePersistenceAdapter3.sql")
     @DisplayName("홈 삭제 테스트")
     void testDeleteHomeHome() {

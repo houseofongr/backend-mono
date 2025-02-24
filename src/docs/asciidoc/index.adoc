@@ -189,6 +189,15 @@ operation::aar-home-get-soundsource[snippets='query-parameters,http-request,http
 
 operation::aar-home-get-soundsource-path[snippets='http-request,http-response,response-fields']
 
+[[aar-home-name-patch-api]]
+==== 홈 이름 수정 API
+
+사용자가 보유한 홈의 이름을 수정합니다.
+
+> 본인이 보유하지 않은 홈을 수정할 경우 403 오류가 발생합니다.
+
+operation::aar-home-patch-name[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
+
 [[admin-api]]
 == 관리자(Admin) API
 

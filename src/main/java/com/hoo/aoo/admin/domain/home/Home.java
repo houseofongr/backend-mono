@@ -32,4 +32,8 @@ public class Home {
     public static Home load(Long id, Long houseId, Long userId, String homeName, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Home(new HomeId(id), new HouseId(houseId), new UserId(userId), new HomeDetail(homeName), new BaseTime(createdTime, updatedTime));
     }
+
+    public void updateName(String homeName) {
+        homeDetail.updateName(homeName);
+    }
 }

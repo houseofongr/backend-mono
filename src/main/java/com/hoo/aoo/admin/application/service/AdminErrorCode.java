@@ -26,6 +26,7 @@ public enum AdminErrorCode implements ErrorCode {
 
     HOME_NOT_FOUND("ADMIN-HOME-1", NOT_FOUND, "해당 홈을 찾을 수 없습니다."),
     ALREADY_CREATED_HOME("ADMIN-HOME-2", CONFLICT, "이미 동일한 요청으로 생성된 홈이 존재합니다."),
+    ILLEGAL_HOME_NAME_FORMAT("ADMIN-HOME-3", BAD_REQUEST, "잘못된 홈 이름 형식입니다."),
 
     ILLEGAL_SHAPE_TYPE("ADMIN-ITEM-1", BAD_REQUEST, "잘못된 아이템 형태입니다."),
     ITEM_HAS_SOUND_SOURCE("ADMIN-ITEM-2", BAD_REQUEST, "음원이 포함된 아이템은 해당 요청을 수행할 수 없습니다."),

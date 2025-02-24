@@ -1,12 +1,13 @@
 package com.hoo.aoo.admin.domain.home;
 
+import com.hoo.aoo.admin.domain.exception.BadHomeNameFormatException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class HomeDetailTest {
 
@@ -22,5 +23,25 @@ class HomeDetailTest {
 
         // then
         assertThat(detail.getName()).isEqualTo(user.getUserInfo().getNickname() + "의 " + house.getHouseDetail().getTitle());
+    }
+
+    @Test
+    @DisplayName("홈 이름 수정 테스트")
+    void testUpdateHomeName() {
+        // given
+        String nullName = null;
+        String emptyName = "";
+        String blankName = " ";
+        String newName = "new name";
+        HomeDetail detail = new HomeDetail("original name");
+
+        // when
+        assertThatThrownBy(() -> detail.updateName(nullName)).isInstanceOf(BadHomeNameFormatException.class);
+        assertThatThrownBy(() -> detail.updateName(emptyName)).isInstanceOf(BadHomeNameFormatException.class);
+        assertThatThrownBy(() -> detail.updateName(blankName)).isInstanceOf(BadHomeNameFormatException.class);
+        detail.updateName(newName);
+
+        // then
+        assertThat(detail.getName()).isEqualTo(newName);
     }
 }

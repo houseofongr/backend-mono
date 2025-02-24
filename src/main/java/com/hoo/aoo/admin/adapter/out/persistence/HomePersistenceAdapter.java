@@ -5,6 +5,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.HomeMapper;
 import com.hoo.aoo.admin.application.port.out.home.DeleteHomePort;
 import com.hoo.aoo.admin.application.port.out.home.FindHomePort;
 import com.hoo.aoo.admin.application.port.out.home.SaveHomePort;
+import com.hoo.aoo.admin.application.port.out.home.UpdateHomePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.home.Home;
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, DeleteHomePort {
+public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, UpdateHomePort, DeleteHomePort {
 
     private final HouseJpaRepository houseJpaRepository;
     private final UserJpaRepository userJpaRepository;
@@ -64,6 +65,12 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Delet
     public List<Home> loadHomes(Long userId) {
         return homeJpaRepository.findAllByUserId(userId)
                 .stream().map(homeMapper::mapToDomainEntity).toList();
+    }
+
+    @Override
+    public void updateHome(Home home) {
+        HomeJpaEntity homeJpaEntity = homeJpaRepository.findById(home.getHomeId().getId()).orElseThrow();
+        homeJpaEntity.updateName(home.getHomeDetail().getName());
     }
 
     @Override

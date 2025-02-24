@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class DeleteMyInfoService implements DeleteMyInfoUseCase {
-
+    
     private final UnlinkKakaoLoginPort unlinkKakaoLoginPort;
     private final DeleteUserUseCase deleteUserUseCase;
 

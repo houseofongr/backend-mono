@@ -1,12 +1,13 @@
 package com.hoo.aoo.admin.domain.home;
 
+import com.hoo.aoo.admin.domain.exception.BadHomeNameFormatException;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.user.User;
 import lombok.Getter;
 
 @Getter
 public class HomeDetail {
-    private final String name;
+    private String name;
 
     public HomeDetail(String name) {
         this.name = name;
@@ -16,4 +17,8 @@ public class HomeDetail {
         this.name = user.getUserInfo().getNickname() + "의 " + house.getHouseDetail().getTitle();
     }
 
+    public void updateName(String homeName) {
+        if (homeName == null || homeName.isBlank()) throw new BadHomeNameFormatException(homeName);
+        this.name = homeName;
+    }
 }
