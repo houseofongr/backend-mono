@@ -28,8 +28,19 @@ class PatchHomeNameControllerTest extends AbstractControllerTest {
     @DisplayName("집 이름 수정 API")
     void testPatchHomeNameAPI() throws Exception {
 
+        // 글자수 없을때(공백일때) 확인
         mockMvc.perform(patch("/aar/homes/{homeId}", 1L)
-                        .content("{\"new name\": \" \"}")
+                        .content("{\"newName\": \" \"}")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
+                                .authorities(new SimpleGrantedAuthority("ROLE_USER"))
+                        )
+                )
+                .andExpect(status().is(400));
+
+        // 글자수 50자 확인
+        mockMvc.perform(patch("/aar/homes/{homeId}", 1L)
+                        .content("{\"newName\": \"fiftylengthhousefiftylengthhousefiftylengthhousefif\"}")
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_USER"))

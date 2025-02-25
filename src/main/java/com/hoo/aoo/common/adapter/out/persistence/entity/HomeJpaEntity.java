@@ -19,7 +19,7 @@ public class HomeJpaEntity extends DateColumnBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 50)
     private String name;
 
     @Column
