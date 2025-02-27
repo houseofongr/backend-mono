@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class PostPublicImageControllerTest extends AbstractControllerTest {
+class PostPublicAudioControllerTest extends AbstractControllerTest {
 
     @Override
     protected String getBaseUrl() {
@@ -19,16 +20,16 @@ public class PostPublicImageControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @DisplayName("이미지파일 업로드 API")
+    @DisplayName("음원파일 업로드 API")
     void testFile() throws Exception {
-        MockMultipartFile image = new MockMultipartFile("images", "image.png", "image/png", "<<png data 1>>".getBytes());
-        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "<<png data 2>>".getBytes());
+        MockMultipartFile audio = new MockMultipartFile("audios", "audio.mp3", "audio/mpeg", "<<mp3 data 1>>".getBytes());
+        MockMultipartFile audio2 = new MockMultipartFile("audios", "audio2.mp3", "audio/mpeg", "<<mp3 data 2>>".getBytes());
 
-        mockMvc.perform(multipart("/public/images")
-                        .file(image).file(image2)
+        mockMvc.perform(multipart("/public/audios")
+                        .file(audio).file(audio2)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
-                .andDo(document("file-public-images-upload",
+                .andDo(document("file-public-audio-upload",
                         responseFields(
                                 fieldWithPath("fileInfos[].id").description("등록된 파일의 아이디입니다."),
                                 fieldWithPath("fileInfos[].ownerId").description("등록된 파일의 소유자 식별자입니다.(공개 이미지이므로 소유자는 없습니다.)"),

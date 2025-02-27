@@ -545,6 +545,13 @@ operation::file-private-images-download-v2[snippets='path-parameters,query-param
 
 > 응답은 <<file-private-api>>와 동일합니다.
 
+[[file-public-audios-post-api]]
+==== 오디오 업로드 API
+
+오디오 파일을 공개 서버에 업로드합니다.
+
+operation::file-public-audio-upload[snippets='http-request,http-response,response-fields']
+
 [[file-private-audios-get-api]]
 ==== 음원 로드 API
 
