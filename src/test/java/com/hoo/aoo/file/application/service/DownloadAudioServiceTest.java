@@ -37,11 +37,11 @@ class DownloadAudioServiceTest {
 
 
     @Test
-    @DisplayName("프라이빗 이미지 다운로드 테스트")
+    @DisplayName("프라이빗 오디오 다운로드 테스트")
     void testDownloadPrivate(@TempDir Path tempDir) throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
-        File file = File.create(FileId.create(tempDir.toString(), Authority.ALL_PRIVATE_IMAGE_ACCESS, FileType.AUDIO, "test.mp3", "test.mp3"), FileStatus.CREATED, null, new FileSize(1234L, 10000L));
+        File file = File.create(FileId.create(tempDir.toString(), Authority.ALL_PRIVATE_AUDIO_ACCESS, FileType.AUDIO, "test.mp3", "test.mp3"), FileStatus.CREATED, null, new FileSize(1234L, 10000L));
         java.io.File javaFile = new java.io.File(file.getFileId().getPath());
         javaFile.getParentFile().mkdirs();
         javaFile.createNewFile();

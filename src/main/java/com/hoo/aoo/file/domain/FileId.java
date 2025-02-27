@@ -39,22 +39,28 @@ public class FileId {
         FileType fileType = FileType.of(fileTypeDir);
 
         String authorityDir = dirs[dirs.length - 2];
-        Authority authority = pathToAuthority(authorityDir);
+        Authority authority = pathToAuthority(authorityDir, fileTypeDir);
 
         String baseDir = parentDir.split("/" + authorityDir)[0];
 
         return new FileId(baseDir, authority, fileType, realFileName, fileSystemName);
     }
 
-    private static Authority pathToAuthority(String authorityDir) {
-        switch (authorityDir) {
-            case "public":
-                return Authority.PUBLIC_FILE_ACCESS;
-            case "private":
+    private static Authority pathToAuthority(String authorityDir, String fileTypeDir) {
+
+        if (authorityDir.equalsIgnoreCase("public"))
+            return Authority.PUBLIC_FILE_ACCESS;
+
+        else if (authorityDir.equalsIgnoreCase("private"))
+            if (fileTypeDir.equalsIgnoreCase("images"))
                 return Authority.ALL_PRIVATE_IMAGE_ACCESS;
-            default:
-                throw new IllegalFileAuthorityDirException(authorityDir);
-        }
+
+            else if (fileTypeDir.equalsIgnoreCase("audios"))
+                return Authority.ALL_PRIVATE_AUDIO_ACCESS;
+
+            else throw new IllegalFileAuthorityDirException(authorityDir + "/" + fileTypeDir);
+
+        else throw new IllegalFileAuthorityDirException(authorityDir + "/" + fileTypeDir);
     }
 
     @Override
@@ -95,7 +101,7 @@ public class FileId {
             case PUBLIC_FILE_ACCESS -> {
                 return "public";
             }
-            case ALL_PRIVATE_IMAGE_ACCESS -> {
+            case ALL_PRIVATE_IMAGE_ACCESS, ALL_PRIVATE_AUDIO_ACCESS -> {
                 return "private";
             }
             default -> throw new IllegalStateException("Unexpected value: " + authority);

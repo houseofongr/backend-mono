@@ -552,6 +552,15 @@ operation::file-private-images-download-v2[snippets='path-parameters,query-param
 
 operation::file-public-audio-upload[snippets='http-request,http-response,response-fields']
 
+
+[[file-public-audios-get-api]]
+==== 오디오 로드 API
+
+오디오 파일을 공개 서버로부터 로드합니다.
+
+operation::file-public-audios-download[snippets='path-parameters,http-request,response-file']
+
+
 [[file-private-audios-get-api]]
 ==== 음원 로드 API
 

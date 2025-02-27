@@ -3,6 +3,7 @@ package com.hoo.aoo.file.application.service;
 import com.hoo.aoo.common.domain.Authority;
 import com.hoo.aoo.file.application.port.in.DownloadFileResult;
 import com.hoo.aoo.file.application.port.in.DownloadPrivateAudioUseCase;
+import com.hoo.aoo.file.application.port.in.DownloadPublicAudioUseCase;
 import com.hoo.aoo.file.application.port.out.database.FindFilePort;
 import com.hoo.aoo.file.domain.File;
 import com.hoo.aoo.file.domain.FileId;
@@ -19,14 +20,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class DownloadAudioService implements DownloadPrivateAudioUseCase {
+public class DownloadAudioService implements DownloadPublicAudioUseCase, DownloadPrivateAudioUseCase {
 
     private final FindFilePort findFilePort;
 
     @Override
-    @Transactional(readOnly = true)
+    public DownloadFileResult publicDownload(Long fileId) {
+        return download(fileId, Authority.PUBLIC_FILE_ACCESS);
+    }
+
+    @Override
     public DownloadFileResult privateDownload(Long fileId) {
+        return download(fileId,Authority.ALL_PRIVATE_AUDIO_ACCESS);
+    }
+
+    private DownloadFileResult download(Long fileId, Authority authority) {
         try {
 
             File file = findFilePort.load(fileId)
@@ -34,7 +44,7 @@ public class DownloadAudioService implements DownloadPrivateAudioUseCase {
 
             FileId audioFileId = file.getFileId();
 
-            if (audioFileId.getAuthority() != Authority.ALL_PRIVATE_IMAGE_ACCESS)
+            if (audioFileId.getAuthority() != authority)
                 throw new FileException(FileErrorCode.INVALID_AUTHORITY);
 
             if (audioFileId.getFileType() != FileType.AUDIO)
