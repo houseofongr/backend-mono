@@ -20,7 +20,7 @@ public class FileSecurityConfig {
     @Bean
     public SecurityFilterChain fileFilterChain(HttpSecurity http) throws Exception {
         return http
-                .securityMatcher("/private/audios/**")
+                .securityMatcher("/private/**", "/public/**")
                 .cors(cors -> cors.configurationSource(fileCorsConfigurationSource()))
 
                 .csrf(CsrfConfigurer::disable)
