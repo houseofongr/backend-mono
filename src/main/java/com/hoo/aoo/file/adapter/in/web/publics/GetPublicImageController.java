@@ -22,6 +22,7 @@ public class GetPublicImageController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
+                .contentType(result.mediaType())
                 .body(result.resource());
     }
 

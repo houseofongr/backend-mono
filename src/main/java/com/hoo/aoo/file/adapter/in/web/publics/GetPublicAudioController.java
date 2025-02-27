@@ -23,6 +23,7 @@ public class GetPublicAudioController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
+                .contentType(result.mediaType())
                 .body(result.resource());
     }
 
