@@ -26,6 +26,7 @@ class PostPublicAudioControllerTest extends AbstractControllerTest {
 
         mockMvc.perform(multipart("/public/audios")
                         .file(audio).file(audio2)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
                 .andDo(document("file-public-audio-upload",
