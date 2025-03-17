@@ -31,8 +31,6 @@ public class AarSecurityConfig {
                 .securityMatcher("/aar/**")
                 .csrf(CsrfConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .headers(headers -> headers
-                        .cacheControl(HeadersConfigurer.CacheControlConfig::disable))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .oauth2Login(oauth2 -> oauth2
