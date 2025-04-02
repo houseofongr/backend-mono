@@ -1,5 +1,7 @@
 package com.hoo.aoo.admin.domain.universe.space;
 
+import com.hoo.aoo.admin.domain.universe.space.element.Element;
+
 import java.util.List;
 
 public class TreeInfo {

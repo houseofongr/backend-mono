@@ -1,12 +1,12 @@
 package com.hoo.aoo.admin.domain.universe.space;
 
 public class PosInfo {
-    private final Integer x;
-    private final Integer y;
-    private final Integer height;
-    private final Integer width;
+    private final Float x;
+    private final Float y;
+    private final Float height;
+    private final Float width;
 
-    public PosInfo(Integer x, Integer y, Integer height, Integer width) {
+    public PosInfo(Float x, Float y, Float height, Float width) {
         this.x = x;
         this.y = y;
         this.height = height;
