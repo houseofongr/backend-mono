@@ -5,7 +5,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.adapter.out.persistence.entity.RoomJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
 import org.junit.jupiter.api.DisplayName;

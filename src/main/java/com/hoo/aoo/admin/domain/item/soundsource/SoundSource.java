@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.domain.soundsource;
+package com.hoo.aoo.admin.domain.item.soundsource;
 
 import com.hoo.aoo.admin.domain.file.File;
 import com.hoo.aoo.admin.domain.file.FileId;

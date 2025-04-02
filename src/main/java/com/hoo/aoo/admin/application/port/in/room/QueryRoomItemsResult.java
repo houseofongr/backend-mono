@@ -2,7 +2,7 @@ package com.hoo.aoo.admin.application.port.in.room;
 
 import com.hoo.aoo.admin.application.port.in.item.ItemData;
 import com.hoo.aoo.admin.domain.item.Item;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 
 import java.util.List;
 

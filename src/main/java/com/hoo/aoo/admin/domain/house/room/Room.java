@@ -1,9 +1,7 @@
-package com.hoo.aoo.admin.domain.room;
+package com.hoo.aoo.admin.domain.house.room;
 
 import com.hoo.aoo.admin.domain.Area;
 import com.hoo.aoo.admin.domain.Axis;
-import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
-import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.file.File;
 import com.hoo.aoo.admin.domain.file.FileId;
 import com.hoo.aoo.admin.domain.file.FileType;

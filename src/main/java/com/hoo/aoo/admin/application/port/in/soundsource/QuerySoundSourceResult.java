@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.in.soundsource;
 
-import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 
 public record QuerySoundSourceResult(

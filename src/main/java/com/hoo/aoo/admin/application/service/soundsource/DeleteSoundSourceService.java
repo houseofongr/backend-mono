@@ -5,7 +5,7 @@ import com.hoo.aoo.admin.application.port.out.soundsource.DeleteSoundSourcePort;
 import com.hoo.aoo.admin.application.port.out.soundsource.FindSoundSourcePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.file.application.port.in.DeleteFileUseCase;
 import lombok.RequiredArgsConstructor;

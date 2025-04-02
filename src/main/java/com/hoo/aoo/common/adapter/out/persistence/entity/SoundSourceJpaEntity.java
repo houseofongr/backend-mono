@@ -1,6 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence.entity;
 
-import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

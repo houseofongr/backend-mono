@@ -1,6 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence.entity;
 
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

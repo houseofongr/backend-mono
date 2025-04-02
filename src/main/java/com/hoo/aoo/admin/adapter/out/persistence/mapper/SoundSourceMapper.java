@@ -1,7 +1,7 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
 import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListResult;
-import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.application.port.in.room;
 
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 
 public record QueryRoomResult(
         String name,

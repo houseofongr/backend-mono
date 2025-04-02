@@ -4,7 +4,7 @@ import com.hoo.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
 import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListCommand;
 import com.hoo.aoo.admin.application.port.in.soundsource.QuerySoundSourceListResult;
 import com.hoo.aoo.admin.application.port.out.soundsource.*;
-import com.hoo.aoo.admin.domain.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.common.adapter.out.persistence.entity.ItemJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SoundSourceJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;

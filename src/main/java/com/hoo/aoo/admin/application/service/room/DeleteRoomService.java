@@ -6,7 +6,7 @@ import com.hoo.aoo.admin.application.port.out.room.DeleteRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.file.application.port.in.DeleteFileUseCase;
 import lombok.RequiredArgsConstructor;

@@ -5,7 +5,7 @@ import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.hoo.aoo.admin.application.port.in.room.UpdateRoomInfoUseCase;
 import com.hoo.aoo.admin.application.port.out.room.FindRoomPort;
 import com.hoo.aoo.admin.application.port.out.room.UpdateRoomPort;
-import com.hoo.aoo.admin.domain.room.Room;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

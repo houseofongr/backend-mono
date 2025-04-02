@@ -1,4 +1,4 @@
-package com.hoo.aoo.admin.domain.soundsource;
+package com.hoo.aoo.admin.domain.item.soundsource;
 
 import lombok.Getter;
 
