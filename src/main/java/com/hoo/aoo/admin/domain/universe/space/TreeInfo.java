@@ -1,9 +1,11 @@
 package com.hoo.aoo.admin.domain.universe.space;
 
 import com.hoo.aoo.admin.domain.universe.space.element.Element;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class TreeInfo {
     private final Integer depth;
     private final Space parentSpace;

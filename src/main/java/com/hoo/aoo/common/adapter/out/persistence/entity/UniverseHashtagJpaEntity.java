@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "UNIVERSE_HASHTAG")
 @Getter
@@ -24,4 +26,7 @@ public class UniverseHashtagJpaEntity {
     @JoinColumn(name = "HASHTAG_ID")
     private HashtagJpaEntity hashtag;
 
+    public static UniverseHashtagJpaEntity create(UniverseJpaEntity universeJpaEntity, HashtagJpaEntity hashtagJpaEntity) {
+        return new UniverseHashtagJpaEntity(null, universeJpaEntity, hashtagJpaEntity);
+    }
 }

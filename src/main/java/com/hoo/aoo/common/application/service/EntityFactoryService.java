@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.application.service;
 
+import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;
 import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
 import com.hoo.aoo.admin.application.port.out.house.CreateHousePort;
@@ -7,13 +8,15 @@ import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
 import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
 import com.hoo.aoo.admin.application.port.out.soundsource.CreateSoundSourcePort;
+import com.hoo.aoo.admin.application.port.out.universe.CreateUniversePort;
 import com.hoo.aoo.admin.application.port.out.user.CreateUserPort;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Shape;
-import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
@@ -26,7 +29,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort {
 
     private final IssueIdPort issueIdPort;
 
@@ -43,7 +46,7 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public House createHouse(String title, String author, String description, Float width, Float height, Long basicImageId, Long borderImageId, List<Room> rooms){
+    public House createHouse(String title, String author, String description, Float width, Float height, Long basicImageId, Long borderImageId, List<Room> rooms) {
         Long newId = issueIdPort.issueHouseId();
         return House.create(newId, title, author, description, width, height, basicImageId, borderImageId, rooms);
     }
@@ -76,5 +79,18 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     public DeletedUser createDeletedUser(com.hoo.aoo.admin.domain.user.User user, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
         Long newId = issueIdPort.issueDeletedUserId();
         return DeletedUser.create(newId, user, termsOfDeletionAgreement, personalInformationDeletionAgreement);
+    }
+
+    @Override
+    public Universe createUniverse(CreateUniverseCommand command, Long thumbnailId, Long thumbMusicId) {
+        Long newId = issueIdPort.issueUniverseId();
+        return Universe.create(newId,
+                command.title(),
+                command.description(),
+                command.tag(),
+                command.category(),
+                command.publicStatus(),
+                thumbnailId,
+                thumbMusicId);
     }
 }

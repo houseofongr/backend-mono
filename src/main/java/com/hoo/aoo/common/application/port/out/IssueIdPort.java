@@ -16,4 +16,6 @@ public interface IssueIdPort {
     Long issueSoundSourceId();
 
     Long issueDeletedUserId();
+
+    Long issueUniverseId();
 }

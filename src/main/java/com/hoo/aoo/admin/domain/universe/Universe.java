@@ -1,7 +1,11 @@
 package com.hoo.aoo.admin.domain.universe;
 
 import com.hoo.aoo.admin.domain.universe.space.TreeInfo;
+import lombok.Getter;
 
+import java.util.List;
+
+@Getter
 public class Universe {
     private final Long id;
     private final Long thumbMusicId;
@@ -19,5 +23,17 @@ public class Universe {
         this.dateInfo = dateInfo;
         this.socialInfo = socialInfo;
         this.treeInfo = treeInfo;
+    }
+
+
+    public static Universe create(Long id, String title, String description, List<String> tag, Category category, PublicStatus publicStatus, Long thumbnailId, Long thumbMusicId) {
+
+        return new Universe(id,
+                thumbMusicId,
+                thumbnailId,
+                new UniverseBasicInfo(title, description, category, publicStatus),
+                null,
+                new SocialInfo(0L, 0L, tag),
+                null);
     }
 }

@@ -8,6 +8,9 @@ import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Rectangle;
 import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
+import com.hoo.aoo.admin.domain.universe.Category;
+import com.hoo.aoo.admin.domain.universe.PublicStatus;
+import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
@@ -101,4 +104,19 @@ public class MockEntityFactoryService {
     public static DeletedUser getDeletedUser() {
         return factory.createDeletedUser(getUser(),true,true);
     }
+
+    public static Universe getUniverse() {
+        Long id = 1L;
+        String title = "우주";
+        String description = "유니버스는 우주입니다.";
+        List<String> tag = List.of("우주", "행성", "지구", "별");
+        Category category = Category.GOVERNMENT_AND_PUBLIC_INSTITUTION;
+        PublicStatus publicStatus = PublicStatus.PUBLIC;
+        Long thumbnailId = 11L;
+        Long thumbMusicId = 100L;
+
+        return Universe.create(id, title, description, tag, category, publicStatus, thumbnailId, thumbMusicId);
+    }
+
+
 }

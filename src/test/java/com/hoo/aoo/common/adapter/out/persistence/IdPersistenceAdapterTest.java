@@ -1,9 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence;
 
-import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
-import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
-import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
-import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
+import com.hoo.aoo.common.adapter.out.persistence.repository.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,9 @@ class IdPersistenceAdapterTest {
     @Autowired
     ItemJpaRepository itemJpaRepository;
 
+    @Autowired
+    UniverseJpaRepository universeJpaRepository;
+
     @Test
     @Sql("IdPersistenceAdapterTest.sql")
     @DisplayName("ID 생성 테스트")
@@ -39,18 +39,21 @@ class IdPersistenceAdapterTest {
         long roomCount = roomJpaRepository.count();
         long homeCount = homeJpaRepository.count();
         long itemCount = itemJpaRepository.count();
+        long universeCount = universeJpaRepository.count();
 
         // when
         Long houseId = sut.issueHouseId();
         Long roomId = sut.issueRoomId();
         Long homeId = sut.issueHomeId();
         Long itemId = sut.issueItemId();
+        Long universeId = sut.issueUniverseId();
 
         // then
         assertThat(houseId).isEqualTo(houseCount + 1);
         assertThat(roomId).isEqualTo(roomCount + 1);
         assertThat(homeId).isEqualTo(homeCount + 1);
         assertThat(itemId).isEqualTo(itemCount + 1);
+        assertThat(universeId).isEqualTo(universeCount + 1);
     }
 
 }

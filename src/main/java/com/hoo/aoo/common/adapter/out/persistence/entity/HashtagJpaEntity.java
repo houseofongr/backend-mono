@@ -16,7 +16,10 @@ public class HashtagJpaEntity extends DateColumnBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-    
+    @Column(nullable = false, length = 100)
+    private String tag;
+
+    public static HashtagJpaEntity create(String tag) {
+        return new HashtagJpaEntity(null, tag);
+    }
 }

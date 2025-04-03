@@ -34,6 +34,9 @@ public enum AdminErrorCode implements ErrorCode {
 
     SOUND_SOURCE_NOT_FOUND("ADMIN-SOUNDSOURCE-1", NOT_FOUND, "해당 음원을 찾을 수 없습니다."),
 
+    ILLEGAL_UNIVERSE_CREATE_FILE("ADMIN-UNIVERSE-1", BAD_REQUEST, "잘못된 유니버스 생성 파일입니다(썸네일 혹은 썸뮤직 파일 누락됨)."),
+    ILLEGAL_UNIVERSE_PARAMETER("ADMIN-UNIVERSE-2", BAD_REQUEST, "잘못된 유니버스 생성 정보입니다(요청값 확인 필요)."),
+
     LOAD_ENTITY_FAILED("ADMIN-COMMON-1", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
 
     private final String code;

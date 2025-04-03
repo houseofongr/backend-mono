@@ -1,12 +1,15 @@
 package com.hoo.aoo.admin.domain.universe;
 
+import lombok.Getter;
+
+@Getter
 public class UniverseBasicInfo extends BasicInfo{
-    private final Long ownerId;
+    private final Category category;
     private final PublicStatus publicStatus;
 
-    public UniverseBasicInfo(String title, String description, Long ownerId, PublicStatus publicStatus) {
+    public UniverseBasicInfo(String title, String description, Category category, PublicStatus publicStatus) {
         super(title, description);
-        this.ownerId = ownerId;
+        this.category = category;
         this.publicStatus = publicStatus;
     }
 }

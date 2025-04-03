@@ -55,6 +55,11 @@ public class IdPersistenceAdapter implements IssueIdPort {
         return issue("SNS_ACCOUNT");
     }
 
+    @Override
+    public Long issueUniverseId() {
+        return issue("UNIVERSE");
+    }
+
     private Long issue(String tableName) {
         Object singleResult = entityManager.createNativeQuery(
                         """
