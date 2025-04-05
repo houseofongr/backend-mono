@@ -41,7 +41,6 @@ public class HouseQueryDslRepositoryImpl implements HouseQueryDslRepository {
     private BooleanExpression houseSearch(QueryHouseListCommand command) {
         if (command.keyword() == null || command.keyword().isBlank()) return null;
         return switch (command.searchType()) {
-            case NONE -> null;
             case TITLE -> houseJpaEntity.title.likeIgnoreCase("%" + command.keyword() + "%");
             case AUTHOR -> houseJpaEntity.author.likeIgnoreCase("%" + command.keyword() + "%");
             case DESCRIPTION -> houseJpaEntity.description.likeIgnoreCase("%" + command.keyword() + "%");

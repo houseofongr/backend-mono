@@ -77,12 +77,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.application.port.in.house;
 &nbsp;
-&nbsp;import com.hoo.aoo.admin.adapter.out.persistence.SearchType;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.condition.HouseSearchType;
 &nbsp;import org.springframework.data.domain.Pageable;
 &nbsp;
 <b class="fc">&nbsp;public record QueryHouseListCommand(</b>
 &nbsp;        Pageable pageable,
-&nbsp;        SearchType searchType,
+&nbsp;        SearchType houseSearchType,
 &nbsp;        String keyword
 &nbsp;) {
 &nbsp;}

@@ -9,8 +9,8 @@ import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.domain.exception.AreaLimitExceededException;
 import com.hoo.aoo.admin.domain.exception.AxisLimitExceededException;
 import com.hoo.aoo.admin.domain.house.House;
-import com.hoo.aoo.admin.domain.house.HouseDetail;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
+import com.hoo.aoo.common.adapter.out.persistence.condition.HouseSearchType;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HouseJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HouseJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.RoomJpaRepository;
@@ -79,10 +79,10 @@ class HousePersistenceAdapterTest {
         Pageable pageable = PageRequest.of(0, 9);
 
         QueryHouseListCommand allCommand = new QueryHouseListCommand(pageable, null, null);
-        QueryHouseListCommand keywordCommand = new QueryHouseListCommand(pageable, SearchType.TITLE, "cozy");
-        QueryHouseListCommand keywordCommand2 = new QueryHouseListCommand(pageable, SearchType.AUTHOR, "leAf");
-        QueryHouseListCommand keywordCommand3 = new QueryHouseListCommand(pageable, SearchType.DESCRIPTION, "IS");
-        QueryHouseListCommand nonKeywordCommand = new QueryHouseListCommand(pageable, SearchType.DESCRIPTION, "no keyword");
+        QueryHouseListCommand keywordCommand = new QueryHouseListCommand(pageable, HouseSearchType.TITLE, "cozy");
+        QueryHouseListCommand keywordCommand2 = new QueryHouseListCommand(pageable, HouseSearchType.AUTHOR, "leAf");
+        QueryHouseListCommand keywordCommand3 = new QueryHouseListCommand(pageable, HouseSearchType.DESCRIPTION, "IS");
+        QueryHouseListCommand nonKeywordCommand = new QueryHouseListCommand(pageable, HouseSearchType.DESCRIPTION, "no keyword");
 
         // when
         QueryHouseListResult result = sut.search(allCommand);

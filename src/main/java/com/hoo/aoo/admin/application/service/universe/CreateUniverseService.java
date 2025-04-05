@@ -9,7 +9,6 @@ import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import com.hoo.aoo.file.application.port.in.UploadFileResult;
-import com.hoo.aoo.file.application.port.in.UploadPrivateImageUseCase;
 import com.hoo.aoo.file.application.port.in.UploadPublicAudioUseCase;
 import com.hoo.aoo.file.application.port.in.UploadPublicImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @Transactional

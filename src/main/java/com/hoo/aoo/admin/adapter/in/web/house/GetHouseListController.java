@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.in.web.house;
 
-import com.hoo.aoo.admin.adapter.out.persistence.SearchType;
+import com.hoo.aoo.common.adapter.out.persistence.condition.HouseSearchType;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 import com.hoo.aoo.admin.application.port.in.house.QueryHouseListUseCase;
@@ -20,7 +20,7 @@ public class GetHouseListController {
 
     @GetMapping("/admin/houses")
     public ResponseEntity<QueryHouseListResult> getList(Pageable pageable,
-                                                        @RequestParam(required = false) SearchType searchType,
+                                                        @RequestParam(required = false) HouseSearchType searchType,
                                                         @RequestParam(required = false) String keyword) {
 
         QueryHouseListCommand command = new QueryHouseListCommand(pageable, searchType, keyword);

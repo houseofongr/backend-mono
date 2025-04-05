@@ -77,7 +77,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.hoo.aoo.admin.adapter.in.web.house;
 &nbsp;
-&nbsp;import com.hoo.aoo.admin.adapter.out.persistence.SearchType;
+&nbsp;import com.hoo.aoo.common.adapter.out.persistence.condition.HouseSearchType;
 &nbsp;import com.hoo.aoo.admin.application.port.in.house.QueryHouseListCommand;
 &nbsp;import com.hoo.aoo.admin.application.port.in.house.QueryHouseListResult;
 &nbsp;import com.hoo.aoo.admin.application.port.in.house.QueryHouseListUseCase;
@@ -97,10 +97,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @GetMapping(&quot;/admin/houses&quot;)
 &nbsp;    public ResponseEntity&lt;QueryHouseListResult&gt; getList(Pageable pageable,
-&nbsp;                                                        @RequestParam(required = false) SearchType searchType,
+&nbsp;                                                        @RequestParam(required = false) SearchType houseSearchType,
 &nbsp;                                                        @RequestParam(required = false) String keyword) {
 &nbsp;
-<b class="fc">&nbsp;        QueryHouseListCommand command = new QueryHouseListCommand(pageable, searchType, keyword);</b>
+<b class="fc">&nbsp;        QueryHouseListCommand command = new QueryHouseListCommand(pageable, houseSearchType, keyword);</b>
 <b class="fc">&nbsp;        QueryHouseListResult result = queryHouseListUseCase.query(command);</b>
 &nbsp;
 <b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</b>

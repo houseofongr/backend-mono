@@ -1,7 +1,11 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
+import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSearchType;
+import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSortType;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
@@ -11,10 +15,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Sql("UniversePersistenceAdapter.sql")
 @PersistenceAdapterTest
 @Import(UniversePersistenceAdapter.class)
 class UniversePersistenceAdapterTest {
@@ -29,7 +37,6 @@ class UniversePersistenceAdapterTest {
     EntityManager em;
 
     @Test
-    @Sql("UniversePersistenceAdapter.sql")
     @DisplayName("해시태그 존재여부 확인 후 생성 테스트")
     void testGetOrCreateHashtag() {
         // given
@@ -56,7 +63,6 @@ class UniversePersistenceAdapterTest {
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(id).orElseThrow();
 
         // then
-        assertThat(universeJpaEntity.getId()).isEqualTo(id);
         assertThat(universeJpaEntity.getTitle()).isEqualTo(universe.getBasicInfo().getTitle());
         assertThat(universeJpaEntity.getDescription()).isEqualTo(universe.getBasicInfo().getDescription());
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(universe.getBasicInfo().getPublicStatus());
@@ -66,5 +72,120 @@ class UniversePersistenceAdapterTest {
         assertThat(universeJpaEntity.getUniverseLikes()).isEmpty();
         assertThat(universeJpaEntity.getThumbnailFileId()).isEqualTo(universe.getThumbnailId());
         assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(universe.getThumbMusicId());
+    }
+
+    @Test
+    @DisplayName("유니버스 10, 20, 50건 조회")
+    void testSearchPageSize() {
+        // given
+        SearchUniverseCommand command10 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, null, null);
+        SearchUniverseCommand command20 = new SearchUniverseCommand(PageRequest.of(0, 20), null, false, null, null);
+        SearchUniverseCommand command50 = new SearchUniverseCommand(PageRequest.of(0, 50), null, false, null, null);
+
+        // when
+        SearchUniverseResult resultSize10 = sut.search(command10);
+        SearchUniverseResult resultSize20 = sut.search(command20);
+        SearchUniverseResult resultSize50 = sut.search(command50);
+
+        // then
+        assertThat(resultSize10.universes().size()).isEqualTo(10);
+        assertThat(resultSize20.universes().size()).isEqualTo(12);
+        assertThat(resultSize50.universes().size()).isEqualTo(12);
+
+        // 페이지네이션 개수 확인
+        assertThat(resultSize10.pagination().size()).isEqualTo(10);
+        assertThat(resultSize20.pagination().size()).isEqualTo(20);
+        assertThat(resultSize50.pagination().size()).isEqualTo(50);
+
+        // 토탈 페이지 개수 확인
+        assertThat(resultSize10.pagination().totalPages()).isEqualTo(2);
+        assertThat(resultSize20.pagination().totalPages()).isEqualTo(1);
+        assertThat(resultSize50.pagination().totalPages()).isEqualTo(1);
+
+        // 카운트 쿼리 확인
+        assertThat(resultSize10.pagination().totalElements()).isEqualTo(12);
+        assertThat(resultSize20.pagination().totalElements()).isEqualTo(12);
+        assertThat(resultSize50.pagination().totalElements()).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("특정 컨텐츠(이름, 내용), 카테고리가 포함된 유니버스 조회")
+    void testSearchKeyword() {
+        // given
+        SearchUniverseCommand 건강 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CONTENT, "건강");
+        SearchUniverseCommand 콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CONTENT, "콘텐츠");
+        SearchUniverseCommand life = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CATEGORY, "life");
+
+        // when
+        SearchUniverseResult result_건강 = sut.search(건강);
+        SearchUniverseResult result_콘텐츠 = sut.search(콘텐츠);
+        SearchUniverseResult result_life= sut.search(life);
+
+
+        // then
+        assertThat(result_건강.universes().size()).isEqualTo(3);
+        assertThat(result_콘텐츠.universes().size()).isEqualTo(4);
+        assertThat(result_life.universes().size()).isEqualTo(3);
+        assertThat(result_건강.universes()).allMatch(universeInfo -> universeInfo.title().contains("건강") || universeInfo.description().contains("건강"));
+        assertThat(result_콘텐츠.universes()).allMatch(universeInfo -> universeInfo.title().contains("콘텐츠") || universeInfo.description().contains("콘텐츠"));
+        assertThat(result_life.universes()).allMatch(universeInfo -> universeInfo.category().equalsIgnoreCase("LIFE"));
+    }
+    
+    @Test
+    @DisplayName("제목, 등록일자, 조회수 내림차순 / 오름차순 정렬")
+    void testOrder() {
+        // given
+        SearchUniverseCommand 제목_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.TITLE, true, null, null);
+        SearchUniverseCommand 제목_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.TITLE, false, null, null);
+        SearchUniverseCommand 등록일자_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.REGISTERED_DATE, true, null, null);
+        SearchUniverseCommand 등록일자_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.REGISTERED_DATE, false, null, null);
+        SearchUniverseCommand 조회수_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.VIEWS, true, null, null);
+        SearchUniverseCommand 조회수_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.VIEWS, false, null, null);
+
+        // when
+        SearchUniverseResult result_제목_오름차순 = sut.search(제목_오름차순);
+        SearchUniverseResult result_제목_내림차순 = sut.search(제목_내림차순);
+        SearchUniverseResult result_조회수_내림차순 = sut.search(조회수_내림차순);
+        SearchUniverseResult result_조회수_오름차순 = sut.search(조회수_오름차순);
+
+        Universe universe = MockEntityFactoryService.getUniverse();
+        sut.save(universe);
+
+        SearchUniverseResult result_등록일자_내림차순 = sut.search(등록일자_내림차순);
+        SearchUniverseResult result_등록일자_오름차순 = sut.search(등록일자_오름차순);
+
+        // then
+        assertThat(result_제목_오름차순.universes().getFirst().title()).isEqualTo("건강 유니버스");
+        assertThat(result_제목_내림차순.universes().getFirst().title()).isEqualTo("패션 유니버스");
+        assertThat(result_제목_오름차순.universes().getLast().title()).isEqualTo("패션 유니버스");
+        assertThat(result_제목_내림차순.universes().getLast().title()).isEqualTo("건강 유니버스");
+
+        // 패션 조회수 : 10, 우주 조회수 : 0
+        assertThat(result_조회수_내림차순.universes().getLast().title()).isEqualTo("패션 유니버스");
+        assertThat(result_조회수_오름차순.universes().getLast().title()).isEqualTo("우주");
+
+        // 정책 등록일자 가장 오래됨, 우주 등록일자 가장 최신
+        assertThat(result_등록일자_오름차순.universes().getFirst().title()).isEqualTo("정책 유니버스");
+        assertThat(result_등록일자_내림차순.universes().getFirst().title()).isEqualTo("우주");
+    }
+    
+    @Test
+    @DisplayName("유니버스 기본 검색(아무 파라미터 없이 검색 시 → 10건 등록 날짜 내림차순)")
+    void testSearch() {
+        // given
+        System.out.println("System.currentTimeMillis() = " + System.currentTimeMillis());
+        System.out.println("ZoneId.systemDefault() = " + ZoneId.systemDefault());
+        Universe universe = MockEntityFactoryService.getUniverse();
+        Long id = sut.save(universe);
+
+        SearchUniverseCommand command = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, null, null);
+
+        // when
+        SearchUniverseResult result = sut.search(command);
+
+        // then
+
+        // 가장 최신 등록된 우주가 먼저 조회
+        assertThat(result.universes().getFirst().title()).isEqualTo(universe.getBasicInfo().getTitle());
     }
 }

@@ -33,7 +33,7 @@ public class Universe {
                 thumbnailId,
                 new UniverseBasicInfo(title, description, category, publicStatus),
                 null,
-                new SocialInfo(0L, 0L, tag),
+                new SocialInfo(0, 0L, tag),
                 null);
     }
 }

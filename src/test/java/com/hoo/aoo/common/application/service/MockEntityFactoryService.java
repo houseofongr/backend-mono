@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.application.service;
 
+import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
 import com.hoo.aoo.admin.domain.item.Circle;
@@ -106,7 +107,6 @@ public class MockEntityFactoryService {
     }
 
     public static Universe getUniverse() {
-        Long id = 1L;
         String title = "우주";
         String description = "유니버스는 우주입니다.";
         List<String> tag = List.of("우주", "행성", "지구", "별");
@@ -115,7 +115,7 @@ public class MockEntityFactoryService {
         Long thumbnailId = 11L;
         Long thumbMusicId = 100L;
 
-        return Universe.create(id, title, description, tag, category, publicStatus, thumbnailId, thumbMusicId);
+        return factory.createUniverse(new CreateUniverseCommand(title, description, tag, category, publicStatus), thumbnailId, thumbMusicId);
     }
 
 

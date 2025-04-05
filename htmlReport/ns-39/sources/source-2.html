@@ -163,7 +163,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    private BooleanExpression houseSearch(QueryHouseListCommand command) {
 <b class="pc">&nbsp;        if (command.keyword() == null || command.keyword().isBlank()) return null;</b>
-<b class="pc">&nbsp;        return switch (command.searchType()) {</b>
+<b class="pc">&nbsp;        return switch (command.houseSearchType()) {</b>
 <b class="nc">&nbsp;            case NONE -&gt; null;</b>
 <b class="fc">&nbsp;            case TITLE -&gt; houseJpaEntity.title.likeIgnoreCase(&quot;%&quot; + command.keyword() + &quot;%&quot;);</b>
 <b class="fc">&nbsp;            case AUTHOR -&gt; houseJpaEntity.author.likeIgnoreCase(&quot;%&quot; + command.keyword() + &quot;%&quot;);</b>

@@ -1,5 +1,8 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
+import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseResult;
+import com.hoo.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.SaveUniversePort;
 import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
@@ -7,12 +10,14 @@ import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseHashtagJpaEntit
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HashtagJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UniversePersistenceAdapter implements SaveUniversePort {
+public class UniversePersistenceAdapter implements SaveUniversePort, FindUniversePort {
 
     private final HashtagJpaRepository hashtagJpaRepository;
     private final UniverseJpaRepository universeJpaRepository;
@@ -31,6 +36,12 @@ public class UniversePersistenceAdapter implements SaveUniversePort {
 
         universeJpaRepository.save(universeJpaEntity);
 
-        return universe.getId();
+        return universeJpaEntity.getId();
+    }
+
+    @Override
+    public SearchUniverseResult search(SearchUniverseCommand command) {
+        Page<SearchUniverseResult.UniverseInfo> entityPage = universeJpaRepository.searchAll(command).map(SearchUniverseResult.UniverseInfo::of);
+        return new SearchUniverseResult(entityPage.getContent(), Pagination.of(entityPage));
     }
 }

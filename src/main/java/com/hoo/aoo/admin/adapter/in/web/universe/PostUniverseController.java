@@ -1,7 +1,5 @@
 package com.hoo.aoo.admin.adapter.in.web.universe;
 
-import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadata;
-import com.hoo.aoo.admin.application.port.in.house.CreateHouseResult;
 import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseUseCase;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
