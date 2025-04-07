@@ -47,10 +47,10 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Long thumbnailFileId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<UniverseHashtagJpaEntity> universeHashtags;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE)
     private List<UniverseLikeJpaEntity> universeLikes;
 
     public static UniverseJpaEntity create(Universe universe) {

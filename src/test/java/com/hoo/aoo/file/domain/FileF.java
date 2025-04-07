@@ -27,7 +27,14 @@ public enum FileF {
                     throw new RuntimeException(e);
                 }
             }
-            case AUDIO, VIDEO -> {
+            case AUDIO -> {
+                try {
+                    return File.create(FileId.create(baseDir, Authority.PUBLIC_FILE_ACCESS, FileType.AUDIO, realFileName, fileSystemName), FileStatus.CREATED, OwnerId.empty(), new FileSize(size, 100 * 1024 * 1024L));
+                } catch (FileSizeLimitExceedException | FileExtensionMismatchException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case VIDEO -> {
                 throw new UnsupportedOperationException();
             }
         }

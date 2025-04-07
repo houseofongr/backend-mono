@@ -12,6 +12,7 @@ import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSortType;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseHashtagJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseLikeJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -40,6 +42,8 @@ class UniversePersistenceAdapterTest {
 
     @Autowired
     EntityManager em;
+    @Autowired
+    private UniverseMapper universeMapper;
 
     @Test
     @DisplayName("해시태그 존재여부 확인 후 생성 테스트")
@@ -222,5 +226,23 @@ class UniversePersistenceAdapterTest {
         assertThat(universeJpaEntity.getCategory()).isEqualTo(Category.LIFE);
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(PublicStatus.PRIVATE);
         assertThat(universeJpaEntity.getUniverseHashtags().stream().map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag()).toList()).allMatch(tag -> List.of("오르트구름", "태양계", "윤하", "별").contains(tag));
+    }
+    
+    @Test
+    @DisplayName("유니버스 정상 삭제 시 연관된 모든 엔티티 삭제되는지 확인")
+    @Transactional
+    void testDeleteRelationship() {
+        // given
+        Universe universe = Universe.load(12L,12L,12L,"우주",null,null,null,null,null,List.of("오르트구름", "태양계", "윤하", "별"),null,null);
+
+        // when
+        sut.delete(universe);
+        List<UniverseHashtagJpaEntity> hashtagEntities = em.createQuery("select uh from UniverseHashtagJpaEntity uh where uh.id in (1, 2, 3, 4)", UniverseHashtagJpaEntity.class).getResultList();
+        List<UniverseLikeJpaEntity> likeEntities = em.createQuery("select ul from UniverseLikeJpaEntity ul where ul.id in (1, 2, 3, 4)", UniverseLikeJpaEntity.class).getResultList();
+
+        // then
+        assertThat(universeJpaRepository.findById(universe.getId())).isEmpty();
+        assertThat(hashtagEntities).isEmpty();
+        assertThat(likeEntities).isEmpty();
     }
 }

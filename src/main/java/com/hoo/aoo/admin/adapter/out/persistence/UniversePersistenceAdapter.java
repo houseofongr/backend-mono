@@ -3,6 +3,7 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseResult;
+import com.hoo.aoo.admin.application.port.out.universe.DeleteUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.SaveUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.UpdateUniversePort;
@@ -24,7 +25,7 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class UniversePersistenceAdapter implements SaveUniversePort, FindUniversePort, UpdateUniversePort {
+public class UniversePersistenceAdapter implements SaveUniversePort, FindUniversePort, UpdateUniversePort, DeleteUniversePort {
 
     private final HashtagJpaRepository hashtagJpaRepository;
     private final UniverseJpaRepository universeJpaRepository;
@@ -82,5 +83,11 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
         }
 
         targetEntity.update(universe);
+    }
+
+    @Override
+    public void delete(Universe universe) {
+        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow();
+        universeJpaRepository.delete(targetEntity);
     }
 }
