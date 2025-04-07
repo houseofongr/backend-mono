@@ -1,13 +1,12 @@
 package com.hoo.aoo.admin.adapter.in.web.universe;
 
-import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
-import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseUseCase;
+import com.hoo.aoo.admin.application.port.in.universe.UpdateUniverseCommand;
+import com.hoo.aoo.admin.application.port.in.universe.UpdateUniverseUseCase;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.common.application.port.in.MessageDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,19 +17,20 @@ import static com.hoo.aoo.common.util.GsonUtil.gson;
 
 @RestController
 @RequiredArgsConstructor
-public class PostUniverseController {
+public class PostUpdateUniverseController {
 
-    private final CreateUniverseUseCase useCase;
+    private final UpdateUniverseUseCase useCase;
 
-    @PostMapping("/admin/universes")
-    public ResponseEntity<MessageDto> create(@RequestParam String metadata, HttpServletRequest request) {
+    @PostMapping("/admin/universes/update")
+    public ResponseEntity<MessageDto> update(@RequestParam String metadata, HttpServletRequest request) {
 
         if (request instanceof MultipartHttpServletRequest multipartRequest) {
-            CreateUniverseCommand baseCommand = gson.fromJson(metadata, CreateUniverseCommand.class);
-            CreateUniverseCommand fullCommand = CreateUniverseCommand.from(baseCommand, multipartRequest.getFileMap());
-            return new ResponseEntity<>(useCase.create(fullCommand), HttpStatus.CREATED);
+            UpdateUniverseCommand baseCommand = gson.fromJson(metadata, UpdateUniverseCommand.class);
+            UpdateUniverseCommand fullCommand = UpdateUniverseCommand.from(baseCommand, multipartRequest.getFileMap());
+            return ResponseEntity.ok(useCase.update(fullCommand));
         }
 
         throw new AdminException(AdminErrorCode.INVALID_REQUEST_TYPE);
     }
+
 }

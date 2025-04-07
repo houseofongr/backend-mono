@@ -11,4 +11,8 @@ truncate table ITEM_SHAPE_RECTANGLE;
 truncate table ITEM_SHAPE_ELLIPSE;
 truncate table SOUND_SOURCE;
 truncate table FILE;
+truncate table UNIVERSE;
+truncate table UNIVERSE_HASHTAG;
+truncate table UNIVERSE_LIKE;
+
 set foreign_key_checks = 1;

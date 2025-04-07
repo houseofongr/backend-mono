@@ -34,11 +34,12 @@ public enum AdminErrorCode implements ErrorCode {
 
     SOUND_SOURCE_NOT_FOUND("ADMIN-SOUNDSOURCE-1", NOT_FOUND, "해당 음원을 찾을 수 없습니다."),
 
-    ILLEGAL_UNIVERSE_CREATE_FILE("ADMIN-UNIVERSE-1", BAD_REQUEST, "잘못된 유니버스 생성 파일입니다(썸네일 혹은 썸뮤직 파일 누락됨)."),
-    ILLEGAL_UNIVERSE_PARAMETER("ADMIN-UNIVERSE-2", BAD_REQUEST, "잘못된 유니버스 생성 정보입니다(요청값 확인 필요)."),
+    ILLEGAL_UNIVERSE_CREATE_FILE("ADMIN-UNIVERSE-1", BAD_REQUEST, "잘못된 유니버스 생성 파일입니다."),
+    UNIVERSE_NOT_FOUND("ADMIN-UNIVERSE-2", NOT_FOUND, "해당 유니버스를 찾을 수 없습니다."),
 
-    INVALID_SEARCH_TYPE("ADMIN-COMMON-1", BAD_REQUEST, "잘못된 검색 조건입니다."),
-    LOAD_ENTITY_FAILED("ADMIN-COMMON-2", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
+    ILLEGAL_ARGUMENT_EXCEPTION("ADMIN-COMMON-1", BAD_REQUEST, "잘못된 요청 파라미터입니다."),
+    INVALID_SEARCH_TYPE("ADMIN-COMMON-2", BAD_REQUEST, "잘못된 검색 조건입니다."),
+    LOAD_ENTITY_FAILED("ADMIN-COMMON-3", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
 
     private final String code;
     private final HttpStatus status;

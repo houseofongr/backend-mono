@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "UNIVERSE")
@@ -45,7 +47,7 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Long thumbnailFileId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", orphanRemoval = true)
     private List<UniverseHashtagJpaEntity> universeHashtags;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe")
@@ -63,5 +65,14 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
                 universe.getThumbnailId(),
                 new ArrayList<>(),
                 List.of());
+    }
+
+    public void update(Universe universe) {
+        this.title = universe.getBasicInfo().getTitle();
+        this.description = universe.getBasicInfo().getDescription();
+        this.category = universe.getBasicInfo().getCategory();
+        this.publicStatus = universe.getBasicInfo().getPublicStatus();
+        this.thumbnailFileId = universe.getThumbnailId();
+        this.thumbMusicFileId = universe.getThumbMusicId();
     }
 }

@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.domain.universe;
 
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class UniverseTest {
         Long thumbMusicId = 100L;
 
         // when
-        Universe universe = Universe.create(id, title, description, tag, category, publicStatus, thumbnailId, thumbMusicId);
+        Universe universe = Universe.create(id, thumbnailId, thumbMusicId, title, description, category, publicStatus, tag);
         UniverseBasicInfo basicInfo = universe.getBasicInfo();
         SocialInfo socialInfo = universe.getSocialInfo();
 
@@ -43,4 +44,64 @@ class UniverseTest {
         assertThat(socialInfo.getViewCount()).isEqualTo(0L);
     }
 
+    @Test
+    @DisplayName("기본정보(제목, 내용, 카테고리, 노출여부) 수정하기")
+    void testUpdateUniverseBasicInfo() {
+        // given
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        String title = "오르트구름";
+        String description = "오르트구름은 태양계 최외곽에 위치하고 있습니다.";
+        Category category = Category.LIFE;
+        PublicStatus publicStatus = PublicStatus.PRIVATE;
+
+        // when
+        universe.updateBasicInfo(title,description,null,null);
+
+        // then
+        assertThat(universe.getBasicInfo().getTitle()).isEqualTo(title);
+        assertThat(universe.getBasicInfo().getDescription()).isEqualTo(description);
+        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.GOVERNMENT_AND_PUBLIC_INSTITUTION);
+        assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PUBLIC);
+
+        // when 2
+        universe.updateBasicInfo(null,null, category, publicStatus);
+
+        // then 2
+        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(category);
+        assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(publicStatus);
+    }
+
+    @Test
+    @DisplayName("소셜정보(태그) 수정하기")
+    void testUpdateSocialInfo() {
+        // given
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        List<String> tags = List.of("오르트구름", "태양계", "윤하", "별");
+
+        // when
+        universe.updateSocialInfo(tags);
+
+        // then
+        assertThat(universe.getSocialInfo().getHashtags()).contains(tags.toArray(String[]::new));
+    }
+
+    @Test
+    @DisplayName("썸네일 / 썸뮤직 수정하기")
+    void testUpdateFiles() {
+        // given
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        Long thumbnailId = 12L;
+        Long thumbMusicId = 101L;
+
+        // when
+        universe.updateThumbnail(thumbnailId);
+        universe.updateThumbMusic(thumbMusicId);
+
+        // then
+        assertThat(universe.getThumbnailId()).isEqualTo(thumbnailId);
+        assertThat(universe.getThumbMusicId()).isEqualTo(thumbMusicId);
+    }
 }

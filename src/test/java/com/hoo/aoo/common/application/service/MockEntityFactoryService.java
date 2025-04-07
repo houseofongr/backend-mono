@@ -3,11 +3,11 @@ package com.hoo.aoo.common.application.service;
 import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
+import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.Circle;
 import com.hoo.aoo.admin.domain.item.Ellipse;
 import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Rectangle;
-import com.hoo.aoo.admin.domain.house.room.Room;
 import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.admin.domain.universe.Category;
 import com.hoo.aoo.admin.domain.universe.PublicStatus;
@@ -61,7 +61,7 @@ public class MockEntityFactoryService {
 
     public static Item getRectangleItem() throws Exception {
         Home home = getHome();
-        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
+        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(), "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
     }
 
     public static Item getCircleItem() throws Exception {
@@ -71,11 +71,12 @@ public class MockEntityFactoryService {
 
     public static Item getEllipseItem() throws Exception {
         Home home = getHome();
-        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
+        return factory.createItem(home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(), "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
     }
+
     public static Item getRectangleItem(Long id) throws Exception {
         Home home = getHome();
-        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
+        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(), "설이", new Rectangle(100f, 100f, 10f, 10f, 5f));
     }
 
     public static Item getCircleItem(Long id) throws Exception {
@@ -85,7 +86,7 @@ public class MockEntityFactoryService {
 
     public static Item getEllipseItem(Long id) throws Exception {
         Home home = getHome();
-        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(),  "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
+        return Item.create(id, home.getHomeId().getId(), getRoom().getRoomId().getId(), home.getUserId().getId(), "화분", new Ellipse(500f, 500f, 15f, 15f, 90f));
     }
 
     public static SoundSource getSoundSource() throws Exception {
@@ -99,23 +100,16 @@ public class MockEntityFactoryService {
 
     public static SoundSource loadSoundSource() throws Exception {
         SoundSource soundSource = getSoundSource();
-        return SoundSource.load(soundSource.getSoundSourceId().getId(), getRectangleItem().getItemId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(),soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(),ZonedDateTime.now(),soundSource.getActive().isActive());
+        return SoundSource.load(soundSource.getSoundSourceId().getId(), getRectangleItem().getItemId().getId(), soundSource.getFile().getFileId().getId(), soundSource.getSoundSourceDetail().getName(), soundSource.getSoundSourceDetail().getDescription(), ZonedDateTime.now(), ZonedDateTime.now(), soundSource.getActive().isActive());
     }
 
     public static DeletedUser getDeletedUser() {
-        return factory.createDeletedUser(getUser(),true,true);
+        return factory.createDeletedUser(getUser(), true, true);
     }
 
     public static Universe getUniverse() {
-        String title = "우주";
-        String description = "유니버스는 우주입니다.";
-        List<String> tag = List.of("우주", "행성", "지구", "별");
-        Category category = Category.GOVERNMENT_AND_PUBLIC_INSTITUTION;
-        PublicStatus publicStatus = PublicStatus.PUBLIC;
-        Long thumbnailId = 11L;
-        Long thumbMusicId = 100L;
-
-        return factory.createUniverse(new CreateUniverseCommand(title, description, tag, category, publicStatus), thumbnailId, thumbMusicId);
+        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), null);
+        return factory.createUniverse(command, 11L, 100L);
     }
 
 

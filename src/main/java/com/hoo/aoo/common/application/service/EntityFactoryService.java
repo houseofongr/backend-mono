@@ -58,7 +58,7 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public Home createHome(House house, com.hoo.aoo.admin.domain.user.User user) {
+    public Home createHome(House house, User user) {
         Long newId = issueIdPort.issueHomeId();
         return Home.create(newId, house, user);
     }
@@ -76,7 +76,7 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public DeletedUser createDeletedUser(com.hoo.aoo.admin.domain.user.User user, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
+    public DeletedUser createDeletedUser(User user, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
         Long newId = issueIdPort.issueDeletedUserId();
         return DeletedUser.create(newId, user, termsOfDeletionAgreement, personalInformationDeletionAgreement);
     }
@@ -85,12 +85,12 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     public Universe createUniverse(CreateUniverseCommand command, Long thumbnailId, Long thumbMusicId) {
         Long newId = issueIdPort.issueUniverseId();
         return Universe.create(newId,
+                thumbnailId,
+                thumbMusicId,
                 command.title(),
                 command.description(),
-                command.tag(),
                 command.category(),
                 command.publicStatus(),
-                thumbnailId,
-                thumbMusicId);
+                command.tags());
     }
 }
