@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.application.service;
 
+import com.hoo.aoo.admin.application.port.in.space.CreateSpaceCommand;
 import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.hoo.aoo.admin.domain.home.Home;
 import com.hoo.aoo.admin.domain.house.House;
@@ -12,11 +13,13 @@ import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.admin.domain.universe.Category;
 import com.hoo.aoo.admin.domain.universe.PublicStatus;
 import com.hoo.aoo.admin.domain.universe.Universe;
+import com.hoo.aoo.admin.domain.universe.space.Space;
 import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.hoo.aoo.common.adapter.MockIdAdapter;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -113,4 +116,16 @@ public class MockEntityFactoryService {
     }
 
 
+    public static Space getParentSpace() {
+        MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
+        CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f,0.9f,0.8f,0.7f, basicImage);
+        return factory.createSpace(command, null, 10L);
+    }
+
+    public static Space getChildSpace(Long parentId) {
+        MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
+        Space parentSpace = Space.loadSingle(parentId,10L,1L,"공간",null,ZonedDateTime.now(),ZonedDateTime.now(), 1f,0.9f,0.8f,0.7f, 1);
+        CreateSpaceCommand command = new CreateSpaceCommand(1L, parentSpace.getId(), "자식",null,1f,0.9f,0.8f,0.7f, basicImage);
+        return factory.createSpace(command, parentSpace,11L);
+    }
 }

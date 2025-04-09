@@ -1,15 +1,13 @@
-package com.hoo.aoo.admin.adapter.in.web.universe;
+package com.hoo.aoo.admin.adapter.in.web.space;
 
-import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadataTest;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
-import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -21,61 +19,57 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PostUniverseControllerTest extends AbstractControllerTest {
+class PostSpaceControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    FileJpaRepository fileJpaRepository;
+    //language=JSON
+    String metadata = """
+            {
+              "universeId": 1,
+              "parentSpaceId": 1,
+              "title": "공간",
+              "description": "스페이스는 공간입니다.",
+              "dx": 0.8,
+              "dy": 0.7,
+              "scaleX": 0.6,
+              "scaleY": 0.5
+            }
+            """;
 
     @Override
     public boolean useSpringSecurity() {
         return false;
     }
 
-    //language=JSON
-    String metadata = """
-            {
-              "title": "우주",
-              "description": "유니버스는 우주입니다.",
-              "category": "GOVERNMENT_AND_PUBLIC_INSTITUTION",
-              "publicStatus": "PUBLIC",
-              "tags": [
-                "우주", "행성", "지구", "별"
-              ]
-            }
-            """;
-
     @Test
     @DisplayName("유니버스 생성 API")
+    @Sql("PostSpaceControllerTest.sql")
     void testCreateUniverse() throws Exception {
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes());
-        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
+        MockMultipartFile image = new MockMultipartFile("image", "inner_image.png", "image/png", "image file".getBytes());
 
-        mockMvc.perform(multipart("/admin/universes")
-                        .file(thumbnail).file(thumbMusic)
+        mockMvc.perform(multipart("/admin/spaces")
+                        .file(image)
                         .part(metadataPart)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(201))
-                .andDo(document("admin-universe-post",
+                .andDo(document("admin-space-post",
                         requestParts(
                                 partWithName("metadata").description("생성할 유니버스의 정보를 포함하는 Json 형태의 문자열입니다."),
-                                partWithName("thumbnail").description("생성할 유니버스의 썸네일 이미지입니다."),
-                                partWithName("thumbMusic").description("생성할 유니버스의 썸뮤직 오디오입니다.")
+                                partWithName("image").description("생성할 스페이스의 내부 이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("생성 완료 메시지 : 0번 유니버스가 생성되었습니다.")
+                                fieldWithPath("message").description("생성 완료 메시지 : 0번 스페이스가 생성되었습니다.")
                         )
                 ));
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(2);
+        assertThat(fileInDB).hasSize(1);
         assertThat(fileInDB)
-                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_thumb.png"))
-                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_music.mp3"));
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("inner_image.png"));
     }
 
 }

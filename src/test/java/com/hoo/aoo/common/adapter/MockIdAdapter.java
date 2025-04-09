@@ -43,6 +43,11 @@ public class MockIdAdapter implements IssueIdPort {
     }
 
     @Override
+    public Long issueSpaceId() {
+        return Random.from(RandomGenerator.getDefault()).nextLong();
+    }
+
+    @Override
     public Long issueUserId() {
         return Random.from(RandomGenerator.getDefault()).nextLong();
     }

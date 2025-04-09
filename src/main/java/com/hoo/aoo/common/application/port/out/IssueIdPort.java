@@ -18,4 +18,6 @@ public interface IssueIdPort {
     Long issueDeletedUserId();
 
     Long issueUniverseId();
+
+    Long issueSpaceId();
 }

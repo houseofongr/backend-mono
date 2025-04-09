@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.application.service;
 
+import com.hoo.aoo.admin.application.port.in.space.CreateSpaceCommand;
 import com.hoo.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.user.CreateDeletedUserPort;
 import com.hoo.aoo.admin.application.port.out.home.CreateHomePort;
@@ -8,6 +9,7 @@ import com.hoo.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.hoo.aoo.admin.application.port.out.item.CreateItemPort;
 import com.hoo.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
 import com.hoo.aoo.admin.application.port.out.soundsource.CreateSoundSourcePort;
+import com.hoo.aoo.admin.application.port.out.space.CreateSpacePort;
 import com.hoo.aoo.admin.application.port.out.universe.CreateUniversePort;
 import com.hoo.aoo.admin.application.port.out.user.CreateUserPort;
 import com.hoo.aoo.admin.domain.home.Home;
@@ -17,6 +19,7 @@ import com.hoo.aoo.admin.domain.item.Item;
 import com.hoo.aoo.admin.domain.item.Shape;
 import com.hoo.aoo.admin.domain.item.soundsource.SoundSource;
 import com.hoo.aoo.admin.domain.universe.Universe;
+import com.hoo.aoo.admin.domain.universe.space.Space;
 import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
@@ -29,7 +32,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort, CreateSpacePort {
 
     private final IssueIdPort issueIdPort;
 
@@ -92,5 +95,20 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
                 command.category(),
                 command.publicStatus(),
                 command.tags());
+    }
+
+    @Override
+    public Space createSpace(CreateSpaceCommand command, Space parent, Long imageId) {
+        Long newId = issueIdPort.issueSpaceId();
+        return Space.create(newId,
+                imageId,
+                command.universeId(),
+                command.title(),
+                command.description(),
+                command.dx(),
+                command.dy(),
+                command.scaleX(),
+                command.scaleY(),
+                parent);
     }
 }

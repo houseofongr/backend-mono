@@ -37,6 +37,9 @@ public enum AdminErrorCode implements ErrorCode {
     ILLEGAL_UNIVERSE_CREATE_FILE("ADMIN-UNIVERSE-1", BAD_REQUEST, "잘못된 유니버스 생성 파일입니다."),
     UNIVERSE_NOT_FOUND("ADMIN-UNIVERSE-2", NOT_FOUND, "해당 유니버스를 찾을 수 없습니다."),
 
+    ILLEGAL_SPACE_IMAGE("ADMIN-SPACE-1", BAD_REQUEST, "잘못된 스페이스 이미지입니다."),
+    SPACE_NOT_FOUND("ADMIN-SPACE-2", NOT_FOUND, "해당 스페이스를 찾을 수 없습니다."),
+
     ILLEGAL_ARGUMENT_EXCEPTION("ADMIN-COMMON-1", BAD_REQUEST, "잘못된 요청 파라미터입니다."),
     INVALID_SEARCH_TYPE("ADMIN-COMMON-2", BAD_REQUEST, "잘못된 검색 조건입니다."),
     LOAD_ENTITY_FAILED("ADMIN-COMMON-3", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");

@@ -60,6 +60,12 @@ public class IdPersistenceAdapter implements IssueIdPort {
         return issue("UNIVERSE");
     }
 
+    @Override
+    public Long issueSpaceId() {
+        return issue("SPACE");
+    }
+
+
     private Long issue(String tableName) {
         Object singleResult = entityManager.createNativeQuery(
                         """

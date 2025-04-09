@@ -1,10 +1,12 @@
 package com.hoo.aoo.common.adapter.out.persistence.entity;
 
+import com.hoo.aoo.admin.domain.universe.space.Space;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpaceJpaEntity extends DateColumnBaseEntity{
+public class SpaceJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,23 +23,26 @@ public class SpaceJpaEntity extends DateColumnBaseEntity{
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(nullable = false, length = 5000)
+    @Column(length = 5000)
     private String description;
 
     @Column(nullable = false)
-    private Float x;
+    private Float dx;
 
     @Column(nullable = false)
-    private Float y;
+    private Float dy;
 
-    @Column(nullable = false)
-    private Float width;
+    @Column(nullable = false, name = "SCALE_X")
+    private Float scaleX;
 
-    @Column(nullable = false)
-    private Float height;
+    @Column(nullable = false, name = "SCALE_Y")
+    private Float scaleY;
 
     @Column(nullable = false)
     private Long imageFileId;
+
+    @Column(nullable = false)
+    private Integer depth;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UNIVERSE_ID")
@@ -50,4 +55,40 @@ public class SpaceJpaEntity extends DateColumnBaseEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     private List<SpaceJpaEntity> children;
 
+    public static SpaceJpaEntity create(Space space, UniverseJpaEntity universeJpaEntity) {
+        return new SpaceJpaEntity(
+                null,
+                space.getBasicInfo().getTitle(),
+                space.getBasicInfo().getDescription(),
+                space.getPosInfo().getDx(),
+                space.getPosInfo().getDy(),
+                space.getPosInfo().getScaleX(),
+                space.getPosInfo().getScaleY(),
+                space.getImageId(),
+                space.getTreeInfo().getDepth(),
+                universeJpaEntity,
+                null,
+                new ArrayList<>()
+        );
+    }
+
+    public static SpaceJpaEntity createChild(Space space, SpaceJpaEntity parent) {
+        SpaceJpaEntity childSpace = new SpaceJpaEntity(
+                null,
+                space.getBasicInfo().getTitle(),
+                space.getBasicInfo().getDescription(),
+                space.getPosInfo().getDx(),
+                space.getPosInfo().getDy(),
+                space.getPosInfo().getScaleX(),
+                space.getPosInfo().getScaleY(),
+                space.getImageId(),
+                space.getTreeInfo().getDepth(),
+                parent.getUniverse(),
+                parent,
+                new ArrayList<>());
+
+        parent.getChildren().add(childSpace);
+
+        return childSpace;
+    }
 }

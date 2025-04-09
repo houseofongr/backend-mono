@@ -42,8 +42,6 @@ class UniversePersistenceAdapterTest {
 
     @Autowired
     EntityManager em;
-    @Autowired
-    private UniverseMapper universeMapper;
 
     @Test
     @DisplayName("해시태그 존재여부 확인 후 생성 테스트")

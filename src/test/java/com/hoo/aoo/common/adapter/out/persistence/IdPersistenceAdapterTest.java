@@ -40,6 +40,7 @@ class IdPersistenceAdapterTest {
         long homeCount = homeJpaRepository.count();
         long itemCount = itemJpaRepository.count();
         long universeCount = universeJpaRepository.count();
+        long spaceCount = universeJpaRepository.count();
 
         // when
         Long houseId = sut.issueHouseId();
@@ -47,6 +48,7 @@ class IdPersistenceAdapterTest {
         Long homeId = sut.issueHomeId();
         Long itemId = sut.issueItemId();
         Long universeId = sut.issueUniverseId();
+        Long spaceId = sut.issueSpaceId();
 
         // then
         assertThat(houseId).isEqualTo(houseCount + 1);
@@ -54,6 +56,7 @@ class IdPersistenceAdapterTest {
         assertThat(homeId).isEqualTo(homeCount + 1);
         assertThat(itemId).isEqualTo(itemCount + 1);
         assertThat(universeId).isEqualTo(universeCount + 1);
+        assertThat(spaceId).isEqualTo(spaceCount + 1);
     }
 
 }

@@ -40,7 +40,7 @@ class UpdateUniverseCommandTest {
     void testDescriptionCondition() {
         String length5000 = "a".repeat(5001);
 
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, null, length5000, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, "우주", length5000, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test

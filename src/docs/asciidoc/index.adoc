@@ -507,14 +507,6 @@ operation::admin-soundsource-delete[snippets='path-parameters,http-request,http-
 
 operation::admin-universe-post[snippets='http-request,request-parts,http-response,response-fields']
 
-==== 유니버스 생성 시 오류
-
-===== 전송타입 오류
-
-전송타입(``Content-Type``)이 ``Multipart-FormData``가 아닐 경우, 다음과 같은 오류가 발생합니다.
-
-include::{snippets}/admin-universe-post-error-1/response-body.adoc[]
-
 [[admin-universe-get-list-api]]
 ==== 유니버스 조회 API
 
@@ -536,6 +528,16 @@ operation::admin-universe-post-update[snippets='http-request,request-parts,http-
 > 유니버스 내부의 모든 연관된 정보(좋아요, 해시태그, 썸네일, 썸뮤직)을 함께 삭제합니다.
 
 operation::admin-universe-delete[snippets='path-parameters,http-request,http-response,response-fields']
+
+[[admin-space-api]]
+=== 스페이스(Space) API
+
+[[admin-space-post-api]]
+==== 스페이스 생성 API
+
+관리자가 스페이스를 생성합니다.
+
+operation::admin-space-post[snippets='http-request,request-parts,http-response,response-fields']
 
 [[file-api]]
 == 파일(File) API
