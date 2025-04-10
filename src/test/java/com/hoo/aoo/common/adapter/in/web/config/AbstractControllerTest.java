@@ -54,6 +54,7 @@ public abstract class AbstractControllerTest {
     protected void init(WebApplicationContext wac, RestDocumentationContextProvider restDocumentation) {
         DefaultMockMvcBuilder mockMvcBuilder = MockMvcBuilders.webAppContextSetup(wac)
                 .addFilter(new CharacterEncodingFilter("UTF-8", true))
+                .alwaysDo(print())
                 .alwaysDo(log())
                 .apply(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()

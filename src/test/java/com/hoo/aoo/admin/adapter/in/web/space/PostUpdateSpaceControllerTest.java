@@ -61,6 +61,8 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
     @DisplayName("스페이스 수정 API")
     void testSpaceUpdateAPI() throws Exception {
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
@@ -84,8 +86,8 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
                 ));
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(1);
         assertThat(fileInDB)
-                .allSatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_image.png"));
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_image.png"))
+                .noneSatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getId()).isEqualTo(3));
     }
 }
