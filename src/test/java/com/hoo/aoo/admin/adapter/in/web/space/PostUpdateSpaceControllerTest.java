@@ -86,6 +86,6 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
         assertThat(fileInDB).hasSize(1);
         assertThat(fileInDB)
-                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_image.png"));
+                .allSatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_image.png"));
     }
 }

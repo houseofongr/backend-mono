@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 @DocumentationTest
 @Sql(value = "classpath:sql/clear.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
@@ -54,7 +54,7 @@ public abstract class AbstractControllerTest {
     protected void init(WebApplicationContext wac, RestDocumentationContextProvider restDocumentation) {
         DefaultMockMvcBuilder mockMvcBuilder = MockMvcBuilders.webAppContextSetup(wac)
                 .addFilter(new CharacterEncodingFilter("UTF-8", true))
-                .alwaysDo(print())
+                .alwaysDo(log())
                 .apply(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
                         .withRequestDefaults(
