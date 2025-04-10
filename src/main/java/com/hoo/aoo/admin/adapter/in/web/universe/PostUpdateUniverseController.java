@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import static com.hoo.aoo.common.util.GsonUtil.gson;
@@ -22,15 +24,14 @@ public class PostUpdateUniverseController {
     private final UpdateUniverseUseCase useCase;
 
     @PostMapping("/admin/universes/update")
-    public ResponseEntity<MessageDto> update(@RequestParam String metadata, HttpServletRequest request) {
+    public ResponseEntity<MessageDto> update(@RequestParam String metadata,
+                                             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                             @RequestPart(value = "thumbMusic", required = false) MultipartFile thumbMusic) {
 
-        if (request instanceof MultipartHttpServletRequest multipartRequest) {
-            UpdateUniverseCommand baseCommand = gson.fromJson(metadata, UpdateUniverseCommand.class);
-            UpdateUniverseCommand fullCommand = UpdateUniverseCommand.from(baseCommand, multipartRequest.getFileMap());
-            return ResponseEntity.ok(useCase.update(fullCommand));
-        }
+        UpdateUniverseCommand baseCommand = gson.fromJson(metadata, UpdateUniverseCommand.class);
+        UpdateUniverseCommand fullCommand = UpdateUniverseCommand.from(baseCommand, thumbnail, thumbMusic);
 
-        throw new AdminException(AdminErrorCode.INVALID_REQUEST_TYPE);
+        return ResponseEntity.ok(useCase.update(fullCommand));
     }
 
 }

@@ -91,4 +91,14 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
 
         return childSpace;
     }
+
+    public void update(Space space) {
+        this.imageFileId = space.getImageId();
+        this.title = space.getBasicInfo().getTitle();
+        this.description = space.getBasicInfo().getDescription();
+        this.dx = space.getPosInfo().getDx();
+        this.dy = space.getPosInfo().getDy();
+        this.scaleX = space.getPosInfo().getScaleX();
+        this.scaleY = space.getPosInfo().getScaleY();
+    }
 }

@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.domain.universe.space;
 
+import com.hoo.aoo.common.application.service.MockEntityFactoryService;
 import org.assertj.core.api.Assertions;
 import org.hibernate.loader.ast.internal.CollectionLoaderSingleKey;
 import org.junit.jupiter.api.DisplayName;
@@ -65,4 +66,68 @@ class SpaceTest {
         assertThat(parentSpace.getTreeInfo().getChildSpaces()).contains(childSpace);
     }
 
+    @Test
+    @DisplayName("기본정보(제목, 내용) 수정하기")
+    void testUpdateBasicInfo() {
+        // given
+        String title = "블랙홀";
+        String description = "블랙홀은 빛도 빨아들입니다.";
+        Space space = MockEntityFactoryService.getParentSpace();
+
+        // try 1
+        space.updateBasicInfo(null, null);
+        assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
+        assertThat(space.getBasicInfo().getDescription()).isEqualTo(null);
+
+        // try 2
+        space.updateBasicInfo(title, null);
+        assertThat(space.getBasicInfo().getTitle()).isEqualTo(title);
+        assertThat(space.getBasicInfo().getDescription()).isEqualTo(null);
+
+        // try 3
+        space.updateBasicInfo(null, description);
+        assertThat(space.getBasicInfo().getTitle()).isEqualTo(title);
+        assertThat(space.getBasicInfo().getDescription()).isEqualTo(description);
+    }
+    
+    @Test
+    @DisplayName("위치정보(dx, dy, scaleX, scaleY) 수정하기")
+    void testUpdatePosInfo() {
+        // given
+        Float dx = 0.1f;
+        Float dy = 0.2f;
+        Float scaleX = 0.3f;
+        Float scaleY = 0.4f;
+        Space space = MockEntityFactoryService.getParentSpace();
+
+        // try 1
+        space.updatePosInfo(dx, dy, null, null);
+        assertThat(space.getPosInfo().getDx()).isEqualTo(dx);
+        assertThat(space.getPosInfo().getDy()).isEqualTo(dy);
+        assertThat(space.getPosInfo().getScaleX()).isEqualTo(0.8f);
+        assertThat(space.getPosInfo().getScaleY()).isEqualTo(0.7f);
+
+        // try 2
+        space.updatePosInfo(null, null, scaleX, scaleY);
+        assertThat(space.getPosInfo().getDx()).isEqualTo(dx);
+        assertThat(space.getPosInfo().getDy()).isEqualTo(dy);
+        assertThat(space.getPosInfo().getScaleX()).isEqualTo(scaleX);
+        assertThat(space.getPosInfo().getScaleY()).isEqualTo(scaleY);
+    }
+
+    @Test
+    @DisplayName("이미지 수정하기")
+    void testUpdateImageId() {
+        // given
+        Long imageId = 4321L;
+        Space space = MockEntityFactoryService.getParentSpace();
+
+        // try 1
+        space.updateImage(null);
+        assertThat(space.getImageId()).isEqualTo(10L);
+
+        // try 2
+        space.updateImage(imageId);
+        assertThat(space.getImageId()).isEqualTo(imageId);
+    }
 }

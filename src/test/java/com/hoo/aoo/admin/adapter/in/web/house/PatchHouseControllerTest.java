@@ -15,8 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PatchHouseControllerTest extends AbstractControllerTest {
 
-
-
     @Test
     @Sql("PatchHouseControllerTest.sql")
     @DisplayName("하우스 수정 문서화")

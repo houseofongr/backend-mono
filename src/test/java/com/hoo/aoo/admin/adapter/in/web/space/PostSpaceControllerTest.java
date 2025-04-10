@@ -58,7 +58,7 @@ class PostSpaceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-space-post",
                         requestParts(
-                                partWithName("metadata").description("생성할 유니버스의 정보를 포함하는 Json 형태의 문자열입니다."),
+                                partWithName("metadata").description("생성할 스페이스의 정보를 포함하는 Json 형태의 문자열입니다."),
                                 partWithName("image").description("생성할 스페이스의 내부 이미지입니다.")
                         ),
                         responseFields(

@@ -47,8 +47,9 @@ class UpdateUniverseServiceTest {
     @DisplayName("수정 전 썸네일 혹은 썸뮤직 삭제하기")
     void deleteThumbnailOrThumbMusic() {
         // given
-        Map<String, MultipartFile> fileMap = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes()), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
-        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, null, null, null, null, null, fileMap);
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
+        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, null, null, null, null, null, thumbnail, thumbMusic);
 
         Universe universe = MockEntityFactoryService.getUniverse();
 
@@ -66,8 +67,9 @@ class UpdateUniverseServiceTest {
     @DisplayName("정상 수정로직(Happy Case)")
     void happyCase() {
         // given
-        Map<String, MultipartFile> fileMap = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes()), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
-        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"), fileMap);
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
+        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"), thumbnail, thumbMusic);
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when

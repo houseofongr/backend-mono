@@ -37,14 +37,14 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         targetUniverse.updateBasicInfo(command.title(), command.description(), command.category(), command.publicStatus());
         targetUniverse.updateSocialInfo(command.tags());
 
-        if (command.fileMap().containsKey("thumbnail")) {
-            UploadFileResult thumbnail = uploadPublicImageUseCase.publicUpload(List.of(command.fileMap().get("thumbnail")));
+        if (command.thumbnail() != null) {
+            UploadFileResult thumbnail = uploadPublicImageUseCase.publicUpload(List.of(command.thumbnail()));
             deleteFileUseCase.deleteFile(targetUniverse.getThumbnailId());
             targetUniverse.updateThumbnail(thumbnail.fileInfos().getFirst().id());
         }
 
-        if (command.fileMap().containsKey("thumbMusic")) {
-            UploadFileResult thumbMusic = uploadPublicAudioUseCase.publicUpload(List.of(command.fileMap().get("thumbMusic")));
+        if (command.thumbMusic() != null) {
+            UploadFileResult thumbMusic = uploadPublicAudioUseCase.publicUpload(List.of(command.thumbMusic()));
             deleteFileUseCase.deleteFile(targetUniverse.getThumbMusicId());
             targetUniverse.updateThumbMusic( thumbMusic.fileInfos().getFirst().id());
         }

@@ -19,8 +19,8 @@ class UpdateUniverseCommandTest {
     @Test
     @DisplayName("요청 ID 필수조건 확인")
     void testIdCondition() {
-        assertThatThrownBy(() -> new UpdateUniverseCommand(null, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateUniverseCommand(0L, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(null, null, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(0L, null, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
@@ -30,9 +30,9 @@ class UpdateUniverseCommandTest {
         String blankTitle = " ";
         String length100 = "a".repeat(101);
 
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, emptyTitle, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, blankTitle, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, length100, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, emptyTitle, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, blankTitle, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, length100, null, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
@@ -40,7 +40,7 @@ class UpdateUniverseCommandTest {
     void testDescriptionCondition() {
         String length5000 = "a".repeat(5001);
 
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, "우주", length5000, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, "우주", length5000, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
@@ -49,34 +49,34 @@ class UpdateUniverseCommandTest {
         List<String> tag11 = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
         List<String> tagLength500 = List.of("a".repeat(501));
 
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, null, null, null, null, tag11, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, null, null, null, null, tagLength500, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, null, null, null, null, tag11, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(1L, null, null, null, null, tagLength500, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
     @DisplayName("파일용량 확인하기(2MB)")
     void testFileSize() {
         // given
-        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, null, null, null, null, null, null);
+        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, null, null, null, null, null, null, null);
         byte[] content = new byte[2 * 1024 * 1024 + 1];
 
         // when
-        Map<String, MultipartFile> exceedThumbnailSize = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
-        Map<String, MultipartFile> exceedThumbMusicSize = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes()), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content));
+        MockMultipartFile exceedThumbnailSize = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content);
+        MockMultipartFile exceedThumbMusicSize = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content);
 
         // then
-        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, exceedThumbnailSize)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
-        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, exceedThumbMusicSize)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
+        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, exceedThumbnailSize, null)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
+        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, null, exceedThumbMusicSize)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
     }
 
     @Test
     @DisplayName("정상 요청")
     void happyCase() {
-        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"), null);
-        Map<String, MultipartFile> map = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes()), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
-        UpdateUniverseCommand fullCommand = UpdateUniverseCommand.from(command, map);
+        UpdateUniverseCommand command = new UpdateUniverseCommand(1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"), null, null);
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
+        UpdateUniverseCommand fullCommand = UpdateUniverseCommand.from(command, thumbnail, thumbMusic);
 
         assertThat(fullCommand).isNotNull();
-        assertThat(fullCommand.fileMap()).isNotNull();
     }
 }

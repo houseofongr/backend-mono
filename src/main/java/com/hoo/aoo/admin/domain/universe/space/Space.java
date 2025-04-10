@@ -9,11 +9,11 @@ import java.time.ZonedDateTime;
 @Getter
 public class Space {
     private final Long id;
-    private final Long imageId;
+    private Long imageId;
     private final Long universeId;
-    private final BasicInfo basicInfo;
+    private BasicInfo basicInfo;
     private final DateInfo dateInfo;
-    private final PosInfo posInfo;
+    private PosInfo posInfo;
     private final TreeInfo treeInfo;
 
     private Space(Long id, Long imageId, Long universeId, BasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
@@ -66,5 +66,23 @@ public class Space {
 
     public boolean isRoot() {
         return this.treeInfo.getDepth() == 1;
+    }
+
+    public void updateBasicInfo(String title, String description) {
+        String newTitle = title != null? title : basicInfo.getTitle();
+        String newDescription = description != null? description : basicInfo.getDescription();
+        this.basicInfo = new BasicInfo(newTitle, newDescription);
+    }
+
+    public void updatePosInfo(Float dx, Float dy, Float scaleX, Float scaleY) {
+        Float newDx = dx != null? dx : posInfo.getDx();
+        Float newDy = dy != null? dy : posInfo.getDy();
+        Float newScaleX = scaleX != null? scaleX : posInfo.getScaleX();
+        Float newScaleY = scaleY != null? scaleY : posInfo.getScaleY();
+        this.posInfo = new PosInfo(newDx, newDy, newScaleX, newScaleY);
+    }
+
+    public void updateImage(Long imageId) {
+        this.imageId = imageId != null? imageId : this.imageId;
     }
 }
