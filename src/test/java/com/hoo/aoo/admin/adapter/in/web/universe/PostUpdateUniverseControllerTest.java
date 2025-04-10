@@ -55,15 +55,7 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                         .part(metadataPart)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is(200))
-                .andDo(document("admin-universe-post-update-without-file",
-                        requestParts(
-                                partWithName("metadata").description("수정할 유니버스의 정보를 포함하는 Json 형태의 문자열입니다.")
-                        ),
-                        responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 유니버스가 수정되었습니다.")
-                        )
-                ));
+                .andExpect(status().is(200));
     }
 
     @Test

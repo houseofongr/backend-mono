@@ -539,6 +539,14 @@ operation::admin-universe-delete[snippets='path-parameters,http-request,http-res
 
 operation::admin-space-post[snippets='http-request,request-parts,http-response,response-fields']
 
+[[admin-space-post-update-api]]
+==== 스페이스 수정 API
+
+관리자가 스페이스를 수정합니다.
+
+operation::admin-space-post-update[snippets='http-request,request-parts,http-response,response-fields']
+
+
 [[file-api]]
 == 파일(File) API
 
