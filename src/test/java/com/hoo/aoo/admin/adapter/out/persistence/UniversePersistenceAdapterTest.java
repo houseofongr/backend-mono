@@ -85,9 +85,9 @@ class UniversePersistenceAdapterTest {
     @DisplayName("유니버스 10, 20, 50건 조회")
     void testSearchPageSize() {
         // given
-        SearchUniverseCommand command10 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, null, null);
-        SearchUniverseCommand command20 = new SearchUniverseCommand(PageRequest.of(0, 20), null, false, null, null);
-        SearchUniverseCommand command50 = new SearchUniverseCommand(PageRequest.of(0, 50), null, false, null, null);
+        SearchUniverseCommand command10 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, null, null, null);
+        SearchUniverseCommand command20 = new SearchUniverseCommand(PageRequest.of(0, 20), null, false, null, null, null);
+        SearchUniverseCommand command50 = new SearchUniverseCommand(PageRequest.of(0, 50), null, false, null, null, null);
 
         // when
         SearchUniverseResult resultSize10 = sut.search(command10);
@@ -116,13 +116,13 @@ class UniversePersistenceAdapterTest {
     }
 
     @Test
-    @DisplayName("특정 컨텐츠(이름, 내용), 카테고리가 포함된 유니버스 조회")
+    @DisplayName("특정 컨텐츠(이름, 내용, 작성자)가 포함된 유니버스 조회")
     void testSearchKeyword() {
         // given
-        SearchUniverseCommand 건강 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CONTENT, "건강");
-        SearchUniverseCommand 콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CONTENT, "콘텐츠");
-        SearchUniverseCommand leaf = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.AUTHOR, "leaf");
-        SearchUniverseCommand 건 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.ALL, "건");
+        SearchUniverseCommand 건강 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CONTENT, "건강", null);
+        SearchUniverseCommand 콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.CONTENT, "콘텐츠", null);
+        SearchUniverseCommand leaf = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.AUTHOR, "leaf", null);
+        SearchUniverseCommand 건 = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, UniverseSearchType.ALL, "건", null);
 
         // when
         SearchUniverseResult result_건강 = sut.search(건강);
@@ -142,15 +142,33 @@ class UniversePersistenceAdapterTest {
     }
 
     @Test
+    @DisplayName("특정 카테고리가 포함된 유니버스 조회")
+    void testFilterCategory() {
+        // given
+        SearchUniverseCommand life = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, null, null, Category.LIFE.toString());
+        SearchUniverseCommand fashion = new SearchUniverseCommand(PageRequest.of(0, 10), null, false, null, null, Category.FASHION_AND_BEAUTY.toString());
+
+        // when
+        SearchUniverseResult result_life = sut.search(life);
+        SearchUniverseResult result_fashion = sut.search(fashion);
+
+        // then
+        assertThat(result_life.universes().size()).isEqualTo(3);
+        assertThat(result_fashion.universes().size()).isEqualTo(3);
+        assertThat(result_life.universes()).allMatch(universeInfo -> universeInfo.category().equals(Category.LIFE.toString()));
+        assertThat(result_fashion.universes()).allMatch(universeInfo -> universeInfo.category().equals(Category.FASHION_AND_BEAUTY.toString()));
+    }
+
+    @Test
     @DisplayName("제목, 등록일자, 조회수 내림차순 / 오름차순 정렬")
     void testOrder() {
         // given
-        SearchUniverseCommand 제목_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.TITLE, true, null, null);
-        SearchUniverseCommand 제목_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.TITLE, false, null, null);
-        SearchUniverseCommand 등록일자_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.REGISTERED_DATE, true, null, null);
-        SearchUniverseCommand 등록일자_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.REGISTERED_DATE, false, null, null);
-        SearchUniverseCommand 조회수_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.VIEWS, true, null, null);
-        SearchUniverseCommand 조회수_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.VIEWS, false, null, null);
+        SearchUniverseCommand 제목_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.TITLE, true, null, null, null);
+        SearchUniverseCommand 제목_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.TITLE, false, null, null, null);
+        SearchUniverseCommand 등록일자_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.REGISTERED_DATE, true, null, null, null);
+        SearchUniverseCommand 등록일자_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.REGISTERED_DATE, false, null, null, null);
+        SearchUniverseCommand 조회수_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.VIEWS, true, null, null, null);
+        SearchUniverseCommand 조회수_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), UniverseSortType.VIEWS, false, null, null, null);
 
         // when
         SearchUniverseResult result_제목_오름차순 = sut.search(제목_오름차순);
@@ -186,7 +204,7 @@ class UniversePersistenceAdapterTest {
         Universe universe = Universe.create(1L, 1L, 1L,"test title","test desc", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, List.of());
         sut.save(universe, 1L);
 
-        SearchUniverseCommand command = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, null, null);
+        SearchUniverseCommand command = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, null, null, null);
 
         // when
         SearchUniverseResult result = sut.search(command);

@@ -5,12 +5,14 @@ import com.hoo.aoo.admin.domain.universe.Category;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.hoo.aoo.common.adapter.out.persistence.entity.QUniverseHashtagJpaEntity.universeHashtagJpaEntity;
@@ -29,6 +31,7 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
         List<UniverseJpaEntity> entities = query.selectFrom(universeJpaEntity)
                 .leftJoin(universeJpaEntity.universeHashtags, universeHashtagJpaEntity).fetchJoin()
                 .where(search(command))
+                .where(filter(command))
                 .orderBy(order(command))
                 .offset(command.pageable().getOffset())
                 .limit(command.pageable().getPageSize())
@@ -40,6 +43,12 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
                 .fetchFirst();
 
         return new PageImpl<>(entities, command.pageable(), count == null ? 0 : count);
+    }
+
+    private BooleanExpression filter(SearchUniverseCommand command) {
+        if (command.category() == null || command.category().isBlank() || !Category.contains(command.category())) return null;
+
+        return universeJpaEntity.category.eq(Category.valueOf(command.category()));
     }
 
     private BooleanExpression search(SearchUniverseCommand command) {

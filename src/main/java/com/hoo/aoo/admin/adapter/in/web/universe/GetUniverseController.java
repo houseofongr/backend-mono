@@ -24,8 +24,9 @@ public class GetUniverseController {
             @RequestParam(required = false) UniverseSortType sortType,
             @RequestParam(required = false) Boolean isAsc,
             @RequestParam(required = false) UniverseSearchType searchType,
-            @RequestParam(required = false) String keyword
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category
     ) {
-        return ResponseEntity.ok(useCase.search(new SearchUniverseCommand(pageable, sortType, isAsc, searchType, keyword)));
+        return ResponseEntity.ok(useCase.search(new SearchUniverseCommand(pageable, sortType, isAsc, searchType, keyword, category)));
     }
 }
