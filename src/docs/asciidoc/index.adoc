@@ -508,9 +508,9 @@ operation::admin-soundsource-delete[snippets='path-parameters,http-request,http-
 operation::admin-universe-post[snippets='http-request,request-parts,http-response,response-fields']
 
 [[admin-universe-get-list-api]]
-==== 유니버스 조회 API
+==== 유니버스 검색 API
 
-관리자가 유니버스를 생성합니다.
+관리자가 유니버스를 검색합니다.
 
 operation::admin-universe-get-list[snippets='path-parameters,http-request,http-response,response-fields']
 
