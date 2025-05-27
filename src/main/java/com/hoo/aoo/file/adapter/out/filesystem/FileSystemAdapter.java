@@ -6,6 +6,7 @@ import com.hoo.aoo.file.application.port.out.filesystem.WriteFilePort;
 import com.hoo.aoo.file.application.service.FileErrorCode;
 import com.hoo.aoo.file.application.service.FileException;
 import com.hoo.aoo.file.domain.File;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class FileSystemAdapter implements WriteFilePort, EraseFilePort, RandomFileNamePort {
 
@@ -43,6 +45,7 @@ public class FileSystemAdapter implements WriteFilePort, EraseFilePort, RandomFi
 
     @Override
     public void erase(File file) throws IOException {
+        log.info("Try to delete file : {}", file.getFileId().getPath());
         Files.delete(Path.of(file.getFileId().getPath()));
     }
 }
