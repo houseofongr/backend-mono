@@ -21,12 +21,12 @@ public class GetUniverseController {
     @GetMapping("/admin/universes")
     public ResponseEntity<SearchUniverseResult> search(
             Pageable pageable,
-            @RequestParam(required = false) UniverseSortType sortType,
+            @RequestParam(required = false) String sortType,
             @RequestParam(required = false) Boolean isAsc,
-            @RequestParam(required = false) UniverseSearchType searchType,
+            @RequestParam(required = false) String searchType,
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String category
     ) {
-        return ResponseEntity.ok(useCase.search(new SearchUniverseCommand(pageable, sortType, isAsc, searchType, keyword, category)));
+        return ResponseEntity.ok(useCase.search(new SearchUniverseCommand(pageable, searchType, keyword, category, sortType, isAsc)));
     }
 }

@@ -2,6 +2,8 @@ package com.hoo.aoo.common.adapter.out.persistence.repository;
 
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.hoo.aoo.admin.domain.universe.Category;
+import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSearchType;
+import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSortType;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -48,13 +50,13 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
     private BooleanExpression filter(SearchUniverseCommand command) {
         if (command.category() == null || command.category().isBlank() || !Category.contains(command.category())) return null;
 
-        return universeJpaEntity.category.eq(Category.valueOf(command.category()));
+        return universeJpaEntity.category.eq(Category.valueOf(command.category().toUpperCase()));
     }
 
     private BooleanExpression search(SearchUniverseCommand command) {
-        if (command.keyword() == null || command.keyword().isBlank()) return null;
+        if (command.keyword() == null || command.keyword().isBlank() || !UniverseSearchType.contains(command.searchType())) return null;
 
-        return switch (command.searchType()) {
+        return switch (UniverseSearchType.valueOf(command.searchType().toUpperCase())) {
             case CONTENT -> universeJpaEntity.title.likeIgnoreCase("%" + command.keyword() + "%")
                     .or(universeJpaEntity.description.likeIgnoreCase("%" + command.keyword() + "%"));
             case AUTHOR -> universeJpaEntity.author.nickname.likeIgnoreCase(command.keyword());
@@ -65,11 +67,11 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
     }
 
     private OrderSpecifier<?> order(SearchUniverseCommand command) {
-        if (command.isAsc() == null || command.sortType() == null)
+        if (command.isAsc() == null || command.sortType() == null || !UniverseSortType.contains(command.sortType()))
             return new OrderSpecifier<>(Order.DESC, universeJpaEntity.createdTime);
 
         Order order = command.isAsc() ? Order.ASC : Order.DESC;
-        return switch (command.sortType()) {
+        return switch (UniverseSortType.valueOf(command.sortType().toUpperCase())) {
             case TITLE -> new OrderSpecifier<>(order, universeJpaEntity.title);
             case REGISTERED_DATE -> new OrderSpecifier<>(order, universeJpaEntity.createdTime);
             case VIEWS -> new OrderSpecifier<>(order, universeJpaEntity.viewCount);

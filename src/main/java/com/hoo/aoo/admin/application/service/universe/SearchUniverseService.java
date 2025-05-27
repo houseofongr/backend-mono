@@ -23,15 +23,7 @@ public class SearchUniverseService implements SearchUniverseUseCase {
 
     @Override
     public SearchUniverseResult search(SearchUniverseCommand command) {
-        if (!validCategorySearch(command)) throw new AdminException(AdminErrorCode.INVALID_SEARCH_TYPE);
-
         return findUniversePort.search(command);
     }
 
-    private boolean validCategorySearch(SearchUniverseCommand command) {
-        return !(command.searchType() != null &&
-                 Arrays.stream(Category.values())
-                         .noneMatch(e -> e.name().equalsIgnoreCase(command.keyword()))
-        );
-    }
 }

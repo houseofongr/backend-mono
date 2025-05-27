@@ -24,24 +24,10 @@ class SearchUniverseServiceTest {
     }
 
     @Test
-    @DisplayName("검색조건 검증 -> 카테고리에 존재하지 않는 키워드 사용")
-    void testBadKeyword() {
-        // given
-        SearchUniverseCommand invalidCommand = new SearchUniverseCommand(Pageable.ofSize(10), null, false, UniverseSearchType.AUTHOR, "bad keyword", null);
-        SearchUniverseCommand validCommand = new SearchUniverseCommand(Pageable.ofSize(10), null, false, UniverseSearchType.AUTHOR, "life", null);
-
-        // when
-        assertThatThrownBy(() -> sut.search(invalidCommand)).hasMessage(AdminErrorCode.INVALID_SEARCH_TYPE.getMessage());
-
-        // then
-        sut.search(validCommand);
-    }
-
-    @Test
     @DisplayName("유니버스 검색 서비스 테스트 - 어댑터 계층으로 위임")
     void testSearchUniverseService() {
         // given
-        SearchUniverseCommand command = new SearchUniverseCommand(Pageable.ofSize(10), null, false, UniverseSearchType.AUTHOR, "life", null);
+        SearchUniverseCommand command = new SearchUniverseCommand(Pageable.ofSize(10), null, null, "life", "life", false);
 
         // when
         sut.search(command);
