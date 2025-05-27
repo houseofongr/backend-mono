@@ -1,15 +1,12 @@
 package com.hoo.aoo.admin.application.port.in.universe;
 
-import com.hoo.aoo.admin.application.port.in.user.UpdateUserInfoCommand;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.domain.universe.PublicStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.hoo.aoo.admin.domain.universe.Category.LIFE;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
@@ -65,8 +62,8 @@ class UpdateUniverseCommandTest {
         MockMultipartFile exceedThumbMusicSize = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content);
 
         // then
-        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, exceedThumbnailSize, null)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
-        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, null, exceedThumbMusicSize)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
+        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, exceedThumbnailSize, null)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, null, exceedThumbMusicSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
     }
 
     @Test

@@ -48,11 +48,11 @@ class CreateUniverseCommandTest {
         Map<String, MultipartFile> exceedThumbMusicSize = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes()), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content));
 
         // then
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, empty)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbnail)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbMusic)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbnailSize)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbMusicSize)).hasMessage(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, empty)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbnail)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbMusic)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbnailSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbMusicSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
     }
 
 }

@@ -521,6 +521,15 @@ operation::admin-universe-get-list[snippets='path-parameters,http-request,http-r
 
 operation::admin-universe-post-update[snippets='http-request,request-parts,http-response,response-fields']
 
+[[admin-universe-post-update-thumbnail-api]]
+==== 유니버스 썸네일 수정 API
+
+관리자가 유니버스의 썸네일을 수정합니다.
+
+> 썸네일 파일 용량은 2MB를 초과할 수 없습니다.
+
+operation::admin-universe-post-update-thumbnail[snippets='http-request,request-parts,http-response,response-fields']
+
 [[admin-universe-delete-api]]
 ==== 유니버스 삭제 API
 

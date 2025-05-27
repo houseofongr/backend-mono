@@ -34,7 +34,7 @@ public enum AdminErrorCode implements ErrorCode {
 
     SOUND_SOURCE_NOT_FOUND("ADMIN-SOUNDSOURCE-1", NOT_FOUND, "해당 음원을 찾을 수 없습니다."),
 
-    ILLEGAL_UNIVERSE_CREATE_FILE("ADMIN-UNIVERSE-1", BAD_REQUEST, "잘못된 유니버스 생성 파일입니다."),
+    EXCEEDED_UNIVERSE_FILE_SIZE("ADMIN-UNIVERSE-1", BAD_REQUEST, "유니버스 파일 크기를 초과했습니다."),
     UNIVERSE_NOT_FOUND("ADMIN-UNIVERSE-2", NOT_FOUND, "해당 유니버스를 찾을 수 없습니다."),
 
     ILLEGAL_SPACE_IMAGE("ADMIN-SPACE-1", BAD_REQUEST, "잘못된 스페이스 이미지입니다."),

@@ -3,6 +3,8 @@ package com.hoo.aoo.admin.application.service.universe;
 import com.hoo.aoo.admin.application.port.in.universe.UpdateUniverseCommand;
 import com.hoo.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.UpdateUniversePort;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.universe.Category;
 import com.hoo.aoo.admin.domain.universe.PublicStatus;
 import com.hoo.aoo.admin.domain.universe.Universe;
@@ -18,13 +20,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UpdateUniverseServiceTest {
@@ -61,6 +61,34 @@ class UpdateUniverseServiceTest {
 
         // then
         verify(deleteFileUseCase, times(2)).deleteFile(anyLong());
+    }
+
+    @Test
+    @DisplayName("썸네일 수정 전 파일용량 확인")
+    void testThumbnailSize() {
+        // given
+        byte[] over2MB = new byte[2 * 1024 * 1024 + 1];
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", over2MB);
+        assertThatThrownBy(() -> sut.updateThumbnail(1L, thumbnail)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+    }
+
+    @Test
+    @DisplayName("썸네일 수정 서비스")
+    void updateThumbnail() {
+        // given
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        // when
+        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
+        when(uploadPublicImageUseCase.publicUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS))));
+
+        MessageDto message = sut.updateThumbnail(universe.getId(), thumbnail);
+
+        // then
+        assertThat(message.message()).contains("번 유니버스의 썸네일이 수정되었습니다.");
+        verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
+        verify(updateUniversePort, times(1)).update(universe);
     }
 
     @Test

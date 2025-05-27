@@ -27,8 +27,8 @@ public record CreateUniverseCommand(
     }
 
     public static CreateUniverseCommand from(CreateUniverseCommand baseCommand, Map<String, MultipartFile> fileMap) {
-        if (!fileMap.containsKey("thumbnail") || fileMap.get("thumbnail").getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE);
-        if (!fileMap.containsKey("thumbMusic") || fileMap.get("thumbMusic").getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE);
+        if (!fileMap.containsKey("thumbnail") || fileMap.get("thumbnail").getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
+        if (!fileMap.containsKey("thumbMusic") || fileMap.get("thumbMusic").getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
 
         return new CreateUniverseCommand(
                 baseCommand.title(),

@@ -15,6 +15,7 @@ import com.hoo.aoo.file.application.port.in.UploadPublicImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -52,5 +53,20 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         updateUniversePort.update(targetUniverse);
 
         return new MessageDto(command.targetId() + "번 유니버스가 수정되었습니다.");
+    }
+
+    @Override
+    public MessageDto updateThumbnail(Long universeId, MultipartFile thumbnail) {
+        if (thumbnail.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
+        Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+
+        Long beforeThumbnailId = targetUniverse.getThumbnailId();
+        UploadFileResult.FileInfo uploadedThumbnail = uploadPublicImageUseCase.publicUpload(List.of(thumbnail)).fileInfos().getFirst();
+
+        targetUniverse.updateThumbnail(uploadedThumbnail.id());
+        updateUniversePort.update(targetUniverse);
+        deleteFileUseCase.deleteFile(beforeThumbnailId);
+
+        return new MessageDto(universeId + "번 유니버스의 썸네일이 수정되었습니다.");
     }
 }

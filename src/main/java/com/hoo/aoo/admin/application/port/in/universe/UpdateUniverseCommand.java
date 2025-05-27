@@ -31,9 +31,9 @@ public record UpdateUniverseCommand(
 
     public static UpdateUniverseCommand from(UpdateUniverseCommand baseCommand, MultipartFile thumbnail, MultipartFile thumbMusic) {
         if (thumbnail != null && thumbnail.getSize() > 2 * 1024 * 1024)
-            throw new AdminException(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE);
+            throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
         if (thumbMusic != null && thumbMusic.getSize() > 2 * 1024 * 1024)
-            throw new AdminException(AdminErrorCode.ILLEGAL_UNIVERSE_CREATE_FILE);
+            throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
 
         return new UpdateUniverseCommand(
                 baseCommand.targetId(),
