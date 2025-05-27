@@ -30,7 +30,6 @@ public class SearchUniverseService implements SearchUniverseUseCase {
 
     private boolean validCategorySearch(SearchUniverseCommand command) {
         return !(command.searchType() != null &&
-                 command.searchType().equals(UniverseSearchType.CATEGORY) &&
                  Arrays.stream(Category.values())
                          .noneMatch(e -> e.name().equalsIgnoreCase(command.keyword()))
         );

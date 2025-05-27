@@ -18,7 +18,7 @@ class UniverseJpaEntityTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe);
+        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, null);
 
         // then
         assertThat(universeJpaEntity.getId()).isEqualTo(null);

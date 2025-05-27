@@ -24,8 +24,6 @@ public class DeleteFileService implements DeleteFileUseCase {
     public void deleteFile(Long id) {
         try {
 
-            System.out.println("파일 삭제시도 : " + id);
-
             File file = findFilePort.load(id)
                     .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
 

@@ -48,7 +48,10 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
         return switch (command.searchType()) {
             case CONTENT -> universeJpaEntity.title.likeIgnoreCase("%" + command.keyword() + "%")
                     .or(universeJpaEntity.description.likeIgnoreCase("%" + command.keyword() + "%"));
-            case CATEGORY -> universeJpaEntity.category.eq(Category.valueOf(command.keyword().toUpperCase()));
+            case AUTHOR -> universeJpaEntity.author.nickname.likeIgnoreCase(command.keyword());
+            case ALL -> universeJpaEntity.title.likeIgnoreCase("%" + command.keyword() + "%")
+                    .or(universeJpaEntity.description.likeIgnoreCase("%" + command.keyword() + "%"))
+                    .or(universeJpaEntity.author.nickname.likeIgnoreCase(command.keyword()));
         };
     }
 

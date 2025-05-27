@@ -47,7 +47,7 @@ class CreateUniverseServiceTest {
         map.put("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes()));
         map.put("thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
 
-        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), map);
+        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), map);
 
         // when
         when(uploadPublicImageUseCase.publicUpload(any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS))));
@@ -55,7 +55,7 @@ class CreateUniverseServiceTest {
         MessageDto messageDto = sut.create(command);
 
         // then
-        verify(saveUniversePort, times(1)).save(any());
+        verify(saveUniversePort, times(1)).save(any(), any());
         assertThat(messageDto.message()).contains("번 유니버스가 생성되었습니다.");
     }
 

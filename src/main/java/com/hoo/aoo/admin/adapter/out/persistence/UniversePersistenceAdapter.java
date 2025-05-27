@@ -1,5 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence;
 
+import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseResult;
@@ -7,10 +8,13 @@ import com.hoo.aoo.admin.application.port.out.universe.DeleteUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.SaveUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.UpdateUniversePort;
+import com.hoo.aoo.admin.application.service.AdminErrorCode;
+import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseHashtagJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.repository.HashtagJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import com.hoo.aoo.common.application.port.in.Pagination;
@@ -29,6 +33,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
 
     private final HashtagJpaRepository hashtagJpaRepository;
     private final UniverseJpaRepository universeJpaRepository;
+    private final UserJpaRepository userJpaRepository;
     private final UniverseMapper universeMapper;
 
     public HashtagJpaEntity getOrCreate(String tag) {
@@ -37,8 +42,10 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     }
 
     @Override
-    public Long save(Universe universe) {
-        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe);
+    public Long save(Universe universe, Long authorId) {
+        UserJpaEntity author = userJpaRepository.findById(authorId).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+
+        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, author);
 
         for (String tag : universe.getSocialInfo().getHashtags())
             universeJpaEntity.getUniverseHashtags().add(UniverseHashtagJpaEntity.create(universeJpaEntity, getOrCreate(tag)));

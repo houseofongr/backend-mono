@@ -13,6 +13,7 @@ import java.util.Map;
 public record CreateUniverseCommand(
         @NotBlank String title,
         String description,
+        Long authorId,
         Category category,
         PublicStatus publicStatus,
         List<String> tags,
@@ -32,6 +33,7 @@ public record CreateUniverseCommand(
         return new CreateUniverseCommand(
                 baseCommand.title(),
                 baseCommand.description(),
+                baseCommand.authorId(),
                 baseCommand.category(),
                 baseCommand.publicStatus(),
                 baseCommand.tags(),

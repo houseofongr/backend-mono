@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.adapter.in.web.universe;
 
-import com.hoo.aoo.admin.application.port.in.house.CreateHouseMetadataTest;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.hoo.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -18,24 +18,19 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PostUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;
-
-    @Override
-    public boolean useSpringSecurity() {
-        return false;
-    }
-
     //language=JSON
     String metadata = """
             {
               "title": "우주",
               "description": "유니버스는 우주입니다.",
+              "authorId": 1,
               "category": "GOVERNMENT_AND_PUBLIC_INSTITUTION",
               "publicStatus": "PUBLIC",
               "tags": [
@@ -44,8 +39,14 @@ class PostUniverseControllerTest extends AbstractControllerTest {
             }
             """;
 
+    @Override
+    public boolean useSpringSecurity() {
+        return false;
+    }
+
     @Test
     @DisplayName("유니버스 생성 API")
+    @Sql("PostUniverseControllerTest.sql")
     void testCreateUniverse() throws Exception {
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());

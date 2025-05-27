@@ -28,7 +28,7 @@ class UniverseMapperTest {
     @DisplayName("유니버스 불러오기")
     void testLoadUniverse() {
         // given
-        UniverseJpaEntity universeJpaEntity = new UniverseJpaEntity(1L, "우주", "이곳은 우주입니다.", 12L, PublicStatus.PUBLIC, Category.LIFE, 13L, 102L, new ArrayList<>(), new ArrayList<>());
+        UniverseJpaEntity universeJpaEntity = new UniverseJpaEntity(1L, "우주", "이곳은 우주입니다.", 12L, PublicStatus.PUBLIC, Category.LIFE, 13L, 102L, null, new ArrayList<>(), new ArrayList<>());
         universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(1L, universeJpaEntity, new HashtagJpaEntity(1L,"우주")));
         universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(2L, universeJpaEntity, new HashtagJpaEntity(2L,"행성")));
         universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(3L, universeJpaEntity, new HashtagJpaEntity(3L,"지구")));

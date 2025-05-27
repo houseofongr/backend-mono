@@ -14,7 +14,7 @@ class SpaceJpaEntityTest {
     void createNewEntity() {
         // given
         Space space = MockEntityFactoryService.getParentSpace();
-        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(MockEntityFactoryService.getUniverse());
+        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(MockEntityFactoryService.getUniverse(), null);
 
         // when
         SpaceJpaEntity newSpaceEntity = SpaceJpaEntity.create(space, universeJpaEntity);
@@ -40,7 +40,7 @@ class SpaceJpaEntityTest {
     void testCreateChildSpace() {
         // given
         Space space = MockEntityFactoryService.getParentSpace();
-        UniverseJpaEntity universe = UniverseJpaEntity.create(MockEntityFactoryService.getUniverse());
+        UniverseJpaEntity universe = UniverseJpaEntity.create(MockEntityFactoryService.getUniverse(), null);
         SpaceJpaEntity parent = SpaceJpaEntity.create(space, universe);
 
         Space space2 = MockEntityFactoryService.getParentSpace();

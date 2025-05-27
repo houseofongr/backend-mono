@@ -47,13 +47,17 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Long thumbnailFileId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private UserJpaEntity author;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<UniverseHashtagJpaEntity> universeHashtags;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE)
     private List<UniverseLikeJpaEntity> universeLikes;
 
-    public static UniverseJpaEntity create(Universe universe) {
+    public static UniverseJpaEntity create(Universe universe, UserJpaEntity author) {
         return new UniverseJpaEntity(
                 null,
                 universe.getBasicInfo().getTitle(),
@@ -63,6 +67,7 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
                 universe.getBasicInfo().getCategory(),
                 universe.getThumbMusicId(),
                 universe.getThumbnailId(),
+                author,
                 new ArrayList<>(),
                 List.of());
     }
