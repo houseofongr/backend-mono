@@ -61,8 +61,8 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
     @DisplayName("스페이스 수정 API")
     void testSpaceUpdateAPI() throws Exception {
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
-        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
-        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_2.get(tempDir.toString()));
+        saveFile(FileF.AUDIO_FILE_1.get(tempDir.toString()));
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
