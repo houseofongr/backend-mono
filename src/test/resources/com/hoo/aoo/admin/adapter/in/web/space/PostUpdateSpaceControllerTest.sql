@@ -1,6 +1,7 @@
 set foreign_key_checks = 0;
 truncate table UNIVERSE;
 truncate table SPACE;
+truncate table FILE;
 set foreign_key_checks = 1;
 
 
