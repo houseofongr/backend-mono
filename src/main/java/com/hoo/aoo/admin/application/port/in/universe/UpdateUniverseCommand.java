@@ -9,18 +9,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public record UpdateUniverseCommand(
-        Long targetId,
         String title,
         String description,
         Category category,
         PublicStatus publicStatus,
-        List<String> tags,
-        MultipartFile thumbnail,
-        MultipartFile thumbMusic
+        List<String> tags
 ) {
 
     public UpdateUniverseCommand {
-        if (targetId == null || targetId <= 0) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (title != null && (title.isBlank() || title.length() > 100))
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (description != null && description.length() > 5000)
@@ -36,14 +32,11 @@ public record UpdateUniverseCommand(
             throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
 
         return new UpdateUniverseCommand(
-                baseCommand.targetId(),
                 baseCommand.title(),
                 baseCommand.description(),
                 baseCommand.category(),
                 baseCommand.publicStatus(),
-                baseCommand.tags(),
-                thumbnail,
-                thumbMusic
+                baseCommand.tags()
         );
     }
 }

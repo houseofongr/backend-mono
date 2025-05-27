@@ -4,6 +4,6 @@ import com.hoo.aoo.common.application.port.in.MessageDto;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UpdateUniverseUseCase {
-    MessageDto update(UpdateUniverseCommand command);
+    MessageDto update(Long universeId, UpdateUniverseCommand command);
     MessageDto updateThumbnail(Long universeId, MultipartFile thumbnail);
 }

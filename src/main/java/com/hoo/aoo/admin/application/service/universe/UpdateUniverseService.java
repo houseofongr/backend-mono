@@ -31,33 +31,20 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
     private final UpdateUniversePort updateUniversePort;
 
     @Override
-    public MessageDto update(UpdateUniverseCommand command) {
-        Universe targetUniverse = findUniversePort.load(command.targetId())
-                .orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+    public MessageDto update(Long universeId, UpdateUniverseCommand command) {
+        Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
         targetUniverse.updateBasicInfo(command.title(), command.description(), command.category(), command.publicStatus());
         targetUniverse.updateSocialInfo(command.tags());
 
-        if (command.thumbnail() != null) {
-            UploadFileResult thumbnail = uploadPublicImageUseCase.publicUpload(List.of(command.thumbnail()));
-            deleteFileUseCase.deleteFile(targetUniverse.getThumbnailId());
-            targetUniverse.updateThumbnail(thumbnail.fileInfos().getFirst().id());
-        }
-
-        if (command.thumbMusic() != null) {
-            UploadFileResult thumbMusic = uploadPublicAudioUseCase.publicUpload(List.of(command.thumbMusic()));
-            deleteFileUseCase.deleteFile(targetUniverse.getThumbMusicId());
-            targetUniverse.updateThumbMusic( thumbMusic.fileInfos().getFirst().id());
-        }
-
         updateUniversePort.update(targetUniverse);
 
-        return new MessageDto(command.targetId() + "번 유니버스가 수정되었습니다.");
+        return new MessageDto(universeId + "번 유니버스가 수정되었습니다.");
     }
 
     @Override
     public MessageDto updateThumbnail(Long universeId, MultipartFile thumbnail) {
-        if (thumbnail.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
+        if (thumbnail == null || thumbnail.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
         Long beforeThumbnailId = targetUniverse.getThumbnailId();
