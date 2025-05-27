@@ -29,18 +29,22 @@ class GetUniverseControllerTest extends AbstractControllerTest {
                                                                       + "\n" + "* 기본값 : 1").optional(),
                                 parameterWithName("size").description("한 페이지에 보여줄 데이터 개수입니다. +"
                                                                       + "\n" + "* 기본값 : 10").optional(),
-                                parameterWithName("sortType").description("정렬 방법입니다. +"
-                                                                          + "\n" + "[제목, 등록일자, 조회수] +"
-                                                                          + "\n" + "* 기본 정렬 : 등록일자 내림차순").optional(),
-                                parameterWithName("isAsc").description("정렬 시 오름차순인지 여부입니다.").optional(),
                                 parameterWithName("searchType").description("검색 방법입니다. +"
-                                                                            + "\n" + "[컨텐츠, 카테고리]").optional(),
-                                parameterWithName("keyword").description("검색 키워드입니다. +"
-                                                                         + "\n" + "* 카테고리 검색 시 카테고리명과 일치해야 합니다. +"
-                                                                         + "\n" + "[GOVERNMENT_AND_PUBLIC_INSTITUTION : 정부/기관] +"
-                                                                         + "\n" + "[HEALTH_INSTITUTION : 의료재단] +"
-                                                                         + "\n" + "[LIFE : 라이프] +"
-                                                                         + "\n" + "[FASHION_AND_BEAUTY : 패션/뷰티]").optional()
+                                                                            + "\n" + "[CONTENT : 제목 + 내용 검색] +"
+                                                                            + "\n" + "[AUTHOR : 작성자 검색] +"
+                                                                            + "\n" + "[ALL : 작성자 + 제목 + 내용 전체 검색]").optional(),
+                                parameterWithName("keyword").description("검색 키워드입니다.").optional(),
+                                parameterWithName("category").description("카테고리 필터링 키워드입니다. +"
+                                                                          + "\n" + "[GOVERNMENT_AND_PUBLIC_INSTITUTION : 정부/기관] +"
+                                                                          + "\n" + "[HEALTH_INSTITUTION : 의료재단] +"
+                                                                          + "\n" + "[LIFE : 라이프] +"
+                                                                          + "\n" + "[FASHION_AND_BEAUTY : 패션/뷰티]").optional(),
+                                parameterWithName("sortType").description("정렬 방법입니다. +"
+                                                                          + "\n" + "[TITLE : 제목 순] +"
+                                                                          + "\n" + "[REGISTERED_DATE : 생성시간 순] +"
+                                                                          + "\n" + "[VIEWS : 조회수 순]"
+                                                                          + "\n" + "* 기본 정렬 : 생성시간 내림차순").optional(),
+                                parameterWithName("isAsc").description("정렬 시 오름차순인지 여부입니다.").optional()
                         ),
                         responseFields(
                                 fieldWithPath("universes[].id").description("유니버스의 아이디입니다."),
