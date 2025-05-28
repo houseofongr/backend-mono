@@ -46,12 +46,15 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
             }
             """;
 
-        mockMvc.perform(patch("/admin/universes/update/1")
+        mockMvc.perform(patch("/admin/universes/update/{universeId}", 1)
                         .content(command)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-post-update",
+                        pathParameters(
+                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                        ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
                                 fieldWithPath("description").description("수정할 상세정보입니다."),

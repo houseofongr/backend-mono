@@ -31,12 +31,15 @@ class PostUpdateUniverseThumbnailControllerTest extends AbstractControllerTest {
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
         MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "new_universe_thumb.png", "image/png", "universe file".getBytes());
 
-        mockMvc.perform(multipart("/admin/universes/thumbnail/1")
+        mockMvc.perform(multipart("/admin/universes/thumbnail/{universeId}", 1)
                         .file(thumbnail)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-post-update-thumbnail",
+                        pathParameters(
+                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                        ),
                         requestParts(
                                 partWithName("thumbnail").description("수정할 유니버스의 썸네일 이미지입니다.")
                         ),
