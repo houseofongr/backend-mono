@@ -6,8 +6,8 @@ import com.hoo.aoo.aar.application.service.AarErrorCode;
 import com.hoo.aoo.aar.application.service.AarException;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UserMapper;
 import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserCommand;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserResult;
 import com.hoo.aoo.admin.application.port.in.user.SaveDeletedUserPort;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.port.out.user.SaveUserPort;
@@ -22,7 +22,9 @@ import com.hoo.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepos
 import com.hoo.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
 import com.hoo.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
+import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -63,8 +65,9 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
     }
 
     @Override
-    public QueryUserInfoResult search(QueryUserInfoCommand command) {
-        return userMapper.mapToQueryResults(userJpaRepository.searchByCommand(command));
+    public SearchUserResult search(SearchUserCommand command) {
+        Page<SearchUserResult.UserInfo> userInfosPages = userJpaRepository.searchAll(command).map(userMapper::mapToQueryResult);
+        return new SearchUserResult(userInfosPages.getContent(), Pagination.of(userInfosPages));
     }
 
     @Override

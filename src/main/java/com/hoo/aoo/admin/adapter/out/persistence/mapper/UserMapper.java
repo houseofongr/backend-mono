@@ -1,6 +1,6 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserResult;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
@@ -19,27 +19,22 @@ public class UserMapper {
 
     private final SnsAccountMapper snsAccountMapper;
 
-    public QueryUserInfoResult mapToQueryResults(Page<UserJpaEntity> userJpaEntities) {
-        Page<QueryUserInfoResult.UserInfo> userInfosPages = userJpaEntities.map(this::mapToQueryResult);
-        return new QueryUserInfoResult(userInfosPages.getContent(), Pagination.of(userInfosPages));
-
-    }
-
-    private QueryUserInfoResult.UserInfo mapToQueryResult(UserJpaEntity userJpaEntity) {
-        return new QueryUserInfoResult.UserInfo(
+    public SearchUserResult.UserInfo mapToQueryResult(UserJpaEntity userJpaEntity) {
+        return new SearchUserResult.UserInfo(
                 userJpaEntity.getId(),
                 userJpaEntity.getRealName(),
                 userJpaEntity.getNickname(),
                 userJpaEntity.getPhoneNumber(),
-                DateTimeFormatters.DOT_DATE.getFormatter().format(userJpaEntity.getCreatedTime()),
+                userJpaEntity.getEmail(),
+                userJpaEntity.getCreatedTime().toEpochSecond(),
                 userJpaEntity.getTermsOfUseAgreement(),
                 userJpaEntity.getPersonalInformationAgreement(),
                 userJpaEntity.getSnsAccountEntities().stream().map(this::mapToQueryResult).toList()
         );
     }
 
-    private QueryUserInfoResult.SnsAccountInfo mapToQueryResult(SnsAccountJpaEntity snsAccountJpaEntity) {
-        return new QueryUserInfoResult.SnsAccountInfo(
+    private SearchUserResult.SnsAccountInfo mapToQueryResult(SnsAccountJpaEntity snsAccountJpaEntity) {
+        return new SearchUserResult.SnsAccountInfo(
                 snsAccountJpaEntity.getSnsDomain(),
                 snsAccountJpaEntity.getEmail()
         );

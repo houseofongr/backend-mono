@@ -3,8 +3,9 @@ package com.hoo.aoo.admin.adapter.out.persistence;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserCommand;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserResult;
+import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.admin.domain.user.DeletedUser;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.common.adapter.out.persistence.entity.*;
@@ -51,23 +52,75 @@ class UserPersistenceAdapterTest {
     @DisplayName("사용자 검색 기능 테스트")
     void testSearchUser() {
         // given
-        QueryUserInfoCommand command = new QueryUserInfoCommand(PageRequest.of(0, 10));
+        SearchUserCommand command = new SearchUserCommand(PageRequest.of(0, 10), null, null, null, null);
 
         // when
-        QueryUserInfoResult result = sut.search(command);
+        SearchUserResult result = sut.search(command);
 
         // then
-        assertThat(result.users()).hasSize(1);
+        assertThat(result.users()).hasSize(8);
         assertThat(result.users()).anySatisfy(userInfo -> {
-                    assertThat(userInfo.id()).isEqualTo(10L);
-                    assertThat(userInfo.realName()).isEqualTo("남상엽");
-                    assertThat(userInfo.nickName()).isEqualTo("leaf");
-                    assertThat(userInfo.phoneNumber()).isEqualTo("010-1234-5678");
-                    assertThat(userInfo.registeredDate()).matches("\\d{4}\\.\\d{2}\\.\\d{2}\\.");
+                    assertThat(userInfo.name()).isEqualTo("남상엽");
+                    assertThat(userInfo.nickname()).isEqualTo("lea");
+                    assertThat(userInfo.phoneNumber()).isEqualTo("01012345678");
+                    assertThat(userInfo.registeredDate()).isInstanceOf(Long.class);
                     assertThat(userInfo.snsAccounts().getFirst().domain()).isEqualTo(KAKAO);
                     assertThat(userInfo.snsAccounts().getFirst().email()).isEqualTo("test@example.com");
                 }
         );
+    }
+
+    @Test
+    @DisplayName("사용자 검색 파라미터 테스트")
+    void testSearchParameter() {
+        // given
+        SearchUserCommand nickLeaf = new SearchUserCommand(PageRequest.of(0, 10), "nickname", "leaf", null, null);
+        SearchUserCommand name남 = new SearchUserCommand(PageRequest.of(0, 10), "name", "남", null, null);
+        SearchUserCommand emailStone = new SearchUserCommand(PageRequest.of(0, 10), "email", "stone", null, null);
+        SearchUserCommand phone3158 = new SearchUserCommand(PageRequest.of(0, 10), "phone_number", "3158", null, null);
+
+        // when
+        SearchUserResult nickLeafResult = sut.search(nickLeaf);
+        SearchUserResult name남Result = sut.search(name남);
+        SearchUserResult emailStoneResult = sut.search(emailStone);
+        SearchUserResult phone3158Result = sut.search(phone3158);
+
+        // then
+        assertThat(nickLeafResult.users()).hasSize(5).allMatch(userInfo -> userInfo.nickname().contains("leaf"));
+        assertThat(name남Result.users()).hasSize(6).allMatch(userInfo -> userInfo.name().contains("남"));
+        assertThat(emailStoneResult.users()).hasSize(2).allMatch(userInfo -> userInfo.email().contains("stone"));
+        assertThat(phone3158Result.users()).hasSize(3).allMatch(userInfo -> userInfo.phoneNumber().contains("3158"));
+    }
+
+    @Test
+    @DisplayName("사용자 검색 정렬 테스트")
+    void testOrder() {
+        // given
+        SearchUserCommand 이름_오름차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "name", true);
+        SearchUserCommand 닉네임_오름차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "nickname", true);
+        SearchUserCommand 등록일_오름차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "registered_date", true);
+        SearchUserCommand 이름_내림차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "name", false);
+        SearchUserCommand 닉네임_내림차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "nickname", false);
+        SearchUserCommand 등록일_내림차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "registered_date", false);
+
+        User user = MockEntityFactoryService.getUser();
+        sut.save(user);
+
+        // when
+        SearchUserResult 이름_오름차순_result = sut.search(이름_오름차순);
+        SearchUserResult 닉네임_오름차순_result = sut.search(닉네임_오름차순);
+        SearchUserResult 등록일_오름차순_result = sut.search(등록일_오름차순);
+        SearchUserResult 이름_내림차순_result = sut.search(이름_내림차순);
+        SearchUserResult 닉네임_내림차순_result = sut.search(닉네임_내림차순);
+        SearchUserResult 등록일_내림차순_result = sut.search(등록일_내림차순);
+
+        // then
+        assertThat(이름_오름차순_result.users().getFirst().name()).matches("^남.*");
+        assertThat(이름_내림차순_result.users().getFirst().name()).isEqualTo("엽상");
+        assertThat(닉네임_오름차순_result.users().getFirst().nickname()).isEqualTo("lea");
+        assertThat(닉네임_내림차순_result.users().getFirst().nickname()).isEqualTo("upstone");
+        assertThat(등록일_오름차순_result.users().getFirst().nickname()).isEqualTo("lea");
+        assertThat(등록일_내림차순_result.users().getFirst().nickname()).isEqualTo("leaf");
     }
 
     @Test

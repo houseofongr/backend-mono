@@ -1,5 +1,13 @@
-insert into AAR_USER(ID, REAL_NAME, PHONE_NUMBER, NICKNAME, email, TERMS_OF_USE_AGREEMENT, PERSONAL_INFORMATION_AGREEMENT, CREATED_TIME) values
-    (10, '남상엽', '010-1234-5678', 'leaf','test@example.com', false, false, CURRENT_TIMESTAMP);
+insert into AAR_USER(ID, REAL_NAME, PHONE_NUMBER, NICKNAME, email, TERMS_OF_USE_AGREEMENT,
+                     PERSONAL_INFORMATION_AGREEMENT, CREATED_TIME)
+values (10, '남상엽', '01012345678', 'lea', 'test@example.com', false, false, CURRENT_TIMESTAMP),
+       (11, '남상', '01012343158', 'up', 'up@example.com', false, false, CURRENT_TIMESTAMP),
+       (12, '남엽', '01012345678', 'leaf2', 'leaf@example.com', false, false, CURRENT_TIMESTAMP),
+       (13, '엽상', '01012345678', 'leaf3', 'leaff@example.com', false, false, CURRENT_TIMESTAMP),
+       (14, '상엽', '01031585678', 'upleaf', 'upleaf@example.com', false, false, CURRENT_TIMESTAMP),
+       (15, '남상엽돌', '01012345678', 'southupleafstone', 'south@example.com', false, false, CURRENT_TIMESTAMP),
+       (16, '남상돌', '01012315867', 'upstone', 'stoneup@example.com', false, false, CURRENT_TIMESTAMP),
+       (17, '남엽돌', '01012345678', 'leafstone', 'lstone@example.com', false, false, CURRENT_TIMESTAMP);
 
 
 insert into SNS_ACCOUNT(ID, REAL_NAME, NICKNAME, EMAIL, SNS_ID, SNS_DOMAIN, USER_ID)
@@ -10,12 +18,12 @@ insert into HOUSE(ID, TITLE, AUTHOR, DESCRIPTION, BASIC_IMAGE_FILE_ID, BORDER_IM
 values (20, 'cozy house', 'leaf', 'my cozy house', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into ROOM(ID, NAME, X, Y, Z, WIDTH, HEIGHT, IMAGE_FILE_ID, HOUSE_ID)
-values (1, "거실", 0, 0, 0, 5000, 1000, 5, 20),
-       (2, "주방", 0, 1000, 0, 5000, 1000, 6, 20);
+values (1, '거실', 0, 0, 0, 5000, 1000, 5, 20),
+       (2, '주방', 0, 1000, 0, 5000, 1000, 6, 20);
 
 insert into HOME(ID, USER_ID, HOUSE_ID, NAME, CREATED_TIME, UPDATED_TIME)
-values (1, 10, 20, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       (2, 10, 20, "leaf의 simple house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+values (1, 10, 20, 'leaf의 cozy house', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (2, 10, 20, 'leaf의 simple house', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 insert into ITEM_SHAPE(ID, X, Y, DTYPE)
@@ -38,6 +46,6 @@ values (1, '설이', 1, 1, 1),
        (3, '화분', 1, 1, 3);
 
 insert into SOUND_SOURCE(ID, NAME, DESCRIPTION, AUDIO_FILE_ID, IS_ACTIVE, CREATED_TIME, UPDATED_TIME, ITEM_ID)
-values (1, "골골송", "2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-       (2, "멍멍송", "2025년 멍멍송 V1", 2, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2),
-       (3, "골골송 V2", "2025년 골골송 V2", 3, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+values (1, '골골송', '2025년 골골송 V1', 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
+       (2, '멍멍송', '2025년 멍멍송 V1', 2, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2),
+       (3, '골골송 V2', '2025년 골골송 V2', 3, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);

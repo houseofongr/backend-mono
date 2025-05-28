@@ -1,23 +1,29 @@
 package com.hoo.aoo.admin.adapter.in.web.user;
 
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
-import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoUseCase;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserCommand;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserResult;
+import com.hoo.aoo.admin.application.port.in.user.SearchUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 public class GetUserListController {
 
-    private final QueryUserInfoUseCase queryUserInfoUseCase;
+    private final SearchUserUseCase useCase;
 
     @GetMapping("/admin/users")
-    public ResponseEntity<QueryUserInfoResult> getUsers(Pageable pageable) {
-        return new ResponseEntity<>(queryUserInfoUseCase.query(new QueryUserInfoCommand(pageable)), HttpStatus.OK);
+    public ResponseEntity<SearchUserResult> getUsers(
+            Pageable pageable,
+            @RequestParam(required = false) String searchType,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String sortType,
+            @RequestParam(required = false) Boolean isAsc) {
+
+        return ResponseEntity.ok(useCase.query(new SearchUserCommand(pageable, searchType, keyword, sortType, isAsc)));
     }
 }

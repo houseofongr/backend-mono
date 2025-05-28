@@ -42,6 +42,7 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
         Long count = query.select(universeJpaEntity.count())
                 .from(universeJpaEntity)
                 .where(search(command))
+                .where(filter(command))
                 .fetchFirst();
 
         return new PageImpl<>(entities, command.pageable(), count == null ? 0 : count);

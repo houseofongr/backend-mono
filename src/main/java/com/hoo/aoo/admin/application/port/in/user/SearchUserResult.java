@@ -5,16 +5,17 @@ import com.hoo.aoo.common.application.port.in.Pagination;
 
 import java.util.List;
 
-public record QueryUserInfoResult(
+public record SearchUserResult(
         List<UserInfo> users,
         Pagination pagination
 ) {
     public record UserInfo(
             Long id,
-            String realName,
-            String nickName,
+            String name,
+            String nickname,
             String phoneNumber,
-            String registeredDate,
+            String email,
+            Long registeredDate,
             Boolean termsOfUseAgreement,
             Boolean personalInformationAgreement,
             List<SnsAccountInfo> snsAccounts
