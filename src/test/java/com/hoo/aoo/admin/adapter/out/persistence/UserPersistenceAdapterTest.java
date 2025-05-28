@@ -115,11 +115,11 @@ class UserPersistenceAdapterTest {
         SearchUserResult 등록일_내림차순_result = sut.search(등록일_내림차순);
 
         // then
-        assertThat(이름_오름차순_result.users().getFirst().name()).matches("^남.*");
+        assertThat(이름_오름차순_result.users().getLast().name()).matches("엽상");
         assertThat(이름_내림차순_result.users().getFirst().name()).isEqualTo("엽상");
-        assertThat(닉네임_오름차순_result.users().getFirst().nickname()).isEqualTo("lea");
+        assertThat(닉네임_오름차순_result.users().getLast().nickname()).isEqualTo("upstone");
         assertThat(닉네임_내림차순_result.users().getFirst().nickname()).isEqualTo("upstone");
-        assertThat(등록일_오름차순_result.users().getFirst().nickname()).isEqualTo("lea");
+        assertThat(등록일_오름차순_result.users().getLast().nickname()).isEqualTo("leaf");
         assertThat(등록일_내림차순_result.users().getFirst().nickname()).isEqualTo("leaf");
     }
 
