@@ -7,12 +7,14 @@ import com.hoo.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import com.hoo.aoo.admin.domain.universe.Category;
+import com.hoo.aoo.admin.domain.universe.Universe;
 import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSearchType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,6 +26,11 @@ public class SearchUniverseService implements SearchUniverseUseCase {
     @Override
     public SearchUniverseResult search(SearchUniverseCommand command) {
         return findUniversePort.search(command);
+    }
+
+    @Override
+    public SearchUniverseResult.UniverseInfo search(Long universeId) {
+        return findUniversePort.find(universeId);
     }
 
 }

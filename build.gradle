@@ -69,7 +69,9 @@ test {
 
 asciidoctor {
 
-    delete file("./build/generated-snippets")
+    if (System.getProperty("deleteSnippets") || System.getenv("DELETE_SNIPPETS") == "true") {
+        delete file("./build/generated-snippets")
+    }
 
     inputs.dir snippetsDir
     sourceDir = file("src/docs/asciidoc/")

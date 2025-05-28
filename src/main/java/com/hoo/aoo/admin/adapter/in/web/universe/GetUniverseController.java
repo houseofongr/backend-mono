@@ -1,15 +1,11 @@
 package com.hoo.aoo.admin.adapter.in.web.universe;
 
-import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseUseCase;
-import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSearchType;
-import com.hoo.aoo.common.adapter.out.persistence.condition.UniverseSortType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,15 +14,9 @@ public class GetUniverseController {
 
     private final SearchUniverseUseCase useCase;
 
-    @GetMapping("/admin/universes")
-    public ResponseEntity<SearchUniverseResult> search(
-            Pageable pageable,
-            @RequestParam(required = false) String sortType,
-            @RequestParam(required = false) Boolean isAsc,
-            @RequestParam(required = false) String searchType,
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String category
-    ) {
-        return ResponseEntity.ok(useCase.search(new SearchUniverseCommand(pageable, searchType, keyword, category, sortType, isAsc)));
+    @GetMapping("/admin/universes/{universeId}")
+    public ResponseEntity<SearchUniverseResult.UniverseInfo> get(@PathVariable Long universeId) {
+
+        return ResponseEntity.ok(useCase.search(universeId));
     }
 }

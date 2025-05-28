@@ -516,6 +516,15 @@ operation::admin-universe-post[snippets='http-request,request-parts,http-respons
 
 operation::admin-universe-get-list[snippets='path-parameters,http-request,http-response,response-fields']
 
+[[admin-universe-get-api]]
+==== 관리자 유니버스 상세정보 조회 API
+
+관리자가 특정 유니버스를 상세조회합니다.
+
+> 비공개 유니버스도 검색되며, 유니버스의 모든 정보가 공개됩니다.
+
+operation::admin-universe-get[snippets='path-parameters,http-request,http-response,response-fields']
+
 [[admin-universe-post-update-api]]
 ==== 유니버스 수정 API
 

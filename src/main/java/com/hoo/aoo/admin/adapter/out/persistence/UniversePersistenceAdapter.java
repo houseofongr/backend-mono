@@ -68,6 +68,12 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     }
 
     @Override
+    public SearchUniverseResult.UniverseInfo find(Long id) {
+        return SearchUniverseResult.UniverseInfo.of(universeJpaRepository.findById(id)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND)));
+    }
+
+    @Override
     public void update(Universe universe) {
         UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow();
 

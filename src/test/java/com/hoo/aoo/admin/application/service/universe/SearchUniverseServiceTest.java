@@ -36,4 +36,10 @@ class SearchUniverseServiceTest {
         verify(findUniversePort, times(1)).search(any());
     }
 
+    @Test
+    @DisplayName("유니버스 조회 서비스 테스트 - 어댑터 계층 위임")
+    void testFindUniverseService() {
+        sut.search(1L);
+        verify(findUniversePort, times(1)).find(any());
+    }
 }

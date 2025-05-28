@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface FindUniversePort {
     Optional<Universe> load(Long id);
     SearchUniverseResult search(SearchUniverseCommand command);
+    SearchUniverseResult.UniverseInfo find(Long id);
 }
