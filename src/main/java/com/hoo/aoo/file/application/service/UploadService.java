@@ -32,6 +32,10 @@ class UploadService {
         return upload(files, null, fileIdCreateStrategy);
     }
 
+    UploadFileResult.FileInfo upload(MultipartFile image, FileIdCreateStrategy fileIdCreateStrategy) {
+        return upload(List.of(image), fileIdCreateStrategy).fileInfos().getFirst();
+    }
+
     UploadFileResult upload(List<MultipartFile> files, Long ownerId, FileIdCreateStrategy idCreateStrategy) {
 
         // int[0] : total file name count | int[1] : name suffix(increase)
@@ -94,5 +98,4 @@ class UploadService {
             return split[0] + "-" + fileNameMap.get(originalFileName)[1]++ + "." + split[1];
         }
     }
-
 }

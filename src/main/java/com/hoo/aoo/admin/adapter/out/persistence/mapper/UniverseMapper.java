@@ -10,6 +10,7 @@ public class UniverseMapper {
         return Universe.load(universeJpaEntity.getId(),
                 universeJpaEntity.getThumbnailFileId(),
                 universeJpaEntity.getThumbMusicFileId(),
+                universeJpaEntity.getInnerImageId(),
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
                 universeJpaEntity.getCategory(),

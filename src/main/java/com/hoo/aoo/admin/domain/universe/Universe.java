@@ -2,9 +2,7 @@ package com.hoo.aoo.admin.domain.universe;
 
 import com.hoo.aoo.admin.domain.universe.space.TreeInfo;
 import lombok.Getter;
-import lombok.extern.java.Log;
 
-import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -13,15 +11,17 @@ public class Universe {
     private final Long id;
     private Long thumbMusicId;
     private Long thumbnailId;
+    private Long innerImageId;
     private UniverseBasicInfo basicInfo;
     private final DateInfo dateInfo;
     private SocialInfo socialInfo;
     private final TreeInfo treeInfo;
 
-    private Universe(Long id, Long thumbMusicId, Long thumbnailId, UniverseBasicInfo basicInfo, DateInfo dateInfo, SocialInfo socialInfo, TreeInfo treeInfo) {
+    private Universe(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageId, UniverseBasicInfo basicInfo, DateInfo dateInfo, SocialInfo socialInfo, TreeInfo treeInfo) {
         this.id = id;
         this.thumbMusicId = thumbMusicId;
         this.thumbnailId = thumbnailId;
+        this.innerImageId = innerImageId;
         this.basicInfo = basicInfo;
         this.dateInfo = dateInfo;
         this.socialInfo = socialInfo;
@@ -29,20 +29,22 @@ public class Universe {
     }
 
 
-    public static Universe create(Long id, Long thumbnailId, Long thumbMusicId, String title, String description, Category category, PublicStatus publicStatus,  List<String> tag) {
+    public static Universe create(Long id, Long thumbnailId, Long thumbMusicId, Long innerImageId, String title, String description, Category category, PublicStatus publicStatus, List<String> tag) {
         return new Universe(id,
                 thumbMusicId,
                 thumbnailId,
+                innerImageId,
                 new UniverseBasicInfo(title, description, category, publicStatus),
                 null,
                 new SocialInfo(0, 0L, tag),
                 null);
     }
 
-    public static Universe load(Long id, Long thumbnailId, Long thumbMusicId, String title, String description, Category category, PublicStatus publicStatus, Integer likeCount, Long viewCount, List<String> tag, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Universe load(Long id, Long thumbnailId, Long thumbMusicId, Long innerImageId, String title, String description, Category category, PublicStatus publicStatus, Integer likeCount, Long viewCount, List<String> tag, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Universe(id,
                 thumbMusicId,
                 thumbnailId,
+                innerImageId,
                 new UniverseBasicInfo(title, description, category, publicStatus),
                 new DateInfo(createdTime,updatedTime),
                 new SocialInfo(likeCount, viewCount, tag),

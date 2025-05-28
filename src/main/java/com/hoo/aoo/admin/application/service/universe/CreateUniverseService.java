@@ -28,10 +28,11 @@ public class CreateUniverseService implements CreateUniverseUseCase {
     @Override
     public MessageDto create(CreateUniverseCommand command) {
 
-        UploadFileResult thumbnail = uploadPublicImageUseCase.publicUpload(List.of(command.fileMap().get("thumbnail")));
-        UploadFileResult thumbMusic = uploadPublicAudioUseCase.publicUpload(List.of(command.fileMap().get("thumbMusic")));
+        UploadFileResult.FileInfo innerImage = uploadPublicImageUseCase.publicUpload(command.fileMap().get("innerImage"));
+        UploadFileResult.FileInfo thumbnail = uploadPublicImageUseCase.publicUpload(command.fileMap().get("thumbnail"));
+        UploadFileResult.FileInfo thumbMusic = uploadPublicAudioUseCase.publicUpload(command.fileMap().get("thumbMusic"));
 
-        Universe universe = createUniversePort.createUniverse(command, thumbnail.fileInfos().getFirst().id(), thumbMusic.fileInfos().getFirst().id());
+        Universe universe = createUniversePort.createUniverse(command, thumbnail.id(), thumbMusic.id(), innerImage.id());
 
         return new MessageDto(saveUniversePort.save(universe, command.authorId()) + "번 유니버스가 생성되었습니다.");
     }

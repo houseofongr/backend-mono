@@ -15,6 +15,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CreateUniverseCommandTest {
 
+    CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), Map.of());
+
     @Test
     @DisplayName("잘못된 요청 파라미터")
     void testBadCommand() {
@@ -34,25 +36,49 @@ class CreateUniverseCommandTest {
     }
 
     @Test
-    @DisplayName("썸네일, 썸뮤직 파일 누락")
+    @DisplayName("썸네일, 썸뮤직, 내부이미지 파일 누락")
     void testFileOmissionOrDuplicateName() {
         // given
-        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), Map.of());
-        byte[] content = new byte[2 * 1024 * 1024 + 1];
+        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_inner_image.png", "image/png", "image file".getBytes());
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
 
         // when
         Map<String, MultipartFile> empty = Map.of();
-        Map<String, MultipartFile> noThumbnail = Map.of("thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
-        Map<String, MultipartFile> noThumbMusic = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes()));
-        Map<String, MultipartFile> exceedThumbnailSize = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
-        Map<String, MultipartFile> exceedThumbMusicSize = Map.of("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes()), "thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content));
+        Map<String, MultipartFile> noThumbnail = Map.of("thumbMusic", thumbMusic, "innerImage", innerImage);
+        Map<String, MultipartFile> noThumbMusic = Map.of("thumbnail", thumbnail,  "innerImage", innerImage);
+        Map<String, MultipartFile> noInnerImage = Map.of("thumbnail", thumbnail, "thumbMusic", thumbMusic);
 
         // then
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, empty)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbnail)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbMusic)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, empty)).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbnail)).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noThumbMusic)).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, noInnerImage)).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
+    }
+
+    @Test
+    @DisplayName("썸네일, 썸뮤직, 내부이미지 용량 초과")
+    void testFileSizeExceeded() {
+        // given
+        byte[] content = new byte[2 * 1024 * 1024 + 1];
+        byte[] content2 = new byte[5 * 1024 * 1024 + 1];
+
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
+        MockMultipartFile thumbnailExceed = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content);
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
+        MockMultipartFile thumbMusicExceed = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content);
+        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_inner_image.png", "image/png", content);
+        MockMultipartFile innerImageExceed = new MockMultipartFile("innerImage", "universe_inner_image.png", "image/png", content2);
+
+        // when
+        Map<String, MultipartFile> exceedThumbnailSize = Map.of("thumbnail", thumbnailExceed, "thumbMusic", thumbMusic, "innerImage", innerImage);
+        Map<String, MultipartFile> exceedThumbMusicSize = Map.of("thumbnail", thumbnail, "thumbMusic", thumbMusicExceed, "innerImage", innerImage);
+        Map<String, MultipartFile> exceedInnerImage = Map.of("thumbnail", thumbnail, "thumbMusic", thumbMusic, "innerImage", innerImageExceed);
+
+        // then
         assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbnailSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
         assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbMusicSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedInnerImage)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
     }
 
 }

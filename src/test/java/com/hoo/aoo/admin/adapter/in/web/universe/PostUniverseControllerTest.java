@@ -52,11 +52,12 @@ class PostUniverseControllerTest extends AbstractControllerTest {
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
+        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_inner_image.png", "image/png", "image file".getBytes());
         MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes());
         MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
 
         mockMvc.perform(multipart("/admin/universes")
-                        .file(thumbnail).file(thumbMusic)
+                        .file(thumbnail).file(thumbMusic).file(innerImage)
                         .part(metadataPart)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .with(user("admin").roles("ADMIN")))
@@ -65,7 +66,8 @@ class PostUniverseControllerTest extends AbstractControllerTest {
                         requestParts(
                                 partWithName("metadata").description("생성할 유니버스의 정보를 포함하는 Json 형태의 문자열입니다."),
                                 partWithName("thumbnail").description("생성할 유니버스의 썸네일 이미지입니다."),
-                                partWithName("thumbMusic").description("생성할 유니버스의 썸뮤직 오디오입니다.")
+                                partWithName("thumbMusic").description("생성할 유니버스의 썸뮤직 오디오입니다."),
+                                partWithName("innerImage").description("생성할 유니버스의 내부이미지입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : 0번 유니버스가 생성되었습니다.")
@@ -73,8 +75,9 @@ class PostUniverseControllerTest extends AbstractControllerTest {
                 ));
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(2);
+        assertThat(fileInDB).hasSize(3);
         assertThat(fileInDB)
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_inner_image.png"))
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_thumb.png"))
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_music.mp3"));
     }

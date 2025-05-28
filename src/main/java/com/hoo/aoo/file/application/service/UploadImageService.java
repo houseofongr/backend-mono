@@ -26,6 +26,11 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
     }
 
     @Override
+    public UploadFileResult.FileInfo publicUpload(MultipartFile image) {
+        return uploadService.upload(image, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE));
+    }
+
+    @Override
     @Transactional
     public UploadFileResult privateUpload(List<MultipartFile> images) {
         return uploadService.upload(images, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.ALL_PRIVATE_IMAGE_ACCESS, FileType.IMAGE));

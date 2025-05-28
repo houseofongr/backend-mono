@@ -47,6 +47,9 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Long thumbnailFileId;
 
+    @Column(nullable = false)
+    private Long innerImageId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private UserJpaEntity author;
@@ -67,6 +70,7 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
                 universe.getBasicInfo().getCategory(),
                 universe.getThumbMusicId(),
                 universe.getThumbnailId(),
+                universe.getInnerImageId(),
                 author,
                 new ArrayList<>(),
                 List.of());
@@ -79,5 +83,6 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
         this.publicStatus = universe.getBasicInfo().getPublicStatus();
         this.thumbnailFileId = universe.getThumbnailId();
         this.thumbMusicFileId = universe.getThumbMusicId();
+        this.innerImageId = universe.getInnerImageId();
     }
 }

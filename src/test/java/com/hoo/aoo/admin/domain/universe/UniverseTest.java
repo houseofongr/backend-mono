@@ -22,9 +22,10 @@ class UniverseTest {
         PublicStatus publicStatus = PublicStatus.PUBLIC;
         Long thumbnailId = 11L;
         Long thumbMusicId = 100L;
+        Long innerImageId = 12L;
 
         // when
-        Universe universe = Universe.create(id, thumbnailId, thumbMusicId, title, description, category, publicStatus, tag);
+        Universe universe = Universe.create(id, thumbnailId, thumbMusicId, innerImageId, title, description, category, publicStatus, tag);
         UniverseBasicInfo basicInfo = universe.getBasicInfo();
         SocialInfo socialInfo = universe.getSocialInfo();
 

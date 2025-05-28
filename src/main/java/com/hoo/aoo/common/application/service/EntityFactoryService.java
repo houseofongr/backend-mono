@@ -85,11 +85,12 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     }
 
     @Override
-    public Universe createUniverse(CreateUniverseCommand command, Long thumbnailId, Long thumbMusicId) {
+    public Universe createUniverse(CreateUniverseCommand command, Long thumbnailId, Long thumbMusicId, Long innerImageId) {
         Long newId = issueIdPort.issueUniverseId();
         return Universe.create(newId,
                 thumbnailId,
                 thumbMusicId,
+                innerImageId,
                 command.title(),
                 command.description(),
                 command.category(),
