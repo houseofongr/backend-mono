@@ -1,13 +1,13 @@
 insert into AAR_USER(ID, REAL_NAME, PHONE_NUMBER, NICKNAME, email, TERMS_OF_USE_AGREEMENT,
                      PERSONAL_INFORMATION_AGREEMENT, CREATED_TIME)
-values (10, '남상엽', '01012345678', 'lea', 'test@example.com', false, false, CURRENT_TIMESTAMP),
+values (10, '남상엽', '01012345678', 'lea', 'test@example.com', false, false, CURRENT_TIMESTAMP + 1),
        (11, '남상', '01012343158', 'up', 'up@example.com', false, false, CURRENT_TIMESTAMP),
        (12, '남엽', '01012345678', 'leaf2', 'leaf@example.com', false, false, CURRENT_TIMESTAMP),
        (13, '엽상', '01012345678', 'leaf3', 'leaff@example.com', false, false, CURRENT_TIMESTAMP),
        (14, '상엽', '01031585678', 'upleaf', 'upleaf@example.com', false, false, CURRENT_TIMESTAMP),
        (15, '남상엽돌', '01012345678', 'southupleafstone', 'south@example.com', false, false, CURRENT_TIMESTAMP),
        (16, '남상돌', '01012315867', 'upstone', 'stoneup@example.com', false, false, CURRENT_TIMESTAMP),
-       (17, '남엽돌', '01012345678', 'leafstone', 'lstone@example.com', false, false, CURRENT_TIMESTAMP);
+       (17, '남엽돌', '01012345678', 'leafstone', 'lstone@example.com', false, false, CURRENT_TIMESTAMP - 1);
 
 
 insert into SNS_ACCOUNT(ID, REAL_NAME, NICKNAME, EMAIL, SNS_ID, SNS_DOMAIN, USER_ID)

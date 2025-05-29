@@ -103,9 +103,6 @@ class UserPersistenceAdapterTest {
         SearchUserCommand 닉네임_내림차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "nickname", false);
         SearchUserCommand 등록일_내림차순 = new SearchUserCommand(PageRequest.of(0, 10), null, null, "registered_date", false);
 
-        User user = MockEntityFactoryService.getUser();
-        sut.save(user);
-
         // when
         SearchUserResult 이름_오름차순_result = sut.search(이름_오름차순);
         SearchUserResult 닉네임_오름차순_result = sut.search(닉네임_오름차순);
@@ -119,8 +116,8 @@ class UserPersistenceAdapterTest {
         assertThat(이름_내림차순_result.users().getFirst().name()).isEqualTo("엽상");
         assertThat(닉네임_오름차순_result.users().getLast().nickname()).isEqualTo("upstone");
         assertThat(닉네임_내림차순_result.users().getFirst().nickname()).isEqualTo("upstone");
-        assertThat(등록일_오름차순_result.users().getLast().nickname()).isEqualTo("leaf");
-        assertThat(등록일_내림차순_result.users().getFirst().nickname()).isEqualTo("leaf");
+        assertThat(등록일_오름차순_result.users().getFirst().nickname()).isEqualTo("leafstone");
+        assertThat(등록일_내림차순_result.users().getFirst().nickname()).isEqualTo("lea");
     }
 
     @Test
