@@ -527,12 +527,12 @@ operation::admin-universe-get-list[snippets='path-parameters,http-request,http-r
 
 operation::admin-universe-get[snippets='path-parameters,http-request,http-response,response-fields']
 
-[[admin-universe-post-update-api]]
-==== 유니버스 수정 API
+[[admin-universe-patch-api]]
+==== 특정 유니버스 정보 수정 API
 
-관리자가 유니버스를 수정합니다.
+관리자가 특정 유니버스를 수정합니다.
 
-operation::admin-universe-post-update[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
+operation::admin-universe-patch[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
 
 [[admin-universe-post-update-thumbnail-api]]
 ==== 유니버스 썸네일 수정 API

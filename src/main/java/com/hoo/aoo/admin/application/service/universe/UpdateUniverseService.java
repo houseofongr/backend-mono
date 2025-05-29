@@ -32,10 +32,11 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
     @Override
     public MessageDto update(Long universeId, UpdateUniverseCommand command) {
+
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
         targetUniverse.updateBasicInfo(command.title(), command.description(), command.category(), command.publicStatus());
-        targetUniverse.updateSocialInfo(command.tags());
+        targetUniverse.updateSocialInfo(command.hashtags());
 
         updateUniversePort.update(targetUniverse);
 
@@ -44,7 +45,10 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
     @Override
     public MessageDto updateThumbnail(Long universeId, MultipartFile thumbnail) {
-        if (thumbnail == null || thumbnail.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
+
+        if (thumbnail == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
+        if (thumbnail.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE);
+
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
         Long beforeThumbnailId = targetUniverse.getThumbnailId();

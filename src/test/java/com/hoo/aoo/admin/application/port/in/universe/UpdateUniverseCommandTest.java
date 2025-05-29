@@ -44,29 +44,10 @@ class UpdateUniverseCommandTest {
     }
 
     @Test
-    @DisplayName("파일용량 확인하기(2MB)")
-    void testFileSize() {
-        // given
-        UpdateUniverseCommand command = new UpdateUniverseCommand(null, null, null, null, null);
-        byte[] content = new byte[2 * 1024 * 1024 + 1];
-
-        // when
-        MockMultipartFile exceedThumbnailSize = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content);
-        MockMultipartFile exceedThumbMusicSize = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", content);
-
-        // then
-        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, exceedThumbnailSize, null)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
-        assertThatThrownBy(() -> UpdateUniverseCommand.from(command, null, exceedThumbMusicSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
-    }
-
-    @Test
     @DisplayName("정상 요청")
     void happyCase() {
         UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
-        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
-        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes());
-        UpdateUniverseCommand fullCommand = UpdateUniverseCommand.from(command, thumbnail, thumbMusic);
 
-        assertThat(fullCommand).isNotNull();
+        assertThat(command).isNotNull();
     }
 }

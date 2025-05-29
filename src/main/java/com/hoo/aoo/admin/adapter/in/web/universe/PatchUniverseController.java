@@ -16,7 +16,7 @@ public class PatchUniverseController {
 
     private final UpdateUniverseUseCase useCase;
 
-    @PatchMapping("/admin/universes/update/{universeId}")
+    @PatchMapping("/admin/universes/{universeId}")
     public ResponseEntity<MessageDto> update(
             @PathVariable Long universeId,
             @RequestBody UpdateUniverseCommand command) {

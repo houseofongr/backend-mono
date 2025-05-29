@@ -69,7 +69,7 @@ test {
 
 asciidoctor {
 
-    if (System.getProperty("deleteSnippets") || System.getenv("DELETE_SNIPPETS") == "true") {
+    if (System.getProperty("deleteSnippets") || System.getenv("DELETE_SNIPPETS")) {
         delete file("./build/generated-snippets")
     }
 
