@@ -65,9 +65,13 @@ public class Universe {
     }
 
     public void updateThumbnail(Long thumbnailId) {
-        this.thumbnailId = thumbnailId != null? thumbnailId : this.thumbnailId;
+        this.thumbnailId = thumbnailId;
     }
     public void updateThumbMusic(Long thumbMusicId) {
-        this.thumbMusicId = thumbMusicId != null? thumbMusicId : this.thumbMusicId;
+        this.thumbMusicId = thumbMusicId;
+    }
+
+    public void updateInnerImage(Long innerImageId) {
+        this.innerImageId = innerImageId;
     }
 }

@@ -12,16 +12,34 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-public class PostUpdateUniverseThumbnailController {
+public class PostUpdateUniverseController {
 
     private final UpdateUniverseUseCase useCase;
 
     @PostMapping("/admin/universes/thumbnail/{universeId}")
-    public ResponseEntity<MessageDto> update(
+    public ResponseEntity<MessageDto> updateThumbnail(
             @PathVariable Long universeId,
             @RequestPart(value = "thumbnail") MultipartFile thumbnail) {
 
         return ResponseEntity.ok(useCase.updateThumbnail(universeId, thumbnail));
+
+    }
+
+    @PostMapping("/admin/universes/thumb-music/{universeId}")
+    public ResponseEntity<MessageDto> updateThumbMusic(
+            @PathVariable Long universeId,
+            @RequestPart(value = "thumbMusic") MultipartFile thumbMusic) {
+
+        return ResponseEntity.ok(useCase.updateThumbMusic(universeId, thumbMusic));
+
+    }
+
+    @PostMapping("/admin/universes/inner-image/{universeId}")
+    public ResponseEntity<MessageDto> updateInnerImage(
+            @PathVariable Long universeId,
+            @RequestPart(value = "innerImage") MultipartFile innerImage) {
+
+        return ResponseEntity.ok(useCase.updateInnerImage(universeId, innerImage));
 
     }
 

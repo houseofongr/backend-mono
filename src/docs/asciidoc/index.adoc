@@ -550,6 +550,24 @@ operation::admin-universe-patch[snippets='path-parameters,http-request,request-f
 
 operation::admin-universe-post-update-thumbnail[snippets='path-parameters,http-request,request-parts,http-response,response-fields']
 
+[[admin-universe-post-update-thumb-music-api]]
+==== 특정 유니버스 썸뮤직 변경 API
+
+관리자가 유니버스의 썸뮤직을 변경합니다.
+
+> 썸뮤직 파일 용량은 2MB를 초과할 수 없으며, 기존 썸뮤직은 삭제됩니다.
+
+operation::admin-universe-post-update-thumb-music[snippets='path-parameters,http-request,request-parts,http-response,response-fields']
+
+[[admin-universe-post-update-inner-image-api]]
+==== 특정 유니버스 내부 이미지 변경 API
+
+관리자가 유니버스의 내부 이미지를 변경합니다.
+
+> 내부 이미지 파일 용량은 5MB를 초과할 수 없으며, 기존 내부 이미지는 삭제됩니다.
+
+operation::admin-universe-post-update-inner-image[snippets='path-parameters,http-request,request-parts,http-response,response-fields']
+
 [[admin-universe-delete-api]]
 ==== 유니버스 삭제 API
 

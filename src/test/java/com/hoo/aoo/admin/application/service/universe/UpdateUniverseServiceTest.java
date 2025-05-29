@@ -67,12 +67,20 @@ class UpdateUniverseServiceTest {
     }
 
     @Test
-    @DisplayName("썸네일 수정 전 파일용량 확인")
-    void testThumbnailSize() {
+    @DisplayName("수정 전 파일 확인")
+    void testFile() {
         // given
         byte[] over2MB = new byte[2 * 1024 * 1024 + 1];
+        byte[] over5MB = new byte[5 * 1024 * 1024 + 1];
         MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", over2MB);
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_thumb.mp3", "audio/mpeg", over2MB);
+        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_image.png", "image/png", over5MB);
+        assertThatThrownBy(() -> sut.updateThumbnail(1L, null)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> sut.updateThumbMusic(1L, null)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> sut.updateInnerImage(1L, null)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
         assertThatThrownBy(() -> sut.updateThumbnail(1L, thumbnail)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> sut.updateThumbMusic(1L, thumbMusic)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> sut.updateInnerImage(1L, innerImage)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
     }
 
     @Test
@@ -84,12 +92,50 @@ class UpdateUniverseServiceTest {
 
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
-        when(uploadPublicImageUseCase.publicUpload((List<MultipartFile>) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS))));
+        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
 
         MessageDto message = sut.updateThumbnail(universe.getId(), thumbnail);
 
         // then
         assertThat(message.message()).contains("번 유니버스의 썸네일이 수정되었습니다.");
+        verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
+        verify(updateUniversePort, times(1)).update(universe);
+    }
+
+    @Test
+    @DisplayName("썸뮤직 수정 서비스")
+    void updateThumbmusic() {
+        // given
+        MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_thumb.mp3", "audio/mpeg", "image file".getBytes());
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        // when
+        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
+        when(uploadPublicAudioUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
+
+        MessageDto message = sut.updateThumbMusic(universe.getId(), thumbMusic);
+
+        // then
+        assertThat(message.message()).contains("번 유니버스의 썸뮤직이 수정되었습니다.");
+        verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
+        verify(updateUniversePort, times(1)).update(universe);
+    }
+
+    @Test
+    @DisplayName("내부이미지 수정 서비스")
+    void updateInnerImage() {
+        // given
+        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_inner_image.png", "image/png", "image file".getBytes());
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        // when
+        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
+        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
+
+        MessageDto message = sut.updateInnerImage(universe.getId(), innerImage);
+
+        // then
+        assertThat(message.message()).contains("번 유니버스의 내부 이미지가 수정되었습니다.");
         verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
         verify(updateUniversePort, times(1)).update(universe);
     }
