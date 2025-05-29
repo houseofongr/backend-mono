@@ -5,10 +5,7 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.aar.application.service.AarErrorCode;
 import com.hoo.aoo.aar.application.service.AarException;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UserMapper;
-import com.hoo.aoo.admin.application.port.in.user.DeleteUserPort;
-import com.hoo.aoo.admin.application.port.in.user.SearchUserCommand;
-import com.hoo.aoo.admin.application.port.in.user.SearchUserResult;
-import com.hoo.aoo.admin.application.port.in.user.SaveDeletedUserPort;
+import com.hoo.aoo.admin.application.port.in.user.*;
 import com.hoo.aoo.admin.application.port.out.user.FindUserPort;
 import com.hoo.aoo.admin.application.port.out.user.SaveUserPort;
 import com.hoo.aoo.admin.application.port.out.user.SearchUserPort;
@@ -65,8 +62,14 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
     }
 
     @Override
+    public QueryUserInfoResult query(QueryUserInfoCommand command) {
+        Page<QueryUserInfoResult.UserInfo> userInfosPages = userJpaRepository.searchAll(command).map(userMapper::mapToQueryResult);
+        return new QueryUserInfoResult(userInfosPages.getContent(), Pagination.of(userInfosPages));
+    }
+
+    @Override
     public SearchUserResult search(SearchUserCommand command) {
-        Page<SearchUserResult.UserInfo> userInfosPages = userJpaRepository.searchAll(command).map(userMapper::mapToQueryResult);
+        Page<SearchUserResult.UserInfo> userInfosPages = userJpaRepository.searchAll(command).map(userMapper::mapToSearchResult);
         return new SearchUserResult(userInfosPages.getContent(), Pagination.of(userInfosPages));
     }
 

@@ -4,6 +4,8 @@ import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.hoo.aoo.admin.application.port.in.universe.SearchUniverseResult;
+import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
+import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.admin.application.port.out.universe.DeleteUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.hoo.aoo.admin.application.port.out.universe.SaveUniversePort;

@@ -1,5 +1,6 @@
 package com.hoo.aoo.common.adapter.out.persistence.repository;
 
+import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoCommand;
 import com.hoo.aoo.admin.application.port.in.user.SearchUserCommand;
 import com.hoo.aoo.common.adapter.out.persistence.condition.UserSearchType;
 import com.hoo.aoo.common.adapter.out.persistence.condition.UserSortType;
@@ -26,6 +27,21 @@ public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
 
     public UserQueryDslRepositoryImpl(EntityManager em) {
         this.query = new JPAQueryFactory(em);
+    }
+
+    @Override
+    public Page<UserJpaEntity> searchAll(QueryUserInfoCommand command) {
+        List<UserJpaEntity> entities = query.selectFrom(userJpaEntity)
+                .leftJoin(userJpaEntity.snsAccountEntities, snsAccountJpaEntity).fetchJoin()
+                .offset(command.pageable().getOffset())
+                .limit(command.pageable().getPageSize())
+                .fetch();
+
+        Long count = query.select(userJpaEntity.count())
+                .from(userJpaEntity)
+                .fetchFirst();
+
+        return new PageImpl<>(entities, command.pageable(), count);
     }
 
     @Override

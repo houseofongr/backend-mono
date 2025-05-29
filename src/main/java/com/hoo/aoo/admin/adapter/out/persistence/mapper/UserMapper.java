@@ -1,14 +1,13 @@
 package com.hoo.aoo.admin.adapter.out.persistence.mapper;
 
+import com.hoo.aoo.admin.application.port.in.user.QueryUserInfoResult;
 import com.hoo.aoo.admin.application.port.in.user.SearchUserResult;
 import com.hoo.aoo.admin.domain.user.User;
 import com.hoo.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.hoo.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.hoo.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.hoo.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.hoo.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +18,27 @@ public class UserMapper {
 
     private final SnsAccountMapper snsAccountMapper;
 
-    public SearchUserResult.UserInfo mapToQueryResult(UserJpaEntity userJpaEntity) {
+    public QueryUserInfoResult.UserInfo mapToQueryResult(UserJpaEntity userJpaEntity) {
+        return new QueryUserInfoResult.UserInfo(
+                userJpaEntity.getId(),
+                userJpaEntity.getRealName(),
+                userJpaEntity.getNickname(),
+                userJpaEntity.getPhoneNumber(),
+                DateTimeFormatters.DOT_DATE.getFormatter().format(userJpaEntity.getCreatedTime()),
+                userJpaEntity.getTermsOfUseAgreement(),
+                userJpaEntity.getPersonalInformationAgreement(),
+                userJpaEntity.getSnsAccountEntities().stream().map(this::mapToQueryResult).toList()
+        );
+    }
+
+    private QueryUserInfoResult.SnsAccountInfo mapToQueryResult(SnsAccountJpaEntity snsAccountJpaEntity) {
+        return new QueryUserInfoResult.SnsAccountInfo(
+                snsAccountJpaEntity.getSnsDomain(),
+                snsAccountJpaEntity.getEmail()
+        );
+    }
+
+    public SearchUserResult.UserInfo mapToSearchResult(UserJpaEntity userJpaEntity) {
         return new SearchUserResult.UserInfo(
                 userJpaEntity.getId(),
                 userJpaEntity.getRealName(),
@@ -29,11 +48,11 @@ public class UserMapper {
                 userJpaEntity.getCreatedTime().toEpochSecond(),
                 userJpaEntity.getTermsOfUseAgreement(),
                 userJpaEntity.getPersonalInformationAgreement(),
-                userJpaEntity.getSnsAccountEntities().stream().map(this::mapToQueryResult).toList()
+                userJpaEntity.getSnsAccountEntities().stream().map(this::mapToSearchResult).toList()
         );
     }
 
-    private SearchUserResult.SnsAccountInfo mapToQueryResult(SnsAccountJpaEntity snsAccountJpaEntity) {
+    private SearchUserResult.SnsAccountInfo mapToSearchResult(SnsAccountJpaEntity snsAccountJpaEntity) {
         return new SearchUserResult.SnsAccountInfo(
                 snsAccountJpaEntity.getSnsDomain(),
                 snsAccountJpaEntity.getEmail()

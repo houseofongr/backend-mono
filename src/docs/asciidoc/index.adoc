@@ -362,13 +362,20 @@ operation::admin-room-delete[snippets='path-parameters,http-request,http-respons
 소리기록실 사용자 정보 관리를 위한 API 입니다.
 
 [[admin-user-get-list-api]]
+==== 사용자 조회 API
+
+관리자가 유저를 조회하는 API 입니다.
+
+operation::admin-user-get-list[snippets='path-parameters,http-request,http-response,response-fields']
+
+[[admin-user-get-list-v2-api]]
 ==== 관리자 유저 조회 API
 
 관리자가 유저를 조회하는 API 입니다.
 
 > 민감정보를 포함하고 있어 주의가 필요합니다.
 
-operation::admin-user-get-list[snippets='path-parameters,http-request,http-response,response-fields']
+operation::admin-user-get-list-v2[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-user-get-home-list-api]]
 ==== 사용자 홈 조회 API
@@ -535,11 +542,11 @@ operation::admin-universe-get[snippets='path-parameters,http-request,http-respon
 operation::admin-universe-patch[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
 
 [[admin-universe-post-update-thumbnail-api]]
-==== 유니버스 썸네일 수정 API
+==== 특정 유니버스 썸네일 변경 API
 
-관리자가 유니버스의 썸네일을 수정합니다.
+관리자가 유니버스의 썸네일을 변경합니다.
 
-> 썸네일 파일 용량은 2MB를 초과할 수 없습니다.
+> 썸네일 파일 용량은 2MB를 초과할 수 없으며, 기존 썸네일은 삭제됩니다.
 
 operation::admin-universe-post-update-thumbnail[snippets='path-parameters,http-request,request-parts,http-response,response-fields']
 
