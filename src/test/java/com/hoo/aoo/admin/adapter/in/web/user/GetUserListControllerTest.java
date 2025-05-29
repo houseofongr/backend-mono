@@ -41,7 +41,7 @@ class GetUserListControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("users[].id").description("사용자의 식별자입니다."),
                                 fieldWithPath("users[].name").description("사용자의 이름입니다."),
-                                fieldWithPath("users[].nickname").description("사용자의 이름입니다."),
+                                fieldWithPath("users[].nickname").description("사용자의 닉네임입니다."),
                                 fieldWithPath("users[].phoneNumber").description("사용자의 전화번호입니다."),
                                 fieldWithPath("users[].email").description("사용자의 메인 이메일입니다."),
                                 fieldWithPath("users[].registeredDate").description("사용자의 등록일입니다(유닉스 타임스탬프)."),
