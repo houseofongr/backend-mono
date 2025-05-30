@@ -54,8 +54,8 @@ class CreateSpaceCommandTest {
         CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f, 1f, 1f, 1f, null);
         byte[] content = new byte[2 * 1024 * 1024 + 1];
         MockMultipartFile over2MB = new MockMultipartFile("image", "image.png", "image/png", content);
-        assertThatThrownBy(() -> CreateSpaceCommand.from(command, null)).hasMessage(AdminErrorCode.ILLEGAL_SPACE_IMAGE.getMessage());
-        assertThatThrownBy(() -> CreateSpaceCommand.from(command,over2MB)).hasMessage(AdminErrorCode.ILLEGAL_SPACE_IMAGE.getMessage());
+        assertThatThrownBy(() -> CreateSpaceCommand.from(command, null)).hasMessage(AdminErrorCode.SPACE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> CreateSpaceCommand.from(command,over2MB)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.hoo.aoo.admin.application.port.in.space;
 
-import com.hoo.aoo.admin.application.port.in.universe.UpdateUniverseCommand;
 import com.hoo.aoo.admin.application.service.AdminErrorCode;
 import com.hoo.aoo.admin.application.service.AdminException;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +26,7 @@ public record UpdateSpaceCommand(
     }
 
     public static UpdateSpaceCommand from(UpdateSpaceCommand base, MultipartFile image) {
-        if (image != null && image.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.ILLEGAL_SPACE_IMAGE);
+        if (image != null && image.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.SPACE_FILE_REQUIRED);
         return new UpdateSpaceCommand(
                 base.targetId(),
                 base.title(),

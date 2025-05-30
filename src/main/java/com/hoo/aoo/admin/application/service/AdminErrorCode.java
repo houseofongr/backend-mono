@@ -41,18 +41,18 @@ public enum AdminErrorCode implements ErrorCode {
     SOUND_SOURCE_NOT_FOUND("ADMIN-SOUNDSOURCE-1", NOT_FOUND, "해당 음원을 찾을 수 없습니다."),
 
     // Universe
-    EXCEEDED_UNIVERSE_FILE_SIZE("ADMIN-UNIVERSE-1", BAD_REQUEST, "유니버스 파일 크기를 초과했습니다."),
     UNIVERSE_FILE_REQUIRED("ADMIN-UNIVERSE-2", BAD_REQUEST, "유니버스의 필수 파일이 누락되었습니다."),
     UNIVERSE_NOT_FOUND("ADMIN-UNIVERSE-3", NOT_FOUND, "해당 유니버스를 찾을 수 없습니다."),
 
     // Space
-    ILLEGAL_SPACE_IMAGE("ADMIN-SPACE-1", BAD_REQUEST, "잘못된 스페이스 이미지입니다."),
+    SPACE_FILE_REQUIRED("ADMIN-SPACE-1", BAD_REQUEST, "스페이스의 필수 파일이 누락되었습니다."),
     SPACE_NOT_FOUND("ADMIN-SPACE-2", NOT_FOUND, "해당 스페이스를 찾을 수 없습니다."),
 
     // Common
     ILLEGAL_ARGUMENT_EXCEPTION("ADMIN-COMMON-1", BAD_REQUEST, "잘못된 요청 파라미터입니다."),
     INVALID_SEARCH_TYPE("ADMIN-COMMON-2", BAD_REQUEST, "잘못된 검색 조건입니다."),
-    LOAD_ENTITY_FAILED("ADMIN-COMMON-3", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
+    EXCEEDED_FILE_SIZE("ADMIN-COMMON-3", BAD_REQUEST, "허용된 파일 크기를 초과했습니다."),
+    LOAD_ENTITY_FAILED("ADMIN-COMMON-4", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
 
     private final String code;
     private final HttpStatus status;

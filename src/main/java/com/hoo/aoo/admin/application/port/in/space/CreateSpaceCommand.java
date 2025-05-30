@@ -26,7 +26,9 @@ public record CreateSpaceCommand(
     }
 
     public static CreateSpaceCommand from(CreateSpaceCommand command, MultipartFile imageFile) {
-        if (imageFile == null || imageFile.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.ILLEGAL_SPACE_IMAGE);
+        if (imageFile == null) throw new AdminException(AdminErrorCode.SPACE_FILE_REQUIRED);
+        if (imageFile.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
+
         return new CreateSpaceCommand(
                 command.universeId(),
                 command.parentSpaceId(),

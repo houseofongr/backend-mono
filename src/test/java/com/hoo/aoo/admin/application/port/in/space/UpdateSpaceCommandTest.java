@@ -51,6 +51,6 @@ class UpdateSpaceCommandTest {
         byte[] content = new byte[2 * 1024 * 1024 + 1];
         UpdateSpaceCommand base = new UpdateSpaceCommand(1L, null, null, null, null, null, null, null);
         MockMultipartFile file = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content);
-        assertThatThrownBy(() -> UpdateSpaceCommand.from(base, file)).hasMessage(AdminErrorCode.ILLEGAL_SPACE_IMAGE.getMessage());
+        assertThatThrownBy(() -> UpdateSpaceCommand.from(base, file)).hasMessage(AdminErrorCode.SPACE_FILE_REQUIRED.getMessage());
     }
 }

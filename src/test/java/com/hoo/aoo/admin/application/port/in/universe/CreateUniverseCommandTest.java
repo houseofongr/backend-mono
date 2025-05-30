@@ -76,9 +76,9 @@ class CreateUniverseCommandTest {
         Map<String, MultipartFile> exceedInnerImage = Map.of("thumbnail", thumbnail, "thumbMusic", thumbMusic, "innerImage", innerImageExceed);
 
         // then
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbnailSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbMusicSize)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
-        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedInnerImage)).hasMessage(AdminErrorCode.EXCEEDED_UNIVERSE_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbnailSize)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedThumbMusicSize)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
+        assertThatThrownBy(() -> CreateUniverseCommand.from(command, exceedInnerImage)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
     }
 
 }
