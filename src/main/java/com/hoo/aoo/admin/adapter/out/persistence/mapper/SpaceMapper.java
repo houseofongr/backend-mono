@@ -9,7 +9,7 @@ public class SpaceMapper {
 
     public Space mapToSingleEntity(SpaceJpaEntity spaceJpaEntity) {
         return Space.loadSingle(spaceJpaEntity.getId(),
-                spaceJpaEntity.getImageFileId(),
+                spaceJpaEntity.getInnerImageFileId(),
                 spaceJpaEntity.getUniverse().getId(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),
@@ -28,7 +28,7 @@ public class SpaceMapper {
         }
 
         return Space.loadAncestor(spaceJpaEntity.getId(),
-                spaceJpaEntity.getImageFileId(),
+                spaceJpaEntity.getInnerImageFileId(),
                 spaceJpaEntity.getUniverse().getId(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),

@@ -39,7 +39,7 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     private Float scaleY;
 
     @Column(nullable = false)
-    private Long imageFileId;
+    private Long innerImageFileId;
 
     @Column(nullable = false)
     private Integer depth;
@@ -64,7 +64,7 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
                 space.getPosInfo().getDy(),
                 space.getPosInfo().getScaleX(),
                 space.getPosInfo().getScaleY(),
-                space.getImageId(),
+                space.getInnerImageId(),
                 space.getTreeInfo().getDepth(),
                 universeJpaEntity,
                 null,
@@ -81,7 +81,7 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
                 space.getPosInfo().getDy(),
                 space.getPosInfo().getScaleX(),
                 space.getPosInfo().getScaleY(),
-                space.getImageId(),
+                space.getInnerImageId(),
                 space.getTreeInfo().getDepth(),
                 parent.getUniverse(),
                 parent,
@@ -93,7 +93,7 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     }
 
     public void update(Space space) {
-        this.imageFileId = space.getImageId();
+        this.innerImageFileId = space.getInnerImageId();
         this.title = space.getBasicInfo().getTitle();
         this.description = space.getBasicInfo().getDescription();
         this.dx = space.getPosInfo().getDx();

@@ -115,7 +115,7 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
         assertThat(fileInDB).hasSize(1);
         assertThat(fileInDB)
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_universe_inner_image.png"));
-        assertThat(universeJpaRepository.findById(1L).orElseThrow().getInnerImageId()).isEqualTo(fileInDB.getFirst().getId());
+        assertThat(universeJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(fileInDB.getFirst().getId());
     }
 
 }

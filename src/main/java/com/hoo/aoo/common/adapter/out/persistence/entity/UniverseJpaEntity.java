@@ -9,9 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "UNIVERSE")
@@ -48,7 +46,7 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     private Long thumbnailFileId;
 
     @Column(nullable = false)
-    private Long innerImageId;
+    private Long innerImageFileId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -83,6 +81,6 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
         this.publicStatus = universe.getBasicInfo().getPublicStatus();
         this.thumbnailFileId = universe.getThumbnailId();
         this.thumbMusicFileId = universe.getThumbMusicId();
-        this.innerImageId = universe.getInnerImageId();
+        this.innerImageFileId = universe.getInnerImageId();
     }
 }

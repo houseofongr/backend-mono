@@ -1,13 +1,10 @@
 package com.hoo.aoo.admin.domain.universe.space;
 
 import com.hoo.aoo.common.application.service.MockEntityFactoryService;
-import org.assertj.core.api.Assertions;
-import org.hibernate.loader.ast.internal.CollectionLoaderSingleKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceTest {
     
@@ -31,7 +28,7 @@ class SpaceTest {
         // then
         assertThat(newSpace.getId()).isEqualTo(id);
         assertThat(newSpace.getUniverseId()).isEqualTo(universeId);
-        assertThat(newSpace.getImageId()).isEqualTo(imageId);
+        assertThat(newSpace.getInnerImageId()).isEqualTo(imageId);
         assertThat(newSpace.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(newSpace.getBasicInfo().getDescription()).isEqualTo(description);
         assertThat(newSpace.getPosInfo().getDx()).isEqualTo(dx);
@@ -117,17 +114,12 @@ class SpaceTest {
 
     @Test
     @DisplayName("이미지 수정하기")
-    void testUpdateImageId() {
+    void testUpdateInnerImageId() {
         // given
         Long imageId = 4321L;
         Space space = MockEntityFactoryService.getParentSpace();
 
-        // try 1
-        space.updateImage(null);
-        assertThat(space.getImageId()).isEqualTo(10L);
-
-        // try 2
-        space.updateImage(imageId);
-        assertThat(space.getImageId()).isEqualTo(imageId);
+        space.updateInnerImage(imageId);
+        assertThat(space.getInnerImageId()).isEqualTo(imageId);
     }
 }

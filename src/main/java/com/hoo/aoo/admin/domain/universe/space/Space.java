@@ -9,16 +9,16 @@ import java.time.ZonedDateTime;
 @Getter
 public class Space {
     private final Long id;
-    private Long imageId;
+    private Long innerImageId;
     private final Long universeId;
     private BasicInfo basicInfo;
     private final DateInfo dateInfo;
     private PosInfo posInfo;
     private final TreeInfo treeInfo;
 
-    private Space(Long id, Long imageId, Long universeId, BasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
+    private Space(Long id, Long innerImageId, Long universeId, BasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
         this.id = id;
-        this.imageId = imageId;
+        this.innerImageId = innerImageId;
         this.universeId = universeId;
         this.basicInfo = basicInfo;
         this.dateInfo = dateInfo;
@@ -26,10 +26,10 @@ public class Space {
         this.treeInfo = treeInfo;
     }
 
-    public static Space create(Long id, Long imageId, Long universeId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, Space parentSpace) {
+    public static Space create(Long id, Long innerImageId, Long universeId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, Space parentSpace) {
         Space newSpace = new Space(
                 id,
-                imageId,
+                innerImageId,
                 universeId,
                 new BasicInfo(title, description),
                 null,
@@ -42,10 +42,10 @@ public class Space {
         return newSpace;
     }
 
-    public static Space loadSingle(Long id, Long imageId, Long universeId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float dx, Float dy, Float scaleX, Float scaleY, Integer depth) {
+    public static Space loadSingle(Long id, Long innerImageId, Long universeId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float dx, Float dy, Float scaleX, Float scaleY, Integer depth) {
         return new Space(
                 id,
-                imageId,
+                innerImageId,
                 universeId,
                 new BasicInfo(title, description),
                 new DateInfo(createdTime, updatedTime),
@@ -82,7 +82,7 @@ public class Space {
         this.posInfo = new PosInfo(newDx, newDy, newScaleX, newScaleY);
     }
 
-    public void updateImage(Long imageId) {
-        this.imageId = imageId != null? imageId : this.imageId;
+    public void updateInnerImage(Long innerImageId) {
+        this.innerImageId = innerImageId;
     }
 }

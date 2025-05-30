@@ -21,7 +21,7 @@ class SpaceJpaEntityTest {
 
         // then
         assertThat(newSpaceEntity.getId()).isNull();
-        assertThat(newSpaceEntity.getImageFileId()).isEqualTo(space.getImageId());
+        assertThat(newSpaceEntity.getInnerImageFileId()).isEqualTo(space.getInnerImageId());
         assertThat(newSpaceEntity.getTitle()).isEqualTo(space.getBasicInfo().getTitle());
         assertThat(newSpaceEntity.getDescription()).isEqualTo(space.getBasicInfo().getDescription());
         assertThat(newSpaceEntity.getDx()).isEqualTo(space.getPosInfo().getDx());
@@ -50,7 +50,7 @@ class SpaceJpaEntityTest {
 
         // then
         assertThat(childSpaceEntity.getId()).isNull();
-        assertThat(childSpaceEntity.getImageFileId()).isEqualTo(space2.getImageId());
+        assertThat(childSpaceEntity.getInnerImageFileId()).isEqualTo(space2.getInnerImageId());
         assertThat(childSpaceEntity.getTitle()).isEqualTo(space2.getBasicInfo().getTitle());
         assertThat(childSpaceEntity.getDescription()).isEqualTo(space2.getBasicInfo().getDescription());
         assertThat(childSpaceEntity.getDx()).isEqualTo(space2.getPosInfo().getDx());

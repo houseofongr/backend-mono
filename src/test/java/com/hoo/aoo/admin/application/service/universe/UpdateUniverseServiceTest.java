@@ -92,7 +92,7 @@ class UpdateUniverseServiceTest {
 
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
-        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
+        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_thumb.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
 
         MessageDto message = sut.updateThumbnail(universe.getId(), thumbnail);
 
@@ -130,7 +130,7 @@ class UpdateUniverseServiceTest {
 
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
-        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
+        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_inner_image.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
 
         MessageDto message = sut.updateInnerImage(universe.getId(), innerImage);
 
