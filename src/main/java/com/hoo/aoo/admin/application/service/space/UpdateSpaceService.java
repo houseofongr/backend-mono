@@ -28,17 +28,11 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
     private final UpdateSpacePort updateSpacePort;
 
     @Override
-    public MessageDto update(UpdateSpaceCommand command) {
-        Space space = findSpacePort.loadSingle(command.targetId()).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+    public MessageDto update(Long spaceId, UpdateSpaceCommand command) {
+        Space space = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         space.updateBasicInfo(command.title(), command.description());
         space.updatePosInfo(command.dx(), command.dy(), command.scaleX(), command.scaleY());
-
-        if (command.image() != null) {
-            deleteFileUseCase.deleteFile(space.getImageId());
-            UploadFileResult uploadFileResult = uploadPublicImageUseCase.publicUpload(List.of(command.image()));
-            space.updateImage(uploadFileResult.fileInfos().getFirst().id());
-        }
 
         updateSpacePort.update(space);
 

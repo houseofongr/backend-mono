@@ -25,7 +25,7 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
     @DisplayName("특정 유니버스 정보 수정 API")
     void testUniverseUpdateAPI() throws Exception {
         //language=JSON
-        String command = """
+        String request = """
                 {
                   "title": "오르트구름",
                   "description": "오르트구름은 태양계 최외곽에 위치하고 있습니다.",
@@ -38,7 +38,7 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
                 """;
 
         mockMvc.perform(patch("/admin/universes/{universeId}", 1)
-                        .content(command)
+                        .content(request)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
