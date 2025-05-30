@@ -5,6 +5,7 @@ import com.hoo.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.hoo.aoo.file.application.service.FileProperties;
 import com.hoo.aoo.file.domain.File;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.RestDocumentationContextProvider;

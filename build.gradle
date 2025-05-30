@@ -67,6 +67,48 @@ test {
     useJUnitPlatform()
 }
 
+tasks.register('unitTest', Test) {
+    description = 'Run unit tests'
+    group = 'verification'
+
+    include '**/domain/**/*Test.class'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform()
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Run integration tests'
+    group = 'verification'
+
+    include '**/application/**/*Test.class'
+    include '**/adapter/out/**/*Test.class'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform()
+}
+
+tasks.register('APITest', Test) {
+    description = 'Run API tests'
+    group = 'verification'
+
+    include '**/adapter/in/**/*Test.class'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform()
+}
+
+tasks.named('check') {
+    dependsOn 'unitTest', 'integrationTest', 'APITest'
+}
+
+tasks.named('test') {
+    enabled = false
+}
+
 asciidoctor {
 
     if (System.getProperty("deleteSnippets") || System.getenv("DELETE_SNIPPETS")) {
@@ -100,9 +142,8 @@ asciidoctor {
                   'stylesheet'        : 'stylesheet.css',
                   'favicon'           : './images/favicon.ico']
 
-    dependsOn test
+    dependsOn APITest
 }
-
 
 bootJar {
     dependsOn asciidoctor

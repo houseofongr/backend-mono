@@ -13,8 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DeleteItemControllerTest extends AbstractControllerTest {
 
-
-
     @Test
     @Sql("DeleteItemControllerTest.sql")
     @DisplayName("아이템 삭제 API")
