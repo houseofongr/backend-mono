@@ -24,6 +24,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql(value = "classpath:sql/clear.sql")
 @Sql("DeleteMyAccountControllerTest.sql")
 class DeleteMyAccountControllerTest extends AbstractControllerTest {
 
