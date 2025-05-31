@@ -1,6 +1,5 @@
 package com.hoo.aoo.aar.adapter.in.web.user;
 
-import com.hoo.aoo.aar.adapter.out.api.KakaoLoginApi;
 import com.hoo.aoo.aar.adapter.out.api.KakaoProperties;
 import com.hoo.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.hoo.aoo.common.adapter.in.web.config.AbstractControllerTest;
@@ -16,8 +15,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -27,6 +24,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql("DeleteMyAccountControllerTest.sql")
 class DeleteMyAccountControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -44,11 +42,11 @@ class DeleteMyAccountControllerTest extends AbstractControllerTest {
     @Autowired
     DeletedUserJpaRepository deletedUserJpaRepository;
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
     KakaoProperties kakaoProperties;
+
+    @LocalServerPort
+    private int port;
 
     @BeforeEach
     void init() {
@@ -56,7 +54,6 @@ class DeleteMyAccountControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Sql("DeleteMyAccountControllerTest.sql")
     @DisplayName("회원탈퇴 API")
     void testDeleteMyAccountAPI() throws Exception {
 
