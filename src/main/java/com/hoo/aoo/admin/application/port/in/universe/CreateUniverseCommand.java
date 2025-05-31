@@ -16,14 +16,14 @@ public record CreateUniverseCommand(
         Long authorId,
         Category category,
         PublicStatus publicStatus,
-        List<String> tags,
+        List<String> hashtags,
         Map<String, MultipartFile> fileMap
 ) {
 
     public CreateUniverseCommand {
         if (title == null || title.isBlank() || title.length() > 100) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (description != null && description.length() > 5000) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (tags.size() > 10 || String.join("", tags).length() > 500) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (hashtags.size() > 10 || String.join("", hashtags).length() > 500) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
     public static CreateUniverseCommand from(CreateUniverseCommand baseCommand, Map<String, MultipartFile> fileMap) {
@@ -43,7 +43,7 @@ public record CreateUniverseCommand(
                 baseCommand.authorId(),
                 baseCommand.category(),
                 baseCommand.publicStatus(),
-                baseCommand.tags(),
+                baseCommand.hashtags(),
                 fileMap
         );
     }

@@ -33,7 +33,7 @@ class PostUniverseControllerTest extends AbstractControllerTest {
               "authorId": 1,
               "category": "GOVERNMENT_AND_PUBLIC_INSTITUTION",
               "publicStatus": "PUBLIC",
-              "tags": [
+              "hashtags": [
                 "우주", "행성", "지구", "별"
               ]
             }

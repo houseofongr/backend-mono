@@ -95,7 +95,7 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
                 command.description(),
                 command.category(),
                 command.publicStatus(),
-                command.tags());
+                command.hashtags());
     }
 
     @Override
