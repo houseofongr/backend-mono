@@ -1,0 +1,86 @@
+package com.aoo.common.adapter.out.persistence.entity;
+
+import com.aoo.admin.domain.universe.Category;
+import com.aoo.admin.domain.universe.PublicStatus;
+import com.aoo.admin.domain.universe.Universe;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "UNIVERSE")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UniverseJpaEntity extends DateColumnBaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private String title;
+
+    @Column(nullable = false, length = 5000)
+    private String description;
+
+    @Column(nullable = false)
+    private Long viewCount;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PublicStatus publicStatus;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @Column(nullable = false)
+    private Long thumbMusicFileId;
+
+    @Column(nullable = false)
+    private Long thumbnailFileId;
+
+    @Column(nullable = false)
+    private Long innerImageFileId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private UserJpaEntity author;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<UniverseHashtagJpaEntity> universeHashtags;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE)
+    private List<UniverseLikeJpaEntity> universeLikes;
+
+    public static UniverseJpaEntity create(Universe universe, UserJpaEntity author) {
+        return new UniverseJpaEntity(
+                null,
+                universe.getBasicInfo().getTitle(),
+                universe.getBasicInfo().getDescription(),
+                universe.getSocialInfo().getViewCount(),
+                universe.getBasicInfo().getPublicStatus(),
+                universe.getBasicInfo().getCategory(),
+                universe.getThumbMusicId(),
+                universe.getThumbnailId(),
+                universe.getInnerImageId(),
+                author,
+                new ArrayList<>(),
+                List.of());
+    }
+
+    public void update(Universe universe) {
+        this.title = universe.getBasicInfo().getTitle();
+        this.description = universe.getBasicInfo().getDescription();
+        this.category = universe.getBasicInfo().getCategory();
+        this.publicStatus = universe.getBasicInfo().getPublicStatus();
+        this.thumbnailFileId = universe.getThumbnailId();
+        this.thumbMusicFileId = universe.getThumbMusicId();
+        this.innerImageFileId = universe.getInnerImageId();
+    }
+}

@@ -5,7 +5,14 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '4.0.2'
 }
 
-group = 'com.hoo'
+group = 'com.aoo'
+
+/*
+ * NAME  - Description                          Example
+ * MAJOR – breaking changes                     0.0.1 → 0.0.2
+ * MINOR – backward-compatible new features     0.0.2 → 0.1.0
+ * PATCH – backward-compatible bug fixes        0.1.0 → 1.0.0
+ * */
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -109,7 +116,6 @@ asciidoctor {
 
     inputs.dir snippetsDir
     sourceDir = file("src/docs/asciidoc/")
-    ant.touch(file: "${sourceDir}/index.adoc")
     sources {
         include 'index.adoc'
     }
