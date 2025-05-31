@@ -134,7 +134,7 @@ asciidoctor {
                   'stylesheet'        : 'stylesheet.css',
                   'favicon'           : './images/favicon.ico']
 
-    dependsOn APITest
+    dependsOn test
 }
 
 bootJar {
