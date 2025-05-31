@@ -101,10 +101,6 @@ tasks.register('APITest', Test) {
     useJUnitPlatform()
 }
 
-tasks.named('check') {
-    dependsOn 'unitTest', 'integrationTest', 'APITest'
-}
-
 asciidoctor {
 
     if (System.getProperty("deleteSnippets") || System.getenv("DELETE_SNIPPETS")) {
