@@ -27,7 +27,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Sql("UniversePersistenceAdapter.sql")
+@Sql("UniversePersistenceAdapterTest.sql")
 @PersistenceAdapterTest
 @Import({UniversePersistenceAdapter.class, UniverseMapper.class})
 class UniversePersistenceAdapterTest {

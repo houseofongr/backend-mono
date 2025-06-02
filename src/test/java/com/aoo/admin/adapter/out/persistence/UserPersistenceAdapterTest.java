@@ -7,6 +7,7 @@ import com.aoo.admin.application.port.in.user.SearchUserCommand;
 import com.aoo.admin.application.port.in.user.SearchUserResult;
 import com.aoo.admin.domain.user.DeletedUser;
 import com.aoo.admin.domain.user.User;
+import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.*;
 import com.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
 import com.aoo.common.application.service.MockEntityFactoryService;
@@ -29,10 +30,9 @@ import java.util.Optional;
 import static com.aoo.admin.domain.user.snsaccount.SnsDomain.KAKAO;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({UserPersistenceAdapter.class, UserMapper.class, SnsAccountMapper.class})
 @Sql("UserPersistenceAdapterTest.sql")
+@PersistenceAdapterTest
+@Import({UserPersistenceAdapter.class, UserMapper.class, SnsAccountMapper.class})
 class UserPersistenceAdapterTest {
 
     @Autowired
