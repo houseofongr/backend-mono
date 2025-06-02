@@ -40,7 +40,7 @@ public class GetPublicImageControllerTest extends AbstractControllerTest {
 
         mockMvc.perform(get("/public/images/{imageId}", entity.getId()))
                 .andExpect(status().is(200))
-                .andDo(document("file-public-images-download",
+                .andDo(document("file-public-images-download-inline",
                         pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());

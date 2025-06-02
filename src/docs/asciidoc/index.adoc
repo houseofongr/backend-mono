@@ -618,12 +618,23 @@ operation::admin-space-post-update-inner-image[snippets='http-request,path-param
 
 operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
 
+[[file-public-images-get-inline-api]]
+==== 이미지 인라인 다운로드 API
+
+이미지 파일을 공개 서버로부터 다운로드합니다.
+
+> 해당 API는 인라인 방식으로, 브라우저에서는 <img/> 태그 내부의 파일로 인식합니다.
+
+operation::file-public-images-download-inline[snippets='path-parameters,http-request,response-file']
+
 [[file-public-images-get-api]]
-==== 이미지 로드 API
+==== 이미지 첨부파일 다운로드 API
 
-이미지 파일을 공개 서버로부터 로드합니다.
+이미지 파일을 공개 서버로부터 다운로드합니다.
 
-operation::file-public-images-download[snippets='path-parameters,http-request,response-file']
+> 해당 API는 첨부파일 방식으로, 브라우저에서는 첨부파일로 다운로드를 시도합니다.
+
+operation::file-public-images-download-attachment[snippets='path-parameters,http-request,response-file']
 
 [[file-public-audios-post-api]]
 ==== 오디오 업로드 API
