@@ -56,7 +56,7 @@ class CreateUniverseServiceTest {
         MessageDto messageDto = sut.create(command);
 
         // then
-        verify(saveUniversePort, times(1)).save(any(), any());
+        verify(saveUniversePort, times(1)).save(any());
         assertThat(messageDto.message()).contains("번 유니버스가 생성되었습니다.");
     }
 

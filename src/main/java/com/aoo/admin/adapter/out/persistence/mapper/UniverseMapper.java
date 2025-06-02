@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 public class UniverseMapper {
     public Universe mapToDomainEntity(UniverseJpaEntity universeJpaEntity){
         return Universe.load(universeJpaEntity.getId(),
-                universeJpaEntity.getThumbnailFileId(),
                 universeJpaEntity.getThumbMusicFileId(),
+                universeJpaEntity.getThumbnailFileId(),
                 universeJpaEntity.getInnerImageFileId(),
+                universeJpaEntity.getAuthor().getId(),
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
                 universeJpaEntity.getCategory(),

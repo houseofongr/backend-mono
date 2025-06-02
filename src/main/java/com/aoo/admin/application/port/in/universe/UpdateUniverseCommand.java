@@ -10,6 +10,7 @@ import java.util.List;
 public record UpdateUniverseCommand(
         String title,
         String description,
+        Long authorId,
         Category category,
         PublicStatus publicStatus,
         List<String> hashtags

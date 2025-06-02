@@ -33,7 +33,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
-        targetUniverse.updateBasicInfo(command.title(), command.description(), command.category(), command.publicStatus());
+        targetUniverse.updateBasicInfo(command.title(), command.description(), command.authorId(), command.category(), command.publicStatus());
         targetUniverse.updateSocialInfo(command.hashtags());
 
         updateUniversePort.update(targetUniverse);
@@ -49,7 +49,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
-        Long beforeThumbnailId = targetUniverse.getThumbnailId();
+        Long beforeThumbnailId = targetUniverse.getFileInfo().getThumbnailId();
         UploadFileResult.FileInfo uploadedThumbnail = uploadPublicImageUseCase.publicUpload(thumbnail);
 
         targetUniverse.updateThumbnail(uploadedThumbnail.id());
@@ -67,7 +67,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
-        Long beforeThumbMusicId = targetUniverse.getThumbMusicId();
+        Long beforeThumbMusicId = targetUniverse.getFileInfo().getThumbMusicId();
         UploadFileResult.FileInfo uploadedThumbMusic = uploadPublicAudioUseCase.publicUpload(thumbMusic);
 
         targetUniverse.updateThumbMusic(uploadedThumbMusic.id());
@@ -85,7 +85,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
-        Long beforeInnerImageId = targetUniverse.getInnerImageId();
+        Long beforeInnerImageId = targetUniverse.getFileInfo().getInnerImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);
 
         targetUniverse.updateInnerImage(uploadedInnerImage.id());

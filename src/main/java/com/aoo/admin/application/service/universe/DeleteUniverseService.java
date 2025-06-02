@@ -27,8 +27,8 @@ public class DeleteUniverseService implements DeleteUniverseUseCase {
 
         Universe universe = findUniversePort.load(id).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
-        deleteFileUseCase.deleteFile(universe.getThumbnailId());
-        deleteFileUseCase.deleteFile(universe.getThumbMusicId());
+        deleteFileUseCase.deleteFile(universe.getFileInfo().getThumbnailId());
+        deleteFileUseCase.deleteFile(universe.getFileInfo().getThumbMusicId());
 
         deleteUniversePort.delete(universe);
 

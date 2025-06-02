@@ -48,7 +48,7 @@ class UpdateUniverseServiceTest {
     @DisplayName("정보 수정")
     void testUpdate() {
         // given
-        UpdateUniverseCommand command = new UpdateUniverseCommand( "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
+        UpdateUniverseCommand command = new UpdateUniverseCommand( "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when

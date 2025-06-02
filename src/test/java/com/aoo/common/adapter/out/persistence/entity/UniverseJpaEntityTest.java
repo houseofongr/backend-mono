@@ -29,7 +29,8 @@ class UniverseJpaEntityTest {
         assertThat(universeJpaEntity.getViewCount()).isEqualTo(0L);
         assertThat(universeJpaEntity.getUniverseHashtags()).isEmpty();
         assertThat(universeJpaEntity.getUniverseLikes()).isEqualTo(List.of());
-        assertThat(universeJpaEntity.getThumbnailFileId()).isEqualTo(universe.getThumbnailId());
-        assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(universe.getThumbMusicId());
+        assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(universe.getFileInfo().getThumbMusicId());
+        assertThat(universeJpaEntity.getThumbnailFileId()).isEqualTo(universe.getFileInfo().getThumbnailId());
+        assertThat(universeJpaEntity.getInnerImageFileId()).isEqualTo(universe.getFileInfo().getInnerImageId());
     }
 }

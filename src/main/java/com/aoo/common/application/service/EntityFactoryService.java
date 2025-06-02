@@ -91,6 +91,7 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
                 thumbnailId,
                 thumbMusicId,
                 innerImageId,
+                command.authorId(),
                 command.title(),
                 command.description(),
                 command.category(),

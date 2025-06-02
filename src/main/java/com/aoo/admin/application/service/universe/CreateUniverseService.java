@@ -32,7 +32,7 @@ public class CreateUniverseService implements CreateUniverseUseCase {
 
         Universe universe = createUniversePort.createUniverse(command, thumbnail.id(), thumbMusic.id(), innerImage.id());
 
-        return new MessageDto(saveUniversePort.save(universe, command.authorId()) + "번 유니버스가 생성되었습니다.");
+        return new MessageDto(saveUniversePort.save(universe) + "번 유니버스가 생성되었습니다.");
     }
 
 }

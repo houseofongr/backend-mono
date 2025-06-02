@@ -20,21 +20,24 @@ class UniverseTest {
         List<String> tag = List.of("우주", "행성", "지구", "별");
         Category category = Category.GOVERNMENT_AND_PUBLIC_INSTITUTION;
         PublicStatus publicStatus = PublicStatus.PUBLIC;
-        Long thumbnailId = 11L;
         Long thumbMusicId = 100L;
+        Long thumbnailId = 11L;
         Long innerImageId = 12L;
+        Long authorId = 1L;
 
         // when
-        Universe universe = Universe.create(id, thumbnailId, thumbMusicId, innerImageId, title, description, category, publicStatus, tag);
+        Universe universe = Universe.create(id, thumbMusicId, thumbnailId, innerImageId, authorId, title, description, category, publicStatus, tag);
         UniverseBasicInfo basicInfo = universe.getBasicInfo();
         SocialInfo socialInfo = universe.getSocialInfo();
 
         // then
         assertThat(universe.getId()).isEqualTo(id);
-        assertThat(universe.getThumbnailId()).isEqualTo(thumbnailId);
-        assertThat(universe.getThumbMusicId()).isEqualTo(thumbMusicId);
+        assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(thumbnailId);
+        assertThat(universe.getFileInfo().getThumbMusicId()).isEqualTo(thumbMusicId);
+        assertThat(universe.getFileInfo().getInnerImageId()).isEqualTo(innerImageId);
         assertThat(universe.getDateInfo()).isNull();
         assertThat(universe.getTreeInfo()).isNull();
+        assertThat(basicInfo.getAuthorId()).isEqualTo(authorId);
         assertThat(basicInfo.getPublicStatus()).isEqualTo(publicStatus);
         assertThat(basicInfo.getTitle()).isEqualTo(title);
         assertThat(basicInfo.getDescription()).isEqualTo(description);
@@ -55,18 +58,20 @@ class UniverseTest {
         String description = "오르트구름은 태양계 최외곽에 위치하고 있습니다.";
         Category category = Category.LIFE;
         PublicStatus publicStatus = PublicStatus.PRIVATE;
+        Long authorId = 1L;
 
         // when
-        universe.updateBasicInfo(title,description,null,null);
+        universe.updateBasicInfo(title, description, authorId, null, null);
 
         // then
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(universe.getBasicInfo().getDescription()).isEqualTo(description);
+        assertThat(universe.getBasicInfo().getAuthorId()).isEqualTo(authorId);
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.GOVERNMENT_AND_PUBLIC_INSTITUTION);
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PUBLIC);
 
         // when 2
-        universe.updateBasicInfo(null,null, category, publicStatus);
+        universe.updateBasicInfo(null, null, null, category, publicStatus);
 
         // then 2
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(category);
@@ -89,20 +94,23 @@ class UniverseTest {
     }
 
     @Test
-    @DisplayName("썸네일 / 썸뮤직 수정하기")
+    @DisplayName("썸네일 / 썸뮤직 / 내부이미지 수정하기")
     void testUpdateFiles() {
         // given
         Universe universe = MockEntityFactoryService.getUniverse();
 
-        Long thumbnailId = 12L;
         Long thumbMusicId = 101L;
+        Long thumbnailId = 12L;
+        Long innerImageId = 13L;
 
         // when
-        universe.updateThumbnail(thumbnailId);
         universe.updateThumbMusic(thumbMusicId);
+        universe.updateThumbnail(thumbnailId);
+        universe.updateInnerImage(innerImageId);
 
         // then
-        assertThat(universe.getThumbnailId()).isEqualTo(thumbnailId);
-        assertThat(universe.getThumbMusicId()).isEqualTo(thumbMusicId);
+        assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(thumbnailId);
+        assertThat(universe.getFileInfo().getThumbMusicId()).isEqualTo(thumbMusicId);
+        assertThat(universe.getFileInfo().getInnerImageId()).isEqualTo(innerImageId);
     }
 }

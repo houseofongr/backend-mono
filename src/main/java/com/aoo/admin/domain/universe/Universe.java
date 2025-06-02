@@ -9,19 +9,15 @@ import java.util.List;
 @Getter
 public class Universe {
     private final Long id;
-    private Long thumbMusicId;
-    private Long thumbnailId;
-    private Long innerImageId;
-    private UniverseBasicInfo basicInfo;
     private final DateInfo dateInfo;
-    private SocialInfo socialInfo;
     private final TreeInfo treeInfo;
+    private UniverseFileInfo fileInfo;
+    private UniverseBasicInfo basicInfo;
+    private SocialInfo socialInfo;
 
-    private Universe(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageId, UniverseBasicInfo basicInfo, DateInfo dateInfo, SocialInfo socialInfo, TreeInfo treeInfo) {
+    private Universe(Long id, UniverseFileInfo fileInfo, UniverseBasicInfo basicInfo, DateInfo dateInfo, SocialInfo socialInfo, TreeInfo treeInfo) {
         this.id = id;
-        this.thumbMusicId = thumbMusicId;
-        this.thumbnailId = thumbnailId;
-        this.innerImageId = innerImageId;
+        this.fileInfo = fileInfo;
         this.basicInfo = basicInfo;
         this.dateInfo = dateInfo;
         this.socialInfo = socialInfo;
@@ -29,49 +25,47 @@ public class Universe {
     }
 
 
-    public static Universe create(Long id, Long thumbnailId, Long thumbMusicId, Long innerImageId, String title, String description, Category category, PublicStatus publicStatus, List<String> tag) {
+    public static Universe create(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageId, Long authorId, String title, String description, Category category, PublicStatus publicStatus, List<String> tag) {
         return new Universe(id,
-                thumbMusicId,
-                thumbnailId,
-                innerImageId,
-                new UniverseBasicInfo(title, description, category, publicStatus),
+                new UniverseFileInfo(thumbMusicId, thumbnailId, innerImageId),
+                new UniverseBasicInfo(title, description, authorId, category, publicStatus),
                 null,
                 new SocialInfo(0, 0L, tag),
                 null);
     }
 
-    public static Universe load(Long id, Long thumbnailId, Long thumbMusicId, Long innerImageId, String title, String description, Category category, PublicStatus publicStatus, Integer likeCount, Long viewCount, List<String> tag, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Universe load(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageId, Long authorId, String title, String description, Category category, PublicStatus publicStatus, Integer likeCount, Long viewCount, List<String> tag, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Universe(id,
-                thumbMusicId,
-                thumbnailId,
-                innerImageId,
-                new UniverseBasicInfo(title, description, category, publicStatus),
-                new DateInfo(createdTime,updatedTime),
+                new UniverseFileInfo(thumbMusicId, thumbnailId, innerImageId),
+                new UniverseBasicInfo(title, description, authorId, category, publicStatus),
+                new DateInfo(createdTime, updatedTime),
                 new SocialInfo(likeCount, viewCount, tag),
                 null);
     }
 
-    public void updateBasicInfo(String title, String description, Category category, PublicStatus publicStatus) {
-        String newTitle = title != null? title : basicInfo.getTitle();
-        String newDescription = description != null? description : basicInfo.getDescription();
-        Category newCategory = category != null? category : basicInfo.getCategory();
-        PublicStatus newStatus = publicStatus != null? publicStatus : basicInfo.getPublicStatus();
+    public void updateBasicInfo(String title, String description, Long authorId, Category category, PublicStatus publicStatus) {
+        String newTitle = title != null ? title : basicInfo.getTitle();
+        String newDescription = description != null ? description : basicInfo.getDescription();
+        Long newAuthorId = authorId != null ? authorId : basicInfo.getAuthorId();
+        Category newCategory = category != null ? category : basicInfo.getCategory();
+        PublicStatus newStatus = publicStatus != null ? publicStatus : basicInfo.getPublicStatus();
 
-        this.basicInfo = new UniverseBasicInfo(newTitle, newDescription, newCategory, newStatus);
+        this.basicInfo = new UniverseBasicInfo(newTitle, newDescription, newAuthorId, newCategory, newStatus);
     }
 
     public void updateSocialInfo(List<String> tags) {
-        this.socialInfo = tags != null? new SocialInfo(socialInfo.getLikeCount(), socialInfo.getViewCount(), tags) : this.socialInfo;
+        this.socialInfo = tags != null ? new SocialInfo(socialInfo.getLikeCount(), socialInfo.getViewCount(), tags) : this.socialInfo;
     }
 
     public void updateThumbnail(Long thumbnailId) {
-        this.thumbnailId = thumbnailId;
+        this.fileInfo = new UniverseFileInfo(this.fileInfo.getThumbMusicId(), thumbnailId, this.fileInfo.getInnerImageId());
     }
+
     public void updateThumbMusic(Long thumbMusicId) {
-        this.thumbMusicId = thumbMusicId;
+        this.fileInfo = new UniverseFileInfo(thumbMusicId, this.fileInfo.getThumbnailId(), this.fileInfo.getInnerImageId());
     }
 
     public void updateInnerImage(Long innerImageId) {
-        this.innerImageId = innerImageId;
+        this.fileInfo = new UniverseFileInfo(this.fileInfo.getThumbMusicId(), this.fileInfo.getThumbnailId(), innerImageId);
     }
 }

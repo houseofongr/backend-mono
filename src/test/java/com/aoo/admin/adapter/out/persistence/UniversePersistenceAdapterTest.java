@@ -64,7 +64,7 @@ class UniversePersistenceAdapterTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        Long id = sut.save(universe, 1L);
+        Long id = sut.save(universe);
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(id).orElseThrow();
 
         // then
@@ -75,8 +75,8 @@ class UniversePersistenceAdapterTest {
         assertThat(universeJpaEntity.getViewCount()).isEqualTo(0L);
         assertThat(universeJpaEntity.getUniverseHashtags()).hasSize(4);
         assertThat(universeJpaEntity.getUniverseLikes()).isEmpty();
-        assertThat(universeJpaEntity.getThumbnailFileId()).isEqualTo(universe.getThumbnailId());
-        assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(universe.getThumbMusicId());
+        assertThat(universeJpaEntity.getThumbnailFileId()).isEqualTo(universe.getFileInfo().getThumbnailId());
+        assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(universe.getFileInfo().getThumbMusicId());
     }
 
     @Test
@@ -175,7 +175,7 @@ class UniversePersistenceAdapterTest {
         SearchUniverseResult result_조회수_오름차순 = sut.search(조회수_오름차순);
 
         Universe universe = MockEntityFactoryService.getUniverse();
-        sut.save(universe, 1L);
+        sut.save(universe);
 
         SearchUniverseResult result_등록일자_내림차순 = sut.search(등록일자_내림차순);
         SearchUniverseResult result_등록일자_오름차순 = sut.search(등록일자_오름차순);
@@ -199,8 +199,8 @@ class UniversePersistenceAdapterTest {
     @DisplayName("유니버스 기본 검색(아무 파라미터 없이 검색 시 → 10건 등록 날짜 내림차순)")
     void testSearch() {
         // given
-        Universe universe = Universe.create(1L, 1L, 1L, 1L, "test title","test desc", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, List.of());
-        sut.save(universe, 1L);
+        Universe universe = Universe.create(1L, 1L, 1L, 1L, 1L, "test title","test desc", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, List.of());
+        sut.save(universe);
 
         SearchUniverseCommand command = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, null, null, null);
 
@@ -215,7 +215,7 @@ class UniversePersistenceAdapterTest {
     @DisplayName("태그 수정시 기존태그(UniverseHashtag) 삭제")
     void testDeleteOriginalTag() {
         // given
-        Universe universe = Universe.load(12L, 13L, 13L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), ZonedDateTime.now(), ZonedDateTime.now());
+        Universe universe = Universe.load(12L, 13L, 13L, 1L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
         sut.update(universe);
@@ -230,7 +230,7 @@ class UniversePersistenceAdapterTest {
     @DisplayName("정상 수정로직(Happy Case)")
     void happyCase() {
         // given
-        Universe universe = Universe.load(12L, 13L, 13L, 1L,"오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), ZonedDateTime.now(), ZonedDateTime.now());
+        Universe universe = Universe.load(12L, 13L, 13L, 1L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
         sut.update(universe);
@@ -251,7 +251,7 @@ class UniversePersistenceAdapterTest {
     @Transactional
     void testDeleteRelationship() {
         // given
-        Universe universe = Universe.load(12L,12L,12L, 1L,"우주",null,null,null,null,null,List.of("오르트구름", "태양계", "윤하", "별"),null,null);
+        Universe universe = Universe.load(12L,12L,12L, 1L, 1L,"우주",null,null,null,null,null,List.of("오르트구름", "태양계", "윤하", "별"),null,null);
 
         // when
         sut.delete(universe);

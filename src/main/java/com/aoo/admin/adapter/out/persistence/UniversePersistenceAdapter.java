@@ -22,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -36,14 +33,15 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     private final UserJpaRepository userJpaRepository;
     private final UniverseMapper universeMapper;
 
+    //TODO : 여러 태그 한번에 조회하도록 로직 수정(현재 쿼리가 tag 개수만큼 나감)
     public HashtagJpaEntity getOrCreate(String tag) {
         return hashtagJpaRepository.findByTag(tag)
                 .orElseGet(() -> hashtagJpaRepository.save(HashtagJpaEntity.create(tag)));
     }
 
     @Override
-    public Long save(Universe universe, Long authorId) {
-        UserJpaEntity author = userJpaRepository.findById(authorId).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+    public Long save(Universe universe) {
+        UserJpaEntity author = userJpaRepository.findById(universe.getBasicInfo().getAuthorId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
         UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, author);
 
@@ -75,8 +73,16 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
 
     @Override
     public void update(Universe universe) {
-        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow();
+        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        targetEntity.update(universe);
 
+        // Author Update
+        if (!Objects.equals(targetEntity.getAuthor().getId(), universe.getBasicInfo().getAuthorId())) {
+            UserJpaEntity userJpaEntity = userJpaRepository.findById(universe.getBasicInfo().getAuthorId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+            targetEntity.updateAuthor(userJpaEntity);
+        }
+
+        // Hashtag Update
         List<UniverseHashtagJpaEntity> universeHashtags = targetEntity.getUniverseHashtags();
         Set<String> notExistTags = new HashSet<>(universe.getSocialInfo().getHashtags());
         for (int i = universeHashtags.size() - 1; i >= 0; i--) {
@@ -92,10 +98,8 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
         }
 
         for (String tag : notExistTags) {
-            universeHashtags.add(UniverseHashtagJpaEntity.create(targetEntity,getOrCreate(tag)));
+            universeHashtags.add(UniverseHashtagJpaEntity.create(targetEntity, getOrCreate(tag)));
         }
-
-        targetEntity.update(universe);
     }
 
     @Override

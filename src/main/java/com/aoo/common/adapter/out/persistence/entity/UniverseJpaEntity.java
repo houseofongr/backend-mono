@@ -66,9 +66,9 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
                 universe.getSocialInfo().getViewCount(),
                 universe.getBasicInfo().getPublicStatus(),
                 universe.getBasicInfo().getCategory(),
-                universe.getThumbMusicId(),
-                universe.getThumbnailId(),
-                universe.getInnerImageId(),
+                universe.getFileInfo().getThumbMusicId(),
+                universe.getFileInfo().getThumbnailId(),
+                universe.getFileInfo().getInnerImageId(),
                 author,
                 new ArrayList<>(),
                 List.of());
@@ -79,8 +79,12 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
         this.description = universe.getBasicInfo().getDescription();
         this.category = universe.getBasicInfo().getCategory();
         this.publicStatus = universe.getBasicInfo().getPublicStatus();
-        this.thumbnailFileId = universe.getThumbnailId();
-        this.thumbMusicFileId = universe.getThumbMusicId();
-        this.innerImageFileId = universe.getInnerImageId();
+        this.thumbMusicFileId = universe.getFileInfo().getThumbMusicId();
+        this.thumbnailFileId = universe.getFileInfo().getThumbnailId();
+        this.innerImageFileId = universe.getFileInfo().getInnerImageId();
+    }
+
+    public void updateAuthor(UserJpaEntity author) {
+        this.author = author;
     }
 }
