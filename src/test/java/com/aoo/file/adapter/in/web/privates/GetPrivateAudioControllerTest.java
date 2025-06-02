@@ -29,8 +29,6 @@ class GetPrivateAudioControllerTest extends AbstractControllerTest {
         return "file.archiveofongr.site";
     }
 
-
-
     @Test
     @DisplayName("오디오 파일 다운로드 API")
     void testDownloadAudio() throws Exception {

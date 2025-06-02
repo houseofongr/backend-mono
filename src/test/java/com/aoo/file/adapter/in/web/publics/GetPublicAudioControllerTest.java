@@ -30,8 +30,8 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @DisplayName("오디오파일 다운로드 API")
-    void testFile() throws Exception {
+    @DisplayName("오디오 인라인 다운로드 API")
+    void testDownloadInline() throws Exception {
 
         ClassPathResource resource = new ClassPathResource("public/audios/sample.mp3");
         byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
@@ -40,8 +40,35 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
 
         mockMvc.perform(get("/public/audios/{audioId}", entity.getId()))
                 .andExpect(status().is(200))
-                .andDo(document("file-public-audios-download",
-                        pathParameters(parameterWithName("audioId").description("조회(다운로드)할 음원 식별자입니다.")),
+                .andDo(document("file-public-audios-download-inline",
+                        pathParameters(parameterWithName("audioId").description("다운로드할 음원 식별자입니다.")),
+                        operation -> {
+                            var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
+                            var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
+                            var outputStream = new ByteArrayOutputStream();
+                            outputStream.write("++++\n".getBytes());
+                            outputStream.write("<audio controls type=\"audio/mp3\" src=\"data:audio/mp3;base64,".getBytes());
+                            outputStream.write(Base64.getEncoder().encode(operation.getResponse().getContent()));
+                            outputStream.write("\"/>\n".getBytes());
+                            outputStream.write("++++\n".getBytes());
+                            Files.createDirectories(path.getParent());
+                            Files.write(path, outputStream.toByteArray());
+                        }));
+    }
+
+    @Test
+    @DisplayName("오디오 첨부파일 다운로드 API")
+    void testFile() throws Exception {
+
+        ClassPathResource resource = new ClassPathResource("public/audios/sample.mp3");
+        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
+        FileJpaEntity entity = new FileJpaEntity(null, "sample.mp3", "sample.mp3", resource.getFile().getParent(), false, (long) bytes.length, null);
+        fileJpaRepository.save(entity);
+
+        mockMvc.perform(get("/public/audios/attachment/{audioId}", entity.getId()))
+                .andExpect(status().is(200))
+                .andDo(document("file-public-audios-download-attachment",
+                        pathParameters(parameterWithName("audioId").description("다운로드할 음원 식별자입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");

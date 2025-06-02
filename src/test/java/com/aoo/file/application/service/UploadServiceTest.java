@@ -42,8 +42,10 @@ class UploadServiceTest {
     MockMultipartFile imageFile2;
     MockMultipartFile audioFile;
 
+    @TempDir Path tempDir;
+
     @BeforeEach
-    void init(@TempDir Path tempDir) {
+    void init() {
         saveImageFilePort = mock();
         fileProperties = new FileProperties(100 * 1024 * 1024L, tempDir.toString());
         writeFilePort = mock();

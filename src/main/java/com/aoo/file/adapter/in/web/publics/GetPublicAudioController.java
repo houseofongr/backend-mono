@@ -16,9 +16,20 @@ public class GetPublicAudioController {
     private final DownloadPublicAudioUseCase downloadPublicAudioUseCase;
 
     @GetMapping("/public/audios/{fileId}")
-    public ResponseEntity<?> download(@PathVariable Long fileId) {
+    public ResponseEntity<?> downloadInline(@PathVariable Long fileId) {
 
-        DownloadFileResult result = downloadPublicAudioUseCase.publicDownload(fileId);
+        DownloadFileResult result = downloadPublicAudioUseCase.publicDownloadInline(fileId);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
+                .contentType(result.mediaType())
+                .body(result.resource());
+    }
+
+    @GetMapping("/public/audios/attachment/{fileId}")
+    public ResponseEntity<?> downloadAttachment(@PathVariable Long fileId) {
+
+        DownloadFileResult result = downloadPublicAudioUseCase.publicDownloadAttachment(fileId);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())

@@ -24,43 +24,21 @@ import java.nio.file.Path;
 @RequiredArgsConstructor
 public class DownloadAudioService implements DownloadPublicAudioUseCase, DownloadPrivateAudioUseCase {
 
-    private final FindFilePort findFilePort;
+    private final DownloadService downloadService;
 
     @Override
-    public DownloadFileResult publicDownload(Long fileId) {
-        return download(fileId, Authority.PUBLIC_FILE_ACCESS);
+    public DownloadFileResult publicDownloadInline(Long fileId) {
+        return downloadService.load(fileId, FileType.AUDIO, Authority.PUBLIC_FILE_ACCESS, false);
+    }
+
+    @Override
+    public DownloadFileResult publicDownloadAttachment(Long fileId) {
+        return downloadService.load(fileId, FileType.AUDIO, Authority.PUBLIC_FILE_ACCESS, true);
     }
 
     @Override
     public DownloadFileResult privateDownload(Long fileId) {
-        return download(fileId,Authority.ALL_PRIVATE_AUDIO_ACCESS);
+        return downloadService.load(fileId, FileType.AUDIO, Authority.ALL_PRIVATE_AUDIO_ACCESS, false);
     }
 
-    private DownloadFileResult download(Long fileId, Authority authority) {
-        try {
-
-            File file = findFilePort.load(fileId)
-                    .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
-
-            FileId audioFileId = file.getFileId();
-
-            if (audioFileId.getAuthority() != authority)
-                throw new FileException(FileErrorCode.INVALID_AUTHORITY);
-
-            if (audioFileId.getFileType() != FileType.AUDIO)
-                throw new FileException(FileErrorCode.INVALID_FILE_TYPE);
-
-            ContentDisposition disposition = ContentDisposition.inline()
-                    .filename(audioFileId.getFileSystemName())
-                    .build();
-
-            return new DownloadFileResult(
-                    disposition.toString(),
-                    MediaType.parseMediaType(Files.probeContentType(Path.of(audioFileId.getFilePath()))),
-                    new UrlResource(audioFileId.getFilePath()));
-
-        } catch (IOException e) {
-            throw new FileException(e, FileErrorCode.RETRIEVE_FILE_FAILED);
-        }
-    }
 }

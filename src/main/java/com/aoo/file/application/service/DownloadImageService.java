@@ -20,55 +20,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Component
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DownloadImageService implements DownloadPublicImageUseCase, DownloadImageUseCase {
 
-    private final FindFilePort findFilePort;
+    private final DownloadService downloadService;
 
     @Override
-    @Transactional(readOnly = true)
-    public DownloadFileResult privateDownload(Long fileId) {
-        return load(fileId, Authority.ALL_PRIVATE_IMAGE_ACCESS, false);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public DownloadFileResult publicDownloadInline(Long fileId) {
-        return load(fileId, Authority.PUBLIC_FILE_ACCESS, false);
+        return downloadService.load(fileId, FileType.IMAGE, Authority.PUBLIC_FILE_ACCESS, false);
     }
 
     @Override
     public DownloadFileResult publicDownloadAttachment(Long fileId) {
-        return load(fileId, Authority.PUBLIC_FILE_ACCESS, true);
+        return downloadService.load(fileId, FileType.IMAGE, Authority.PUBLIC_FILE_ACCESS, true);
     }
 
-    private DownloadFileResult load(Long fileId, Authority authority, boolean attachment) {
-        try {
-
-            File loadedFile = findFilePort.load(fileId)
-                    .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
-
-            FileId imageFileId = loadedFile.getFileId();
-
-            if (imageFileId.getFileType() != FileType.IMAGE)
-                throw new FileException(FileErrorCode.INVALID_FILE_TYPE);
-
-            if (imageFileId.getAuthority() != authority)
-                throw new FileException(FileErrorCode.INVALID_AUTHORITY);
-
-            ContentDisposition disposition = attachment?
-                    ContentDisposition.attachment().filename(imageFileId.getRealFileName()).build() :
-                    ContentDisposition.inline().filename(imageFileId.getFileSystemName()).build();
-
-            return new DownloadFileResult(
-                    disposition.toString(),
-                    MediaType.parseMediaType(Files.probeContentType(Path.of(imageFileId.getFilePath()))),
-                    new UrlResource(imageFileId.getFilePath()));
-
-        } catch (IOException e) {
-
-            throw new FileException(e, FileErrorCode.RETRIEVE_FILE_FAILED);
-
-        }
+    @Override
+    public DownloadFileResult privateDownload(Long fileId) {
+        return downloadService.load(fileId, FileType.IMAGE, Authority.ALL_PRIVATE_IMAGE_ACCESS, false);
     }
 }
