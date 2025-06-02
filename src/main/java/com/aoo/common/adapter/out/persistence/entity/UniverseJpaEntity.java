@@ -52,7 +52,7 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID")
     private UserJpaEntity author;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<UniverseHashtagJpaEntity> universeHashtags;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE)

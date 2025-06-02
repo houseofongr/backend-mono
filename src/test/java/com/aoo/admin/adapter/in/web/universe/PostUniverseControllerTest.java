@@ -1,8 +1,14 @@
 package com.aoo.admin.adapter.in.web.universe;
 
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import com.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.UniverseHashtagJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.aoo.common.adapter.out.persistence.repository.HashtagJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import com.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +31,13 @@ class PostUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;
+
+    @Autowired
+    HashtagJpaRepository hashtagJpaRepository;
+
+    @Autowired
+    EntityManager em;
+
     //language=JSON
     String metadata = """
             {
@@ -80,6 +93,14 @@ class PostUniverseControllerTest extends AbstractControllerTest {
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_inner_image.png"))
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_thumb.png"))
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_music.mp3"));
+
+        List<UniverseHashtagJpaEntity> universeHashtags = em.createQuery("select u from UniverseHashtagJpaEntity u", UniverseHashtagJpaEntity.class).getResultList();
+        assertThat(universeHashtags).hasSize(4);
+
+        List<HashtagJpaEntity> hashtagsInDB = hashtagJpaRepository.findAll();
+        String tags = "우주, 행성, 지구, 별";
+        assertThat(hashtagsInDB).hasSize(4);
+        assertThat(hashtagsInDB).allMatch(hashtagJpaEntity -> tags.contains(hashtagJpaEntity.getTag()));
     }
 
 }
