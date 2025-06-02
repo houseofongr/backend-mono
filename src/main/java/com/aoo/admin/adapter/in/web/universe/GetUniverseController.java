@@ -15,7 +15,7 @@ public class GetUniverseController {
     private final SearchUniverseUseCase useCase;
 
     @GetMapping("/admin/universes/{universeId}")
-    public ResponseEntity<SearchUniverseResult.UniverseInfo> get(@PathVariable Long universeId) {
+    public ResponseEntity<SearchUniverseResult.UniverseDetailInfo> get(@PathVariable Long universeId) {
 
         return ResponseEntity.ok(useCase.search(universeId));
     }

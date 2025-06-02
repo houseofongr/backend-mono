@@ -21,7 +21,7 @@ public class SearchUniverseService implements SearchUniverseUseCase {
     }
 
     @Override
-    public SearchUniverseResult.UniverseInfo search(Long universeId) {
+    public SearchUniverseResult.UniverseDetailInfo search(Long universeId) {
         return findUniversePort.find(universeId);
     }
 

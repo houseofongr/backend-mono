@@ -47,4 +47,45 @@ public record SearchUniverseResult(
             );
         }
     }
+
+    public record UniverseDetailInfo(
+            Long id,
+            Long thumbnailId,
+            Long thumbMusicId,
+            Long innerImageId,
+            Long authorId,
+            Long createdTime,
+            Long updatedTime,
+            Long view,
+            Integer like,
+            String title,
+            String description,
+            String author,
+            String category,
+            String publicStatus,
+            List<String> hashtags
+    ) {
+
+        public static UniverseDetailInfo of(UniverseJpaEntity universeJpaEntity) {
+            return new UniverseDetailInfo(
+                    universeJpaEntity.getId(),
+                    universeJpaEntity.getThumbnailFileId(),
+                    universeJpaEntity.getThumbMusicFileId(),
+                    universeJpaEntity.getInnerImageFileId(),
+                    universeJpaEntity.getAuthor().getId(),
+                    universeJpaEntity.getCreatedTime().toEpochSecond(),
+                    universeJpaEntity.getUpdatedTime().toEpochSecond(),
+                    universeJpaEntity.getViewCount(),
+                    universeJpaEntity.getUniverseLikes().size(),
+                    universeJpaEntity.getTitle(),
+                    universeJpaEntity.getDescription(),
+                    universeJpaEntity.getAuthor().getNickname(),
+                    universeJpaEntity.getCategory().name(),
+                    universeJpaEntity.getPublicStatus().name(),
+                    universeJpaEntity.getUniverseHashtags().stream()
+                            .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
+                            .toList()
+            );
+        }
+    }
 }
