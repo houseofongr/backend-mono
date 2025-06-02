@@ -45,7 +45,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
     public MessageDto updateThumbnail(Long universeId, MultipartFile thumbnail) {
 
         if (thumbnail == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
-        if (thumbnail.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
+        if (thumbnail.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
@@ -63,7 +63,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
     public MessageDto updateThumbMusic(Long universeId, MultipartFile thumbMusic) {
 
         if (thumbMusic == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
-        if (thumbMusic.getSize() >= 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
+        if (thumbMusic.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
@@ -81,7 +81,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
     public MessageDto updateInnerImage(Long universeId, MultipartFile innerImage) {
 
         if (innerImage == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
-        if (innerImage.getSize() >= 5 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
+        if (innerImage.getSize() > 100 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
         Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 

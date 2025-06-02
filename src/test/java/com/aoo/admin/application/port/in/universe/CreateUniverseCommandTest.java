@@ -62,7 +62,7 @@ class CreateUniverseCommandTest {
     void testFileSizeExceeded() {
         // given
         byte[] content = new byte[2 * 1024 * 1024 + 1];
-        byte[] content2 = new byte[5 * 1024 * 1024 + 1];
+        byte[] content2 = new byte[100 * 1024 * 1024 + 1];
 
         MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
         MockMultipartFile thumbnailExceed = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", content);

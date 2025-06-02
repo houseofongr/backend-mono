@@ -71,10 +71,10 @@ class UpdateUniverseServiceTest {
     void testFile() {
         // given
         byte[] over2MB = new byte[2 * 1024 * 1024 + 1];
-        byte[] over5MB = new byte[5 * 1024 * 1024 + 1];
+        byte[] over100MB = new byte[100 * 1024 * 1024 + 1];
         MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", over2MB);
         MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_thumb.mp3", "audio/mpeg", over2MB);
-        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_image.png", "image/png", over5MB);
+        MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_image.png", "image/png", over100MB);
         assertThatThrownBy(() -> sut.updateThumbnail(1L, null)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
         assertThatThrownBy(() -> sut.updateThumbMusic(1L, null)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());
         assertThatThrownBy(() -> sut.updateInnerImage(1L, null)).isInstanceOf(AdminException.class).hasMessage(AdminErrorCode.UNIVERSE_FILE_REQUIRED.getMessage());

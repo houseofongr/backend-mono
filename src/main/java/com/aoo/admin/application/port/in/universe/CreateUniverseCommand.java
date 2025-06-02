@@ -34,7 +34,7 @@ public record CreateUniverseCommand(
 
         if (fileMap.get("thumbnail").getSize() > 2 * 1024 * 1024 ||
             fileMap.get("thumbMusic").getSize() > 2 * 1024 * 1024 ||
-            fileMap.get("innerImage").getSize() > 5 * 1024 * 1024)
+            fileMap.get("innerImage").getSize() > 100 * 1024 * 1024)
             throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
         return new CreateUniverseCommand(

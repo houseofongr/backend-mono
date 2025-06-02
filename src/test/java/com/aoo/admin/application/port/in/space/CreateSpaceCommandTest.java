@@ -49,11 +49,11 @@ class CreateSpaceCommandTest {
     }
     
     @Test
-    @DisplayName("내부사진 없거나 2MB 초과 케이스")
+    @DisplayName("내부사진 없거나 100MB 초과 케이스")
     void testExceed2MB() {
         // given
         CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f, 1f, 1f, 1f, null);
-        byte[] content = new byte[2 * 1024 * 1024 + 1];
+        byte[] content = new byte[100 * 1024 * 1024 + 1];
         MockMultipartFile over2MB = new MockMultipartFile("image", "image.png", "image/png", content);
         assertThatThrownBy(() -> CreateSpaceCommand.from(command, null)).hasMessage(AdminErrorCode.SPACE_FILE_REQUIRED.getMessage());
         assertThatThrownBy(() -> CreateSpaceCommand.from(command,over2MB)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
