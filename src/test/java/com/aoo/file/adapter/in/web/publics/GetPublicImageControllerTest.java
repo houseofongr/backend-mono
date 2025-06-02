@@ -30,8 +30,8 @@ public class GetPublicImageControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @DisplayName("이미지파일 다운로드 API")
-    void testFile() throws Exception {
+    @DisplayName("이미지파일 인라인 다운로드 API")
+    void testGetInlineFile() throws Exception {
 
         ClassPathResource resource = new ClassPathResource("public/images/logo.png");
         byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
@@ -56,4 +56,30 @@ public class GetPublicImageControllerTest extends AbstractControllerTest {
                         }));
     }
 
+    @Test
+    @DisplayName("이미지파일 첨부파일 다운로드 API")
+    void testGetAttachmentFile() throws Exception {
+
+        ClassPathResource resource = new ClassPathResource("public/images/logo.png");
+        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
+        FileJpaEntity entity = new FileJpaEntity(null, "logo.png", "logo.png", resource.getFile().getParent(), false, (long) bytes.length, null);
+        fileJpaRepository.save(entity);
+
+        mockMvc.perform(get("/public/images/attachment/{imageId}", entity.getId()))
+                .andExpect(status().is(200))
+                .andDo(document("file-public-images-download-attachment",
+                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
+                        operation -> {
+                            var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
+                            var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
+                            var outputStream = new ByteArrayOutputStream();
+                            outputStream.write("++++\n".getBytes());
+                            outputStream.write("<img src=\"data:image/png;base64,".getBytes());
+                            outputStream.write(Base64.getEncoder().encode(operation.getResponse().getContent()));
+                            outputStream.write("\"/>\n".getBytes());
+                            outputStream.write("++++\n".getBytes());
+                            Files.createDirectories(path.getParent());
+                            Files.write(path, outputStream.toByteArray());
+                        }));
+    }
 }

@@ -28,6 +28,9 @@ class DownloadImageServiceTest {
 
     FindFilePort findFilePort;
 
+    @TempDir
+    Path tempDir;
+
     @BeforeEach
     void init() {
         findFilePort = mock();
@@ -35,8 +38,8 @@ class DownloadImageServiceTest {
     }
 
     @Test
-    @DisplayName("이미지 다운로드 테스트")
-    void testDownloadImage(@TempDir Path tempDir) throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    @DisplayName("이미지 로드 테스트")
+    void testLoadImage() throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
         File file = FileF.IMAGE_FILE_1.get(tempDir.toString());
@@ -47,7 +50,7 @@ class DownloadImageServiceTest {
 
         // when
         when(findFilePort.load(fileId)).thenReturn(Optional.of(file));
-        DownloadFileResult result = sut.publicDownload(fileId);
+        DownloadFileResult result = sut.publicDownloadInline(fileId);
 
         // then
         assertThat(result.disposition()).contains("inline;").contains(file.getFileId().getFileSystemName());
@@ -55,8 +58,28 @@ class DownloadImageServiceTest {
     }
 
     @Test
+    @DisplayName("이미지 다운로드 테스트")
+    void testDownloadImage() throws IOException {
+        // given
+        Long fileId = 1L;
+        File file = FileF.IMAGE_FILE_1.get(tempDir.toString());
+        java.io.File javaFile = new java.io.File(file.getFileId().getPath());
+        javaFile.getParentFile().mkdirs();
+        javaFile.createNewFile();
+        Files.writeString(javaFile.toPath(), "test file");
+
+        // when
+        when(findFilePort.load(fileId)).thenReturn(Optional.of(file));
+        DownloadFileResult result = sut.publicDownloadAttachment(fileId);
+
+        // then
+        assertThat(result.disposition()).contains("attachment;").contains(file.getFileId().getRealFileName());
+        assertThat(result.resource().getContentAsByteArray().length).isEqualTo(9);
+    }
+
+    @Test
     @DisplayName("프라이빗 이미지 다운로드 테스트")
-    void testDownloadPrivate(@TempDir Path tempDir) throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
+    void testLoadPrivate() throws IOException, FileSizeLimitExceedException, FileExtensionMismatchException, IllegalFileTypeDirException, IllegalFileAuthorityDirException {
         // given
         Long fileId = 1L;
         File file = File.create(FileId.create(tempDir.toString(), Authority.ALL_PRIVATE_IMAGE_ACCESS, FileType.IMAGE, "test.png", "test.png"), FileStatus.CREATED, null, new FileSize(1234L, 10000L));

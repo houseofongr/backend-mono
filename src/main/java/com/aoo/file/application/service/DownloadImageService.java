@@ -28,16 +28,21 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
     @Override
     @Transactional(readOnly = true)
     public DownloadFileResult privateDownload(Long fileId) {
-        return download(fileId, Authority.ALL_PRIVATE_IMAGE_ACCESS);
+        return load(fileId, Authority.ALL_PRIVATE_IMAGE_ACCESS, false);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public DownloadFileResult publicDownload(Long fileId) {
-        return download(fileId, Authority.PUBLIC_FILE_ACCESS);
+    public DownloadFileResult publicDownloadInline(Long fileId) {
+        return load(fileId, Authority.PUBLIC_FILE_ACCESS, false);
     }
 
-    private DownloadFileResult download(Long fileId, Authority authority) {
+    @Override
+    public DownloadFileResult publicDownloadAttachment(Long fileId) {
+        return load(fileId, Authority.PUBLIC_FILE_ACCESS, true);
+    }
+
+    private DownloadFileResult load(Long fileId, Authority authority, boolean attachment) {
         try {
 
             File loadedFile = findFilePort.load(fileId)
@@ -51,9 +56,9 @@ public class DownloadImageService implements DownloadPublicImageUseCase, Downloa
             if (imageFileId.getAuthority() != authority)
                 throw new FileException(FileErrorCode.INVALID_AUTHORITY);
 
-            ContentDisposition disposition = ContentDisposition.inline()
-                    .filename(imageFileId.getFileSystemName())
-                    .build();
+            ContentDisposition disposition = attachment?
+                    ContentDisposition.attachment().filename(imageFileId.getRealFileName()).build() :
+                    ContentDisposition.inline().filename(imageFileId.getFileSystemName()).build();
 
             return new DownloadFileResult(
                     disposition.toString(),
