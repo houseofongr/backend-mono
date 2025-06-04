@@ -1,6 +1,8 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.application.port.in.category.CreateCategoryResult;
+import com.aoo.admin.application.port.in.category.SearchCategoryResult;
+import com.aoo.admin.application.port.out.category.FindCategoryPort;
 import com.aoo.admin.application.port.out.category.SaveCategoryPort;
 import com.aoo.common.adapter.out.persistence.entity.CategoryJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.CategoryJpaRepository;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryPersistenceAdapter implements SaveCategoryPort {
+public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategoryPort {
 
     private final CategoryJpaRepository categoryJpaRepository;
 
@@ -19,5 +21,10 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort {
         categoryJpaRepository.save(newCategory);
 
         return CreateCategoryResult.of(newCategory);
+    }
+
+    @Override
+    public SearchCategoryResult find() {
+        return SearchCategoryResult.of(categoryJpaRepository.findAll());
     }
 }

@@ -516,6 +516,13 @@ operation::admin-soundsource-delete[snippets='path-parameters,http-request,http-
 
 operation::admin-category-post[snippets='http-request,request-fields,http-response,response-fields']
 
+[[admin-category-get-api]]
+==== 카테고리 검색 API
+
+관리자가 전체 카테고리를 검색합니다.
+
+operation::admin-category-get[snippets='http-request,http-response,response-fields']
+
 
 [[admin-universe-api]]
 === 유니버스(Universe) API
