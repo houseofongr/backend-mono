@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.in.web.space;
 
 import com.aoo.admin.application.port.in.space.CreateSpaceCommand;
+import com.aoo.admin.application.port.in.space.CreateSpaceResult;
 import com.aoo.admin.application.port.in.space.CreateSpaceUseCase;
 import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class PostSpaceController {
     private final CreateSpaceUseCase useCase;
 
     @PostMapping("/admin/spaces")
-    public ResponseEntity<MessageDto> create(@RequestParam String metadata,
-                                             @RequestParam("image") MultipartFile imageFile) {
+    public ResponseEntity<CreateSpaceResult> create(@RequestParam String metadata,
+                                                    @RequestParam("image") MultipartFile imageFile) {
 
         CreateSpaceCommand baseCommand = gson.fromJson(metadata, CreateSpaceCommand.class);
         CreateSpaceCommand fullCommand = CreateSpaceCommand.from(baseCommand,imageFile);

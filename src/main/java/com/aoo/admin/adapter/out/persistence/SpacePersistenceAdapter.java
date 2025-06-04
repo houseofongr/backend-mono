@@ -1,6 +1,8 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.SpaceMapper;
+import com.aoo.admin.application.port.in.space.CreateSpaceResult;
+import com.aoo.admin.application.port.in.space.UpdateSpaceResult;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.space.SaveSpacePort;
 import com.aoo.admin.application.port.out.space.UpdateSpacePort;
@@ -29,7 +31,7 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
     }
 
     @Override
-    public Long save(Space space, Long universeId) {
+    public CreateSpaceResult save(Long universeId, Space space) {
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(universeId).orElseThrow();
         SpaceJpaEntity spaceJpaEntity = space.isRoot()?
                 SpaceJpaEntity.create(space, universeJpaEntity) :
@@ -37,12 +39,14 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
 
         spaceJpaRepository.save(spaceJpaEntity);
 
-        return spaceJpaEntity.getId();
+        return CreateSpaceResult.of(spaceJpaEntity);
     }
 
     @Override
-    public void update(Space space) {
+    public UpdateSpaceResult.Detail update(Space space) {
         SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(space.getId()).orElseThrow();
         spaceJpaEntity.update(space);
+
+        return UpdateSpaceResult.Detail.of(spaceJpaEntity);
     }
 }

@@ -8,7 +8,6 @@ import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
 import com.aoo.admin.domain.universe.Universe;
-import com.aoo.common.application.port.in.MessageDto;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
@@ -46,19 +45,17 @@ class UpdateUniverseServiceTest {
 
     @Test
     @DisplayName("정보 수정")
-    void testUpdate() {
+    void testUpdateDetail() {
         // given
-        UpdateUniverseCommand command = new UpdateUniverseCommand( "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
+        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
-
-        MessageDto message = sut.update(universe.getId(), command);
+        sut.updateDetail(universe.getId(), command);
 
         // then
-        verify(updateUniversePort, times(1)).update(universe);
-        assertThat(message.message()).contains("번 유니버스가 수정되었습니다.");
+        verify(updateUniversePort, times(1)).updateDetail(universe);
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo("오르트구름");
         assertThat(universe.getBasicInfo().getDescription()).isEqualTo("오르트구름은 태양계 최외곽에 위치하고 있습니다.");
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.LIFE);
@@ -85,7 +82,7 @@ class UpdateUniverseServiceTest {
 
     @Test
     @DisplayName("썸네일 수정 서비스")
-    void updateThumbnail() {
+    void updateDetailThumbnail() {
         // given
         MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "image file".getBytes());
         Universe universe = MockEntityFactoryService.getUniverse();
@@ -93,18 +90,16 @@ class UpdateUniverseServiceTest {
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_thumb.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
-
-        MessageDto message = sut.updateThumbnail(universe.getId(), thumbnail);
+        sut.updateThumbnail(universe.getId(), thumbnail);
 
         // then
-        assertThat(message.message()).contains("번 유니버스의 썸네일이 수정되었습니다.");
         verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
-        verify(updateUniversePort, times(1)).update(universe);
+        verify(updateUniversePort, times(1)).updateThumbnail(universe);
     }
 
     @Test
     @DisplayName("썸뮤직 수정 서비스")
-    void updateThumbmusic() {
+    void updateDetailThumbmusic() {
         // given
         MockMultipartFile thumbMusic = new MockMultipartFile("thumbMusic", "universe_thumb.mp3", "audio/mpeg", "image file".getBytes());
         Universe universe = MockEntityFactoryService.getUniverse();
@@ -112,18 +107,16 @@ class UpdateUniverseServiceTest {
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
         when(uploadPublicAudioUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
-
-        MessageDto message = sut.updateThumbMusic(universe.getId(), thumbMusic);
+        sut.updateThumbMusic(universe.getId(), thumbMusic);
 
         // then
-        assertThat(message.message()).contains("번 유니버스의 썸뮤직이 수정되었습니다.");
         verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
-        verify(updateUniversePort, times(1)).update(universe);
+        verify(updateUniversePort, times(1)).updateThumbMusic(universe);
     }
 
     @Test
     @DisplayName("내부이미지 수정 서비스")
-    void updateInnerImage() {
+    void updateDetailInnerImage() {
         // given
         MockMultipartFile innerImage = new MockMultipartFile("innerImage", "universe_inner_image.png", "image/png", "image file".getBytes());
         Universe universe = MockEntityFactoryService.getUniverse();
@@ -131,12 +124,10 @@ class UpdateUniverseServiceTest {
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_inner_image.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
-
-        MessageDto message = sut.updateInnerImage(universe.getId(), innerImage);
+        sut.updateInnerImage(universe.getId(), innerImage);
 
         // then
-        assertThat(message.message()).contains("번 유니버스의 내부 이미지가 수정되었습니다.");
         verify(deleteFileUseCase, times(1)).deleteFile(anyLong());
-        verify(updateUniversePort, times(1)).update(universe);
+        verify(updateUniversePort, times(1)).updateInnerImage(universe);
     }
 }

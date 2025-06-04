@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.in.web.universe;
 
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
+import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.in.universe.CreateUniverseUseCase;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
@@ -23,7 +24,7 @@ public class PostUniverseController {
     private final CreateUniverseUseCase useCase;
 
     @PostMapping("/admin/universes")
-    public ResponseEntity<MessageDto> create(@RequestParam String metadata, HttpServletRequest request) {
+    public ResponseEntity<CreateUniverseResult> create(@RequestParam String metadata, HttpServletRequest request) {
 
         if (request instanceof MultipartHttpServletRequest multipartRequest) {
             CreateUniverseCommand baseCommand = gson.fromJson(metadata, CreateUniverseCommand.class);

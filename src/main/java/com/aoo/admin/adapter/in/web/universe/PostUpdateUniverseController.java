@@ -1,5 +1,6 @@
 package com.aoo.admin.adapter.in.web.universe;
 
+import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseUseCase;
 import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class PostUpdateUniverseController {
     private final UpdateUniverseUseCase useCase;
 
     @PostMapping("/admin/universes/thumbnail/{universeId}")
-    public ResponseEntity<MessageDto> updateThumbnail(
+    public ResponseEntity<UpdateUniverseResult.Thumbnail> updateThumbnail(
             @PathVariable Long universeId,
             @RequestPart(value = "thumbnail") MultipartFile thumbnail) {
 
@@ -26,7 +27,7 @@ public class PostUpdateUniverseController {
     }
 
     @PostMapping("/admin/universes/thumb-music/{universeId}")
-    public ResponseEntity<MessageDto> updateThumbMusic(
+    public ResponseEntity<UpdateUniverseResult.ThumbMusic> updateThumbMusic(
             @PathVariable Long universeId,
             @RequestPart(value = "thumbMusic") MultipartFile thumbMusic) {
 
@@ -35,7 +36,7 @@ public class PostUpdateUniverseController {
     }
 
     @PostMapping("/admin/universes/inner-image/{universeId}")
-    public ResponseEntity<MessageDto> updateInnerImage(
+    public ResponseEntity<UpdateUniverseResult.InnerImage> updateInnerImage(
             @PathVariable Long universeId,
             @RequestPart(value = "innerImage") MultipartFile innerImage) {
 

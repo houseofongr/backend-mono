@@ -51,10 +51,10 @@ class SpaceTest {
         Float dy = 2000 / 5000F;
         Float scaleX = 1500 / 5000F;
         Float scaleY = 1500 / 5000F;
-        Space parentSpace = Space.create(id, imageId, universeId, title, description, dx, dy, scaleX, scaleY, null);
+        Space parentSpace = Space.create(id, imageId, id, title, description, dx, dy, scaleX, scaleY, null);
 
         // when
-        Space childSpace = Space.create(2L, imageId, universeId, title, description, dx, dy, scaleX, scaleY, parentSpace);
+        Space childSpace = Space.create(2L, imageId, id, title, description, dx, dy, scaleX, scaleY, parentSpace);
 
         // then
         assertThat(parentSpace.getUniverseId()).isEqualTo(childSpace.getUniverseId());

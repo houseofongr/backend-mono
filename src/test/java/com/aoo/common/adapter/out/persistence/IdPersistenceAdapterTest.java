@@ -47,7 +47,7 @@ class IdPersistenceAdapterTest {
         Long roomId = sut.issueRoomId();
         Long homeId = sut.issueHomeId();
         Long itemId = sut.issueItemId();
-        Long universeId = sut.issueUniverseId();
+        Long id = sut.issueUniverseId();
         Long spaceId = sut.issueSpaceId();
 
         // then
@@ -55,7 +55,7 @@ class IdPersistenceAdapterTest {
         assertThat(roomId).isEqualTo(roomCount + 1);
         assertThat(homeId).isEqualTo(homeCount + 1);
         assertThat(itemId).isEqualTo(itemCount + 1);
-        assertThat(universeId).isEqualTo(universeCount + 1);
+        assertThat(id).isEqualTo(universeCount + 1);
         assertThat(spaceId).isEqualTo(spaceCount + 1);
     }
 

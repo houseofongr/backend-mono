@@ -1,8 +1,8 @@
 package com.aoo.admin.adapter.in.web.universe;
 
 import com.aoo.admin.application.port.in.universe.UpdateUniverseCommand;
+import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseUseCase;
-import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,11 +17,11 @@ public class PatchUniverseController {
     private final UpdateUniverseUseCase useCase;
 
     @PatchMapping("/admin/universes/{universeId}")
-    public ResponseEntity<MessageDto> update(
+    public ResponseEntity<UpdateUniverseResult.Detail> update(
             @PathVariable Long universeId,
             @RequestBody UpdateUniverseCommand command) {
 
-        return ResponseEntity.ok(useCase.update(universeId, command));
+        return ResponseEntity.ok(useCase.updateDetail(universeId, command));
 
     }
 

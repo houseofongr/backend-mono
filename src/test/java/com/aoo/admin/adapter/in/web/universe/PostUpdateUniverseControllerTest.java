@@ -46,7 +46,9 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                                 partWithName("thumbnail").description("수정할 유니버스의 썸네일 이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 유니버스의 썸네일이 수정되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 유니버스의 썸네일이 수정되었습니다.'"),
+                                fieldWithPath("deletedThumbnailId").description("삭제된 썸네일 아이디입니다."),
+                                fieldWithPath("newThumbnailId").description("새로운 썸네일 아이디입니다.")
                         )
                 ));
 
@@ -76,7 +78,9 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                                 partWithName("thumbMusic").description("수정할 유니버스의 썸뮤직 오디오 파일입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 유니버스의 썸뮤직이 수정되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 유니버스의 썸뮤직이 수정되었습니다.'"),
+                                fieldWithPath("deletedThumbMusicId").description("삭제된 썸뮤직 아이디입니다."),
+                                fieldWithPath("newThumbMusicId").description("새로운 썸뮤직 아이디입니다.")
                         )
                 ));
 
@@ -106,10 +110,11 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                                 partWithName("innerImage").description("수정할 유니버스의 내부 이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 유니버스의 내부 이미지가 수정되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 유니버스의 내부 이미지가 수정되었습니다.'"),
+                                fieldWithPath("deletedInnerImageId").description("삭제된 내부 이미지 아이디입니다."),
+                                fieldWithPath("newInnerImageId").description("새로운 내부 이미지 아이디입니다.")
                         )
                 ));
-
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
         assertThat(fileInDB).hasSize(1);

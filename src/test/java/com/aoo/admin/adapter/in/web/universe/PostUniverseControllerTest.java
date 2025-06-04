@@ -86,7 +86,19 @@ class PostUniverseControllerTest extends AbstractControllerTest {
                                 partWithName("innerImage").description("생성할 유니버스의 내부이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("생성 완료 메시지 : 0번 유니버스가 생성되었습니다.")
+                                fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 유니버스가 생성되었습니다.'"),
+                                fieldWithPath("universeId").description("생성된 유니버스의 아이디입니다."),
+                                fieldWithPath("thumbnailId").description("생성된 유니버스의 썸네일 파일 식별자입니다."),
+                                fieldWithPath("thumbMusicId").description("생성된 유니버스의 썸뮤직 파일 식별자입니다."),
+                                fieldWithPath("innerImageId").description("생성된 유니버스의 내부 이미지 파일 식별자입니다."),
+                                fieldWithPath("authorId").description("생성된 유니버스 작성자의 식별자입니다."),
+                                fieldWithPath("createdTime").description("생성된 유니버스의 유닉스 타임스탬프 형식의 생성(등록)일자입니다."),
+                                fieldWithPath("title").description("생성된 유니버스의 제목입니다."),
+                                fieldWithPath("author").description("생성된 유니버스의 작성자의 닉네임입니다."),
+                                fieldWithPath("description").description("생성된 유니버스의 설명입니다."),
+                                fieldWithPath("category").description("생성된 유니버스의 카테고리입니다."),
+                                fieldWithPath("publicStatus").description("생성된 유니버스의 공개 여부입니다."),
+                                fieldWithPath("hashtags").description("생성된 유니버스의 해시태그 리스트입니다.")
                         )
                 ));
 

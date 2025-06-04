@@ -1,6 +1,7 @@
 package com.aoo.admin.application.service.space;
 
 import com.aoo.admin.application.port.in.space.UpdateSpaceCommand;
+import com.aoo.admin.application.port.in.space.UpdateSpaceResult;
 import com.aoo.admin.application.port.in.space.UpdateSpaceUseCase;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.space.UpdateSpacePort;
@@ -27,19 +28,17 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
     private final UpdateSpacePort updateSpacePort;
 
     @Override
-    public MessageDto update(Long spaceId, UpdateSpaceCommand command) {
+    public UpdateSpaceResult.Detail updateDetail(Long spaceId, UpdateSpaceCommand command) {
         Space space = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         space.updateBasicInfo(command.title(), command.description());
         space.updatePosInfo(command.dx(), command.dy(), command.scaleX(), command.scaleY());
 
-        updateSpacePort.update(space);
-
-        return new MessageDto(space.getId() + "번 스페이스가 수정되었습니다.");
+        return updateSpacePort.update(space);
     }
 
     @Override
-    public MessageDto updateInnerImage(Long spaceId, MultipartFile innerImage) {
+    public UpdateSpaceResult.InnerImage updateInnerImage(Long spaceId, MultipartFile innerImage) {
 
         if (innerImage == null) throw new AdminException(AdminErrorCode.SPACE_FILE_REQUIRED);
         if (innerImage.getSize() >= 5 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
@@ -53,6 +52,6 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
         updateSpacePort.update(targetSpace);
         deleteFileUseCase.deleteFile(beforeInnerImageId);
 
-        return new MessageDto(spaceId + "번 스페이스의 내부 이미지가 수정되었습니다.");
+        return UpdateSpaceResult.InnerImage.of(targetSpace.getId(), beforeInnerImageId, uploadedInnerImage.id());
     }
 }

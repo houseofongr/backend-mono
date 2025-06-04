@@ -1,6 +1,7 @@
 package com.aoo.admin.application.service.universe;
 
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
+import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.in.universe.CreateUniverseUseCase;
 import com.aoo.admin.application.port.out.universe.CreateUniversePort;
 import com.aoo.admin.application.port.out.universe.SaveUniversePort;
@@ -24,7 +25,7 @@ public class CreateUniverseService implements CreateUniverseUseCase {
     private final SaveUniversePort saveUniversePort;
 
     @Override
-    public MessageDto create(CreateUniverseCommand command) {
+    public CreateUniverseResult create(CreateUniverseCommand command) {
 
         UploadFileResult.FileInfo thumbMusic = uploadPublicAudioUseCase.publicUpload(command.fileMap().get("thumbMusic"));
         UploadFileResult.FileInfo thumbnail = uploadPublicImageUseCase.publicUpload(command.fileMap().get("thumbnail"));
@@ -32,7 +33,7 @@ public class CreateUniverseService implements CreateUniverseUseCase {
 
         Universe universe = createUniversePort.createUniverse(command, thumbMusic.id(), thumbnail.id(), innerImage.id());
 
-        return new MessageDto(saveUniversePort.save(universe) + "번 유니버스가 생성되었습니다.");
+        return saveUniversePort.save(universe);
     }
 
 }

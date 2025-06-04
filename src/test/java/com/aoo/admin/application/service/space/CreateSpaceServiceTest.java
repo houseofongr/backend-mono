@@ -49,10 +49,9 @@ class CreateSpaceServiceTest {
         // when
         when(uploadPublicImageUseCase.publicUpload((List<MultipartFile>) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "image.png", "image1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS))));
         when(findSpacePort.loadSingle(-1L)).thenReturn(Optional.ofNullable(space));
-        MessageDto message = sut.create(command);
+        sut.create(command);
 
         // then
         verify(saveSpacePort, times(1)).save(any(), any());
-        assertThat(message.message()).contains("번 스페이스가 생성되었습니다.");
     }
 }

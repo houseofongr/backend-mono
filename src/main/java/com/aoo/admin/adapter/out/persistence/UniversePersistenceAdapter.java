@@ -2,8 +2,10 @@ package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
+import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
+import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.application.port.out.universe.DeleteUniversePort;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.application.port.out.universe.SaveUniversePort;
@@ -40,7 +42,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     }
 
     @Override
-    public Long save(Universe universe) {
+    public CreateUniverseResult save(Universe universe) {
         UserJpaEntity author = userJpaRepository.findById(universe.getBasicInfo().getAuthorId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
         UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, author);
@@ -50,7 +52,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
 
         universeJpaRepository.save(universeJpaEntity);
 
-        return universeJpaEntity.getId();
+        return CreateUniverseResult.of(universeJpaEntity);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     }
 
     @Override
-    public void update(Universe universe) {
+    public UpdateUniverseResult.Detail updateDetail(Universe universe) {
         UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
         targetEntity.update(universe);
 
@@ -100,6 +102,26 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
         for (String tag : notExistTags) {
             universeHashtags.add(UniverseHashtagJpaEntity.create(targetEntity, getOrCreate(tag)));
         }
+
+        return UpdateUniverseResult.Detail.of(targetEntity);
+    }
+
+    @Override
+    public void updateThumbMusic(Universe universe) {
+        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        targetEntity.update(universe);
+    }
+
+    @Override
+    public void updateThumbnail(Universe universe) {
+        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        targetEntity.update(universe);
+    }
+
+    @Override
+    public void updateInnerImage(Universe universe) {
+        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        targetEntity.update(universe);
     }
 
     @Override

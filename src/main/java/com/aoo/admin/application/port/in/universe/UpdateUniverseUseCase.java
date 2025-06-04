@@ -1,15 +1,14 @@
 package com.aoo.admin.application.port.in.universe;
 
-import com.aoo.common.application.port.in.MessageDto;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UpdateUniverseUseCase {
 
-    MessageDto update(Long universeId, UpdateUniverseCommand command);
+    UpdateUniverseResult.Detail updateDetail(Long universeId, UpdateUniverseCommand command);
 
-    MessageDto updateThumbnail(Long universeId, MultipartFile thumbnail);
+    UpdateUniverseResult.ThumbMusic updateThumbMusic(Long universeId, MultipartFile thumbMusic);
 
-    MessageDto updateThumbMusic(Long universeId, MultipartFile thumbMusic);
+    UpdateUniverseResult.Thumbnail updateThumbnail(Long universeId, MultipartFile thumbnail);
 
-    MessageDto updateInnerImage(Long universeId, MultipartFile innerImage);
+    UpdateUniverseResult.InnerImage updateInnerImage(Long universeId, MultipartFile innerImage);
 }

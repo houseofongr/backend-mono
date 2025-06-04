@@ -1,6 +1,7 @@
 package com.aoo.admin.application.service.space;
 
 import com.aoo.admin.application.port.in.space.CreateSpaceCommand;
+import com.aoo.admin.application.port.in.space.CreateSpaceResult;
 import com.aoo.admin.application.port.in.space.CreateSpaceUseCase;
 import com.aoo.admin.application.port.out.space.CreateSpacePort;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
@@ -28,15 +29,13 @@ public class CreateSpaceService implements CreateSpaceUseCase {
     private final SaveSpacePort saveSpacePort;
 
     @Override
-    public MessageDto create(CreateSpaceCommand command) {
+    public CreateSpaceResult create(CreateSpaceCommand command) {
         Space parentSpace = command.parentSpaceId() == -1? null :
                 findSpacePort.loadSingle(command.parentSpaceId()).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         UploadFileResult uploadFileResult = uploadPublicImageUseCase.publicUpload(List.of(command.imageFile()));
 
         Space space = createSpacePort.createSpace(command, parentSpace, uploadFileResult.fileInfos().getFirst().id());
-        Long savedId = saveSpacePort.save(space, command.universeId());
-
-        return new MessageDto(savedId + "번 스페이스가 생성되었습니다.");
+        return saveSpacePort.save(command.universeId(), space);
     }
 }

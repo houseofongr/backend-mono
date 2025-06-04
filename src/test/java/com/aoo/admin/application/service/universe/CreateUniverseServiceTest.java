@@ -1,12 +1,15 @@
 package com.aoo.admin.application.service.universe;
 
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
+import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.out.universe.CreateUniversePort;
 import com.aoo.admin.application.port.out.universe.SaveUniversePort;
 import com.aoo.admin.application.service.universe.CreateUniverseService;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
+import com.aoo.admin.domain.universe.Universe;
 import com.aoo.common.application.port.in.MessageDto;
+import com.aoo.common.application.service.MockEntityFactoryService;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.in.UploadPublicAudioUseCase;
@@ -53,11 +56,10 @@ class CreateUniverseServiceTest {
         // when
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         when(uploadPublicAudioUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "universe_thumb.png", "test1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
-        MessageDto messageDto = sut.create(command);
+        sut.create(command);
 
         // then
         verify(saveUniversePort, times(1)).save(any());
-        assertThat(messageDto.message()).contains("번 유니버스가 생성되었습니다.");
     }
 
 }

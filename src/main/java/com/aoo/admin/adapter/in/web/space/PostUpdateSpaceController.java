@@ -1,5 +1,6 @@
 package com.aoo.admin.adapter.in.web.space;
 
+import com.aoo.admin.application.port.in.space.UpdateSpaceResult;
 import com.aoo.admin.application.port.in.space.UpdateSpaceUseCase;
 import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class PostUpdateSpaceController {
     private final UpdateSpaceUseCase useCase;
 
     @PostMapping("/admin/spaces/inner-image/{spaceId}")
-    public ResponseEntity<MessageDto> updateInnerImage(
+    public ResponseEntity<UpdateSpaceResult.InnerImage> updateInnerImage(
             @PathVariable Long spaceId,
             @RequestPart(value = "innerImage") MultipartFile innerImage) {
 

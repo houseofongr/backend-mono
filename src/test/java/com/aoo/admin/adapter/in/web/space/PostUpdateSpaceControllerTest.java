@@ -46,7 +46,9 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
                                 partWithName("innerImage").description("수정할 스페이스의 내부 이미지입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 스페이스의 내부 이미지가 수정되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 스페이스의 내부 이미지가 수정되었습니다.'"),
+                                fieldWithPath("deletedInnerImageId").description("삭제된 내부 이미지 아이디입니다."),
+                                fieldWithPath("newInnerImageId").description("새로운 내부 이미지 아이디입니다.")
                         )
                 ));
 

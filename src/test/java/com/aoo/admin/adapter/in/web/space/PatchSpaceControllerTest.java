@@ -24,11 +24,7 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
         String request = """
             {
               "title": "블랙홀",
-              "description": "블랙홀은 빛도 빨아들입니다.",
-              "dx": 0.1,
-              "dy": 0.2,
-              "scaleX": 0.3,
-              "scaleY": 0.4
+              "description": "블랙홀은 빛도 빨아들입니다."
             }
             """;
 
@@ -43,14 +39,12 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
-                                fieldWithPath("description").description("수정할 상세정보입니다."),
-                                fieldWithPath("dx").description("수정할 상대좌표(x)입니다."),
-                                fieldWithPath("dy").description("수정할 상대좌표(y)입니다."),
-                                fieldWithPath("scaleX").description("수정할 사이즈(x)입니다."),
-                                fieldWithPath("scaleY").description("수정할 사이즈(y)입니다.")
+                                fieldWithPath("description").description("수정할 상세정보입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 스페이스가 수정되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#0]번 스페이스의 상세정보가 수정되었습니다.'"),
+                                fieldWithPath("title").description("수정된 제목입니다."),
+                                fieldWithPath("description").description("수정된 상세정보입니다.")
                         )
                 ));
     }

@@ -80,7 +80,15 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
                                 fieldWithPath("hashtags").description("수정할 태그 정보입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : 0번 유니버스가 수정되었습니다.")
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 유니버스의 상세정보가 수정되었습니다.'"),
+                                fieldWithPath("authorId").description("수정된 작성자입니다."),
+                                fieldWithPath("updatedTime").description("유닉스 타임스탬프 형식의 수정일자입니다."),
+                                fieldWithPath("title").description("수정된 제목입니다."),
+                                fieldWithPath("description").description("수정된 상세정보입니다."),
+                                fieldWithPath("author").description("수정된 작성자의 닉네임입니다."),
+                                fieldWithPath("category").description("수정된 카테고리입니다."),
+                                fieldWithPath("publicStatus").description("수정된 공개 여부입니다."),
+                                fieldWithPath("hashtags").description("수정된 태그 정보입니다.")
                         )
                 ));
 

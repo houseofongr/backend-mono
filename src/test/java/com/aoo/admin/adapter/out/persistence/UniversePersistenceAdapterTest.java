@@ -64,7 +64,7 @@ class UniversePersistenceAdapterTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        Long id = sut.save(universe);
+        Long id = sut.save(universe).universeId();
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(id).orElseThrow();
 
         // then
@@ -218,7 +218,7 @@ class UniversePersistenceAdapterTest {
         Universe universe = Universe.load(12L, 13L, 13L, 1L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
-        sut.update(universe);
+        sut.updateDetail(universe);
         List<UniverseHashtagJpaEntity> entities = em.createQuery("select uh from UniverseHashtagJpaEntity uh where uh.id in (1, 2, 3, 4)", UniverseHashtagJpaEntity.class).getResultList();
 
         // then
@@ -233,7 +233,7 @@ class UniversePersistenceAdapterTest {
         Universe universe = Universe.load(12L, 13L, 13L, 1L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
-        sut.update(universe);
+        sut.updateDetail(universe);
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(universe.getId()).orElseThrow();
 
         // then

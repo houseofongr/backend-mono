@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.SpaceMapper;
+import com.aoo.admin.application.port.in.space.CreateSpaceResult;
 import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
@@ -58,11 +59,10 @@ class SpacePersistenceAdapterTest {
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
-        Long savedId = sut.save(space, 1L);
-        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(savedId).orElseThrow();
+        CreateSpaceResult result = sut.save(1L, space);
+        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(result.spaceId()).orElseThrow();
 
         // then
-        assertThat(spaceJpaEntity.getId()).isEqualTo(savedId);
         assertThat(spaceJpaEntity.getInnerImageFileId()).isEqualTo(space.getInnerImageId());
         assertThat(spaceJpaEntity.getUniverse().getId()).isEqualTo(space.getUniverseId());
         assertThat(spaceJpaEntity.getDx()).isEqualTo(space.getPosInfo().getDx());
@@ -80,18 +80,18 @@ class SpacePersistenceAdapterTest {
     void testSaveChildSpace() {
         // given
         Space parent = MockEntityFactoryService.getParentSpace();
-        Long parentId = sut.save(parent, 1L);
+        CreateSpaceResult parentSpaceResult = sut.save(1L, parent);
         em.flush();
         em.clear();
 
-        Space child = MockEntityFactoryService.getChildSpace(parentId);
+        Space child = MockEntityFactoryService.getChildSpace(parentSpaceResult.spaceId());
 
         // when
-        Long savedId = sut.save(child, 1L);
-        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(savedId).orElseThrow();
+        CreateSpaceResult childSpaceResult = sut.save(1L, child);
+        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(childSpaceResult.spaceId()).orElseThrow();
 
         // then
-        assertThat(spaceJpaEntity.getId()).isEqualTo(savedId);
+        assertThat(spaceJpaEntity.getId()).isEqualTo(childSpaceResult.spaceId());
         assertThat(spaceJpaEntity.getInnerImageFileId()).isEqualTo(child.getInnerImageId());
         assertThat(spaceJpaEntity.getUniverse().getId()).isEqualTo(child.getUniverseId());
         assertThat(spaceJpaEntity.getDx()).isEqualTo(child.getPosInfo().getDx());
@@ -100,7 +100,7 @@ class SpacePersistenceAdapterTest {
         assertThat(spaceJpaEntity.getScaleY()).isEqualTo(child.getPosInfo().getScaleY());
         assertThat(spaceJpaEntity.getTitle()).isEqualTo(child.getBasicInfo().getTitle());
         assertThat(spaceJpaEntity.getDescription()).isEqualTo(child.getBasicInfo().getDescription());
-        assertThat(spaceJpaEntity.getParent().getId()).isEqualTo(parentId);
+        assertThat(spaceJpaEntity.getParent().getId()).isEqualTo(parentSpaceResult.spaceId());
         assertThat(spaceJpaEntity.getDepth()).isEqualTo(child.getTreeInfo().getDepth());
     }
 
