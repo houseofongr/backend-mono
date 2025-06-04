@@ -19,7 +19,7 @@ public record UpdateUniverseResult() {
     ) {
         public static Detail of(UniverseJpaEntity universeJpaEntity) {
             return new Detail(
-                    String.format("[#%d]번 유니버스가 수정되었습니다.", universeJpaEntity.getId()),
+                    String.format("[#%d]번 유니버스의 상세정보가 수정되었습니다.", universeJpaEntity.getId()),
                     universeJpaEntity.getAuthor().getId(),
                     universeJpaEntity.getUpdatedTime().toEpochSecond(),
                     universeJpaEntity.getTitle(),
