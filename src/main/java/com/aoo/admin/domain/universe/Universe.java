@@ -24,7 +24,6 @@ public class Universe {
         this.treeInfo = treeInfo;
     }
 
-
     public static Universe create(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageId, Long authorId, String title, String description, Category category, PublicStatus publicStatus, List<String> tag) {
         return new Universe(id,
                 new UniverseFileInfo(thumbMusicId, thumbnailId, innerImageId),

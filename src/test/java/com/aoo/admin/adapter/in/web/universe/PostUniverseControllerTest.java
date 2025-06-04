@@ -36,6 +36,9 @@ class PostUniverseControllerTest extends AbstractControllerTest {
     HashtagJpaRepository hashtagJpaRepository;
 
     @Autowired
+    UniverseJpaRepository universeJpaRepository;
+
+    @Autowired
     EntityManager em;
 
     //language=JSON
@@ -87,12 +90,22 @@ class PostUniverseControllerTest extends AbstractControllerTest {
                         )
                 ));
 
+        UniverseJpaEntity newUniverse = universeJpaRepository.findAll().getFirst();
+
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
         assertThat(fileInDB).hasSize(3);
         assertThat(fileInDB)
-                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_inner_image.png"))
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_music.mp3"))
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_thumb.png"))
-                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_music.mp3"));
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("universe_inner_image.png"));
+
+        FileJpaEntity thumbMusicFile = fileInDB.stream().filter(fileJpaEntity -> fileJpaEntity.getRealFileName().equals("universe_music.mp3")).findFirst().orElseThrow();
+        FileJpaEntity thumbnailFile = fileInDB.stream().filter(fileJpaEntity -> fileJpaEntity.getRealFileName().equals("universe_thumb.png")).findFirst().orElseThrow();
+        FileJpaEntity innerImageFile = fileInDB.stream().filter(fileJpaEntity -> fileJpaEntity.getRealFileName().equals("universe_inner_image.png")).findFirst().orElseThrow();
+
+        assertThat(newUniverse.getThumbMusicFileId()).isEqualTo(thumbMusicFile.getId());
+        assertThat(newUniverse.getThumbnailFileId()).isEqualTo(thumbnailFile.getId());
+        assertThat(newUniverse.getInnerImageFileId()).isEqualTo(innerImageFile.getId());
 
         List<UniverseHashtagJpaEntity> universeHashtags = em.createQuery("select u from UniverseHashtagJpaEntity u", UniverseHashtagJpaEntity.class).getResultList();
         assertThat(universeHashtags).hasSize(4);

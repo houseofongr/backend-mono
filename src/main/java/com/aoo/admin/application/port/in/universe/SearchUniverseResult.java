@@ -50,8 +50,8 @@ public record SearchUniverseResult(
 
     public record UniverseDetailInfo(
             Long id,
-            Long thumbnailId,
             Long thumbMusicId,
+            Long thumbnailId,
             Long innerImageId,
             Long authorId,
             Long createdTime,
@@ -69,8 +69,8 @@ public record SearchUniverseResult(
         public static UniverseDetailInfo of(UniverseJpaEntity universeJpaEntity) {
             return new UniverseDetailInfo(
                     universeJpaEntity.getId(),
-                    universeJpaEntity.getThumbnailFileId(),
                     universeJpaEntity.getThumbMusicFileId(),
+                    universeJpaEntity.getThumbnailFileId(),
                     universeJpaEntity.getInnerImageFileId(),
                     universeJpaEntity.getAuthor().getId(),
                     universeJpaEntity.getCreatedTime().toEpochSecond(),
