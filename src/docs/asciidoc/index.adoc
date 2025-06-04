@@ -506,6 +506,17 @@ operation::admin-soundsource-patch[snippets='path-parameters,http-request,reques
 
 operation::admin-soundsource-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
+[[admin-category-api]]
+=== 카테고리(Category) API
+
+[[admin-category-post-api]]
+==== 카테고리 생성 API
+
+관리자가 카테고리를 생성합니다.
+
+operation::admin-category-post[snippets='http-request,request-fields,http-response,response-fields']
+
+
 [[admin-universe-api]]
 === 유니버스(Universe) API
 
