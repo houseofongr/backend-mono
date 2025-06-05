@@ -22,4 +22,8 @@ public class CategoryJpaEntity {
     public static CategoryJpaEntity create(String name) {
         return new CategoryJpaEntity(null, name);
     }
+
+    public void update(String name) {
+        this.name = name;
+    }
 }

@@ -1,0 +1,2 @@
+INSERT INTO CATEGORY(ID, NAME)
+values (1, 'LIFE');

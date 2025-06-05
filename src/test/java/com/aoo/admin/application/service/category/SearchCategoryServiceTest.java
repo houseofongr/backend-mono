@@ -15,7 +15,7 @@ class SearchCategoryServiceTest {
     @DisplayName("카테고리 조회 서비스")
     void testCategorySearchService() {
         sut.search();
-        verify(findCategoryPort, times(1)).find();
+        verify(findCategoryPort, times(1)).findAll();
     }
 
 }

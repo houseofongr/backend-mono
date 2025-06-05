@@ -14,6 +14,6 @@ public class SearchCategoryService implements SearchCategoryUseCase {
 
     @Override
     public SearchCategoryResult search() {
-        return findCategoryPort.find();
+        return findCategoryPort.findAll();
     }
 }

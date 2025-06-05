@@ -40,6 +40,9 @@ public enum AdminErrorCode implements ErrorCode {
     // SoundSource
     SOUND_SOURCE_NOT_FOUND("ADMIN-SOUNDSOURCE-1", NOT_FOUND, "해당 음원을 찾을 수 없습니다."),
 
+    // Category
+    CATEGORY_NOT_FOUND("ADMIN-CATEGORY-1", NOT_FOUND, "해당 카테고리를 찾을 수 없습니다."),
+
     // Universe
     UNIVERSE_FILE_REQUIRED("ADMIN-UNIVERSE-1", BAD_REQUEST, "유니버스의 필수 파일이 누락되었습니다."),
     UNIVERSE_NOT_FOUND("ADMIN-UNIVERSE-2", NOT_FOUND, "해당 유니버스를 찾을 수 없습니다."),

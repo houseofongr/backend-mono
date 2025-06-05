@@ -523,6 +523,13 @@ operation::admin-category-post[snippets='http-request,request-fields,http-respon
 
 operation::admin-category-get[snippets='http-request,http-response,response-fields']
 
+[[admin-category-patch-api]]
+==== 특정 카테고리 수정 API
+
+관리자가 특정 카테고리를 수정합니다.
+
+operation::admin-category-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
 
 [[admin-universe-api]]
 === 유니버스(Universe) API
