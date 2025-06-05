@@ -14,8 +14,8 @@ public class DeleteUniverseController {
 
     private final DeleteUniverseUseCase useCase;
 
-    @DeleteMapping("/admin/universes/{id}")
-    public ResponseEntity<MessageDto> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(useCase.delete(id));
+    @DeleteMapping("/admin/universes/{universeId}")
+    public ResponseEntity<MessageDto> delete(@PathVariable Long universeId) {
+        return ResponseEntity.ok(useCase.delete(universeId));
     }
 }
