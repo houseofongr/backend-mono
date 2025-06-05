@@ -1,8 +1,10 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.application.port.in.category.CreateCategoryResult;
+import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
 import com.aoo.admin.application.port.in.category.SearchCategoryResult;
 import com.aoo.admin.application.port.in.category.UpdateCategoryResult;
+import com.aoo.admin.application.port.out.category.DeleteCategoryPort;
 import com.aoo.admin.application.port.out.category.FindCategoryPort;
 import com.aoo.admin.application.port.out.category.SaveCategoryPort;
 import com.aoo.admin.application.port.out.category.UpdateCategoryPort;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategoryPort, UpdateCategoryPort {
+public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategoryPort, UpdateCategoryPort, DeleteCategoryPort {
 
     private final CategoryJpaRepository categoryJpaRepository;
 
@@ -40,5 +42,11 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategor
         targetCategory.update(name);
 
         return UpdateCategoryResult.of(targetCategory);
+    }
+
+    @Override
+    public DeleteCategoryResult delete(Long categoryId) {
+        categoryJpaRepository.deleteById(categoryId);
+        return DeleteCategoryResult.of(categoryId);
     }
 }

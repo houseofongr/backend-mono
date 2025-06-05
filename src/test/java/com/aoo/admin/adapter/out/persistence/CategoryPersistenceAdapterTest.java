@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.application.port.in.category.CreateCategoryResult;
+import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
 import com.aoo.admin.application.port.in.category.SearchCategoryResult;
 import com.aoo.admin.application.port.in.category.UpdateCategoryResult;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
@@ -68,5 +69,19 @@ class CategoryPersistenceAdapterTest {
         assertThat(result.categoryId()).isEqualTo(id);
         assertThat(result.name()).isEqualTo(name);
         assertThat(categoryJpaEntity.getName()).isEqualTo(name);
+    }
+
+    @Test
+    @DisplayName("카테고리 삭제 테스트")
+    void testDeleteCategory() {
+        // given
+        Long id = 1L;
+
+        // when
+        DeleteCategoryResult result = sut.delete(id);
+
+        // then
+        assertThat(result.deletedCategoryId()).isEqualTo(id);
+        assertThat(categoryJpaRepository.findById(id)).isEmpty();
     }
 }

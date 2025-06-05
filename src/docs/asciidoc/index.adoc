@@ -530,6 +530,13 @@ operation::admin-category-get[snippets='http-request,http-response,response-fiel
 
 operation::admin-category-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[admin-category-delete-api]]
+==== 특정 카테고리 삭제 API
+
+관리자가 특정 카테고리를 삭제합니다.
+
+operation::admin-category-delete[snippets='http-request,path-parameters,http-response,response-fields']
+
 
 [[admin-universe-api]]
 === 유니버스(Universe) API
