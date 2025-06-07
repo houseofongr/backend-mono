@@ -25,19 +25,28 @@ public class ElementJpaEntity extends DateColumnBaseEntity{
     private String description;
 
     @Column(nullable = false)
-    private Float x;
+    private Float dx;
 
     @Column(nullable = false)
-    private Float y;
+    private Float dy;
+
+    @Column(nullable = false, name = "SCALE_X")
+    private Float scaleX;
+
+    @Column(nullable = false, name = "SCALE_Y")
+    private Float scaleY;
 
     @Column(nullable = false)
-    private Float width;
+    private Long innerImageFileId;
 
     @Column(nullable = false)
-    private Float height;
+    private Integer depth;
 
     @Column(nullable = false)
-    private Long imageFileId;
+    private Long universeId;
+
+    @Column
+    private Long parentSpaceId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "element")
     private List<SoundJpaEntity> sounds;

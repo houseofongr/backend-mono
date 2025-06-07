@@ -102,15 +102,16 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     @Override
     public Space createSpace(CreateSpaceCommand command, Space parent, Long imageId) {
         Long newId = issueIdPort.issueSpaceId();
-        return Space.create(newId,
-                imageId,
-                command.universeId(),
-                command.title(),
-                command.description(),
-                command.dx(),
-                command.dy(),
-                command.scaleX(),
-                command.scaleY(),
-                parent);
+        return null;
+//        return Space.create(newId,
+//                imageId,
+//                command.universeId(),
+//                command.title(),
+//                command.description(),
+//                command.dx(),
+//                command.dy(),
+//                command.scaleX(),
+//                command.scaleY(),
+//                parent);
     }
 }

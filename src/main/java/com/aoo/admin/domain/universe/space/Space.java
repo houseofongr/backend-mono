@@ -1,88 +1,83 @@
 package com.aoo.admin.domain.universe.space;
 
-import com.aoo.admin.domain.universe.BasicInfo;
+import com.aoo.admin.domain.universe.BaseFileInfo;
 import com.aoo.admin.domain.universe.DateInfo;
+import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
 
 @Getter
-public class Space {
-    private final Long id;
-    private Long innerImageId;
-    private final Long universeId;
-    private BasicInfo basicInfo;
+public class Space extends UniverseTreeComponent {
+    private BaseFileInfo fileInfo;
+    private SpaceElementBasicInfo basicInfo;
     private final DateInfo dateInfo;
     private PosInfo posInfo;
-    private final TreeInfo treeInfo;
 
-    private Space(Long id, Long innerImageId, Long universeId, BasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
-        this.id = id;
-        this.innerImageId = innerImageId;
-        this.universeId = universeId;
+    private Space(Long id, BaseFileInfo fileInfo, SpaceElementBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
+        super(id, treeInfo);
+        this.fileInfo = fileInfo;
         this.basicInfo = basicInfo;
         this.dateInfo = dateInfo;
         this.posInfo = posInfo;
-        this.treeInfo = treeInfo;
     }
 
-    public static Space create(Long id, Long innerImageId, Long universeId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, Space parentSpace) {
-        Space newSpace = new Space(
-                id,
-                innerImageId,
-                universeId,
-                new BasicInfo(title, description),
-                null,
-                new PosInfo(dx, dy, scaleX, scaleY),
-                parentSpace != null ? TreeInfo.createChild(parentSpace) : TreeInfo.createRoot()
-        );
+    public static Space create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY) {
 
-        if (!newSpace.isRoot()) parentSpace.getTreeInfo().addChild(newSpace);
-
-        return newSpace;
-    }
-
-    public static Space loadSingle(Long id, Long innerImageId, Long universeId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float dx, Float dy, Float scaleX, Float scaleY, Integer depth) {
         return new Space(
                 id,
-                innerImageId,
-                universeId,
-                new BasicInfo(title, description),
-                new DateInfo(createdTime, updatedTime),
+                new BaseFileInfo(innerImageId),
+                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                null,
                 new PosInfo(dx, dy, scaleX, scaleY),
-                TreeInfo.loadSingle(depth)
+                null
         );
     }
 
-    public static Space loadAncestor(Long id, Long imageId, Long universeId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float dx, Float dy, Float scaleX, Float scaleY, Space parent) {
-        return new Space(id,
-                imageId,
-                universeId,
-                new BasicInfo(title, description),
+    public static Space loadSingle(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float dx, Float dy, Float scaleX, Float scaleY) {
+        return new Space(
+                id,
+                new BaseFileInfo(innerImageId),
+                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(dx, dy, scaleX, scaleY),
-                parent == null? TreeInfo.createRoot() : TreeInfo.createChild(parent));
+                null
+        );
+    }
+
+    public static Space loadTreeComponent(Long id, Long universeId, Long parentSpaceId, Long innerImageFileId, Integer depth, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+        return new Space(
+                id,
+                new BaseFileInfo(innerImageFileId),
+                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                new DateInfo(createdTime, updatedTime),
+                new PosInfo(dx, dy,scaleX,scaleY),
+                null
+        );
     }
 
     public boolean isRoot() {
-        return this.treeInfo.getDepth() == 1;
+        return this.basicInfo.getParentSpaceId() == null || this.basicInfo.getParentSpaceId() == -1;
     }
 
     public void updateBasicInfo(String title, String description) {
-        String newTitle = title != null? title : basicInfo.getTitle();
-        String newDescription = description != null? description : basicInfo.getDescription();
-        this.basicInfo = new BasicInfo(newTitle, newDescription);
+        this.basicInfo = new SpaceElementBasicInfo(
+                this.basicInfo.getUniverseId(),
+                this.basicInfo.getParentSpaceId(),
+                title != null ? title : basicInfo.getTitle(),
+                description != null ? description : basicInfo.getDescription()
+        );
     }
 
     public void updatePosInfo(Float dx, Float dy, Float scaleX, Float scaleY) {
-        Float newDx = dx != null? dx : posInfo.getDx();
-        Float newDy = dy != null? dy : posInfo.getDy();
-        Float newScaleX = scaleX != null? scaleX : posInfo.getScaleX();
-        Float newScaleY = scaleY != null? scaleY : posInfo.getScaleY();
-        this.posInfo = new PosInfo(newDx, newDy, newScaleX, newScaleY);
+        this.posInfo = new PosInfo(
+                dx != null ? dx : posInfo.getDx(),
+                dy != null ? dy : posInfo.getDy(),
+                scaleX != null ? scaleX : posInfo.getScaleX(),
+                scaleY != null ? scaleY : posInfo.getScaleY());
     }
 
     public void updateInnerImage(Long innerImageId) {
-        this.innerImageId = innerImageId;
+        this.fileInfo = new BaseFileInfo(innerImageId);
     }
 }

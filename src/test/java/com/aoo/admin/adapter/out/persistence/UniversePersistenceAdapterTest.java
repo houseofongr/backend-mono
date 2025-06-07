@@ -5,6 +5,7 @@ import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
+import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
@@ -209,6 +210,22 @@ class UniversePersistenceAdapterTest {
 
         // then : 가장 최신 등록된 우주가 먼저 조회
         assertThat(result.universes().getFirst().title()).isEqualTo(universe.getBasicInfo().getTitle());
+    }
+
+    @Test
+    @DisplayName("유니버스 트리 컴포넌트 조회")
+    void testFindTreeComponents() {
+        // given
+        Long universeId = 1L;
+
+        // when
+        TraversalComponents treeComponents = sut.findTreeComponents(universeId);
+
+        // then
+        assertThat(treeComponents.getUniverse().getId()).isEqualTo(1L);
+        assertThat(treeComponents.getUniverse().getFileInfo().getInnerImageId()).isEqualTo(1L);
+        assertThat(treeComponents.getSpaces()).hasSize(5);
+        assertThat(treeComponents.getElements()).hasSize(7);
     }
 
     @Test

@@ -7,21 +7,18 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
-public class Universe {
-    private final Long id;
-    private final DateInfo dateInfo;
-    private final TreeInfo treeInfo;
+public class Universe extends UniverseTreeComponent {
     private UniverseFileInfo fileInfo;
     private UniverseBasicInfo basicInfo;
+    private final DateInfo dateInfo;
     private SocialInfo socialInfo;
 
     private Universe(Long id, UniverseFileInfo fileInfo, UniverseBasicInfo basicInfo, DateInfo dateInfo, SocialInfo socialInfo, TreeInfo treeInfo) {
-        this.id = id;
+        super(id, treeInfo);
         this.fileInfo = fileInfo;
         this.basicInfo = basicInfo;
         this.dateInfo = dateInfo;
         this.socialInfo = socialInfo;
-        this.treeInfo = treeInfo;
     }
 
     public static Universe create(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageId, Long authorId, String title, String description, Category category, PublicStatus publicStatus, List<String> tag) {
@@ -40,6 +37,10 @@ public class Universe {
                 new DateInfo(createdTime, updatedTime),
                 new SocialInfo(likeCount, viewCount, tag),
                 null);
+    }
+
+    public static Universe loadTreeComponent(Long id, Long innerImageFileId) {
+        return new Universe(id,new UniverseFileInfo(null, null, innerImageFileId),null,null,null,null);
     }
 
     public void updateBasicInfo(String title, String description, Long authorId, Category category, PublicStatus publicStatus) {

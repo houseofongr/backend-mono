@@ -45,7 +45,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
 
         Space targetSpace = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
-        Long beforeInnerImageId = targetSpace.getInnerImageId();
+        Long beforeInnerImageId = targetSpace.getFileInfo().getInnerImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);
 
         targetSpace.updateInnerImage(uploadedInnerImage.id());

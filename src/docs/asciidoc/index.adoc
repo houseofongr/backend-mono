@@ -566,6 +566,28 @@ operation::admin-universe-get-list[snippets='path-parameters,http-request,http-r
 
 operation::admin-universe-get[snippets='path-parameters,http-request,http-response,response-fields']
 
+[[admin-universe-get-tree-api]]
+==== 관리자 유니버스 트리정보 조회 API
+
+관리자가 특정 유니버스의 트리정보를 조회합니다.
+
+> 비공개 유니버스도 검색되며, 유니버스의 모든 정보가 공개됩니다.
+
+===== 유니버스 트리
+
+- 유니버스는 다음과 같이 트리 형태로 구성됩니다.
+
+//https://excalidraw.com/#json=P55r2Q4CfVnfIPYyGzNjb,PeJW81rbGhAdPxCoRl5xuA
+image::universe-tree.png[universe tree]
+
+- 위 트리구조를 집합으로 표현하면 다음과 같습니다.
+
+image::universe-nested.png[universe nested]
+
+> 아래 API 예시는 위 그림을 토대로 작성하였습니다.
+
+operation::admin-universe-get-tree[snippets='path-parameters,http-request,http-response,response-fields']
+
 [[admin-universe-patch-api]]
 ==== 특정 유니버스 정보 수정 API
 

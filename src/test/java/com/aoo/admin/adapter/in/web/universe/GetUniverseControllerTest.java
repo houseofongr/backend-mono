@@ -19,12 +19,12 @@ class GetUniverseControllerTest extends AbstractControllerTest {
     @DisplayName("관리자 유니버스 상세정보 조회")
     void testGetSpecificUniverse() throws Exception {
 
-        mockMvc.perform(get("/admin/universes/{id}", 1)
+        mockMvc.perform(get("/admin/universes/{universeId}", 1)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-get",
                         pathParameters(
-                                parameterWithName("id").description("조회할 유니버스의 식별자입니다.")
+                                parameterWithName("universeId").description("조회할 유니버스의 식별자입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("id").description("유니버스의 아이디입니다."),

@@ -3,7 +3,7 @@ package com.aoo.admin.domain.universe;
 import lombok.Getter;
 
 @Getter
-public class UniverseBasicInfo extends BasicInfo{
+public class UniverseBasicInfo extends BaseBasicInfo {
     private final Long authorId;
     private final Category category;
     private final PublicStatus publicStatus;

@@ -122,10 +122,10 @@ public class MockEntityFactoryService {
         return factory.createSpace(command, null, 10L);
     }
 
-    public static Space getChildSpace(Long parentId) {
-        MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
-        Space parentSpace = Space.loadSingle(parentId,10L,1L,"공간",null,ZonedDateTime.now(),ZonedDateTime.now(), 1f,0.9f,0.8f,0.7f, 1);
-        CreateSpaceCommand command = new CreateSpaceCommand(1L, parentSpace.getId(), "자식",null,1f,0.9f,0.8f,0.7f, basicImage);
-        return factory.createSpace(command, parentSpace,11L);
-    }
+//    public static Space getChildSpace(Long parentId) {
+//        MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
+//        Space parentSpace = Space.loadSingle(parentId,10L,1L,"공간",null,ZonedDateTime.now(),ZonedDateTime.now(), 1f,0.9f,0.8f,0.7f, 1);
+//        CreateSpaceCommand command = new CreateSpaceCommand(1L, parentSpace.getId(), "자식",null,1f,0.9f,0.8f,0.7f, basicImage);
+//        return factory.createSpace(command, parentSpace,11L);
+//    }
 }

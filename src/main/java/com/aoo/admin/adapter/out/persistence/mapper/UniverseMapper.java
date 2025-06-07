@@ -1,8 +1,15 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
+import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.space.Space;
+import com.aoo.admin.domain.universe.space.element.Element;
+import com.aoo.common.adapter.out.persistence.entity.ElementJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class UniverseMapper {
@@ -22,5 +29,46 @@ public class UniverseMapper {
                         .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag()).toList(),
                 universeJpaEntity.getCreatedTime(),
                 universeJpaEntity.getUpdatedTime());
+    }
+
+    public TraversalComponents mapToTraversalComponent(UniverseJpaEntity universeJpaEntity, List<SpaceJpaEntity> spaceJpaEntities, List<ElementJpaEntity> elementJpaEntities) {
+        Universe universe = Universe.loadTreeComponent(
+                universeJpaEntity.getId(),
+                universeJpaEntity.getInnerImageFileId()
+        );
+
+        List<Space> spaces = spaceJpaEntities.stream().map(spaceJpaEntity -> Space.loadTreeComponent(
+                spaceJpaEntity.getId(),
+                spaceJpaEntity.getUniverseId(),
+                spaceJpaEntity.getParentSpaceId(),
+                spaceJpaEntity.getInnerImageFileId(),
+                spaceJpaEntity.getDepth(),
+                spaceJpaEntity.getTitle(),
+                spaceJpaEntity.getDescription(),
+                spaceJpaEntity.getDx(),
+                spaceJpaEntity.getDy(),
+                spaceJpaEntity.getScaleX(),
+                spaceJpaEntity.getScaleY(),
+                spaceJpaEntity.getCreatedTime(),
+                spaceJpaEntity.getUpdatedTime()
+        )).toList();
+
+        List<Element> elements = elementJpaEntities.stream().map(elementJpaEntity -> Element.loadTreeComponent(
+                elementJpaEntity.getId(),
+                elementJpaEntity.getUniverseId(),
+                elementJpaEntity.getParentSpaceId(),
+                elementJpaEntity.getInnerImageFileId(),
+                elementJpaEntity.getDepth(),
+                elementJpaEntity.getTitle(),
+                elementJpaEntity.getDescription(),
+                elementJpaEntity.getDx(),
+                elementJpaEntity.getDy(),
+                elementJpaEntity.getScaleX(),
+                elementJpaEntity.getScaleY(),
+                elementJpaEntity.getCreatedTime(),
+                elementJpaEntity.getUpdatedTime()
+        )).toList();
+
+        return new TraversalComponents(universe, spaces, elements);
     }
 }

@@ -12,15 +12,14 @@ import com.aoo.admin.application.port.out.universe.SaveUniversePort;
 import com.aoo.admin.application.port.out.universe.UpdateUniversePort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
+import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
-import com.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.UniverseHashtagJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.*;
 import com.aoo.common.adapter.out.persistence.repository.HashtagJpaRepository;
 import com.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import com.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.Triple;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -71,6 +70,12 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     public SearchUniverseResult.UniverseDetailInfo find(Long id) {
         return SearchUniverseResult.UniverseDetailInfo.of(universeJpaRepository.findById(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND)));
+    }
+
+    @Override
+    public TraversalComponents findTreeComponents(Long universeId) {
+        TraversalJpaEntityComponents components = universeJpaRepository.findAllTreeComponentById(universeId);
+        return universeMapper.mapToTraversalComponent(components.universeJpaEntity(), components.spaceJpaEntities(), components.elementJpaEntities());
     }
 
     @Override

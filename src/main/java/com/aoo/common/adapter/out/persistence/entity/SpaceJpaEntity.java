@@ -44,56 +44,52 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Integer depth;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UNIVERSE_ID")
-    private UniverseJpaEntity universe;
+    @Column(nullable = false)
+    private Long universeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_SPACE_ID")
-    private SpaceJpaEntity parent;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-    private List<SpaceJpaEntity> children;
+    @Column
+    private Long parentSpaceId;
 
     public static SpaceJpaEntity create(Space space, UniverseJpaEntity universeJpaEntity) {
-        return new SpaceJpaEntity(
-                null,
-                space.getBasicInfo().getTitle(),
-                space.getBasicInfo().getDescription(),
-                space.getPosInfo().getDx(),
-                space.getPosInfo().getDy(),
-                space.getPosInfo().getScaleX(),
-                space.getPosInfo().getScaleY(),
-                space.getInnerImageId(),
-                space.getTreeInfo().getDepth(),
-                universeJpaEntity,
-                null,
-                new ArrayList<>()
-        );
+//        return new SpaceJpaEntity(
+//                null,
+//                space.getBasicInfo().getTitle(),
+//                space.getBasicInfo().getDescription(),
+//                space.getPosInfo().getDx(),
+//                space.getPosInfo().getDy(),
+//                space.getPosInfo().getScaleX(),
+//                space.getPosInfo().getScaleY(),
+//                space.getFileInfo().getInnerImageId(),
+//                space.getTreeInfo().getDepth(),
+//                universeJpaEntity,
+//                null,
+//                new ArrayList<>()
+//        );
+        return null;
     }
 
     public static SpaceJpaEntity createChild(Space space, SpaceJpaEntity parent) {
-        SpaceJpaEntity childSpace = new SpaceJpaEntity(
-                null,
-                space.getBasicInfo().getTitle(),
-                space.getBasicInfo().getDescription(),
-                space.getPosInfo().getDx(),
-                space.getPosInfo().getDy(),
-                space.getPosInfo().getScaleX(),
-                space.getPosInfo().getScaleY(),
-                space.getInnerImageId(),
-                space.getTreeInfo().getDepth(),
-                parent.getUniverse(),
-                parent,
-                new ArrayList<>());
+//        SpaceJpaEntity childSpace = new SpaceJpaEntity(
+//                null,
+//                space.getBasicInfo().getTitle(),
+//                space.getBasicInfo().getDescription(),
+//                space.getPosInfo().getDx(),
+//                space.getPosInfo().getDy(),
+//                space.getPosInfo().getScaleX(),
+//                space.getPosInfo().getScaleY(),
+//                space.getInnerImageId(),
+//                space.getTreeInfo().getDepth(),
+//                parent.getUniverse(),
+//                parent,
+//                new ArrayList<>());
+//
+//        parent.getChildren().add(childSpace);
 
-        parent.getChildren().add(childSpace);
-
-        return childSpace;
+        return null;
     }
 
     public void update(Space space) {
-        this.innerImageFileId = space.getInnerImageId();
+        this.innerImageFileId = space.getFileInfo().getInnerImageId();
         this.title = space.getBasicInfo().getTitle();
         this.description = space.getBasicInfo().getDescription();
         this.dx = space.getPosInfo().getDx();

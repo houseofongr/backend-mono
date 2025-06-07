@@ -35,7 +35,7 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(universeId).orElseThrow();
         SpaceJpaEntity spaceJpaEntity = space.isRoot()?
                 SpaceJpaEntity.create(space, universeJpaEntity) :
-                SpaceJpaEntity.createChild(space, spaceJpaRepository.findById(space.getTreeInfo().getParentSpace().getId()).orElseThrow());
+                SpaceJpaEntity.createChild(space, spaceJpaRepository.findById(space.getBasicInfo().getParentSpaceId()).orElseThrow());
 
         spaceJpaRepository.save(spaceJpaEntity);
 

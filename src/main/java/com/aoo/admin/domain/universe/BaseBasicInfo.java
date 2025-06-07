@@ -3,11 +3,11 @@ package com.aoo.admin.domain.universe;
 import lombok.Getter;
 
 @Getter
-public class BasicInfo {
+public class BaseBasicInfo {
     private final String title;
     private final String description;
 
-    public BasicInfo(String title, String description) {
+    public BaseBasicInfo(String title, String description) {
         this.title = title;
         this.description = description;
     }
