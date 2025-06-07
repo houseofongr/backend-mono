@@ -25,16 +25,16 @@ public class ElementJpaEntity extends DateColumnBaseEntity{
     private String description;
 
     @Column(nullable = false)
-    private Float dx;
+    private Float sx;
 
     @Column(nullable = false)
-    private Float dy;
+    private Float sy;
 
-    @Column(nullable = false, name = "SCALE_X")
-    private Float scaleX;
+    @Column(nullable = false)
+    private Float ex;
 
-    @Column(nullable = false, name = "SCALE_Y")
-    private Float scaleY;
+    @Column(nullable = false)
+    private Float ey;
 
     @Column(nullable = false)
     private Long innerImageFileId;

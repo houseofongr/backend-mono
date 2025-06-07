@@ -45,10 +45,10 @@ public class UniverseMapper {
                 spaceJpaEntity.getDepth(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),
-                spaceJpaEntity.getDx(),
-                spaceJpaEntity.getDy(),
-                spaceJpaEntity.getScaleX(),
-                spaceJpaEntity.getScaleY(),
+                spaceJpaEntity.getSx(),
+                spaceJpaEntity.getSy(),
+                spaceJpaEntity.getEx(),
+                spaceJpaEntity.getEy(),
                 spaceJpaEntity.getCreatedTime(),
                 spaceJpaEntity.getUpdatedTime()
         )).toList();
@@ -61,10 +61,10 @@ public class UniverseMapper {
                 elementJpaEntity.getDepth(),
                 elementJpaEntity.getTitle(),
                 elementJpaEntity.getDescription(),
-                elementJpaEntity.getDx(),
-                elementJpaEntity.getDy(),
-                elementJpaEntity.getScaleX(),
-                elementJpaEntity.getScaleY(),
+                elementJpaEntity.getSx(),
+                elementJpaEntity.getSy(),
+                elementJpaEntity.getEx(),
+                elementJpaEntity.getEy(),
                 elementJpaEntity.getCreatedTime(),
                 elementJpaEntity.getUpdatedTime()
         )).toList();

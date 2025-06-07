@@ -20,10 +20,10 @@ public record CreateSpaceResult(
                 spaceJpaEntity.getInnerImageFileId(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),
-                spaceJpaEntity.getDx(),
-                spaceJpaEntity.getDy(),
-                spaceJpaEntity.getScaleX(),
-                spaceJpaEntity.getScaleY()
+                spaceJpaEntity.getSx(),
+                spaceJpaEntity.getSy(),
+                spaceJpaEntity.getEx(),
+                spaceJpaEntity.getEy()
         );
     }
 }

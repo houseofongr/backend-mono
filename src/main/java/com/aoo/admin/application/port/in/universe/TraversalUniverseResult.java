@@ -58,10 +58,10 @@ public record TraversalUniverseResult(
                         space.getTreeInfo().getDepth(),
                         space.getBasicInfo().getTitle(),
                         space.getBasicInfo().getDescription(),
-                        space.getPosInfo().getDx(),
-                        space.getPosInfo().getDy(),
-                        space.getPosInfo().getScaleX(),
-                        space.getPosInfo().getScaleY(),
+                        space.getPosInfo().getSx(),
+                        space.getPosInfo().getSy(),
+                        space.getPosInfo().getEx(),
+                        space.getPosInfo().getEy(),
                         space.getTreeInfo().getChildren().stream()
                                 .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Space)
                                 .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
@@ -98,10 +98,10 @@ public record TraversalUniverseResult(
                         element.getTreeInfo().getDepth(),
                         element.getBasicInfo().getTitle(),
                         element.getBasicInfo().getDescription(),
-                        element.getPosInfo().getDx(),
-                        element.getPosInfo().getDy(),
-                        element.getPosInfo().getScaleX(),
-                        element.getPosInfo().getScaleY()
+                        element.getPosInfo().getSx(),
+                        element.getPosInfo().getSy(),
+                        element.getPosInfo().getEx(),
+                        element.getPosInfo().getEy()
                 );
 
             else return null;

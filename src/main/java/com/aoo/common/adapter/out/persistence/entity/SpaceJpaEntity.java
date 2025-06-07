@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "SPACE")
 @Getter
@@ -27,16 +24,16 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private Float dx;
+    private Float sx;
 
     @Column(nullable = false)
-    private Float dy;
+    private Float sy;
 
-    @Column(nullable = false, name = "SCALE_X")
-    private Float scaleX;
+    @Column(nullable = false)
+    private Float ex;
 
-    @Column(nullable = false, name = "SCALE_Y")
-    private Float scaleY;
+    @Column(nullable = false)
+    private Float ey;
 
     @Column(nullable = false)
     private Long innerImageFileId;
@@ -92,9 +89,9 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
         this.innerImageFileId = space.getFileInfo().getInnerImageId();
         this.title = space.getBasicInfo().getTitle();
         this.description = space.getBasicInfo().getDescription();
-        this.dx = space.getPosInfo().getDx();
-        this.dy = space.getPosInfo().getDy();
-        this.scaleX = space.getPosInfo().getScaleX();
-        this.scaleY = space.getPosInfo().getScaleY();
+        this.sx = space.getPosInfo().getSx();
+        this.sy = space.getPosInfo().getSy();
+        this.ex = space.getPosInfo().getEx();
+        this.ey = space.getPosInfo().getEy();
     }
 }

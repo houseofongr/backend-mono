@@ -4,15 +4,15 @@ import lombok.Getter;
 
 @Getter
 public class PosInfo {
-    private final Float dx;
-    private final Float dy;
-    private final Float scaleX;
-    private final Float scaleY;
+    private final Float sx;
+    private final Float sy;
+    private final Float ex;
+    private final Float ey;
 
-    public PosInfo(Float dx, Float dy, Float scaleX, Float scaleY) {
-        this.dx = dx;
-        this.dy = dy;
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
+    public PosInfo(Float sx, Float sy, Float ex, Float ey) {
+        this.sx = sx;
+        this.sy = sy;
+        this.ex = ex;
+        this.ey = ey;
     }
 }

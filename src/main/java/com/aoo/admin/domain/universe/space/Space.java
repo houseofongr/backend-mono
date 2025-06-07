@@ -71,10 +71,10 @@ public class Space extends UniverseTreeComponent {
 
     public void updatePosInfo(Float dx, Float dy, Float scaleX, Float scaleY) {
         this.posInfo = new PosInfo(
-                dx != null ? dx : posInfo.getDx(),
-                dy != null ? dy : posInfo.getDy(),
-                scaleX != null ? scaleX : posInfo.getScaleX(),
-                scaleY != null ? scaleY : posInfo.getScaleY());
+                dx != null ? dx : posInfo.getSx(),
+                dy != null ? dy : posInfo.getSy(),
+                scaleX != null ? scaleX : posInfo.getEx(),
+                scaleY != null ? scaleY : posInfo.getEy());
     }
 
     public void updateInnerImage(Long innerImageId) {
