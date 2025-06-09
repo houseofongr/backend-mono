@@ -37,31 +37,6 @@ class SpaceTest {
         assertThat(newSpace.getPosInfo().getEy()).isEqualTo(ey);
     }
 
-//    @Test
-//    @DisplayName("하위 스페이스 생성")
-//    void testCreateChildSpace() {
-//        // given
-//        Long id = 1L;
-//        Long universeId = 12L;
-//        Long imageId = 100L;
-//        String title = "공간";
-//        String description = "스페이스는 공간입니다.";
-//        Float startX = 1000 / 5000F;
-//        Float startY = 2000 / 5000F;
-//        Float endX = 1500 / 5000F;
-//        Float endY = 1500 / 5000F;
-//        Space parentSpace = Space.create(id, imageId, id, title, description, startX, startY, endX, endY, null);
-//
-//        // when
-//        Space childSpace = Space.create(2L, imageId, id, title, description, startX, startY, endX, endY, parentSpace);
-//
-//        // then
-//        assertThat(parentSpace.getUniverseId()).isEqualTo(childSpace.getUniverseId());
-//        assertThat(childSpace.getTreeInfo().getDepth()).isEqualTo(2);
-//        assertThat(childSpace.getTreeInfo().getParentSpace()).isEqualTo(parentSpace);
-//        assertThat(parentSpace.getTreeInfo().getChildSpaces()).contains(childSpace);
-//    }
-
     @Test
     @DisplayName("기본정보(제목, 내용) 수정하기")
     void testUpdateBasicInfo() {
@@ -71,17 +46,17 @@ class SpaceTest {
         Space space = MockEntityFactoryService.getParentSpace();
 
         // try 1
-        space.updateBasicInfo(null, null);
+        space.getBasicInfo().update(null, null);
         assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
         assertThat(space.getBasicInfo().getDescription()).isEqualTo(null);
 
         // try 2
-        space.updateBasicInfo(title, null);
+        space.getBasicInfo().update(title, null);
         assertThat(space.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(space.getBasicInfo().getDescription()).isEqualTo(null);
 
         // try 3
-        space.updateBasicInfo(null, description);
+        space.getBasicInfo().update(null, description);
         assertThat(space.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(space.getBasicInfo().getDescription()).isEqualTo(description);
     }
@@ -97,28 +72,28 @@ class SpaceTest {
         Space space = MockEntityFactoryService.getParentSpace();
 
         // try 1
-        space.updatePosInfo(sx, sy, null, null);
+        space.getPosInfo().update(sx, sy, null, null);
         assertThat(space.getPosInfo().getSx()).isEqualTo(sx);
         assertThat(space.getPosInfo().getSy()).isEqualTo(sy);
         assertThat(space.getPosInfo().getEx()).isEqualTo(0.8f);
         assertThat(space.getPosInfo().getEy()).isEqualTo(0.7f);
 
         // try 2
-        space.updatePosInfo(null, null, ex, ey);
+        space.getPosInfo().update(null, null, ex, ey);
         assertThat(space.getPosInfo().getSx()).isEqualTo(sx);
         assertThat(space.getPosInfo().getSy()).isEqualTo(sy);
         assertThat(space.getPosInfo().getEx()).isEqualTo(ex);
         assertThat(space.getPosInfo().getEy()).isEqualTo(ey);
     }
 
-//    @Test
-//    @DisplayName("이미지 수정하기")
-//    void testUpdateInnerImageId() {
-//        // given
-//        Long imageId = 4321L;
-//        Space space = MockEntityFactoryService.getParentSpace();
-//
-//        space.updateInnerImage(imageId);
-//        assertThat(space.getInnerImageId()).isEqualTo(imageId);
-//    }
+    @Test
+    @DisplayName("이미지 수정하기")
+    void testUpdateInnerImageId() {
+        // given
+        Long imageId = 4321L;
+        Space space = MockEntityFactoryService.getParentSpace();
+
+        space.getFileInfo().updateInnerImage(imageId);
+        assertThat(space.getFileInfo().getInnerImageId()).isEqualTo(imageId);
+    }
 }

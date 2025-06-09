@@ -8,10 +8,10 @@ import java.util.List;
 
 @Getter
 public class Universe extends UniverseTreeComponent {
-    private UniverseFileInfo fileInfo;
-    private UniverseBasicInfo basicInfo;
+    private final UniverseFileInfo fileInfo;
+    private final UniverseBasicInfo basicInfo;
     private final DateInfo dateInfo;
-    private SocialInfo socialInfo;
+    private final SocialInfo socialInfo;
 
     private Universe(Long id, UniverseFileInfo fileInfo, UniverseBasicInfo basicInfo, DateInfo dateInfo, SocialInfo socialInfo, TreeInfo treeInfo) {
         super(id, treeInfo);
@@ -43,29 +43,4 @@ public class Universe extends UniverseTreeComponent {
         return new Universe(id, new UniverseFileInfo(null, null, innerImageFileId), null, null, null, null);
     }
 
-    public void updateBasicInfo(String title, String description, Long authorId, Category category, PublicStatus publicStatus) {
-        String newTitle = title != null ? title : basicInfo.getTitle();
-        String newDescription = description != null ? description : basicInfo.getDescription();
-        Long newAuthorId = authorId != null ? authorId : basicInfo.getAuthorId();
-        Category newCategory = category != null ? category : basicInfo.getCategory();
-        PublicStatus newStatus = publicStatus != null ? publicStatus : basicInfo.getPublicStatus();
-
-        this.basicInfo = new UniverseBasicInfo(newTitle, newDescription, newAuthorId, newCategory, newStatus);
-    }
-
-    public void updateSocialInfo(List<String> tags) {
-        this.socialInfo = tags != null ? new SocialInfo(socialInfo.getLikeCount(), socialInfo.getViewCount(), tags) : this.socialInfo;
-    }
-
-    public void updateThumbnail(Long thumbnailId) {
-        this.fileInfo = new UniverseFileInfo(this.fileInfo.getThumbMusicId(), thumbnailId, this.fileInfo.getInnerImageId());
-    }
-
-    public void updateThumbMusic(Long thumbMusicId) {
-        this.fileInfo = new UniverseFileInfo(thumbMusicId, this.fileInfo.getThumbnailId(), this.fileInfo.getInnerImageId());
-    }
-
-    public void updateInnerImage(Long innerImageId) {
-        this.fileInfo = new UniverseFileInfo(this.fileInfo.getThumbMusicId(), this.fileInfo.getThumbnailId(), innerImageId);
-    }
 }

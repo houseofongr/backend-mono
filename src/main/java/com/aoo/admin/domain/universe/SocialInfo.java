@@ -12,7 +12,7 @@ public class SocialInfo {
 
     private final Integer likeCount;
     private final Long viewCount;
-    private final List<String> hashtags;
+    private List<String> hashtags;
 
 
     public SocialInfo(Integer likeCount, Long viewCount, List<String> hashtags) {
@@ -28,5 +28,9 @@ public class SocialInfo {
                 .filter(tag -> VALID_HASHTAG_PATTERN.matcher(tag).matches())
                 .distinct()
                 .toList();
+    }
+
+    public void updateHashtag(List<String> tags) {
+        this.hashtags = tags;
     }
 }

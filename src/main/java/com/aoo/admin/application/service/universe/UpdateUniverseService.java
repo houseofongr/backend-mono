@@ -33,8 +33,8 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId);
 
-        targetUniverse.updateBasicInfo(command.title(), command.description(), command.authorId(), command.category(), command.publicStatus());
-        targetUniverse.updateSocialInfo(command.hashtags());
+        targetUniverse.getBasicInfo().updateUniverseInfo(command.title(), command.description(), command.authorId(), command.category(), command.publicStatus());
+        targetUniverse.getSocialInfo().updateHashtag(command.hashtags());
 
         return updateUniversePort.updateDetail(targetUniverse);
     }
@@ -50,7 +50,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         Long beforeThumbMusicId = targetUniverse.getFileInfo().getThumbMusicId();
         UploadFileResult.FileInfo uploadedThumbMusic = uploadPublicAudioUseCase.publicUpload(thumbMusic);
 
-        targetUniverse.updateThumbMusic(uploadedThumbMusic.id());
+        targetUniverse.getFileInfo().updateThumbMusic(uploadedThumbMusic.id());
 
         updateUniversePort.updateThumbMusic(targetUniverse);
         deleteFileUseCase.deleteFile(beforeThumbMusicId);
@@ -69,7 +69,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         Long beforeThumbnailId = targetUniverse.getFileInfo().getThumbnailId();
         UploadFileResult.FileInfo uploadedThumbnail = uploadPublicImageUseCase.publicUpload(thumbnail);
 
-        targetUniverse.updateThumbnail(uploadedThumbnail.id());
+        targetUniverse.getFileInfo().updateThumbnail(uploadedThumbnail.id());
 
         updateUniversePort.updateThumbnail(targetUniverse);
         deleteFileUseCase.deleteFile(beforeThumbnailId);
@@ -88,7 +88,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         Long beforeInnerImageId = targetUniverse.getFileInfo().getInnerImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);
 
-        targetUniverse.updateInnerImage(uploadedInnerImage.id());
+        targetUniverse.getFileInfo().updateInnerImage(uploadedInnerImage.id());
 
         updateUniversePort.updateInnerImage(targetUniverse);
         deleteFileUseCase.deleteFile(beforeInnerImageId);

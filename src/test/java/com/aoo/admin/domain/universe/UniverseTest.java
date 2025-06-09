@@ -61,7 +61,7 @@ class UniverseTest {
         Long authorId = 1L;
 
         // when
-        universe.updateBasicInfo(title, description, authorId, null, null);
+        universe.getBasicInfo().updateUniverseInfo(title, description, authorId, null, null);
 
         // then
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo(title);
@@ -71,7 +71,7 @@ class UniverseTest {
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PUBLIC);
 
         // when 2
-        universe.updateBasicInfo(null, null, null, category, publicStatus);
+        universe.getBasicInfo().updateUniverseInfo(null, null, null, category, publicStatus);
 
         // then 2
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(category);
@@ -87,7 +87,7 @@ class UniverseTest {
         List<String> tags = List.of("오르트구름", "태양계", "윤하", "별");
 
         // when
-        universe.updateSocialInfo(tags);
+        universe.getSocialInfo().updateHashtag(tags);
 
         // then
         assertThat(universe.getSocialInfo().getHashtags()).contains(tags.toArray(String[]::new));
@@ -104,9 +104,9 @@ class UniverseTest {
         Long innerImageId = 13L;
 
         // when
-        universe.updateThumbMusic(thumbMusicId);
-        universe.updateThumbnail(thumbnailId);
-        universe.updateInnerImage(innerImageId);
+        universe.getFileInfo().updateThumbMusic(thumbMusicId);
+        universe.getFileInfo().updateThumbnail(thumbnailId);
+        universe.getFileInfo().updateInnerImage(innerImageId);
 
         // then
         assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(thumbnailId);

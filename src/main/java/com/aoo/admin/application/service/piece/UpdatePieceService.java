@@ -22,7 +22,7 @@ public class UpdatePieceService implements UpdatePieceUseCase {
     public UpdatePieceResult.Detail updateDetail(Long pieceId, UpdatePieceCommand.Detail command) {
         Piece piece = findPiecePort.find(pieceId);
 
-        piece.updateBasicInfo(command.title(), command.description());
+        piece.getBasicInfo().update(command.title(), command.description());
         updatePiecePort.update(pieceId, piece);
 
         return UpdatePieceResult.Detail.of(piece);
@@ -32,7 +32,7 @@ public class UpdatePieceService implements UpdatePieceUseCase {
     public UpdatePieceResult.Position updatePosition(Long pieceId, UpdatePieceCommand.Position command) {
         Piece piece = findPiecePort.find(pieceId);
 
-        piece.updatePosInfo(command.startX(), command.startY(), command.endX(), command.endY());
+        piece.getPosInfo().update(command.startX(), command.startY(), command.endX(), command.endY());
         updatePiecePort.update(pieceId, piece);
 
         return UpdatePieceResult.Position.of(piece);

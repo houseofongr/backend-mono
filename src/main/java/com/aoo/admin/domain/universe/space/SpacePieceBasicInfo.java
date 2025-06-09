@@ -14,4 +14,5 @@ public class SpacePieceBasicInfo extends BaseBasicInfo {
         this.universeId = universeId;
         this.parentSpaceId = parentSpaceId;
     }
+
 }

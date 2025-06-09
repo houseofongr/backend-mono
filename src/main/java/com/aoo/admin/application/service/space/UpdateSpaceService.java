@@ -30,7 +30,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
     public UpdateSpaceResult.Detail updateDetail(Long spaceId, UpdateSpaceCommand.Detail command) {
         Space space = findSpacePort.find(spaceId);
 
-        space.updateBasicInfo(command.title(), command.description());
+        space.getBasicInfo().update(command.title(), command.description());
         updateSpacePort.update(space);
 
         return UpdateSpaceResult.Detail.of(space);
@@ -40,7 +40,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
     public UpdateSpaceResult.Position updatePosition(Long spaceId, UpdateSpaceCommand.Position command) {
         Space space = findSpacePort.find(spaceId);
 
-        space.updatePosInfo(command.startX(), command.startY(), command.endX(), command.endY());
+        space.getPosInfo().update(command.startX(), command.startY(), command.endX(), command.endY());
         updateSpacePort.update(space);
 
         return UpdateSpaceResult.Position.of(space);
@@ -57,7 +57,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
         Long beforeInnerImageId = targetSpace.getFileInfo().getInnerImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);
 
-        targetSpace.updateInnerImage(uploadedInnerImage.id());
+        targetSpace.getFileInfo().updateInnerImage(uploadedInnerImage.id());
         updateSpacePort.update(targetSpace);
         deleteFileUseCase.deleteFile(beforeInnerImageId);
 

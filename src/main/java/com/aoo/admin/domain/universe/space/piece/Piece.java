@@ -13,9 +13,9 @@ import java.time.ZonedDateTime;
 @Getter
 public class Piece extends UniverseTreeComponent {
     private final BaseFileInfo fileInfo;
-    private SpacePieceBasicInfo basicInfo;
+    private final SpacePieceBasicInfo basicInfo;
     private final DateInfo dateInfo;
-    private PosInfo posInfo;
+    private final PosInfo posInfo;
 
     private Piece(Long id, BaseFileInfo fileInfo, SpacePieceBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
         super(id, treeInfo);
@@ -59,22 +59,5 @@ public class Piece extends UniverseTreeComponent {
 
     public boolean isRoot() {
         return this.basicInfo.getParentSpaceId() == null || this.basicInfo.getParentSpaceId() == -1;
-    }
-
-    public void updateBasicInfo(String title, String description) {
-        this.basicInfo = new SpacePieceBasicInfo(
-                this.basicInfo.getUniverseId(),
-                this.basicInfo.getParentSpaceId(),
-                title != null ? title : basicInfo.getTitle(),
-                description != null ? description : basicInfo.getDescription()
-        );
-    }
-
-    public void updatePosInfo(Float sx, Float sy, Float ex, Float ey) {
-        this.posInfo = new PosInfo(
-                sx != null ? sx : posInfo.getSx(),
-                sy != null ? sy : posInfo.getSy(),
-                ex != null ? ex : posInfo.getEx(),
-                ey != null ? ey : posInfo.getEy());
     }
 }
