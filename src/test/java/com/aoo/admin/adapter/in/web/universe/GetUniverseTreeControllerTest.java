@@ -42,6 +42,8 @@ class GetUniverseTreeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("spaces[].startY").description("스페이스의 시작좌표(Y)입니다."),
                                 fieldWithPath("spaces[].endX").description("스페이스의 종료좌표(X)입니다."),
                                 fieldWithPath("spaces[].endY").description("스페이스의 종료좌표(Y)입니다."),
+                                fieldWithPath("spaces[].createdTime").description("스페이스의 생성일자입니다.(유닉스 타임스태프)"),
+                                fieldWithPath("spaces[].updatedTime").description("스페이스의 수정일자입니다.(유닉스 타임스태프)"),
                                 subsectionWithPath("spaces[].pieces").description("스페이스 내부의 피스입니다."),
                                 subsectionWithPath("spaces[].spaces").description("스페이스 내부의 스페이스입니다.(무한 depth)"),
 
@@ -54,7 +56,9 @@ class GetUniverseTreeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("pieces[].startX").description("피스의 시작좌표(X)입니다."),
                                 fieldWithPath("pieces[].startY").description("피스의 시작좌표(Y)입니다."),
                                 fieldWithPath("pieces[].endX").description("피스의 종료좌표(X)입니다."),
-                                fieldWithPath("pieces[].endY").description("피스의 종료좌표(Y)입니다.")
+                                fieldWithPath("pieces[].endY").description("피스의 종료좌표(Y)입니다."),
+                                fieldWithPath("pieces[].createdTime").description("피스의 생성일자입니다.(유닉스 타임스태프)"),
+                                fieldWithPath("pieces[].updatedTime").description("피스의 수정일자입니다.(유닉스 타임스태프)")
                         )
                 ));
     }

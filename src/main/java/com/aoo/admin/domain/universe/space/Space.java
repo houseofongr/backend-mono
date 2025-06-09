@@ -34,18 +34,7 @@ public class Space extends UniverseTreeComponent {
         );
     }
 
-    public static Space loadSingle(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float dx, Float dy, Float scaleX, Float scaleY) {
-        return new Space(
-                id,
-                new BaseFileInfo(innerImageId),
-                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
-                new DateInfo(createdTime, updatedTime),
-                new PosInfo(dx, dy, scaleX, scaleY),
-                null
-        );
-    }
-
-    public static Space loadTreeComponent(Long id, Long universeId, Long parentSpaceId, Long innerImageFileId, Integer depth, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Space loadTreeComponent(Long id,  Long innerImageFileId, Long universeId, Long parentSpaceId,String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Space(
                 id,
                 new BaseFileInfo(innerImageFileId),

@@ -40,9 +40,6 @@ public class PieceJpaEntity extends DateColumnBaseEntity{
     private Long innerImageFileId;
 
     @Column(nullable = false)
-    private Integer depth;
-
-    @Column(nullable = false)
     private Long universeId;
 
     @Column

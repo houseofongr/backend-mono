@@ -39,9 +39,6 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     private Long innerImageFileId;
 
     @Column(nullable = false)
-    private Integer depth;
-
-    @Column(nullable = false)
     private Long universeId;
 
     @Column

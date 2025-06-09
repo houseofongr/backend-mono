@@ -44,6 +44,8 @@ public record TraversalUniverseResult(
             Float startY,
             Float endX,
             Float endY,
+            Long createdTime,
+            Long updatedTime,
             List<SpaceTreeInfo> spaces,
             List<PieceTreeInfo> pieces
     ) {
@@ -61,6 +63,8 @@ public record TraversalUniverseResult(
                         space.getPosInfo().getSy(),
                         space.getPosInfo().getEx(),
                         space.getPosInfo().getEy(),
+                        space.getDateInfo().getCreatedTime().toEpochSecond(),
+                        space.getDateInfo().getUpdatedTime().toEpochSecond(),
                         space.getTreeInfo().getChildren().stream()
                                 .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Space)
                                 .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
@@ -85,7 +89,9 @@ public record TraversalUniverseResult(
             Float startX,
             Float startY,
             Float endX,
-            Float endY
+            Float endY,
+            Long createdTime,
+            Long updatedTime
     ) {
 
         public static PieceTreeInfo of(UniverseTreeComponent component) {
@@ -100,7 +106,9 @@ public record TraversalUniverseResult(
                         piece.getPosInfo().getSx(),
                         piece.getPosInfo().getSy(),
                         piece.getPosInfo().getEx(),
-                        piece.getPosInfo().getEy()
+                        piece.getPosInfo().getEy(),
+                        piece.getDateInfo().getCreatedTime().toEpochSecond(),
+                        piece.getDateInfo().getUpdatedTime().toEpochSecond()
                 );
 
             else return null;

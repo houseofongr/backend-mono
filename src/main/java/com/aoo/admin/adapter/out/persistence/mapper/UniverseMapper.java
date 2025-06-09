@@ -39,10 +39,9 @@ public class UniverseMapper {
 
         List<Space> spaces = spaceJpaEntities.stream().map(spaceJpaEntity -> Space.loadTreeComponent(
                 spaceJpaEntity.getId(),
+                spaceJpaEntity.getInnerImageFileId(),
                 spaceJpaEntity.getUniverseId(),
                 spaceJpaEntity.getParentSpaceId(),
-                spaceJpaEntity.getInnerImageFileId(),
-                spaceJpaEntity.getDepth(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),
                 spaceJpaEntity.getSx(),
@@ -55,10 +54,9 @@ public class UniverseMapper {
 
         List<Piece> pieces = elementJpaEntities.stream().map(elementJpaEntity -> Piece.loadTreeComponent(
                 elementJpaEntity.getId(),
+                elementJpaEntity.getInnerImageFileId(),
                 elementJpaEntity.getUniverseId(),
                 elementJpaEntity.getParentSpaceId(),
-                elementJpaEntity.getInnerImageFileId(),
-                elementJpaEntity.getDepth(),
                 elementJpaEntity.getTitle(),
                 elementJpaEntity.getDescription(),
                 elementJpaEntity.getSx(),

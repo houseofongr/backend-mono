@@ -36,7 +36,7 @@ public class Piece extends UniverseTreeComponent {
         );
     }
 
-    public static Piece loadTreeComponent(Long id, Long universeId, Long parentSpaceId, Long innerImageFileId, Integer depth, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Piece loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId,  String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Piece(
                 id,
                 new BaseFileInfo(innerImageFileId),
