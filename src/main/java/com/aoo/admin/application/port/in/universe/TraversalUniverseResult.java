@@ -12,7 +12,7 @@ public record TraversalUniverseResult(
         Long universeId,
         Long innerImageId,
         List<SpaceTreeInfo> spaces,
-        List<PieceTreeInfo> elements
+        List<PieceTreeInfo> pieces
 ) {
 
     public static TraversalUniverseResult of(TreeInfo root) {
@@ -45,7 +45,7 @@ public record TraversalUniverseResult(
             Float endX,
             Float endY,
             List<SpaceTreeInfo> spaces,
-            List<PieceTreeInfo> elements
+            List<PieceTreeInfo> pieces
     ) {
 
         public static SpaceTreeInfo of(UniverseTreeComponent component) {

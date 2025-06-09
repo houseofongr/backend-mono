@@ -53,27 +53,27 @@ class TraversalUniverseServiceTest {
         // then
         assertThat(result.universeId()).isEqualTo(1L);
         assertThat(result.innerImageId()).isEqualTo(3L);
-        assertThat(result.elements()).hasSize(1);
+        assertThat(result.pieces()).hasSize(1);
         assertThat(result.spaces()).hasSize(2)
                 .anySatisfy(spaceTreeInfo -> {
                     assertThat(spaceTreeInfo.spaceId()).isEqualTo(1L);
                     assertThat(spaceTreeInfo.spaces()).hasSize(1)
                                     .anySatisfy(spaceTreeInfo1 -> {
                                         assertThat(spaceTreeInfo1.spaceId()).isEqualTo(3L);
-                                        assertThat(spaceTreeInfo1.elements().getFirst().elementId()).isEqualTo(3L);
+                                        assertThat(spaceTreeInfo1.pieces().getFirst().elementId()).isEqualTo(3L);
                                     });
-                    assertThat(spaceTreeInfo.elements()).hasSize(1);
+                    assertThat(spaceTreeInfo.pieces()).hasSize(1);
                 })
                 .anySatisfy(spaceTreeInfo -> {
                     assertThat(spaceTreeInfo.spaceId()).isEqualTo(2L);
                     assertThat(spaceTreeInfo.spaces()).hasSize(2)
                             .anySatisfy(spaceTreeInfo1 -> {
                                 assertThat(spaceTreeInfo1.spaceId()).isEqualTo(4L);
-                                assertThat(spaceTreeInfo1.elements()).hasSize(2);
+                                assertThat(spaceTreeInfo1.pieces()).hasSize(2);
                             })
                             .anySatisfy(spaceTreeInfo1 -> {
                                 assertThat(spaceTreeInfo1.spaceId()).isEqualTo(5L);
-                                assertThat(spaceTreeInfo1.elements()).hasSize(2);
+                                assertThat(spaceTreeInfo1.pieces()).hasSize(2);
                             });
                 });
     }
