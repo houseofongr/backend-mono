@@ -28,10 +28,10 @@
 //              "parentSpaceId": 1,
 //              "title": "공간",
 //              "description": "스페이스는 공간입니다.",
-//              "dx": 0.8,
-//              "dy": 0.7,
-//              "scaleX": 0.6,
-//              "scaleY": 0.5
+//              "sx": 0.8,
+//              "sy": 0.7,
+//              "ex": 0.6,
+//              "ey": 0.5
 //            }
 //            """;
 //
@@ -67,10 +67,10 @@
 //                                fieldWithPath("innerImageId").description("생성된 스페이스의 내부 이미지입니다."),
 //                                fieldWithPath("title").description("생성된 스페이스의 제목입니다."),
 //                                fieldWithPath("description").description("생성된 스페이스의 상세정보입니다."),
-//                                fieldWithPath("dx").description("생성된 스페이스의 상대좌표(x)입니다."),
-//                                fieldWithPath("dy").description("생성된 스페이스의 상대좌표(y)입니다."),
-//                                fieldWithPath("scaleX").description("생성된 스페이스의 사이즈(x)입니다."),
-//                                fieldWithPath("scaleY").description("생성된 스페이스의 사이즈(y)입니다.")
+//                                fieldWithPath("sx").description("생성된 스페이스의 상대좌표(x)입니다."),
+//                                fieldWithPath("sy").description("생성된 스페이스의 상대좌표(y)입니다."),
+//                                fieldWithPath("ex").description("생성된 스페이스의 사이즈(x)입니다."),
+//                                fieldWithPath("ey").description("생성된 스페이스의 사이즈(y)입니다.")
 //                        )
 //                ));
 //

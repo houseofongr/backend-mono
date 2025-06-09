@@ -3,7 +3,7 @@ package com.aoo.admin.domain.universe.space;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
-import com.aoo.admin.domain.universe.space.element.Element;
+import com.aoo.admin.domain.universe.space.element.Piece;
 import lombok.Getter;
 
 import java.util.ArrayDeque;
@@ -26,50 +26,50 @@ public class TreeInfo {
     }
 
     public static TreeInfo create(TraversalComponents components) {
-        return create(components.getUniverse(),components.getSpaces(),components.getElements());
+        return create(components.getUniverse(),components.getSpaces(),components.getPieces());
     }
 
-    public static TreeInfo create(Universe universe, List<Space> spaces, List<Element> elements) {
+    public static TreeInfo create(Universe universe, List<Space> spaces, List<Piece> pieces) {
         TreeInfo root = new TreeInfo(0, null, new ArrayList<>(), universe);
 
         List<Space> childSpaces = new ArrayList<>();
-        List<Element> childElements = new ArrayList<>();
+        List<Piece> childPieces = new ArrayList<>();
 
         for (Space space : spaces) {
             if (space.isRoot()) root.addChild(space);
             else childSpaces.add(space);
         }
 
-        for (Element element : elements) {
-            if (element.isRoot()) root.addChild(element);
-            else childElements.add(element);
+        for (Piece piece : pieces) {
+            if (piece.isRoot()) root.addChild(piece);
+            else childPieces.add(piece);
         }
 
         for (TreeInfo child : root.children) {
-            makeChildTree(child, childSpaces, childElements);
+            makeChildTree(child, childSpaces, childPieces);
         }
 
         return root;
     }
 
-    private static void makeChildTree(TreeInfo tree, List<Space> spaces, List<Element> elements) {
-        if (tree.getUniverseTreeComponent() instanceof Element) return;
+    private static void makeChildTree(TreeInfo tree, List<Space> spaces, List<Piece> pieces) {
+        if (tree.getUniverseTreeComponent() instanceof Piece) return;
 
         List<Space> childSpaces = new ArrayList<>();
-        List<Element> childElements = new ArrayList<>();
+        List<Piece> childPieces = new ArrayList<>();
 
         for (Space space : spaces) {
             if (space.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId())) tree.addChild(space);
             else childSpaces.add(space);
         }
 
-        for (Element element : elements) {
-            if (element.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId())) tree.addChild(element);
-            else childElements.add(element);
+        for (Piece piece : pieces) {
+            if (piece.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId())) tree.addChild(piece);
+            else childPieces.add(piece);
         }
 
         for (TreeInfo child : tree.children) {
-            makeChildTree(child,childSpaces,childElements);
+            makeChildTree(child,childSpaces, childPieces);
         }
     }
 

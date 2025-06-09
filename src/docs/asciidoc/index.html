@@ -2120,8 +2120,8 @@ if (!hljs.initHighlighting.called) {
     return result
   }
 
-  function toggleClassOnEach (elements, className, method) {
-    forEach.call(elements, function (el) {
+  function toggleClassOnEach (pieces, className, method) {
+    forEach.call(pieces, function (el) {
       el.classList[method](className)
     })
   }

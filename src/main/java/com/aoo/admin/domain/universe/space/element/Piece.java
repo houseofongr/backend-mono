@@ -1,24 +1,23 @@
 package com.aoo.admin.domain.universe.space.element;
 
-import com.aoo.admin.domain.universe.BaseBasicInfo;
 import com.aoo.admin.domain.universe.BaseFileInfo;
 import com.aoo.admin.domain.universe.DateInfo;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import com.aoo.admin.domain.universe.space.PosInfo;
-import com.aoo.admin.domain.universe.space.SpaceElementBasicInfo;
+import com.aoo.admin.domain.universe.space.SpacePieceBasicInfo;
 import com.aoo.admin.domain.universe.space.TreeInfo;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
 
 @Getter
-public class Element extends UniverseTreeComponent {
+public class Piece extends UniverseTreeComponent {
     private final BaseFileInfo fileInfo;
-    private final SpaceElementBasicInfo basicInfo;
+    private final SpacePieceBasicInfo basicInfo;
     private final DateInfo dateInfo;
     private final PosInfo posInfo;
 
-    private Element(Long id, BaseFileInfo fileInfo, SpaceElementBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
+    private Piece(Long id, BaseFileInfo fileInfo, SpacePieceBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
         super(id, treeInfo);
         this.fileInfo = fileInfo;
         this.basicInfo = basicInfo;
@@ -26,22 +25,22 @@ public class Element extends UniverseTreeComponent {
         this.posInfo = posInfo;
     }
 
-    public static Element create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY) {
-        return new Element(
+    public static Piece create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY) {
+        return new Piece(
                 id,
                 new BaseFileInfo(innerImageId),
-                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 null,
                 new PosInfo(dx, dy, scaleX, scaleY),
                 null
         );
     }
 
-    public static Element loadTreeComponent(Long id, Long universeId, Long parentSpaceId, Long innerImageFileId, Integer depth, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
-        return new Element(
+    public static Piece loadTreeComponent(Long id, Long universeId, Long parentSpaceId, Long innerImageFileId, Integer depth, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+        return new Piece(
                 id,
                 new BaseFileInfo(innerImageFileId),
-                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(dx, dy, scaleX, scaleY),
                 null

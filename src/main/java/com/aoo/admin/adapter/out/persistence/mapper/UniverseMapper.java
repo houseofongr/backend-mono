@@ -3,8 +3,8 @@ package com.aoo.admin.adapter.out.persistence.mapper;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.element.Element;
-import com.aoo.common.adapter.out.persistence.entity.ElementJpaEntity;
+import com.aoo.admin.domain.universe.space.element.Piece;
+import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,7 @@ public class UniverseMapper {
                 universeJpaEntity.getUpdatedTime());
     }
 
-    public TraversalComponents mapToTraversalComponent(UniverseJpaEntity universeJpaEntity, List<SpaceJpaEntity> spaceJpaEntities, List<ElementJpaEntity> elementJpaEntities) {
+    public TraversalComponents mapToTraversalComponent(UniverseJpaEntity universeJpaEntity, List<SpaceJpaEntity> spaceJpaEntities, List<PieceJpaEntity> elementJpaEntities) {
         Universe universe = Universe.loadTreeComponent(
                 universeJpaEntity.getId(),
                 universeJpaEntity.getInnerImageFileId()
@@ -53,7 +53,7 @@ public class UniverseMapper {
                 spaceJpaEntity.getUpdatedTime()
         )).toList();
 
-        List<Element> elements = elementJpaEntities.stream().map(elementJpaEntity -> Element.loadTreeComponent(
+        List<Piece> pieces = elementJpaEntities.stream().map(elementJpaEntity -> Piece.loadTreeComponent(
                 elementJpaEntity.getId(),
                 elementJpaEntity.getUniverseId(),
                 elementJpaEntity.getParentSpaceId(),
@@ -69,6 +69,6 @@ public class UniverseMapper {
                 elementJpaEntity.getUpdatedTime()
         )).toList();
 
-        return new TraversalComponents(universe, spaces, elements);
+        return new TraversalComponents(universe, spaces, pieces);
     }
 }

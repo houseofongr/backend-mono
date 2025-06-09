@@ -4,7 +4,7 @@ import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.admin.domain.universe.space.TreeInfo;
-import com.aoo.admin.domain.universe.space.element.Element;
+import com.aoo.admin.domain.universe.space.element.Piece;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public record TraversalUniverseResult(
         Long universeId,
         Long innerImageId,
         List<SpaceTreeInfo> spaces,
-        List<ElementTreeInfo> elements
+        List<PieceTreeInfo> elements
 ) {
 
     public static TraversalUniverseResult of(TreeInfo root) {
@@ -25,8 +25,8 @@ public record TraversalUniverseResult(
                             .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
                             .toList(),
                     root.getChildren().stream()
-                            .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Element)
-                            .map(treeInfo -> ElementTreeInfo.of(treeInfo.getUniverseTreeComponent()))
+                            .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Piece)
+                            .map(treeInfo -> PieceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
                             .toList()
             );
 
@@ -40,15 +40,14 @@ public record TraversalUniverseResult(
             Integer depth,
             String title,
             String description,
-            Float dx,
-            Float dy,
-            Float scaleX,
-            Float scaleY,
+            Float startX,
+            Float startY,
+            Float endX,
+            Float endY,
             List<SpaceTreeInfo> spaces,
-            List<ElementTreeInfo> elements
+            List<PieceTreeInfo> elements
     ) {
 
-        //TODO : Recursive 구현
         public static SpaceTreeInfo of(UniverseTreeComponent component) {
             if (component instanceof Space space)
                 return new SpaceTreeInfo(
@@ -67,8 +66,8 @@ public record TraversalUniverseResult(
                                 .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
                                 .toList(),
                         space.getTreeInfo().getChildren().stream()
-                                .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Element)
-                                .map(treeInfo -> ElementTreeInfo.of(treeInfo.getUniverseTreeComponent()))
+                                .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Piece)
+                                .map(treeInfo -> PieceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
                                 .toList()
                 );
 
@@ -76,32 +75,32 @@ public record TraversalUniverseResult(
         }
     }
 
-    public record ElementTreeInfo(
+    public record PieceTreeInfo(
             Long elementId,
             Long parentSpaceId,
             Long innerImageId,
             Integer depth,
             String title,
             String description,
-            Float dx,
-            Float dy,
-            Float scaleX,
-            Float scaleY
+            Float startX,
+            Float startY,
+            Float endX,
+            Float endY
     ) {
 
-        public static ElementTreeInfo of(UniverseTreeComponent component) {
-            if (component instanceof Element element)
-                return new ElementTreeInfo(
-                        element.getId(),
-                        element.getBasicInfo().getParentSpaceId(),
-                        element.getFileInfo().getInnerImageId(),
-                        element.getTreeInfo().getDepth(),
-                        element.getBasicInfo().getTitle(),
-                        element.getBasicInfo().getDescription(),
-                        element.getPosInfo().getSx(),
-                        element.getPosInfo().getSy(),
-                        element.getPosInfo().getEx(),
-                        element.getPosInfo().getEy()
+        public static PieceTreeInfo of(UniverseTreeComponent component) {
+            if (component instanceof Piece piece)
+                return new PieceTreeInfo(
+                        piece.getId(),
+                        piece.getBasicInfo().getParentSpaceId(),
+                        piece.getFileInfo().getInnerImageId(),
+                        piece.getTreeInfo().getDepth(),
+                        piece.getBasicInfo().getTitle(),
+                        piece.getBasicInfo().getDescription(),
+                        piece.getPosInfo().getSx(),
+                        piece.getPosInfo().getSy(),
+                        piece.getPosInfo().getEx(),
+                        piece.getPosInfo().getEy()
                 );
 
             else return null;

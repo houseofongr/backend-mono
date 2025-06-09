@@ -38,10 +38,10 @@ class GetUniverseTreeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("spaces[].depth").description("스페이스의 깊이입니다."),
                                 fieldWithPath("spaces[].title").description("스페이스의 제목입니다."),
                                 fieldWithPath("spaces[].description").description("스페이스의 설명입니다."),
-                                fieldWithPath("spaces[].dx").description("스페이스의 상대좌표(X)입니다."),
-                                fieldWithPath("spaces[].dy").description("스페이스의 상대좌표(Y)입니다."),
-                                fieldWithPath("spaces[].scaleX").description("스페이스의 상대크기(X)입니다."),
-                                fieldWithPath("spaces[].scaleY").description("스페이스의 상대크기(Y)입니다."),
+                                fieldWithPath("spaces[].startX").description("스페이스의 시작좌표(X)입니다."),
+                                fieldWithPath("spaces[].startY").description("스페이스의 시작좌표(Y)입니다."),
+                                fieldWithPath("spaces[].endX").description("스페이스의 종료좌표(X)입니다."),
+                                fieldWithPath("spaces[].endY").description("스페이스의 종료좌표(Y)입니다."),
                                 subsectionWithPath("spaces[].elements").description("스페이스 내부의 엘리먼트입니다."),
                                 subsectionWithPath("spaces[].spaces").description("스페이스 내부의 스페이스입니다.(무한 depth)"),
 
@@ -51,10 +51,10 @@ class GetUniverseTreeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("elements[].depth").description("엘리먼트의 깊이입니다."),
                                 fieldWithPath("elements[].title").description("엘리먼트의 제목입니다."),
                                 fieldWithPath("elements[].description").description("엘리먼트의 설명입니다."),
-                                fieldWithPath("elements[].dx").description("엘리먼트의 상대좌표(X)입니다."),
-                                fieldWithPath("elements[].dy").description("엘리먼트의 상대좌표(Y)입니다."),
-                                fieldWithPath("elements[].scaleX").description("엘리먼트의 상대크기(X)입니다."),
-                                fieldWithPath("elements[].scaleY").description("엘리먼트의 상대크기(Y)입니다.")
+                                fieldWithPath("elements[].startX").description("엘리먼트의 시작좌표(X)입니다."),
+                                fieldWithPath("elements[].startY").description("엘리먼트의 시작좌표(Y)입니다."),
+                                fieldWithPath("elements[].endX").description("엘리먼트의 종료좌표(X)입니다."),
+                                fieldWithPath("elements[].endY").description("엘리먼트의 종료좌표(Y)입니다.")
                         )
                 ));
     }

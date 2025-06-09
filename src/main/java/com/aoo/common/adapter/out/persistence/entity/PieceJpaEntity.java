@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "ELEMENT")
+@Table(name = "PIECE")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ElementJpaEntity extends DateColumnBaseEntity{
+public class PieceJpaEntity extends DateColumnBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class ElementJpaEntity extends DateColumnBaseEntity{
     @Column
     private Long parentSpaceId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "element")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "piece")
     private List<SoundJpaEntity> sounds;
 
 }

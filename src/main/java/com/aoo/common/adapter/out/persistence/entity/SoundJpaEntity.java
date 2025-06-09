@@ -29,7 +29,7 @@ public class SoundJpaEntity {
     private Boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ELEMENT_ID")
-    private ElementJpaEntity element;
+    @JoinColumn(name = "PIECE_ID")
+    private PieceJpaEntity piece;
 
 }

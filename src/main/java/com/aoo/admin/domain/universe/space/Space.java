@@ -10,11 +10,11 @@ import java.time.ZonedDateTime;
 @Getter
 public class Space extends UniverseTreeComponent {
     private BaseFileInfo fileInfo;
-    private SpaceElementBasicInfo basicInfo;
+    private SpacePieceBasicInfo basicInfo;
     private final DateInfo dateInfo;
     private PosInfo posInfo;
 
-    private Space(Long id, BaseFileInfo fileInfo, SpaceElementBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
+    private Space(Long id, BaseFileInfo fileInfo, SpacePieceBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
         super(id, treeInfo);
         this.fileInfo = fileInfo;
         this.basicInfo = basicInfo;
@@ -27,7 +27,7 @@ public class Space extends UniverseTreeComponent {
         return new Space(
                 id,
                 new BaseFileInfo(innerImageId),
-                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 null,
                 new PosInfo(dx, dy, scaleX, scaleY),
                 null
@@ -38,7 +38,7 @@ public class Space extends UniverseTreeComponent {
         return new Space(
                 id,
                 new BaseFileInfo(innerImageId),
-                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(dx, dy, scaleX, scaleY),
                 null
@@ -49,7 +49,7 @@ public class Space extends UniverseTreeComponent {
         return new Space(
                 id,
                 new BaseFileInfo(innerImageFileId),
-                new SpaceElementBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(dx, dy,scaleX,scaleY),
                 null
@@ -61,7 +61,7 @@ public class Space extends UniverseTreeComponent {
     }
 
     public void updateBasicInfo(String title, String description) {
-        this.basicInfo = new SpaceElementBasicInfo(
+        this.basicInfo = new SpacePieceBasicInfo(
                 this.basicInfo.getUniverseId(),
                 this.basicInfo.getParentSpaceId(),
                 title != null ? title : basicInfo.getTitle(),

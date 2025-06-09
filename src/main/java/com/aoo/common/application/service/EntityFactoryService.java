@@ -108,10 +108,10 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
 //                command.universeId(),
 //                command.title(),
 //                command.description(),
-//                command.dx(),
-//                command.dy(),
-//                command.scaleX(),
-//                command.scaleY(),
+//                command.sx(),
+//                command.sy(),
+//                command.ex(),
+//                command.ey(),
 //                parent);
     }
 }

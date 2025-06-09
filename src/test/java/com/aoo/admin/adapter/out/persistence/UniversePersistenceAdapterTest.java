@@ -225,7 +225,7 @@ class UniversePersistenceAdapterTest {
         assertThat(treeComponents.getUniverse().getId()).isEqualTo(1L);
         assertThat(treeComponents.getUniverse().getFileInfo().getInnerImageId()).isEqualTo(1L);
         assertThat(treeComponents.getSpaces()).hasSize(5);
-        assertThat(treeComponents.getElements()).hasSize(7);
+        assertThat(treeComponents.getPieces()).hasSize(7);
     }
 
     @Test

@@ -17,7 +17,7 @@ import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
-import static com.aoo.common.adapter.out.persistence.entity.QElementJpaEntity.elementJpaEntity;
+import static com.aoo.common.adapter.out.persistence.entity.QPieceJpaEntity.pieceJpaEntity;
 import static com.aoo.common.adapter.out.persistence.entity.QSpaceJpaEntity.spaceJpaEntity;
 import static com.aoo.common.adapter.out.persistence.entity.QUniverseHashtagJpaEntity.universeHashtagJpaEntity;
 import static com.aoo.common.adapter.out.persistence.entity.QUniverseJpaEntity.universeJpaEntity;
@@ -63,12 +63,12 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
                 .where(spaceJpaEntity.universeId.eq(universeId))
                 .fetch();
 
-        List<ElementJpaEntity> elementJpaEntities = query
-                .selectFrom(elementJpaEntity)
-                .where(elementJpaEntity.universeId.eq(universeId))
+        List<PieceJpaEntity> pieceJpaEntities = query
+                .selectFrom(pieceJpaEntity)
+                .where(pieceJpaEntity.universeId.eq(universeId))
                 .fetch();
 
-        return new TraversalJpaEntityComponents(universe, spaceJpaEntities, elementJpaEntities);
+        return new TraversalJpaEntityComponents(universe, spaceJpaEntities, pieceJpaEntities);
     }
 
     private BooleanExpression filter(SearchUniverseCommand command) {

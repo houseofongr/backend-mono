@@ -1,7 +1,7 @@
 package com.aoo.admin.domain.universe;
 
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.element.Element;
+import com.aoo.admin.domain.universe.space.element.Piece;
 import lombok.Getter;
 
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.List;
 public class TraversalComponents {
     private final Universe universe;
     private final List<Space> spaces;
-    private final List<Element> elements;
+    private final List<Piece> pieces;
 
-    public TraversalComponents(Universe universe, List<Space> spaces, List<Element> elements) {
+    public TraversalComponents(Universe universe, List<Space> spaces, List<Piece> pieces) {
         this.universe = universe;
         this.spaces = spaces;
-        this.elements = elements;
+        this.pieces = pieces;
     }
 }
