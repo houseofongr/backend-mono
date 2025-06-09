@@ -674,6 +674,21 @@ operation::admin-space-post-update-inner-image[snippets='http-request,path-param
 
 operation::admin-piece-post[snippets='http-request,request-fields,http-response,response-fields']
 
+[[admin-piece-patch-api]]
+==== 특정 피스 정보 수정 API
+
+관리자가 특정 피스의 정보를 수정합니다.
+
+operation::admin-piece-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
+[[admin-piece-patch-position-api]]
+==== 특정 피스 좌표 수정 API
+
+관리자가 특정 피스의 좌표를 수정합니다.
+
+operation::admin-piece-patch-position[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
++
 [[file-api]]
 == 파일(File) API
 

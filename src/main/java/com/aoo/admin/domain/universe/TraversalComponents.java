@@ -1,7 +1,7 @@
 package com.aoo.admin.domain.universe;
 
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.element.Piece;
+import com.aoo.admin.domain.universe.space.piece.Piece;
 import lombok.Getter;
 
 import java.util.List;

@@ -22,7 +22,7 @@ import com.aoo.admin.domain.item.Shape;
 import com.aoo.admin.domain.item.soundsource.SoundSource;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.element.Piece;
+import com.aoo.admin.domain.universe.space.piece.Piece;
 import com.aoo.admin.domain.user.DeletedUser;
 import com.aoo.admin.domain.user.User;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;

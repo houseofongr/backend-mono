@@ -1,6 +1,6 @@
 package com.aoo.admin.application.port.in.piece;
 
-import com.aoo.admin.domain.universe.space.element.Piece;
+import com.aoo.admin.domain.universe.space.piece.Piece;
 
 public record CreatePieceResult(
         String message,

@@ -1,6 +1,6 @@
 package com.aoo.common.adapter.out.persistence.entity;
 
-import com.aoo.admin.domain.universe.space.element.Piece;
+import com.aoo.admin.domain.universe.space.piece.Piece;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -64,5 +64,15 @@ public class PieceJpaEntity extends DateColumnBaseEntity{
                 piece.getBasicInfo().getParentSpaceId(),
                 new ArrayList<>()
         );
+    }
+
+    public void update(Piece piece) {
+        this.innerImageFileId = piece.getFileInfo().getInnerImageId();
+        this.title = piece.getBasicInfo().getTitle();
+        this.description = piece.getBasicInfo().getDescription();
+        this.sx = piece.getPosInfo().getSx();
+        this.sy = piece.getPosInfo().getSy();
+        this.ex = piece.getPosInfo().getEx();
+        this.ey = piece.getPosInfo().getEy();
     }
 }

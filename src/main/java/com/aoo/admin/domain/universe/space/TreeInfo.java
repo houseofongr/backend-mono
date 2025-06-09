@@ -3,7 +3,7 @@ package com.aoo.admin.domain.universe.space;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
-import com.aoo.admin.domain.universe.space.element.Piece;
+import com.aoo.admin.domain.universe.space.piece.Piece;
 import lombok.Getter;
 
 import java.util.ArrayDeque;

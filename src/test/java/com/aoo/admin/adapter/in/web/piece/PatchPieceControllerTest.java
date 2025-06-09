@@ -1,4 +1,4 @@
-package com.aoo.admin.adapter.in.web.space;
+package com.aoo.admin.adapter.in.web.piece;
 
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import org.junit.jupiter.api.DisplayName;
@@ -14,45 +14,44 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("PatchSpaceControllerTest.sql")
-class PatchSpaceControllerTest extends AbstractControllerTest {
+@Sql("PatchPieceControllerTest.sql")
+class PatchPieceControllerTest extends AbstractControllerTest {
 
     @Test
-    @DisplayName("스페이스 수정 API")
-    void testSpaceUpdateAPI() throws Exception {
+    @DisplayName("피스 수정 API")
+    void testPieceUpdateAPI() throws Exception {
         //language=JSON
         String request = """
                 {
-                  "title": "블랙홀",
-                  "description": "블랙홀은 빛도 빨아들입니다."
+                  "title": "평화",
+                  "description": "피스는 평화입니다."
                 }
                 """;
 
-        mockMvc.perform(patch("/admin/spaces/{spaceId}", 1)
+        mockMvc.perform(patch("/admin/pieces/{pieceId}", 1)
                         .content(request)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-space-patch",
+                .andDo(document("admin-piece-patch",
                         pathParameters(
-                                parameterWithName("spaceId").description("수정할 스페이스의 식별자입니다.")
+                                parameterWithName("pieceId").description("수정할 피스의 식별자입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
                                 fieldWithPath("description").description("수정할 상세정보입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 스페이스의 상세정보가 수정되었습니다.'"),
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 피스의 상세정보가 수정되었습니다.'"),
                                 fieldWithPath("title").description("수정된 제목입니다."),
                                 fieldWithPath("description").description("수정된 상세정보입니다.")
                         )
                 ));
     }
 
-
     @Test
-    @DisplayName("스페이스 좌표 수정 API")
-    void testSpaceUpdatePositionAPI() throws Exception {
+    @DisplayName("피스 좌표 수정 API")
+    void testPieceUpdatePositionAPI() throws Exception {
         //language=JSON
         String request = """
                 {
@@ -63,14 +62,14 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                 }
                 """;
 
-        mockMvc.perform(patch("/admin/spaces/position/{spaceId}", 1)
+        mockMvc.perform(patch("/admin/pieces/position/{pieceId}", 1)
                         .content(request)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
-                .andDo(document("admin-space-patch-position",
+                .andDo(document("admin-piece-patch-position",
                         pathParameters(
-                                parameterWithName("spaceId").description("수정할 스페이스의 식별자입니다.")
+                                parameterWithName("pieceId").description("수정할 피스의 식별자입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("startX").description("수정할 X축 시작좌표입니다."),
@@ -79,7 +78,7 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("endY").description("수정할 Y축 종료좌표입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 스페이스의 좌표가 수정되었습니다.'"),
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 피스의 좌표가 수정되었습니다.'"),
                                 fieldWithPath("startX").description("수정된 X축 시작좌표입니다."),
                                 fieldWithPath("startY").description("수정된 Y축 시작좌표입니다."),
                                 fieldWithPath("endX").description("수정된 X축 종료좌표입니다."),

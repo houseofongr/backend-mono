@@ -51,6 +51,9 @@ public enum AdminErrorCode implements ErrorCode {
     SPACE_FILE_REQUIRED("ADMIN-SPACE-1", BAD_REQUEST, "스페이스의 필수 파일이 누락되었습니다."),
     SPACE_NOT_FOUND("ADMIN-SPACE-2", NOT_FOUND, "해당 스페이스를 찾을 수 없습니다."),
 
+    // Piece
+    PIECE_NOT_FOUND("ADMIN-PIECE-1", NOT_FOUND, "해당 피스를 찾을 수 없습니다."),
+
     // Common
     ILLEGAL_ARGUMENT_EXCEPTION("ADMIN-COMMON-1", BAD_REQUEST, "잘못된 요청 파라미터입니다."),
     INVALID_SEARCH_TYPE("ADMIN-COMMON-2", BAD_REQUEST, "잘못된 검색 조건입니다."),

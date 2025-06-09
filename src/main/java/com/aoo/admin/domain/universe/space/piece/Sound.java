@@ -1,4 +1,4 @@
-package com.aoo.admin.domain.universe.space.element;
+package com.aoo.admin.domain.universe.space.piece;
 
 import com.aoo.admin.domain.universe.BaseBasicInfo;
 import com.aoo.admin.domain.universe.DateInfo;

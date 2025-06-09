@@ -66,6 +66,4 @@ class PostPieceControllerTest extends AbstractControllerTest {
                         )
                 ));
     }
-
-
 }
