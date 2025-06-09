@@ -30,12 +30,9 @@ public class CreateSpaceService implements CreateSpaceUseCase {
 
     @Override
     public CreateSpaceResult create(CreateSpaceCommand command) {
-        Space parentSpace = command.parentSpaceId() == -1? null :
-                findSpacePort.loadSingle(command.parentSpaceId()).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        UploadFileResult.FileInfo uploadFileResult = uploadPublicImageUseCase.publicUpload(command.imageFile());
+        Space space = createSpacePort.createSpace(command, uploadFileResult.id());
 
-        UploadFileResult uploadFileResult = uploadPublicImageUseCase.publicUpload(List.of(command.imageFile()));
-
-        Space space = createSpacePort.createSpace(command, parentSpace, uploadFileResult.fileInfos().getFirst().id());
         return saveSpacePort.save(command.universeId(), space);
     }
 }

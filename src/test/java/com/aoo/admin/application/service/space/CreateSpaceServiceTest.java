@@ -47,7 +47,7 @@ class CreateSpaceServiceTest {
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
-        when(uploadPublicImageUseCase.publicUpload((List<MultipartFile>) any())).thenReturn(new UploadFileResult(List.of(new UploadFileResult.FileInfo(1L, null, "image.png", "image1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS))));
+        when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "image.png", "image1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         when(findSpacePort.loadSingle(-1L)).thenReturn(Optional.ofNullable(space));
         sut.create(command);
 

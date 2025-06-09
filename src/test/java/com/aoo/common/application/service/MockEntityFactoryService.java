@@ -119,7 +119,7 @@ public class MockEntityFactoryService {
     public static Space getParentSpace() {
         MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
         CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f,0.9f,0.8f,0.7f, basicImage);
-        return factory.createSpace(command, null, 10L);
+        return factory.createSpace(command, 10L);
     }
 
 //    public static Space getChildSpace(Long parentId) {

@@ -44,42 +44,19 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     @Column
     private Long parentSpaceId;
 
-    public static SpaceJpaEntity create(Space space, UniverseJpaEntity universeJpaEntity) {
-//        return new SpaceJpaEntity(
-//                null,
-//                space.getBasicInfo().getTitle(),
-//                space.getBasicInfo().getDescription(),
-//                space.getPosInfo().getDx(),
-//                space.getPosInfo().getDy(),
-//                space.getPosInfo().getScaleX(),
-//                space.getPosInfo().getScaleY(),
-//                space.getFileInfo().getInnerImageId(),
-//                space.getTreeInfo().getDepth(),
-//                universeJpaEntity,
-//                null,
-//                new ArrayList<>()
-//        );
-        return null;
-    }
-
-    public static SpaceJpaEntity createChild(Space space, SpaceJpaEntity parent) {
-//        SpaceJpaEntity childSpace = new SpaceJpaEntity(
-//                null,
-//                space.getBasicInfo().getTitle(),
-//                space.getBasicInfo().getDescription(),
-//                space.getPosInfo().getDx(),
-//                space.getPosInfo().getDy(),
-//                space.getPosInfo().getScaleX(),
-//                space.getPosInfo().getScaleY(),
-//                space.getInnerImageId(),
-//                space.getTreeInfo().getDepth(),
-//                parent.getUniverse(),
-//                parent,
-//                new ArrayList<>());
-//
-//        parent.getChildren().add(childSpace);
-
-        return null;
+    public static SpaceJpaEntity create(Space space) {
+        return new SpaceJpaEntity(
+                null,
+                space.getBasicInfo().getTitle(),
+                space.getBasicInfo().getDescription(),
+                space.getPosInfo().getSx(),
+                space.getPosInfo().getSy(),
+                space.getPosInfo().getEx(),
+                space.getPosInfo().getEy(),
+                space.getFileInfo().getInnerImageId(),
+                space.getBasicInfo().getUniverseId(),
+                space.getBasicInfo().getParentSpaceId()
+        );
     }
 
     public void update(Space space) {

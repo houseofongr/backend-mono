@@ -8,10 +8,10 @@ public record CreateSpaceResult(
         Long innerImageId,
         String title,
         String description,
-        Float dx,
-        Float dy,
-        Float scaleX,
-        Float scaleY
+        Float startX,
+        Float startY,
+        Float endX,
+        Float endY
 ) {
     public static CreateSpaceResult of(SpaceJpaEntity spaceJpaEntity) {
         return new CreateSpaceResult(

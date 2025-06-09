@@ -9,7 +9,7 @@
 //class SpaceTest {
 //
 //    @Test
-//    @DisplayName("요청 정보(제목, 내용, 위치좌표(sx, sy), 크기(ex, ey), 유니버스id, 상위 스페이스, 내부사진id)로 스페이스 생성")
+//    @DisplayName("요청 정보(제목, 내용, 위치좌표(startX, sy), 크기(ex, ey), 유니버스id, 상위 스페이스, 내부사진id)로 스페이스 생성")
 //    void createSpace() {
 //        // given
 //        Long id = 1L;
@@ -17,13 +17,13 @@
 //        Long imageId = 100L;
 //        String title = "공간";
 //        String description = "스페이스는 공간입니다.";
-//        Float sx = 1000 / 5000F;
+//        Float startX = 1000 / 5000F;
 //        Float sy = 2000 / 5000F;
 //        Float ex = 1500 / 5000F;
 //        Float ey = 1500 / 5000F;
 //
 //        // when
-//        Space newSpace = Space.create(id, imageId, universeId, null, title, description, sx, sy, ex, ey);
+//        Space newSpace = Space.create(id, imageId, universeId, null, title, description, startX, sy, ex, ey);
 //
 //        // then
 //        assertThat(newSpace.getId()).isEqualTo(id);
@@ -31,7 +31,7 @@
 //        assertThat(newSpace.getFileInfo().getInnerImageId()).isEqualTo(imageId);
 //        assertThat(newSpace.getBasicInfo().getTitle()).isEqualTo(title);
 //        assertThat(newSpace.getBasicInfo().getDescription()).isEqualTo(description);
-//        assertThat(newSpace.getPosInfo().getDx()).isEqualTo(sx);
+//        assertThat(newSpace.getPosInfo().getDx()).isEqualTo(startX);
 //        assertThat(newSpace.getPosInfo().getDy()).isEqualTo(sy);
 //        assertThat(newSpace.getPosInfo().getScaleX()).isEqualTo(ex);
 //        assertThat(newSpace.getPosInfo().getScaleY()).isEqualTo(ey);
@@ -46,14 +46,14 @@
 ////        Long imageId = 100L;
 ////        String title = "공간";
 ////        String description = "스페이스는 공간입니다.";
-////        Float sx = 1000 / 5000F;
+////        Float startX = 1000 / 5000F;
 ////        Float sy = 2000 / 5000F;
 ////        Float ex = 1500 / 5000F;
 ////        Float ey = 1500 / 5000F;
-////        Space parentSpace = Space.create(id, imageId, id, title, description, sx, sy, ex, ey, null);
+////        Space parentSpace = Space.create(id, imageId, id, title, description, startX, sy, ex, ey, null);
 ////
 ////        // when
-////        Space childSpace = Space.create(2L, imageId, id, title, description, sx, sy, ex, ey, parentSpace);
+////        Space childSpace = Space.create(2L, imageId, id, title, description, startX, sy, ex, ey, parentSpace);
 ////
 ////        // then
 ////        assertThat(parentSpace.getUniverseId()).isEqualTo(childSpace.getUniverseId());
@@ -87,25 +87,25 @@
 //    }
 //
 //    @Test
-//    @DisplayName("위치정보(sx, sy, ex, ey) 수정하기")
+//    @DisplayName("위치정보(startX, sy, ex, ey) 수정하기")
 //    void testUpdatePosInfo() {
 //        // given
-//        Float sx = 0.1f;
+//        Float startX = 0.1f;
 //        Float sy = 0.2f;
 //        Float ex = 0.3f;
 //        Float ey = 0.4f;
 //        Space space = MockEntityFactoryService.getParentSpace();
 //
 //        // try 1
-//        space.updatePosInfo(sx, sy, null, null);
-//        assertThat(space.getPosInfo().getDx()).isEqualTo(sx);
+//        space.updatePosInfo(startX, sy, null, null);
+//        assertThat(space.getPosInfo().getDx()).isEqualTo(startX);
 //        assertThat(space.getPosInfo().getDy()).isEqualTo(sy);
 //        assertThat(space.getPosInfo().getScaleX()).isEqualTo(0.8f);
 //        assertThat(space.getPosInfo().getScaleY()).isEqualTo(0.7f);
 //
 //        // try 2
 //        space.updatePosInfo(null, null, ex, ey);
-//        assertThat(space.getPosInfo().getDx()).isEqualTo(sx);
+//        assertThat(space.getPosInfo().getDx()).isEqualTo(startX);
 //        assertThat(space.getPosInfo().getDy()).isEqualTo(sy);
 //        assertThat(space.getPosInfo().getScaleX()).isEqualTo(ex);
 //        assertThat(space.getPosInfo().getScaleY()).isEqualTo(ey);
