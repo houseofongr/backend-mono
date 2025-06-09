@@ -27,11 +27,10 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
     private final UpdateSpacePort updateSpacePort;
 
     @Override
-    public UpdateSpaceResult.Detail updateDetail(Long spaceId, UpdateSpaceCommand command) {
+    public UpdateSpaceResult.Detail updateDetail(Long spaceId, UpdateSpaceCommand.Detail command) {
         Space space = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         space.updateBasicInfo(command.title(), command.description());
-        space.updatePosInfo(command.sx(), command.sy(), command.ex(), command.ey());
 
         return updateSpacePort.update(space);
     }

@@ -20,7 +20,7 @@ public class PatchSpaceController {
     @PatchMapping("/admin/spaces/{spaceId}")
     public ResponseEntity<UpdateSpaceResult.Detail> update(
             @PathVariable Long spaceId,
-            @RequestBody UpdateSpaceCommand command) {
+            @RequestBody UpdateSpaceCommand.Detail command) {
 
         return ResponseEntity.ok(useCase.updateDetail(spaceId, command));
     }
