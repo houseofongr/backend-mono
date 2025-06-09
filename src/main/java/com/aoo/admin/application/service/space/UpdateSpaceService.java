@@ -8,7 +8,6 @@ import com.aoo.admin.application.port.out.space.UpdateSpacePort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.common.application.port.in.MessageDto;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
 import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.in.UploadPublicImageUseCase;
@@ -32,7 +31,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
         Space space = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         space.updateBasicInfo(command.title(), command.description());
-        space.updatePosInfo(command.dx(), command.dy(), command.scaleX(), command.scaleY());
+        space.updatePosInfo(command.sx(), command.sy(), command.ex(), command.ey());
 
         return updateSpacePort.update(space);
     }

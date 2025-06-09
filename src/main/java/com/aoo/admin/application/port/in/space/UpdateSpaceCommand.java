@@ -6,18 +6,18 @@ import com.aoo.admin.application.service.AdminException;
 public record UpdateSpaceCommand(
         String title,
         String description,
-        Float dx,
-        Float dy,
-        Float scaleX,
-        Float scaleY
+        Float sx,
+        Float sy,
+        Float ex,
+        Float ey
 ) {
     public UpdateSpaceCommand {
         if ((title != null && (title.isBlank() || title.length() > 100)) ||
             (description != null && description.length() > 5000) ||
-            (dx != null && (dx < 0 || dx > 1)) ||
-            (dy != null && (dy < 0 || dy > 1)) ||
-            (scaleX != null && (scaleX < 0 || scaleX > 1)) ||
-            (scaleY != null && (scaleY < 0 || scaleY > 1))
+            (sx != null && (sx < 0 || sx > 1)) ||
+            (sy != null && (sy < 0 || sy > 1)) ||
+            (ex != null && (ex < 0 || ex > 1)) ||
+            (ey != null && (ey < 0 || ey > 1))
         ) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 }

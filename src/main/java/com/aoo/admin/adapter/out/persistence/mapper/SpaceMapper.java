@@ -8,19 +8,17 @@ import org.springframework.stereotype.Component;
 public class SpaceMapper {
 
     public Space mapToSingleEntity(SpaceJpaEntity spaceJpaEntity) {
-        return null;
-//        return Space.loadSingle(spaceJpaEntity.getId(),
-//                spaceJpaEntity.getInnerImageFileId(),
-//                spaceJpaEntity.getUniverse().getId(),
-//                spaceJpaEntity.getTitle(),
-//                spaceJpaEntity.getDescription(),
-//                spaceJpaEntity.getCreatedTime(),
-//                spaceJpaEntity.getUpdatedTime(),
-//                spaceJpaEntity.getDx(),
-//                spaceJpaEntity.getDy(),
-//                spaceJpaEntity.getScaleX(),
-//                spaceJpaEntity.getScaleY(),
-//                spaceJpaEntity.getDepth());
+        return Space.loadSingle(spaceJpaEntity.getId(),
+                spaceJpaEntity.getInnerImageFileId(),
+                spaceJpaEntity.getUniverseId(),
+                spaceJpaEntity.getTitle(),
+                spaceJpaEntity.getDescription(),
+                spaceJpaEntity.getCreatedTime(),
+                spaceJpaEntity.getUpdatedTime(),
+                spaceJpaEntity.getSx(),
+                spaceJpaEntity.getSy(),
+                spaceJpaEntity.getEx(),
+                spaceJpaEntity.getEy());
     }
 
     public Space mapToAncestorEntity(SpaceJpaEntity spaceJpaEntity) {

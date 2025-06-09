@@ -9,9 +9,9 @@ import java.time.ZonedDateTime;
 
 @Getter
 public class Space extends UniverseTreeComponent {
+    private final DateInfo dateInfo;
     private BaseFileInfo fileInfo;
     private SpacePieceBasicInfo basicInfo;
-    private final DateInfo dateInfo;
     private PosInfo posInfo;
 
     private Space(Long id, BaseFileInfo fileInfo, SpacePieceBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
@@ -22,25 +22,36 @@ public class Space extends UniverseTreeComponent {
         this.posInfo = posInfo;
     }
 
-    public static Space create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY) {
+    public static Space create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey) {
 
         return new Space(
                 id,
                 new BaseFileInfo(innerImageId),
                 new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 null,
-                new PosInfo(dx, dy, scaleX, scaleY),
+                new PosInfo(sx, sy, ex, ey),
                 null
         );
     }
 
-    public static Space loadTreeComponent(Long id,  Long innerImageFileId, Long universeId, Long parentSpaceId,String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Space loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Space(
                 id,
                 new BaseFileInfo(innerImageFileId),
                 new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
-                new PosInfo(dx, dy,scaleX,scaleY),
+                new PosInfo(sx, sy, ex, ey),
+                null
+        );
+    }
+
+    public static Space loadSingle(Long id, Long innerImageFileId, Long universeId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
+        return new Space(
+                id,
+                new BaseFileInfo(innerImageFileId),
+                new SpacePieceBasicInfo(universeId, null, title, description),
+                new DateInfo(createdTime, updatedTime),
+                new PosInfo(sx, sy, ex, ey),
                 null
         );
     }
@@ -58,12 +69,12 @@ public class Space extends UniverseTreeComponent {
         );
     }
 
-    public void updatePosInfo(Float dx, Float dy, Float scaleX, Float scaleY) {
+    public void updatePosInfo(Float sx, Float sy, Float ex, Float ey) {
         this.posInfo = new PosInfo(
-                dx != null ? dx : posInfo.getSx(),
-                dy != null ? dy : posInfo.getSy(),
-                scaleX != null ? scaleX : posInfo.getEx(),
-                scaleY != null ? scaleY : posInfo.getEy());
+                sx != null ? sx : posInfo.getSx(),
+                sy != null ? sy : posInfo.getSy(),
+                ex != null ? ex : posInfo.getEx(),
+                ey != null ? ey : posInfo.getEy());
     }
 
     public void updateInnerImage(Long innerImageId) {
