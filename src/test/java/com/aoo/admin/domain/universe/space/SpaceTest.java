@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpaceTest {
 
     @Test
-    @DisplayName("요청 정보(제목, 내용, 위치좌표(startX, sy), 크기(ex, ey), 유니버스id, 상위 스페이스, 내부사진id)로 스페이스 생성")
+    @DisplayName("요청 정보(제목, 내용, 위치좌표(startX, startY), 크기(endX, endY), 유니버스id, 상위 스페이스, 내부사진id)로 스페이스 생성")
     void createSpace() {
         // given
         Long id = 1L;
@@ -47,13 +47,13 @@ class SpaceTest {
 //        String title = "공간";
 //        String description = "스페이스는 공간입니다.";
 //        Float startX = 1000 / 5000F;
-//        Float sy = 2000 / 5000F;
-//        Float ex = 1500 / 5000F;
-//        Float ey = 1500 / 5000F;
-//        Space parentSpace = Space.create(id, imageId, id, title, description, startX, sy, ex, ey, null);
+//        Float startY = 2000 / 5000F;
+//        Float endX = 1500 / 5000F;
+//        Float endY = 1500 / 5000F;
+//        Space parentSpace = Space.create(id, imageId, id, title, description, startX, startY, endX, endY, null);
 //
 //        // when
-//        Space childSpace = Space.create(2L, imageId, id, title, description, startX, sy, ex, ey, parentSpace);
+//        Space childSpace = Space.create(2L, imageId, id, title, description, startX, startY, endX, endY, parentSpace);
 //
 //        // then
 //        assertThat(parentSpace.getUniverseId()).isEqualTo(childSpace.getUniverseId());
@@ -87,7 +87,7 @@ class SpaceTest {
     }
 
     @Test
-    @DisplayName("위치정보(startX, sy, ex, ey) 수정하기")
+    @DisplayName("위치정보(startX, startY, endX, endY) 수정하기")
     void testUpdatePosInfo() {
         // given
         Float sx = 0.1f;

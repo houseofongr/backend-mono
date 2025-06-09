@@ -47,4 +47,43 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                         )
                 ));
     }
+
+
+    @Test
+    @DisplayName("스페이스 좌표 수정 API")
+    void testSpaceUpdatePositionAPI() throws Exception {
+        //language=JSON
+        String request = """
+                {
+                  "startX": 0.6,
+                  "startY": 0.7,
+                  "endX": 0.5,
+                  "endY": 0.4
+                }
+                """;
+
+        mockMvc.perform(patch("/admin/spaces/position/{spaceId}", 1)
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(user("admin").roles("ADMIN")))
+                .andExpect(status().is(200))
+                .andDo(document("admin-space-patch-position",
+                        pathParameters(
+                                parameterWithName("spaceId").description("수정할 스페이스의 식별자입니다.")
+                        ),
+                        requestFields(
+                                fieldWithPath("startX").description("수정할 X축 시작좌표입니다."),
+                                fieldWithPath("startY").description("수정할 Y축 시작좌표입니다."),
+                                fieldWithPath("endX").description("수정할 X축 종료좌표입니다."),
+                                fieldWithPath("endY").description("수정할 Y축 종료좌표입니다.")
+                        ),
+                        responseFields(
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#0]번 스페이스의 상세정보가 수정되었습니다.'"),
+                                fieldWithPath("startX").description("수정된 X축 시작좌표입니다."),
+                                fieldWithPath("startY").description("수정된 Y축 시작좌표입니다."),
+                                fieldWithPath("endX").description("수정된 X축 종료좌표입니다."),
+                                fieldWithPath("endY").description("수정된 Y축 종료좌표입니다.")
+                        )
+                ));
+    }
 }

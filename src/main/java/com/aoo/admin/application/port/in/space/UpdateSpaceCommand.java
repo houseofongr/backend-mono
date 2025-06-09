@@ -17,16 +17,16 @@ public record UpdateSpaceCommand() {
     }
 
     public record Position(
-            Float sx,
-            Float sy,
-            Float ex,
-            Float ey
+            Float startX,
+            Float startY,
+            Float endX,
+            Float endY
     ) {
         public Position {
-            if ((sx != null && (sx < 0 || sx > 1)) ||
-                (sy != null && (sy < 0 || sy > 1)) ||
-                (ex != null && (ex < 0 || ex > 1)) ||
-                (ey != null && (ey < 0 || ey > 1))
+            if ((startX != null && (startX < 0 || startX > 1)) ||
+                (startY != null && (startY < 0 || startY > 1)) ||
+                (endX != null && (endX < 0 || endX > 1)) ||
+                (endY != null && (endY < 0 || endY > 1))
             ) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         }
     }

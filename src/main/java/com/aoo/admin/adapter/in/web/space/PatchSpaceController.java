@@ -24,4 +24,12 @@ public class PatchSpaceController {
 
         return ResponseEntity.ok(useCase.updateDetail(spaceId, command));
     }
+
+    @PatchMapping("/admin/spaces/position/{spaceId}")
+    public ResponseEntity<UpdateSpaceResult.Position> updatePosition(
+            @PathVariable Long spaceId,
+            @RequestBody UpdateSpaceCommand.Position command) {
+
+        return ResponseEntity.ok(useCase.updatePosition(spaceId, command));
+    }
 }

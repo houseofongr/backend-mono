@@ -47,10 +47,8 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
     }
 
     @Override
-    public UpdateSpaceResult.Detail update(Space space) {
+    public void update(Space space) {
         SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(space.getId()).orElseThrow();
         spaceJpaEntity.update(space);
-
-        return UpdateSpaceResult.Detail.of(spaceJpaEntity);
     }
 }

@@ -27,7 +27,7 @@ class CreateSpaceCommandTest {
     }
     
     @Test
-    @DisplayName("위치(startX, sy, scalex, scaley : 0 ~ 1) 조건 확인")
+    @DisplayName("위치(startX, startY, scalex, scaley : 0 ~ 1) 조건 확인")
     void testPositionInfo() {
         // null
         assertThatThrownBy(() -> new CreateSpaceCommand(1L, 1L, "공간", null, null, 0.5F, 0.5F, 0.5F, basicImage)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
