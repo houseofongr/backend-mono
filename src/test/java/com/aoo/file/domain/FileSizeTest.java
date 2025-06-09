@@ -1,6 +1,5 @@
 package com.aoo.file.domain;
 
-import com.aoo.file.domain.FileSize;
 import com.aoo.file.domain.exception.FileSizeLimitExceedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class GetRoomItemsControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @Sql("GetRoomItemsControllerTest.sql")
     @DisplayName("룸 및 아이템 조회 API")

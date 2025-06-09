@@ -3,7 +3,6 @@ package com.aoo.admin.adapter.in.web.space;
 import com.aoo.admin.application.port.in.space.CreateSpaceCommand;
 import com.aoo.admin.application.port.in.space.CreateSpaceResult;
 import com.aoo.admin.application.port.in.space.CreateSpaceUseCase;
-import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class PostSpaceController {
                                                     @RequestParam("image") MultipartFile imageFile) {
 
         CreateSpaceCommand baseCommand = gson.fromJson(metadata, CreateSpaceCommand.class);
-        CreateSpaceCommand fullCommand = CreateSpaceCommand.from(baseCommand,imageFile);
+        CreateSpaceCommand fullCommand = CreateSpaceCommand.from(baseCommand, imageFile);
 
         return new ResponseEntity<>(useCase.create(fullCommand), HttpStatus.CREATED);
     }

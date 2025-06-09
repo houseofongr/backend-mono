@@ -1,6 +1,5 @@
 package com.aoo.admin.adapter.out.persistence;
 
-import com.aoo.admin.adapter.out.persistence.RoomPersistenceAdapter;
 import com.aoo.admin.adapter.out.persistence.mapper.ItemMapper;
 import com.aoo.admin.adapter.out.persistence.mapper.RoomMapper;
 import com.aoo.admin.adapter.out.persistence.mapper.SoundSourceMapper;
@@ -38,8 +37,8 @@ class RoomPersistenceAdapterTest {
     @DisplayName("룸 수정 테스트")
     void testUpdateRoomInfo() throws Exception {
         // given
-        List<Room> rooms = List.of(Room.create(1L,"욕실",1f,1f,1f,5000f,1000f,1L),
-                Room.create(2L,"주방",1f,1f,1f,5000f,1000f,1L));
+        List<Room> rooms = List.of(Room.create(1L, "욕실", 1f, 1f, 1f, 5000f, 1000f, 1L),
+                Room.create(2L, "주방", 1f, 1f, 1f, 5000f, 1000f, 1L));
 
         // when
         int update = sut.update(rooms);

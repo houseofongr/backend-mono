@@ -118,10 +118,10 @@ class UniversePersistenceAdapterTest {
     @DisplayName("특정 컨텐츠(이름, 내용, 작성자)가 포함된 유니버스 조회")
     void testSearchKeyword() {
         // given
-        SearchUniverseCommand 건강 = new SearchUniverseCommand(PageRequest.of(0, 10),  "content", "건강", null, null,false);
-        SearchUniverseCommand 콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), "content", "콘텐츠",null, null, false);
-        SearchUniverseCommand leaf = new SearchUniverseCommand(PageRequest.of(0, 10), "author", "leaf", null, null,false);
-        SearchUniverseCommand 건 = new SearchUniverseCommand(PageRequest.of(0, 10), "all", "건",null, null, false);
+        SearchUniverseCommand 건강 = new SearchUniverseCommand(PageRequest.of(0, 10), "content", "건강", null, null, false);
+        SearchUniverseCommand 콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), "content", "콘텐츠", null, null, false);
+        SearchUniverseCommand leaf = new SearchUniverseCommand(PageRequest.of(0, 10), "author", "leaf", null, null, false);
+        SearchUniverseCommand 건 = new SearchUniverseCommand(PageRequest.of(0, 10), "all", "건", null, null, false);
 
         // when
         SearchUniverseResult result_건강 = sut.search(건강);
@@ -164,10 +164,10 @@ class UniversePersistenceAdapterTest {
         // given
         SearchUniverseCommand 제목_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null, null, "title", true);
         SearchUniverseCommand 제목_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null, null, "title", false);
-        SearchUniverseCommand 등록일자_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null,null, "registered_date", true);
-        SearchUniverseCommand 등록일자_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null,null, "registered_date", false);
+        SearchUniverseCommand 등록일자_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null, null, "registered_date", true);
+        SearchUniverseCommand 등록일자_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null, null, "registered_date", false);
         SearchUniverseCommand 조회수_내림차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null, null, "views", true);
-        SearchUniverseCommand 조회수_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null,null, "views", false);
+        SearchUniverseCommand 조회수_오름차순 = new SearchUniverseCommand(PageRequest.of(0, 20), null, null, null, "views", false);
 
         // when
         SearchUniverseResult result_제목_오름차순 = sut.search(제목_오름차순);
@@ -200,7 +200,7 @@ class UniversePersistenceAdapterTest {
     @DisplayName("유니버스 기본 검색(아무 파라미터 없이 검색 시 → 10건 등록 날짜 내림차순)")
     void testSearch() {
         // given
-        Universe universe = Universe.create(1L, 1L, 1L, 1L, 1L, "test title","test desc", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, List.of());
+        Universe universe = Universe.create(1L, 1L, 1L, 1L, 1L, "test title", "test desc", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, List.of());
         sut.save(universe);
 
         SearchUniverseCommand command = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, null, null, null);
@@ -262,13 +262,13 @@ class UniversePersistenceAdapterTest {
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(PublicStatus.PRIVATE);
         assertThat(universeJpaEntity.getUniverseHashtags().stream().map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag()).toList()).allMatch(tag -> List.of("오르트구름", "태양계", "윤하", "별").contains(tag));
     }
-    
+
     @Test
     @DisplayName("유니버스 정상 삭제 시 연관된 모든 엔티티 삭제되는지 확인")
     @Transactional
     void testDeleteRelationship() {
         // given
-        Universe universe = Universe.load(12L,12L,12L, 1L, 1L,"우주",null,null,null,null,null,List.of("오르트구름", "태양계", "윤하", "별"),null,null);
+        Universe universe = Universe.load(12L, 12L, 12L, 1L, 1L, "우주", null, null, null, null, null, List.of("오르트구름", "태양계", "윤하", "별"), null, null);
 
         // when
         sut.delete(universe);

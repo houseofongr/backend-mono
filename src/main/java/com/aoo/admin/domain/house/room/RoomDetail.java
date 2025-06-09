@@ -12,6 +12,6 @@ public class RoomDetail {
     }
 
     public void update(String name) {
-        this.name = (name == null || name.isBlank())? this.name : name;
+        this.name = (name == null || name.isBlank()) ? this.name : name;
     }
 }

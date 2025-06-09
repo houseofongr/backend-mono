@@ -7,5 +7,6 @@ import org.springframework.data.domain.Page;
 
 public interface UniverseQueryDslRepository {
     Page<UniverseJpaEntity> searchAll(SearchUniverseCommand command);
+
     TraversalJpaEntityComponents findAllTreeComponentById(Long universeId);
 }

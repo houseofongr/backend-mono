@@ -16,11 +16,16 @@ public record CreateSpaceCommand(
         MultipartFile imageFile
 ) {
     public CreateSpaceCommand {
-        if (universeId == null || parentSpaceId == null) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (title == null || title.isBlank() || title.length() > 100) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (description != null && description.length() > 5000) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (startX == null || startX < 0 || startX > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (startY == null || startY < 0 || startY > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (universeId == null || parentSpaceId == null)
+            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (title == null || title.isBlank() || title.length() > 100)
+            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (description != null && description.length() > 5000)
+            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (startX == null || startX < 0 || startX > 1)
+            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (startY == null || startY < 0 || startY > 1)
+            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (endX == null || endX < 0 || endX > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (endY == null || endY < 0 || endY > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
     }

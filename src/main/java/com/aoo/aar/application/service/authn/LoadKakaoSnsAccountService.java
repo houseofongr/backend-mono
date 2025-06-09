@@ -32,7 +32,7 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
         OAuth2Dto.KakaoUserInfo userInfo = gson.fromJson(gson.toJsonTree(user.getAttributes()), OAuth2Dto.KakaoUserInfo.class);
         SnsAccount snsAccount = loadSnsAccountUseCase.loadSnsAccount(SnsDomain.KAKAO, userInfo.id());
 
-        SNSLoginResult response = snsAccount != null?
+        SNSLoginResult response = snsAccount != null ?
                 getResponseByAccountInDB(snsAccount) :
                 getResponseByNewAccount(userInfo);
 
@@ -44,13 +44,13 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
         // account with user
         if (snsAccount.isRegistered())
             return new SNSLoginResult(
-                queryUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
-                issueAccessTokenPort.issueAccessToken(snsAccount),
-                SnsDomain.KAKAO.name(),
-                false
-        );
+                    queryUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
+                    issueAccessTokenPort.issueAccessToken(snsAccount),
+                    SnsDomain.KAKAO.name(),
+                    false
+            );
 
-        // temp account
+            // temp account
         else return new SNSLoginResult(
                 snsAccount.getSnsAccountInfo().getNickname(),
                 issueAccessTokenPort.issueAccessToken(snsAccount),

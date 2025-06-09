@@ -5,11 +5,12 @@ import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 
-import java.util.Optional;
-
 public interface FindUniversePort {
-    Optional<Universe> load(Long id);
+    Universe load(Long id);
+
     SearchUniverseResult search(SearchUniverseCommand command);
+
     SearchUniverseResult.UniverseDetailInfo find(Long id);
-    TraversalComponents findTreeComponents(Long universeId);
+
+    TraversalComponents findTreeComponents(Long id);
 }

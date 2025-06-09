@@ -31,8 +31,6 @@ public class PostHouseController {
                     createHouseUseCase.create(gson.fromJson(metadata, CreateHouseMetadata.class), multipartRequest.getFileMap()),
                     HttpStatus.CREATED);
 
-        }
-
-        else throw new AdminException(AdminErrorCode.INVALID_REQUEST_TYPE);
+        } else throw new AdminException(AdminErrorCode.INVALID_REQUEST_TYPE);
     }
 }

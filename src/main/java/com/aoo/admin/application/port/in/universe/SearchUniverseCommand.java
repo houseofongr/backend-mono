@@ -9,5 +9,5 @@ public record SearchUniverseCommand(
         String category,
         String sortType,
         Boolean isAsc
-        ) {
+) {
 }

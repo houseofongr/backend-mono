@@ -35,7 +35,7 @@ public class HouseQueryDslRepositoryImpl implements HouseQueryDslRepository {
                 .where(houseSearch(command))
                 .fetchFirst();
 
-        return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);
+        return new PageImpl<>(entities, command.pageable(), count == null ? 0 : count);
     }
 
     private BooleanExpression houseSearch(QueryHouseListCommand command) {

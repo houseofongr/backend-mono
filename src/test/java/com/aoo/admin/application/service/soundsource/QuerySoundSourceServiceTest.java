@@ -26,7 +26,7 @@ class QuerySoundSourceServiceTest {
     void init() {
         findSoundSourcePort = mock();
         querySoundSourcePort = mock();
-        sut = new QuerySoundSourceService(findSoundSourcePort,querySoundSourcePort);
+        sut = new QuerySoundSourceService(findSoundSourcePort, querySoundSourcePort);
     }
 
     @Test

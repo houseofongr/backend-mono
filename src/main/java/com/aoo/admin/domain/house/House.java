@@ -41,7 +41,7 @@ public class House {
         return new House(new HouseId(id), new HouseDetail(title, author, description), new Area(width, height), null, rooms, defaultImageFile, borderImageFile);
     }
 
-    public static House load(Long houseId, String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms)  {
+    public static House load(Long houseId, String title, String author, String description, Float width, Float height, ZonedDateTime createdTime, ZonedDateTime updatedTime, Long defaultImageFileId, Long borderImageFileId, List<Room> rooms) {
 
         Area area = new Area(width, height);
         File defaultImageFile = new File(new FileId(defaultImageFileId), FileType.IMAGE);
@@ -54,7 +54,7 @@ public class House {
         houseDetail.update(title, author, description);
     }
 
-    public void updateRoomInfo(String originalName, String newName)  {
+    public void updateRoomInfo(String originalName, String newName) {
 
         for (Room room : rooms) {
             if (room.getRoomDetail().getName().equals(originalName)) {

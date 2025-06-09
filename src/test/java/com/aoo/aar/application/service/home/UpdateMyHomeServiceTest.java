@@ -2,7 +2,6 @@ package com.aoo.aar.application.service.home;
 
 import com.aoo.aar.application.port.out.persistence.home.CheckOwnerPort;
 import com.aoo.aar.application.service.AarErrorCode;
-import com.aoo.aar.application.service.home.UpdateMyHomeService;
 import com.aoo.admin.application.port.in.home.UpdateHomeUseCase;
 import com.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;

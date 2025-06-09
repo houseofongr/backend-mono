@@ -47,13 +47,13 @@ public class AdminLoginControllerTest {
                         .param("password", "admin Password"))
                 .andExpect(status().is(302))
                 .andDo(document("admin-authn-login",
-                            formParameters(
-                                    parameterWithName("username").description("로그인하는 관리자 계정 ID입니다."),
-                                    parameterWithName("password").description("로그인하는 관리자 계정 Password입니다.")
-                            ),
-                            responseHeaders(
-                                    headerWithName("location").description("로그인 시도 이후 이동하는 URL입니다. +" + "\n" + "* 성공 시 : /login?form-success, 실패 시 : /login?failure")
-                            )
-                        ));
+                        formParameters(
+                                parameterWithName("username").description("로그인하는 관리자 계정 ID입니다."),
+                                parameterWithName("password").description("로그인하는 관리자 계정 Password입니다.")
+                        ),
+                        responseHeaders(
+                                headerWithName("location").description("로그인 시도 이후 이동하는 URL입니다. +" + "\n" + "* 성공 시 : /login?form-success, 실패 시 : /login?failure")
+                        )
+                ));
     }
 }

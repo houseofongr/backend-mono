@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UniverseLikeJpaEntity extends DateColumnBaseEntity{
+public class UniverseLikeJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

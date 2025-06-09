@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PatchMyInfoControllerTest extends AbstractControllerTest {
 
 
-
     @Autowired
     UserJpaRepository userJpaRepository;
 

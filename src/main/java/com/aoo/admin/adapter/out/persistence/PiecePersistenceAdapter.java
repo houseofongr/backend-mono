@@ -28,8 +28,8 @@ public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, Up
     }
 
     @Override
-    public Piece find(Long pieceId) {
-        PieceJpaEntity pieceJpaEntity = pieceJpaRepository.findById(pieceId).orElseThrow(() -> new AdminException(AdminErrorCode.PIECE_NOT_FOUND));
+    public Piece find(Long id) {
+        PieceJpaEntity pieceJpaEntity = pieceJpaRepository.findById(id).orElseThrow(() -> new AdminException(AdminErrorCode.PIECE_NOT_FOUND));
         return pieceMapper.mapToSingleDomainEntity(pieceJpaEntity);
     }
 

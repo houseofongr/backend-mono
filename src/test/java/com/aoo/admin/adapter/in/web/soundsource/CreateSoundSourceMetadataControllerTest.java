@@ -12,12 +12,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class CreateSoundSourceMetadataControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @DisplayName("음원 메타데이터 생성 테스트")
     void testCreateSoundSourceMetadata() throws Exception {
         mockMvc.perform(get("/mock/admin/create-soundsource-metadata")
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(document("admin-create-soundsource-metadata",
                         responseFields(
                                 fieldWithPath("name").description("생성할 음원의 이름입니다."),

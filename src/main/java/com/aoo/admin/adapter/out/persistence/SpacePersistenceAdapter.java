@@ -14,8 +14,6 @@ import com.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, UpdateSpacePort {
@@ -25,9 +23,9 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
     private final SpaceMapper spaceMapper;
 
     @Override
-    public Optional<Space> loadSingle(Long id) {
-        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(id).orElseThrow();
-        return Optional.of(spaceMapper.mapToSingleDomainEntity(spaceJpaEntity));
+    public Space find(Long id) {
+        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(id).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        return spaceMapper.mapToSingleDomainEntity(spaceJpaEntity);
     }
 
     @Override
@@ -35,18 +33,19 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
         universeJpaRepository.findById(space.getBasicInfo().getUniverseId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
         Long parentSpaceId = space.getBasicInfo().getParentSpaceId();
-        if (parentSpaceId != -1) spaceJpaRepository.findById(parentSpaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        if (parentSpaceId != -1)
+            spaceJpaRepository.findById(parentSpaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         SpaceJpaEntity spaceJpaEntity = SpaceJpaEntity.create(space);
 
         spaceJpaRepository.save(spaceJpaEntity);
 
-        return CreateSpaceResult.of(spaceJpaEntity);
+        return spaceMapper.mapToCreateSpaceResult(spaceJpaEntity);
     }
 
     @Override
     public void update(Space space) {
-        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(space.getId()).orElseThrow();
+        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(space.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
         spaceJpaEntity.update(space);
     }
 }

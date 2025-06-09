@@ -1,17 +1,5 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
-import com.aoo.admin.adapter.out.persistence.mapper.SpaceMapper;
-import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
-
 class SpaceMapperTest {
 
     SpaceMapper sut = new SpaceMapper();

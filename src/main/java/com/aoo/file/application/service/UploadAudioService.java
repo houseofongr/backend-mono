@@ -26,7 +26,7 @@ public class UploadAudioService implements UploadPublicAudioUseCase, UploadPriva
 
     @Override
     public UploadFileResult.FileInfo publicUpload(MultipartFile audio) {
-        return uploadService.upload(audio,new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.AUDIO));
+        return uploadService.upload(audio, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.AUDIO));
     }
 
     @Override

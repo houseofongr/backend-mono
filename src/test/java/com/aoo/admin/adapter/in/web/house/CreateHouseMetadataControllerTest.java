@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class CreateHouseMetadataControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @DisplayName("Metadata 생성 테스트")
     void testCreateMetadata() throws Exception {

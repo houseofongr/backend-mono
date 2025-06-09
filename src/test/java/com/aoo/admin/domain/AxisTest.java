@@ -1,6 +1,5 @@
 package com.aoo.admin.domain;
 
-import com.aoo.admin.domain.Axis;
 import com.aoo.admin.domain.exception.AxisLimitExceededException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

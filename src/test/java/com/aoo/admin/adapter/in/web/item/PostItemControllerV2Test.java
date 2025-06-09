@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PostItemControllerV2Test extends AbstractControllerTest {
 
 
-
     @Test
     @Sql("PostItemControllerTestV2.sql")
     @DisplayName("아이템 생성 및 수정 API V2")

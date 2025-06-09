@@ -28,7 +28,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
 
     @Override
     public UpdateSpaceResult.Detail updateDetail(Long spaceId, UpdateSpaceCommand.Detail command) {
-        Space space = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        Space space = findSpacePort.find(spaceId);
 
         space.updateBasicInfo(command.title(), command.description());
         updateSpacePort.update(space);
@@ -38,7 +38,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
 
     @Override
     public UpdateSpaceResult.Position updatePosition(Long spaceId, UpdateSpaceCommand.Position command) {
-        Space space = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        Space space = findSpacePort.find(spaceId);
 
         space.updatePosInfo(command.startX(), command.startY(), command.endX(), command.endY());
         updateSpacePort.update(space);
@@ -52,7 +52,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
         if (innerImage == null) throw new AdminException(AdminErrorCode.SPACE_FILE_REQUIRED);
         if (innerImage.getSize() >= 5 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
-        Space targetSpace = findSpacePort.loadSingle(spaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        Space targetSpace = findSpacePort.find(spaceId);
 
         Long beforeInnerImageId = targetSpace.getFileInfo().getInnerImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);

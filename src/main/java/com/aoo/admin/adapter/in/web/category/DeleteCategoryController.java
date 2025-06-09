@@ -3,7 +3,6 @@ package com.aoo.admin.adapter.in.web.category;
 import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
 import com.aoo.admin.application.port.in.category.DeleteCategoryUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

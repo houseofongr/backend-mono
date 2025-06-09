@@ -41,6 +41,6 @@ public class QueryRoomService implements QueryRoomInfoUseCase, QueryRoomItemsUse
 
         List<Item> items = findItemPort.loadAllItemsInHomeAndRoom(homeId, roomId);
 
-        return QueryRoomItemsResult.of(room,items);
+        return QueryRoomItemsResult.of(room, items);
     }
 }

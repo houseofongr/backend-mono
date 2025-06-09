@@ -1,7 +1,6 @@
-
-
-insert into AAR_USER(ID, REAL_NAME, PHONE_NUMBER, EMAIL, NICKNAME, TERMS_OF_USE_AGREEMENT, PERSONAL_INFORMATION_AGREEMENT)
-values (10, '남상엽', 'NOT_SET', 'test@example.com','leaf', false, false);
+insert into AAR_USER(ID, REAL_NAME, PHONE_NUMBER, EMAIL, NICKNAME, TERMS_OF_USE_AGREEMENT,
+                     PERSONAL_INFORMATION_AGREEMENT)
+values (10, '남상엽', 'NOT_SET', 'test@example.com', 'leaf', false, false);
 
 insert into SNS_ACCOUNT(ID, REAL_NAME, NICKNAME, EMAIL, SNS_ID, SNS_DOMAIN, USER_ID)
 values (1, '남상엽', 'leaf', 'test@example.com', 'SNS_ID', 'KAKAO', 10);

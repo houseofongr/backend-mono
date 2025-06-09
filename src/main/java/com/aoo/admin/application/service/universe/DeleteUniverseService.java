@@ -3,8 +3,6 @@ package com.aoo.admin.application.service.universe;
 import com.aoo.admin.application.port.in.universe.DeleteUniverseUseCase;
 import com.aoo.admin.application.port.out.universe.DeleteUniversePort;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
-import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.common.application.port.in.MessageDto;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
@@ -25,7 +23,7 @@ public class DeleteUniverseService implements DeleteUniverseUseCase {
     @Override
     public MessageDto delete(Long id) {
 
-        Universe universe = findUniversePort.load(id).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        Universe universe = findUniversePort.load(id);
 
         deleteFileUseCase.deleteFile(universe.getFileInfo().getThumbnailId());
         deleteFileUseCase.deleteFile(universe.getFileInfo().getThumbMusicId());

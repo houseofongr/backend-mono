@@ -4,7 +4,6 @@ import com.aoo.aar.application.port.in.home.QuerySoundSourcesPathCommand;
 import com.aoo.aar.application.port.out.persistence.home.CheckOwnerPort;
 import com.aoo.aar.application.port.out.persistence.home.QueryHomePort;
 import com.aoo.aar.application.service.AarErrorCode;
-import com.aoo.aar.application.service.home.QueryHomeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -114,7 +113,7 @@ class QueryHomeServiceTest {
     @DisplayName("전체음원 경로 조회 서비스 테스트")
     void testQuerySoundSourcesPath() {
         // given
-        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(1,3));
+        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(1, 3));
 
         // when
         sut.querySoundSourcesPath(command);

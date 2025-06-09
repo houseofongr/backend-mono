@@ -1,5 +1,6 @@
 package com.aoo.admin.adapter.out.persistence;
 
+import com.aoo.admin.adapter.out.persistence.mapper.CategoryMapper;
 import com.aoo.admin.application.port.in.category.CreateCategoryResult;
 import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
 import com.aoo.admin.application.port.in.category.SearchCategoryResult;
@@ -20,18 +21,19 @@ import org.springframework.stereotype.Component;
 public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategoryPort, UpdateCategoryPort, DeleteCategoryPort {
 
     private final CategoryJpaRepository categoryJpaRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public CreateCategoryResult save(String name) {
         CategoryJpaEntity newCategory = CategoryJpaEntity.create(name);
         categoryJpaRepository.save(newCategory);
 
-        return CreateCategoryResult.of(newCategory);
+        return categoryMapper.mapToCreateCategoryResult(newCategory);
     }
 
     @Override
     public SearchCategoryResult findAll() {
-        return SearchCategoryResult.of(categoryJpaRepository.findAll());
+        return categoryMapper.mapToSearchCategoryResult(categoryJpaRepository.findAll());
     }
 
     @Override
@@ -41,7 +43,7 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategor
 
         targetCategory.update(name);
 
-        return UpdateCategoryResult.of(targetCategory);
+        return categoryMapper.mapToUpdateCategoryResult(targetCategory);
     }
 
     @Override

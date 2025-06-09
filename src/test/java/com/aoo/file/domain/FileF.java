@@ -1,7 +1,6 @@
 package com.aoo.file.domain;
 
 import com.aoo.common.domain.Authority;
-import com.aoo.file.domain.*;
 import com.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.aoo.file.domain.exception.FileSizeLimitExceedException;
 import lombok.AllArgsConstructor;

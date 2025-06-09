@@ -42,7 +42,7 @@ class ItemTest {
 
         // when
         설이.update(newName, null);
-        설이2.update(null,rectangle);
+        설이2.update(null, rectangle);
 
         // then
         assertThat(설이.getItemDetail().getName()).isEqualTo("고양이");
@@ -58,7 +58,7 @@ class ItemTest {
         // given
         Item rectangleItem = MockEntityFactoryService.getRectangleItem();
         Item rectangleItemWithSoundSource = MockEntityFactoryService.loadRectangleItem();
-        Item rectangleItemWithNull = Item.load(1L,1L,1L,1L,"test", null,null);
+        Item rectangleItemWithNull = Item.load(1L, 1L, 1L, 1L, "test", null, null);
 
         // when
         boolean hasSoundSource1 = rectangleItem.hasSoundSource();

@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PieceJpaEntity extends DateColumnBaseEntity{
+public class PieceJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

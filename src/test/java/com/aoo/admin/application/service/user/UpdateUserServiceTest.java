@@ -4,7 +4,6 @@ import com.aoo.admin.application.port.in.user.UpdateUserInfoCommand;
 import com.aoo.admin.application.port.out.user.FindUserPort;
 import com.aoo.admin.application.port.out.user.UpdateUserPort;
 import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.application.service.user.UpdateUserService;
 import com.aoo.admin.domain.user.User;
 import com.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +42,7 @@ class UpdateUserServiceTest {
         MessageDto messageDto = sut.updateUserInfo(userId, command);
 
         // then
-        assertThatThrownBy(() -> sut.updateUserInfo(1234L,command)).hasMessage(AdminErrorCode.USER_NOT_FOUND.getMessage());
+        assertThatThrownBy(() -> sut.updateUserInfo(1234L, command)).hasMessage(AdminErrorCode.USER_NOT_FOUND.getMessage());
         verify(user, times(1)).updateNickname(any());
         verify(updateUserPort, times(1)).updateUser(any());
         assertThat(messageDto.message()).isEqualTo("본인정보가 수정되었습니다.");

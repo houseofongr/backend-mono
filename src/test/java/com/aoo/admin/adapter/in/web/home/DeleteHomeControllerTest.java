@@ -24,9 +24,6 @@ class DeleteHomeControllerTest extends AbstractControllerTest {
     ItemJpaRepository itemJpaRepository;
 
 
-
-
-
     @Test
     @Sql("DeleteHomeControllerTest.sql")
     @DisplayName("홈 삭제 API")

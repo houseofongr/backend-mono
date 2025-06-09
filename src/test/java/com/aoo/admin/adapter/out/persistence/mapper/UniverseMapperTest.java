@@ -1,6 +1,5 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
-import com.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
 import com.aoo.admin.domain.universe.Universe;
@@ -35,10 +34,10 @@ class UniverseMapperTest {
         User user = MockEntityFactoryService.getUser();
         UserJpaEntity userJpaEntity = UserJpaEntity.create(user, List.of());
         UniverseJpaEntity universeJpaEntity = new UniverseJpaEntity(1L, "우주", "이곳은 우주입니다.", 12L, PublicStatus.PUBLIC, Category.LIFE, 13L, 102L, 14L, userJpaEntity, new ArrayList<>(), new ArrayList<>());
-        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(1L, universeJpaEntity, new HashtagJpaEntity(1L,"우주")));
-        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(2L, universeJpaEntity, new HashtagJpaEntity(2L,"행성")));
-        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(3L, universeJpaEntity, new HashtagJpaEntity(3L,"지구")));
-        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(4L, universeJpaEntity, new HashtagJpaEntity(4L,"별")));
+        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(1L, universeJpaEntity, new HashtagJpaEntity(1L, "우주")));
+        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(2L, universeJpaEntity, new HashtagJpaEntity(2L, "행성")));
+        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(3L, universeJpaEntity, new HashtagJpaEntity(3L, "지구")));
+        universeJpaEntity.getUniverseHashtags().add(new UniverseHashtagJpaEntity(4L, universeJpaEntity, new HashtagJpaEntity(4L, "별")));
         universeJpaEntity.getUniverseLikes().add(new UniverseLikeJpaEntity(1L, universeJpaEntity, new UserJpaEntity()));
         universeJpaEntity.getUniverseLikes().add(new UniverseLikeJpaEntity(2L, universeJpaEntity, new UserJpaEntity()));
         universeJpaEntity.prePersist();
@@ -50,8 +49,8 @@ class UniverseMapperTest {
         assertThat(universe.getId()).isEqualTo(universeJpaEntity.getId());
         assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(universeJpaEntity.getThumbnailFileId());
         assertThat(universe.getFileInfo().getThumbMusicId()).isEqualTo(universeJpaEntity.getThumbMusicFileId());
-        assertThat(universe.getDateInfo().getCreatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(100L,ChronoUnit.MILLIS));
-        assertThat(universe.getDateInfo().getUpdatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(100L,ChronoUnit.MILLIS));
+        assertThat(universe.getDateInfo().getCreatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(100L, ChronoUnit.MILLIS));
+        assertThat(universe.getDateInfo().getUpdatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(100L, ChronoUnit.MILLIS));
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(universeJpaEntity.getPublicStatus());
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo(universeJpaEntity.getTitle());
         assertThat(universe.getBasicInfo().getAuthorId()).isEqualTo(universeJpaEntity.getAuthor().getId());

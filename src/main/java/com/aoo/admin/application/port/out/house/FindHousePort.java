@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface FindHousePort {
     Optional<House> load(Long id);
+
     QueryHouseListResult search(QueryHouseListCommand command);
 }

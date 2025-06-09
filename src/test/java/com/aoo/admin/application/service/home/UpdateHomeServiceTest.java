@@ -3,7 +3,6 @@ package com.aoo.admin.application.service.home;
 import com.aoo.admin.application.port.out.home.FindHomePort;
 import com.aoo.admin.application.port.out.home.UpdateHomePort;
 import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.application.service.home.UpdateHomeService;
 import com.aoo.admin.domain.exception.BadHomeNameFormatException;
 import com.aoo.admin.domain.home.Home;
 import org.junit.jupiter.api.BeforeEach;

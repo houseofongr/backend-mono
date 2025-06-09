@@ -3,7 +3,6 @@ package com.aoo.admin.application.service.room;
 import com.aoo.admin.application.port.in.room.UpdateRoomInfoCommand;
 import com.aoo.admin.application.port.out.room.FindRoomPort;
 import com.aoo.admin.application.port.out.room.UpdateRoomPort;
-import com.aoo.admin.application.service.room.UpdateRoomService;
 import com.aoo.admin.domain.house.room.Room;
 import com.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;

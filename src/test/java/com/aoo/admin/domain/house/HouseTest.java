@@ -1,6 +1,5 @@
 package com.aoo.admin.domain.house;
 
-import com.aoo.admin.domain.house.HouseDetail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

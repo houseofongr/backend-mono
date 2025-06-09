@@ -2,14 +2,12 @@ package com.aoo.file.application.service;
 
 import com.aoo.file.application.port.in.DownloadImageUseCase;
 import com.aoo.file.application.port.out.jwt.VerifyAccessTokenPort;
-import com.aoo.file.application.service.DownloadPrivateImageService;
-import com.aoo.file.application.service.FileErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.jwt.JwtException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class DownloadPrivateImageServiceTest {
@@ -36,11 +34,11 @@ class DownloadPrivateImageServiceTest {
 
         // when
         doThrow(new JwtException("bad token")).when(verifyAccessTokenPort).verifyImageToken(badToken);
-        assertThatThrownBy(() -> sut.privateDownload(badToken,fileId)).hasMessage(FileErrorCode.INVALID_AUTHORITY.getMessage());
+        assertThatThrownBy(() -> sut.privateDownload(badToken, fileId)).hasMessage(FileErrorCode.INVALID_AUTHORITY.getMessage());
 
-        sut.privateDownload(goodToken,fileId);
+        sut.privateDownload(goodToken, fileId);
 
         // then
-        verify(downloadImageUseCase,times(1)).privateDownload(fileId);
+        verify(downloadImageUseCase, times(1)).privateDownload(fileId);
     }
 }

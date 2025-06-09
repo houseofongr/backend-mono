@@ -1,8 +1,6 @@
 package com.aoo.file.domain;
 
 import com.aoo.common.domain.Authority;
-import com.aoo.file.domain.FileId;
-import com.aoo.file.domain.FileType;
 import com.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.aoo.file.domain.exception.IllegalFileAuthorityDirException;
 import com.aoo.file.domain.exception.IllegalFileTypeDirException;

@@ -44,7 +44,7 @@ class DeleteUserServiceTest {
 
         // when
         when(findUserPort.loadUser(userId)).thenReturn(Optional.of(MockEntityFactoryService.getUser()));
-        when(createDeletedUserPort.createDeletedUser(any(),anyBoolean(),anyBoolean())).thenReturn(MockEntityFactoryService.getDeletedUser());
+        when(createDeletedUserPort.createDeletedUser(any(), anyBoolean(), anyBoolean())).thenReturn(MockEntityFactoryService.getDeletedUser());
         assertThatThrownBy(() -> sut.deleteUser(1234L, command)).hasMessage(AdminErrorCode.USER_NOT_FOUND.getMessage());
         MessageDto messageDto = sut.deleteUser(userId, command);
 

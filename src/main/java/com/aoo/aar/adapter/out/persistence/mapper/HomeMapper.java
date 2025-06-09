@@ -72,7 +72,8 @@ public class HomeMapper {
     }
 
     private QueryRoomItemsResult.ItemData mapToItemInfo(ItemJpaEntity itemJpaEntity) {
-        if (itemJpaEntity.getSoundSources().isEmpty() || itemJpaEntity.getSoundSources().stream().noneMatch(SoundSourceJpaEntity::getIsActive)) return null;
+        if (itemJpaEntity.getSoundSources().isEmpty() || itemJpaEntity.getSoundSources().stream().noneMatch(SoundSourceJpaEntity::getIsActive))
+            return null;
 
         return switch (itemJpaEntity.getShape()) {
             case ItemShapeRectangleJpaEntity rectangle -> new QueryRoomItemsResult.ItemData(

@@ -54,7 +54,7 @@ public record TraversalUniverseResult(
             if (component instanceof Space space)
                 return new SpaceTreeInfo(
                         space.getId(),
-                        space.getBasicInfo().getParentSpaceId() == null? -1 : space.getBasicInfo().getParentSpaceId(),
+                        space.getBasicInfo().getParentSpaceId() == null ? -1 : space.getBasicInfo().getParentSpaceId(),
                         space.getFileInfo().getInnerImageId(),
                         space.getTreeInfo().getDepth(),
                         space.getBasicInfo().getTitle(),
@@ -98,7 +98,7 @@ public record TraversalUniverseResult(
             if (component instanceof Piece piece)
                 return new PieceTreeInfo(
                         piece.getId(),
-                        piece.getBasicInfo().getParentSpaceId() == null? -1 : piece.getBasicInfo().getParentSpaceId(),
+                        piece.getBasicInfo().getParentSpaceId() == null ? -1 : piece.getBasicInfo().getParentSpaceId(),
                         piece.getFileInfo().getInnerImageId(),
                         piece.getTreeInfo().getDepth(),
                         piece.getBasicInfo().getTitle(),

@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class GetUserHomesControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @Sql("GetUserHomesControllerTest.sql")
     @DisplayName("사용자 홈 조회 테스트")

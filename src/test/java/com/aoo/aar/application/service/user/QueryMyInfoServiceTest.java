@@ -1,7 +1,6 @@
 package com.aoo.aar.application.service.user;
 
 import com.aoo.aar.application.port.out.persistence.user.QueryUserPort;
-import com.aoo.aar.application.service.user.QueryMyInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

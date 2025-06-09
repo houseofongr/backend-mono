@@ -26,7 +26,7 @@ public class TreeInfo {
     }
 
     public static TreeInfo create(TraversalComponents components) {
-        return create(components.getUniverse(),components.getSpaces(),components.getPieces());
+        return create(components.getUniverse(), components.getSpaces(), components.getPieces());
     }
 
     public static TreeInfo create(Universe universe, List<Space> spaces, List<Piece> pieces) {
@@ -59,17 +59,19 @@ public class TreeInfo {
         List<Piece> childPieces = new ArrayList<>();
 
         for (Space space : spaces) {
-            if (space.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId())) tree.addChild(space);
+            if (space.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId()))
+                tree.addChild(space);
             else childSpaces.add(space);
         }
 
         for (Piece piece : pieces) {
-            if (piece.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId())) tree.addChild(piece);
+            if (piece.getBasicInfo().getParentSpaceId().equals(tree.getUniverseTreeComponent().getId()))
+                tree.addChild(piece);
             else childPieces.add(piece);
         }
 
         for (TreeInfo child : tree.children) {
-            makeChildTree(child,childSpaces, childPieces);
+            makeChildTree(child, childSpaces, childPieces);
         }
     }
 
@@ -88,7 +90,7 @@ public class TreeInfo {
         queue.offer(this);
         TreeInfo treeInfo = null;
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             treeInfo = queue.poll();
             UniverseTreeComponent component = treeInfo.getUniverseTreeComponent();
 

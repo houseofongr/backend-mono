@@ -2,7 +2,6 @@ package com.aoo.admin.adapter.in.web.universe;
 
 import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseUseCase;
-import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

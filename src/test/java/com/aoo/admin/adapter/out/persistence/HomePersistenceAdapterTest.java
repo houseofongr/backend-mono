@@ -36,8 +36,8 @@ class HomePersistenceAdapterTest {
     void testSaveHome() throws Exception {
         // given
         Home home = Home.create(1L,
-                House.create(20L,"cozy house", "leaf", "this is cozy house",5000f,5000f,null,null,null),
-                User.load(10L, "남상엽","leaf","test@example.com",true,true,null,null,null));
+                House.create(20L, "cozy house", "leaf", "this is cozy house", 5000f, 5000f, null, null, null),
+                User.load(10L, "남상엽", "leaf", "test@example.com", true, true, null, null, null));
 
         // when
         Long result = sut.save(home);

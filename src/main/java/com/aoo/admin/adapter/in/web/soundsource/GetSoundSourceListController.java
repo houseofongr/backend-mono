@@ -16,7 +16,7 @@ public class GetSoundSourceListController {
     private final QuerySoundSourceListUseCase useCase;
 
     @GetMapping("/admin/sound-sources")
-    public ResponseEntity<QuerySoundSourceListResult> getSoundSourceList(Pageable pageable){
+    public ResponseEntity<QuerySoundSourceListResult> getSoundSourceList(Pageable pageable) {
         return ResponseEntity.ok(useCase.querySoundSourceList(new QuerySoundSourceListCommand(pageable)));
     }
 }

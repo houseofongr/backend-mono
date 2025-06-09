@@ -22,9 +22,10 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static com.aoo.admin.domain.universe.Category.LIFE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class UpdateUniverseServiceTest {
@@ -37,30 +38,47 @@ class UpdateUniverseServiceTest {
     DeleteFileUseCase deleteFileUseCase = mock();
     UpdateUniversePort updateUniversePort = mock();
 
-
     @BeforeEach
     void init() {
         sut = new UpdateUniverseService(findUniversePort, uploadPublicImageUseCase, uploadPublicAudioUseCase, deleteFileUseCase, updateUniversePort);
     }
 
     @Test
-    @DisplayName("정보 수정")
-    void testUpdateDetail() {
-        // given
-        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
-        Universe universe = MockEntityFactoryService.getUniverse();
+    @DisplayName("제목(100자/NB) 조건 확인")
+    void testTitleCondition() {
+        String emptyTitle = "";
+        String blankTitle = " ";
+        String length100 = "a".repeat(101);
 
-        // when
-        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
-        sut.updateDetail(universe.getId(), command);
+        assertThatThrownBy(() -> new UpdateUniverseCommand(emptyTitle, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(blankTitle, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(length100, null, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
 
-        // then
-        verify(updateUniversePort, times(1)).updateDetail(universe);
-        assertThat(universe.getBasicInfo().getTitle()).isEqualTo("오르트구름");
-        assertThat(universe.getBasicInfo().getDescription()).isEqualTo("오르트구름은 태양계 최외곽에 위치하고 있습니다.");
-        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.LIFE);
-        assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PRIVATE);
-        assertThat(universe.getSocialInfo().getHashtags()).contains("오르트구름", "태양계", "윤하", "별");
+    @Test
+    @DisplayName("내용(5000자) 조건 확인")
+    void testDescriptionCondition() {
+        String length5000 = "a".repeat(5001);
+
+        assertThatThrownBy(() -> new UpdateUniverseCommand("우주", length5000, null, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
+
+    @Test
+    @DisplayName("태그개수 확인하기(10개, 500자)")
+    void testTagCondition() {
+        List<String> tag11 = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
+        List<String> tagLength500 = List.of("a".repeat(501));
+
+        assertThatThrownBy(() -> new UpdateUniverseCommand(null, null, null, null, null, tag11)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateUniverseCommand(null, null, null, null, null, tagLength500)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
+
+    @Test
+    @DisplayName("정상 요청")
+    void happyCase() {
+        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
+
+        assertThat(command).isNotNull();
     }
 
     @Test
@@ -81,6 +99,27 @@ class UpdateUniverseServiceTest {
     }
 
     @Test
+    @DisplayName("정보 수정 서비스")
+    void testUpdateDetail() {
+        // given
+        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
+        Universe universe = MockEntityFactoryService.getUniverse();
+
+        // when
+        when(findUniversePort.load(universe.getId())).thenReturn(universe);
+        sut.updateDetail(universe.getId(), command);
+
+        // then
+        verify(updateUniversePort, times(1)).updateDetail(universe);
+        assertThat(universe.getBasicInfo().getTitle()).isEqualTo("오르트구름");
+        assertThat(universe.getBasicInfo().getDescription()).isEqualTo("오르트구름은 태양계 최외곽에 위치하고 있습니다.");
+        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.LIFE);
+        assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PRIVATE);
+        assertThat(universe.getSocialInfo().getHashtags()).contains("오르트구름", "태양계", "윤하", "별");
+
+    }
+
+    @Test
     @DisplayName("썸네일 수정 서비스")
     void updateDetailThumbnail() {
         // given
@@ -88,7 +127,7 @@ class UpdateUniverseServiceTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
+        when(findUniversePort.load(universe.getId())).thenReturn(universe);
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_thumb.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         sut.updateThumbnail(universe.getId(), thumbnail);
 
@@ -105,7 +144,7 @@ class UpdateUniverseServiceTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
+        when(findUniversePort.load(universe.getId())).thenReturn(universe);
         when(uploadPublicAudioUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         sut.updateThumbMusic(universe.getId(), thumbMusic);
 
@@ -122,7 +161,7 @@ class UpdateUniverseServiceTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        when(findUniversePort.load(universe.getId())).thenReturn(Optional.ofNullable(universe));
+        when(findUniversePort.load(universe.getId())).thenReturn(universe);
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "universe_inner_image.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         sut.updateInnerImage(universe.getId(), innerImage);
 

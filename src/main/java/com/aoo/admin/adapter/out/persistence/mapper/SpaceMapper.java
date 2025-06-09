@@ -1,5 +1,6 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
+import com.aoo.admin.application.port.in.space.CreateSpaceResult;
 import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import org.springframework.stereotype.Component;
@@ -20,24 +21,17 @@ public class SpaceMapper {
                 spaceJpaEntity.getEy());
     }
 
-    public Space mapToAncestorEntity(SpaceJpaEntity spaceJpaEntity) {
-        return null;
+    public CreateSpaceResult mapToCreateSpaceResult(SpaceJpaEntity spaceJpaEntity) {
+        return new CreateSpaceResult(
+                String.format("[#%d]번 스페이스가 생성되었습니다.", spaceJpaEntity.getId()),
+                spaceJpaEntity.getId(),
+                spaceJpaEntity.getInnerImageFileId(),
+                spaceJpaEntity.getTitle(),
+                spaceJpaEntity.getDescription(),
+                spaceJpaEntity.getSx(),
+                spaceJpaEntity.getSy(),
+                spaceJpaEntity.getEx(),
+                spaceJpaEntity.getEy()
+        );
     }
-//        if (spaceJpaEntity.getParent() == null) {
-//            return mapToSingleEntity(spaceJpaEntity);
-//        }
-//
-//        return Space.loadAncestor(spaceJpaEntity.getId(),
-//                spaceJpaEntity.getInnerImageFileId(),
-//                spaceJpaEntity.getUniverse().getId(),
-//                spaceJpaEntity.getTitle(),
-//                spaceJpaEntity.getDescription(),
-//                spaceJpaEntity.getCreatedTime(),
-//                spaceJpaEntity.getUpdatedTime(),
-//                spaceJpaEntity.getDx(),
-//                spaceJpaEntity.getDy(),
-//                spaceJpaEntity.getScaleX(),
-//                spaceJpaEntity.getScaleY(),
-//                mapToAncestorEntity(spaceJpaEntity.getParent()));
-//    }
 }

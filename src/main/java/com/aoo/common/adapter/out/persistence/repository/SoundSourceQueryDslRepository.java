@@ -9,7 +9,10 @@ import java.util.List;
 
 public interface SoundSourceQueryDslRepository {
     boolean existsByUserIdAndId(Long userId, Long soundSourceId);
+
     Page<SoundSourceJpaEntity> findAllWithRelatedEntity(QuerySoundSourceListCommand command);
+
     Page<SoundSourceJpaEntity> findAllActivatedByIdWithPathEntity(QuerySoundSourcesPathCommand command);
+
     List<SoundSourceJpaEntity> findAllByUserId(Long userId);
 }

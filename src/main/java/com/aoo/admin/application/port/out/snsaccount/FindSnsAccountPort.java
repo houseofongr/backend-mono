@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface FindSnsAccountPort {
     Optional<SnsAccount> loadSnsAccount(SnsDomain domain, String snsId);
+
     Optional<SnsAccount> loadSnsAccount(Long id);
 }

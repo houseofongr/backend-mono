@@ -27,13 +27,13 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
     @Override
     public boolean existsByUserIdAndId(Long userId, Long soundSourceId) {
         return query.selectOne()
-                .from(soundSourceJpaEntity)
-                .leftJoin(soundSourceJpaEntity.item, itemJpaEntity)
-                .leftJoin(itemJpaEntity.home, homeJpaEntity)
-                .leftJoin(homeJpaEntity.user, userJpaEntity)
-                .where(soundSourceJpaEntity.id.eq(soundSourceId)
-                        .and(userJpaEntity.id.eq(userId)))
-                .fetchFirst() != null;
+                       .from(soundSourceJpaEntity)
+                       .leftJoin(soundSourceJpaEntity.item, itemJpaEntity)
+                       .leftJoin(itemJpaEntity.home, homeJpaEntity)
+                       .leftJoin(homeJpaEntity.user, userJpaEntity)
+                       .where(soundSourceJpaEntity.id.eq(soundSourceId)
+                               .and(userJpaEntity.id.eq(userId)))
+                       .fetchFirst() != null;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
                 .from(soundSourceJpaEntity)
                 .fetchFirst();
 
-        return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);
+        return new PageImpl<>(entities, command.pageable(), count == null ? 0 : count);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SoundSourceQueryDslRepositoryImpl implements SoundSourceQueryDslRep
                 .limit(command.pageable().getPageSize())
                 .fetchFirst();
 
-        return new PageImpl<>(entities, command.pageable(), count == null? 0 : count);
+        return new PageImpl<>(entities, command.pageable(), count == null ? 0 : count);
     }
 
     @Override

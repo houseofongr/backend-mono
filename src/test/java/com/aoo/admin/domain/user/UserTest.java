@@ -1,7 +1,5 @@
 package com.aoo.admin.domain.user;
 
-import com.aoo.admin.domain.user.User;
-import com.aoo.admin.domain.user.UserInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

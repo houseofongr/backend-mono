@@ -2,7 +2,6 @@ package com.aoo.admin.adapter.in.web.space;
 
 import com.aoo.admin.application.port.in.space.UpdateSpaceResult;
 import com.aoo.admin.application.port.in.space.UpdateSpaceUseCase;
-import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

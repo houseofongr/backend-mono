@@ -19,7 +19,6 @@ public class FileErrorCodeControllerTest extends AbstractControllerTest {
     }
 
 
-
     @Test
     @DisplayName("에러코드 문서화")
     void testErrorCodeDocumentation() throws Exception {

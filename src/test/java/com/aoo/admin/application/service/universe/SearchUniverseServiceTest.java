@@ -2,13 +2,11 @@ package com.aoo.admin.application.service.universe;
 
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
-import com.aoo.admin.application.service.universe.SearchUniverseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

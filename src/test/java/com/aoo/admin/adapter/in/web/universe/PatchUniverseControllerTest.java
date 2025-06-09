@@ -7,9 +7,7 @@ import com.aoo.common.adapter.out.persistence.entity.UniverseHashtagJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.HashtagJpaRepository;
 import com.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
-import com.aoo.common.util.GsonUtil;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +91,7 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
                 ));
 
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(1L).orElseThrow();
-        UpdateUniverseCommand command = gson.fromJson(request,UpdateUniverseCommand.class);
+        UpdateUniverseCommand command = gson.fromJson(request, UpdateUniverseCommand.class);
         assertThat(universeJpaEntity.getTitle()).isEqualTo(command.title());
         assertThat(universeJpaEntity.getDescription()).isEqualTo(command.description());
         assertThat(universeJpaEntity.getCategory()).isEqualTo(command.category());

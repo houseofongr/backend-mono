@@ -18,7 +18,7 @@ values (1, 10, 20, "leaf의 cozy house", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 insert into ITEM_SHAPE(ID, X, Y, DTYPE)
 values (1, 100, 100, 'RECTANGLE'),
        (2, 200, 200, 'CIRCLE'),
-       (3,  500, 500, 'ELLIPSE');
+       (3, 500, 500, 'ELLIPSE');
 
 insert into ITEM_SHAPE_RECTANGLE(ID, WIDTH, HEIGHT, ROTATION)
 values (1, 10, 10, 5);
@@ -31,5 +31,5 @@ values (3, 15, 15, 90);
 
 insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, ITEM_SHAPE_ID)
 values (1, '설이', 1, 1, 1),
-       (2, '강아지',  1, 1, 2),
-       (3, '화분',  1, 1, 3);
+       (2, '강아지', 1, 1, 2),
+       (3, '화분', 1, 1, 3);

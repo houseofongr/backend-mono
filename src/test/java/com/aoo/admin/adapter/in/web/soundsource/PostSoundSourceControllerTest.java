@@ -25,7 +25,6 @@ class PostSoundSourceControllerTest extends AbstractControllerTest {
     SoundSourceJpaRepository soundSourceJpaRepository;
 
 
-
     @Test
     @Sql("PostSoundSourceControllerTest.sql")
     @DisplayName("음원 생성 API 테스트")

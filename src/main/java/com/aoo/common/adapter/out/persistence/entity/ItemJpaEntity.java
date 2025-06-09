@@ -60,37 +60,34 @@ public class ItemJpaEntity extends DateColumnBaseEntity {
     }
 
     public void update(Item item) {
-       this.name = item.getItemDetail().getName();
-       this.shape = getShapeEntity(item.getShape());
+        this.name = item.getItemDetail().getName();
+        this.shape = getShapeEntity(item.getShape());
     }
 
     private ItemShapeJpaEntity getShapeEntity(Shape shape) {
         return switch (shape) {
-           case Rectangle rectangle ->
-               this.shape = new ItemShapeRectangleJpaEntity(
-                       null,
-                       rectangle.getX(),
-                       rectangle.getY(),
-                       rectangle.getWidth(),
-                       rectangle.getHeight(),
-                       rectangle.getRotation()
-               );
-           case Circle circle ->
-               this.shape = new ItemShapeCircleJpaEntity(
-                       null,
-                       circle.getX(),
-                       circle.getY(),
-                       circle.getRadius()
-               );
-           case Ellipse ellipse ->
-               this.shape = new ItemShapeEllipseJpaEntity(
-                       null,
-                       ellipse.getX(),
-                       ellipse.getY(),
-                       ellipse.getRadiusX(),
-                       ellipse.getRadiusY(),
-                       ellipse.getRotation()
-               );
+            case Rectangle rectangle -> this.shape = new ItemShapeRectangleJpaEntity(
+                    null,
+                    rectangle.getX(),
+                    rectangle.getY(),
+                    rectangle.getWidth(),
+                    rectangle.getHeight(),
+                    rectangle.getRotation()
+            );
+            case Circle circle -> this.shape = new ItemShapeCircleJpaEntity(
+                    null,
+                    circle.getX(),
+                    circle.getY(),
+                    circle.getRadius()
+            );
+            case Ellipse ellipse -> this.shape = new ItemShapeEllipseJpaEntity(
+                    null,
+                    ellipse.getX(),
+                    ellipse.getY(),
+                    ellipse.getRadiusX(),
+                    ellipse.getRadiusY(),
+                    ellipse.getRotation()
+            );
             default -> throw new IllegalStateException("Unexpected value: " + shape);
         };
     }

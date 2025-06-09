@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AccessTokenControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @DisplayName("Access Token Snippet 생성 테스트")
     void testCreateAccessTokenSnippet() throws Exception {

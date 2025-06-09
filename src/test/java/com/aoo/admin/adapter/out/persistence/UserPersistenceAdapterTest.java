@@ -17,8 +17,6 @@ import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
@@ -186,18 +184,18 @@ class UserPersistenceAdapterTest {
 
         // then
         assertThat(userJpaRepository.findById(user.getUserId().getId())).isEmpty();
-        assertThat(entityManager.find(SnsAccountJpaEntity.class,1L)).isNull();
-        assertThat(entityManager.find(SoundSourceJpaEntity.class,1L)).isNull();
-        assertThat(entityManager.find(SoundSourceJpaEntity.class,2L)).isNull();
-        assertThat(entityManager.find(SoundSourceJpaEntity.class,3L)).isNull();
-        assertThat(entityManager.find(ItemJpaEntity.class,1L)).isNull();
-        assertThat(entityManager.find(ItemJpaEntity.class,2L)).isNull();
-        assertThat(entityManager.find(ItemJpaEntity.class,3L)).isNull();
-        assertThat(entityManager.find(ItemShapeRectangleJpaEntity.class,1L)).isNull();
-        assertThat(entityManager.find(ItemShapeCircleJpaEntity.class,2L)).isNull();
-        assertThat(entityManager.find(ItemShapeEllipseJpaEntity.class,3L)).isNull();
-        assertThat(entityManager.find(HomeJpaEntity.class,1L)).isNull();
-        assertThat(entityManager.find(HomeJpaEntity.class,2L)).isNull();
+        assertThat(entityManager.find(SnsAccountJpaEntity.class, 1L)).isNull();
+        assertThat(entityManager.find(SoundSourceJpaEntity.class, 1L)).isNull();
+        assertThat(entityManager.find(SoundSourceJpaEntity.class, 2L)).isNull();
+        assertThat(entityManager.find(SoundSourceJpaEntity.class, 3L)).isNull();
+        assertThat(entityManager.find(ItemJpaEntity.class, 1L)).isNull();
+        assertThat(entityManager.find(ItemJpaEntity.class, 2L)).isNull();
+        assertThat(entityManager.find(ItemJpaEntity.class, 3L)).isNull();
+        assertThat(entityManager.find(ItemShapeRectangleJpaEntity.class, 1L)).isNull();
+        assertThat(entityManager.find(ItemShapeCircleJpaEntity.class, 2L)).isNull();
+        assertThat(entityManager.find(ItemShapeEllipseJpaEntity.class, 3L)).isNull();
+        assertThat(entityManager.find(HomeJpaEntity.class, 1L)).isNull();
+        assertThat(entityManager.find(HomeJpaEntity.class, 2L)).isNull();
     }
 
 }

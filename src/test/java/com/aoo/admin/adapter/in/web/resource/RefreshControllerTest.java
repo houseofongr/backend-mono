@@ -1,6 +1,5 @@
 package com.aoo.admin.adapter.in.web.resource;
 
-import com.aoo.admin.adapter.in.web.resource.RefreshController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

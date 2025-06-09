@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class DeleteSoundSourceControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @Sql("DeleteSoundSourceControllerTest.sql")
     @DisplayName("음원 삭제 API")

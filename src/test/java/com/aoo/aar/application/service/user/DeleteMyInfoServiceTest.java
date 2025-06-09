@@ -1,7 +1,6 @@
 package com.aoo.aar.application.service.user;
 
 import com.aoo.aar.application.port.out.api.UnlinkKakaoLoginPort;
-import com.aoo.aar.application.service.user.DeleteMyInfoService;
 import com.aoo.admin.application.port.in.user.DeleteUserCommand;
 import com.aoo.admin.application.port.in.user.DeleteUserUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ class DeleteMyInfoServiceTest {
 
         // then
         verify(unlinkKakaoLoginPort, times(1)).unlink(userId);
-        verify(deleteUserUseCase, times(1)).deleteUser(userId,command);
+        verify(deleteUserUseCase, times(1)).deleteUser(userId, command);
     }
 
 }

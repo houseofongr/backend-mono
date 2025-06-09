@@ -66,10 +66,10 @@ class SoundSourceTest {
         soundSource.updateDetail(originalName, newDescription, originalActive);
         assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(newDescription);
 
-        soundSource.updateDetail(originalName,originalDesc,nullActive);
+        soundSource.updateDetail(originalName, originalDesc, nullActive);
         assertThat(soundSource.getActive().isActive()).isEqualTo(originalActive);
 
-        soundSource.updateDetail(newName,newDescription, active);
+        soundSource.updateDetail(newName, newDescription, active);
         assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo(newName);
         assertThat(soundSource.getSoundSourceDetail().getDescription()).isEqualTo(newDescription);
         assertThat(soundSource.getActive().isActive()).isFalse();

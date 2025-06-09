@@ -21,7 +21,7 @@ public class FileId {
         this.fileSystemName = fileSystemName;
     }
 
-    public static FileId create(String baseDir, Authority authority, FileType fileType, String realFileName, String fileSystemName)  {
+    public static FileId create(String baseDir, Authority authority, FileType fileType, String realFileName, String fileSystemName) {
         if (baseDir.charAt(baseDir.length() - 1) == '/')
             baseDir = baseDir.substring(0, baseDir.length() - 1);
 
@@ -32,7 +32,7 @@ public class FileId {
         return fileId;
     }
 
-    public static FileId load(String parentDir, String realFileName, String fileSystemName)  {
+    public static FileId load(String parentDir, String realFileName, String fileSystemName) {
         String[] dirs = parentDir.split("/");
 
         String fileTypeDir = dirs[dirs.length - 1];

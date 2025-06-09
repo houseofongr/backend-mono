@@ -14,7 +14,7 @@ public record QueryItemResult(
         return new QueryItemResult(
                 item.getItemDetail().getName(),
                 item.getSoundSources().stream().map(SoundSourceInfo::of).toList()
-                );
+        );
     }
 
     public record SoundSourceInfo(

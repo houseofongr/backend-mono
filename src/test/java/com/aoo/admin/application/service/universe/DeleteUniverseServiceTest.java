@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -39,7 +37,7 @@ class DeleteUniverseServiceTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        when(findUniversePort.load(id)).thenReturn(Optional.of(universe));
+        when(findUniversePort.load(id)).thenReturn(universe);
         MessageDto message = sut.delete(id);
 
         // then

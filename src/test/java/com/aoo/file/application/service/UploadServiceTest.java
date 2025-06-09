@@ -6,9 +6,6 @@ import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.out.database.SaveImageFilePort;
 import com.aoo.file.application.port.out.filesystem.RandomFileNamePort;
 import com.aoo.file.application.port.out.filesystem.WriteFilePort;
-import com.aoo.file.application.service.BasicFileIdCreateStrategy;
-import com.aoo.file.application.service.FileProperties;
-import com.aoo.file.application.service.UploadService;
 import com.aoo.file.domain.FileType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +39,8 @@ class UploadServiceTest {
     MockMultipartFile imageFile2;
     MockMultipartFile audioFile;
 
-    @TempDir Path tempDir;
+    @TempDir
+    Path tempDir;
 
     @BeforeEach
     void init() {

@@ -40,7 +40,7 @@ public class Universe extends UniverseTreeComponent {
     }
 
     public static Universe loadTreeComponent(Long id, Long innerImageFileId) {
-        return new Universe(id,new UniverseFileInfo(null, null, innerImageFileId),null,null,null,null);
+        return new Universe(id, new UniverseFileInfo(null, null, innerImageFileId), null, null, null, null);
     }
 
     public void updateBasicInfo(String title, String description, Long authorId, Category category, PublicStatus publicStatus) {

@@ -1,6 +1,5 @@
 package com.aoo.aar.adapter.in.web.authn.security;
 
-import com.aoo.aar.adapter.in.web.authn.security.OAuth2UserServiceDelegator;
 import com.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

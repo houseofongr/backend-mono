@@ -13,6 +13,6 @@ import java.lang.annotation.RetentionPolicy;
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public @interface DocumentationTest {
 }

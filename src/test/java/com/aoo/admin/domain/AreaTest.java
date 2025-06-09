@@ -1,6 +1,5 @@
 package com.aoo.admin.domain;
 
-import com.aoo.admin.domain.Area;
 import com.aoo.admin.domain.exception.AreaLimitExceededException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

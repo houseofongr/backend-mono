@@ -1,5 +1,6 @@
 package com.aoo.admin.adapter.out.persistence;
 
+import com.aoo.admin.adapter.out.persistence.mapper.CategoryMapper;
 import com.aoo.admin.application.port.in.category.CreateCategoryResult;
 import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
 import com.aoo.admin.application.port.in.category.SearchCategoryResult;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
 @Sql("CategoryPersistenceAdapterTest.sql")
-@Import(CategoryPersistenceAdapter.class)
+@Import({CategoryPersistenceAdapter.class, CategoryMapper.class})
 class CategoryPersistenceAdapterTest {
 
     @Autowired

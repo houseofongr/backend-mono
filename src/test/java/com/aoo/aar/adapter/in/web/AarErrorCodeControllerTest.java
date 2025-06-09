@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AarErrorCodeControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @DisplayName("에러코드 문서화")
     void testErrorCodeDocumentation() throws Exception {

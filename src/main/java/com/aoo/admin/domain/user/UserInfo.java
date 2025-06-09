@@ -47,8 +47,8 @@ public class UserInfo {
 
         else
             return name.charAt(0) +
-               "*".repeat(name.length() - 2) +
-               name.charAt(name.length() - 1);
+                   "*".repeat(name.length() - 2) +
+                   name.charAt(name.length() - 1);
     }
 
     public String getMaskedEmail() {

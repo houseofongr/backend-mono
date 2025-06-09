@@ -17,6 +17,7 @@ public record UpdateSpaceResult() {
         }
 
     }
+
     public record Position(
             String message,
             Float startX,

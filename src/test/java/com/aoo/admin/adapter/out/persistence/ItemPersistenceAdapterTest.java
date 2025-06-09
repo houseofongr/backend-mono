@@ -66,7 +66,7 @@ class ItemPersistenceAdapterTest {
         assertThat(item3.get().getItemDetail().getName()).isEqualTo("화분");
 
         assertThat(item1.get().getSoundSources()).anySatisfy(soundSource ->
-            assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo("골골송")
+                assertThat(soundSource.getSoundSourceDetail().getName()).isEqualTo("골골송")
         );
     }
 
@@ -87,9 +87,9 @@ class ItemPersistenceAdapterTest {
             assertThat(item.getItemDetail().getName()).isEqualTo("설이");
             assertThat(item.getShape().getX()).isEqualTo(100);
             assertThat(item.getShape().getY()).isEqualTo(100);
-            assertThat(((Rectangle)item.getShape()).getWidth()).isEqualTo(10);
-            assertThat(((Rectangle)item.getShape()).getHeight()).isEqualTo(10);
-            assertThat(((Rectangle)item.getShape()).getRotation()).isEqualTo(5);
+            assertThat(((Rectangle) item.getShape()).getWidth()).isEqualTo(10);
+            assertThat(((Rectangle) item.getShape()).getHeight()).isEqualTo(10);
+            assertThat(((Rectangle) item.getShape()).getRotation()).isEqualTo(5);
         });
     }
 
@@ -111,9 +111,9 @@ class ItemPersistenceAdapterTest {
             assertThat(item.getItemDetail().getName()).isEqualTo("설이");
             assertThat(item.getShape().getX()).isEqualTo(100);
             assertThat(item.getShape().getY()).isEqualTo(100);
-            assertThat(((Rectangle)item.getShape()).getWidth()).isEqualTo(10);
-            assertThat(((Rectangle)item.getShape()).getHeight()).isEqualTo(10);
-            assertThat(((Rectangle)item.getShape()).getRotation()).isEqualTo(5);
+            assertThat(((Rectangle) item.getShape()).getWidth()).isEqualTo(10);
+            assertThat(((Rectangle) item.getShape()).getHeight()).isEqualTo(10);
+            assertThat(((Rectangle) item.getShape()).getRotation()).isEqualTo(5);
         });
     }
 
@@ -134,7 +134,7 @@ class ItemPersistenceAdapterTest {
     void testUpdateItem() {
         // given
         Item item = Item.create(1L, 1L, 1L, 10L, "고양이",
-                new Ellipse(10f,10f,70.5f,50f,10f)
+                new Ellipse(10f, 10f, 70.5f, 50f, 10f)
         );
 
         // when

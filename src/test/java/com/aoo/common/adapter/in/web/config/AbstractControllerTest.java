@@ -42,7 +42,7 @@ public abstract class AbstractControllerTest {
 
     protected MockMvcTester mockMvcTester;
 
-    protected String getBaseUrl(){
+    protected String getBaseUrl() {
         return "api.archiveofongr.site";
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractControllerTest {
                         .withResponseDefaults(prettyPrint())
                 );
 
-        mockMvc = useSpringSecurity()? mockMvcBuilder.apply(springSecurity()).build() : mockMvcBuilder.build();
+        mockMvc = useSpringSecurity() ? mockMvcBuilder.apply(springSecurity()).build() : mockMvcBuilder.build();
 
         ReflectionTestUtils.setField(fileProperties, "baseDir", tempDir.toString());
 

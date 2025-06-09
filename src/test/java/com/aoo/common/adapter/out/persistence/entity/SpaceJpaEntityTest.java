@@ -30,9 +30,9 @@
 //        assertThat(newSpaceEntity.getScaleY()).isEqualTo(space.getPosInfo().getScaleY());
 //        assertThat(newSpaceEntity.getCreatedTime()).isNull();
 //        assertThat(newSpaceEntity.getUpdatedTime()).isNull();
-////        assertThat(newSpaceEntity.getUniverse()).isEqualTo(universeJpaEntity);
-////        assertThat(newSpaceEntity.getParent()).isNull();
-////        assertThat(newSpaceEntity.getChildren()).isEmpty();
+/// /        assertThat(newSpaceEntity.getUniverse()).isEqualTo(universeJpaEntity);
+/// /        assertThat(newSpaceEntity.getParent()).isNull();
+/// /        assertThat(newSpaceEntity.getChildren()).isEmpty();
 //    }
 //
 //    @Test

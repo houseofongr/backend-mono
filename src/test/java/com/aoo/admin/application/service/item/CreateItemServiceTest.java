@@ -1,8 +1,8 @@
 package com.aoo.admin.application.service.item;
 
 import com.aoo.admin.application.port.in.item.*;
-import com.aoo.admin.application.port.out.item.*;
 import com.aoo.admin.application.port.out.home.FindHomePort;
+import com.aoo.admin.application.port.out.item.*;
 import com.aoo.admin.application.port.out.room.FindRoomPort;
 import com.aoo.admin.application.port.out.user.FindUserPort;
 import com.aoo.admin.domain.item.ItemType;
@@ -92,7 +92,7 @@ class CreateItemServiceTest {
         when(findHomePort.exist(1L)).thenReturn(true);
         when(findRoomPort.exist(1L)).thenReturn(true);
         when(saveItemPort.save(any(), any(), any())).thenReturn(new ArrayList<>(Arrays.asList(4L, 5L, 6L)));
-        when(findItemPort.loadAllItemsInHomeAndRoom(1L,1L)).thenReturn(List.of(MockEntityFactoryService.getCircleItem(1L), MockEntityFactoryService.getRectangleItem(2L), MockEntityFactoryService.getEllipseItem(3L)));
+        when(findItemPort.loadAllItemsInHomeAndRoom(1L, 1L)).thenReturn(List.of(MockEntityFactoryService.getCircleItem(1L), MockEntityFactoryService.getRectangleItem(2L), MockEntityFactoryService.getEllipseItem(3L)));
         CreateAndUpdateItemResult result = sut.createAndUpdate(1L, 1L, 1L, command);
 
         // then

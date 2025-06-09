@@ -31,7 +31,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
     @Override
     public UpdateUniverseResult.Detail updateDetail(Long universeId, UpdateUniverseCommand command) {
 
-        Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        Universe targetUniverse = findUniversePort.load(universeId);
 
         targetUniverse.updateBasicInfo(command.title(), command.description(), command.authorId(), command.category(), command.publicStatus());
         targetUniverse.updateSocialInfo(command.hashtags());
@@ -45,7 +45,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         if (thumbMusic == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
         if (thumbMusic.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
-        Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        Universe targetUniverse = findUniversePort.load(universeId);
 
         Long beforeThumbMusicId = targetUniverse.getFileInfo().getThumbMusicId();
         UploadFileResult.FileInfo uploadedThumbMusic = uploadPublicAudioUseCase.publicUpload(thumbMusic);
@@ -64,7 +64,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         if (thumbnail == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
         if (thumbnail.getSize() > 2 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
-        Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        Universe targetUniverse = findUniversePort.load(universeId);
 
         Long beforeThumbnailId = targetUniverse.getFileInfo().getThumbnailId();
         UploadFileResult.FileInfo uploadedThumbnail = uploadPublicImageUseCase.publicUpload(thumbnail);
@@ -83,7 +83,7 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         if (innerImage == null) throw new AdminException(AdminErrorCode.UNIVERSE_FILE_REQUIRED);
         if (innerImage.getSize() > 100 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 
-        Universe targetUniverse = findUniversePort.load(universeId).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
+        Universe targetUniverse = findUniversePort.load(universeId);
 
         Long beforeInnerImageId = targetUniverse.getFileInfo().getInnerImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);

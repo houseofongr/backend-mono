@@ -1,6 +1,5 @@
 package com.aoo.admin.application.port.in.house;
 
-import com.aoo.admin.application.port.in.house.CreateHouseMetadata;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

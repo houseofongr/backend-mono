@@ -22,9 +22,6 @@ class DeleteRoomControllerTest extends AbstractControllerTest {
     FileJpaRepository fileJpaRepository;
 
 
-
-
-
     @Test
     @Sql("DeleteRoomControllerTest.sql")
     @DisplayName("룸 삭제 API")

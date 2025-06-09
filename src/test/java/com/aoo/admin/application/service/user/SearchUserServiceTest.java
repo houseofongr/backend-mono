@@ -2,7 +2,6 @@ package com.aoo.admin.application.service.user;
 
 import com.aoo.admin.application.port.in.user.SearchUserCommand;
 import com.aoo.admin.application.port.out.user.SearchUserPort;
-import com.aoo.admin.application.service.user.SearchUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

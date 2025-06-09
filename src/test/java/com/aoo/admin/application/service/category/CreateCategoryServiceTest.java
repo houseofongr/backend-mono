@@ -2,11 +2,10 @@ package com.aoo.admin.application.service.category;
 
 import com.aoo.admin.application.port.out.category.SaveCategoryPort;
 import com.aoo.admin.application.service.AdminErrorCode;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class CreateCategoryServiceTest {

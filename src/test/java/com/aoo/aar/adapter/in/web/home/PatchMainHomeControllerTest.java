@@ -39,8 +39,8 @@ class PatchMainHomeControllerTest extends AbstractControllerTest {
                         )
                 ));
 
-        Assertions.assertThat(homeJpaRepository.findByUserIdAndIsMain(10L,true).orElseThrow().getId()).isEqualTo(1L);
-        Assertions.assertThat(homeJpaRepository.findByUserIdAndIsMain(11L,true).orElseThrow().getId()).isEqualTo(7L);
+        Assertions.assertThat(homeJpaRepository.findByUserIdAndIsMain(10L, true).orElseThrow().getId()).isEqualTo(1L);
+        Assertions.assertThat(homeJpaRepository.findByUserIdAndIsMain(11L, true).orElseThrow().getId()).isEqualTo(7L);
     }
 
 }

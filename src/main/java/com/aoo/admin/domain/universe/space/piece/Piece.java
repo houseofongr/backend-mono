@@ -7,7 +7,6 @@ import com.aoo.admin.domain.universe.space.PosInfo;
 import com.aoo.admin.domain.universe.space.SpacePieceBasicInfo;
 import com.aoo.admin.domain.universe.space.TreeInfo;
 import lombok.Getter;
-import org.springframework.security.core.parameters.P;
 
 import java.time.ZonedDateTime;
 
@@ -37,7 +36,7 @@ public class Piece extends UniverseTreeComponent {
         );
     }
 
-    public static Piece loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId,  String title, String description, Float sx, Float sy, Float ex, Float ey, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Piece loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Piece(
                 id,
                 new BaseFileInfo(innerImageFileId),

@@ -84,7 +84,7 @@ class UploadService {
         Map<String, int[]> map = new HashMap<>();
 
         for (MultipartFile file : files) {
-            if (map.get(file.getOriginalFilename()) == null) map.put(file.getOriginalFilename(), new int[] {1, 1});
+            if (map.get(file.getOriginalFilename()) == null) map.put(file.getOriginalFilename(), new int[]{1, 1});
             else map.get(file.getOriginalFilename())[0]++;
         }
 

@@ -19,11 +19,13 @@ import com.aoo.common.adapter.out.persistence.repository.HashtagJpaRepository;
 import com.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import com.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.misc.Triple;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -51,30 +53,30 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
 
         universeJpaRepository.save(universeJpaEntity);
 
-        return CreateUniverseResult.of(universeJpaEntity);
+        return universeMapper.mapToCreateUniverseResult(universeJpaEntity);
     }
 
     @Override
-    public Optional<Universe> load(Long id) {
-        Optional<UniverseJpaEntity> universeJpaEntity = universeJpaRepository.findById(id);
-        return universeJpaEntity.map(universeMapper::mapToDomainEntity);
+    public Universe load(Long id) {
+        return universeMapper.mapToDomainEntity(universeJpaRepository.findById(id)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND)));
     }
 
     @Override
     public SearchUniverseResult search(SearchUniverseCommand command) {
-        Page<SearchUniverseResult.UniverseInfo> entityPage = universeJpaRepository.searchAll(command).map(SearchUniverseResult.UniverseInfo::of);
+        Page<SearchUniverseResult.UniverseListInfo> entityPage = universeJpaRepository.searchAll(command).map(universeMapper::mapToSearchUniverseListInfo);
         return new SearchUniverseResult(entityPage.getContent(), Pagination.of(entityPage));
     }
 
     @Override
     public SearchUniverseResult.UniverseDetailInfo find(Long id) {
-        return SearchUniverseResult.UniverseDetailInfo.of(universeJpaRepository.findById(id)
+        return universeMapper.mapToSearchUniverseDetailInfo(universeJpaRepository.findById(id)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND)));
     }
 
     @Override
-    public TraversalComponents findTreeComponents(Long universeId) {
-        TraversalJpaEntityComponents components = universeJpaRepository.findAllTreeComponentById(universeId);
+    public TraversalComponents findTreeComponents(Long id) {
+        TraversalJpaEntityComponents components = universeJpaRepository.findAllTreeComponentById(id);
         return universeMapper.mapToTraversalComponent(components.universeJpaEntity(), components.spaceJpaEntities(), components.elementJpaEntities());
     }
 

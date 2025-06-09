@@ -6,7 +6,6 @@ import com.aoo.admin.application.port.out.item.FindItemPort;
 import com.aoo.admin.application.port.out.item.MappingItemShapePort;
 import com.aoo.admin.application.port.out.item.UpdateItemPort;
 import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.application.service.item.UpdateItemService;
 import com.aoo.admin.domain.item.Item;
 import com.aoo.admin.domain.item.ItemType;
 import com.aoo.common.application.port.in.MessageDto;
@@ -41,7 +40,7 @@ class UpdateItemServiceTest {
         // given
         Long id = 1L;
         Long notExistId = 1234L;
-        UpdateItemCommand command = new UpdateItemCommand(new ItemData(null,"고양이", ItemType.RECTANGLE, null,
+        UpdateItemCommand command = new UpdateItemCommand(new ItemData(null, "고양이", ItemType.RECTANGLE, null,
                 new ItemData.RectangleData(300f, 300f, 20f, 20f, 10f), null));
 
         Item item = mock();

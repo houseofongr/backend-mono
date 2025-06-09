@@ -4,8 +4,8 @@ import com.aoo.admin.application.port.in.space.UpdateSpaceCommand;
 import com.aoo.admin.application.port.in.space.UpdateSpaceResult;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.space.UpdateSpacePort;
+import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.common.application.port.in.MessageDto;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
@@ -17,8 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -38,14 +36,43 @@ class UpdateSpaceServiceTest {
     }
 
     @Test
+    @DisplayName("제목(100자/NB) 조건 확인")
+    void testTitleCondition() {
+        String over100 = "a".repeat(101);
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail("", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail(" ", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail(over100, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
+
+    @Test
+    @DisplayName("내용(5000자) 조건 확인")
+    void testDescriptionCondition() {
+        String over5000 = "a".repeat(5001);
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail("블랙홀", over5000)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
+
+    @Test
+    @DisplayName("위치정보(0 ≤ posInfo ≤ 1) 조건 확인")
+    void testPosCondition() {
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(-1F, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(1.1F, null, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(null, -1F, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(null, 1.1F, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(null, null, -1F, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(null, null, 1.1F, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(null, null, null, -1F)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Position(null, null, null, 1.1F)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
+
+    @Test
     @DisplayName("스페이스 기본정보 수정 서비스")
     void testUpdateDetailSpaceService() {
         // given
-        UpdateSpaceCommand.Detail command = new UpdateSpaceCommand.Detail( "블랙홀", "블랙홀은 빛도 빨아들입니다.");
+        UpdateSpaceCommand.Detail command = new UpdateSpaceCommand.Detail("블랙홀", "블랙홀은 빛도 빨아들입니다.");
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
-        when(findSpacePort.loadSingle(1L)).thenReturn(Optional.ofNullable(space));
+        when(findSpacePort.find(1L)).thenReturn(space);
         UpdateSpaceResult.Detail result = sut.updateDetail(1L, command);
 
         // then
@@ -59,11 +86,11 @@ class UpdateSpaceServiceTest {
     @DisplayName("스페이스 좌표 수정 서비스")
     void testUpdatePositionSpaceService() {
         // given
-        UpdateSpaceCommand.Position command = new UpdateSpaceCommand.Position( 0.3f, 0.4f, 0.5f, 0.6f);
+        UpdateSpaceCommand.Position command = new UpdateSpaceCommand.Position(0.3f, 0.4f, 0.5f, 0.6f);
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
-        when(findSpacePort.loadSingle(1L)).thenReturn(Optional.ofNullable(space));
+        when(findSpacePort.find(1L)).thenReturn(space);
         UpdateSpaceResult.Position result = sut.updatePosition(1L, command);
 
         // then
@@ -84,7 +111,7 @@ class UpdateSpaceServiceTest {
         Long beforeSpaceInnerImageId = space.getFileInfo().getInnerImageId();
 
         // when
-        when(findSpacePort.loadSingle(space.getId())).thenReturn(Optional.ofNullable(space));
+        when(findSpacePort.find(space.getId())).thenReturn(space);
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(12L, null, "space_inner_image.png", "test1235.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
 
         UpdateSpaceResult.InnerImage result = sut.updateInnerImage(space.getId(), innerImage);

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ItemQueryDslRepository {
     boolean existsByUserIdAndItemId(Long userId, Long itemId);
+
     List<ItemJpaEntity> findAllByUserId(Long userId);
 }

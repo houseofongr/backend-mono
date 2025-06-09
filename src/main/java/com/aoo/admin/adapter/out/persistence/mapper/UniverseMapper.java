@@ -1,5 +1,7 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
+import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
+import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.space.Space;
@@ -13,7 +15,28 @@ import java.util.List;
 
 @Component
 public class UniverseMapper {
-    public Universe mapToDomainEntity(UniverseJpaEntity universeJpaEntity){
+
+    public CreateUniverseResult mapToCreateUniverseResult(UniverseJpaEntity universeJpaEntity) {
+        return new CreateUniverseResult(
+                String.format("[#%d]번 유니버스가 생성되었습니다.", universeJpaEntity.getId()),
+                universeJpaEntity.getId(),
+                universeJpaEntity.getThumbMusicFileId(),
+                universeJpaEntity.getThumbnailFileId(),
+                universeJpaEntity.getInnerImageFileId(),
+                universeJpaEntity.getAuthor().getId(),
+                universeJpaEntity.getCreatedTime().toEpochSecond(),
+                universeJpaEntity.getTitle(),
+                universeJpaEntity.getDescription(),
+                universeJpaEntity.getAuthor().getNickname(),
+                universeJpaEntity.getCategory().name(),
+                universeJpaEntity.getPublicStatus().name(),
+                universeJpaEntity.getUniverseHashtags().stream()
+                        .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
+                        .toList()
+        );
+    }
+
+    public Universe mapToDomainEntity(UniverseJpaEntity universeJpaEntity) {
         return Universe.load(universeJpaEntity.getId(),
                 universeJpaEntity.getThumbMusicFileId(),
                 universeJpaEntity.getThumbnailFileId(),
@@ -68,5 +91,49 @@ public class UniverseMapper {
         )).toList();
 
         return new TraversalComponents(universe, spaces, pieces);
+    }
+
+
+    public SearchUniverseResult.UniverseListInfo mapToSearchUniverseListInfo(UniverseJpaEntity universeJpaEntity) {
+        return new SearchUniverseResult.UniverseListInfo(
+                universeJpaEntity.getId(),
+                universeJpaEntity.getThumbnailFileId(),
+                universeJpaEntity.getThumbMusicFileId(),
+                universeJpaEntity.getAuthor().getId(),
+                universeJpaEntity.getCreatedTime().toEpochSecond(),
+                universeJpaEntity.getUpdatedTime().toEpochSecond(),
+                universeJpaEntity.getViewCount(),
+                universeJpaEntity.getUniverseLikes().size(),
+                universeJpaEntity.getTitle(),
+                universeJpaEntity.getDescription(),
+                universeJpaEntity.getAuthor().getNickname(),
+                universeJpaEntity.getCategory().name(),
+                universeJpaEntity.getPublicStatus().name(),
+                universeJpaEntity.getUniverseHashtags().stream()
+                        .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
+                        .toList()
+        );
+    }
+
+    public SearchUniverseResult.UniverseDetailInfo mapToSearchUniverseDetailInfo(UniverseJpaEntity universeJpaEntity) {
+        return new SearchUniverseResult.UniverseDetailInfo(
+                universeJpaEntity.getId(),
+                universeJpaEntity.getThumbMusicFileId(),
+                universeJpaEntity.getThumbnailFileId(),
+                universeJpaEntity.getInnerImageFileId(),
+                universeJpaEntity.getAuthor().getId(),
+                universeJpaEntity.getCreatedTime().toEpochSecond(),
+                universeJpaEntity.getUpdatedTime().toEpochSecond(),
+                universeJpaEntity.getViewCount(),
+                universeJpaEntity.getUniverseLikes().size(),
+                universeJpaEntity.getTitle(),
+                universeJpaEntity.getDescription(),
+                universeJpaEntity.getAuthor().getNickname(),
+                universeJpaEntity.getCategory().name(),
+                universeJpaEntity.getPublicStatus().name(),
+                universeJpaEntity.getUniverseHashtags().stream()
+                        .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
+                        .toList()
+        );
     }
 }

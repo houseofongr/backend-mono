@@ -43,8 +43,8 @@ public class SoundSource {
 
     public void updateDetail(String name, String description, Boolean isActive) {
 
-        String newName = name != null && !name.isBlank()? name : this.soundSourceDetail.getName();
-        String newDescription = description != null && !description.isBlank()? description : this.soundSourceDetail.getDescription();
+        String newName = name != null && !name.isBlank() ? name : this.soundSourceDetail.getName();
+        String newDescription = description != null && !description.isBlank() ? description : this.soundSourceDetail.getDescription();
 
         this.soundSourceDetail = new SoundSourceDetail(newName, newDescription);
 

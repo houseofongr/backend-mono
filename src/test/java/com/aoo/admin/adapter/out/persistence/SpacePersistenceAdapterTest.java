@@ -8,20 +8,20 @@ import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.SpaceJpaRepository;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 @PersistenceAdapterTest
+@Sql("SpacePersistenceAdapterTest.sql")
 @Import({SpacePersistenceAdapter.class, SpaceMapper.class})
 class SpacePersistenceAdapterTest {
 
@@ -35,7 +35,6 @@ class SpacePersistenceAdapterTest {
     EntityManager em;
 
     @Test
-    @Sql("SpacePersistenceAdapterTest2.sql")
     @DisplayName("스페이스 저장하기")
     void testSaveSpace() {
         // given
@@ -56,27 +55,56 @@ class SpacePersistenceAdapterTest {
         assertThat(spaceJpaEntity.getDescription()).isEqualTo(space.getBasicInfo().getDescription());
     }
 
-//    @Test
-//    @Sql("SpacePersistenceAdapterTest.sql")
-//    @DisplayName("정상 수정로직(Happy case) + 수정 완료 시 수정일자(UpdatedTime) 변경")
-//    void testUpdateSpace() {
-//        // given
-//        Space space = Space.loadSingle(1L, 2L, 1L, "블랙홀", "블랙홀은 빛도 빨아들입니다.", null, null, 0.1f, 0.2f, 0.3f, 0.4f, 1);
-//
-//        // when
-//        sut.update(space);
-//        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(1L).orElseThrow();
-//        em.flush();
-//        em.clear();
-//
-//        // then
-//        assertThat(spaceJpaEntity.getInnerImageFileId()).isEqualTo(space.getInnerImageId());
-//        assertThat(spaceJpaEntity.getTitle()).isEqualTo(space.getBasicInfo().getTitle());
-//        assertThat(spaceJpaEntity.getDescription()).isEqualTo(space.getBasicInfo().getDescription());
-//        assertThat(spaceJpaEntity.getDx()).isEqualTo(space.getPosInfo().getDx());
-//        assertThat(spaceJpaEntity.getDy()).isEqualTo(space.getPosInfo().getDy());
-//        assertThat(spaceJpaEntity.getScaleX()).isEqualTo(space.getPosInfo().getScaleX());
-//        assertThat(spaceJpaEntity.getScaleY()).isEqualTo(space.getPosInfo().getScaleY());
-//        assertThat(spaceJpaEntity.getUpdatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(1L, ChronoUnit.SECONDS));
-//    }
+    @Test
+    @DisplayName("스페이스 조회 테스트")
+    void testFindPiece() {
+        // given
+        Long pieceId = 1L;
+
+        // when
+        Space space = sut.find(pieceId);
+
+        // then
+        assertThat(space.getId()).isEqualTo(pieceId);
+        assertThat(space.getFileInfo().getInnerImageId()).isEqualTo(1L);
+        assertThat(space.getBasicInfo().getParentSpaceId()).isNull();
+        assertThat(space.getBasicInfo().getUniverseId()).isNull();
+        assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
+        assertThat(space.getBasicInfo().getDescription()).isEqualTo("스페이스는 공간입니다.");
+        assertThat(space.getPosInfo().getSx()).isEqualTo(0.3f);
+        assertThat(space.getPosInfo().getSy()).isEqualTo(0.2f);
+        assertThat(space.getPosInfo().getEx()).isEqualTo(0.2f);
+        assertThat(space.getPosInfo().getEy()).isEqualTo(0.3f);
+        assertThat(space.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+        assertThat(space.getDateInfo().getUpdatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+    }
+
+    @Test
+    @DisplayName("스페이스 수정 테스트")
+    void testUpdatePiece() {
+        // given
+        Space space = Space.create(1L, 1L, 1L, -1L, "평화", "피스는 평화입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
+
+        // when
+        sut.update(space);
+
+        em.flush();
+        em.clear();
+
+        Space spaceInDB = sut.find(space.getId());
+
+        // then
+        assertThat(spaceInDB.getId()).isEqualTo(space.getId());
+        assertThat(spaceInDB.getFileInfo().getInnerImageId()).isEqualTo(1L);
+        assertThat(spaceInDB.getBasicInfo().getParentSpaceId()).isNull();
+        assertThat(spaceInDB.getBasicInfo().getUniverseId()).isNull();
+        assertThat(spaceInDB.getBasicInfo().getTitle()).isEqualTo("평화");
+        assertThat(spaceInDB.getBasicInfo().getDescription()).isEqualTo("피스는 평화입니다.");
+        assertThat(spaceInDB.getPosInfo().getSx()).isEqualTo(0.1f);
+        assertThat(spaceInDB.getPosInfo().getSy()).isEqualTo(0.2f);
+        assertThat(spaceInDB.getPosInfo().getEx()).isEqualTo(0.3f);
+        assertThat(spaceInDB.getPosInfo().getEy()).isEqualTo(0.4f);
+        assertThat(spaceInDB.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+        assertThat(spaceInDB.getDateInfo().getUpdatedTime()).isAfter(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+    }
 }

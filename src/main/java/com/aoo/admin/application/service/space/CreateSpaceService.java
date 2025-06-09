@@ -6,17 +6,12 @@ import com.aoo.admin.application.port.in.space.CreateSpaceUseCase;
 import com.aoo.admin.application.port.out.space.CreateSpacePort;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.space.SaveSpacePort;
-import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.common.application.port.in.MessageDto;
 import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.in.UploadPublicImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional

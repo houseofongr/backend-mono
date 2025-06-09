@@ -224,8 +224,8 @@ class HomePersistenceAdapterTest {
     @DisplayName("전체음원 경로 조회 테스트")
     void testQuerySoundSourcesPath() {
         // given
-        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(0,3));
-        QuerySoundSourcesPathCommand fourSourceCommand = new QuerySoundSourcesPathCommand(10L, PageRequest.of(0,4));
+        QuerySoundSourcesPathCommand command = new QuerySoundSourcesPathCommand(10L, PageRequest.of(0, 3));
+        QuerySoundSourcesPathCommand fourSourceCommand = new QuerySoundSourcesPathCommand(10L, PageRequest.of(0, 4));
 
         // when
         QuerySoundSourcesPathResult result = sut.querySoundSourcesPath(command);

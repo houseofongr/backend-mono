@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PatchSoundSourceControllerTest extends AbstractControllerTest {
 
 
-
     @Test
     @Sql("PatchSoundSourceControllerTest.sql")
     @DisplayName("음원 수정 API")

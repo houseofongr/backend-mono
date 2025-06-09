@@ -1,6 +1,5 @@
 package com.aoo.admin.domain.universe;
 
-import com.aoo.admin.domain.universe.Category;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

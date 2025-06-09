@@ -8,7 +8,7 @@ values ('temp house', 'tester', 'temp house', 3, 4, 5000, 5000, CURRENT_TIMESTAM
        ('temp houseInfo', 'tester', 'temp houseInfo', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('temp houseInfo', 'tester', 'temp houseInfo', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('temp houseInfo', 'tester', 'temp houseInfo', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ( 'temp houseInfo', 'tester', 'temp houseInfo', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('temp houseInfo', 'tester', 'temp houseInfo', 3, 4, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('cozy houseInfo', 'leaf', 'my cozy houseInfo', 1, 2, 5000, 5000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 insert into ROOM(ID, NAME, X, Y, Z, WIDTH, HEIGHT, IMAGE_FILE_ID, HOUSE_ID)
@@ -29,7 +29,7 @@ values (1, 10, 1, "leaf의 cozy houseInfo", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 insert into ITEM_SHAPE(ID, X, Y, DTYPE)
 values (1, 100, 100, 'RECTANGLE'),
        (2, 200, 200, 'CIRCLE'),
-       (3,  500, 500, 'ELLIPSE');
+       (3, 500, 500, 'ELLIPSE');
 
 insert into ITEM_SHAPE_RECTANGLE(ID, WIDTH, HEIGHT, ROTATION)
 values (1, 10, 10, 5);
@@ -42,8 +42,8 @@ values (3, 15, 15, 90);
 
 insert into ITEM(ID, NAME, HOME_ID, ROOM_ID, ITEM_SHAPE_ID)
 values (1, '설이', 1, 1, 1),
-       (2, '강아지',  1, 1, 2),
-       (3, '화분',  1, 1, 3);
+       (2, '강아지', 1, 1, 2),
+       (3, '화분', 1, 1, 3);
 
 insert into SOUND_SOURCE(ID, NAME, DESCRIPTION, AUDIO_FILE_ID, IS_ACTIVE, CREATED_TIME, UPDATED_TIME, ITEM_ID)
 values (1, "골골송", "2025년 골골송 V1", 1, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
