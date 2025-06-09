@@ -61,7 +61,7 @@ class TraversalUniverseServiceTest {
                     assertThat(spaceTreeInfo.spaces()).hasSize(1)
                             .anySatisfy(spaceTreeInfo1 -> {
                                 assertThat(spaceTreeInfo1.spaceId()).isEqualTo(3L);
-                                assertThat(spaceTreeInfo1.pieces().getFirst().elementId()).isEqualTo(3L);
+                                assertThat(spaceTreeInfo1.pieces().getFirst().pieceId()).isEqualTo(3L);
                             });
                     assertThat(spaceTreeInfo.pieces()).hasSize(1);
                 })

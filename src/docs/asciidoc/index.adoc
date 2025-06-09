@@ -662,6 +662,18 @@ operation::admin-space-patch-position[snippets='http-request,path-parameters,req
 
 operation::admin-space-post-update-inner-image[snippets='http-request,path-parameters,request-parts,http-response,response-fields']
 
+[[admin-piece-api]]
+=== 피스(Piece) API
+
+[[admin-piece-post-api]]
+==== 피스 좌표방식 생성 API
+
+관리자가 좌표방식으로 피스를 생성합니다.
+
+> 해당 API로 생성된 피스는 내부이미지 ID가 -1입니다.
+
+operation::admin-piece-post[snippets='http-request,request-fields,http-response,response-fields']
+
 [[file-api]]
 == 파일(File) API
 

@@ -52,6 +52,6 @@ class CreateSpaceServiceTest {
         sut.create(command);
 
         // then
-        verify(saveSpacePort, times(1)).save(any(), any());
+        verify(saveSpacePort, times(1)).save(any());
     }
 }

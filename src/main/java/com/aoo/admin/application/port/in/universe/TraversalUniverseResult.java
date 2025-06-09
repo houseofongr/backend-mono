@@ -80,7 +80,7 @@ public record TraversalUniverseResult(
     }
 
     public record PieceTreeInfo(
-            Long elementId,
+            Long pieceId,
             Long parentSpaceId,
             Long innerImageId,
             Integer depth,

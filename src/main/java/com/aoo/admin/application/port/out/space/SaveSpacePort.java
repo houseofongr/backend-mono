@@ -4,5 +4,5 @@ import com.aoo.admin.application.port.in.space.CreateSpaceResult;
 import com.aoo.admin.domain.universe.space.Space;
 
 public interface SaveSpacePort {
-    CreateSpaceResult save(Long universeId, Space space);
+    CreateSpaceResult save(Space space);
 }

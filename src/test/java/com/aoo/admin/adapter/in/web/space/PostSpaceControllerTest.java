@@ -43,7 +43,7 @@ class PostSpaceControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("스페이스 생성 API")
     @Sql("PostSpaceControllerTest.sql")
-    void testCreateUniverse() throws Exception {
+    void testCreateSpace() throws Exception {
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
@@ -67,10 +67,10 @@ class PostSpaceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("innerImageId").description("생성된 스페이스의 내부 이미지입니다."),
                                 fieldWithPath("title").description("생성된 스페이스의 제목입니다."),
                                 fieldWithPath("description").description("생성된 스페이스의 상세정보입니다."),
-                                fieldWithPath("startX").description("생성된 스페이스의 상대좌표(x)입니다."),
-                                fieldWithPath("startY").description("생성된 스페이스의 상대좌표(y)입니다."),
-                                fieldWithPath("endX").description("생성된 스페이스의 사이즈(x)입니다."),
-                                fieldWithPath("endY").description("생성된 스페이스의 사이즈(y)입니다.")
+                                fieldWithPath("startX").description("생성된 스페이스의 시작좌표(x)입니다."),
+                                fieldWithPath("startY").description("생성된 스페이스의 시작좌표(y)입니다."),
+                                fieldWithPath("endX").description("생성된 스페이스의 종료좌표(x)입니다."),
+                                fieldWithPath("endY").description("생성된 스페이스의 종료좌표(y)입니다.")
                         )
                 ));
 

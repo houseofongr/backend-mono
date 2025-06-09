@@ -1,5 +1,6 @@
 package com.aoo.common.application.service;
 
+import com.aoo.admin.application.port.in.piece.CreatePieceCommand;
 import com.aoo.admin.application.port.in.space.CreateSpaceCommand;
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.aoo.admin.application.port.in.user.CreateDeletedUserPort;
@@ -7,6 +8,7 @@ import com.aoo.admin.application.port.out.home.CreateHomePort;
 import com.aoo.admin.application.port.out.house.CreateHousePort;
 import com.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.aoo.admin.application.port.out.item.CreateItemPort;
+import com.aoo.admin.application.port.out.piece.CreatePiecePort;
 import com.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
 import com.aoo.admin.application.port.out.soundsource.CreateSoundSourcePort;
 import com.aoo.admin.application.port.out.space.CreateSpacePort;
@@ -20,6 +22,7 @@ import com.aoo.admin.domain.item.Shape;
 import com.aoo.admin.domain.item.soundsource.SoundSource;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.space.Space;
+import com.aoo.admin.domain.universe.space.element.Piece;
 import com.aoo.admin.domain.user.DeletedUser;
 import com.aoo.admin.domain.user.User;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;
@@ -32,7 +35,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort, CreateSpacePort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort, CreateSpacePort, CreatePiecePort {
 
     private final IssueIdPort issueIdPort;
 
@@ -105,6 +108,23 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
 
         return Space.create(newId,
                 innerImageFileId,
+                command.universeId(),
+                command.parentSpaceId(),
+                command.title(),
+                command.description(),
+                command.startX(),
+                command.startY(),
+                command.endX(),
+                command.endY()
+        );
+    }
+
+    @Override
+    public Piece createPieceWithoutImageFile(CreatePieceCommand command) {
+        Long newId = issueIdPort.issuePieceId();
+
+        return Piece.create(newId,
+                -1L,
                 command.universeId(),
                 command.parentSpaceId(),
                 command.title(),

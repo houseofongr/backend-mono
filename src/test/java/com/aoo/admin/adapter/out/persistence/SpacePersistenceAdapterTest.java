@@ -42,7 +42,7 @@ class SpacePersistenceAdapterTest {
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
-        CreateSpaceResult result = sut.save(1L, space);
+        CreateSpaceResult result = sut.save(space);
         SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(result.spaceId()).orElseThrow();
 
         // then

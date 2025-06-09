@@ -17,4 +17,5 @@ truncate table UNIVERSE_LIKE;
 truncate table HASHTAG;
 truncate table SPACE;
 truncate table CATEGORY;
+truncate table PIECE;
 set foreign_key_checks = 1;

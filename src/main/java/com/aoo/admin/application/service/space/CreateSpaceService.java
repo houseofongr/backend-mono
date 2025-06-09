@@ -33,6 +33,6 @@ public class CreateSpaceService implements CreateSpaceUseCase {
         UploadFileResult.FileInfo uploadFileResult = uploadPublicImageUseCase.publicUpload(command.imageFile());
         Space space = createSpacePort.createSpace(command, uploadFileResult.id());
 
-        return saveSpacePort.save(command.universeId(), space);
+        return saveSpacePort.save(space);
     }
 }

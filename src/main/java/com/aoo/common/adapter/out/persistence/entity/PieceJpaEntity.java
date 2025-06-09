@@ -1,10 +1,12 @@
 package com.aoo.common.adapter.out.persistence.entity;
 
+import com.aoo.admin.domain.universe.space.element.Piece;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,4 +50,19 @@ public class PieceJpaEntity extends DateColumnBaseEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "piece")
     private List<SoundJpaEntity> sounds;
 
+    public static PieceJpaEntity create(Piece piece) {
+        return new PieceJpaEntity(
+                null,
+                piece.getBasicInfo().getTitle(),
+                piece.getBasicInfo().getDescription(),
+                piece.getPosInfo().getSx(),
+                piece.getPosInfo().getSy(),
+                piece.getPosInfo().getEx(),
+                piece.getPosInfo().getEy(),
+                piece.getFileInfo().getInnerImageId(),
+                piece.getBasicInfo().getUniverseId(),
+                piece.getBasicInfo().getParentSpaceId(),
+                new ArrayList<>()
+        );
+    }
 }

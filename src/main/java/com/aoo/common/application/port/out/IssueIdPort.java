@@ -20,4 +20,6 @@ public interface IssueIdPort {
     Long issueUniverseId();
 
     Long issueSpaceId();
+
+    Long issuePieceId();
 }

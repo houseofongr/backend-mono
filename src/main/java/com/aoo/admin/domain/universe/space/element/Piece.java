@@ -25,24 +25,24 @@ public class Piece extends UniverseTreeComponent {
         this.posInfo = posInfo;
     }
 
-    public static Piece create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float dx, Float dy, Float scaleX, Float scaleY) {
+    public static Piece create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey) {
         return new Piece(
                 id,
                 new BaseFileInfo(innerImageId),
                 new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 null,
-                new PosInfo(dx, dy, scaleX, scaleY),
+                new PosInfo(sx, sy, ex, ey),
                 null
         );
     }
 
-    public static Piece loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId,  String title, String description, Float dx, Float dy, Float scaleX, Float scaleY, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Piece loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId,  String title, String description, Float sx, Float sy, Float ex, Float ey, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Piece(
                 id,
                 new BaseFileInfo(innerImageFileId),
                 new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
-                new PosInfo(dx, dy, scaleX, scaleY),
+                new PosInfo(sx, sy, ex, ey),
                 null
         );
     }
