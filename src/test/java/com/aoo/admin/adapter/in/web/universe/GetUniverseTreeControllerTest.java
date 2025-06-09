@@ -33,7 +33,7 @@ class GetUniverseTreeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("pieces").description("유니버스 내부의 피스입니다."),
 
                                 fieldWithPath("spaces[].spaceId").description("스페이스의 식별자입니다."),
-                                fieldWithPath("spaces[].parentSpaceId").description("스페이스의 부모 스페이스 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
+                                fieldWithPath("spaces[].parentSpaceId").description("스페이스의 부모 스페이스 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, null"),
                                 fieldWithPath("spaces[].innerImageId").description("스페이스의 내부 이미지파일 식별자입니다."),
                                 fieldWithPath("spaces[].depth").description("스페이스의 깊이입니다."),
                                 fieldWithPath("spaces[].title").description("스페이스의 제목입니다."),
@@ -48,7 +48,7 @@ class GetUniverseTreeControllerTest extends AbstractControllerTest {
                                 subsectionWithPath("spaces[].spaces").description("스페이스 내부의 스페이스입니다.(무한 depth)"),
 
                                 fieldWithPath("pieces[].elementId").description("피스의 식별자입니다."),
-                                fieldWithPath("pieces[].parentSpaceId").description("피스의 부모 스페이스 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
+                                fieldWithPath("pieces[].parentSpaceId").description("피스의 부모 스페이스 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, null"),
                                 fieldWithPath("pieces[].innerImageId").description("피스의 내부 이미지파일 식별자입니다."),
                                 fieldWithPath("pieces[].depth").description("피스의 깊이입니다."),
                                 fieldWithPath("pieces[].title").description("피스의 제목입니다."),
