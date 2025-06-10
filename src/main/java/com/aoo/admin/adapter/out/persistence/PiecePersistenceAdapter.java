@@ -43,6 +43,11 @@ public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, Up
     }
 
     @Override
+    public void delete(Long id) {
+        pieceJpaRepository.deleteById(id);
+    }
+
+    @Override
     public void deleteAll(List<Long> ids) {
         pieceJpaRepository.deleteAllById(ids);
     }

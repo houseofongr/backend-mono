@@ -698,6 +698,15 @@ operation::admin-piece-patch[snippets='http-request,path-parameters,request-fiel
 
 operation::admin-piece-patch-position[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[admin-piece-delete-api]]
+==== 특정 피스 삭제 API
+
+관리자가 특정 피스를 삭제합니다.
+
+> 피스 내부의 모든 연관된 정보(오디오 파일, 이미지 파일)를 함께 삭제합니다.
+
+operation::admin-piece-delete[snippets='path-parameters,http-request,http-response,response-fields']
+
 +
 [[file-api]]
 == 파일(File) API
