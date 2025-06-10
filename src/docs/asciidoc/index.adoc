@@ -577,7 +577,7 @@ operation::admin-universe-get[snippets='path-parameters,http-request,http-respon
 
 - 유니버스는 다음과 같이 트리 형태로 구성됩니다.
 
-//https://excalidraw.com/#json=P55r2Q4CfVnfIPYyGzNjb,PeJW81rbGhAdPxCoRl5xuA
+//https://excalidraw.com/#json=dPkJjvjSPaz6_JObrgARE,a49N4D52vI_c3E67OPtdoQ
 image::universe-tree.png[universe tree]
 
 - 위 트리구조를 집합으로 표현하면 다음과 같습니다.
@@ -623,11 +623,11 @@ operation::admin-universe-post-update-thumb-music[snippets='path-parameters,http
 operation::admin-universe-post-update-inner-image[snippets='path-parameters,http-request,request-parts,http-response,response-fields']
 
 [[admin-universe-delete-api]]
-==== 유니버스 삭제 API
+==== 특정 유니버스 삭제 API
 
-관리자가 유니버스를 삭제합니다.
+관리자가 특정 유니버스를 삭제합니다.
 
-> 유니버스 내부의 모든 연관된 정보(좋아요, 해시태그, 썸네일, 썸뮤직)을 함께 삭제합니다.
+> 유니버스 내부의 모든 연관된 정보(좋아요, 해시태그, 썸네일, 썸뮤직, 스페이스, 피스)를 함께 삭제합니다.
 
 operation::admin-universe-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
@@ -661,6 +661,16 @@ operation::admin-space-patch-position[snippets='http-request,path-parameters,req
 관리자가 특정 스페이스의 내부이미지를 변경합니다.
 
 operation::admin-space-post-update-inner-image[snippets='http-request,path-parameters,request-parts,http-response,response-fields']
+
+[[admin-space-delete-api]]
+==== 특정 스페이스 삭제 API
+
+관리자가 특정 스페이스를 삭제합니다.
+
+> 스페이스 내부의 모든 연관된 정보(하위 스페이스, 피스, 오디오 파일, 이미지 파일)를 함께 삭제합니다.
+
+operation::admin-space-delete[snippets='path-parameters,http-request,http-response,response-fields']
+
 
 [[admin-piece-api]]
 === 피스(Piece) API

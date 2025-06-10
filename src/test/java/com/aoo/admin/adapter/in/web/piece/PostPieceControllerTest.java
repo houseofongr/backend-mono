@@ -1,11 +1,16 @@
 package com.aoo.admin.adapter.in.web.piece;
 
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
+import com.aoo.common.adapter.out.persistence.repository.PieceJpaRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -28,10 +33,8 @@ class PostPieceControllerTest extends AbstractControllerTest {
             }
             """;
 
-    @Override
-    public boolean useSpringSecurity() {
-        return false;
-    }
+    @Autowired
+    PieceJpaRepository pieceJpaRepository;
 
     @Test
     @DisplayName("피스 생성 API")
@@ -65,5 +68,7 @@ class PostPieceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("endY").description("생성된 피스의 종료좌표(y)입니다.")
                         )
                 ));
+
+        assertThat(pieceJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(-1);
     }
 }

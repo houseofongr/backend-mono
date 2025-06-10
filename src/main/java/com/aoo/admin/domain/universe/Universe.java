@@ -1,6 +1,5 @@
 package com.aoo.admin.domain.universe;
 
-import com.aoo.admin.domain.universe.space.TreeInfo;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;

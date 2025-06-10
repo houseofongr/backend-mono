@@ -2,6 +2,8 @@ package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.SpaceMapper;
 import com.aoo.admin.application.port.in.space.CreateSpaceResult;
+import com.aoo.admin.application.port.out.piece.DeletePiecePort;
+import com.aoo.admin.application.port.out.space.DeleteSpacePort;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.space.SaveSpacePort;
 import com.aoo.admin.application.port.out.space.UpdateSpacePort;
@@ -14,9 +16,11 @@ import com.aoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
-public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, UpdateSpacePort {
+public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, UpdateSpacePort, DeleteSpacePort {
 
     private final UniverseJpaRepository universeJpaRepository;
     private final SpaceJpaRepository spaceJpaRepository;
@@ -26,6 +30,12 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
     public Space find(Long id) {
         SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(id).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
         return spaceMapper.mapToSingleDomainEntity(spaceJpaEntity);
+    }
+
+    @Override
+    public Long findUniverseId(Long id) {
+        SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(id).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
+        return spaceJpaEntity.getUniverseId();
     }
 
     @Override
@@ -47,5 +57,10 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
     public void update(Space space) {
         SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(space.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
         spaceJpaEntity.update(space);
+    }
+
+    @Override
+    public void deleteAll(List<Long> ids) {
+        spaceJpaRepository.deleteAllById(ids);
     }
 }

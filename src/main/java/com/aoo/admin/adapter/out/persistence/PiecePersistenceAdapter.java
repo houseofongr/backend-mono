@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.PieceMapper;
+import com.aoo.admin.application.port.out.piece.DeletePiecePort;
 import com.aoo.admin.application.port.out.piece.FindPiecePort;
 import com.aoo.admin.application.port.out.piece.SavePiecePort;
 import com.aoo.admin.application.port.out.piece.UpdatePiecePort;
@@ -12,9 +13,11 @@ import com.aoo.common.adapter.out.persistence.repository.PieceJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
-public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, UpdatePiecePort {
+public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, UpdatePiecePort, DeletePiecePort {
 
     private final PieceJpaRepository pieceJpaRepository;
     private final PieceMapper pieceMapper;
@@ -37,5 +40,10 @@ public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, Up
     public void update(Long pieceId, Piece piece) {
         PieceJpaEntity pieceJpaEntity = pieceJpaRepository.findById(pieceId).orElseThrow(() -> new AdminException(AdminErrorCode.PIECE_NOT_FOUND));
         pieceJpaEntity.update(piece);
+    }
+
+    @Override
+    public void deleteAll(List<Long> ids) {
+        pieceJpaRepository.deleteAllById(ids);
     }
 }

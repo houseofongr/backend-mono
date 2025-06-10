@@ -2,6 +2,7 @@ package com.aoo.admin.domain.universe.space;
 
 import com.aoo.admin.domain.universe.BaseFileInfo;
 import com.aoo.admin.domain.universe.DateInfo;
+import com.aoo.admin.domain.universe.TreeInfo;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import lombok.Getter;
 

@@ -22,6 +22,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -104,16 +105,49 @@ class FilePersistenceAdapterTest {
     }
 
     @Test
+    @Sql("FilePersistenceAdapterTest3.sql")
+    @DisplayName("파일 엔티티 전체조회")
+    void testLoadAllFile() {
+        // given
+        List<Long> ids = List.of(1L, 2L, 3L, 4L, 5L);
+
+        // when
+        List<File> files = sut.loadAll(ids);
+
+        // then
+        assertThat(files).hasSize(5)
+                .anyMatch(file -> file.getFileId().getRealFileName().equals("test.png"))
+                .anyMatch(file -> file.getFileId().getRealFileName().equals("test2.png"))
+                .anyMatch(file -> file.getFileId().getRealFileName().equals("test3.png"))
+                .anyMatch(file -> file.getFileId().getRealFileName().equals("test4.png"))
+                .anyMatch(file -> file.getFileId().getRealFileName().equals("test5.png"));
+    }
+
+    @Test
     @Sql("FilePersistenceAdapterTest2.sql")
     @DisplayName("파일 엔티티 삭제")
-    void deleteFileEntity() {
+    void deleteEntity() {
         // given
         Long id = 1L;
 
         // when
-        sut.deleteFile(id);
+        sut.delete(id);
 
         // then
         assertThat(fileJpaRepository.findById(id)).isEmpty();
+    }
+
+    @Test
+    @Sql("FilePersistenceAdapterTest3.sql")
+    @DisplayName("파일 엔티티 전체 삭제")
+    void deleteAllEntities() {
+        // given
+        List<Long> ids = List.of(1L, 2L, 3L, 4L, 5L);
+
+        // when
+        sut.deleteAll(ids);
+
+        // then
+        assertThat(fileJpaRepository.findAllById(ids)).isEmpty();
     }
 }

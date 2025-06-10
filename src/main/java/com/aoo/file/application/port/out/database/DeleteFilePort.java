@@ -1,5 +1,8 @@
 package com.aoo.file.application.port.out.database;
 
+import java.util.List;
+
 public interface DeleteFilePort {
-    void deleteFile(Long id);
+    void delete(Long id);
+    void deleteAll(List<Long> ids);
 }

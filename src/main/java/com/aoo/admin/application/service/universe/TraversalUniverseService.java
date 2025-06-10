@@ -4,7 +4,7 @@ import com.aoo.admin.application.port.in.universe.TraversalUniverseResult;
 import com.aoo.admin.application.port.in.universe.TraversalUniverseUseCase;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.domain.universe.TraversalComponents;
-import com.aoo.admin.domain.universe.space.TreeInfo;
+import com.aoo.admin.domain.universe.TreeInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

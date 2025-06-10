@@ -24,7 +24,7 @@ public class File {
     @Override
     public String toString() {
         return "File [" +
-               "universeId : " + fileId +
+               "id : " + fileId +
                ", status : " + status +
                ", ownerId : " + ownerId +
                ", size : " + size +

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -45,7 +46,17 @@ public class FilePersistenceAdapter implements SaveImageFilePort, FindFilePort, 
     }
 
     @Override
-    public void deleteFile(Long id) {
+    public List<File> loadAll(List<Long> ids) {
+        return fileJpaRepository.findAllById(ids).stream().map(fileMapper::mapToDomainEntity).toList();
+    }
+
+    @Override
+    public void delete(Long id) {
         fileJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll(List<Long> ids) {
+        fileJpaRepository.deleteAllById(ids);
     }
 }

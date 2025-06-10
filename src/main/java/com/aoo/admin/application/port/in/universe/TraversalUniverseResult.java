@@ -3,7 +3,7 @@ package com.aoo.admin.application.port.in.universe;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.TreeInfo;
+import com.aoo.admin.domain.universe.TreeInfo;
 import com.aoo.admin.domain.universe.space.piece.Piece;
 
 import java.util.List;

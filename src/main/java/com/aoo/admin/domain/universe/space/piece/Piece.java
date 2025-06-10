@@ -5,7 +5,7 @@ import com.aoo.admin.domain.universe.DateInfo;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import com.aoo.admin.domain.universe.space.PosInfo;
 import com.aoo.admin.domain.universe.space.SpacePieceBasicInfo;
-import com.aoo.admin.domain.universe.space.TreeInfo;
+import com.aoo.admin.domain.universe.TreeInfo;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;

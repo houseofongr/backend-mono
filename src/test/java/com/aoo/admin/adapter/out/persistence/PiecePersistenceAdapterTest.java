@@ -14,6 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -107,4 +108,18 @@ class PiecePersistenceAdapterTest {
         assertThat(piece.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
         assertThat(piece.getDateInfo().getUpdatedTime()).isAfter(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
     }
+
+    @Test
+    @DisplayName("피스 삭제 테스트")
+    void testDeletePiece() {
+        // given
+        List<Long> ids = List.of(1L);
+
+        // when
+        sut.deleteAll(ids);
+
+        // then
+        assertThat(pieceJpaRepository.findAll()).isEmpty();
+    }
+
 }

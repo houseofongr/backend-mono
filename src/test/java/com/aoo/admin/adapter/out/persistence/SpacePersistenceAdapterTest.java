@@ -16,6 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,15 +58,15 @@ class SpacePersistenceAdapterTest {
 
     @Test
     @DisplayName("스페이스 조회 테스트")
-    void testFindPiece() {
+    void testFindSpace() {
         // given
-        Long pieceId = 1L;
+        Long spaceId = 1L;
 
         // when
-        Space space = sut.find(pieceId);
+        Space space = sut.find(spaceId);
 
         // then
-        assertThat(space.getId()).isEqualTo(pieceId);
+        assertThat(space.getId()).isEqualTo(spaceId);
         assertThat(space.getFileInfo().getInnerImageId()).isEqualTo(1L);
         assertThat(space.getBasicInfo().getParentSpaceId()).isNull();
         assertThat(space.getBasicInfo().getUniverseId()).isNull();
@@ -80,8 +81,22 @@ class SpacePersistenceAdapterTest {
     }
 
     @Test
+    @DisplayName("유니버스 ID 조회 테스트")
+    void testFindUniverseId() {
+        // given
+        Long spaceId = 1L;
+
+        // when
+        Long universeId = sut.findUniverseId(spaceId);
+
+        // then
+        assertThat(universeId).isEqualTo(1L);
+
+    }
+
+    @Test
     @DisplayName("스페이스 수정 테스트")
-    void testUpdatePiece() {
+    void testUpdateSpace() {
         // given
         Space space = Space.create(1L, 1L, 1L, -1L, "평화", "피스는 평화입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
 
@@ -106,5 +121,18 @@ class SpacePersistenceAdapterTest {
         assertThat(spaceInDB.getPosInfo().getEy()).isEqualTo(0.4f);
         assertThat(spaceInDB.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
         assertThat(spaceInDB.getDateInfo().getUpdatedTime()).isAfter(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+    }
+
+    @Test
+    @DisplayName("스페이스 삭제 테스트")
+    void testDeleteSpace() {
+        // given
+        List<Long> ids = List.of(1L);
+
+        // when
+        sut.deleteAll(ids);
+
+        // then
+        assertThat(spaceJpaRepository.findAll()).isEmpty();
     }
 }

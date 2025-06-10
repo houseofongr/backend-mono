@@ -1,8 +1,6 @@
-package com.aoo.admin.domain.universe.space;
+package com.aoo.admin.domain.universe;
 
-import com.aoo.admin.domain.universe.TraversalComponents;
-import com.aoo.admin.domain.universe.Universe;
-import com.aoo.admin.domain.universe.UniverseTreeComponent;
+import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.admin.domain.universe.space.piece.Piece;
 import lombok.Getter;
 
@@ -88,10 +86,9 @@ public class TreeInfo {
     public UniverseTreeComponent getComponent(Class<? extends UniverseTreeComponent> clazz, Long id) {
         Deque<TreeInfo> queue = new ArrayDeque<>();
         queue.offer(this);
-        TreeInfo treeInfo = null;
 
         while (!queue.isEmpty()) {
-            treeInfo = queue.poll();
+            TreeInfo treeInfo = queue.poll();
             UniverseTreeComponent component = treeInfo.getUniverseTreeComponent();
 
             if (clazz.isInstance(component) && treeInfo.getUniverseTreeComponent().getId().equals(id))
@@ -103,5 +100,32 @@ public class TreeInfo {
         }
 
         return null;
+    }
+
+    public TraversalComponents getAllComponents() {
+        Deque<TreeInfo> queue = new ArrayDeque<>();
+        queue.offer(this);
+
+        Universe universe = null;
+        List<Space> spaces = new ArrayList<>();
+        List<Piece> pieces = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            TreeInfo treeInfo = queue.poll();
+            UniverseTreeComponent component = treeInfo.getUniverseTreeComponent();
+
+            switch (component) {
+                case Universe universeComponent -> universe = universeComponent;
+                case Space space -> spaces.add(space);
+                case Piece piece -> pieces.add(piece);
+                default -> throw new IllegalArgumentException("Unexpected type: " + component.getClass());
+            }
+
+            for (TreeInfo child : treeInfo.children) {
+                queue.offer(child);
+            }
+        }
+
+        return new TraversalComponents(universe, spaces, pieces);
     }
 }

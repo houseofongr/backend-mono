@@ -12,6 +12,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -45,6 +46,28 @@ class DeleteFileServiceTest {
 
         // then
         verify(eraseFilePort, times(1)).erase(file);
-        verify(deleteFilePort, times(1)).deleteFile(id);
+        verify(deleteFilePort, times(1)).delete(id);
+    }
+
+    @Test
+    @DisplayName("파일 전체 삭제 서비스 테스트")
+    void testDeleteAllFile(@TempDir Path tempDir) throws IOException {
+        // given
+        List<Long> ids = List.of(1L, 2L, 3L, 4L, 5L);
+        List<File> files = List.of(
+                FileF.IMAGE_FILE_1.get(tempDir.toString()),
+                FileF.IMAGE_FILE_1.get(tempDir.toString()),
+                FileF.IMAGE_FILE_1.get(tempDir.toString()),
+                FileF.IMAGE_FILE_1.get(tempDir.toString()),
+                FileF.IMAGE_FILE_1.get(tempDir.toString())
+        );
+
+        // when
+        when(findFilePort.loadAll(ids)).thenReturn(files);
+        sut.deleteFiles(ids);
+
+        // then
+        verify(eraseFilePort, times(5)).erase(any());
+        verify(deleteFilePort, times(1)).deleteAll(ids);
     }
 }
