@@ -12,7 +12,7 @@ public class SpacePieceBasicInfo extends BaseBasicInfo {
     public SpacePieceBasicInfo(Long universeId, Long parentSpaceId, String title, String description) {
         super(title, description);
         this.universeId = universeId;
-        this.parentSpaceId = parentSpaceId;
+        this.parentSpaceId = parentSpaceId == null? -1 : parentSpaceId;
     }
 
 }

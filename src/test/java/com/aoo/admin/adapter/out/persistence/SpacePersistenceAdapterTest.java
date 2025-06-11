@@ -68,7 +68,7 @@ class SpacePersistenceAdapterTest {
         // then
         assertThat(space.getId()).isEqualTo(spaceId);
         assertThat(space.getFileInfo().getInnerImageId()).isEqualTo(1L);
-        assertThat(space.getBasicInfo().getParentSpaceId()).isNull();
+        assertThat(space.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(space.getBasicInfo().getUniverseId()).isNull();
         assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
         assertThat(space.getBasicInfo().getDescription()).isEqualTo("스페이스는 공간입니다.");
@@ -111,7 +111,7 @@ class SpacePersistenceAdapterTest {
         // then
         assertThat(spaceInDB.getId()).isEqualTo(space.getId());
         assertThat(spaceInDB.getFileInfo().getInnerImageId()).isEqualTo(1L);
-        assertThat(spaceInDB.getBasicInfo().getParentSpaceId()).isNull();
+        assertThat(spaceInDB.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(spaceInDB.getBasicInfo().getUniverseId()).isNull();
         assertThat(spaceInDB.getBasicInfo().getTitle()).isEqualTo("평화");
         assertThat(spaceInDB.getBasicInfo().getDescription()).isEqualTo("피스는 평화입니다.");

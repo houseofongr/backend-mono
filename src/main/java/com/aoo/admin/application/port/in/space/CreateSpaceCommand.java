@@ -16,7 +16,7 @@ public record CreateSpaceCommand(
         MultipartFile imageFile
 ) {
     public CreateSpaceCommand {
-        if (universeId == null || parentSpaceId == null)
+        if (universeId == null)
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (title == null || title.isBlank() || title.length() > 100)
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);

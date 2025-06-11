@@ -68,7 +68,7 @@ class PiecePersistenceAdapterTest {
         // then
         assertThat(piece.getId()).isEqualTo(pieceId);
         assertThat(piece.getFileInfo().getInnerImageId()).isEqualTo(-1L);
-        assertThat(piece.getBasicInfo().getParentSpaceId()).isNull();
+        assertThat(piece.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(piece.getBasicInfo().getUniverseId()).isNull();
         assertThat(piece.getBasicInfo().getTitle()).isEqualTo("조각");
         assertThat(piece.getBasicInfo().getDescription()).isEqualTo("피스는 조각입니다.");
@@ -97,7 +97,7 @@ class PiecePersistenceAdapterTest {
         // then
         assertThat(piece.getId()).isEqualTo(pieceId);
         assertThat(piece.getFileInfo().getInnerImageId()).isEqualTo(-1L);
-        assertThat(piece.getBasicInfo().getParentSpaceId()).isNull();
+        assertThat(piece.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(piece.getBasicInfo().getUniverseId()).isNull();
         assertThat(piece.getBasicInfo().getTitle()).isEqualTo("평화");
         assertThat(piece.getBasicInfo().getDescription()).isEqualTo("피스는 평화입니다.");

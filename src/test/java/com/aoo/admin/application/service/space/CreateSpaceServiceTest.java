@@ -85,10 +85,9 @@ class CreateSpaceServiceTest {
     }
 
     @Test
-    @DisplayName("유니버스 혹은 상위 스페이스 없음")
+    @DisplayName("유니버스 없음")
     void noUniverseOrParentId() {
         assertThatThrownBy(() -> new CreateSpaceCommand(null, 1L, "공간", null, 1.0F, 0.5F, 0.5F, 0.5F, basicImage)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new CreateSpaceCommand(1L, null, "공간", null, 1.0F, 0.5F, 0.5F, 0.5F, basicImage)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
