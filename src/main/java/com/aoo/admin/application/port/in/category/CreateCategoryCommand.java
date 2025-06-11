@@ -1,6 +1,7 @@
 package com.aoo.admin.application.port.in.category;
 
 public record CreateCategoryCommand(
-        String name
+        String kor,
+        String eng
 ) {
 }

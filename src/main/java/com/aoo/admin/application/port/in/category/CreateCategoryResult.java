@@ -3,6 +3,7 @@ package com.aoo.admin.application.port.in.category;
 public record CreateCategoryResult(
         String message,
         Long categoryId,
-        String name
+        String kor,
+        String eng
 ) {
 }

@@ -3,5 +3,5 @@ package com.aoo.admin.application.port.out.category;
 import com.aoo.admin.application.port.in.category.UpdateCategoryResult;
 
 public interface UpdateCategoryPort {
-    UpdateCategoryResult update(Long categoryId, String name);
+    UpdateCategoryResult update(Long categoryId, String kor, String eng);
 }

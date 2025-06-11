@@ -17,7 +17,7 @@ class CategoryMapperTest {
     @DisplayName("카테고리 생성 메시지 테스트")
     void testCreateMessage() {
         // given
-        CategoryJpaEntity newCategory = new CategoryJpaEntity(1L, "new category");
+        CategoryJpaEntity newCategory = new CategoryJpaEntity(1L, "새 카테고리", "new category");
 
         // when
         CreateCategoryResult result = sut.mapToCreateCategoryResult(newCategory);
@@ -30,7 +30,7 @@ class CategoryMapperTest {
     @DisplayName("카테고리 수정 메시지 테스트")
     void testUpdateMessage() {
         // given
-        CategoryJpaEntity changedCategory = new CategoryJpaEntity(1L, "new category");
+        CategoryJpaEntity changedCategory = new CategoryJpaEntity(1L, "새 카테고리",  "new category");
 
         // when
         UpdateCategoryResult result = sut.mapToUpdateCategoryResult(changedCategory);

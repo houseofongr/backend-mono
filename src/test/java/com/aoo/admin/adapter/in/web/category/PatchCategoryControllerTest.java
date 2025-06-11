@@ -23,7 +23,8 @@ class PatchCategoryControllerTest extends AbstractControllerTest {
         //language=JSON
         String content = """ 
                 {
-                  "name" : "변경된 카테고리"
+                  "kor" : "변경된 카테고리",
+                  "eng" : "altered category"
                 }
                 """;
 
@@ -37,12 +38,14 @@ class PatchCategoryControllerTest extends AbstractControllerTest {
                                 parameterWithName("categoryId").description("수정할 카테고리의 식별자입니다.")
                         ),
                         requestFields(
-                                fieldWithPath("name").description("수정할 이름입니다.")
+                                fieldWithPath("kor").description("수정할 한글 이름입니다.(Null 시 한글 수정하지 않음)").optional(),
+                                fieldWithPath("eng").description("수정할 영문 이름입니다.(Null 시 영문 수정하지 않음)").optional()
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 카테고리가 수정되었습니다.'"),
                                 fieldWithPath("categoryId").description("수정된 카테고리의 아이디입니다."),
-                                fieldWithPath("name").description("수정된 카테고리의 이름입니다.")
+                                fieldWithPath("kor").description("수정된 카테고리의 한글 이름입니다."),
+                                fieldWithPath("eng").description("수정된 카테고리의 영문 이름입니다.")
                         )
                 ));
     }

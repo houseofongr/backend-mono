@@ -18,6 +18,6 @@ public class PatchCategoryController {
 
     @PatchMapping("/admin/categories/{categoryId}")
     ResponseEntity<UpdateCategoryResult> update(@PathVariable Long categoryId, @RequestBody UpdateCategoryCommand command) {
-        return ResponseEntity.ok(useCase.update(categoryId, command.name()));
+        return ResponseEntity.ok(useCase.update(categoryId, command));
     }
 }

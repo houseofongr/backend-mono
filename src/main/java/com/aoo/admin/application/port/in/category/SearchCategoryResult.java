@@ -8,7 +8,8 @@ public record SearchCategoryResult(
 
     public record CategoryInfo(
             Long id,
-            String name
+            String kor,
+            String eng
     ) {
     }
 }

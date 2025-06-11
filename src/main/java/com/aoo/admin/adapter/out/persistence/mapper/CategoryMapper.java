@@ -15,13 +15,14 @@ public class CategoryMapper {
         return new CreateCategoryResult(
                 String.format("[#%d]번 카테고리가 생성되었습니다.", newCategory.getId()),
                 newCategory.getId(),
-                newCategory.getName()
+                newCategory.getTitleKor(),
+                newCategory.getTitleEng()
         );
     }
 
     public SearchCategoryResult mapToSearchCategoryResult(List<CategoryJpaEntity> categoryJpaEntities) {
         return new SearchCategoryResult(categoryJpaEntities.stream()
-                .map(categoryJpaEntity -> new SearchCategoryResult.CategoryInfo(categoryJpaEntity.getId(), categoryJpaEntity.getName()))
+                .map(categoryJpaEntity -> new SearchCategoryResult.CategoryInfo(categoryJpaEntity.getId(), categoryJpaEntity.getTitleKor(), categoryJpaEntity.getTitleEng()))
                 .toList());
     }
 
@@ -29,7 +30,8 @@ public class CategoryMapper {
         return new UpdateCategoryResult(
                 String.format("[#%d]번 카테고리가 수정되었습니다.", updatedCategory.getId()),
                 updatedCategory.getId(),
-                updatedCategory.getName()
+                updatedCategory.getTitleKor(),
+                updatedCategory.getTitleEng()
         );
     }
 }

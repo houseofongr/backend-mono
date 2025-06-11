@@ -1,10 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.CategoryMapper;
-import com.aoo.admin.application.port.in.category.CreateCategoryResult;
-import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
-import com.aoo.admin.application.port.in.category.SearchCategoryResult;
-import com.aoo.admin.application.port.in.category.UpdateCategoryResult;
+import com.aoo.admin.application.port.in.category.*;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.CategoryJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.CategoryJpaRepository;
@@ -31,14 +28,16 @@ class CategoryPersistenceAdapterTest {
     @DisplayName("카테고리 생성 테스트")
     void testCreateCategory() {
         // given
-        String name = "new category";
+        String kor = "새 카테고리";
+        String eng = "new category";
 
         // when
-        CreateCategoryResult result = sut.save(name);
+        CreateCategoryResult result = sut.save(kor, eng);
 
         // then
         assertThat(result.categoryId()).isNotNull();
-        assertThat(result.name()).isEqualTo(name);
+        assertThat(result.kor()).isEqualTo(kor);
+        assertThat(result.eng()).isEqualTo(eng);
     }
 
     @Test
@@ -50,9 +49,9 @@ class CategoryPersistenceAdapterTest {
 
         // then
         assertThat(result.categories())
-                .anyMatch(categoryInfo -> categoryInfo.id().equals(1L) && categoryInfo.name().equalsIgnoreCase("Life"))
-                .anyMatch(categoryInfo -> categoryInfo.id().equals(2L) && categoryInfo.name().equalsIgnoreCase("Public"))
-                .anyMatch(categoryInfo -> categoryInfo.id().equals(3L) && categoryInfo.name().equalsIgnoreCase("Government"));
+                .anyMatch(categoryInfo -> categoryInfo.id().equals(1L) && categoryInfo.eng().equalsIgnoreCase("Life"))
+                .anyMatch(categoryInfo -> categoryInfo.id().equals(2L) && categoryInfo.eng().equalsIgnoreCase("Public"))
+                .anyMatch(categoryInfo -> categoryInfo.id().equals(3L) && categoryInfo.eng().equalsIgnoreCase("Government"));
     }
 
     @Test
@@ -60,16 +59,19 @@ class CategoryPersistenceAdapterTest {
     void testUpdateCategory() {
         // given
         Long id = 1L;
-        String name = "수정된 카테고리";
+        String kor = "수정된 카테고리";
+        String eng = "altered category";
 
         // when
-        UpdateCategoryResult result = sut.update(id, name);
+        UpdateCategoryResult result = sut.update(id, kor, eng);
         CategoryJpaEntity categoryJpaEntity = categoryJpaRepository.findById(1L).orElseThrow();
 
         // then
         assertThat(result.categoryId()).isEqualTo(id);
-        assertThat(result.name()).isEqualTo(name);
-        assertThat(categoryJpaEntity.getName()).isEqualTo(name);
+        assertThat(result.kor()).isEqualTo(kor);
+        assertThat(result.eng()).isEqualTo(eng);
+        assertThat(categoryJpaEntity.getTitleKor()).isEqualTo(kor);
+        assertThat(categoryJpaEntity.getTitleEng()).isEqualTo(eng);
     }
 
     @Test

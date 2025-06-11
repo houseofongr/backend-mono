@@ -20,7 +20,8 @@ class PostCategoryControllerTest extends AbstractControllerTest {
         //language=JSON
         String content = """ 
                 {
-                  "name" : "새 카테고리"
+                  "kor" : "새 카테고리",
+                  "eng" : "new category"
                 }
                 """;
 
@@ -31,12 +32,14 @@ class PostCategoryControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-category-post",
                         requestFields(
-                                fieldWithPath("name").description("생성할 카테고리의 이름입니다.")
+                                fieldWithPath("kor").description("생성할 카테고리의 한글 이름입니다."),
+                                fieldWithPath("eng").description("생성할 카테고리의 영문 이름입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 카테고리가 생성되었습니다.'"),
                                 fieldWithPath("categoryId").description("생성된 카테고리의 아이디입니다."),
-                                fieldWithPath("name").description("생성된 카테고리의 이름입니다.")
+                                fieldWithPath("kor").description("생성된 카테고리의 한글 이름입니다."),
+                                fieldWithPath("eng").description("생성된 카테고리의 영문 이름입니다.")
                         )
                 ));
     }

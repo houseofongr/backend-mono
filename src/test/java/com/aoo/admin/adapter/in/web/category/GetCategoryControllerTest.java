@@ -24,7 +24,8 @@ class GetCategoryControllerTest extends AbstractControllerTest {
                 .andDo(document("admin-category-get",
                         responseFields(
                                 fieldWithPath("categories[].id").description("조회된 카테고리의 아이디입니다."),
-                                fieldWithPath("categories[].name").description("조회된 카테고리의 이름입니다.")
+                                fieldWithPath("categories[].kor").description("조회된 카테고리의 한글 이름입니다."),
+                                fieldWithPath("categories[].eng").description("조회된 카테고리의 영문 이름입니다.")
                         )
                 ));
     }

@@ -18,6 +18,6 @@ public class PostCategoryController {
 
     @PostMapping("/admin/categories")
     ResponseEntity<CreateCategoryResult> create(@RequestBody CreateCategoryCommand command) {
-        return new ResponseEntity<>(useCase.create(command.name()), HttpStatus.CREATED);
+        return new ResponseEntity<>(useCase.create(command), HttpStatus.CREATED);
     }
 }

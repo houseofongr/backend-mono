@@ -1,5 +1,6 @@
 package com.aoo.admin.application.service.category;
 
+import com.aoo.admin.application.port.in.category.CreateCategoryCommand;
 import com.aoo.admin.application.port.in.category.CreateCategoryResult;
 import com.aoo.admin.application.port.in.category.CreateCategoryUseCase;
 import com.aoo.admin.application.port.out.category.SaveCategoryPort;
@@ -17,10 +18,12 @@ public class CreateCategoryService implements CreateCategoryUseCase {
     private final SaveCategoryPort saveCategoryPort;
 
     @Override
-    public CreateCategoryResult create(String name) {
-        if (name == null || name.isBlank() || name.length() > 100)
+    public CreateCategoryResult create(CreateCategoryCommand command) {
+        if (command.kor() == null || command.kor().isBlank() || command.kor().length() > 100)
+            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (command.eng() == null || command.eng().isBlank() || command.eng().length() > 100)
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
 
-        return saveCategoryPort.save(name);
+        return saveCategoryPort.save(command.kor(), command.eng());
     }
 }

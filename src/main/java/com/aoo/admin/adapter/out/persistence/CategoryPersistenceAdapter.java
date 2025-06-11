@@ -24,8 +24,8 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategor
     private final CategoryMapper categoryMapper;
 
     @Override
-    public CreateCategoryResult save(String name) {
-        CategoryJpaEntity newCategory = CategoryJpaEntity.create(name);
+    public CreateCategoryResult save(String kor, String eng) {
+        CategoryJpaEntity newCategory = CategoryJpaEntity.create(kor, eng);
         categoryJpaRepository.save(newCategory);
 
         return categoryMapper.mapToCreateCategoryResult(newCategory);
@@ -37,11 +37,11 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategor
     }
 
     @Override
-    public UpdateCategoryResult update(Long categoryId, String name) {
+    public UpdateCategoryResult update(Long categoryId, String kor, String eng) {
         CategoryJpaEntity targetCategory = categoryJpaRepository.findById(categoryId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.CATEGORY_NOT_FOUND));
 
-        targetCategory.update(name);
+        targetCategory.update(kor, eng);
 
         return categoryMapper.mapToUpdateCategoryResult(targetCategory);
     }
