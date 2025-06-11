@@ -21,7 +21,7 @@ public class PostSpaceController {
 
     @PostMapping("/admin/spaces")
     public ResponseEntity<CreateSpaceResult> create(@RequestParam String metadata,
-                                                    @RequestParam("image") MultipartFile imageFile) {
+                                                    @RequestParam("innerImage") MultipartFile imageFile) {
 
         CreateSpaceCommand baseCommand = gson.fromJson(metadata, CreateSpaceCommand.class);
         CreateSpaceCommand fullCommand = CreateSpaceCommand.from(baseCommand, imageFile);

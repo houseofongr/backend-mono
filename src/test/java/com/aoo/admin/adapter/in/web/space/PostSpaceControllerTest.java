@@ -48,7 +48,7 @@ class PostSpaceControllerTest extends AbstractControllerTest {
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
         metadataPart.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        MockMultipartFile image = new MockMultipartFile("image", "inner_image.png", "image/png", "image file".getBytes());
+        MockMultipartFile image = new MockMultipartFile("innerImage", "inner_image.png", "image/png", "image file".getBytes());
 
         mockMvc.perform(multipart("/admin/spaces")
                         .file(image)
@@ -59,7 +59,7 @@ class PostSpaceControllerTest extends AbstractControllerTest {
                 .andDo(document("admin-space-post",
                         requestParts(
                                 partWithName("metadata").description("생성할 스페이스의 정보를 포함하는 Json 형태의 문자열입니다."),
-                                partWithName("image").description("생성할 스페이스의 내부 이미지입니다.")
+                                partWithName("innerImage").description("생성할 스페이스의 내부 이미지입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 스페이스가 생성되었습니다.'"),
