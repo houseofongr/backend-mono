@@ -1,11 +1,9 @@
 package com.aoo.admin.domain.universe;
 
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

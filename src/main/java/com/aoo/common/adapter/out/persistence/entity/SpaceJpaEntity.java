@@ -53,14 +53,14 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
                 space.getPosInfo().getSy(),
                 space.getPosInfo().getEx(),
                 space.getPosInfo().getEy(),
-                space.getFileInfo().getInnerImageId(),
+                space.getFileInfo().getImageId(),
                 space.getBasicInfo().getUniverseId(),
                 space.getBasicInfo().getParentSpaceId()
         );
     }
 
     public void update(Space space) {
-        this.innerImageFileId = space.getFileInfo().getInnerImageId();
+        this.innerImageFileId = space.getFileInfo().getImageId();
         this.title = space.getBasicInfo().getTitle();
         this.description = space.getBasicInfo().getDescription();
         this.sx = space.getPosInfo().getSx();

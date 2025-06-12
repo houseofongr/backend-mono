@@ -30,7 +30,7 @@ public record CreateSpaceCommand(
         if (endY == null || endY < 0 || endY > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
-    public static CreateSpaceCommand from(CreateSpaceCommand command, MultipartFile imageFile) {
+    public static CreateSpaceCommand withImageFile(CreateSpaceCommand command, MultipartFile imageFile) {
         if (imageFile == null) throw new AdminException(AdminErrorCode.SPACE_FILE_REQUIRED);
         if (imageFile.getSize() > 100 * 1024 * 1024) throw new AdminException(AdminErrorCode.EXCEEDED_FILE_SIZE);
 

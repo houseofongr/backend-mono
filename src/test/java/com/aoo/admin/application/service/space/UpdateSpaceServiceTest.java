@@ -108,7 +108,7 @@ class UpdateSpaceServiceTest {
         // given
         MockMultipartFile innerImage = new MockMultipartFile("innerImage", "space_inner_image.png", "image/png", "image file".getBytes());
         Space space = MockEntityFactoryService.getParentSpace();
-        Long beforeSpaceInnerImageId = space.getFileInfo().getInnerImageId();
+        Long beforeSpaceInnerImageId = space.getFileInfo().getImageId();
 
         // when
         when(findSpacePort.find(space.getId())).thenReturn(space);

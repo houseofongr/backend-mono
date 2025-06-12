@@ -85,10 +85,10 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId);
 
-        Long beforeInnerImageId = targetUniverse.getFileInfo().getInnerImageId();
+        Long beforeInnerImageId = targetUniverse.getFileInfo().getImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);
 
-        targetUniverse.getFileInfo().updateInnerImage(uploadedInnerImage.id());
+        targetUniverse.getFileInfo().updateImage(uploadedInnerImage.id());
 
         updateUniversePort.updateInnerImage(targetUniverse);
         deleteFileUseCase.deleteFile(beforeInnerImageId);

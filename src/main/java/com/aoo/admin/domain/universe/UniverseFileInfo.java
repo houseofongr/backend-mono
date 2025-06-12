@@ -3,7 +3,7 @@ package com.aoo.admin.domain.universe;
 import lombok.Getter;
 
 @Getter
-public class UniverseFileInfo extends BaseFileInfo {
+public class UniverseFileInfo extends ImageFileInfo {
 
     private Long thumbMusicId;
     private Long thumbnailId;

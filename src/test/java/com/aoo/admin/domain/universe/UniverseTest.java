@@ -34,7 +34,7 @@ class UniverseTest {
         assertThat(universe.getId()).isEqualTo(id);
         assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(thumbnailId);
         assertThat(universe.getFileInfo().getThumbMusicId()).isEqualTo(thumbMusicId);
-        assertThat(universe.getFileInfo().getInnerImageId()).isEqualTo(innerImageId);
+        assertThat(universe.getFileInfo().getImageId()).isEqualTo(innerImageId);
         assertThat(universe.getDateInfo()).isNull();
         assertThat(universe.getTreeInfo()).isNull();
         assertThat(basicInfo.getAuthorId()).isEqualTo(authorId);
@@ -106,11 +106,11 @@ class UniverseTest {
         // when
         universe.getFileInfo().updateThumbMusic(thumbMusicId);
         universe.getFileInfo().updateThumbnail(thumbnailId);
-        universe.getFileInfo().updateInnerImage(innerImageId);
+        universe.getFileInfo().updateImage(innerImageId);
 
         // then
         assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(thumbnailId);
         assertThat(universe.getFileInfo().getThumbMusicId()).isEqualTo(thumbMusicId);
-        assertThat(universe.getFileInfo().getInnerImageId()).isEqualTo(innerImageId);
+        assertThat(universe.getFileInfo().getImageId()).isEqualTo(innerImageId);
     }
 }

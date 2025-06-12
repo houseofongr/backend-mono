@@ -1,5 +1,6 @@
 package com.aoo.common.adapter.out.persistence.entity;
 
+import com.aoo.admin.domain.universe.piece.sound.Sound;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,13 @@ public class SoundJpaEntity {
     @JoinColumn(name = "PIECE_ID")
     private PieceJpaEntity piece;
 
+    public static SoundJpaEntity create(Sound sound, PieceJpaEntity pieceJpaEntity) {
+        return new SoundJpaEntity(null,
+                sound.getBasicInfo().getTitle(),
+                sound.getBasicInfo().getDescription(),
+                sound.getFileInfo().getAudioId(),
+                true,
+                pieceJpaEntity
+        );
+    }
 }

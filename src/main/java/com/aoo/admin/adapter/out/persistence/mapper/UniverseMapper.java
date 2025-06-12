@@ -5,7 +5,7 @@ import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;

@@ -4,7 +4,7 @@ import com.aoo.admin.application.port.in.piece.UpdatePieceCommand;
 import com.aoo.admin.application.port.in.piece.UpdatePieceResult;
 import com.aoo.admin.application.port.out.piece.FindPiecePort;
 import com.aoo.admin.application.port.out.piece.UpdatePiecePort;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

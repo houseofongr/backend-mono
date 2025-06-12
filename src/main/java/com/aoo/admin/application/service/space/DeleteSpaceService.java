@@ -9,7 +9,7 @@ import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.TreeInfo;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,13 +44,13 @@ public class DeleteSpaceService implements DeleteSpaceUseCase {
         List<Long> deletedAudioFileIds = new ArrayList<>();
 
         for (Space space : subComponents.getSpaces()) {
-            Long innerImageId = space.getFileInfo().getInnerImageId();
+            Long innerImageId = space.getFileInfo().getImageId();
             if (innerImageId != null && !innerImageId.equals(-1L)) deletedImageFileIds.add(innerImageId);
             deletedSpaceIds.add(space.getId());
         }
 
         for (Piece piece : subComponents.getPieces()) {
-            Long innerImageId = piece.getFileInfo().getInnerImageId();
+            Long innerImageId = piece.getFileInfo().getImageId();
             if (innerImageId != null && !innerImageId.equals(-1L)) deletedImageFileIds.add(innerImageId);
             deletedPieceIds.add(piece.getId());
         }

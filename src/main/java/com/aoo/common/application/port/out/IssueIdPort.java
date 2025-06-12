@@ -22,4 +22,6 @@ public interface IssueIdPort {
     Long issueSpaceId();
 
     Long issuePieceId();
+
+    Long issueSoundId();
 }

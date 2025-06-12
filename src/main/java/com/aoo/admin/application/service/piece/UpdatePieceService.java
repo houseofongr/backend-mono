@@ -5,7 +5,7 @@ import com.aoo.admin.application.port.in.piece.UpdatePieceResult;
 import com.aoo.admin.application.port.in.piece.UpdatePieceUseCase;
 import com.aoo.admin.application.port.out.piece.FindPiecePort;
 import com.aoo.admin.application.port.out.piece.UpdatePiecePort;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

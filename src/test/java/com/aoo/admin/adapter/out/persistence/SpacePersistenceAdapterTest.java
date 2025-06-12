@@ -46,7 +46,7 @@ class SpacePersistenceAdapterTest {
         SpaceJpaEntity spaceJpaEntity = spaceJpaRepository.findById(result.spaceId()).orElseThrow();
 
         // then
-        assertThat(spaceJpaEntity.getInnerImageFileId()).isEqualTo(space.getFileInfo().getInnerImageId());
+        assertThat(spaceJpaEntity.getInnerImageFileId()).isEqualTo(space.getFileInfo().getImageId());
         assertThat(spaceJpaEntity.getUniverseId()).isEqualTo(space.getBasicInfo().getUniverseId());
         assertThat(spaceJpaEntity.getSx()).isEqualTo(space.getPosInfo().getSx());
         assertThat(spaceJpaEntity.getSy()).isEqualTo(space.getPosInfo().getSy());
@@ -67,7 +67,7 @@ class SpacePersistenceAdapterTest {
 
         // then
         assertThat(space.getId()).isEqualTo(spaceId);
-        assertThat(space.getFileInfo().getInnerImageId()).isEqualTo(1L);
+        assertThat(space.getFileInfo().getImageId()).isEqualTo(1L);
         assertThat(space.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(space.getBasicInfo().getUniverseId()).isNull();
         assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
@@ -110,7 +110,7 @@ class SpacePersistenceAdapterTest {
 
         // then
         assertThat(spaceInDB.getId()).isEqualTo(space.getId());
-        assertThat(spaceInDB.getFileInfo().getInnerImageId()).isEqualTo(1L);
+        assertThat(spaceInDB.getFileInfo().getImageId()).isEqualTo(1L);
         assertThat(spaceInDB.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(spaceInDB.getBasicInfo().getUniverseId()).isNull();
         assertThat(spaceInDB.getBasicInfo().getTitle()).isEqualTo("평화");

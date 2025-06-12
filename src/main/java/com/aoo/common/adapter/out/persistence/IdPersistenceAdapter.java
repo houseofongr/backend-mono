@@ -70,6 +70,11 @@ public class IdPersistenceAdapter implements IssueIdPort {
         return issue("PIECE");
     }
 
+    @Override
+    public Long issueSoundId() {
+        return issue("SOUND");
+    }
+
 
     private Long issue(String tableName) {
         Object singleResult = entityManager.createNativeQuery(

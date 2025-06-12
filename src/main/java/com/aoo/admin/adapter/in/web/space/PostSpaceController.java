@@ -24,7 +24,7 @@ public class PostSpaceController {
                                                     @RequestParam("innerImage") MultipartFile imageFile) {
 
         CreateSpaceCommand baseCommand = gson.fromJson(metadata, CreateSpaceCommand.class);
-        CreateSpaceCommand fullCommand = CreateSpaceCommand.from(baseCommand, imageFile);
+        CreateSpaceCommand fullCommand = CreateSpaceCommand.withImageFile(baseCommand, imageFile);
 
         return new ResponseEntity<>(useCase.create(fullCommand), HttpStatus.CREATED);
     }

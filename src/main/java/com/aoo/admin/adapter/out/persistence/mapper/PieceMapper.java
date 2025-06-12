@@ -1,6 +1,6 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import org.springframework.stereotype.Component;
 

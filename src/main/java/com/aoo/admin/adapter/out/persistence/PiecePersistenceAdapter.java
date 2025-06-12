@@ -7,7 +7,7 @@ import com.aoo.admin.application.port.out.piece.SavePiecePort;
 import com.aoo.admin.application.port.out.piece.UpdatePiecePort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.PieceJpaRepository;
 import lombok.RequiredArgsConstructor;

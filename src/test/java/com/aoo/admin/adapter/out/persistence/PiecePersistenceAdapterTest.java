@@ -1,7 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.PieceMapper;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.PieceJpaRepository;
@@ -67,7 +67,7 @@ class PiecePersistenceAdapterTest {
 
         // then
         assertThat(piece.getId()).isEqualTo(pieceId);
-        assertThat(piece.getFileInfo().getInnerImageId()).isEqualTo(-1L);
+        assertThat(piece.getFileInfo().getImageId()).isEqualTo(-1L);
         assertThat(piece.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(piece.getBasicInfo().getUniverseId()).isNull();
         assertThat(piece.getBasicInfo().getTitle()).isEqualTo("조각");
@@ -96,7 +96,7 @@ class PiecePersistenceAdapterTest {
 
         // then
         assertThat(piece.getId()).isEqualTo(pieceId);
-        assertThat(piece.getFileInfo().getInnerImageId()).isEqualTo(-1L);
+        assertThat(piece.getFileInfo().getImageId()).isEqualTo(-1L);
         assertThat(piece.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
         assertThat(piece.getBasicInfo().getUniverseId()).isNull();
         assertThat(piece.getBasicInfo().getTitle()).isEqualTo("평화");

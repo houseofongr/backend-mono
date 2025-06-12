@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateSpaceService implements CreateSpaceUseCase {
 
-    private final FindSpacePort findSpacePort;
     private final UploadPublicImageUseCase uploadPublicImageUseCase;
     private final CreateSpacePort createSpacePort;
     private final SaveSpacePort saveSpacePort;

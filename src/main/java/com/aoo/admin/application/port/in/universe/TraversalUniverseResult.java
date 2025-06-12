@@ -4,7 +4,7 @@ import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
 import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.admin.domain.universe.TreeInfo;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public record TraversalUniverseResult(
         if (root.getUniverseTreeComponent() instanceof Universe universe)
             return new TraversalUniverseResult(
                     universe.getId(),
-                    universe.getFileInfo().getInnerImageId(),
+                    universe.getFileInfo().getImageId(),
                     root.getChildren().stream()
                             .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Space)
                             .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
@@ -55,7 +55,7 @@ public record TraversalUniverseResult(
                 return new SpaceTreeInfo(
                         space.getId(),
                         space.getBasicInfo().getParentSpaceId() == null ? -1 : space.getBasicInfo().getParentSpaceId(),
-                        space.getFileInfo().getInnerImageId(),
+                        space.getFileInfo().getImageId(),
                         space.getTreeInfo().getDepth(),
                         space.getBasicInfo().getTitle(),
                         space.getBasicInfo().getDescription(),
@@ -99,7 +99,7 @@ public record TraversalUniverseResult(
                 return new PieceTreeInfo(
                         piece.getId(),
                         piece.getBasicInfo().getParentSpaceId() == null ? -1 : piece.getBasicInfo().getParentSpaceId(),
-                        piece.getFileInfo().getInnerImageId(),
+                        piece.getFileInfo().getImageId(),
                         piece.getTreeInfo().getDepth(),
                         piece.getBasicInfo().getTitle(),
                         piece.getBasicInfo().getDescription(),

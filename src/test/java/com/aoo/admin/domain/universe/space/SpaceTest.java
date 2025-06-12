@@ -28,7 +28,7 @@ class SpaceTest {
         // then
         assertThat(newSpace.getId()).isEqualTo(id);
         assertThat(newSpace.getBasicInfo().getUniverseId()).isEqualTo(universeId);
-        assertThat(newSpace.getFileInfo().getInnerImageId()).isEqualTo(imageId);
+        assertThat(newSpace.getFileInfo().getImageId()).isEqualTo(imageId);
         assertThat(newSpace.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(newSpace.getBasicInfo().getDescription()).isEqualTo(description);
         assertThat(newSpace.getPosInfo().getSx()).isEqualTo(sx);
@@ -93,7 +93,7 @@ class SpaceTest {
         Long imageId = 4321L;
         Space space = MockEntityFactoryService.getParentSpace();
 
-        space.getFileInfo().updateInnerImage(imageId);
-        assertThat(space.getFileInfo().getInnerImageId()).isEqualTo(imageId);
+        space.getFileInfo().updateImage(imageId);
+        assertThat(space.getFileInfo().getImageId()).isEqualTo(imageId);
     }
 }

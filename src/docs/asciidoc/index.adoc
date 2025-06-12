@@ -707,7 +707,18 @@ operation::admin-piece-patch-position[snippets='http-request,path-parameters,req
 
 operation::admin-piece-delete[snippets='path-parameters,http-request,http-response,response-fields']
 
-+
+[[admin-sound-api]]
+=== 사운드(Sound) API
+
+[[admin-sound-post-api]]
+==== 사운드 생성 API
+
+관리자가 사운드를 생성합니다.
+
+operation::admin-sound-post[snippets='http-request,request-parts,http-response,response-fields']
+
+
+
 [[file-api]]
 == 파일(File) API
 

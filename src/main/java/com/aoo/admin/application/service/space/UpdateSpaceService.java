@@ -54,10 +54,10 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
 
         Space targetSpace = findSpacePort.find(spaceId);
 
-        Long beforeInnerImageId = targetSpace.getFileInfo().getInnerImageId();
+        Long beforeInnerImageId = targetSpace.getFileInfo().getImageId();
         UploadFileResult.FileInfo uploadedInnerImage = uploadPublicImageUseCase.publicUpload(innerImage);
 
-        targetSpace.getFileInfo().updateInnerImage(uploadedInnerImage.id());
+        targetSpace.getFileInfo().updateImage(uploadedInnerImage.id());
         updateSpacePort.update(targetSpace);
         deleteFileUseCase.deleteFile(beforeInnerImageId);
 

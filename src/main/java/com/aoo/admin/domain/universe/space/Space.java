@@ -1,9 +1,6 @@
 package com.aoo.admin.domain.universe.space;
 
-import com.aoo.admin.domain.universe.BaseFileInfo;
-import com.aoo.admin.domain.universe.DateInfo;
-import com.aoo.admin.domain.universe.TreeInfo;
-import com.aoo.admin.domain.universe.UniverseTreeComponent;
+import com.aoo.admin.domain.universe.*;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
@@ -11,11 +8,11 @@ import java.time.ZonedDateTime;
 @Getter
 public class Space extends UniverseTreeComponent {
     private final DateInfo dateInfo;
-    private final BaseFileInfo fileInfo;
+    private final ImageFileInfo fileInfo;
     private final SpacePieceBasicInfo basicInfo;
     private final PosInfo posInfo;
 
-    private Space(Long id, BaseFileInfo fileInfo, SpacePieceBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
+    private Space(Long id, ImageFileInfo fileInfo, SpacePieceBasicInfo basicInfo, DateInfo dateInfo, PosInfo posInfo, TreeInfo treeInfo) {
         super(id, treeInfo);
         this.fileInfo = fileInfo;
         this.basicInfo = basicInfo;
@@ -27,7 +24,7 @@ public class Space extends UniverseTreeComponent {
 
         return new Space(
                 id,
-                new BaseFileInfo(innerImageId),
+                new ImageFileInfo(innerImageId),
                 new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 null,
                 new PosInfo(sx, sy, ex, ey),
@@ -38,7 +35,7 @@ public class Space extends UniverseTreeComponent {
     public static Space loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Space(
                 id,
-                new BaseFileInfo(innerImageFileId),
+                new ImageFileInfo(innerImageFileId),
                 new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(sx, sy, ex, ey),
@@ -49,7 +46,7 @@ public class Space extends UniverseTreeComponent {
     public static Space loadSingle(Long id, Long innerImageFileId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
         return new Space(
                 id,
-                new BaseFileInfo(innerImageFileId),
+                new ImageFileInfo(innerImageFileId),
                 new SpacePieceBasicInfo(null, null, title, description),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(sx, sy, ex, ey),

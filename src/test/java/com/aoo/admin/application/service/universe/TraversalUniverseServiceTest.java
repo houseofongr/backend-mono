@@ -3,13 +3,8 @@ package com.aoo.admin.application.service.universe;
 import com.aoo.admin.application.port.in.universe.TraversalUniverseResult;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.domain.universe.*;
-import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.time.ZonedDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;

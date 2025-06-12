@@ -1,4 +1,4 @@
-package com.aoo.admin.domain.universe.space;
+package com.aoo.admin.domain.universe;
 
 import lombok.Getter;
 

@@ -1,6 +1,5 @@
-package com.aoo.admin.domain.universe.space;
+package com.aoo.admin.domain.universe;
 
-import com.aoo.admin.domain.universe.BaseBasicInfo;
 import lombok.Getter;
 
 @Getter

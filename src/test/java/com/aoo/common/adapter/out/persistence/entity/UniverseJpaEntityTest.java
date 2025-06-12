@@ -31,6 +31,6 @@ class UniverseJpaEntityTest {
         assertThat(universeJpaEntity.getUniverseLikes()).isEqualTo(List.of());
         assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(universe.getFileInfo().getThumbMusicId());
         assertThat(universeJpaEntity.getThumbnailFileId()).isEqualTo(universe.getFileInfo().getThumbnailId());
-        assertThat(universeJpaEntity.getInnerImageFileId()).isEqualTo(universe.getFileInfo().getInnerImageId());
+        assertThat(universeJpaEntity.getInnerImageFileId()).isEqualTo(universe.getFileInfo().getImageId());
     }
 }

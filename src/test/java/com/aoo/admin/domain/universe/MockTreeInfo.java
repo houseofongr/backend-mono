@@ -1,7 +1,7 @@
 package com.aoo.admin.domain.universe;
 
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 
 import java.time.ZonedDateTime;
 import java.util.List;

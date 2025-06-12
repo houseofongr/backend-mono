@@ -1,6 +1,7 @@
 package com.aoo.common.application.service;
 
 import com.aoo.admin.application.port.in.piece.CreatePieceCommand;
+import com.aoo.admin.application.port.in.sound.CreateSoundCommand;
 import com.aoo.admin.application.port.in.space.CreateSpaceCommand;
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.aoo.admin.application.port.in.user.CreateDeletedUserPort;
@@ -10,6 +11,7 @@ import com.aoo.admin.application.port.out.house.CreateRoomPort;
 import com.aoo.admin.application.port.out.item.CreateItemPort;
 import com.aoo.admin.application.port.out.piece.CreatePiecePort;
 import com.aoo.admin.application.port.out.snsaccount.CreateSnsAccountPort;
+import com.aoo.admin.application.port.out.sound.CreateSoundPort;
 import com.aoo.admin.application.port.out.soundsource.CreateSoundSourcePort;
 import com.aoo.admin.application.port.out.space.CreateSpacePort;
 import com.aoo.admin.application.port.out.universe.CreateUniversePort;
@@ -21,8 +23,9 @@ import com.aoo.admin.domain.item.Item;
 import com.aoo.admin.domain.item.Shape;
 import com.aoo.admin.domain.item.soundsource.SoundSource;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.piece.sound.Sound;
 import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.space.piece.Piece;
+import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.admin.domain.user.DeletedUser;
 import com.aoo.admin.domain.user.User;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;
@@ -35,7 +38,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort, CreateSpacePort, CreatePiecePort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort, CreateSpacePort, CreatePiecePort, CreateSoundPort {
 
     private final IssueIdPort issueIdPort;
 
@@ -134,5 +137,12 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
                 command.endX(),
                 command.endY()
         );
+    }
+
+    @Override
+    public Sound createSound(Long audioId, CreateSoundCommand command) {
+        Long newId = issueIdPort.issueSoundId();
+
+        return Sound.create(newId, audioId, command.pieceId(), command.title(), command.description());
     }
 }

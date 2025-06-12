@@ -2,7 +2,6 @@ package com.aoo.admin.application.service.space;
 
 import com.aoo.admin.application.port.in.space.CreateSpaceCommand;
 import com.aoo.admin.application.port.out.space.CreateSpacePort;
-import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.space.SaveSpacePort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.domain.universe.space.Space;
@@ -25,14 +24,13 @@ class CreateSpaceServiceTest {
 
     CreateSpaceService sut;
 
-    FindSpacePort findSpacePort = mock();
     UploadPublicImageUseCase uploadPublicImageUseCase = mock();
     CreateSpacePort createSpacePort = mock();
     SaveSpacePort saveSpacePort = mock();
 
     @BeforeEach
     void init() {
-        sut = new CreateSpaceService(findSpacePort, uploadPublicImageUseCase, createSpacePort, saveSpacePort);
+        sut = new CreateSpaceService(uploadPublicImageUseCase, createSpacePort, saveSpacePort);
     }
 
     MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
@@ -79,9 +77,9 @@ class CreateSpaceServiceTest {
         // given
         CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f, 1f, 1f, 1f, null);
         byte[] content = new byte[100 * 1024 * 1024 + 1];
-        MockMultipartFile over2MB = new MockMultipartFile("image", "image.png", "image/png", content);
-        assertThatThrownBy(() -> CreateSpaceCommand.from(command, null)).hasMessage(AdminErrorCode.SPACE_FILE_REQUIRED.getMessage());
-        assertThatThrownBy(() -> CreateSpaceCommand.from(command, over2MB)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
+        MockMultipartFile over100MB = new MockMultipartFile("image", "image.png", "image/png", content);
+        assertThatThrownBy(() -> CreateSpaceCommand.withImageFile(command, null)).hasMessage(AdminErrorCode.SPACE_FILE_REQUIRED.getMessage());
+        assertThatThrownBy(() -> CreateSpaceCommand.withImageFile(command, over100MB)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
     }
 
     @Test
@@ -106,7 +104,6 @@ class CreateSpaceServiceTest {
 
         // when
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "image.png", "image1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
-        when(findSpacePort.find(-1L)).thenReturn(space);
         sut.create(command);
 
         // then
