@@ -56,6 +56,7 @@ public enum AdminErrorCode implements ErrorCode {
 
     // Sound
     SOUND_FILE_REQUIRED("ADMIN-SOUND-1", BAD_REQUEST, "사운드의 필수 파일이 누락되었습니다."),
+    SOUND_NOT_FOUND("ADMIN-SOUND-2", NOT_FOUND, "해당 사운드를 찾을 수 없습니다."),
 
     // Common
     ILLEGAL_ARGUMENT_EXCEPTION("ADMIN-COMMON-1", BAD_REQUEST, "잘못된 요청 파라미터입니다."),

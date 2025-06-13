@@ -1,6 +1,9 @@
 package com.aoo.admin.adapter.out.persistence;
 
+import com.aoo.admin.adapter.out.persistence.mapper.SoundMapper;
+import com.aoo.admin.application.port.out.sound.FindSoundPort;
 import com.aoo.admin.application.port.out.sound.SaveSoundPort;
+import com.aoo.admin.application.port.out.sound.UpdateSoundPort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.piece.sound.Sound;
@@ -13,10 +16,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SoundPersistenceAdapter implements SaveSoundPort {
+public class SoundPersistenceAdapter implements SaveSoundPort, FindSoundPort, UpdateSoundPort {
 
     private final PieceJpaRepository pieceJpaRepository;
     private final SoundJpaRepository soundJpaRepository;
+    private final SoundMapper soundMapper;
 
     @Override
     public Long save(Sound sound) {
@@ -27,5 +31,17 @@ public class SoundPersistenceAdapter implements SaveSoundPort {
         soundJpaRepository.save(soundJpaEntity);
 
         return soundJpaEntity.getId();
+    }
+
+    @Override
+    public Sound find(Long id) {
+        SoundJpaEntity soundJpaEntity = soundJpaRepository.findById(id).orElseThrow(() -> new AdminException(AdminErrorCode.SOUND_NOT_FOUND));
+        return soundMapper.mapToDomainEntity(soundJpaEntity);
+    }
+
+    @Override
+    public void update(Sound sound) {
+        SoundJpaEntity soundJpaEntity = soundJpaRepository.findById(sound.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.SOUND_NOT_FOUND));
+        soundJpaEntity.update(sound);
     }
 }

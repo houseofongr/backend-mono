@@ -3,6 +3,8 @@ package com.aoo.admin.domain.universe.piece.sound;
 import com.aoo.admin.domain.universe.DateInfo;
 import lombok.Getter;
 
+import java.time.ZonedDateTime;
+
 @Getter
 public class Sound {
     private final Long id;
@@ -22,6 +24,14 @@ public class Sound {
                 new AudioFileInfo(audioId),
                 new SoundBasicInfo(pieceId, title, description),
                 null
+        );
+    }
+
+    public static Sound loadWithoutRelation(Long id, Long audioId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+        return new Sound(id,
+                new AudioFileInfo(audioId),
+                new SoundBasicInfo(null, title, description),
+                new DateInfo(createdTime, updatedTime)
         );
     }
 }

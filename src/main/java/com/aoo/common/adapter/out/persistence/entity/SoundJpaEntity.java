@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SoundJpaEntity {
+public class SoundJpaEntity extends DateColumnBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,5 +41,10 @@ public class SoundJpaEntity {
                 true,
                 pieceJpaEntity
         );
+    }
+
+    public void update(Sound sound) {
+        this.title = sound.getBasicInfo().getTitle();
+        this.description = sound.getBasicInfo().getDescription();
     }
 }

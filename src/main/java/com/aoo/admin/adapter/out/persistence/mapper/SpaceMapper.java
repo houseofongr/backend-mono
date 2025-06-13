@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class SpaceMapper {
 
     public Space mapToSingleDomainEntity(SpaceJpaEntity spaceJpaEntity) {
-        return Space.loadSingle(spaceJpaEntity.getId(),
+        return Space.loadWithoutRelation(spaceJpaEntity.getId(),
                 spaceJpaEntity.getInnerImageFileId(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),

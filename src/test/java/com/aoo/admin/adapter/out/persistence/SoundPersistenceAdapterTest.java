@@ -1,10 +1,11 @@
 package com.aoo.admin.adapter.out.persistence;
 
+import com.aoo.admin.adapter.out.persistence.mapper.SoundMapper;
 import com.aoo.admin.domain.universe.piece.sound.Sound;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.SoundJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.SoundJpaRepository;
-import org.assertj.core.api.Assertions;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @PersistenceAdapterTest
 @Sql("SoundPersistenceAdapter.sql")
-@Import(SoundPersistenceAdapter.class)
+@Import({SoundPersistenceAdapter.class, SoundMapper.class})
 class SoundPersistenceAdapterTest {
 
     @Autowired
@@ -24,6 +24,9 @@ class SoundPersistenceAdapterTest {
 
     @Autowired
     SoundJpaRepository soundJpaRepository;
+
+    @Autowired
+    EntityManager em;
 
     @Test
     @DisplayName("사운드 저장 테스트")
@@ -43,4 +46,39 @@ class SoundPersistenceAdapterTest {
         assertThat(soundInDB.getDescription()).isEqualTo("사운드는 소리입니다.");
     }
 
+    @Test
+    @DisplayName("사운드 조회 테스트")
+    void testFindSound() {
+        // given
+        Long soundId = 1L;
+
+        // when
+        Sound sound = sut.find(soundId);
+        SoundJpaEntity soundInDB = soundJpaRepository.findById(soundId).orElseThrow();
+
+        // then
+        assertThat(sound.getBasicInfo().getPieceId()).isNull();
+        assertThat(sound.getBasicInfo().getTitle()).isEqualTo(soundInDB.getTitle());
+        assertThat(sound.getBasicInfo().getDescription()).isEqualTo(soundInDB.getDescription());
+        assertThat(sound.getDateInfo().getCreatedTime()).isEqualTo(soundInDB.getCreatedTime());
+        assertThat(sound.getDateInfo().getUpdatedTime()).isEqualTo(soundInDB.getUpdatedTime());
+    }
+
+    @Test
+    @DisplayName("사운드 업데이트 테스트")
+    void testUpdateSound() {
+        // given
+        Sound sound = Sound.create(1L, 1L, 1L, "변경할 제목", "변경할 내용");
+
+        // when
+        sut.update(sound);
+        em.flush();
+        em.clear();
+        SoundJpaEntity soundInDB = soundJpaRepository.findById(sound.getId()).orElseThrow();
+
+        // then
+        assertThat(soundInDB.getTitle()).isEqualTo("변경할 제목");
+        assertThat(soundInDB.getDescription()).isEqualTo("변경할 내용");
+        assertThat(soundInDB.getUpdatedTime()).isAfter(soundInDB.getCreatedTime());
+    }
 }

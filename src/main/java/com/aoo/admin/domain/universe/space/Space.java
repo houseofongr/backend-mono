@@ -43,7 +43,7 @@ public class Space extends UniverseTreeComponent {
         );
     }
 
-    public static Space loadSingle(Long id, Long innerImageFileId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
+    public static Space loadWithoutRelation(Long id, Long innerImageFileId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
         return new Space(
                 id,
                 new ImageFileInfo(innerImageFileId),

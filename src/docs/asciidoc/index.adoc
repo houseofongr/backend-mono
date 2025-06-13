@@ -717,6 +717,12 @@ operation::admin-piece-delete[snippets='path-parameters,http-request,http-respon
 
 operation::admin-sound-post[snippets='http-request,request-parts,http-response,response-fields']
 
+[[admin-sound-patch-api]]
+==== 특정 사운드 정보 수정 API
+
+관리자가 특정 사운드의 정보를 수정합니다.
+
+operation::admin-sound-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
 
 [[file-api]]

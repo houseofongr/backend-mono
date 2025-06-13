@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class PieceMapper {
 
     public Piece mapToSingleDomainEntity(PieceJpaEntity pieceJpaEntity) {
-        return Piece.loadSingle(pieceJpaEntity.getId(),
+        return Piece.loadWithoutRelation(pieceJpaEntity.getId(),
                 pieceJpaEntity.getInnerImageFileId(),
                 pieceJpaEntity.getTitle(),
                 pieceJpaEntity.getDescription(),

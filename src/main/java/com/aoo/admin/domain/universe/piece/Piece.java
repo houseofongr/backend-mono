@@ -47,7 +47,7 @@ public class Piece extends UniverseTreeComponent {
         );
     }
 
-    public static Piece loadSingle(Long id, Long innerImageFileId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
+    public static Piece loadWithoutRelation(Long id, Long innerImageFileId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
         return new Piece(
                 id,
                 new ImageFileInfo(innerImageFileId),
