@@ -684,6 +684,16 @@ operation::admin-space-delete[snippets='path-parameters,http-request,http-respon
 
 operation::admin-piece-post[snippets='http-request,request-fields,http-response,response-fields']
 
+[[admin-piece-get-api]]
+==== 관리자 특정 피스 내부 조회 API
+
+관리자가 특정 피스를 내부 사운드와 함께 조회합니다.
+
+> 비공개 사운드도 검색됩니다.
+
+operation::admin-piece-get[snippets='path-parameters,http-request,http-response,response-fields']
+
+
 [[admin-piece-patch-api]]
 ==== 특정 피스 정보 수정 API
 

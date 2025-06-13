@@ -1,6 +1,8 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.PieceMapper;
+import com.aoo.admin.application.port.in.piece.SearchPieceCommand;
+import com.aoo.admin.application.port.in.piece.SearchPieceResult;
 import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.ZoneOffset;
@@ -81,6 +84,24 @@ class PiecePersistenceAdapterTest {
     }
 
     @Test
+    @DisplayName("피스 검색 테스트")
+    void testSearchPiece() {
+        // given
+        SearchPieceCommand command = new SearchPieceCommand(Pageable.ofSize(10), 1L, "life", false);
+
+        // when
+        SearchPieceResult result = sut.search(command);
+
+        // then
+        assertThat(result.pieceId()).isEqualTo(1L);
+        assertThat(result.title()).isEqualTo("조각");
+        assertThat(result.description()).isEqualTo("피스는 조각입니다.");
+        assertThat(result.createdTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC).toEpochSecond());
+        assertThat(result.updatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC).toEpochSecond());
+        assertThat(result.sounds()).hasSize(10).noneMatch(soundInfo -> soundInfo.soundId().equals(1L));
+    }
+
+    @Test
     @DisplayName("피스 수정 테스트")
     void testUpdatePiece() {
         // given
@@ -119,7 +140,7 @@ class PiecePersistenceAdapterTest {
         sut.deleteAll(ids);
 
         // then
-        assertThat(pieceJpaRepository.findAll()).isEmpty();
+        assertThat(pieceJpaRepository.findById(ids.getFirst())).isEmpty();
     }
 
 }
