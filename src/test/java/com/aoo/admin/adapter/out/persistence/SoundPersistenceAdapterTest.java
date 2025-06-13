@@ -68,7 +68,7 @@ class SoundPersistenceAdapterTest {
     @DisplayName("사운드 업데이트 테스트")
     void testUpdateSound() {
         // given
-        Sound sound = Sound.create(1L, 1L, 1L, "변경할 제목", "변경할 내용");
+        Sound sound = Sound.create(1L, 234L, 1L, "변경할 제목", "변경할 내용");
 
         // when
         sut.update(sound);
@@ -77,6 +77,7 @@ class SoundPersistenceAdapterTest {
         SoundJpaEntity soundInDB = soundJpaRepository.findById(sound.getId()).orElseThrow();
 
         // then
+        assertThat(soundInDB.getAudioFileId()).isEqualTo(234L);
         assertThat(soundInDB.getTitle()).isEqualTo("변경할 제목");
         assertThat(soundInDB.getDescription()).isEqualTo("변경할 내용");
         assertThat(soundInDB.getUpdatedTime()).isAfter(soundInDB.getCreatedTime());

@@ -1,25 +1,25 @@
 package com.aoo.admin.adapter.in.web.sound;
 
-import com.aoo.admin.application.port.in.sound.UpdateSoundCommand;
 import com.aoo.admin.application.port.in.sound.UpdateSoundResult;
 import com.aoo.admin.application.port.in.sound.UpdateSoundUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-public class PatchSoundController {
+public class PostUpdateSoundController {
 
     private final UpdateSoundUseCase useCase;
 
-    @PatchMapping("/admin/sounds/{soundId}")
-    ResponseEntity<UpdateSoundResult.Detail> update(
+    @PostMapping("/admin/sounds/audio/{soundId}")
+    ResponseEntity<UpdateSoundResult.Audio> update(
             @PathVariable Long soundId,
-            @RequestBody UpdateSoundCommand command) {
-        return ResponseEntity.ok(useCase.updateDetail(soundId, command));
+            @RequestPart(value = "audio") MultipartFile audio) {
+        return ResponseEntity.ok(useCase.updateAudio(soundId, audio));
     }
 }

@@ -11,7 +11,7 @@ public class AudioFileInfo {
         this.audioId = audioId;
     }
 
-    public void updateAudio(Long innerImageId) {
-        this.audioId = innerImageId;
+    public void updateAudio(Long audioId) {
+        this.audioId = audioId;
     }
 }

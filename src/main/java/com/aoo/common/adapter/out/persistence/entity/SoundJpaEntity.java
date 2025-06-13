@@ -44,6 +44,7 @@ public class SoundJpaEntity extends DateColumnBaseEntity {
     }
 
     public void update(Sound sound) {
+        this.audioFileId = sound.getFileInfo().getAudioId();
         this.title = sound.getBasicInfo().getTitle();
         this.description = sound.getBasicInfo().getDescription();
     }

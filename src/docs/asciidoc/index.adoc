@@ -724,6 +724,13 @@ operation::admin-sound-post[snippets='http-request,request-parts,http-response,r
 
 operation::admin-sound-patch[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[admin-sound-post-update-api]]
+==== 특정 사운드 오디오 변경 API
+
+관리자가 특정 스페이스의 오디오 파일을 변경합니다.
+
+operation::admin-sound-post-update-audio[snippets='http-request,path-parameters,request-parts,http-response,response-fields']
+
 
 [[file-api]]
 == 파일(File) API
