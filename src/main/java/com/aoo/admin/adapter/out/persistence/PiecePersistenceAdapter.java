@@ -43,7 +43,8 @@ public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, Up
 
     @Override
     public SearchPieceResult search(SearchPieceCommand command) {
-        return pieceMapper.mapToSearchPieceResult(pieceJpaRepository.searchAll(command));
+        PieceJpaEntity pieceJpaEntity = pieceJpaRepository.findById(command.pieceId()).orElseThrow(() -> new AdminException(AdminErrorCode.PIECE_NOT_FOUND));
+        return pieceMapper.mapToSearchPieceResult(pieceJpaEntity, pieceJpaRepository.searchAll(command));
     }
 
     @Override

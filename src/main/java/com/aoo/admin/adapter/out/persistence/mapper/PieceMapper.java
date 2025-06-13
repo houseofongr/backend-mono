@@ -27,9 +27,8 @@ public class PieceMapper {
         );
     }
 
-    public SearchPieceResult mapToSearchPieceResult(Page<SoundJpaEntity> entityPage) {
+    public SearchPieceResult mapToSearchPieceResult(PieceJpaEntity piece, Page<SoundJpaEntity> entityPage) {
         List<SoundJpaEntity> content = entityPage.getContent();
-        PieceJpaEntity piece = content.getFirst().getPiece();
         return new SearchPieceResult(
                 piece.getId(),
                 piece.getTitle(),
