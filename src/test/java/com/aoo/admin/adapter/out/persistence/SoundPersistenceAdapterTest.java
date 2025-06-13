@@ -82,4 +82,17 @@ class SoundPersistenceAdapterTest {
         assertThat(soundInDB.getDescription()).isEqualTo("변경할 내용");
         assertThat(soundInDB.getUpdatedTime()).isAfter(soundInDB.getCreatedTime());
     }
+
+    @Test
+    @DisplayName("사운드 삭제 테스트")
+    void testDeleteSound() {
+        // given
+        Sound sound = Sound.create(1L, 234L, 1L, "변경할 제목", "변경할 내용");
+
+        // when
+        sut.delete(sound);
+
+        // then
+        assertThat(soundJpaRepository.findById(sound.getId())).isEmpty();
+    }
 }

@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.adapter.out.persistence.mapper.SoundMapper;
+import com.aoo.admin.application.port.out.sound.DeleteSoundPort;
 import com.aoo.admin.application.port.out.sound.FindSoundPort;
 import com.aoo.admin.application.port.out.sound.SaveSoundPort;
 import com.aoo.admin.application.port.out.sound.UpdateSoundPort;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SoundPersistenceAdapter implements SaveSoundPort, FindSoundPort, UpdateSoundPort {
+public class SoundPersistenceAdapter implements SaveSoundPort, FindSoundPort, UpdateSoundPort, DeleteSoundPort {
 
     private final PieceJpaRepository pieceJpaRepository;
     private final SoundJpaRepository soundJpaRepository;
@@ -43,5 +44,10 @@ public class SoundPersistenceAdapter implements SaveSoundPort, FindSoundPort, Up
     public void update(Sound sound) {
         SoundJpaEntity soundJpaEntity = soundJpaRepository.findById(sound.getId()).orElseThrow(() -> new AdminException(AdminErrorCode.SOUND_NOT_FOUND));
         soundJpaEntity.update(sound);
+    }
+
+    @Override
+    public void delete(Sound sound) {
+        soundJpaRepository.deleteById(sound.getId());
     }
 }

@@ -731,6 +731,15 @@ operation::admin-sound-patch[snippets='http-request,path-parameters,request-fiel
 
 operation::admin-sound-post-update-audio[snippets='http-request,path-parameters,request-parts,http-response,response-fields']
 
+[[admin-sound-delete-api]]
+==== 특정 사운드 삭제 API
+
+관리자가 특정 사운드를 삭제합니다.
+
+> 사운드 내부의 오디오 파일을 함께 삭제합니다.
+
+operation::admin-sound-delete[snippets='path-parameters,http-request,http-response,response-fields']
+
 
 [[file-api]]
 == 파일(File) API
