@@ -4,6 +4,7 @@ import com.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.aoo.file.application.service.FileProperties;
 import com.aoo.file.domain.File;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public abstract class AbstractControllerTest {
 
     @Autowired
     protected FileProperties fileProperties;
+
+    @Autowired
+    protected EntityManager em;
 
     protected MockMvcTester mockMvcTester;
 

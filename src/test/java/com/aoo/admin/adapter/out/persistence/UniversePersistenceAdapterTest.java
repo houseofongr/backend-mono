@@ -271,7 +271,7 @@ class UniversePersistenceAdapterTest {
         Universe universe = Universe.load(12L, 12L, 12L, 1L, 1L, "우주", null, null, null, null, null, List.of("오르트구름", "태양계", "윤하", "별"), null, null);
 
         // when
-        sut.delete(universe);
+        sut.delete(universe.getId());
         List<UniverseHashtagJpaEntity> hashtagEntities = em.createQuery("select uh from UniverseHashtagJpaEntity uh where uh.id in (1, 2, 3, 4)", UniverseHashtagJpaEntity.class).getResultList();
         List<UniverseLikeJpaEntity> likeEntities = em.createQuery("select ul from UniverseLikeJpaEntity ul where ul.id in (1, 2, 3, 4)", UniverseLikeJpaEntity.class).getResultList();
 

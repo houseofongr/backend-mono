@@ -30,9 +30,9 @@ public class DeletePieceService implements DeletePieceUseCase {
         Piece piece = findPiecePort.findWithSounds(pieceId);
         deletePiecePort.delete(pieceId);
 
-        List<Long> deletedSoundIds = piece.getSounds().stream().map(Sound::getId).toList();
+        List<Long> deletedSoundIds = piece.getSounds().stream().map(Sound::getId).sorted().toList();
         List<Long> deletedImageFileIds = piece.getFileInfo().getImageId() == null? List.of() : List.of(piece.getFileInfo().getImageId());
-        List<Long> deletedAudioFileIds = piece.getSounds().stream().map(sound -> sound.getFileInfo().getAudioId()).toList();
+        List<Long> deletedAudioFileIds = piece.getSounds().stream().map(sound -> sound.getFileInfo().getAudioId()).sorted().toList();
 
         deleteSoundPort.deleteAll(deletedSoundIds);
         deleteFileUseCase.deleteFiles(Stream.concat(deletedImageFileIds.stream(), deletedAudioFileIds.stream()).toList());

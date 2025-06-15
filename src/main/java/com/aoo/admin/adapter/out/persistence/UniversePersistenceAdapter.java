@@ -132,8 +132,8 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     }
 
     @Override
-    public void delete(Universe universe) {
-        UniverseJpaEntity targetEntity = universeJpaRepository.findById(universe.getId()).orElseThrow();
+    public void delete(Long id) {
+        UniverseJpaEntity targetEntity = universeJpaRepository.findById(id).orElseThrow();
         universeJpaRepository.delete(targetEntity);
     }
 }

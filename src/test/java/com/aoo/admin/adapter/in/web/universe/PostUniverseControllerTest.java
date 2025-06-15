@@ -37,9 +37,6 @@ class PostUniverseControllerTest extends AbstractControllerTest {
     @Autowired
     UniverseJpaRepository universeJpaRepository;
 
-    @Autowired
-    EntityManager em;
-
     //language=JSON
     String metadata = """
             {

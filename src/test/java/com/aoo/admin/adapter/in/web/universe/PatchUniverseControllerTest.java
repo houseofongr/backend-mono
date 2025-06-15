@@ -35,9 +35,6 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
     @Autowired
     HashtagJpaRepository hashtagJpaRepository;
 
-    @Autowired
-    EntityManager em;
-
     @Override
     public boolean useSpringSecurity() {
         return false;

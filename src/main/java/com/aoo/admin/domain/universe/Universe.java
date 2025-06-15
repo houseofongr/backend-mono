@@ -38,8 +38,8 @@ public class Universe extends UniverseTreeComponent {
                 null);
     }
 
-    public static Universe loadTreeComponent(Long id, Long innerImageFileId) {
-        return new Universe(id, new UniverseFileInfo(null, null, innerImageFileId), null, null, null, null);
+    public static Universe loadTreeComponent(Long id, Long thumbMusicId, Long thumbnailId, Long innerImageFileId) {
+        return new Universe(id, new UniverseFileInfo(thumbMusicId, thumbnailId, innerImageFileId), null, null, null, null);
     }
 
 }

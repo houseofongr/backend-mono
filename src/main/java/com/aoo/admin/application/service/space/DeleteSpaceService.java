@@ -4,7 +4,6 @@ import com.aoo.admin.application.port.in.piece.DeletePieceResult;
 import com.aoo.admin.application.port.in.piece.DeletePieceUseCase;
 import com.aoo.admin.application.port.in.space.DeleteSpaceResult;
 import com.aoo.admin.application.port.in.space.DeleteSpaceUseCase;
-import com.aoo.admin.application.port.out.piece.DeletePiecePort;
 import com.aoo.admin.application.port.out.space.DeleteSpacePort;
 import com.aoo.admin.application.port.out.space.FindSpacePort;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -36,8 +34,16 @@ public class DeleteSpaceService implements DeleteSpaceUseCase {
     public DeleteSpaceResult delete(Long spaceId) {
         Long universeId = findSpacePort.findUniverseId(spaceId);
         TreeInfo root = TreeInfo.create(findUniversePort.findTreeComponents(universeId));
-
         TreeInfo subtree = root.getComponent(Space.class, spaceId).getTreeInfo();
+
+        DeleteSpaceResult result = deleteSubtree(spaceId, subtree);
+        result.sort();
+
+        return result;
+    }
+
+    @Override
+    public DeleteSpaceResult deleteSubtree(Long spaceId, TreeInfo subtree) {
         TraversalComponents subComponents = subtree.getAllComponents();
 
         List<Long> deletedSpaceIds = new ArrayList<>();

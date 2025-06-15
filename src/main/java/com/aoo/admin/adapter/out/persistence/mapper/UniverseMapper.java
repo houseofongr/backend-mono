@@ -57,6 +57,8 @@ public class UniverseMapper {
     public TraversalComponents mapToTraversalComponent(UniverseJpaEntity universeJpaEntity, List<SpaceJpaEntity> spaceJpaEntities, List<PieceJpaEntity> pieceJpaEntities) {
         Universe universe = Universe.loadTreeComponent(
                 universeJpaEntity.getId(),
+                universeJpaEntity.getThumbMusicFileId(),
+                universeJpaEntity.getThumbnailFileId(),
                 universeJpaEntity.getInnerImageFileId()
         );
 
