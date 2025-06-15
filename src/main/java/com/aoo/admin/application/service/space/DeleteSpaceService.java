@@ -1,5 +1,7 @@
 package com.aoo.admin.application.service.space;
 
+import com.aoo.admin.application.port.in.piece.DeletePieceResult;
+import com.aoo.admin.application.port.in.piece.DeletePieceUseCase;
 import com.aoo.admin.application.port.in.space.DeleteSpaceResult;
 import com.aoo.admin.application.port.in.space.DeleteSpaceUseCase;
 import com.aoo.admin.application.port.out.piece.DeletePiecePort;
@@ -26,9 +28,9 @@ public class DeleteSpaceService implements DeleteSpaceUseCase {
 
     private final FindSpacePort findSpacePort;
     private final FindUniversePort findUniversePort;
-    private final DeleteFileUseCase deleteFileUseCase;
     private final DeleteSpacePort deleteSpacePort;
-    private final DeletePiecePort deletePiecePort;
+    private final DeletePieceUseCase deletePieceUseCase;
+    private final DeleteFileUseCase deleteFileUseCase;
 
     @Override
     public DeleteSpaceResult delete(Long spaceId) {
@@ -40,6 +42,7 @@ public class DeleteSpaceService implements DeleteSpaceUseCase {
 
         List<Long> deletedSpaceIds = new ArrayList<>();
         List<Long> deletedPieceIds = new ArrayList<>();
+        List<Long> deletedSoundIds = new ArrayList<>();
         List<Long> deletedImageFileIds = new ArrayList<>();
         List<Long> deletedAudioFileIds = new ArrayList<>();
 
@@ -55,14 +58,20 @@ public class DeleteSpaceService implements DeleteSpaceUseCase {
             deletedPieceIds.add(piece.getId());
         }
 
-        deleteFileUseCase.deleteFiles(Stream.concat(deletedImageFileIds.stream(), deletedAudioFileIds.stream()).toList());
-        deletePiecePort.deleteAll(deletedPieceIds);
+        for (Long deletePieceId : deletedPieceIds) {
+            DeletePieceResult deletePieceResult = deletePieceUseCase.delete(deletePieceId);
+            deletedSoundIds.addAll(deletePieceResult.deletedSoundIds());
+            deletedAudioFileIds.addAll(deletePieceResult.deletedAudioFileIds());
+        }
+
+        deleteFileUseCase.deleteFiles(deletedImageFileIds);
         deleteSpacePort.deleteAll(deletedSpaceIds);
 
         return new DeleteSpaceResult(
                 String.format("[#%d]번 스페이스가 삭제되었습니다.", spaceId),
                 deletedSpaceIds,
                 deletedPieceIds,
+                deletedSoundIds,
                 deletedImageFileIds,
                 deletedAudioFileIds);
     }

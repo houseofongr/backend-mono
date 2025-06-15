@@ -6,6 +6,7 @@ public record DeleteSpaceResult(
         String message,
         List<Long> deletedSpaceIds,
         List<Long> deletedPieceIds,
+        List<Long> deletedSoundIds,
         List<Long> deletedImageFileIds,
         List<Long> deletedAudioFileIds
 ) {

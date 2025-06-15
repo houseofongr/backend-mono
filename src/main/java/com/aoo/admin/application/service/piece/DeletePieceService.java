@@ -25,7 +25,6 @@ public class DeletePieceService implements DeletePieceUseCase {
     private final DeleteSoundPort deleteSoundPort;
     private final DeleteFileUseCase deleteFileUseCase;
 
-    // TODO : 사운드 및 이미지, 음원 삭제
     @Override
     public DeletePieceResult delete(Long pieceId) {
         Piece piece = findPiecePort.findWithSounds(pieceId);

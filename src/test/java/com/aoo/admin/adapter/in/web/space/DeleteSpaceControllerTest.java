@@ -2,6 +2,7 @@ package com.aoo.admin.adapter.in.web.space;
 
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.SoundJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
@@ -39,8 +40,12 @@ class DeleteSpaceControllerTest extends AbstractControllerTest {
     void testDeleteUniverse() throws Exception {
 
         saveFile(FileF.AUDIO_FILE_1.get(tempDir.toString()));
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             saveFile(File.create(FileId.create(tempDir.toString(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE, String.format("test%d.png", i), String.format("test-123%d.png", i)), FileStatus.CREATED, null,new FileSize(1234L, 10000L)));
+        }
+
+        for (int i = 10; i <= 20; i++) {
+            saveFile(File.create(FileId.create(tempDir.toString(), Authority.PUBLIC_FILE_ACCESS, FileType.AUDIO, String.format("test%d.mp3", i), String.format("test-13%d.mp3", i)), FileStatus.CREATED, null,new FileSize(1234L, 10000L)));
         }
 
         mockMvc.perform(delete("/admin/spaces/{spaceId}", 2L)
@@ -55,6 +60,7 @@ class DeleteSpaceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("message").description("삭제 완료 메시지 : '[#id]번 스페이스가 삭제되었습니다.'"),
                                 fieldWithPath("deletedSpaceIds").description("삭제된 스페이스 식별자 리스트입니다."),
                                 fieldWithPath("deletedPieceIds").description("삭제된 피스 식별자 리스트입니다."),
+                                fieldWithPath("deletedSoundIds").description("삭제된 사운드 식별자 리스트입니다."),
                                 fieldWithPath("deletedImageFileIds").description("삭제된 이미지 파일 식별자 리스트입니다."),
                                 fieldWithPath("deletedAudioFileIds").description("삭제된 오디오 파일 식별자 리스트입니다.")
                         )
@@ -62,8 +68,8 @@ class DeleteSpaceControllerTest extends AbstractControllerTest {
 
         // 파일개수 체크
         List<FileJpaEntity> files = fileJpaRepository.findAll();
-        assertThat(files).hasSize(6);
-        assertThat(files.stream().filter(fileJpaEntity -> fileJpaEntity.getAbsolutePath().contains("images"))).hasSize(5);
+        assertThat(files).hasSize(5);
+        assertThat(files.stream().filter(fileJpaEntity -> fileJpaEntity.getAbsolutePath().contains("images"))).hasSize(4);
         assertThat(files.stream().filter(fileJpaEntity -> fileJpaEntity.getAbsolutePath().contains("audios"))).hasSize(1);
 
         // 스페이스 체크
@@ -80,5 +86,9 @@ class DeleteSpaceControllerTest extends AbstractControllerTest {
                 .noneMatch(pieceJpaEntity -> pieceJpaEntity.getId().equals(5L))
                 .noneMatch(pieceJpaEntity -> pieceJpaEntity.getId().equals(6L))
                 .noneMatch(pieceJpaEntity -> pieceJpaEntity.getId().equals(7L));
+
+        // 사운드 체크
+        List<SoundJpaEntity> sounds = em.createQuery("select s from SoundJpaEntity s", SoundJpaEntity.class).getResultList();
+        assertThat(sounds).isEmpty();
     }
 }
