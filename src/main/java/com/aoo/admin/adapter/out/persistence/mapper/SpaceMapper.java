@@ -13,12 +13,14 @@ public class SpaceMapper {
                 spaceJpaEntity.getInnerImageFileId(),
                 spaceJpaEntity.getTitle(),
                 spaceJpaEntity.getDescription(),
-                spaceJpaEntity.getCreatedTime(),
-                spaceJpaEntity.getUpdatedTime(),
                 spaceJpaEntity.getSx(),
                 spaceJpaEntity.getSy(),
                 spaceJpaEntity.getEx(),
-                spaceJpaEntity.getEy());
+                spaceJpaEntity.getEy(),
+                spaceJpaEntity.getHidden(),
+                spaceJpaEntity.getCreatedTime(),
+                spaceJpaEntity.getUpdatedTime()
+        );
     }
 
     public CreateSpaceResult mapToCreateSpaceResult(SpaceJpaEntity spaceJpaEntity) {
@@ -31,7 +33,8 @@ public class SpaceMapper {
                 spaceJpaEntity.getSx(),
                 spaceJpaEntity.getSy(),
                 spaceJpaEntity.getEx(),
-                spaceJpaEntity.getEy()
+                spaceJpaEntity.getEy(),
+                spaceJpaEntity.getHidden()
         );
     }
 }

@@ -21,43 +21,12 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("PostUpdateUniverseControllerTest.sql")
+@Sql(value = "classpath:sql/clear.sql")
+@Sql("UniverseControllerTest.sql")
 class PostUpdateUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
     UniverseJpaRepository universeJpaRepository;
-
-    @Test
-    @DisplayName("유니버스 썸네일 수정 API")
-    void testUniverseUpdateThumbnailAPI() throws Exception {
-        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
-        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "new_universe_thumb.png", "image/png", "universe file".getBytes());
-
-        mockMvc.perform(multipart("/admin/universes/thumbnail/{universeId}", 1)
-                        .file(thumbnail)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
-                        .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is(200))
-                .andDo(document("admin-universe-post-update-thumbnail",
-                        pathParameters(
-                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
-                        ),
-                        requestParts(
-                                partWithName("thumbnail").description("수정할 유니버스의 썸네일 이미지입니다.")
-                        ),
-                        responseFields(
-                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 유니버스의 썸네일이 수정되었습니다.'"),
-                                fieldWithPath("deletedThumbnailId").description("삭제된 썸네일 아이디입니다."),
-                                fieldWithPath("newThumbnailId").description("새로운 썸네일 아이디입니다.")
-                        )
-                ));
-
-        List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(1);
-        assertThat(fileInDB)
-                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_universe_thumb.png"));
-        assertThat(universeJpaRepository.findById(1L).orElseThrow().getThumbnailFileId()).isEqualTo(fileInDB.getFirst().getId());
-    }
 
     @Test
     @DisplayName("유니버스 썸뮤직 수정 API")
@@ -92,9 +61,44 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("유니버스 썸네일 수정 API")
+    void testUniverseUpdateThumbnailAPI() throws Exception {
+        saveFile(FileF.AUDIO_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        MockMultipartFile thumbnail = new MockMultipartFile("thumbnail", "new_universe_thumb.png", "image/png", "universe file".getBytes());
+
+        mockMvc.perform(multipart("/admin/universes/thumbnail/{universeId}", 1)
+                        .file(thumbnail)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .with(user("admin").roles("ADMIN")))
+                .andExpect(status().is(200))
+                .andDo(document("admin-universe-post-update-thumbnail",
+                        pathParameters(
+                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                        ),
+                        requestParts(
+                                partWithName("thumbnail").description("수정할 유니버스의 썸네일 이미지입니다.")
+                        ),
+                        responseFields(
+                                fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 유니버스의 썸네일이 수정되었습니다.'"),
+                                fieldWithPath("deletedThumbnailId").description("삭제된 썸네일 아이디입니다."),
+                                fieldWithPath("newThumbnailId").description("새로운 썸네일 아이디입니다.")
+                        )
+                ));
+
+        List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
+        assertThat(fileInDB).hasSize(2);
+        assertThat(fileInDB)
+                .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_universe_thumb.png"));
+        assertThat(universeJpaRepository.findById(1L).orElseThrow().getThumbnailFileId()).isEqualTo(fileInDB.getLast().getId());
+    }
+
+    @Test
     @DisplayName("유니버스 내부이미지 수정 API")
     void testUniverseUpdateInnerImageAPI() throws Exception {
-        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.AUDIO_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_2.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_3.get(tempDir.toString()));
         MockMultipartFile innerImage = new MockMultipartFile("innerImage", "new_universe_inner_image.png", "image/png", "universe file".getBytes());
 
         mockMvc.perform(multipart("/admin/universes/inner-image/{universeId}", 1)
@@ -117,10 +121,10 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                 ));
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(1);
+        assertThat(fileInDB).hasSize(3);
         assertThat(fileInDB)
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_universe_inner_image.png"));
-        assertThat(universeJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(fileInDB.getFirst().getId());
+        assertThat(universeJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(fileInDB.getLast().getId());
     }
 
 }

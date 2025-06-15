@@ -23,8 +23,8 @@ class UpdatePieceServiceTest {
     void testUpdateDetailPiece() {
         // given
         Long pieceId = 1L;
-        UpdatePieceCommand.Detail command = new UpdatePieceCommand.Detail("평화", "피스는 평화입니다.");
-        Piece newPiece = Piece.create(1L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
+        UpdatePieceCommand.Detail command = new UpdatePieceCommand.Detail("평화", "피스는 평화입니다.", false);
+        Piece newPiece = Piece.create(1L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f, false);
 
         // when
         when(findPiecePort.find(pieceId)).thenReturn(newPiece);
@@ -43,7 +43,7 @@ class UpdatePieceServiceTest {
         // given
         Long pieceId = 1L;
         UpdatePieceCommand.Position command = new UpdatePieceCommand.Position(0.5f, 0.6f, 0.7f, 0.8f);
-        Piece newPiece = Piece.create(1L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
+        Piece newPiece = Piece.create(1L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f, false);
 
         // when
         when(findPiecePort.find(pieceId)).thenReturn(newPiece);

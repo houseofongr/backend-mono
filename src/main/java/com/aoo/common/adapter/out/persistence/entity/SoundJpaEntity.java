@@ -27,7 +27,7 @@ public class SoundJpaEntity extends DateColumnBaseEntity {
     private Long audioFileId;
 
     @Column(nullable = false)
-    private Boolean isActive;
+    private Boolean hidden;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PIECE_ID")
@@ -38,7 +38,7 @@ public class SoundJpaEntity extends DateColumnBaseEntity {
                 sound.getBasicInfo().getTitle(),
                 sound.getBasicInfo().getDescription(),
                 sound.getFileInfo().getAudioId(),
-                true,
+                sound.getBasicInfo().getHidden(),
                 pieceJpaEntity
         );
     }
@@ -47,5 +47,6 @@ public class SoundJpaEntity extends DateColumnBaseEntity {
         this.audioFileId = sound.getFileInfo().getAudioId();
         this.title = sound.getBasicInfo().getTitle();
         this.description = sound.getBasicInfo().getDescription();
+        this.hidden = sound.getBasicInfo().getHidden();
     }
 }

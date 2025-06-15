@@ -24,7 +24,7 @@ public class DeleteSoundService implements DeleteSoundUseCase {
         Sound sound = findSoundPort.find(soundId);
 
         deleteFileUseCase.deleteFile(sound.getFileInfo().getAudioId());
-        deleteSoundPort.delete(sound);
+        deleteSoundPort.delete(sound.getId());
 
         return new DeleteSoundResult(
                 String.format("[#%d]번 사운드가 삭제되었습니다.", sound.getId()),

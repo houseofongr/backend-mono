@@ -12,6 +12,7 @@ public class SoundMapper {
                 soundJpaEntity.getAudioFileId(),
                 soundJpaEntity.getTitle(),
                 soundJpaEntity.getDescription(),
+                soundJpaEntity.getHidden(),
                 soundJpaEntity.getCreatedTime(),
                 soundJpaEntity.getUpdatedTime());
     }

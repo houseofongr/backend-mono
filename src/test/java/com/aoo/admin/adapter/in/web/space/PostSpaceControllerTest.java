@@ -19,6 +19,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql("classpath:/sql/clear.sql")
+@Sql("SpaceControllerTest.sql")
 class PostSpaceControllerTest extends AbstractControllerTest {
 
     //language=JSON
@@ -31,7 +33,8 @@ class PostSpaceControllerTest extends AbstractControllerTest {
               "startX": 0.8,
               "startY": 0.7,
               "endX": 0.6,
-              "endY": 0.5
+              "endY": 0.5,
+              "hidden": false
             }
             """;
 
@@ -42,7 +45,6 @@ class PostSpaceControllerTest extends AbstractControllerTest {
 
     @Test
     @DisplayName("스페이스 생성 API")
-    @Sql("PostSpaceControllerTest.sql")
     void testCreateSpace() throws Exception {
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
@@ -70,7 +72,8 @@ class PostSpaceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("startX").description("생성된 스페이스의 시작좌표(x)입니다."),
                                 fieldWithPath("startY").description("생성된 스페이스의 시작좌표(y)입니다."),
                                 fieldWithPath("endX").description("생성된 스페이스의 종료좌표(x)입니다."),
-                                fieldWithPath("endY").description("생성된 스페이스의 종료좌표(y)입니다.")
+                                fieldWithPath("endY").description("생성된 스페이스의 종료좌표(y)입니다."),
+                                fieldWithPath("hidden").description("생성된 스페이스의 숨김 여부입니다.")
                         )
                 ));
 

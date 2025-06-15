@@ -7,14 +7,16 @@ public record UpdatePieceResult() {
     public record Detail(
             String message,
             String title,
-            String description
+            String description,
+            Boolean hidden
     ) {
 
         public static UpdatePieceResult.Detail of(Piece piece) {
             return new UpdatePieceResult.Detail(
                     String.format("[#%d]번 피스의 상세정보가 수정되었습니다.", piece.getId()),
                     piece.getBasicInfo().getTitle(),
-                    piece.getBasicInfo().getDescription()
+                    piece.getBasicInfo().getDescription(),
+                    piece.getBasicInfo().getHidden()
             );
         }
     }

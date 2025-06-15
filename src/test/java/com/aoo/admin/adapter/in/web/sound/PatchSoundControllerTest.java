@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("PatchSoundControllerTest.sql")
+@Sql("SoundControllerTest.sql")
 class PatchSoundControllerTest extends AbstractControllerTest {
 
     @Autowired

@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:sql/clear.sql")
-@Sql("DeleteSpaceControllerTest.sql")
+@Sql("SpaceControllerTest.sql")
 class DeleteSpaceControllerTest extends AbstractControllerTest {
 
     @Autowired

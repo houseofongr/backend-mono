@@ -21,8 +21,8 @@ class CreatePieceServiceTest {
     @DisplayName("피스 생성 서비스")
     void TestCreatePieceService() {
         // given
-        CreatePieceCommand command = new CreatePieceCommand(1L, 1L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
-        Piece newPiece = Piece.create(1L, -1L, command.universeId(), command.parentSpaceId(), command.title(), command.description(), command.startX(), command.startY(), command.endX(), command.endY());
+        CreatePieceCommand command = new CreatePieceCommand(1L, 1L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f, false);
+        Piece newPiece = Piece.create(1L, -1L, command.universeId(), command.parentSpaceId(), command.title(), command.description(), command.startX(), command.startY(), command.endX(), command.endY(), command.hidden());
 
         // when
         when(createPiecePort.createPieceWithoutImageFile(command)).thenReturn(newPiece);

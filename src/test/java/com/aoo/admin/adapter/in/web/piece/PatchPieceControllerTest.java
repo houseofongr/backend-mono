@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("PatchPieceControllerTest.sql")
+@Sql("PieceControllerTest.sql")
 class PatchPieceControllerTest extends AbstractControllerTest {
 
     @Test
@@ -24,7 +24,8 @@ class PatchPieceControllerTest extends AbstractControllerTest {
         String request = """
                 {
                   "title": "평화",
-                  "description": "피스는 평화입니다."
+                  "description": "피스는 평화입니다.",
+                  "hidden": false
                 }
                 """;
 
@@ -39,12 +40,14 @@ class PatchPieceControllerTest extends AbstractControllerTest {
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
-                                fieldWithPath("description").description("수정할 상세정보입니다.")
+                                fieldWithPath("description").description("수정할 상세정보입니다."),
+                                fieldWithPath("hidden").description("수정할 숨김 여부입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 피스의 상세정보가 수정되었습니다.'"),
                                 fieldWithPath("title").description("수정된 제목입니다."),
-                                fieldWithPath("description").description("수정된 상세정보입니다.")
+                                fieldWithPath("description").description("수정된 상세정보입니다."),
+                                fieldWithPath("hidden").description("수정된 숨김 여부입니다.")
                         )
                 ));
     }

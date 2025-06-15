@@ -6,13 +6,15 @@ public record UpdateSpaceResult() {
     public record Detail(
             String message,
             String title,
-            String description
+            String description,
+            Boolean hidden
     ) {
         public static Detail of(Space space) {
             return new Detail(
                     String.format("[#%d]번 스페이스의 상세정보가 수정되었습니다.", space.getId()),
                     space.getBasicInfo().getTitle(),
-                    space.getBasicInfo().getDescription()
+                    space.getBasicInfo().getDescription(),
+                    space.getBasicInfo().getHidden()
             );
         }
 

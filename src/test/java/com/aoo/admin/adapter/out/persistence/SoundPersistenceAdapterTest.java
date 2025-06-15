@@ -32,7 +32,7 @@ class SoundPersistenceAdapterTest {
     @DisplayName("사운드 저장 테스트")
     void testSaveSound() {
         // given
-        Sound sound = Sound.create(123L, 345L, 1L, "소리", "사운드는 소리입니다.");
+        Sound sound = Sound.create(123L, 345L, 1L, "소리", "사운드는 소리입니다.", false);
 
         // when
         Long newSoundId = sut.save(sound);
@@ -68,7 +68,7 @@ class SoundPersistenceAdapterTest {
     @DisplayName("사운드 업데이트 테스트")
     void testUpdateSound() {
         // given
-        Sound sound = Sound.create(1L, 234L, 1L, "변경할 제목", "변경할 내용");
+        Sound sound = Sound.create(1L, 234L, 1L, "변경할 제목", "변경할 내용", false);
 
         // when
         sut.update(sound);
@@ -87,10 +87,10 @@ class SoundPersistenceAdapterTest {
     @DisplayName("사운드 삭제 테스트")
     void testDeleteSound() {
         // given
-        Sound sound = Sound.create(1L, 234L, 1L, "변경할 제목", "변경할 내용");
+        Sound sound = Sound.create(1L, 234L, 1L, "변경할 제목", "변경할 내용", false);
 
         // when
-        sut.delete(sound);
+        sut.delete(sound.getId());
 
         // then
         assertThat(soundJpaRepository.findById(sound.getId())).isEmpty();

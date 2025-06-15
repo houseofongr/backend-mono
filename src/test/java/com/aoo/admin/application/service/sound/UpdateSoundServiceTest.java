@@ -51,7 +51,7 @@ class UpdateSoundServiceTest {
         // given
         Long id = 1L;
         UpdateSoundCommand command = new UpdateSoundCommand("수정", "수정할 내용");
-        Sound sound = Sound.create(123L, 345L, 1L, "소리", "사운드는 소리입니다.");
+        Sound sound = Sound.create(123L, 345L, 1L, "소리", "사운드는 소리입니다.", false);
 
         // when
         when(findSoundPort.find(id)).thenReturn(sound);
@@ -72,7 +72,7 @@ class UpdateSoundServiceTest {
         byte[] over100MB = new byte[100 * 1024 * 1024 + 1];
         MockMultipartFile audio = new MockMultipartFile("audio", "new_audio.mp3", "audio/mpeg", "audio file".getBytes());
         MockMultipartFile audioOver100MB = new MockMultipartFile("audio", "new_audio2.mp3", "audio/mpeg", over100MB);
-        Sound sound = Sound.loadWithoutRelation(1L, 1L,"소리", "사운드는 소리입니다.", ZonedDateTime.now(), ZonedDateTime.now());
+        Sound sound = Sound.loadWithoutRelation(1L, 1L,"소리", "사운드는 소리입니다.", false, ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
         when(findSoundPort.find(id)).thenReturn(sound);

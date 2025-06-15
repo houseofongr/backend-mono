@@ -13,10 +13,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql("classpath:/sql/clear.sql")
+@Sql("UniverseControllerTest.sql")
 class GetUniverseListControllerTest extends AbstractControllerTest {
 
     @Test
-    @Sql("GetUniverseListControllerTest.sql")
     @DisplayName("유니버스 리스트 조회 API")
     void testGetList() throws Exception {
         mockMvc.perform(get("/admin/universes?page=1&size=10")

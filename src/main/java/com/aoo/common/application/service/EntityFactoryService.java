@@ -118,7 +118,8 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
                 command.startX(),
                 command.startY(),
                 command.endX(),
-                command.endY()
+                command.endY(),
+                command.hidden()
         );
     }
 
@@ -135,7 +136,8 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
                 command.startX(),
                 command.startY(),
                 command.endX(),
-                command.endY()
+                command.endY(),
+                command.hidden()
         );
     }
 
@@ -143,6 +145,6 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     public Sound createSound(Long audioId, CreateSoundCommand command) {
         Long newId = issueIdPort.issueSoundId();
 
-        return Sound.create(newId, audioId, command.pieceId(), command.title(), command.description());
+        return Sound.create(newId, audioId, command.pieceId(), command.title(), command.description(), command.hidden());
     }
 }

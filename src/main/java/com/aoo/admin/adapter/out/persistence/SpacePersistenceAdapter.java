@@ -43,7 +43,7 @@ public class SpacePersistenceAdapter implements FindSpacePort, SaveSpacePort, Up
         universeJpaRepository.findById(space.getBasicInfo().getUniverseId()).orElseThrow(() -> new AdminException(AdminErrorCode.UNIVERSE_NOT_FOUND));
 
         Long parentSpaceId = space.getBasicInfo().getParentSpaceId();
-        if (parentSpaceId != -1)
+        if (parentSpaceId != null && parentSpaceId != -1)
             spaceJpaRepository.findById(parentSpaceId).orElseThrow(() -> new AdminException(AdminErrorCode.SPACE_NOT_FOUND));
 
         SpaceJpaEntity spaceJpaEntity = SpaceJpaEntity.create(space);

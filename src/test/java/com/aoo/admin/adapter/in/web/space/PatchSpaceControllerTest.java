@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("PatchSpaceControllerTest.sql")
+@Sql("SpaceControllerTest.sql")
 class PatchSpaceControllerTest extends AbstractControllerTest {
 
     @Test
@@ -24,7 +24,8 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
         String request = """
                 {
                   "title": "블랙홀",
-                  "description": "블랙홀은 빛도 빨아들입니다."
+                  "description": "블랙홀은 빛도 빨아들입니다.",
+                  "hidden": false
                 }
                 """;
 
@@ -39,12 +40,14 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
-                                fieldWithPath("description").description("수정할 상세정보입니다.")
+                                fieldWithPath("description").description("수정할 상세정보입니다."),
+                                fieldWithPath("hidden").description("수정할 숨김 여부입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 스페이스의 상세정보가 수정되었습니다.'"),
                                 fieldWithPath("title").description("수정된 제목입니다."),
-                                fieldWithPath("description").description("수정된 상세정보입니다.")
+                                fieldWithPath("description").description("수정된 상세정보입니다."),
+                                fieldWithPath("hidden").description("수정된 숨김 여부입니다.")
                         )
                 ));
     }

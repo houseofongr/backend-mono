@@ -25,8 +25,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql(value = "classpath:sql/clear.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
-@Sql("PatchUniverseControllerTest.sql")
+@Sql(value = "classpath:sql/clear.sql")
+@Sql("UniverseControllerTest.sql")
 class PatchUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired

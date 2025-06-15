@@ -8,17 +8,18 @@ public record CreateSoundCommand(
         Long pieceId,
         String title,
         String description,
+        Boolean hidden,
         MultipartFile audioFile
 ) {
-    public static CreateSoundCommand create(Long spaceId, String title, String description) {
-        if (spaceId == null)
-            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (title == null || title.isBlank() || title.length() > 100)
-            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (description != null && description.length() > 5000)
+    public static CreateSoundCommand create(Long spaceId, String title, String description, Boolean hidden) {
+        if ((spaceId == null) ||
+            (title == null || title.isBlank() || title.length() > 100) ||
+            (description != null && description.length() > 5000) ||
+            hidden == null
+        )
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
 
-        return new CreateSoundCommand(spaceId, title, description, null);
+        return new CreateSoundCommand(spaceId, title, description, hidden, null);
     }
 
     public static CreateSoundCommand withAudioFile(CreateSoundCommand baseCommand, MultipartFile audioFile) {
@@ -29,6 +30,7 @@ public record CreateSoundCommand(
                 baseCommand.pieceId(),
                 baseCommand.title(),
                 baseCommand.description(),
+                baseCommand.hidden(),
                 audioFile
         );
     }

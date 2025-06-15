@@ -10,7 +10,8 @@ public record CreatePieceResult(
         Float startX,
         Float startY,
         Float endX,
-        Float endY
+        Float endY,
+        Boolean hidden
 ) {
     public static CreatePieceResult from(Long pieceId, Piece piece) {
         return new CreatePieceResult(
@@ -21,7 +22,8 @@ public record CreatePieceResult(
                 piece.getPosInfo().getSx(),
                 piece.getPosInfo().getSy(),
                 piece.getPosInfo().getEx(),
-                piece.getPosInfo().getEy()
+                piece.getPosInfo().getEy(),
+                piece.getBasicInfo().getHidden()
         );
     }
 }

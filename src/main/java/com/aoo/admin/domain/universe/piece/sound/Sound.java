@@ -19,19 +19,27 @@ public class Sound {
         this.dateInfo = dateInfo;
     }
 
-    public static Sound create(Long id, Long audioId, Long pieceId, String title, String description) {
+    public static Sound create(Long id, Long audioId, Long pieceId, String title, String description, Boolean hidden) {
         return new Sound(id,
                 new AudioFileInfo(audioId),
-                new SoundBasicInfo(pieceId, title, description),
+                new SoundBasicInfo(pieceId, title, description, hidden),
                 null
         );
     }
 
-    public static Sound loadWithoutRelation(Long id, Long audioId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Sound loadWithoutRelation(Long id, Long audioId, String title, String description, Boolean hidden, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Sound(id,
                 new AudioFileInfo(audioId),
-                new SoundBasicInfo(null, title, description),
+                new SoundBasicInfo(null, title, description, hidden),
                 new DateInfo(createdTime, updatedTime)
+        );
+    }
+
+    public static Sound loadFile(Long id, Long audioId) {
+        return new Sound(id,
+                new AudioFileInfo(audioId),
+                null,
+                null
         );
     }
 }

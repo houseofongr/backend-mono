@@ -38,7 +38,7 @@ public class PieceJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false)
     private Float ey;
 
-    @Column(nullable = false)
+    @Column
     private Long innerImageFileId;
 
     @Column(nullable = false)
@@ -46,6 +46,9 @@ public class PieceJpaEntity extends DateColumnBaseEntity {
 
     @Column
     private Long parentSpaceId;
+
+    @Column(nullable = false)
+    private Boolean hidden;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "piece")
     private List<SoundJpaEntity> sounds;
@@ -62,6 +65,7 @@ public class PieceJpaEntity extends DateColumnBaseEntity {
                 piece.getFileInfo().getImageId(),
                 piece.getBasicInfo().getUniverseId(),
                 piece.getBasicInfo().getParentSpaceId(),
+                piece.getBasicInfo().getHidden(),
                 new ArrayList<>()
         );
     }

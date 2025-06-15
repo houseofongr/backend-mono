@@ -2,6 +2,7 @@ package com.aoo.admin.adapter.out.persistence.mapper;
 
 import com.aoo.admin.application.port.in.piece.SearchPieceResult;
 import com.aoo.admin.domain.universe.piece.Piece;
+import com.aoo.admin.domain.universe.piece.sound.Sound;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SoundJpaEntity;
 import com.aoo.common.application.port.in.Pagination;
@@ -18,12 +19,13 @@ public class PieceMapper {
                 pieceJpaEntity.getInnerImageFileId(),
                 pieceJpaEntity.getTitle(),
                 pieceJpaEntity.getDescription(),
-                pieceJpaEntity.getCreatedTime(),
-                pieceJpaEntity.getUpdatedTime(),
                 pieceJpaEntity.getSx(),
                 pieceJpaEntity.getSy(),
                 pieceJpaEntity.getEx(),
-                pieceJpaEntity.getEy()
+                pieceJpaEntity.getEy(),
+                pieceJpaEntity.getHidden(),
+                pieceJpaEntity.getCreatedTime(),
+                pieceJpaEntity.getUpdatedTime()
         );
     }
 
@@ -43,6 +45,16 @@ public class PieceMapper {
                         soundJpaEntity.getCreatedTime().toEpochSecond(),
                         soundJpaEntity.getUpdatedTime().toEpochSecond())).toList(),
                 Pagination.of(entityPage)
+        );
+    }
+
+    public Piece mapToPieceWithSounds(PieceJpaEntity pieceJpaEntity) {
+        return Piece.loadWithSound(pieceJpaEntity.getId(),
+                pieceJpaEntity.getInnerImageFileId(),
+                pieceJpaEntity.getSounds().stream().map(soundJpaEntity ->
+                        Sound.loadFile(soundJpaEntity.getId(),
+                                soundJpaEntity.getAudioFileId())
+                ).toList()
         );
     }
 }

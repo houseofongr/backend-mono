@@ -8,6 +8,7 @@ public record CreatePieceCommand(
         Float startX,
         Float startY,
         Float endX,
-        Float endY
+        Float endY,
+        Boolean hidden
 ) {
 }

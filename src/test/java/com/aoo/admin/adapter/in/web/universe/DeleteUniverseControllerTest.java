@@ -17,20 +17,22 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql("classpath:/sql/clear.sql")
+@Sql("UniverseControllerTest.sql")
 class DeleteUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;
 
     @Test
-    @Sql("DeleteUniverseControllerTest.sql")
     @DisplayName("유니버스 삭제 API")
     void testDeleteUniverse() throws Exception {
 
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_2.get(tempDir.toString()));
         saveFile(FileF.AUDIO_FILE_1.get(tempDir.toString()));
 
-        mockMvc.perform(delete("/admin/universes/{universeId}", 12L)
+        mockMvc.perform(delete("/admin/universes/{universeId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))

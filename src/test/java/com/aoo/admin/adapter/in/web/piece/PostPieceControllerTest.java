@@ -17,6 +17,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql("classpath:/sql/clear.sql")
+@Sql("PieceControllerTest.sql")
 class PostPieceControllerTest extends AbstractControllerTest {
 
     //language=JSON
@@ -29,7 +31,8 @@ class PostPieceControllerTest extends AbstractControllerTest {
               "startX": 0.1,
               "startY": 0.2,
               "endX": 0.3,
-              "endY": 0.4
+              "endY": 0.4,
+              "hidden": false
             }
             """;
 
@@ -38,7 +41,6 @@ class PostPieceControllerTest extends AbstractControllerTest {
 
     @Test
     @DisplayName("피스 생성 API")
-    @Sql("PostPieceControllerTest.sql")
     void testCreatePiece() throws Exception {
 
         mockMvc.perform(post("/admin/pieces/position")
@@ -55,7 +57,8 @@ class PostPieceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("startX").description("생성할 피스의 시작좌표(x)입니다."),
                                 fieldWithPath("startY").description("생성할 피스의 시작좌표(y)입니다."),
                                 fieldWithPath("endX").description("생성할 피스의 종료좌표(x)입니다."),
-                                fieldWithPath("endY").description("생성할 피스의 종료좌표(y)입니다.")
+                                fieldWithPath("endY").description("생성할 피스의 종료좌표(y)입니다."),
+                                fieldWithPath("hidden").description("생성할 피스의 숨김여부입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 피스가 생성되었습니다.'"),
@@ -65,7 +68,8 @@ class PostPieceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("startX").description("생성된 피스의 시작좌표(x)입니다."),
                                 fieldWithPath("startY").description("생성된 피스의 시작좌표(y)입니다."),
                                 fieldWithPath("endX").description("생성된 피스의 종료좌표(x)입니다."),
-                                fieldWithPath("endY").description("생성된 피스의 종료좌표(y)입니다.")
+                                fieldWithPath("endY").description("생성된 피스의 종료좌표(y)입니다."),
+                                fieldWithPath("hidden").description("생성된 피스의 숨김여부입니다.")
                         )
                 ));
 

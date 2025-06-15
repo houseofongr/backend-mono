@@ -5,8 +5,8 @@ values (1, CURRENT_TIMESTAMP - INTERVAL 9 HOUR, CURRENT_TIMESTAMP - INTERVAL 9 H
         'GOVERNMENT_AND_PUBLIC_INSTITUTION', '유니버스는 우주입니다.', 'PUBLIC', 1, 2, 3, '우주', 0);
 
 insert into PIECE(PIECE.ID, PIECE.CREATED_TIME, PIECE.UPDATED_TIME, PIECE.DESCRIPTION, PIECE.INNER_IMAGE_FILE_ID,
-                  PIECE.TITLE, PIECE.SX, PIECE.SY, PIECE.EX, PIECE.EY, PIECE.PARENT_SPACE_ID, PIECE.UNIVERSE_ID)
-values (1, current_timestamp, current_timestamp, '피스는 조각입니다.', -1, '조각', 0.3, 0.2, 0.2, 0.3, null, 1);
+                  PIECE.TITLE, PIECE.SX, PIECE.SY, PIECE.EX, PIECE.EY, PIECE.PARENT_SPACE_ID, PIECE.UNIVERSE_ID, PIECE.HIDDEN)
+values (1, current_timestamp, current_timestamp, '피스는 조각입니다.', -1, '조각', 0.3, 0.2, 0.2, 0.3, -1, 1, false);
 
-insert into SOUND(ID, AUDIO_FILE_ID, TITLE, DESCRIPTION, IS_ACTIVE, PIECE_ID)
+insert into SOUND(ID, AUDIO_FILE_ID, TITLE, DESCRIPTION, HIDDEN, PIECE_ID)
 values (1, 1, '소리', '사운드는 소리입니다.', true, 1);

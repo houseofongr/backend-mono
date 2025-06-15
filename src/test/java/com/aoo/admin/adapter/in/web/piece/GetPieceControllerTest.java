@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("GetPieceControllerTest.sql")
+@Sql("PieceControllerTest.sql")
 class GetPieceControllerTest extends AbstractControllerTest {
 
     @Test

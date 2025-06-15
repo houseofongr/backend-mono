@@ -6,6 +6,7 @@ public record CreateSoundResult(
         Long pieceId,
         Long audioFileId,
         String title,
-        String description
+        String description,
+        Boolean hidden
 ) {
 }

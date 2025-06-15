@@ -36,19 +36,14 @@ class UpdateSpaceServiceTest {
     }
 
     @Test
-    @DisplayName("제목(100자/NB) 조건 확인")
+    @DisplayName("제목(100자/NB), 내용(5000자) 조건 확인")
     void testTitleCondition() {
         String over100 = "a".repeat(101);
-        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail("", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail(" ", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail(over100, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-    }
-
-    @Test
-    @DisplayName("내용(5000자) 조건 확인")
-    void testDescriptionCondition() {
         String over5000 = "a".repeat(5001);
-        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail("블랙홀", over5000)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail("", "설명", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail(" ", "설명", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail(over100, "설명", null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSpaceCommand.Detail("블랙홀", over5000, true)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
@@ -68,7 +63,7 @@ class UpdateSpaceServiceTest {
     @DisplayName("스페이스 기본정보 수정 서비스")
     void testUpdateDetailSpaceService() {
         // given
-        UpdateSpaceCommand.Detail command = new UpdateSpaceCommand.Detail("블랙홀", "블랙홀은 빛도 빨아들입니다.");
+        UpdateSpaceCommand.Detail command = new UpdateSpaceCommand.Detail("블랙홀", "블랙홀은 빛도 빨아들입니다.", false);
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when

@@ -42,6 +42,12 @@ public class PiecePersistenceAdapter implements SavePiecePort, FindPiecePort, Up
     }
 
     @Override
+    public Piece findWithSounds(Long id) {
+        PieceJpaEntity pieceJpaEntity = pieceJpaRepository.findById(id).orElseThrow(() -> new AdminException(AdminErrorCode.PIECE_NOT_FOUND));
+        return pieceMapper.mapToPieceWithSounds(pieceJpaEntity);
+    }
+
+    @Override
     public SearchPieceResult search(SearchPieceCommand command) {
         PieceJpaEntity pieceJpaEntity = pieceJpaRepository.findById(command.pieceId()).orElseThrow(() -> new AdminException(AdminErrorCode.PIECE_NOT_FOUND));
         return pieceMapper.mapToSearchPieceResult(pieceJpaEntity, pieceJpaRepository.searchAll(command));

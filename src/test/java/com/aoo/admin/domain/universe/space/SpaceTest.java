@@ -23,7 +23,7 @@ class SpaceTest {
         Float ey = 1500 / 5000F;
 
         // when
-        Space newSpace = Space.create(id, imageId, universeId, null, title, description, sx, sy, ex, ey);
+        Space newSpace = Space.create(id, imageId, universeId, null, title, description, sx, sy, ex, ey, false);
 
         // then
         assertThat(newSpace.getId()).isEqualTo(id);

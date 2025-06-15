@@ -13,6 +13,7 @@ public record CreateSpaceCommand(
         Float startY,
         Float endX,
         Float endY,
+        Boolean hidden,
         MultipartFile imageFile
 ) {
     public CreateSpaceCommand {
@@ -28,6 +29,7 @@ public record CreateSpaceCommand(
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (endX == null || endX < 0 || endX > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
         if (endY == null || endY < 0 || endY > 1) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
+        if (hidden == null) throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
     public static CreateSpaceCommand withImageFile(CreateSpaceCommand command, MultipartFile imageFile) {
@@ -43,6 +45,7 @@ public record CreateSpaceCommand(
                 command.startY(),
                 command.endX(),
                 command.endY(),
+                command.hidden(),
                 imageFile
         );
     }

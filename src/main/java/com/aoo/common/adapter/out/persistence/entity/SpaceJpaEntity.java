@@ -44,6 +44,9 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     @Column
     private Long parentSpaceId;
 
+    @Column(nullable = false)
+    private Boolean hidden;
+
     public static SpaceJpaEntity create(Space space) {
         return new SpaceJpaEntity(
                 null,
@@ -55,7 +58,8 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
                 space.getPosInfo().getEy(),
                 space.getFileInfo().getImageId(),
                 space.getBasicInfo().getUniverseId(),
-                space.getBasicInfo().getParentSpaceId()
+                space.getBasicInfo().getParentSpaceId(),
+                space.getBasicInfo().getHidden()
         );
     }
 
@@ -63,6 +67,7 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
         this.innerImageFileId = space.getFileInfo().getImageId();
         this.title = space.getBasicInfo().getTitle();
         this.description = space.getBasicInfo().getDescription();
+        this.hidden = space.getBasicInfo().getHidden();
         this.sx = space.getPosInfo().getSx();
         this.sy = space.getPosInfo().getSy();
         this.ex = space.getPosInfo().getEx();

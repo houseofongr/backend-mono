@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:sql/clear.sql")
-@Sql("PostSoundControllerTest.sql")
+@Sql("SoundControllerTest.sql")
 class PostSoundControllerTest extends AbstractControllerTest {
 
     //language=JSON
@@ -24,7 +24,8 @@ class PostSoundControllerTest extends AbstractControllerTest {
             {
               "pieceId": 1,
               "title": "소리",
-              "description": "사운드는 소리입니다."
+              "description": "사운드는 소리입니다.",
+              "hidden": false
             }
             """;
 
@@ -53,7 +54,8 @@ class PostSoundControllerTest extends AbstractControllerTest {
                                 fieldWithPath("pieceId").description("생성된 사운드를 포함하는 피스의 식별자입니다."),
                                 fieldWithPath("audioFileId").description("생성된 사운드의 내부 음원파일 식별자입니다."),
                                 fieldWithPath("title").description("생성된 사운드의 제목입니다."),
-                                fieldWithPath("description").description("생성된 사운드의 상세정보입니다.")
+                                fieldWithPath("description").description("생성된 사운드의 상세정보입니다."),
+                                fieldWithPath("hidden").description("생성된 사운드의 숨김 여부입니다.")
                         )
                 ));
     }

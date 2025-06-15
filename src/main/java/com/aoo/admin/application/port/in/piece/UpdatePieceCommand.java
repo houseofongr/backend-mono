@@ -7,7 +7,8 @@ public record UpdatePieceCommand() {
 
     public record Detail(
             String title,
-            String description
+            String description,
+            Boolean hidden
     ) {
         public Detail {
             if ((title != null && (title.isBlank() || title.length() > 100)) ||

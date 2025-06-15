@@ -20,34 +20,34 @@ public class Space extends UniverseTreeComponent {
         this.posInfo = posInfo;
     }
 
-    public static Space create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey) {
+    public static Space create(Long id, Long innerImageId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey, Boolean hidden) {
 
         return new Space(
                 id,
                 new ImageFileInfo(innerImageId),
-                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description, hidden),
                 null,
                 new PosInfo(sx, sy, ex, ey),
                 null
         );
     }
 
-    public static Space loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
+    public static Space loadTreeComponent(Long id, Long innerImageFileId, Long universeId, Long parentSpaceId, String title, String description, Float sx, Float sy, Float ex, Float ey, Boolean hidden, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Space(
                 id,
                 new ImageFileInfo(innerImageFileId),
-                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description),
+                new SpacePieceBasicInfo(universeId, parentSpaceId, title, description, hidden),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(sx, sy, ex, ey),
                 null
         );
     }
 
-    public static Space loadWithoutRelation(Long id, Long innerImageFileId, String title, String description, ZonedDateTime createdTime, ZonedDateTime updatedTime, Float sx, Float sy, Float ex, Float ey) {
+    public static Space loadWithoutRelation(Long id, Long innerImageFileId, String title, String description,Float sx, Float sy, Float ex, Float ey,  Boolean hidden, ZonedDateTime createdTime, ZonedDateTime updatedTime) {
         return new Space(
                 id,
                 new ImageFileInfo(innerImageFileId),
-                new SpacePieceBasicInfo(null, null, title, description),
+                new SpacePieceBasicInfo(null, null, title, description, hidden),
                 new DateInfo(createdTime, updatedTime),
                 new PosInfo(sx, sy, ex, ey),
                 null

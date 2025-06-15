@@ -33,7 +33,8 @@ public class CreateSoundService implements CreateSoundUseCase {
                 newSound.getBasicInfo().getPieceId(),
                 newSound.getFileInfo().getAudioId(),
                 newSound.getBasicInfo().getTitle(),
-                newSound.getBasicInfo().getDescription()
+                newSound.getBasicInfo().getDescription(),
+                newSound.getBasicInfo().getHidden()
         );
     }
 }

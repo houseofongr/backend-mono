@@ -12,10 +12,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql("classpath:/sql/clear.sql")
+@Sql("UniverseControllerTest.sql")
 class GetUniverseControllerTest extends AbstractControllerTest {
 
     @Test
-    @Sql("GetUniverseControllerTest.sql")
     @DisplayName("관리자 유니버스 상세정보 조회")
     void testGetSpecificUniverse() throws Exception {
 

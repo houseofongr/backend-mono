@@ -54,7 +54,7 @@ public class UniverseMapper {
                 universeJpaEntity.getUpdatedTime());
     }
 
-    public TraversalComponents mapToTraversalComponent(UniverseJpaEntity universeJpaEntity, List<SpaceJpaEntity> spaceJpaEntities, List<PieceJpaEntity> elementJpaEntities) {
+    public TraversalComponents mapToTraversalComponent(UniverseJpaEntity universeJpaEntity, List<SpaceJpaEntity> spaceJpaEntities, List<PieceJpaEntity> pieceJpaEntities) {
         Universe universe = Universe.loadTreeComponent(
                 universeJpaEntity.getId(),
                 universeJpaEntity.getInnerImageFileId()
@@ -71,23 +71,25 @@ public class UniverseMapper {
                 spaceJpaEntity.getSy(),
                 spaceJpaEntity.getEx(),
                 spaceJpaEntity.getEy(),
+                spaceJpaEntity.getHidden(),
                 spaceJpaEntity.getCreatedTime(),
                 spaceJpaEntity.getUpdatedTime()
         )).toList();
 
-        List<Piece> pieces = elementJpaEntities.stream().map(elementJpaEntity -> Piece.loadTreeComponent(
-                elementJpaEntity.getId(),
-                elementJpaEntity.getInnerImageFileId(),
-                elementJpaEntity.getUniverseId(),
-                elementJpaEntity.getParentSpaceId(),
-                elementJpaEntity.getTitle(),
-                elementJpaEntity.getDescription(),
-                elementJpaEntity.getSx(),
-                elementJpaEntity.getSy(),
-                elementJpaEntity.getEx(),
-                elementJpaEntity.getEy(),
-                elementJpaEntity.getCreatedTime(),
-                elementJpaEntity.getUpdatedTime()
+        List<Piece> pieces = pieceJpaEntities.stream().map(pieceJpaEntity -> Piece.loadTreeComponent(
+                pieceJpaEntity.getId(),
+                pieceJpaEntity.getInnerImageFileId(),
+                pieceJpaEntity.getUniverseId(),
+                pieceJpaEntity.getParentSpaceId(),
+                pieceJpaEntity.getTitle(),
+                pieceJpaEntity.getDescription(),
+                pieceJpaEntity.getSx(),
+                pieceJpaEntity.getSy(),
+                pieceJpaEntity.getEx(),
+                pieceJpaEntity.getEy(),
+                pieceJpaEntity.getHidden(),
+                pieceJpaEntity.getCreatedTime(),
+                pieceJpaEntity.getUpdatedTime()
         )).toList();
 
         return new TraversalComponents(universe, spaces, pieces);

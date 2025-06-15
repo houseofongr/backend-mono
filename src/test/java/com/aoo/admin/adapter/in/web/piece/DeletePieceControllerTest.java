@@ -2,7 +2,6 @@ package com.aoo.admin.adapter.in.web.piece;
 
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.aoo.common.adapter.out.persistence.repository.PieceJpaRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("DeletePieceControllerTest.sql")
+@Sql("classpath:/sql/clear.sql")
+@Sql("PieceControllerTest.sql")
 class DeletePieceControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -36,7 +36,10 @@ class DeletePieceControllerTest extends AbstractControllerTest {
                                 parameterWithName("pieceId").description("삭제할 피스 식별자입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("삭제 완료 메시지 : '[#id]번 피스가 삭제되었습니다.'")
+                                fieldWithPath("message").description("삭제 완료 메시지 : '[#id]번 피스가 삭제되었습니다.'"),
+                                fieldWithPath("deletedSoundIds").description("삭제된 사운드 식별자 리스트입니다."),
+                                fieldWithPath("deletedImageFileIds").description("삭제된 이미지 파일 식별자 리스트입니다."),
+                                fieldWithPath("deletedAudioFileIds").description("삭제된 오디오 파일 식별자 리스트입니다.")
                         )
                 ));
 

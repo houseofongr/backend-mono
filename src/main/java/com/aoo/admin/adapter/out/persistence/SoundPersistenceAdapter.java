@@ -15,6 +15,8 @@ import com.aoo.common.adapter.out.persistence.repository.SoundJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class SoundPersistenceAdapter implements SaveSoundPort, FindSoundPort, UpdateSoundPort, DeleteSoundPort {
@@ -47,7 +49,12 @@ public class SoundPersistenceAdapter implements SaveSoundPort, FindSoundPort, Up
     }
 
     @Override
-    public void delete(Sound sound) {
-        soundJpaRepository.deleteById(sound.getId());
+    public void delete(Long id) {
+        soundJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll(List<Long> ids) {
+        soundJpaRepository.deleteAllById(ids);
     }
 }

@@ -21,7 +21,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("PostUpdateSpaceControllerTest.sql")
+@Sql("classpath:sql/clear.sql")
+@Sql("SpaceControllerTest.sql")
 class PostUpdateSpaceControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -30,6 +31,9 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("스페이스 내부이미지 수정 API")
     void testUpdateSpaceInnerImageAPI() throws Exception {
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
+        saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
         saveFile(FileF.IMAGE_FILE_1.get(tempDir.toString()));
         MockMultipartFile innerImage = new MockMultipartFile("innerImage", "new_space_inner_image.png", "image/png", "space file".getBytes());
 
@@ -53,9 +57,9 @@ class PostUpdateSpaceControllerTest extends AbstractControllerTest {
                 ));
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(1);
+        assertThat(fileInDB).hasSize(4);
         assertThat(fileInDB)
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_space_inner_image.png"));
-        assertThat(spaceJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(fileInDB.getFirst().getId());
+        assertThat(spaceJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(fileInDB.getLast().getId());
     }
 }

@@ -9,6 +9,7 @@ public record CreateSpaceResult(
         Float startX,
         Float startY,
         Float endX,
-        Float endY
+        Float endY,
+        Boolean hidden
 ) {
 }

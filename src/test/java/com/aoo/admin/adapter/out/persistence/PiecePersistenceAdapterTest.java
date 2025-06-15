@@ -40,7 +40,7 @@ class PiecePersistenceAdapterTest {
     @DisplayName("피스 저장 테스트")
     void testSavePiece() {
         // given
-        Piece newPiece = Piece.create(2L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
+        Piece newPiece = Piece.create(2L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f, false);
 
         // when
         Long newPieceId = sut.save(newPiece);
@@ -70,8 +70,8 @@ class PiecePersistenceAdapterTest {
 
         // then
         assertThat(piece.getId()).isEqualTo(pieceId);
-        assertThat(piece.getFileInfo().getImageId()).isEqualTo(-1L);
-        assertThat(piece.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
+        assertThat(piece.getFileInfo().getImageId()).isNull();
+        assertThat(piece.getBasicInfo().getParentSpaceId()).isNull();
         assertThat(piece.getBasicInfo().getUniverseId()).isNull();
         assertThat(piece.getBasicInfo().getTitle()).isEqualTo("조각");
         assertThat(piece.getBasicInfo().getDescription()).isEqualTo("피스는 조각입니다.");
@@ -81,6 +81,21 @@ class PiecePersistenceAdapterTest {
         assertThat(piece.getPosInfo().getEy()).isEqualTo(0.3f);
         assertThat(piece.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
         assertThat(piece.getDateInfo().getUpdatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+    }
+
+    @Test
+    @DisplayName("피스, 사운드 조회 테스트")
+    void testFindWithSounds() {
+        // given
+        Long id = 1L;
+
+        // when
+        Piece pieceWithSounds = sut.findWithSounds(id);
+
+        // then
+        assertThat(pieceWithSounds.getId()).isEqualTo(1L);
+        assertThat(pieceWithSounds.getFileInfo().getImageId()).isNull();
+        assertThat(pieceWithSounds.getSounds()).hasSize(11);
     }
 
     @Test
@@ -105,7 +120,7 @@ class PiecePersistenceAdapterTest {
     @DisplayName("피스 수정 테스트")
     void testUpdatePiece() {
         // given
-        Piece updatedPiece = Piece.create(1L, -1L, 123L, 321L, "평화", "피스는 평화입니다.", 0.1f, 0.2f, 0.3f, 0.4f);
+        Piece updatedPiece = Piece.create(1L, -1L, 123L, 321L, "평화", "피스는 평화입니다.", 0.1f, 0.2f, 0.3f, 0.4f, false);
         Long pieceId = 1L;
 
         // when
@@ -117,8 +132,8 @@ class PiecePersistenceAdapterTest {
 
         // then
         assertThat(piece.getId()).isEqualTo(pieceId);
-        assertThat(piece.getFileInfo().getImageId()).isEqualTo(-1L);
-        assertThat(piece.getBasicInfo().getParentSpaceId()).isEqualTo(-1L);
+        assertThat(piece.getFileInfo().getImageId()).isNull();
+        assertThat(piece.getBasicInfo().getParentSpaceId()).isNull();
         assertThat(piece.getBasicInfo().getUniverseId()).isNull();
         assertThat(piece.getBasicInfo().getTitle()).isEqualTo("평화");
         assertThat(piece.getBasicInfo().getDescription()).isEqualTo("피스는 평화입니다.");

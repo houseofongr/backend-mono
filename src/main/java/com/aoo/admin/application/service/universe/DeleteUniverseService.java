@@ -27,6 +27,7 @@ public class DeleteUniverseService implements DeleteUniverseUseCase {
 
         deleteFileUseCase.deleteFile(universe.getFileInfo().getThumbnailId());
         deleteFileUseCase.deleteFile(universe.getFileInfo().getThumbMusicId());
+        deleteFileUseCase.deleteFile(universe.getFileInfo().getImageId());
 
         deleteUniversePort.delete(universe);
 

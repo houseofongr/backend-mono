@@ -24,14 +24,14 @@ class DeleteSoundServiceTest {
     void testDeleteSound() {
         // given
         Long id = 1L;
-        Sound sound = Sound.create(1L, 234L, 1L, "소리", "사운드는 소리입니다.");
+        Sound sound = Sound.create(1L, 234L, 1L, "소리", "사운드는 소리입니다.", false);
 
         // when
         when(findSoundPort.find(1L)).thenReturn(sound);
         DeleteSoundResult result = sut.delete(id);
 
         // then
-        verify(deleteSoundPort, times(1)).delete(sound);
+        verify(deleteSoundPort, times(1)).delete(sound.getId());
         assertThat(result.message()).matches("\\[#\\d+]번 사운드가 삭제되었습니다.");
         assertThat(result.deletedAudioId()).isEqualTo(234L);
     }

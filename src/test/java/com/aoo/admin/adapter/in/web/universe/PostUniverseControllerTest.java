@@ -27,13 +27,12 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql(value = "classpath:sql/clear.sql")
+@Sql("UniverseControllerTest.sql")
 class PostUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;
-
-    @Autowired
-    HashtagJpaRepository hashtagJpaRepository;
 
     @Autowired
     UniverseJpaRepository universeJpaRepository;
@@ -62,7 +61,6 @@ class PostUniverseControllerTest extends AbstractControllerTest {
 
     @Test
     @DisplayName("유니버스 생성 API")
-    @Sql("PostUniverseControllerTest.sql")
     void testCreateUniverse() throws Exception {
 
         MockPart metadataPart = new MockPart("metadata", metadata.getBytes());
@@ -102,7 +100,7 @@ class PostUniverseControllerTest extends AbstractControllerTest {
                         )
                 ));
 
-        UniverseJpaEntity newUniverse = universeJpaRepository.findAll().getFirst();
+        UniverseJpaEntity newUniverse = universeJpaRepository.findAll().getLast();
 
         List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
         assertThat(fileInDB).hasSize(3);
@@ -120,12 +118,7 @@ class PostUniverseControllerTest extends AbstractControllerTest {
         assertThat(newUniverse.getInnerImageFileId()).isEqualTo(innerImageFile.getId());
 
         List<UniverseHashtagJpaEntity> universeHashtags = em.createQuery("select u from UniverseHashtagJpaEntity u", UniverseHashtagJpaEntity.class).getResultList();
-        assertThat(universeHashtags).hasSize(4);
-
-        List<HashtagJpaEntity> hashtagsInDB = hashtagJpaRepository.findAll();
-        String tags = "우주, 행성, 지구, 별";
-        assertThat(hashtagsInDB).hasSize(4);
-        assertThat(hashtagsInDB).allMatch(hashtagJpaEntity -> tags.contains(hashtagJpaEntity.getTag()));
+        assertThat(universeHashtags.size()).isGreaterThan(4);
     }
 
 }

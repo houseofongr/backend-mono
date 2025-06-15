@@ -41,7 +41,7 @@ class DeleteUniverseServiceTest {
         MessageDto message = sut.delete(id);
 
         // then
-        verify(deleteFileUseCase, times(2)).deleteFile(anyLong());
+        verify(deleteFileUseCase, times(3)).deleteFile(anyLong());
         verify(deleteUniversePort, times(1)).delete(universe);
         assertThat(message.message()).contains("번 유니버스가 삭제되었습니다.");
     }
