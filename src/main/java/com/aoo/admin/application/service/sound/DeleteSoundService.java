@@ -28,6 +28,7 @@ public class DeleteSoundService implements DeleteSoundUseCase {
 
         return new DeleteSoundResult(
                 String.format("[#%d]번 사운드가 삭제되었습니다.", sound.getId()),
+                soundId,
                 sound.getFileInfo().getAudioId()
         );
     }

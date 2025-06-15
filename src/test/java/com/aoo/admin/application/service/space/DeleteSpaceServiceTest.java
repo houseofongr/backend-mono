@@ -37,7 +37,7 @@ class DeleteSpaceServiceTest {
         // when
         when(findSpacePort.findUniverseId(spaceId)).thenReturn(1L);
         when(findUniversePort.findTreeComponents(1L)).thenReturn(traversalComponent);
-        when(deletePieceUseCase.delete(anyLong())).thenReturn(new DeletePieceResult("test", List.of(), List.of(), List.of()));
+        when(deletePieceUseCase.delete(anyLong())).thenReturn(new DeletePieceResult("test", 1L, List.of(), List.of(), List.of()));
         DeleteSpaceResult result = sut.delete(spaceId);
 
         // then

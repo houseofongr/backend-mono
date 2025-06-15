@@ -37,6 +37,7 @@ class DeletePieceControllerTest extends AbstractControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("message").description("삭제 완료 메시지 : '[#id]번 피스가 삭제되었습니다.'"),
+                                fieldWithPath("deletedPieceId").description("삭제된 피스 식별자입니다."),
                                 fieldWithPath("deletedSoundIds").description("삭제된 사운드 식별자 리스트입니다."),
                                 fieldWithPath("deletedImageFileIds").description("삭제된 이미지 파일 식별자 리스트입니다."),
                                 fieldWithPath("deletedAudioFileIds").description("삭제된 오디오 파일 식별자 리스트입니다.")

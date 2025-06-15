@@ -40,7 +40,8 @@ class DeleteSoundControllerTest extends AbstractControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("message").description("삭제 완료 메시지 : '[#id]번 사운드가 삭제되었습니다.'"),
-                                fieldWithPath("deletedAudioId").description("삭제된 오디오 파일 아이디입니다.")
+                                fieldWithPath("deletedSoundId").description("삭제된 사운드 식별자입니다."),
+                                fieldWithPath("deletedAudioId").description("삭제된 오디오 파일 식별자입니다.")
                         )
                 ));
 

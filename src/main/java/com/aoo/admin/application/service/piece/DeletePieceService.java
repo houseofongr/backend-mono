@@ -38,6 +38,7 @@ public class DeletePieceService implements DeletePieceUseCase {
         deleteFileUseCase.deleteFiles(Stream.concat(deletedImageFileIds.stream(), deletedAudioFileIds.stream()).toList());
 
         return new DeletePieceResult(String.format("[#%d]번 피스가 삭제되었습니다.", pieceId),
+                pieceId,
                 deletedSoundIds,
                 deletedImageFileIds,
                 deletedAudioFileIds);
