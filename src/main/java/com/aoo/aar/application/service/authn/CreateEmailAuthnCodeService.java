@@ -23,7 +23,7 @@ public class CreateEmailAuthnCodeService implements CreateEmailAuthnCodeUseCase 
     private final SaveEmailAuthnCodePort saveEmailAuthnCodePort;
     private final SendAuthnCodePort sendAuthnCodePort;
 
-    @Value("${security.email-authn-code-ttl:500}")
+    @Value("${security.email-authn-code-ttl:600}")
     private Integer authnCodeTTLSecond;
 
     @Override

@@ -1,13 +1,18 @@
 package com.aoo.aar.adapter.in.web.authn;
 
+import com.aoo.aar.application.port.out.cache.LoadEmailAuthnStatePort;
 import com.aoo.aar.application.port.out.cache.SaveEmailAuthnCodePort;
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
+import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -20,6 +25,15 @@ class PostVerifyEmailAuthnCodeControllerTest extends AbstractControllerTest {
     @Autowired
     SaveEmailAuthnCodePort saveEmailAuthnCodePort;
 
+    @Autowired
+    LoadEmailAuthnStatePort loadEmailAuthnStatePort;
+
+    @BeforeEach
+    void clearRedis() {
+        Set<String> keys = redisTemplate.keys("*");
+        redisTemplate.delete(keys);
+    }
+
     @Test
     @DisplayName("이메일 인증코드 생성 API")
     void testPostEmailAuthnAPI() throws Exception {
@@ -28,6 +42,7 @@ class PostVerifyEmailAuthnCodeControllerTest extends AbstractControllerTest {
         String code = "123456";
 
         saveEmailAuthnCodePort.saveEmailAuthnCode(email, code, Duration.ofMinutes(5));
+        assertThat(loadEmailAuthnStatePort.loadAuthenticated(email)).isFalse();
 
         mockMvc.perform(post("/aar/authn/email-code/verify")
                         .param("email", email)
@@ -43,6 +58,8 @@ class PostVerifyEmailAuthnCodeControllerTest extends AbstractControllerTest {
                                 fieldWithPath("message").description("인증 완료 메시지 : '이메일 인증에 성공했습니다.'")
                         )
                 ));
+
+        assertThat(loadEmailAuthnStatePort.loadAuthenticated(email)).isTrue();
     }
 
 }

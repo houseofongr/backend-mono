@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -22,6 +23,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Set;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -48,6 +50,9 @@ public abstract class AbstractControllerTest {
 
     @Autowired
     protected EntityManager em;
+
+    @Autowired
+    protected RedisTemplate<String, String> redisTemplate;
 
     protected MockMvcTester mockMvcTester;
 

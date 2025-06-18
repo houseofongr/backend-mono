@@ -4,7 +4,6 @@ import com.aoo.aar.application.port.in.authn.CreateEmailAuthnCodeResult;
 import com.aoo.aar.application.port.out.cache.SaveEmailAuthnCodePort;
 import com.aoo.aar.application.port.out.mail.SendAuthnCodePort;
 import com.aoo.aar.application.service.AarErrorCode;
-import com.aoo.common.application.port.in.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
