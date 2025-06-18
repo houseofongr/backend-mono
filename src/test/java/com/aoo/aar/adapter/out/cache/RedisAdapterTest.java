@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.time.Duration;
 
+import static com.aoo.aar.adapter.out.cache.RedisKeys.EMAIL_AUTHN_CODE_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RedisTest
@@ -30,7 +31,7 @@ class RedisAdapterTest {
         sut.saveEmailAuthnCode(email, code, ttl);
 
         // then
-        assertThat(redisTemplate.opsForValue().get(email)).isEqualTo(code);
-        assertThat(redisTemplate.getExpire(email)).isEqualTo(300);
+        assertThat(redisTemplate.opsForValue().get(EMAIL_AUTHN_CODE_PREFIX.getKey() + email)).isEqualTo(code);
+        assertThat(redisTemplate.getExpire(EMAIL_AUTHN_CODE_PREFIX.getKey() + email)).isEqualTo(300);
     }
 }
