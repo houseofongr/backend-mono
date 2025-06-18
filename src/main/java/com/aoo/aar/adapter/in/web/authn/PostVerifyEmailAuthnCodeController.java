@@ -1,5 +1,6 @@
 package com.aoo.aar.adapter.in.web.authn;
 
+import com.aoo.aar.application.port.in.authn.VerifyEmailAuthnCodeResult;
 import com.aoo.aar.application.port.in.authn.VerifyEmailAuthnCodeUseCase;
 import com.aoo.common.application.port.in.MessageDto;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class PostVerifyEmailAuthnCodeController {
     private final VerifyEmailAuthnCodeUseCase useCase;
 
     @PostMapping("/aar/authn/email-code/verify")
-    ResponseEntity<MessageDto> sendMail(
+    ResponseEntity<VerifyEmailAuthnCodeResult> sendMail(
             @RequestParam String email,
             @RequestParam String code) {
         return ResponseEntity.ok(useCase.verify(email, code));

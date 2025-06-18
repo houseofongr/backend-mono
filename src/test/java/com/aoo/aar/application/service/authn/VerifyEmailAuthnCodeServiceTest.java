@@ -1,5 +1,6 @@
 package com.aoo.aar.application.service.authn;
 
+import com.aoo.aar.application.port.in.authn.VerifyEmailAuthnCodeResult;
 import com.aoo.aar.application.port.out.cache.LoadEmailAuthnCodePort;
 import com.aoo.aar.application.port.out.cache.SaveEmailAuthnStatePort;
 import com.aoo.aar.application.service.AarErrorCode;
@@ -22,7 +23,7 @@ class VerifyEmailAuthnCodeServiceTest {
 
     @BeforeEach
     void init() {
-        ReflectionTestUtils.setField(sut, "authnStatusTTLSecond", 6000);
+        ReflectionTestUtils.setField(sut, "authnStatusTTLSecond", 3600);
     }
 
     @Test
@@ -40,11 +41,12 @@ class VerifyEmailAuthnCodeServiceTest {
 
         // 정상 인증번호
         when(loadEmailAuthnCodePort.loadAuthnCodeByEmail(email)).thenReturn(code);
-        MessageDto result = sut.verify(email, code);
+        VerifyEmailAuthnCodeResult result = sut.verify(email, code);
 
         // then
-        verify(saveEmailAuthnStatePort, times(1)).saveAuthenticated(email, Duration.ofSeconds(6000));
+        verify(saveEmailAuthnStatePort, times(1)).saveAuthenticated(email, Duration.ofSeconds(3600));
         assertThat(result.message()).isEqualTo("이메일 인증에 성공했습니다.");
+        assertThat(result.ttl()).isEqualTo(3600);
     }
 
 }

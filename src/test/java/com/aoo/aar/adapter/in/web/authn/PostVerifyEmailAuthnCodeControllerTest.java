@@ -55,7 +55,8 @@ class PostVerifyEmailAuthnCodeControllerTest extends AbstractControllerTest {
                                 parameterWithName("code").description("인증코드입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("message").description("인증 완료 메시지 : '이메일 인증에 성공했습니다.'")
+                                fieldWithPath("message").description("인증 완료 메시지 : '이메일 인증에 성공했습니다.'"),
+                                fieldWithPath("ttl").description("인증 유효시간(초)")
                         )
                 ));
 
