@@ -8,7 +8,9 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public abstract class AbstractControllerTest {
 
     protected MockMvc mockMvc;
+
+    @MockitoBean
+    protected JavaMailSender javaMailSender;
 
     @TempDir
     protected Path tempDir;

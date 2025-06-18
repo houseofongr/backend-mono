@@ -53,6 +53,10 @@ public class AarSecurityConfig {
                                         "/aar/error-codes")
                                 .permitAll()
 
+                                .requestMatchers(POST,
+                                        "/aar/authn/email-code")
+                                .permitAll()
+
                                 .requestMatchers(GET,
                                         "/aar/homes/**")
                                 .hasRole("USER")
