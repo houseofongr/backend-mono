@@ -91,6 +91,21 @@ include::{snippets}/aar-access-token/response-fields.adoc[]
 
 operation::aar-authn-regist[snippets='http-request,request-fields,http-response,response-fields']
 
+[[aar-authn-create-email-code-api]]
+==== 이메일 인증코드 생성 API
+
+이메일 인증을 위한 코드를 메일로 전송합니다.
+
+operation::aar-authn-post-email-code[snippets='http-request,form-parameters,http-response,response-fields']
+
+[[aar-authn-verify-email-code-api]]
+==== 이메일 인증 API
+
+전송된 인증코드로 이메일을 인증합니다.
+
+operation::aar-authn-post-email-code-verify[snippets='http-request,form-parameters,http-response,response-fields']
+
+
 [[aar-user-api]]
 === 사용자(User) API
 

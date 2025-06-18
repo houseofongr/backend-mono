@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class RegisterUserControllerTest extends AbstractControllerTest {
+public class PostRegisterUserControllerTest extends AbstractControllerTest {
 
     @Test
     @Sql("PostUserControllerTest.sql")

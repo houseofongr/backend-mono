@@ -54,7 +54,7 @@ public class AarSecurityConfig {
                                 .permitAll()
 
                                 .requestMatchers(POST,
-                                        "/aar/authn/email-code")
+                                        "/aar/authn/email-code/**")
                                 .permitAll()
 
                                 .requestMatchers(GET,

@@ -20,7 +20,7 @@ class RedisAdapterTest {
     RedisTemplate<String, String> redisTemplate;
 
     @Test
-    @DisplayName("레디스 이메일 인증코드 저장 테스트")
+    @DisplayName("이메일 인증코드 저장 테스트")
     void testSaveAuthnEmailCode() {
         // given
         String email = "test@example.com";
@@ -33,5 +33,21 @@ class RedisAdapterTest {
         // then
         assertThat(redisTemplate.opsForValue().get(EMAIL_AUTHN_CODE_PREFIX.getKey() + email)).isEqualTo(code);
         assertThat(redisTemplate.getExpire(EMAIL_AUTHN_CODE_PREFIX.getKey() + email)).isEqualTo(300);
+    }
+
+    @Test
+    @DisplayName("이메일 인증코드 불러오기 테스트")
+    void testLoadAuthnEmailCode() {
+        // given
+        String email = "test@example.com";
+        String code = "123456";
+        Duration ttl = Duration.ofMinutes(5);
+        sut.saveEmailAuthnCode(email, code, ttl);
+
+        // when
+        String result = sut.loadAuthnCodeByEmail(email);
+
+        // then
+        assertThat(result).isEqualTo(code);
     }
 }
