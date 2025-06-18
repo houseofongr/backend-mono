@@ -40,6 +40,7 @@ class GetPieceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("pieceId").description("피스의 식별자입니다."),
                                 fieldWithPath("title").description("피스의 제목입니다."),
                                 fieldWithPath("description").description("피스의 설명입니다."),
+                                fieldWithPath("hidden").description("피스의 숨김 여부입니다."),
                                 fieldWithPath("createdTime").description("피스의 생성(등록)일자입니다.(유닉스 타임스탬프)"),
                                 fieldWithPath("updatedTime").description("피스의 수정일자입니다.(유닉스 타임스탬프)"),
                                 fieldWithPath("sounds").description("피스 내부에 존재하는 사운드 리스트입니다."),
@@ -47,6 +48,7 @@ class GetPieceControllerTest extends AbstractControllerTest {
                                 fieldWithPath("sounds[].audioId").description("오디오 파일의 식별자입니다."),
                                 fieldWithPath("sounds[].title").description("사운드의 제목입니다."),
                                 fieldWithPath("sounds[].description").description("사운드의 설명입니다."),
+                                fieldWithPath("sounds[].hidden").description("사운드의 숨김여부입니다."),
                                 fieldWithPath("sounds[].createdTime").description("사운드의 생성(등록)일자입니다.(유닉스 타임스탬프)"),
                                 fieldWithPath("sounds[].updatedTime").description("사운드의 수정일자입니다.(유닉스 타임스탬프)"),
 

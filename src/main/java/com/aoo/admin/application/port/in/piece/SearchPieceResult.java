@@ -8,6 +8,7 @@ public record SearchPieceResult(
         Long pieceId,
         String title,
         String description,
+        Boolean hidden,
         Long createdTime,
         Long updatedTime,
         List<SoundInfo> sounds,
@@ -18,6 +19,7 @@ public record SearchPieceResult(
             Long audioId,
             String title,
             String description,
+            Boolean hidden,
             Long createdTime,
             Long updatedTime
     ) {

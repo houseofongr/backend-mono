@@ -35,6 +35,7 @@ public class PieceMapper {
                 piece.getId(),
                 piece.getTitle(),
                 piece.getDescription(),
+                piece.getHidden(),
                 piece.getCreatedTime().toEpochSecond(),
                 piece.getUpdatedTime().toEpochSecond(),
                 content.stream().map(soundJpaEntity -> new SearchPieceResult.SoundInfo(
@@ -42,6 +43,7 @@ public class PieceMapper {
                         soundJpaEntity.getAudioFileId(),
                         soundJpaEntity.getTitle(),
                         soundJpaEntity.getDescription(),
+                        soundJpaEntity.getHidden(),
                         soundJpaEntity.getCreatedTime().toEpochSecond(),
                         soundJpaEntity.getUpdatedTime().toEpochSecond())).toList(),
                 Pagination.of(entityPage)
