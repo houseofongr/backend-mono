@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
+import static com.aoo.aar.adapter.out.cache.RedisKeys.*;
+
 @Component
 public class RedisAdapter implements SaveEmailAuthnCodePort {
 
@@ -18,6 +20,6 @@ public class RedisAdapter implements SaveEmailAuthnCodePort {
 
     @Override
     public void saveEmailAuthnCode(String email, String code, Duration ttl) {
-        valueOperations.set(email, code, ttl);
+        valueOperations.set(EMAIL_AUTHN_CODE_PREFIX.getKey() + email, code, ttl);
     }
 }
