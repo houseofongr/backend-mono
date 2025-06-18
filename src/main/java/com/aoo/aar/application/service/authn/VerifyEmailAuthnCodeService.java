@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class VerifyEmailAuthnCodeService implements VerifyEmailAuthnCodeUseCase 
     @Override
     public VerifyEmailAuthnCodeResult verify(String email, String code) {
         String codeInCache = loadEmailAuthnCodePort.loadAuthnCodeByEmail(email);
-        if (!codeInCache.equals(code)) throw new AarException(AarErrorCode.EMAIL_CODE_AUTHENTICATION_FAILED);
+        if (!Objects.equals(codeInCache, code)) throw new AarException(AarErrorCode.EMAIL_CODE_AUTHENTICATION_FAILED);
 
         saveEmailAuthnStatePort.saveAuthenticated(email, Duration.ofSeconds(authnStatusTTLSecond));
 

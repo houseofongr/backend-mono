@@ -35,6 +35,10 @@ class VerifyEmailAuthnCodeServiceTest {
 
         // when
 
+        // 인증번호가 비어있을 경우
+        when(loadEmailAuthnCodePort.loadAuthnCodeByEmail(email)).thenReturn(null);
+        assertThatThrownBy(() -> sut.verify(email, code)).hasMessage(AarErrorCode.EMAIL_CODE_AUTHENTICATION_FAILED.getMessage());
+
         // 인증번호 다를 경우
         when(loadEmailAuthnCodePort.loadAuthnCodeByEmail(email)).thenReturn("654321");
         assertThatThrownBy(() -> sut.verify(email, code)).hasMessage(AarErrorCode.EMAIL_CODE_AUTHENTICATION_FAILED.getMessage());
