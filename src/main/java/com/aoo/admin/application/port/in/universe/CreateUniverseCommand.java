@@ -21,11 +21,10 @@ public record CreateUniverseCommand(
 ) {
 
     public CreateUniverseCommand {
-        if (title == null || title.isBlank() || title.length() > 100)
-            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (description != null && description.length() > 5000)
-            throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-        if (hashtags.size() > 10 || String.join("", hashtags).length() > 500)
+        if ((title == null || title.isBlank() || title.length() > 100) ||
+            (description == null || description.length() > 5000) ||
+            (hashtags.size() > 10 || String.join("", hashtags).length() > 500)
+        )
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 

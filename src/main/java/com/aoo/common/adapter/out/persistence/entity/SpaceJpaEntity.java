@@ -20,7 +20,7 @@ public class SpaceJpaEntity extends DateColumnBaseEntity {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(length = 5000)
+    @Column(nullable = false, length = 5000)
     private String description;
 
     @Column(nullable = false)

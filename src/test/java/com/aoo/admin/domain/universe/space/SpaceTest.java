@@ -48,12 +48,12 @@ class SpaceTest {
         // try 1
         space.getBasicInfo().update(null, null);
         assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
-        assertThat(space.getBasicInfo().getDescription()).isEqualTo(null);
+        assertThat(space.getBasicInfo().getDescription()).isEmpty();
 
         // try 2
         space.getBasicInfo().update(title, null);
         assertThat(space.getBasicInfo().getTitle()).isEqualTo(title);
-        assertThat(space.getBasicInfo().getDescription()).isEqualTo(null);
+        assertThat(space.getBasicInfo().getDescription()).isEmpty();
 
         // try 3
         space.getBasicInfo().update(null, description);

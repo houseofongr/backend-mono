@@ -76,7 +76,7 @@ class CreateSpaceServiceTest {
     @DisplayName("내부사진 없거나 100MB 초과 케이스")
     void testExceed2MB() {
         // given
-        CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f, 1f, 1f, 1f, false, null);
+        CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", "", 1f, 1f, 1f, 1f, false, null);
         byte[] content = new byte[100 * 1024 * 1024 + 1];
         MockMultipartFile over100MB = new MockMultipartFile("image", "image.png", "image/png", content);
         assertThatThrownBy(() -> CreateSpaceCommand.withImageFile(command, null)).hasMessage(AdminErrorCode.SPACE_FILE_REQUIRED.getMessage());
@@ -92,7 +92,7 @@ class CreateSpaceServiceTest {
     @Test
     @DisplayName("스페이스 생성 요청 정상 생성")
     void happyCase() {
-        new CreateSpaceCommand(1L, -1L, "공간", null, 1f, 1f, 1f, 1f, false, basicImage);
+        new CreateSpaceCommand(1L, -1L, "공간", "", 1f, 1f, 1f, 1f, false, basicImage);
     }
 
     @Test
@@ -100,7 +100,7 @@ class CreateSpaceServiceTest {
     void createSpaceService() {
         // given
         MockMultipartFile basicImage = new MockMultipartFile("image", "image.png", "image/png", "basic image".getBytes());
-        CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", null, 1f, 1f, 1f, 1f, false, basicImage);
+        CreateSpaceCommand command = new CreateSpaceCommand(1L, -1L, "공간", "", 1f, 1f, 1f, 1f, false, basicImage);
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
