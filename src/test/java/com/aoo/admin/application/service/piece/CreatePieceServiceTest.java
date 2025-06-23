@@ -4,11 +4,13 @@ import com.aoo.admin.application.port.in.piece.CreatePieceCommand;
 import com.aoo.admin.application.port.in.piece.CreatePieceResult;
 import com.aoo.admin.application.port.out.piece.CreatePiecePort;
 import com.aoo.admin.application.port.out.piece.SavePiecePort;
+import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.domain.universe.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class CreatePieceServiceTest {
@@ -16,6 +18,39 @@ class CreatePieceServiceTest {
     CreatePiecePort createPiecePort = mock();
     SavePiecePort savePiecePort = mock();
     CreatePieceService sut = new CreatePieceService(createPiecePort, savePiecePort);
+
+    @Test
+    @DisplayName("제목(100자/NB), 내용(5000자), 숨김 여부(hidden), 위치(startX, startY, scalex, scaley : 0 ~ 1) 조건 확인")
+    void testBasicInfo() {
+        String emptyTitle = "";
+        String blankTitle = " ";
+        String length100 = "a".repeat(101);
+        String length5000 = "a".repeat(5001);
+
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, emptyTitle, null, 0.5F, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, blankTitle, null, 0.5F, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, length100, null, 0.5F, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", length5000, 0.5F, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", "공간공간", 0.5F, 0.5F, 0.5F, 0.5F, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+
+        // null
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, null, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, null, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 0.5F, null, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 0.5F, 0.5F, null, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+
+        // 0 미만
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, -0.5F, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, -0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 0.5F, -0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 0.5F, 0.5F, -0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+
+        // 1 이상
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 1.5F, 0.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 1.5F, 0.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 0.5F, 1.5F, 0.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreatePieceCommand(1L, 1L, "공간", null, 0.5F, 0.5F, 0.5F, 1.5F, false)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+    }
 
     @Test
     @DisplayName("피스 생성 서비스")
