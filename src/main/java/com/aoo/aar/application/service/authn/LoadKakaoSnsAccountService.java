@@ -3,7 +3,7 @@ package com.aoo.aar.application.service.authn;
 import com.aoo.aar.application.port.in.authn.OAuth2Dto;
 import com.aoo.aar.application.port.in.authn.SNSLoginResult;
 import com.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
-import com.aoo.aar.application.port.out.persistence.user.QueryUserPort;
+import com.aoo.aar.application.port.out.persistence.user.SearchUserPort;
 import com.aoo.admin.application.port.in.snsaccount.CreateSnsAccountUseCase;
 import com.aoo.admin.application.port.in.snsaccount.LoadSnsAccountUseCase;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;
@@ -22,7 +22,7 @@ import static com.aoo.common.util.GsonUtil.gson;
 public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
 
     private final LoadSnsAccountUseCase loadSnsAccountUseCase;
-    private final QueryUserPort queryUserPort;
+    private final SearchUserPort searchUserPort;
     private final CreateSnsAccountUseCase createSnsAccountUseCase;
     private final IssueAccessTokenPort issueAccessTokenPort;
 
@@ -44,7 +44,7 @@ public class LoadKakaoSnsAccountService implements LoadSnsAccountService {
         // account with user
         if (snsAccount.isRegistered())
             return new SNSLoginResult(
-                    queryUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
+                    searchUserPort.queryMyInfo(snsAccount.getUserId().getId()).nickname(),
                     issueAccessTokenPort.issueAccessToken(snsAccount),
                     SnsDomain.KAKAO.name(),
                     false

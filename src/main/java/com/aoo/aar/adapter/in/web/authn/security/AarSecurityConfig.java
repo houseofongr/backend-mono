@@ -50,6 +50,7 @@ public class AarSecurityConfig {
                                         "/aar/authn/login/**",
                                         "/aar/authn/code/**",
                                         "/aar/authn/kakao/callback",
+                                        "/aar/users/nickname/**",
                                         "/aar/error-codes")
                                 .permitAll()
 

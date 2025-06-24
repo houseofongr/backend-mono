@@ -1,6 +1,6 @@
 package com.aoo.aar.adapter.out.persistence.mapper;
 
-import com.aoo.aar.application.port.in.user.QueryMyInfoResult;
+import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
 import com.aoo.common.adapter.in.web.DateTimeFormatters;
 import com.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
 
-    public QueryMyInfoResult mapToQueryMyInfoResult(UserJpaEntity userJpaEntity, Integer homeCount, Integer soundSourceCount) {
+    public SearchMyInfoResult mapToQueryMyInfoResult(UserJpaEntity userJpaEntity, Integer homeCount, Integer soundSourceCount) {
 
-        return new QueryMyInfoResult(
+        return new SearchMyInfoResult(
                 userJpaEntity.getNickname(),
                 userJpaEntity.getEmail(),
                 DateTimeFormatters.ENGLISH_DATE.getFormatter().format(userJpaEntity.getCreatedTime()),
@@ -25,8 +25,8 @@ public class UserMapper {
         );
     }
 
-    private QueryMyInfoResult.SnsAccountInfo mapToSnsAccountInfo(SnsAccountJpaEntity snsAccountJpaEntity) {
-        return new QueryMyInfoResult.SnsAccountInfo(
+    private SearchMyInfoResult.SnsAccountInfo mapToSnsAccountInfo(SnsAccountJpaEntity snsAccountJpaEntity) {
+        return new SearchMyInfoResult.SnsAccountInfo(
                 snsAccountJpaEntity.getSnsDomain().name(),
                 snsAccountJpaEntity.getEmail()
         );

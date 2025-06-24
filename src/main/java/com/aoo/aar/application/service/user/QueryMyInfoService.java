@@ -1,8 +1,8 @@
 package com.aoo.aar.application.service.user;
 
-import com.aoo.aar.application.port.in.user.QueryMyInfoResult;
+import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
 import com.aoo.aar.application.port.in.user.QueryMyInfoUseCase;
-import com.aoo.aar.application.port.out.persistence.user.QueryUserPort;
+import com.aoo.aar.application.port.out.persistence.user.SearchUserPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class QueryMyInfoService implements QueryMyInfoUseCase {
 
-    private final QueryUserPort queryUserPort;
+    private final SearchUserPort searchUserPort;
 
     @Override
-    public QueryMyInfoResult queryMyInfo(Long userId) {
-        return queryUserPort.queryMyInfo(userId);
+    public SearchMyInfoResult queryMyInfo(Long userId) {
+        return searchUserPort.queryMyInfo(userId);
     }
 }

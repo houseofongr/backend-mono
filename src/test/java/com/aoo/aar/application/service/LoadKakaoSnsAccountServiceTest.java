@@ -2,8 +2,8 @@ package com.aoo.aar.application.service;
 
 import com.aoo.aar.adapter.out.jwt.JwtAdapter;
 import com.aoo.aar.application.port.in.authn.OAuth2Dto;
-import com.aoo.aar.application.port.in.user.QueryMyInfoResult;
-import com.aoo.aar.application.port.out.persistence.user.QueryUserPort;
+import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
+import com.aoo.aar.application.port.out.persistence.user.SearchUserPort;
 import com.aoo.aar.application.service.authn.LoadKakaoSnsAccountService;
 import com.aoo.admin.application.port.in.snsaccount.CreateSnsAccountUseCase;
 import com.aoo.admin.application.port.in.snsaccount.LoadSnsAccountUseCase;
@@ -26,17 +26,17 @@ class LoadKakaoSnsAccountServiceTest {
     LoadKakaoSnsAccountService sut;
 
     LoadSnsAccountUseCase loadSnsAccountUseCase;
-    QueryUserPort queryUserPort;
+    SearchUserPort searchUserPort;
     CreateSnsAccountUseCase createSnsAccountUseCase;
     JwtAdapter jwtAdapter;
 
     @BeforeEach
     void init() {
         loadSnsAccountUseCase = mock();
-        queryUserPort = mock();
+        searchUserPort = mock();
         createSnsAccountUseCase = mock();
         jwtAdapter = mock(JwtAdapter.class);
-        sut = new LoadKakaoSnsAccountService(loadSnsAccountUseCase, queryUserPort, createSnsAccountUseCase, jwtAdapter);
+        sut = new LoadKakaoSnsAccountService(loadSnsAccountUseCase, searchUserPort, createSnsAccountUseCase, jwtAdapter);
     }
 
     @Test
@@ -45,11 +45,11 @@ class LoadKakaoSnsAccountServiceTest {
         // given
         OAuth2User oAuth2User = mock();
         SnsAccount snsAccount = SnsAccount.load(1L, SnsDomain.KAKAO, "sns_id", "leaf", "leaf", "test@example.com", null, null, 1L);
-        QueryMyInfoResult result = mock();
+        SearchMyInfoResult result = mock();
 
         // when
         when(loadSnsAccountUseCase.loadSnsAccount(any(), any())).thenReturn(snsAccount);
-        when(queryUserPort.queryMyInfo(1L)).thenReturn(result);
+        when(searchUserPort.queryMyInfo(1L)).thenReturn(result);
         when(result.nickname()).thenReturn("leaf");
         OAuth2User loadUser = sut.load(oAuth2User);
 

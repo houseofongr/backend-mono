@@ -42,7 +42,7 @@ public class PostRegisterUserControllerTest extends AbstractControllerTest {
                 .andDo(document("aar-authn-regist",
                         requestFields(
                                 fieldWithPath("termsOfUseAgreement").description("녹화물에 대한 2차 가공 동의여부입니다."),
-                                fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수하우스 및 활용에 대한 동의여부입니다.")
+                                fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수집 및 활용에 대한 동의여부입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("userId").description("회원가입한 사용자의 식별자입니다."),

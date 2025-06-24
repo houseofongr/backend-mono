@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetMyInfoControllerTest extends AbstractControllerTest {
 
-
     @Test
     @Sql("GetMyInfoControllerTest.sql")
     @DisplayName("본인정보 조회 API")

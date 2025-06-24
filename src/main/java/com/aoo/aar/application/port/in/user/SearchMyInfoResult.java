@@ -2,7 +2,7 @@ package com.aoo.aar.application.port.in.user;
 
 import java.util.List;
 
-public record QueryMyInfoResult(
+public record SearchMyInfoResult(
         String nickname,
         String email,
         String registeredDate,

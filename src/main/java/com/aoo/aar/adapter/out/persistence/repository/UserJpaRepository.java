@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface UserJpaRepository extends JpaRepository<UserJpaEntity, Long>, UserQueryDslRepository {
     Optional<UserJpaEntity> findByPhoneNumber(String phoneNumber);
+    boolean existsByNickname(String nickname);
 }
