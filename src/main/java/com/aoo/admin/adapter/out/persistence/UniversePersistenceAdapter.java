@@ -1,6 +1,6 @@
 package com.aoo.admin.adapter.out.persistence;
 
-import com.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
 import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;

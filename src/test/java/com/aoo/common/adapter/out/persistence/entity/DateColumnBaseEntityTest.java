@@ -1,7 +1,7 @@
 package com.aoo.common.adapter.out.persistence.entity;
 
 import com.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
-import com.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;

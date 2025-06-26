@@ -1,7 +1,7 @@
 package com.aoo.aar;
 
-import com.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.admin.application.port.in.user.RegisterUserResult;
 import com.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.aoo.common.adapter.in.web.config.SystemTest;

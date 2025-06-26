@@ -1,7 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
-import com.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
 import com.aoo.admin.application.port.out.snsaccount.SaveSnsAccountPort;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;

@@ -1,4 +1,4 @@
-package com.aoo.aar.adapter.out.persistence.repository;
+package com.aoo.common.adapter.out.persistence.repository;
 
 import com.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;

@@ -1,7 +1,7 @@
 package com.aoo.aar.adapter.in.web.user;
 
 import com.aoo.aar.adapter.out.api.KakaoProperties;
-import com.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
 import com.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;

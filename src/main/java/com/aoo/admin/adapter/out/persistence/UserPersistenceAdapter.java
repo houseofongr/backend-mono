@@ -1,7 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
-import com.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.aar.application.service.AarErrorCode;
 import com.aoo.aar.application.service.AarException;
 import com.aoo.admin.adapter.out.persistence.mapper.UserMapper;

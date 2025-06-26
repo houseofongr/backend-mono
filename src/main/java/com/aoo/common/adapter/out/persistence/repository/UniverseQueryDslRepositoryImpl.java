@@ -1,17 +1,18 @@
 package com.aoo.common.adapter.out.persistence.repository;
 
+import com.aoo.aar.application.port.in.universe.SearchPublicUniverseCommand;
+import com.aoo.aar.application.port.in.universe.SearchPublicUniverseResult;
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.Category;
+import com.aoo.admin.domain.universe.PublicStatus;
 import com.aoo.common.adapter.out.persistence.condition.UniverseSearchType;
 import com.aoo.common.adapter.out.persistence.condition.UniverseSortType;
-import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.TraversalJpaEntityComponents;
-import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.*;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,7 @@ import static com.aoo.common.adapter.out.persistence.entity.QPieceJpaEntity.piec
 import static com.aoo.common.adapter.out.persistence.entity.QSpaceJpaEntity.spaceJpaEntity;
 import static com.aoo.common.adapter.out.persistence.entity.QUniverseHashtagJpaEntity.universeHashtagJpaEntity;
 import static com.aoo.common.adapter.out.persistence.entity.QUniverseJpaEntity.universeJpaEntity;
+import static com.aoo.common.adapter.out.persistence.entity.QUniverseLikeJpaEntity.universeLikeJpaEntity;
 
 public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepository {
 
@@ -37,16 +39,16 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
     public Page<UniverseJpaEntity> searchAll(SearchUniverseCommand command) {
         List<UniverseJpaEntity> entities = query.selectFrom(universeJpaEntity)
                 .leftJoin(universeJpaEntity.universeHashtags, universeHashtagJpaEntity).fetchJoin()
-                .where(search(command))
+                .where(search(command.keyword(), command.searchType()))
                 .where(filter(command))
-                .orderBy(order(command))
+                .orderBy(order(command.sortType(), command.isAsc()))
                 .offset(command.pageable().getOffset())
                 .limit(command.pageable().getPageSize())
                 .fetch();
 
         Long count = query.select(universeJpaEntity.count())
                 .from(universeJpaEntity)
-                .where(search(command))
+                .where(search(command.keyword(), command.searchType()))
                 .where(filter(command))
                 .fetchFirst();
 
@@ -74,6 +76,26 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
         return new TraversalJpaEntityComponents(universe, spaceJpaEntities, pieceJpaEntities);
     }
 
+    @Override
+    public  Page<UniverseJpaEntity>  searchAllPublic(SearchPublicUniverseCommand command) {
+        List<UniverseJpaEntity> entities = query.selectFrom(universeJpaEntity)
+                .leftJoin(universeJpaEntity.universeHashtags, universeHashtagJpaEntity).fetchJoin()
+                .where(universeJpaEntity.publicStatus.eq(PublicStatus.PUBLIC))
+                .where(search(command.keyword(), command.searchType()))
+                .orderBy(order(command.sortType(), command.isAsc()))
+                .offset(command.pageable().getOffset())
+                .limit(command.pageable().getPageSize())
+                .fetch();
+
+        Long count = query.select(universeJpaEntity.count())
+                .from(universeJpaEntity)
+                .where(universeJpaEntity.publicStatus.eq(PublicStatus.PUBLIC))
+                .where(search(command.keyword(), command.searchType()))
+                .fetchFirst();
+
+        return new PageImpl<>(entities, command.pageable(), count == null ? 0 : count);
+    }
+
     private BooleanExpression filter(SearchUniverseCommand command) {
         if (command.category() == null || command.category().isBlank() || !Category.contains(command.category()))
             return null;
@@ -81,26 +103,26 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
         return universeJpaEntity.category.eq(Category.valueOf(command.category().toUpperCase()));
     }
 
-    private BooleanExpression search(SearchUniverseCommand command) {
-        if (command.keyword() == null || command.keyword().isBlank() || !UniverseSearchType.contains(command.searchType()))
+    private BooleanExpression search(String keyword, String searchType) {
+        if (keyword == null || keyword.isBlank() || !UniverseSearchType.contains(searchType))
             return null;
 
-        return switch (UniverseSearchType.valueOf(command.searchType().toUpperCase())) {
-            case CONTENT -> universeJpaEntity.title.likeIgnoreCase("%" + command.keyword() + "%")
-                    .or(universeJpaEntity.description.likeIgnoreCase("%" + command.keyword() + "%"));
-            case AUTHOR -> universeJpaEntity.author.nickname.likeIgnoreCase(command.keyword());
-            case ALL -> universeJpaEntity.title.likeIgnoreCase("%" + command.keyword() + "%")
-                    .or(universeJpaEntity.description.likeIgnoreCase("%" + command.keyword() + "%"))
-                    .or(universeJpaEntity.author.nickname.likeIgnoreCase(command.keyword()));
+        return switch (UniverseSearchType.valueOf(searchType.toUpperCase())) {
+            case CONTENT -> universeJpaEntity.title.likeIgnoreCase("%" + keyword + "%")
+                    .or(universeJpaEntity.description.likeIgnoreCase("%" + keyword + "%"));
+            case AUTHOR -> universeJpaEntity.author.nickname.likeIgnoreCase(keyword);
+            case ALL -> universeJpaEntity.title.likeIgnoreCase("%" + keyword + "%")
+                    .or(universeJpaEntity.description.likeIgnoreCase("%" + keyword + "%"))
+                    .or(universeJpaEntity.author.nickname.likeIgnoreCase(keyword));
         };
     }
 
-    private OrderSpecifier<?> order(SearchUniverseCommand command) {
-        if (command.isAsc() == null || command.sortType() == null || !UniverseSortType.contains(command.sortType()))
+    private OrderSpecifier<?> order(String sortType, Boolean isAsc) {
+        if (isAsc == null || sortType == null || !UniverseSortType.contains(sortType))
             return new OrderSpecifier<>(Order.DESC, universeJpaEntity.createdTime);
 
-        Order order = command.isAsc() ? Order.ASC : Order.DESC;
-        return switch (UniverseSortType.valueOf(command.sortType().toUpperCase())) {
+        Order order = isAsc ? Order.ASC : Order.DESC;
+        return switch (UniverseSortType.valueOf(sortType.toUpperCase())) {
             case TITLE -> new OrderSpecifier<>(order, universeJpaEntity.title);
             case REGISTERED_DATE -> new OrderSpecifier<>(order, universeJpaEntity.createdTime);
             case VIEWS -> new OrderSpecifier<>(order, universeJpaEntity.viewCount);

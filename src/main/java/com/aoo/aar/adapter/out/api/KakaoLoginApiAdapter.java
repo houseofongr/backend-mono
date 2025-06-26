@@ -1,6 +1,6 @@
 package com.aoo.aar.adapter.out.api;
 
-import com.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.aoo.aar.application.port.out.api.UnlinkKakaoLoginPort;
 import com.aoo.admin.domain.user.snsaccount.SnsDomain;
 import com.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;

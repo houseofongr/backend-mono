@@ -1,7 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
-import com.aoo.aar.adapter.out.persistence.repository.SnsAccountJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;

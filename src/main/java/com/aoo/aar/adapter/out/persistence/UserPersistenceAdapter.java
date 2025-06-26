@@ -1,15 +1,16 @@
 package com.aoo.aar.adapter.out.persistence;
 
 import com.aoo.aar.adapter.out.persistence.mapper.UserMapper;
-import com.aoo.aar.adapter.out.persistence.repository.UserJpaRepository;
+import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
 import com.aoo.aar.application.port.out.persistence.user.SearchUserPort;
 import com.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component("AARUserPersistenceAdapter")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserPersistenceAdapter implements SearchUserPort {
 
     private final UserJpaRepository userJpaRepository;
