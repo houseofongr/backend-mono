@@ -39,7 +39,7 @@ class PostBusinessUserControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().is(201))
-                .andDo(document("aar-authn-regist-business",
+                .andDo(document("aar-post-user-business",
                         requestFields(
                                 fieldWithPath("email").description("비즈니스 사용자의 이메일입니다. +" + "\n" +
                                                                    "* 인증 완료된 이메일만 가능합니다."),

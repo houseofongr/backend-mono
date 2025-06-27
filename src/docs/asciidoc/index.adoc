@@ -123,6 +123,16 @@ include::{snippets}/aar-access-token/response-fields.adoc[]
 
 operation::aar-user-get-nickname[snippets='http-request,path-parameters,http-response,response-fields']
 
+[[aar-user-post-business-user-api]]
+==== 비즈니스 회원가입 API
+
+비즈니스 회원가입을 위한 API입니다.
+
+> 관리자의 승인 후 계정이 활성화됩니다.
+
+> <<aar-authn-verify-email-code-api>>를 통해 인증 완료된 이메일만 회원가입이 가능합니다.
+
+operation::aar-post-user-business[snippets='http-request,request-fields,http-response,response-fields']
 
 [[aar-user-get-me-api]]
 ==== 본인정보 조회 API
