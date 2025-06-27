@@ -22,8 +22,9 @@ public enum AarErrorCode implements ErrorCode {
     SNS_ACCOUNT_NOT_FOUND("AAR-AUTHN-8", NOT_FOUND, "SNS 계정을 찾을 수 없습니다."),
 
     // User
-    NICK_NAME_CONFLICT("AAR-USER-1", CONFLICT, "중복된 닉네임입니다."),
-    ALREADY_REGISTERED_SNS_ACCOUNT("AAR-USER-2", CONFLICT, "이미 등록된 SNS 계정입니다."),
+    NOT_VERIFIED_EMAIL("AAR-USER-1", UNAUTHORIZED, "확인되지 않은 이메일 주소입니다."),
+    NICK_NAME_CONFLICT("AAR-USER-2", CONFLICT, "중복된 닉네임입니다."),
+    ALREADY_REGISTERED_SNS_ACCOUNT("AAR-USER-3", CONFLICT, "이미 등록된 SNS 계정입니다."),
 
     // Common
     LOAD_ENTITY_FAILED("AAR-COMMON-1", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");

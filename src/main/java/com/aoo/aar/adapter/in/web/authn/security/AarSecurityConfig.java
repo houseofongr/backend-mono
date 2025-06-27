@@ -66,6 +66,10 @@ public class AarSecurityConfig {
                                         "/aar/authn/regist")
                                 .hasRole("TEMP_USER")
 
+                                .requestMatchers(POST,
+                                        "/aar/users/business")
+                                .permitAll()
+
                                 .anyRequest().authenticated())
 
                 .exceptionHandling(handler ->

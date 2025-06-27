@@ -4,6 +4,8 @@ import com.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.aoo.common.adapter.out.persistence.entity.BusinessUserJpaEntity;
+import com.aoo.common.adapter.out.persistence.repository.BusinessUserJpaRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ class UserPersistenceAdapterTest {
 
     @Autowired
     UserPersistenceAdapter sut;
+
+    @Autowired
+    BusinessUserJpaRepository businessUserJpaRepository;
 
     @Test
     @DisplayName("본인정보 조회")
@@ -58,5 +63,25 @@ class UserPersistenceAdapterTest {
         // then
         assertThat(result1).isTrue();
         assertThat(result2).isFalse();
+    }
+
+    @Test
+    @DisplayName("비즈니스 임시회원 생성")
+    void testSaveTempBusinessUser() {
+        // given
+        String email = "test@example.com";
+        String password = "{bcrypt}$2a$10$E4pJtJxQtjHHH11j8/tNTOJljXDFJc3NWGlbCt00SZQB8Nn7DiKF.";
+        String nickname = "temp_user_123";
+
+        // when
+        Long savedId = sut.save(email, password, nickname);
+        BusinessUserJpaEntity businessUserJpaEntity = businessUserJpaRepository.findById(savedId).orElseThrow();
+
+        // then
+        assertThat(businessUserJpaEntity.getEmail()).isEqualTo(email);
+        assertThat(businessUserJpaEntity.getPassword()).isEqualTo(password);
+        assertThat(businessUserJpaEntity.getNickname()).isEqualTo(nickname);
+        assertThat(businessUserJpaEntity.getStatus()).isEqualTo(BusinessUserJpaEntity.Status.WAITING);
+        assertThat(businessUserJpaEntity.getApprovedAt()).isNull();
     }
 }
