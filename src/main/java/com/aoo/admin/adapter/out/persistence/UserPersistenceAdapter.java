@@ -1,24 +1,20 @@
 package com.aoo.admin.adapter.out.persistence;
 
-import com.aoo.common.adapter.out.persistence.repository.SnsAccountJpaRepository;
-import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
+import com.aoo.admin.application.port.out.user.*;
+import com.aoo.admin.application.service.AdminErrorCode;
+import com.aoo.admin.application.service.AdminException;
+import com.aoo.admin.domain.user.BusinessUser;
+import com.aoo.common.adapter.out.persistence.entity.BusinessUserJpaEntity;
+import com.aoo.common.adapter.out.persistence.repository.*;
 import com.aoo.aar.application.service.AarErrorCode;
 import com.aoo.aar.application.service.AarException;
 import com.aoo.admin.adapter.out.persistence.mapper.UserMapper;
 import com.aoo.admin.application.port.in.user.*;
-import com.aoo.admin.application.port.out.user.FindUserPort;
-import com.aoo.admin.application.port.out.user.SaveUserPort;
-import com.aoo.admin.application.port.out.user.SearchUserPort;
-import com.aoo.admin.application.port.out.user.UpdateUserPort;
 import com.aoo.admin.domain.user.DeletedUser;
 import com.aoo.admin.domain.user.User;
 import com.aoo.common.adapter.out.persistence.entity.DeletedUserJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
-import com.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepository;
-import com.aoo.common.adapter.out.persistence.repository.HomeJpaRepository;
-import com.aoo.common.adapter.out.persistence.repository.ItemJpaRepository;
-import com.aoo.common.adapter.out.persistence.repository.SoundSourceJpaRepository;
 import com.aoo.common.application.port.in.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,11 +25,12 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort, SearchUserPort, FindUserPort, UpdateUserPort, DeleteUserPort {
+public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort, SearchUserPort, FindUserPort, UpdateUserPort, DeleteUserPort, FindBusinessUserPort {
 
     private final UserJpaRepository userJpaRepository;
     private final SnsAccountJpaRepository snsAccountJpaRepository;
     private final DeletedUserJpaRepository deletedUserJpaRepository;
+    private final BusinessUserJpaRepository businessUserJpaRepository;
     private final SoundSourceJpaRepository soundSourceJpaRepository;
     private final ItemJpaRepository itemJpaRepository;
     private final HomeJpaRepository homeJpaRepository;
@@ -48,6 +45,15 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
         ).toList();
 
         UserJpaEntity entity = UserJpaEntity.create(user, snsAccountJpaEntities);
+
+        userJpaRepository.save(entity);
+
+        return entity.getId();
+    }
+
+    @Override
+    public Long saveBusinessUser(User user) {
+        UserJpaEntity entity = UserJpaEntity.createBusinessUser(user);
 
         userJpaRepository.save(entity);
 
@@ -85,13 +91,13 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
 
     @Override
     public void updateUser(User user) {
-        UserJpaEntity userJpaEntity = userJpaRepository.findById(user.getUserId().getId()).orElseThrow();
+        UserJpaEntity userJpaEntity = userJpaRepository.findById(user.getUserInfo().getId()).orElseThrow();
         userJpaEntity.update(user);
     }
 
     @Override
     public void deleteUser(User user) {
-        Long userId = user.getUserId().getId();
+        Long userId = user.getUserInfo().getId();
 
         snsAccountJpaRepository.deleteAll(snsAccountJpaRepository.findAllByUserId(userId));
         soundSourceJpaRepository.deleteAll(soundSourceJpaRepository.findAllByUserId(userId));
@@ -99,5 +105,14 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
         homeJpaRepository.deleteAll(homeJpaRepository.findAllByUserId(userId));
 
         userJpaRepository.deleteById(userId);
+    }
+
+    @Override
+    public BusinessUser findBusinessUser(Long businessUserId) {
+        BusinessUserJpaEntity businessUserJpaEntity = businessUserJpaRepository.findById(businessUserId)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+        businessUserJpaEntity.approve();
+
+        return userMapper.mapToBusinessUserEntity(businessUserJpaEntity);
     }
 }

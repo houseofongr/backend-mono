@@ -82,7 +82,7 @@ class HomePersistenceAdapterTest {
         assertThat(home.get().getHomeId().getId()).isEqualTo(1L);
         assertThat(home.get().getHomeDetail().getName()).isEqualTo("leaf의 cozy house");
         assertThat(home.get().getHouseId().getId()).isEqualTo(20L);
-        assertThat(home.get().getUserId().getId()).isEqualTo(10L);
+        assertThat(home.get().getOwnerId()).isEqualTo(10L);
     }
 
     @Test

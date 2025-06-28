@@ -37,7 +37,7 @@ public class QueryHomeService implements QueryHomeUseCase, QueryUserHomesUseCase
         House house = findHousePort.load(home.getHouseId().getId())
                 .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-        User user = findUserPort.loadUser(home.getUserId().getId())
+        User user = findUserPort.loadUser(home.getOwnerId())
                 .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
         return QueryHomeResult.of(home, house, user);
@@ -56,7 +56,7 @@ public class QueryHomeService implements QueryHomeUseCase, QueryUserHomesUseCase
             House house = findHousePort.load(home.getHouseId().getId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.HOUSE_NOT_FOUND));
 
-            User user = findUserPort.loadUser(home.getUserId().getId())
+            User user = findUserPort.loadUser(home.getOwnerId())
                     .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
             homeInfos.add(QueryUserHomesResult.HomeInfo.of(home, house, user));

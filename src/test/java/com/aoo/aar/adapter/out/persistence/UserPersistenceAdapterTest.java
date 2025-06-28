@@ -74,7 +74,7 @@ class UserPersistenceAdapterTest {
         String nickname = "temp_user_123";
 
         // when
-        Long savedId = sut.save(email, password, nickname);
+        Long savedId = sut.save(email, password, nickname, true, true);
         BusinessUserJpaEntity businessUserJpaEntity = businessUserJpaRepository.findById(savedId).orElseThrow();
 
         // then

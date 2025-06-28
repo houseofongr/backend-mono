@@ -1,10 +1,10 @@
 package com.aoo.aar.application.service.user;
 
-import com.aoo.aar.application.port.in.user.CreateTempBusinessUserCommand;
-import com.aoo.aar.application.port.in.user.CreateTempBusinessUserResult;
-import com.aoo.aar.application.port.in.user.CreateTempBusinessUserUseCase;
+import com.aoo.aar.application.port.in.user.CreateBusinessUserCommand;
+import com.aoo.aar.application.port.in.user.CreateBusinessUserResult;
+import com.aoo.aar.application.port.in.user.CreateBusinessUserUseCase;
 import com.aoo.aar.application.port.out.cache.LoadEmailAuthnStatePort;
-import com.aoo.aar.application.port.out.persistence.user.SaveTempUserPort;
+import com.aoo.aar.application.port.out.persistence.user.SaveBusinessUserPort;
 import com.aoo.aar.application.service.AarErrorCode;
 import com.aoo.aar.application.service.AarException;
 import lombok.RequiredArgsConstructor;
@@ -15,24 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CreateTempBusinessUserService implements CreateTempBusinessUserUseCase {
+public class CreateBusinessUserService implements CreateBusinessUserUseCase {
 
     private final LoadEmailAuthnStatePort loadEmailAuthnStatePort;
     private final PasswordEncoder passwordEncoder;
-    private final SaveTempUserPort saveTempUserPort;
+    private final SaveBusinessUserPort saveBusinessUserPort;
 
     @Override
-    public CreateTempBusinessUserResult create(CreateTempBusinessUserCommand command) {
+    public CreateBusinessUserResult create(CreateBusinessUserCommand command) {
         if (!loadEmailAuthnStatePort.loadAuthenticated(command.email())) throw new AarException(AarErrorCode.NOT_VERIFIED_EMAIL);
 
         String encodedPassword = passwordEncoder.encode(command.password());
-        Long tempUserId = saveTempUserPort.save(command.email(), encodedPassword, command.nickname());
+        Long tempUserId = saveBusinessUserPort.save(command.email(), encodedPassword, command.nickname(), command.termsOfUseAgreement(), command.personalInformationAgreement());
 
-        return new CreateTempBusinessUserResult(
+        return new CreateBusinessUserResult(
                 String.format("[#%d]번 임시 사용자가 생성되었습니다. 관리자 승인 후 계정이 등록됩니다.", tempUserId),
                 tempUserId,
                 command.email(),
-                command.nickname()
+                command.nickname(),
+                command.termsOfUseAgreement(),
+                command.personalInformationAgreement()
         );
     }
 }

@@ -1,9 +1,0 @@
-package com.aoo.aar.application.port.in.user;
-
-public record CreateTempBusinessUserResult(
-        String message,
-        Long tempUserId,
-        String email,
-        String nickname
-) {
-}

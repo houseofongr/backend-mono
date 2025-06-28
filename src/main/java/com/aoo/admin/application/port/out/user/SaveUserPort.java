@@ -4,4 +4,5 @@ import com.aoo.admin.domain.user.User;
 
 public interface SaveUserPort {
     Long save(User user);
+    Long saveBusinessUser(User user);
 }

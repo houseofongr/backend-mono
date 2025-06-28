@@ -38,7 +38,7 @@ public record QueryUserHomesResult(
     ) {
 
         public static UserInfo of(User user) {
-            return new UserInfo(user.getUserId().getId(), user.getUserInfo().getNickname());
+            return new UserInfo(user.getUserInfo().getId(), user.getUserInfo().getNickname());
         }
     }
 

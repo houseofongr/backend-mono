@@ -25,4 +25,24 @@ class UserTest {
         assertThat(userInfo.getEmail()).isEqualTo("t**t@example.com");
     }
 
+    @Test
+    @DisplayName("비즈니스 유저 생성 테스트")
+    void testCreateBusinessUser() {
+        // given
+        BusinessUser businessUser = BusinessUser.create(1L, "leaf", "test@example.com", true, true);
+
+        // when
+        User user = User.createBusinessUser(businessUser);
+
+        // then
+        assertThat(user.getUserInfo().getId()).isNull();
+        assertThat(user.getUserInfo().getRealName()).isNull();
+        assertThat(user.getUserInfo().getEmail()).isEqualTo("test@example.com");
+        assertThat(user.getUserInfo().getNickname()).isEqualTo("leaf");
+        assertThat(user.getAgreement().getTermsOfUseAgreement()).isTrue();
+        assertThat(user.getAgreement().getPersonalInformationAgreement()).isTrue();
+        assertThat(user.getSnsAccounts()).isEmpty();
+        assertThat(user.getBaseTime()).isNull();
+    }
+
 }

@@ -429,6 +429,14 @@ operation::admin-user-get-list-v2[snippets='path-parameters,http-request,http-re
 
 operation::admin-user-get-home-list[snippets='path-parameters,http-request,http-response,response-fields']
 
+[[admin-user-post-confirm-business-user-api]]
+==== 비즈니스 사용자 회원가입 승인 API
+
+특정 비즈니스 사용자의 가입을 승인하는 API입니다.
+
+operation::admin-post-confirm-user-business[snippets='form-parameters,http-request,http-response,response-fields']
+
+
 [[admin-home-api]]
 === 홈(Home) API
 

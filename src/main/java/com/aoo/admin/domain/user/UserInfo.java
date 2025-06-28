@@ -4,11 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class UserInfo {
+    private final Long id;
     private final String realName;
     private String nickname;
     private final String email;
 
-    public UserInfo(String realName, String nickname, String email) {
+    public UserInfo(Long id, String realName, String nickname, String email) {
+        this.id = id;
         this.nickname = nickname;
         this.realName = realName;
         this.email = email;

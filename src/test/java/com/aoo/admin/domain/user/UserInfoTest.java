@@ -11,11 +11,11 @@ class UserInfoTest {
     @DisplayName("마스킹 된 이름 생성 테스트")
     void testCreateMaskedName() {
         // given
-        UserInfo oneWordName = new UserInfo("남", "leaf", "test@example.com");
-        UserInfo twoWordName = new UserInfo("남상", "leaf", "test@example.com");
-        UserInfo threeWordName = new UserInfo("남상엽", "leaf", "test@example.com");
-        UserInfo fourWordName = new UserInfo("남상엽돌", "leaf", "test@example.com");
-        UserInfo englishName = new UserInfo("Genie Josh", "leaf", "test@example.com");
+        UserInfo oneWordName = new UserInfo(1L, "남", "leaf", "test@example.com");
+        UserInfo twoWordName = new UserInfo(1L, "남상", "leaf", "test@example.com");
+        UserInfo threeWordName = new UserInfo(1L, "남상엽", "leaf", "test@example.com");
+        UserInfo fourWordName = new UserInfo(1L, "남상엽돌", "leaf", "test@example.com");
+        UserInfo englishName = new UserInfo(1L, "Genie Josh", "leaf", "test@example.com");
 
         // when
         String maskedOneName = oneWordName.getMaskedRealName();
@@ -36,11 +36,11 @@ class UserInfoTest {
     @DisplayName("마스킹 된 닉네임 생성 테스트")
     void testCreateMaskedNickname() {
         // given
-        UserInfo oneWordName = new UserInfo("leaf", "남", "test@example.com");
-        UserInfo twoWordName = new UserInfo("leaf", "남상", "test@example.com");
-        UserInfo threeWordName = new UserInfo("leaf", "남상엽", "test@example.com");
-        UserInfo fourWordName = new UserInfo("leaf", "남상엽돌", "test@example.com");
-        UserInfo englishName = new UserInfo("leaf", "Genie Josh", "test@example.com");
+        UserInfo oneWordName = new UserInfo(1L, "leaf", "남", "test@example.com");
+        UserInfo twoWordName = new UserInfo(1L, "leaf", "남상", "test@example.com");
+        UserInfo threeWordName = new UserInfo(1L, "leaf", "남상엽", "test@example.com");
+        UserInfo fourWordName = new UserInfo(1L, "leaf", "남상엽돌", "test@example.com");
+        UserInfo englishName = new UserInfo(1L, "leaf", "Genie Josh", "test@example.com");
 
         // when
         String maskedOneName = oneWordName.getMaskedNickname();
@@ -61,11 +61,11 @@ class UserInfoTest {
     @DisplayName("마스킹 된 이메일 생성 테스트")
     void testCreateMaskedEmail() {
         // given
-        UserInfo email1 = new UserInfo("남상엽", "leaf", "t@example.com");
-        UserInfo email2 = new UserInfo("남상엽", "leaf", "te@example.com");
-        UserInfo email3 = new UserInfo("남상엽", "leaf", "tes@example.com");
-        UserInfo email4 = new UserInfo("남상엽", "leaf", "test@example.com");
-        UserInfo email5 = new UserInfo("남상엽", "leaf", "test1@example.com");
+        UserInfo email1 = new UserInfo(1L, "남상엽", "leaf", "t@example.com");
+        UserInfo email2 = new UserInfo(1L, "남상엽", "leaf", "te@example.com");
+        UserInfo email3 = new UserInfo(1L, "남상엽", "leaf", "tes@example.com");
+        UserInfo email4 = new UserInfo(1L, "남상엽", "leaf", "test@example.com");
+        UserInfo email5 = new UserInfo(1L, "남상엽", "leaf", "test1@example.com");
 
         // when
         String masked1 = email1.getMaskedEmail();

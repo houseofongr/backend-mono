@@ -30,7 +30,9 @@ class PostBusinessUserControllerTest extends AbstractControllerTest {
                      { 
                         "email": "test@example.com", 
                         "password": "temp2143@",
-                        "nickname": "temp_user123"
+                        "nickname": "temp_user123",
+                        "termsOfUseAgreement": true,
+                        "personalInformationAgreement": true
                      }
                 """;
 
@@ -44,14 +46,18 @@ class PostBusinessUserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("email").description("비즈니스 사용자의 이메일입니다. +" + "\n" +
                                                                    "* 인증 완료된 이메일만 가능합니다."),
                                 fieldWithPath("password").description("사용할 비밀번호입니다."),
-                                fieldWithPath("nickname").description("사용할 닉네임입니다.")
+                                fieldWithPath("nickname").description("사용할 닉네임입니다."),
+                                fieldWithPath("termsOfUseAgreement").description("이용약관 동의 여부입니다."),
+                                fieldWithPath("personalInformationAgreement").description("개인정보 제공 동의여부입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("임시 회원가입 완료 메시지 +" + "\n" +
                                                                      "* '[#id]번 임시 사용자가 생성되었습니다. 관리자 승인 후 계정이 등록됩니다.'"),
                                 fieldWithPath("tempUserId").description("임시 회원가입된 사용자의 식별자입니다."),
                                 fieldWithPath("email").description("회원가입한 사용자의 이메일입니다."),
-                                fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다.")
+                                fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다."),
+                                fieldWithPath("termsOfUseAgreement").description("회원가입한 사용자의 이용약관 동의 여부입니다."),
+                                fieldWithPath("personalInformationAgreement").description("회원가입한 사용자의 개인정보 제공 동의여부입니다.")
                         )
                 ));
     }

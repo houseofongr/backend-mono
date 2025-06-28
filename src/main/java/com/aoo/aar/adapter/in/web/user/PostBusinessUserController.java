@@ -1,8 +1,8 @@
 package com.aoo.aar.adapter.in.web.user;
 
-import com.aoo.aar.application.port.in.user.CreateTempBusinessUserCommand;
-import com.aoo.aar.application.port.in.user.CreateTempBusinessUserResult;
-import com.aoo.aar.application.port.in.user.CreateTempBusinessUserUseCase;
+import com.aoo.aar.application.port.in.user.CreateBusinessUserCommand;
+import com.aoo.aar.application.port.in.user.CreateBusinessUserResult;
+import com.aoo.aar.application.port.in.user.CreateBusinessUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 public class PostBusinessUserController {
 
-    private final CreateTempBusinessUserUseCase useCase;
+    private final CreateBusinessUserUseCase useCase;
 
     @PostMapping("/aar/users/business")
-    ResponseEntity<CreateTempBusinessUserResult> create(@RequestBody CreateTempBusinessUserCommand command) {
+    ResponseEntity<CreateBusinessUserResult> create(@RequestBody CreateBusinessUserCommand command) {
         return new ResponseEntity<>(useCase.create(command), HttpStatus.CREATED);
     }
 }

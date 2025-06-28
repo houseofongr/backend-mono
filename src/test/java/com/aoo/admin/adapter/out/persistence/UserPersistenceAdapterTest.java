@@ -1,5 +1,6 @@
 package com.aoo.admin.adapter.out.persistence;
 
+import com.aoo.admin.domain.user.BusinessUser;
 import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.admin.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.aoo.admin.adapter.out.persistence.mapper.UserMapper;
@@ -21,6 +22,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -149,7 +152,7 @@ class UserPersistenceAdapterTest {
         sut.updateUser(user);
 
         // then
-        Optional<UserJpaEntity> optional = userJpaRepository.findById(user.getUserId().getId());
+        Optional<UserJpaEntity> optional = userJpaRepository.findById(user.getUserInfo().getId());
         assertThat(optional).isPresent();
         assertThat(optional.get().getNickname()).isEqualTo("leaf2");
     }
@@ -183,7 +186,7 @@ class UserPersistenceAdapterTest {
         sut.deleteUser(user);
 
         // then
-        assertThat(userJpaRepository.findById(user.getUserId().getId())).isEmpty();
+        assertThat(userJpaRepository.findById(user.getUserInfo().getId())).isEmpty();
         assertThat(entityManager.find(SnsAccountJpaEntity.class, 1L)).isNull();
         assertThat(entityManager.find(SoundSourceJpaEntity.class, 1L)).isNull();
         assertThat(entityManager.find(SoundSourceJpaEntity.class, 2L)).isNull();
@@ -196,6 +199,28 @@ class UserPersistenceAdapterTest {
         assertThat(entityManager.find(ItemShapeEllipseJpaEntity.class, 3L)).isNull();
         assertThat(entityManager.find(HomeJpaEntity.class, 1L)).isNull();
         assertThat(entityManager.find(HomeJpaEntity.class, 2L)).isNull();
+    }
+
+    @Test
+    @DisplayName("비즈니스 사용자 조회 테스트")
+    void testFindBusinessUser() {
+        // given
+        Long businessUserId = 1L;
+
+        // when
+        BusinessUser businessUser = sut.findBusinessUser(businessUserId);
+
+        // then
+        assertThat(businessUser.getBusinessUserId()).isEqualTo(businessUserId);
+        assertThat(businessUser.getUserInfo().getId()).isNull();
+        assertThat(businessUser.getUserInfo().getId()).isNull();
+        assertThat(businessUser.getUserInfo().getRealName()).isNull();
+        assertThat(businessUser.getUserInfo().getEmail()).isEqualTo("test@example.com");
+        assertThat(businessUser.getUserInfo().getNickname()).isEqualTo("temp_user123");
+        assertThat(businessUser.getAgreement().getTermsOfUseAgreement()).isTrue();
+        assertThat(businessUser.getAgreement().getPersonalInformationAgreement()).isTrue();
+        assertThat(businessUser.getBaseTime().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 27, 20, 15, 0, 0, ZoneOffset.UTC));
+        assertThat(businessUser.getBaseTime().getUpdatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 27, 20, 15, 0, 0, ZoneOffset.UTC));
     }
 
 }

@@ -3,7 +3,6 @@ package com.aoo.aar.adapter.in.web.authn;
 import com.aoo.aar.application.port.out.cache.LoadEmailAuthnStatePort;
 import com.aoo.aar.application.port.out.cache.SaveEmailAuthnCodePort;
 import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import java.time.Duration;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;

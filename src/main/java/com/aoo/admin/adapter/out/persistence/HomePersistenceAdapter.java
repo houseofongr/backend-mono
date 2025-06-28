@@ -31,10 +31,10 @@ public class HomePersistenceAdapter implements SaveHomePort, FindHomePort, Updat
 
     @Override
     public Long save(Home home) {
-        UserJpaEntity userJpaEntity = userJpaRepository.findById(home.getUserId().getId()).orElseThrow();
+        UserJpaEntity userJpaEntity = userJpaRepository.findById(home.getOwnerId()).orElseThrow();
         HouseJpaEntity houseJpaEntity = houseJpaRepository.findById(home.getHouseId().getId()).orElseThrow();
 
-        if (homeJpaRepository.existsByHouseIdAndUserId(home.getHouseId().getId(), home.getUserId().getId()))
+        if (homeJpaRepository.existsByHouseIdAndUserId(home.getHouseId().getId(), home.getOwnerId()))
             throw new AdminException(AdminErrorCode.ALREADY_CREATED_HOME);
 
         HomeJpaEntity homeJpaEntity = HomeJpaEntity.create(home);
