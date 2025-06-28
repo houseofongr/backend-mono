@@ -2,31 +2,34 @@ package com.aoo.admin.application.service.user;
 
 import com.aoo.admin.application.port.in.user.ConfirmBusinessUserResult;
 import com.aoo.admin.application.port.out.user.FindBusinessUserPort;
+import com.aoo.admin.application.port.out.user.RegisterBusinessUserPort;
 import com.aoo.admin.application.port.out.user.SaveUserPort;
 import com.aoo.admin.domain.user.BusinessUser;
+import com.aoo.admin.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class ConfirmBusinessUserServiceTest {
 
-    FindBusinessUserPort findBusinessUserPort = mock();
-    SaveUserPort saveUserPort = mock();
+    RegisterBusinessUserPort registerBusinessUserPort = mock();
 
-    ConfirmBusinessUserService sut = new ConfirmBusinessUserService(findBusinessUserPort, saveUserPort);
+    ConfirmBusinessUserService sut = new ConfirmBusinessUserService(registerBusinessUserPort);
 
     @Test
     @DisplayName("비즈니스 회원가입 승인 서비스")
     void testConfirmBusinessUserService() {
         // given
         Long tempUserId = 1L;
-        BusinessUser businessUser = BusinessUser.create(1L, "leaf", "test@example.com", true, true);
+        User user = User.load(1L, null, "leaf", "test@example.com", true, true, ZonedDateTime.now(), ZonedDateTime.now(), List.of());
 
         // when
-        when(findBusinessUserPort.findBusinessUser(tempUserId)).thenReturn(businessUser);
-        when(saveUserPort.saveBusinessUser(any())).thenReturn(1L);
+        when(registerBusinessUserPort.registerBusinessUser(tempUserId)).thenReturn(user);
         ConfirmBusinessUserResult result = sut.confirm(tempUserId);
 
         // then

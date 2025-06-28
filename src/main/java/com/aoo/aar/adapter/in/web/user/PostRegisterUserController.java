@@ -1,4 +1,4 @@
-package com.aoo.aar.adapter.in.web.authn;
+package com.aoo.aar.adapter.in.web.user;
 
 import com.aoo.aar.adapter.in.web.authn.security.Jwt;
 import com.aoo.admin.application.port.in.user.RegisterUserCommand;

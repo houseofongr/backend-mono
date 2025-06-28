@@ -1,6 +1,7 @@
 package com.aoo.admin.adapter.out.persistence;
 
 import com.aoo.admin.domain.user.BusinessUser;
+import com.aoo.common.adapter.out.persistence.repository.BusinessUserJpaRepository;
 import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.admin.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.aoo.admin.adapter.out.persistence.mapper.UserMapper;
@@ -14,6 +15,7 @@ import com.aoo.common.adapter.out.persistence.repository.DeletedUserJpaRepositor
 import com.aoo.common.application.service.MockEntityFactoryService;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.data.TemporalUnitOffset;
 import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,6 +46,9 @@ class UserPersistenceAdapterTest {
 
     @Autowired
     DeletedUserJpaRepository deletedUserJpaRepository;
+
+    @Autowired
+    BusinessUserJpaRepository businessUserJpaRepository;
 
     @Autowired
     EntityManager entityManager;
@@ -223,4 +228,21 @@ class UserPersistenceAdapterTest {
         assertThat(businessUser.getBaseTime().getUpdatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 27, 20, 15, 0, 0, ZoneOffset.UTC));
     }
 
+    @Test
+    @DisplayName("비즈니스 사용자 등록 테스트")
+    void testRegisterBusinessUser() {
+        // given
+        Long businessUserId = 1L;
+
+        // when
+        User user = sut.registerBusinessUser(businessUserId);
+        BusinessUserJpaEntity businessUserJpaEntity = businessUserJpaRepository.findById(businessUserId).orElseThrow();
+
+        // then
+        assertThat(user.getUserInfo().getId()).isEqualTo(user.getUserInfo().getId());
+        assertThat(businessUserJpaEntity.getUserJpaEntity().getId()).isEqualTo(user.getUserInfo().getId());
+        assertThat(businessUserJpaEntity.getUserJpaEntity().getUserType()).isEqualTo(UserJpaEntity.Type.BUSINESS);
+        assertThat(businessUserJpaEntity.getStatus()).isEqualTo(BusinessUserJpaEntity.Status.APPROVED);
+        assertThat(businessUserJpaEntity.getApprovedAt()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(1, ChronoUnit.SECONDS));
+    }
 }

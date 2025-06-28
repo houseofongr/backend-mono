@@ -44,14 +44,18 @@ public class BusinessUserJpaEntity extends DateColumnBaseEntity {
     @Column
     private ZonedDateTime approvedAt;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private UserJpaEntity userJpaEntity;
 
     public static BusinessUserJpaEntity create(String email, String encryptedPassword, String nickname, Boolean termsOfUseAgreement, Boolean personalInformationAgreement) {
-        return new BusinessUserJpaEntity(null, email, encryptedPassword, nickname, termsOfUseAgreement, personalInformationAgreement, Status.WAITING, null);
+        return new BusinessUserJpaEntity(null, email, encryptedPassword, nickname, termsOfUseAgreement, personalInformationAgreement, Status.WAITING, null, null);
     }
 
-    public void approve() {
+    public void approve(UserJpaEntity userJpaEntity) {
         this.status = Status.APPROVED;
         this.approvedAt = ZonedDateTime.now();
+        this.userJpaEntity = userJpaEntity;
     }
 
 }

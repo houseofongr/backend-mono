@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort, SearchUserPort, FindUserPort, UpdateUserPort, DeleteUserPort, FindBusinessUserPort {
+public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort, SearchUserPort, FindUserPort, UpdateUserPort, DeleteUserPort, FindBusinessUserPort, RegisterBusinessUserPort {
 
     private final UserJpaRepository userJpaRepository;
     private final SnsAccountJpaRepository snsAccountJpaRepository;
@@ -45,15 +45,6 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
         ).toList();
 
         UserJpaEntity entity = UserJpaEntity.create(user, snsAccountJpaEntities);
-
-        userJpaRepository.save(entity);
-
-        return entity.getId();
-    }
-
-    @Override
-    public Long saveBusinessUser(User user) {
-        UserJpaEntity entity = UserJpaEntity.createBusinessUser(user);
 
         userJpaRepository.save(entity);
 
@@ -111,8 +102,23 @@ public class UserPersistenceAdapter implements SaveUserPort, SaveDeletedUserPort
     public BusinessUser findBusinessUser(Long businessUserId) {
         BusinessUserJpaEntity businessUserJpaEntity = businessUserJpaRepository.findById(businessUserId)
                 .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
-        businessUserJpaEntity.approve();
 
         return userMapper.mapToBusinessUserEntity(businessUserJpaEntity);
+    }
+
+    @Override
+    public User registerBusinessUser(Long businessUserId) {
+        BusinessUserJpaEntity businessUserJpaEntity = businessUserJpaRepository.findById(businessUserId)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+
+        BusinessUser businessUser = userMapper.mapToBusinessUserEntity(businessUserJpaEntity);
+        User user = User.createBusinessUser(businessUser);
+
+        UserJpaEntity userJpaEntity = UserJpaEntity.createBusinessUser(user);
+        userJpaRepository.save(userJpaEntity);
+
+        businessUserJpaEntity.approve(userJpaEntity);
+
+        return userMapper.mapToDomainEntity(userJpaEntity);
     }
 }

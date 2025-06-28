@@ -3,6 +3,7 @@ package com.aoo.aar.adapter.out.persistence;
 import com.aoo.aar.adapter.out.persistence.mapper.SnsAccountMapper;
 import com.aoo.aar.adapter.out.persistence.mapper.UserMapper;
 import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
+import com.aoo.aar.application.port.out.persistence.user.BusinessUserInfo;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.BusinessUserJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.BusinessUserJpaRepository;
@@ -54,7 +55,7 @@ class UserPersistenceAdapterTest {
     void testExistNickname() {
         // given
         String nickname1 = "leaf";
-        String nickname2 = "leaf2";
+        String nickname2 = "notExistNickName";
 
         // when
         boolean result1 = sut.existUserByNickname(nickname1);
@@ -83,5 +84,20 @@ class UserPersistenceAdapterTest {
         assertThat(businessUserJpaEntity.getNickname()).isEqualTo(nickname);
         assertThat(businessUserJpaEntity.getStatus()).isEqualTo(BusinessUserJpaEntity.Status.WAITING);
         assertThat(businessUserJpaEntity.getApprovedAt()).isNull();
+    }
+
+    @Test
+    @DisplayName("비즈니스 사용자 검색")
+    void testFindBusinessUser() {
+        // given
+        String email = "test2@example.com";
+
+        // when
+        BusinessUserInfo businessUserInfo = sut.findBusinessUserInfo(email);
+
+        // then
+        assertThat(businessUserInfo.email()).isEqualTo(email);
+        assertThat(businessUserInfo.nickname()).isEqualTo("temp_user123");
+        assertThat(businessUserInfo.userId()).isEqualTo(11L);
     }
 }

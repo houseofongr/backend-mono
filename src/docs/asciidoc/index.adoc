@@ -79,6 +79,17 @@ operation::aar-authn-login[snippets='path-parameters,http-request,http-response,
 
 operation::aar-authn-login-2[snippets='response-fields']
 
+[[aar-authn-business-login-api]]
+==== 비즈니스 로그인 API
+
+소리기록실에 비즈니스 계졍으로 로그인을 시도합니다.
+
+operation::aar-post-login-user-business[snippets='http-request,form-parameters,http-response,response-fields']
+
+> 파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.
+
+operation::aar-authn-login-2[snippets='response-fields']
+
 [[aar-authn-regist-api]]
 ==== 회원가입 API
 

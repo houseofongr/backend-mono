@@ -73,7 +73,7 @@ public class UserJpaEntity extends DateColumnBaseEntity {
                 null,
                 user.getAgreement().getTermsOfUseAgreement(),
                 user.getAgreement().getPersonalInformationAgreement(),
-                Type.CONSUMER,
+                Type.BUSINESS,
                 List.of()
         );
     }

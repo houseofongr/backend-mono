@@ -2,6 +2,7 @@ package com.aoo.aar.adapter.out.jwt;
 
 import com.aoo.aar.adapter.in.web.authn.security.JwtProperties;
 import com.aoo.aar.application.port.out.jwt.IssueAccessTokenPort;
+import com.aoo.aar.application.port.out.persistence.user.BusinessUserInfo;
 import com.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.aoo.common.domain.Role;
 import com.nimbusds.jose.JOSEException;
@@ -28,10 +29,36 @@ public class JwtAdapter implements IssueAccessTokenPort {
         Long userId = snsAccount.isRegistered() ? snsAccount.getUserId().getId() : -1L;
         Role role = snsAccount.isRegistered() ? Role.USER : Role.TEMP_USER;
 
-        return issueAccessToken(snsAccount.getSnsAccountInfo().getNickname(), userId, snsAccount.getSnsAccountId().getPersistenceId(), role);
+        return issueSnsAccessToken(snsAccount.getSnsAccountInfo().getNickname(), userId, snsAccount.getSnsAccountId().getPersistenceId(), role);
     }
 
-    private String issueAccessToken(String nickname, Long userId, Long snsId, Role role) {
+    @Override
+    public String issueAccessToken(BusinessUserInfo businessUserInfo) {
+        return issueBusinessAccessToken(businessUserInfo.nickname(), businessUserInfo.userId(), businessUserInfo.businessUserId(), Role.USER);
+    }
+
+    private String issueBusinessAccessToken(String nickname, Long userId, Long businessUserId, Role role) {
+        try {
+            JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+                    .subject(nickname)
+                    .issuer(jwtProperties.issuer())
+                    .claim("userId", userId)
+                    .claim("businessUserId", businessUserId)
+                    .claim("role", role)
+                    .expirationTime(new Date(System.currentTimeMillis() + jwtProperties.expire()))
+                    .build();
+
+            SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+            signedJWT.sign(signer);
+            return signedJWT.serialize();
+
+        } catch (JOSEException e) {
+            log.error("JWT Sign Error : {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String issueSnsAccessToken(String nickname, Long userId, Long snsId, Role role) {
         try {
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(nickname)

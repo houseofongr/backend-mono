@@ -7,6 +7,7 @@ import com.aoo.admin.application.port.out.snsaccount.FindSnsAccountPort;
 import com.aoo.admin.application.port.out.user.CreateUserPort;
 import com.aoo.admin.application.port.out.user.SaveUserPort;
 import com.aoo.admin.application.service.user.RegisterUserService;
+import com.aoo.admin.domain.user.snsaccount.SnsAccount;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +49,7 @@ class RegisterUserServiceTest {
         // then
         verify(findSnsAccountPort, times(1)).loadSnsAccount(1L);
         verify(saveUserPort, times(1)).save(any());
-        verify(jwtAdapter, times(1)).issueAccessToken((any()));
+        verify(jwtAdapter, times(1)).issueAccessToken((SnsAccount) any());
 
         assertThat(register.nickname()).isEqualTo("leaf");
     }

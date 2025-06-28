@@ -1,7 +1,9 @@
 package com.aoo.aar.adapter.out.persistence.mapper;
 
 import com.aoo.aar.application.port.in.user.SearchMyInfoResult;
+import com.aoo.aar.application.port.out.persistence.user.BusinessUserInfo;
 import com.aoo.common.adapter.in.web.DateTimeFormatters;
+import com.aoo.common.adapter.out.persistence.entity.BusinessUserJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SnsAccountJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,16 @@ public class UserMapper {
         return new SearchMyInfoResult.SnsAccountInfo(
                 snsAccountJpaEntity.getSnsDomain().name(),
                 snsAccountJpaEntity.getEmail()
+        );
+    }
+
+    public BusinessUserInfo mapToBusinessUserInfo(BusinessUserJpaEntity businessUserJpaEntity) {
+        return new BusinessUserInfo(
+                businessUserJpaEntity.getId(),
+                businessUserJpaEntity.getUserJpaEntity().getId(),
+                businessUserJpaEntity.getEmail(),
+                businessUserJpaEntity.getPassword(),
+                businessUserJpaEntity.getNickname()
         );
     }
 }

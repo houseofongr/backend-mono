@@ -19,4 +19,5 @@ truncate table SPACE;
 truncate table CATEGORY;
 truncate table PIECE;
 truncate table SOUND;
+truncate table BUSINESS_USER;
 set foreign_key_checks = 1;
