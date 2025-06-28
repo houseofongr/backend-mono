@@ -86,10 +86,6 @@ operation::aar-authn-login-2[snippets='response-fields']
 
 operation::aar-post-login-user-business[snippets='http-request,form-parameters,http-response,response-fields']
 
-> 파라미터에 대한 세부 정보는 아래 **Response fields**를 참고바랍니다.
-
-operation::aar-authn-login-2[snippets='response-fields']
-
 [[aar-authn-regist-api]]
 ==== 회원가입 API
 
