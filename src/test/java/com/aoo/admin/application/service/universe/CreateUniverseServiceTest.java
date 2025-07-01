@@ -3,9 +3,11 @@ package com.aoo.admin.application.service.universe;
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
 import com.aoo.admin.application.port.out.universe.CreateUniversePort;
 import com.aoo.admin.application.port.out.universe.SaveUniversePort;
+import com.aoo.admin.application.port.out.user.FindUserPort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
+import com.aoo.admin.domain.user.User;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.in.UploadPublicAudioUseCase;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -28,14 +31,14 @@ class CreateUniverseServiceTest {
 
     CreateUniverseService sut;
 
-    CreateUniversePort createUniversePort = mock();
+    FindUserPort findUserPort = mock();
     UploadPublicImageUseCase uploadPublicImageUseCase = mock();
     UploadPublicAudioUseCase uploadPublicAudioUseCase = mock();
     SaveUniversePort saveUniversePort = mock();
 
     @BeforeEach
     void init() {
-        sut = new CreateUniverseService(createUniversePort, uploadPublicImageUseCase, uploadPublicAudioUseCase, saveUniversePort);
+        sut = new CreateUniverseService(findUserPort, uploadPublicImageUseCase, uploadPublicAudioUseCase, saveUniversePort);
     }
 
     CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), Map.of());
@@ -116,6 +119,7 @@ class CreateUniverseServiceTest {
         CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), map);
 
         // when
+        when(findUserPort.loadUser(command.authorId())).thenReturn(Optional.of(User.load(1L, "leaf")));
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         when(uploadPublicAudioUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "universe_thumb.png", "test1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         sut.create(command);

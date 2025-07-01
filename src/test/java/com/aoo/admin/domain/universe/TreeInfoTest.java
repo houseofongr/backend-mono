@@ -89,6 +89,30 @@ class TreeInfoTest {
                 .anyMatch(piece -> piece.getId().equals(7L));
     }
 
+    @Test
+    @DisplayName("스페이스가 없이 존재하는 피스 테스트케이스")
+    void pieceWithoutSpaceTestCase() {
+        // given
+        TreeInfo root = MockTreeInfo.getTreeInfo_pieceWithoutSpace();
+
+        // when
+        TraversalComponents components = root.getAllComponents();
+
+        // then
+        assertThat(components.getUniverse()).isEqualTo(root.getUniverseTreeComponent());
+        assertThat(components.getSpaces()).hasSize(4)
+                .anyMatch(space -> space.getId().equals(1L))
+                .anyMatch(space -> space.getId().equals(2L))
+                .anyMatch(space -> space.getId().equals(3L))
+                .anyMatch(space -> space.getId().equals(4L));
+        assertThat(components.getPieces()).hasSize(5)
+                .anyMatch(piece -> piece.getId().equals(1L))
+                .anyMatch(piece -> piece.getId().equals(2L))
+                .anyMatch(piece -> piece.getId().equals(3L))
+                .anyMatch(piece -> piece.getId().equals(4L))
+                .anyMatch(piece -> piece.getId().equals(5L));
+    }
+
     private void assertDFS(TreeInfo target, Class<?> clazz, long id, int depth, TreeInfo parent) {
         assertThat(target.getDepth()).isEqualTo(depth);
         assertThat(target.getUniverseTreeComponent()).isInstanceOf(clazz);

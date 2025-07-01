@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("GetPublicUniverseListControllerTest.sql")
+@Sql("PublicUniverseControllerTest.sql")
 class GetPublicUniverseListControllerTest extends AbstractControllerTest {
 
     @Test

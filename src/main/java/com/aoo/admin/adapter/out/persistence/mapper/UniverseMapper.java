@@ -9,12 +9,16 @@ import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class UniverseMapper {
+
+    private final UserMapper userMapper;
 
     public CreateUniverseResult mapToCreateUniverseResult(UniverseJpaEntity universeJpaEntity) {
         return new CreateUniverseResult(
@@ -41,7 +45,6 @@ public class UniverseMapper {
                 universeJpaEntity.getThumbMusicFileId(),
                 universeJpaEntity.getThumbnailFileId(),
                 universeJpaEntity.getInnerImageFileId(),
-                universeJpaEntity.getAuthor().getId(),
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
                 universeJpaEntity.getCategory(),
@@ -50,6 +53,7 @@ public class UniverseMapper {
                 universeJpaEntity.getViewCount(),
                 universeJpaEntity.getUniverseHashtags().stream()
                         .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag()).toList(),
+                userMapper.mapToDomainEntity(universeJpaEntity.getAuthor()),
                 universeJpaEntity.getCreatedTime(),
                 universeJpaEntity.getUpdatedTime());
     }

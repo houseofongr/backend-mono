@@ -111,8 +111,7 @@ public class MockEntityFactoryService {
     }
 
     public static Universe getUniverse() {
-        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), null);
-        return factory.createUniverse(command, 11L, 100L, 12L);
+        return Universe.create(11L, 100L, 12L, "우주", "유니버스는 우주입니다.", Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), User.load(1L, "leaf"));
     }
 
 

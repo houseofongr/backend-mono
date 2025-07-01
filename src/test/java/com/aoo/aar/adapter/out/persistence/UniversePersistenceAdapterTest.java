@@ -3,13 +3,13 @@ package com.aoo.aar.adapter.out.persistence;
 import com.aoo.aar.adapter.out.persistence.mapper.UniverseMapper;
 import com.aoo.aar.application.port.in.universe.SearchPublicUniverseCommand;
 import com.aoo.aar.application.port.in.universe.SearchPublicUniverseResult;
+import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -84,8 +84,8 @@ class UniversePersistenceAdapterTest {
     }
 
     @Test
-    @DisplayName("본인이 좋아요 누른 컨텐츠 확인")
-    void testIsLiked() {
+    @DisplayName("리스트 조회 시 본인이 좋아요 누른 컨텐츠 확인")
+    void testIsLikedList() {
         // given
         SearchPublicUniverseCommand user1 = new SearchPublicUniverseCommand(PageRequest.of(0, 10), 1L, null, null, null, false);
 
@@ -102,5 +102,29 @@ class UniversePersistenceAdapterTest {
                     assertThat(universeListInfo.id()).isEqualTo(9);
                     assertThat(universeListInfo.isLiked()).isFalse();
                 });
+    }
+
+    @Test
+    @DisplayName("좋아요 표시한 유니버스인지 확인")
+    void testCheckIsLiked() {
+        assertThat(sut.checkIsLiked(10L, 1L)).isTrue();
+        assertThat(sut.checkIsLiked(9L, 1L)).isFalse();
+    }
+
+    @Test
+    @DisplayName("유니버스 트리 조회")
+    void testFindUniverseTree() {
+        // given
+        Long universeId = 1L;
+
+        // when
+        TraversalComponents treeComponents = sut.viewPublicUniverse(universeId);
+
+        // then
+        assertThat(treeComponents.getUniverse().getId()).isEqualTo(1L);
+        assertThat(treeComponents.getUniverse().getFileInfo().getImageId()).isEqualTo(1L);
+        assertThat(treeComponents.getSpaces()).hasSize(4);
+        assertThat(treeComponents.getPieces()).hasSize(6);
+        assertThat(treeComponents.getUniverse().getSocialInfo().getViewCount()).isEqualTo(2L);
     }
 }

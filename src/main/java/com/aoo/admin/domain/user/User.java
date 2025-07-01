@@ -49,6 +49,10 @@ public class User {
         );
     }
 
+    public static User load(Long id, String nickname) {
+        return new User(new UserInfo(id, null, nickname, null), null, null, null);
+    }
+
     public void updateNickname(String nickname) {
         this.userInfo.updateNickname(nickname);
     }

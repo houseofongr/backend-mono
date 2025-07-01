@@ -38,7 +38,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateUniversePort, CreateSpacePort, CreatePiecePort, CreateSoundPort {
+public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPort, CreateHousePort, CreateRoomPort, CreateHomePort, CreateItemPort, CreateSoundSourcePort, CreateDeletedUserPort, CreateSpacePort, CreatePiecePort, CreateSoundPort {
 
     private final IssueIdPort issueIdPort;
 
@@ -88,21 +88,6 @@ public class EntityFactoryService implements CreateUserPort, CreateSnsAccountPor
     public DeletedUser createDeletedUser(User user, Boolean termsOfDeletionAgreement, Boolean personalInformationDeletionAgreement) {
         Long newId = issueIdPort.issueDeletedUserId();
         return DeletedUser.create(newId, user, termsOfDeletionAgreement, personalInformationDeletionAgreement);
-    }
-
-    @Override
-    public Universe createUniverse(CreateUniverseCommand command, Long thumbMusicId, Long thumbnailId, Long innerImageId) {
-        Long newId = issueIdPort.issueUniverseId();
-        return Universe.create(newId,
-                thumbMusicId,
-                thumbnailId,
-                innerImageId,
-                command.authorId(),
-                command.title(),
-                command.description(),
-                command.category(),
-                command.publicStatus(),
-                command.hashtags());
     }
 
     @Override

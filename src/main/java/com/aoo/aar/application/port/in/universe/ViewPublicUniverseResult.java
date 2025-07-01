@@ -1,27 +1,56 @@
-package com.aoo.admin.application.port.in.universe;
+package com.aoo.aar.application.port.in.universe;
 
-import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.application.service.AdminException;
+import com.aoo.aar.application.service.AarErrorCode;
+import com.aoo.aar.application.service.AarException;
+import com.aoo.admin.application.port.in.universe.TraversalUniverseResult;
+import com.aoo.admin.domain.universe.TreeInfo;
 import com.aoo.admin.domain.universe.Universe;
 import com.aoo.admin.domain.universe.UniverseTreeComponent;
-import com.aoo.admin.domain.universe.space.Space;
-import com.aoo.admin.domain.universe.TreeInfo;
 import com.aoo.admin.domain.universe.piece.Piece;
+import com.aoo.admin.domain.universe.space.Space;
 
 import java.util.List;
 
-public record TraversalUniverseResult(
+public record ViewPublicUniverseResult(
         Long universeId,
+        Long thumbMusicId,
+        Long thumbnailId,
         Long innerImageId,
+        Long authorId,
+        Long createdTime,
+        Long updatedTime,
+        Long view,
+        Integer like,
+        String title,
+        String description,
+        String author,
+        String category,
+        Boolean isMine,
+        Boolean isLiked,
+        List<String> hashtags,
         List<SpaceTreeInfo> spaces,
         List<PieceTreeInfo> pieces
 ) {
 
-    public static TraversalUniverseResult of(TreeInfo root) {
+    public static ViewPublicUniverseResult of(TreeInfo root, Long userId, boolean isLiked) {
         if (root.getUniverseTreeComponent() instanceof Universe universe)
-            return new TraversalUniverseResult(
+            return new ViewPublicUniverseResult(
                     universe.getId(),
+                    universe.getFileInfo().getThumbMusicId(),
+                    universe.getFileInfo().getThumbnailId(),
                     universe.getFileInfo().getImageId(),
+                    universe.getAuthorInfo().getId(),
+                    universe.getDateInfo().getCreatedTime().toEpochSecond(),
+                    universe.getDateInfo().getUpdatedTime().toEpochSecond(),
+                    universe.getSocialInfo().getViewCount(),
+                    universe.getSocialInfo().getLikeCount(),
+                    universe.getBasicInfo().getTitle(),
+                    universe.getBasicInfo().getDescription(),
+                    universe.getAuthorInfo().getNickname(),
+                    universe.getBasicInfo().getCategory().name(),
+                    universe.isMine(userId),
+                    isLiked,
+                    universe.getSocialInfo().getHashtags(),
                     root.getChildren().stream()
                             .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Space)
                             .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
@@ -32,7 +61,7 @@ public record TraversalUniverseResult(
                             .toList()
             );
 
-        throw new AdminException(AdminErrorCode.LOAD_ENTITY_FAILED);
+        throw new AarException(AarErrorCode.LOAD_ENTITY_FAILED);
     }
 
     public record SpaceTreeInfo(
@@ -42,15 +71,14 @@ public record TraversalUniverseResult(
             Integer depth,
             String title,
             String description,
-            Boolean hidden,
             Float startX,
             Float startY,
             Float endX,
             Float endY,
             Long createdTime,
             Long updatedTime,
-            List<SpaceTreeInfo> spaces,
-            List<PieceTreeInfo> pieces
+            List<TraversalUniverseResult.SpaceTreeInfo> spaces,
+            List<TraversalUniverseResult.PieceTreeInfo> pieces
     ) {
 
         public static SpaceTreeInfo of(UniverseTreeComponent component) {
@@ -62,7 +90,6 @@ public record TraversalUniverseResult(
                         space.getTreeInfo().getDepth(),
                         space.getBasicInfo().getTitle(),
                         space.getBasicInfo().getDescription(),
-                        space.getBasicInfo().getHidden(),
                         space.getPosInfo().getSx(),
                         space.getPosInfo().getSy(),
                         space.getPosInfo().getEx(),
@@ -71,11 +98,11 @@ public record TraversalUniverseResult(
                         space.getDateInfo().getUpdatedTime().toEpochSecond(),
                         space.getTreeInfo().getChildren().stream()
                                 .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Space)
-                                .map(treeInfo -> SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
+                                .map(treeInfo -> TraversalUniverseResult.SpaceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
                                 .toList(),
                         space.getTreeInfo().getChildren().stream()
                                 .filter(treeInfo -> treeInfo.getUniverseTreeComponent() instanceof Piece)
-                                .map(treeInfo -> PieceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
+                                .map(treeInfo -> TraversalUniverseResult.PieceTreeInfo.of(treeInfo.getUniverseTreeComponent()))
                                 .toList()
                 );
 
@@ -90,7 +117,6 @@ public record TraversalUniverseResult(
             Integer depth,
             String title,
             String description,
-            Boolean hidden,
             Float startX,
             Float startY,
             Float endX,
@@ -108,7 +134,6 @@ public record TraversalUniverseResult(
                         piece.getTreeInfo().getDepth(),
                         piece.getBasicInfo().getTitle(),
                         piece.getBasicInfo().getDescription(),
-                        piece.getBasicInfo().getHidden(),
                         piece.getPosInfo().getSx(),
                         piece.getPosInfo().getSy(),
                         piece.getPosInfo().getEx(),

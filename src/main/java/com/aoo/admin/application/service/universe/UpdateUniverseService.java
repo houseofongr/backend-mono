@@ -5,9 +5,11 @@ import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseUseCase;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.application.port.out.universe.UpdateUniversePort;
+import com.aoo.admin.application.port.out.user.FindUserPort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.user.User;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
 import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.in.UploadPublicAudioUseCase;
@@ -33,7 +35,8 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
 
         Universe targetUniverse = findUniversePort.load(universeId);
 
-        targetUniverse.getBasicInfo().updateUniverseInfo(command.title(), command.description(), command.authorId(), command.category(), command.publicStatus());
+        targetUniverse.getAuthorInfo().update(command.authorId());
+        targetUniverse.getBasicInfo().updateUniverseInfo(command.title(), command.description(), command.category(), command.publicStatus());
         targetUniverse.getSocialInfo().updateHashtag(command.hashtags());
 
         return updateUniversePort.updateDetail(targetUniverse);

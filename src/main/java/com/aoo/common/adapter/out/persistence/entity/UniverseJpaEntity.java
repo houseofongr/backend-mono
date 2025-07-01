@@ -87,4 +87,8 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     public void updateAuthor(UserJpaEntity author) {
         this.author = author;
     }
+
+    public void view() {
+        this.viewCount++;
+    }
 }

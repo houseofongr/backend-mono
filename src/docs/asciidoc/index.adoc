@@ -263,6 +263,17 @@ operation::aar-home-patch-main[snippets='path-parameters,http-request,http-respo
 
 operation::aar-public-universe-get-list[snippets='path-parameters,http-request,http-response,response-fields']
 
+[[aar-public-universe-get-api]]
+==== 공개 유니버스 상세조회 API
+
+공개된 유니버스의 상세정보를 조회합니다.
+
+> 본인의 것이 아닌 비공개 유니버스나, 숨겨진 스페이스 및 피스는 조회되지 않습니다.
+
+> 조회 시 조회수가 1 증가하며, 내부의 모든 컴포넌트를 함께 조회합니다.
+
+operation::aar-public-universe-get[snippets='path-parameters,http-request,http-response,response-fields']
+
 [[admin-api]]
 == 관리자(Admin) API
 

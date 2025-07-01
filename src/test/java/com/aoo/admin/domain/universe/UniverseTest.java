@@ -1,5 +1,6 @@
 package com.aoo.admin.domain.universe;
 
+import com.aoo.admin.domain.user.User;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ class UniverseTest {
     @DisplayName("유니버스 생성")
     void testCreateUniverse() {
         // given
-        Long id = 1L;
         String title = "우주";
         String description = "유니버스는 우주입니다.";
         List<String> tag = List.of("우주", "행성", "지구", "별");
@@ -23,21 +23,21 @@ class UniverseTest {
         Long thumbMusicId = 100L;
         Long thumbnailId = 11L;
         Long innerImageId = 12L;
-        Long authorId = 1L;
+        User author = User.load(1L, "leaf");
 
         // when
-        Universe universe = Universe.create(id, thumbMusicId, thumbnailId, innerImageId, authorId, title, description, category, publicStatus, tag);
+        Universe universe = Universe.create(thumbMusicId, thumbnailId, innerImageId, title, description, category, publicStatus, tag, author);
         UniverseBasicInfo basicInfo = universe.getBasicInfo();
         SocialInfo socialInfo = universe.getSocialInfo();
 
         // then
-        assertThat(universe.getId()).isEqualTo(id);
+        assertThat(universe.getId()).isNull();
         assertThat(universe.getFileInfo().getThumbnailId()).isEqualTo(thumbnailId);
         assertThat(universe.getFileInfo().getThumbMusicId()).isEqualTo(thumbMusicId);
         assertThat(universe.getFileInfo().getImageId()).isEqualTo(innerImageId);
         assertThat(universe.getDateInfo()).isNull();
         assertThat(universe.getTreeInfo()).isNull();
-        assertThat(basicInfo.getAuthorId()).isEqualTo(authorId);
+        assertThat(universe.getAuthorInfo().getId()).isEqualTo(author.getUserInfo().getId());
         assertThat(basicInfo.getPublicStatus()).isEqualTo(publicStatus);
         assertThat(basicInfo.getTitle()).isEqualTo(title);
         assertThat(basicInfo.getDescription()).isEqualTo(description);
@@ -58,20 +58,18 @@ class UniverseTest {
         String description = "오르트구름은 태양계 최외곽에 위치하고 있습니다.";
         Category category = Category.LIFE;
         PublicStatus publicStatus = PublicStatus.PRIVATE;
-        Long authorId = 1L;
 
         // when
-        universe.getBasicInfo().updateUniverseInfo(title, description, authorId, null, null);
+        universe.getBasicInfo().updateUniverseInfo(title, description,null, null);
 
         // then
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(universe.getBasicInfo().getDescription()).isEqualTo(description);
-        assertThat(universe.getBasicInfo().getAuthorId()).isEqualTo(authorId);
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.GOVERNMENT_AND_PUBLIC_INSTITUTION);
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PUBLIC);
 
         // when 2
-        universe.getBasicInfo().updateUniverseInfo(null, null, null, category, publicStatus);
+        universe.getBasicInfo().updateUniverseInfo(null, null, category, publicStatus);
 
         // then 2
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(category);

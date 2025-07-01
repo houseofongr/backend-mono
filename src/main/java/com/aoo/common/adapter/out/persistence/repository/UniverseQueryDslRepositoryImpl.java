@@ -2,6 +2,8 @@ package com.aoo.common.adapter.out.persistence.repository;
 
 import com.aoo.aar.application.port.in.universe.SearchPublicUniverseCommand;
 import com.aoo.aar.application.port.in.universe.SearchPublicUniverseResult;
+import com.aoo.aar.application.service.AarErrorCode;
+import com.aoo.aar.application.service.AarException;
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
@@ -74,6 +76,37 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
                 .fetch();
 
         return new TraversalJpaEntityComponents(universe, spaceJpaEntities, pieceJpaEntities);
+    }
+
+    @Override
+    public TraversalJpaEntityComponents findAllPublicTreeComponentById(Long universeId) {
+        UniverseJpaEntity universe = query
+                .selectFrom(universeJpaEntity)
+                .where(universeJpaEntity.id.eq(universeId))
+                .stream().findFirst()
+                .orElseThrow(() -> new AarException(AarErrorCode.UNIVERSE_NOT_FOUND));
+
+        List<SpaceJpaEntity> spaceJpaEntities = query
+                .selectFrom(spaceJpaEntity)
+                .where(spaceJpaEntity.universeId.eq(universeId)
+                        .and(spaceJpaEntity.hidden.eq(false)))
+                .fetch();
+
+        List<PieceJpaEntity> pieceJpaEntities = query
+                .selectFrom(pieceJpaEntity)
+                .where(pieceJpaEntity.universeId.eq(universeId)
+                        .and(pieceJpaEntity.hidden.eq(false)))
+                .fetch();
+
+        return new TraversalJpaEntityComponents(universe, spaceJpaEntities, pieceJpaEntities);
+    }
+
+    @Override
+    public boolean checkIsLiked(Long universeId, Long userId) {
+        return query.selectFrom(universeLikeJpaEntity)
+                .where(universeLikeJpaEntity.universe.id.eq(universeId)
+                        .and(universeLikeJpaEntity.user.id.eq(userId))
+                ).stream().findFirst().isPresent();
     }
 
     @Override

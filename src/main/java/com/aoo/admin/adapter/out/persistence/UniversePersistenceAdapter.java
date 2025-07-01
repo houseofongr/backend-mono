@@ -44,7 +44,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
 
     @Override
     public CreateUniverseResult save(Universe universe) {
-        UserJpaEntity author = userJpaRepository.findById(universe.getBasicInfo().getAuthorId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+        UserJpaEntity author = userJpaRepository.findById(universe.getAuthorInfo().getId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
 
         UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, author);
 
@@ -77,7 +77,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     @Override
     public TraversalComponents findTreeComponents(Long id) {
         TraversalJpaEntityComponents components = universeJpaRepository.findAllTreeComponentById(id);
-        return universeMapper.mapToTraversalComponent(components.universeJpaEntity(), components.spaceJpaEntities(), components.elementJpaEntities());
+        return universeMapper.mapToTraversalComponent(components.universeJpaEntity(), components.spaceJpaEntities(), components.pieceJpaEntities());
     }
 
     @Override
@@ -86,8 +86,8 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
         targetEntity.update(universe);
 
         // Author Update
-        if (!Objects.equals(targetEntity.getAuthor().getId(), universe.getBasicInfo().getAuthorId())) {
-            UserJpaEntity userJpaEntity = userJpaRepository.findById(universe.getBasicInfo().getAuthorId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+        if (!Objects.equals(targetEntity.getAuthor().getId(), universe.getAuthorInfo().getId())) {
+            UserJpaEntity userJpaEntity = userJpaRepository.findById(universe.getAuthorInfo().getId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
             targetEntity.updateAuthor(userJpaEntity);
         }
 

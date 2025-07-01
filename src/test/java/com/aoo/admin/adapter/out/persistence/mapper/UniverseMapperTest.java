@@ -24,7 +24,7 @@ class UniverseMapperTest {
 
     @BeforeEach
     void init() {
-        sut = new UniverseMapper();
+        sut = new UniverseMapper(new UserMapper(new SnsAccountMapper()));
     }
 
     @Test
@@ -53,7 +53,7 @@ class UniverseMapperTest {
         assertThat(universe.getDateInfo().getUpdatedTime()).isCloseTo(ZonedDateTime.now(), new TemporalUnitWithinOffset(100L, ChronoUnit.MILLIS));
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(universeJpaEntity.getPublicStatus());
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo(universeJpaEntity.getTitle());
-        assertThat(universe.getBasicInfo().getAuthorId()).isEqualTo(universeJpaEntity.getAuthor().getId());
+        assertThat(universe.getAuthorInfo().getId()).isEqualTo(universeJpaEntity.getAuthor().getId());
         assertThat(universe.getBasicInfo().getDescription()).isEqualTo(universeJpaEntity.getDescription());
         assertThat(universe.getBasicInfo().getCategory()).isEqualTo(universeJpaEntity.getCategory());
         assertThat(universe.getSocialInfo().getHashtags()).hasSize(4);

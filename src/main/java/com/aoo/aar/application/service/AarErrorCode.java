@@ -28,6 +28,9 @@ public enum AarErrorCode implements ErrorCode {
     NICK_NAME_CONFLICT("AAR-USER-3", CONFLICT, "중복된 닉네임입니다."),
     ALREADY_REGISTERED_SNS_ACCOUNT("AAR-USER-4", CONFLICT, "이미 등록된 SNS 계정입니다."),
 
+    NOT_OWNED_PRIVATE_UNIVERSE_ACCESS("AAR-UNIVERSE-1", FORBIDDEN, "본인의 소유가 아닌 비공개 유니버스에 접근했습니다."),
+    UNIVERSE_NOT_FOUND("AAR-UNIVERSE-2", NOT_FOUND, "유니버스를 찾을 수 없습니다."),
+
     // Common
     LOAD_ENTITY_FAILED("AAR-COMMON-1", INTERNAL_SERVER_ERROR, "객체를 불러오는데 실패했습니다.");
 

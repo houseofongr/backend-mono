@@ -14,4 +14,8 @@ public interface UniverseQueryDslRepository {
 
     TraversalJpaEntityComponents findAllTreeComponentById(Long universeId);
 
+    TraversalJpaEntityComponents findAllPublicTreeComponentById(Long universeId);
+
+    boolean checkIsLiked(Long universeId, Long userId);
+
 }
