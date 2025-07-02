@@ -22,7 +22,7 @@ public class GetPublicUniverseListController {
     @GetMapping("/aar/universes")
     ResponseEntity<SearchPublicUniverseResult> search(
             Pageable pageable,
-            @Jwt("userId") Long userId,
+            @Jwt(value = "userId", required = false) Long userId,
             @RequestParam(required = false) String searchType,
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String sortType,
