@@ -25,6 +25,7 @@ public enum AarErrorCode implements ErrorCode {
     // User
     NOT_VERIFIED_EMAIL("AAR-USER-1", UNAUTHORIZED, "확인되지 않은 이메일 주소입니다."),
     BUSINESS_USER_NOT_FOUND("AAR-USER-2", NOT_FOUND, "비즈니스 사용자를 찾을 수 없습니다."),
+    BUSINESS_USER_NOT_CONFIRMED("AAR-USER-3", FORBIDDEN, "관리자의 계정 승인 대기중입니다."),
     NICK_NAME_CONFLICT("AAR-USER-3", CONFLICT, "중복된 닉네임입니다."),
     ALREADY_REGISTERED_SNS_ACCOUNT("AAR-USER-4", CONFLICT, "이미 등록된 SNS 계정입니다."),
 

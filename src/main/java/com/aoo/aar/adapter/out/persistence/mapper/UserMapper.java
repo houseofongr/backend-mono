@@ -37,7 +37,9 @@ public class UserMapper {
     public BusinessUserInfo mapToBusinessUserInfo(BusinessUserJpaEntity businessUserJpaEntity) {
         return new BusinessUserInfo(
                 businessUserJpaEntity.getId(),
-                businessUserJpaEntity.getUserJpaEntity().getId(),
+                businessUserJpaEntity.getUserJpaEntity() != null ? businessUserJpaEntity
+                        .getUserJpaEntity().getId() :
+                        null,
                 businessUserJpaEntity.getEmail(),
                 businessUserJpaEntity.getPassword(),
                 businessUserJpaEntity.getNickname()

@@ -25,7 +25,9 @@ public class LoginBusinessUserService implements LoginBusinessUserUseCase {
     public LoginBusinessUserResult login(String email, String password) {
         BusinessUserInfo businessUserInfo = findBusinessUserPort.findBusinessUserInfo(email);
 
+        if (businessUserInfo.businessUserId() == null) throw new AarException(AarErrorCode.BUSINESS_USER_NOT_CONFIRMED);
         if (!passwordEncoder.matches(password, businessUserInfo.password())) throw new AarException(AarErrorCode.BUSINESS_LOGIN_FAILED);
+
         String accessToken = issueAccessTokenPort.issueAccessToken(businessUserInfo);
 
         return new LoginBusinessUserResult(
