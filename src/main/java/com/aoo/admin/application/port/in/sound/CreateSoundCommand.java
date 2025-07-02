@@ -11,15 +11,13 @@ public record CreateSoundCommand(
         Boolean hidden,
         MultipartFile audioFile
 ) {
-    public static CreateSoundCommand create(Long spaceId, String title, String description, Boolean hidden) {
-        if ((spaceId == null) ||
+    public CreateSoundCommand {
+        if ((pieceId == null) ||
             (title == null || title.isBlank() || title.length() > 100) ||
             (description != null && description.length() > 5000) ||
-            hidden == null
+            (hidden == null)
         )
             throw new AdminException(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION);
-
-        return new CreateSoundCommand(spaceId, title, description, hidden, null);
     }
 
     public static CreateSoundCommand withAudioFile(CreateSoundCommand baseCommand, MultipartFile audioFile) {
