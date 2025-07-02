@@ -29,31 +29,31 @@ class CreateSoundServiceTest {
     @Test
     @DisplayName("요청 파라미터 테스트")
     void testRequestParameter() {
-        Long goodSpaceId = 1L;
+        Long goodPieceId = 1L;
         String goodTitle = "소리";
         String goodDescription = "사운드는 소리입니다.";
-        Long nullSpaceId = null;
+        Long nullPieceId = null;
         String emptyTitle = "";
         String blankTitle = " ";
         String length100 = "a".repeat(101);
         String length5000 = "a".repeat(5001);
 
-        assertThatThrownBy(() -> CreateSoundCommand.create(nullSpaceId, goodTitle, goodDescription, true)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> CreateSoundCommand.create(goodSpaceId, emptyTitle, goodDescription, true)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> CreateSoundCommand.create(goodSpaceId, blankTitle, goodDescription, true)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> CreateSoundCommand.create(goodSpaceId, length100, goodDescription, true)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> CreateSoundCommand.create(goodSpaceId, goodTitle, length5000, true)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> CreateSoundCommand.create(goodSpaceId, goodTitle, goodDescription, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateSoundCommand(nullPieceId, goodTitle, goodDescription, true, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateSoundCommand(goodPieceId, emptyTitle, goodDescription, true, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateSoundCommand(goodPieceId, blankTitle, goodDescription, true, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateSoundCommand(goodPieceId, length100, goodDescription, true, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateSoundCommand(goodPieceId, goodTitle, length5000, true, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateSoundCommand(goodPieceId, goodTitle, goodDescription, null, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
 
         byte[] content = new byte[100 * 1024 * 1024 + 1];
         MockMultipartFile sound = new MockMultipartFile("audio", "audio.png", "audio/mpeg", "audio file".getBytes());
         MockMultipartFile over100MB = new MockMultipartFile("audio", "audio.png", "audio/mpeg", content);
-        CreateSoundCommand happyCommand = CreateSoundCommand.create(goodSpaceId, goodTitle, goodDescription, false);
+        CreateSoundCommand happyCommand = new CreateSoundCommand(goodPieceId, goodTitle, goodDescription, false, null);
 
         assertThatThrownBy(() -> CreateSoundCommand.withAudioFile(happyCommand, over100MB)).hasMessage(AdminErrorCode.EXCEEDED_FILE_SIZE.getMessage());
 
         CreateSoundCommand happyFullCommand = CreateSoundCommand.withAudioFile(happyCommand, sound);
-        assertThat(happyFullCommand.pieceId()).isEqualTo(goodSpaceId);
+        assertThat(happyFullCommand.pieceId()).isEqualTo(goodPieceId);
         assertThat(happyFullCommand.title()).isEqualTo(goodTitle);
         assertThat(happyFullCommand.description()).isEqualTo(goodDescription);
         assertThat(happyFullCommand.audioFile()).isEqualTo(sound);
@@ -63,7 +63,7 @@ class CreateSoundServiceTest {
     @DisplayName("사운드 생성 서비스")
     void testCreateSoundService() {
         // given
-        CreateSoundCommand happyCommand = CreateSoundCommand.create(1L, "소리", "사운드는 소리입니다.", false);
+        CreateSoundCommand happyCommand = new CreateSoundCommand(1L, "소리", "사운드는 소리입니다.", false, null);
         CreateSoundCommand happyFullCommand = CreateSoundCommand.withAudioFile(happyCommand, new MockMultipartFile("audio", "audio.png", "audio/mpeg", "audio file".getBytes()));
         Sound sound = Sound.create(123L, 345L, 1L, "소리", "사운드는 소리입니다.", false);
 
