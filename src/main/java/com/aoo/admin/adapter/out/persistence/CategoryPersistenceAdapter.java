@@ -48,6 +48,7 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategor
 
     @Override
     public DeleteCategoryResult delete(Long categoryId) {
+        if (!categoryJpaRepository.existsById(categoryId)) throw new AdminException(AdminErrorCode.CATEGORY_NOT_FOUND);
         categoryJpaRepository.deleteById(categoryId);
         return DeleteCategoryResult.of(categoryId);
     }
