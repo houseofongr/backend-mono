@@ -23,7 +23,7 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     @Column
     private String realName;
 
-    @Column
+    @Column(unique = true)
     private String nickname;
 
     @Column
