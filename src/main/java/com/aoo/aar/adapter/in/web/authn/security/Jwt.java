@@ -12,4 +12,5 @@ import java.lang.annotation.Target;
 @AuthenticationPrincipal(expression = "claims['{value}']")
 public @interface Jwt {
     String value() default "sub";
+    boolean required() default true;
 }

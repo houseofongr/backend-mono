@@ -18,7 +18,7 @@ public class GetPublicUniverseController {
     @GetMapping("/aar/universes/{universeId}")
     ResponseEntity<ViewPublicUniverseResult> read(
             @PathVariable Long universeId,
-            @Jwt("userId") Long userId
+            @Jwt(value = "userId", required = false) Long userId
     ) {
         return ResponseEntity.ok(useCase.read(universeId, userId));
     }
