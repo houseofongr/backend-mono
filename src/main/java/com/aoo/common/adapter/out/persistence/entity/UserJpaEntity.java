@@ -39,6 +39,7 @@ public class UserJpaEntity extends DateColumnBaseEntity {
     private Boolean personalInformationAgreement;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Type userType;
 
     public enum Type {
