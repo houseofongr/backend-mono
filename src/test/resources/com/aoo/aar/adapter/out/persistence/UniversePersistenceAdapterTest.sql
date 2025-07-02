@@ -45,10 +45,10 @@ values ('1', '2', '12'),
        ('4', '5', '12');
 
 insert into AAR_USER(ID, REAL_NAME, PHONE_NUMBER, NICKNAME, TERMS_OF_USE_AGREEMENT, PERSONAL_INFORMATION_AGREEMENT)
-values (10, '남상엽', 'NOT_SET', 'leaf', false, false),
-       (11, '남상엽', 'NOT_SET', 'leaf', false, false),
-       (12, '남상엽', 'NOT_SET', 'leaf', false, false),
-       (13, '남상엽', 'NOT_SET', 'leaf', false, false);
+values (10, '남상엽', 'NOT_SET', 'leaf10', false, false),
+       (11, '남상엽', 'NOT_SET', 'leaf11', false, false),
+       (12, '남상엽', 'NOT_SET', 'leaf12', false, false),
+       (13, '남상엽', 'NOT_SET', 'leaf13', false, false);
 
 insert into UNIVERSE_LIKE(UNIVERSE_LIKE.ID, UNIVERSE_LIKE.CREATED_TIME, UNIVERSE_LIKE.UPDATED_TIME,
                           UNIVERSE_LIKE.UNIVERSE_ID, UNIVERSE_LIKE.USER_ID)

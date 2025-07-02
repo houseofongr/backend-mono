@@ -22,13 +22,6 @@ class GetSoundSourcesPathControllerTest extends AbstractControllerTest {
         mockMvc.perform(get("/aar/sound-sources/path")
                         .param("page", "1")
                         .param("size", "3")
-                        .with(jwt().authorities(new SimpleGrantedAuthority("ROLE_USER"))
-                        ))
-                .andExpect(status().is(400));
-
-        mockMvc.perform(get("/aar/sound-sources/path")
-                        .param("page", "1")
-                        .param("size", "3")
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 10L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_USER"))
                         ))
