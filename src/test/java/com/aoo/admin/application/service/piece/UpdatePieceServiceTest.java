@@ -23,7 +23,7 @@ class UpdatePieceServiceTest {
     void testUpdateDetailPiece() {
         // given
         Long pieceId = 1L;
-        UpdatePieceCommand.Detail command = new UpdatePieceCommand.Detail("평화", "피스는 평화입니다.", false);
+        UpdatePieceCommand.Detail command = new UpdatePieceCommand.Detail("평화", "피스는 평화입니다.", true);
         Piece newPiece = Piece.create(1L, -1L, 123L, 321L, "피스", "피스는 조각입니다.", 0.1f, 0.2f, 0.3f, 0.4f, false);
 
         // when
@@ -35,6 +35,7 @@ class UpdatePieceServiceTest {
         assertThat(result.message()).matches("\\[#\\d+]번 피스의 상세정보가 수정되었습니다.");
         assertThat(result.title()).isEqualTo("평화");
         assertThat(result.description()).isEqualTo("피스는 평화입니다.");
+        assertThat(result.hidden()).isTrue();
     }
 
     @Test

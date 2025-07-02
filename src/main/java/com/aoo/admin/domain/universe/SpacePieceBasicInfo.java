@@ -7,12 +7,16 @@ public class SpacePieceBasicInfo extends BaseBasicInfo {
 
     private final Long universeId;
     private final Long parentSpaceId;
-    private final Boolean hidden;
+    private Boolean hidden;
 
     public SpacePieceBasicInfo(Long universeId, Long parentSpaceId, String title, String description, Boolean hidden) {
         super(title, description);
         this.universeId = universeId;
         this.parentSpaceId = parentSpaceId != null && parentSpaceId == -1? null : parentSpaceId;
+        this.hidden = hidden;
+    }
+
+    public void updateHidden(Boolean hidden) {
         this.hidden = hidden;
     }
 

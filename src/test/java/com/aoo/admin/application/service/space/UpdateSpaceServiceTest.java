@@ -63,7 +63,7 @@ class UpdateSpaceServiceTest {
     @DisplayName("스페이스 기본정보 수정 서비스")
     void testUpdateDetailSpaceService() {
         // given
-        UpdateSpaceCommand.Detail command = new UpdateSpaceCommand.Detail("블랙홀", "블랙홀은 빛도 빨아들입니다.", false);
+        UpdateSpaceCommand.Detail command = new UpdateSpaceCommand.Detail("블랙홀", "블랙홀은 빛도 빨아들입니다.", true);
         Space space = MockEntityFactoryService.getParentSpace();
 
         // when
@@ -75,6 +75,7 @@ class UpdateSpaceServiceTest {
         assertThat(result.title()).isEqualTo(command.title());
         assertThat(result.description()).isEqualTo(command.description());
         assertThat(result.message()).matches("\\[#-?\\d+]번 스페이스의 상세정보가 수정되었습니다.");
+        assertThat(result.hidden()).isTrue();
     }
 
     @Test
