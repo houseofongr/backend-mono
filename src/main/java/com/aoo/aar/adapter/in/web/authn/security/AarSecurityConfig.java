@@ -51,7 +51,8 @@ public class AarSecurityConfig {
                                         "/aar/authn/code/**",
                                         "/aar/authn/kakao/callback",
                                         "/aar/users/nickname/**",
-                                        "/aar/error-codes")
+                                        "/aar/error-codes",
+                                        "/aar/universes/**")
                                 .permitAll()
 
                                 .requestMatchers(POST,

@@ -82,7 +82,7 @@ operation::aar-authn-login-2[snippets='response-fields']
 [[aar-authn-business-login-api]]
 ==== 비즈니스 로그인 API
 
-소리기록실에 비즈니스 계졍으로 로그인을 시도합니다.
+소리기록실에 비즈니스 계정으로 로그인을 시도합니다.
 
 operation::aar-post-login-user-business[snippets='http-request,form-parameters,http-response,response-fields']
 
