@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,25 +17,18 @@ public class GetPublicImageController {
     private final DownloadPublicImageUseCase downloadPublicImageUseCase;
 
     @GetMapping("/public/images/{fileId}")
-    public ResponseEntity<?> downloadInline(@PathVariable Long fileId) {
+    public ResponseEntity<?> download(
+            @PathVariable Long fileId,
+            @RequestParam(required = false) Boolean attachment
+    ) {
 
-        DownloadFileResult result = downloadPublicImageUseCase.publicDownloadInline(fileId);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
-                .contentType(result.mediaType())
-                .body(result.resource());
-    }
-
-    @GetMapping("/public/images/attachment/{fileId}")
-    public ResponseEntity<?> downloadAttachment(@PathVariable Long fileId) {
-
-        DownloadFileResult result = downloadPublicImageUseCase.publicDownloadAttachment(fileId);
+        DownloadFileResult result = attachment != null && attachment?
+                downloadPublicImageUseCase.publicDownload(fileId, true) :
+                downloadPublicImageUseCase.publicDownload(fileId, false) ;
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, result.disposition())
                 .contentType(result.mediaType())
                 .body(result.resource());
     }
-
 }

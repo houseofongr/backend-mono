@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -54,8 +56,11 @@ public class DownloadService {
 
     private ContentDisposition getDisposition(FileId fileId, boolean isAttachment) {
         return isAttachment ?
-                ContentDisposition.attachment().filename(fileId.getRealFileName()).build() :
-                ContentDisposition.inline().filename(fileId.getFileSystemName()).build();
-
+                ContentDisposition.attachment().filename(
+                        URLEncoder.encode(fileId.getRealFileName(), StandardCharsets.UTF_8))
+                        .build() :
+                ContentDisposition.inline().filename(
+                        fileId.getFileSystemName())
+                        .build();
     }
 }

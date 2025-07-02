@@ -65,7 +65,8 @@ public class GetPublicImageControllerTest extends AbstractControllerTest {
         FileJpaEntity entity = new FileJpaEntity(null, "logo.png", "logo.png", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
-        mockMvc.perform(get("/public/images/attachment/{imageId}", entity.getId()))
+        mockMvc.perform(get("/public/images/{imageId}", entity.getId())
+                        .param("attachment","true"))
                 .andExpect(status().is(200))
                 .andDo(document("file-public-images-download-attachment",
                         pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),

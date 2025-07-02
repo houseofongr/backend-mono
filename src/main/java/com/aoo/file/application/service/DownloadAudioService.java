@@ -17,13 +17,8 @@ public class DownloadAudioService implements DownloadPublicAudioUseCase, Downloa
     private final DownloadService downloadService;
 
     @Override
-    public DownloadFileResult publicDownloadInline(Long fileId) {
-        return downloadService.load(fileId, FileType.AUDIO, Authority.PUBLIC_FILE_ACCESS, false);
-    }
-
-    @Override
-    public DownloadFileResult publicDownloadAttachment(Long fileId) {
-        return downloadService.load(fileId, FileType.AUDIO, Authority.PUBLIC_FILE_ACCESS, true);
+    public DownloadFileResult publicDownload(Long fileId, boolean attachment) {
+        return downloadService.load(fileId, FileType.AUDIO, Authority.PUBLIC_FILE_ACCESS, attachment);
     }
 
     @Override

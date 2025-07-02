@@ -65,7 +65,8 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
         FileJpaEntity entity = new FileJpaEntity(null, "sample.mp3", "sample.mp3", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
-        mockMvc.perform(get("/public/audios/attachment/{audioId}", entity.getId()))
+        mockMvc.perform(get("/public/audios/{audioId}", entity.getId())
+                        .param("attachment", "true"))
                 .andExpect(status().is(200))
                 .andDo(document("file-public-audios-download-attachment",
                         pathParameters(parameterWithName("audioId").description("다운로드할 음원 식별자입니다.")),
