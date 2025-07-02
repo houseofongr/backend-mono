@@ -21,8 +21,10 @@ class GetPublicUniverseListControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("공개 유니버스 리스트 조회 API")
     void testGetList() throws Exception {
+        mockMvc.perform(get("/aar/universes?page=1&size=10"))
+                .andExpect(status().is(200));
+
         mockMvc.perform(get("/aar/universes?page=1&size=10")
-                        .contentType(MediaType.APPLICATION_JSON)
                         .with(jwt().jwt(jwt -> jwt.claim("userId", 1L))
                                 .authorities(new SimpleGrantedAuthority("ROLE_USER"))
                         )
