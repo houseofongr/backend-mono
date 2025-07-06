@@ -31,7 +31,7 @@ public class UpdateSpaceService implements UpdateSpaceUseCase {
         Space space = findSpacePort.find(spaceId);
 
         space.getBasicInfo().update(command.title(), command.description());
-        space.getBasicInfo().updateHidden(command.hidden());
+        space.getBasicInfo().updateHiddenStatus(command.hidden());
 
         updateSpacePort.update(space);
 

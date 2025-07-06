@@ -16,8 +16,8 @@ public class SpacePieceBasicInfo extends BaseBasicInfo {
         this.hidden = hidden;
     }
 
-    public void updateHidden(Boolean hidden) {
-        this.hidden = hidden;
+    public void updateHiddenStatus(Boolean hidden) {
+        this.hidden = hidden != null? hidden : this.hidden;
     }
 
 }

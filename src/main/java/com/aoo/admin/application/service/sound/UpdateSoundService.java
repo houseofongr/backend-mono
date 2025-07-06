@@ -29,14 +29,17 @@ public class UpdateSoundService implements UpdateSoundUseCase {
     @Override
     public UpdateSoundResult.Detail updateDetail(Long soundId, UpdateSoundCommand command) {
         Sound sound = findSoundPort.find(soundId);
+
         sound.getBasicInfo().update(command.title(), command.description());
+        sound.getBasicInfo().updateHideStatus(command.hidden());
 
         updateSoundPort.update(sound);
 
         return new UpdateSoundResult.Detail(
                 String.format("[#%d]번 사운드의 상세정보가 수정되었습니다.", sound.getId()),
                 sound.getBasicInfo().getTitle(),
-                sound.getBasicInfo().getDescription()
+                sound.getBasicInfo().getDescription(),
+                sound.getBasicInfo().getHidden()
         );
     }
 

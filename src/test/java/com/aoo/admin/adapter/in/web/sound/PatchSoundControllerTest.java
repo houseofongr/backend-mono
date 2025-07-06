@@ -31,7 +31,8 @@ class PatchSoundControllerTest extends AbstractControllerTest {
         String content = """
                 {
                   "title" : "수정할 제목을 입력합니다.",
-                  "description" : "수정할 내용을 입력합니다."
+                  "description" : "수정할 내용을 입력합니다.",
+                  "hidden" : "false"
                 }
                 """;
 
@@ -44,13 +45,15 @@ class PatchSoundControllerTest extends AbstractControllerTest {
                                 parameterWithName("soundId").description("수정할 소리의 식별자입니다.")
                         ),
                         requestFields(
-                                fieldWithPath("title").description("수정할 제목입니다."),
-                                fieldWithPath("description").description("수정할 상세 설명입니다.")
+                                fieldWithPath("title").description("수정할 제목입니다.").optional(),
+                                fieldWithPath("description").description("수정할 상세 설명입니다.").optional(),
+                                fieldWithPath("hidden").description("수정할 숨김 여부입니다.").optional()
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : '[id]번 소리의 상세정보가 수정되었습니다.'"),
                                 fieldWithPath("title").description("수정된 제목입니다."),
-                                fieldWithPath("description").description("수정된 상세 설명입니다.")
+                                fieldWithPath("description").description("수정된 상세 설명입니다."),
+                                fieldWithPath("hidden").description("수정된 숨김 여부입니다.")
                         )
                 ));
 

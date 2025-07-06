@@ -7,11 +7,15 @@ import lombok.Getter;
 public class SoundBasicInfo extends BaseBasicInfo {
 
     private final Long pieceId;
-    private final Boolean hidden;
+    private Boolean hidden;
 
     public SoundBasicInfo(Long pieceId, String title, String description, Boolean hidden) {
         super(title, description);
         this.pieceId = pieceId;
+        this.hidden = hidden;
+    }
+
+    public void updateHideStatus(Boolean hidden) {
         this.hidden = hidden;
     }
 }

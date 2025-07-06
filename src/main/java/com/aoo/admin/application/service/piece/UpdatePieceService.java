@@ -23,7 +23,7 @@ public class UpdatePieceService implements UpdatePieceUseCase {
         Piece piece = findPiecePort.find(pieceId);
 
         piece.getBasicInfo().update(command.title(), command.description());
-        piece.getBasicInfo().updateHidden(command.hidden());
+        piece.getBasicInfo().updateHiddenStatus(command.hidden());
 
         updatePiecePort.update(pieceId, piece);
 

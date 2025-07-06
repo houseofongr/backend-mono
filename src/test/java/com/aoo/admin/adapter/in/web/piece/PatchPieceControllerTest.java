@@ -39,9 +39,9 @@ class PatchPieceControllerTest extends AbstractControllerTest {
                                 parameterWithName("pieceId").description("수정할 피스의 식별자입니다.")
                         ),
                         requestFields(
-                                fieldWithPath("title").description("수정할 제목입니다."),
-                                fieldWithPath("description").description("수정할 상세정보입니다."),
-                                fieldWithPath("hidden").description("수정할 숨김 여부입니다.")
+                                fieldWithPath("title").description("수정할 제목입니다.").optional(),
+                                fieldWithPath("description").description("수정할 상세정보입니다.").optional(),
+                                fieldWithPath("hidden").description("수정할 숨김 여부입니다.").optional()
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : '[#id]번 피스의 상세정보가 수정되었습니다.'"),

@@ -34,15 +34,19 @@ class UpdateSoundServiceTest {
     void testRequestParameter() {
         String goodTitle = "소리";
         String goodDescription = "사운드는 소리입니다.";
+        Boolean hidden = true;
         String emptyTitle = "";
         String blankTitle = " ";
         String length100 = "a".repeat(101);
         String length5000 = "a".repeat(5001);
 
-        assertThatThrownBy(() -> new UpdateSoundCommand(emptyTitle, goodDescription)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateSoundCommand(blankTitle, goodDescription)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateSoundCommand(length100, goodDescription)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new UpdateSoundCommand(goodTitle, length5000)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSoundCommand(emptyTitle, goodDescription, hidden)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSoundCommand(blankTitle, goodDescription, hidden)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSoundCommand(length100, goodDescription, hidden)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new UpdateSoundCommand(goodTitle, length5000, hidden)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        new UpdateSoundCommand(goodTitle, null, null);
+        new UpdateSoundCommand(null, goodDescription, null);
+        new UpdateSoundCommand(null, null, true);
     }
 
     @Test
@@ -50,7 +54,7 @@ class UpdateSoundServiceTest {
     void testUpdateSoundDetailService() {
         // given
         Long id = 1L;
-        UpdateSoundCommand command = new UpdateSoundCommand("수정", "수정할 내용");
+        UpdateSoundCommand command = new UpdateSoundCommand("수정", "수정할 내용", true);
         Sound sound = Sound.create(123L, 345L, 1L, "소리", "사운드는 소리입니다.", false);
 
         // when
@@ -62,6 +66,7 @@ class UpdateSoundServiceTest {
         assertThat(result.message()).matches("\\[#\\d+]번 사운드의 상세정보가 수정되었습니다.");
         assertThat(result.title()).isEqualTo("수정");
         assertThat(result.description()).isEqualTo("수정할 내용");
+        assertThat(result.hidden()).isTrue();
     }
 
     @Test

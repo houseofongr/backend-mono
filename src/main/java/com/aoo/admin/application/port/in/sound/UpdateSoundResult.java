@@ -6,7 +6,8 @@ public record UpdateSoundResult(
     public record Detail(
             String message,
             String title,
-            String description
+            String description,
+            Boolean hidden
     ) {
 
     }
