@@ -10,8 +10,8 @@ import java.util.List;
 
 public class MockTreeInfo {
 
-    static Universe universe = Universe.load(1L, 1L, 2L, 3L, "new universe", "새 유니버스", Category.FASHION_AND_BEAUTY, PublicStatus.PUBLIC, 2, 5L, List.of("1", "2", "3"), User.load(1L, "leaf"), ZonedDateTime.now(), ZonedDateTime.now());
-    static Universe privateUniverse = Universe.load(2L, 4L, 5L, 6L, "private universe", "비공개 유니버스", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, 2, 5L, List.of("1", "2", "3"), User.load(1L, "leaf"), ZonedDateTime.now(), ZonedDateTime.now());
+    static Universe universe = Universe.load(1L, 1L, 2L, 3L, "new universe", "새 유니버스", new UniverseCategory(1L, "Category", "카테고리"), PublicStatus.PUBLIC, 2, 5L, List.of("1", "2", "3"), User.load(1L, "leaf"), ZonedDateTime.now(), ZonedDateTime.now());
+    static Universe privateUniverse = Universe.load(2L, 4L, 5L, 6L, "private universe", "비공개 유니버스", new UniverseCategory(1L, "Category", "카테고리"), PublicStatus.PRIVATE, 2, 5L, List.of("1", "2", "3"), User.load(1L, "leaf"), ZonedDateTime.now(), ZonedDateTime.now());
 
     static Space space1 = Space.loadTreeComponent(1L, 4L, 1L, null, "space1", "유니버스의 스페이스-1", 0.5f, 0.5f, 0.7f, 0.6f,false, ZonedDateTime.now(), ZonedDateTime.now());
     static Space space2 = Space.loadTreeComponent(2L, 5L, 1L, null, "space2", "유니버스의 스페이스-2", 0.4f, 0.2f, 0.5f, 0.1f,false, ZonedDateTime.now(), ZonedDateTime.now());

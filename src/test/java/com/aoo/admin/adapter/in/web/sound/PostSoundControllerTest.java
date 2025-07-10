@@ -15,8 +15,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:sql/clear.sql")
-@Sql("SoundControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PostSoundControllerTest extends AbstractControllerTest {
 
     //language=JSON
@@ -50,9 +49,9 @@ class PostSoundControllerTest extends AbstractControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 사운드가 생성되었습니다.'"),
-                                fieldWithPath("soundId").description("생성된 사운드의 식별자입니다."),
-                                fieldWithPath("pieceId").description("생성된 사운드를 포함하는 피스의 식별자입니다."),
-                                fieldWithPath("audioFileId").description("생성된 사운드의 내부 음원파일 식별자입니다."),
+                                fieldWithPath("soundId").description("생성된 사운드의 ID입니다."),
+                                fieldWithPath("pieceId").description("생성된 사운드를 포함하는 피스의 ID입니다."),
+                                fieldWithPath("audioFileId").description("생성된 사운드의 내부 음원파일 ID입니다."),
                                 fieldWithPath("title").description("생성된 사운드의 제목입니다."),
                                 fieldWithPath("description").description("생성된 사운드의 상세정보입니다."),
                                 fieldWithPath("hidden").description("생성된 사운드의 숨김 여부입니다.")

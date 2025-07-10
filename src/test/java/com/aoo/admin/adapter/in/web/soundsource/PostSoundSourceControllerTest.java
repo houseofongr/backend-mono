@@ -51,7 +51,7 @@ class PostSoundSourceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-soundsource-post",
                         pathParameters(
-                                parameterWithName("itemId").description("해당 음원을 소유할 아이템 식별자입니다.")
+                                parameterWithName("itemId").description("해당 음원을 소유할 아이템 ID입니다.")
                         ),
                         requestParts(
                                 partWithName("metadata").description("생성할 음원 정보를 포함하는 Json 형태의 문자열입니다."),

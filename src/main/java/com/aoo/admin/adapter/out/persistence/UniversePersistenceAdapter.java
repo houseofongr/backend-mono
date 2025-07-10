@@ -1,8 +1,8 @@
 package com.aoo.admin.adapter.out.persistence;
 
+import com.aoo.common.adapter.out.persistence.repository.CategoryJpaRepository;
 import com.aoo.common.adapter.out.persistence.repository.UserJpaRepository;
 import com.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
-import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
@@ -34,6 +34,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     private final HashtagJpaRepository hashtagJpaRepository;
     private final UniverseJpaRepository universeJpaRepository;
     private final UserJpaRepository userJpaRepository;
+    private final CategoryJpaRepository categoryJpaRepository;
     private final UniverseMapper universeMapper;
 
     //TODO : 여러 태그 한번에 조회하도록 로직 수정(현재 쿼리가 tag 개수만큼 나감)
@@ -43,17 +44,18 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
     }
 
     @Override
-    public CreateUniverseResult save(Universe universe) {
+    public Universe save(Universe universe) {
         UserJpaEntity author = userJpaRepository.findById(universe.getAuthorInfo().getId()).orElseThrow(() -> new AdminException(AdminErrorCode.USER_NOT_FOUND));
+        CategoryJpaEntity category = categoryJpaRepository.findById(universe.getCategory().getId()).orElseThrow(() -> new AdminException(AdminErrorCode.CATEGORY_NOT_FOUND));
 
-        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, author);
+        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, author, category);
 
         for (String tag : universe.getSocialInfo().getHashtags())
             universeJpaEntity.getUniverseHashtags().add(UniverseHashtagJpaEntity.create(universeJpaEntity, getOrCreate(tag)));
 
         universeJpaRepository.save(universeJpaEntity);
 
-        return universeMapper.mapToCreateUniverseResult(universeJpaEntity);
+        return universeMapper.mapToDomainEntity(universeJpaEntity);
     }
 
     @Override
@@ -91,6 +93,12 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
             targetEntity.updateAuthor(userJpaEntity);
         }
 
+        // Category Update
+        if (!Objects.equals(targetEntity.getCategory().getId(), universe.getCategory().getId())) {
+            CategoryJpaEntity categoryJpaEntity = categoryJpaRepository.findById(universe.getCategory().getId()).orElseThrow(() -> new AdminException(AdminErrorCode.CATEGORY_NOT_FOUND));
+            targetEntity.updateCategory(categoryJpaEntity);
+        }
+
         // Hashtag Update
         List<UniverseHashtagJpaEntity> universeHashtags = targetEntity.getUniverseHashtags();
         Set<String> notExistTags = new HashSet<>(universe.getSocialInfo().getHashtags());
@@ -110,7 +118,7 @@ public class UniversePersistenceAdapter implements SaveUniversePort, FindUnivers
             universeHashtags.add(UniverseHashtagJpaEntity.create(targetEntity, getOrCreate(tag)));
         }
 
-        return UpdateUniverseResult.Detail.of(targetEntity);
+        return universeMapper.mapToUpdateUniverseDetailResult(targetEntity);
     }
 
     @Override

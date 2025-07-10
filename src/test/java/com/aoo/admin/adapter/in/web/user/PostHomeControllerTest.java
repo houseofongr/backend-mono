@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PostHomeControllerTest extends AbstractControllerTest {
 
     @Test
-    @DisplayName("Home 생성 시 식별자 예외처리")
+    @DisplayName("Home 생성 시 ID 예외처리")
     void testValidateId() throws Exception {
 
         String nullId = """
@@ -59,8 +59,8 @@ class PostHomeControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-home-post",
                         requestFields(
-                                fieldWithPath("userId").description("홈을 생성할 사용자의 식별자입니다."),
-                                fieldWithPath("houseId").description("홈의 템플릿으로 사용할 하우스의 식별자입니다.")
+                                fieldWithPath("userId").description("홈을 생성할 사용자의 ID입니다."),
+                                fieldWithPath("houseId").description("홈의 템플릿으로 사용할 하우스의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("createdHomeId").description("생성된 홈의 아이디입니다."),

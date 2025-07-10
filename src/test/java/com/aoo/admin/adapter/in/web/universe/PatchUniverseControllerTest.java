@@ -25,8 +25,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql(value = "classpath:sql/clear.sql")
-@Sql("UniverseControllerTest.sql")
+@Sql("classpath:/sql/universe.sql")
 class PatchUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -49,7 +48,7 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
                   "title": "오르트구름",
                   "description": "오르트구름은 태양계 최외곽에 위치하고 있습니다.",
                   "authorId": 2,
-                  "category": "LIFE",
+                  "categoryId": 1,
                   "publicStatus": "PRIVATE",
                   "hashtags": [
                     "오르트구름", "태양계", "윤하", "별"
@@ -64,13 +63,13 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-patch",
                         pathParameters(
-                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                                parameterWithName("universeId").description("수정할 유니버스의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
                                 fieldWithPath("description").description("수정할 상세정보입니다."),
-                                fieldWithPath("authorId").description("수정할 작성자입니다."),
-                                fieldWithPath("category").description("수정할 카테고리입니다."),
+                                fieldWithPath("authorId").description("수정할 작성자 ID입니다."),
+                                fieldWithPath("categoryId").description("수정할 카테고리 ID입니다."),
                                 fieldWithPath("publicStatus").description("공개 여부입니다."),
                                 fieldWithPath("hashtags").description("수정할 태그 정보입니다.")
                         ),
@@ -81,9 +80,11 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").description("수정된 제목입니다."),
                                 fieldWithPath("description").description("수정된 상세정보입니다."),
                                 fieldWithPath("author").description("수정된 작성자의 닉네임입니다."),
-                                fieldWithPath("category").description("수정된 카테고리입니다."),
                                 fieldWithPath("publicStatus").description("수정된 공개 여부입니다."),
-                                fieldWithPath("hashtags").description("수정된 태그 정보입니다.")
+                                fieldWithPath("hashtags").description("수정된 태그 정보입니다."),
+                                fieldWithPath("category.id").description("수정된 카테고리의 ID입니다."),
+                                fieldWithPath("category.eng").description("수정된 카테고리의 영문 이름입니다."),
+                                fieldWithPath("category.kor").description("수정된 카테고리의 한글 이름입니다.")
                         )
                 ));
 
@@ -91,7 +92,7 @@ class PatchUniverseControllerTest extends AbstractControllerTest {
         UpdateUniverseCommand command = gson.fromJson(request, UpdateUniverseCommand.class);
         assertThat(universeJpaEntity.getTitle()).isEqualTo(command.title());
         assertThat(universeJpaEntity.getDescription()).isEqualTo(command.description());
-        assertThat(universeJpaEntity.getCategory()).isEqualTo(command.category());
+        assertThat(universeJpaEntity.getCategory().getId()).isEqualTo(command.categoryId());
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(command.publicStatus());
         assertThat(universeJpaEntity.getAuthor().getId()).isEqualTo(command.authorId());
 

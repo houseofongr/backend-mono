@@ -4,9 +4,9 @@ import org.springframework.data.domain.Pageable;
 
 public record SearchUniverseCommand(
         Pageable pageable,
+        Long categoryId,
         String searchType,
         String keyword,
-        String category,
         String sortType,
         Boolean isAsc
 ) {

@@ -58,7 +58,7 @@ class PatchItemControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-item-patch",
                         pathParameters(
-                                parameterWithName("itemId").description("수정할 아이템의 식별자입니다.")
+                                parameterWithName("itemId").description("수정할 아이템의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("updateData.name").optional().description("수정할 아이템의 이름입니다."),

@@ -11,7 +11,7 @@ public record UpdateUniverseCommand(
         String title,
         String description,
         Long authorId,
-        Category category,
+        Long categoryId,
         PublicStatus publicStatus,
         List<String> hashtags
 ) {

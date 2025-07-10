@@ -25,12 +25,12 @@ class PostConfirmBusinessUserControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-post-confirm-user-business",
                         formParameters(
-                                parameterWithName("tempUserId").description("승인할 비즈니스 회원의 식별자입니다.")
+                                parameterWithName("tempUserId").description("승인할 비즈니스 회원의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("회원가입 완료 메시지 +" + "\n" +
                                                                      "* '비즈니스 사용자가 등록되어 [#id]번 사용자가 생성되었습니다.'"),
-                                fieldWithPath("userId").description("회원가입된 사용자의 식별자입니다."),
+                                fieldWithPath("userId").description("회원가입된 사용자의 ID입니다."),
                                 fieldWithPath("email").description("회원가입된 사용자의 이메일입니다."),
                                 fieldWithPath("nickname").description("회원가입된 사용자의 닉네임입니다."),
                                 fieldWithPath("termsOfUseAgreement").description("회원가입된 사용자의 이용약관 동의여부입니다."),

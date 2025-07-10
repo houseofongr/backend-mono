@@ -1,9 +1,10 @@
 package com.aoo.common.adapter.in.web.config;
 
+import com.aoo.common.domain.Authority;
 import com.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.aoo.file.application.service.FileProperties;
-import com.aoo.file.domain.File;
+import com.aoo.file.domain.*;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
@@ -18,12 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -89,6 +92,65 @@ public abstract class AbstractControllerTest {
         tempFile.mkdirs();
         tempFile.createNewFile();
         fileJpaRepository.save(FileJpaEntity.create(file));
+    }
+
+    /**
+     * @Transactional nativeQuery를 통해 파일을 저장하기 때문에 해당 어노테이션 필수
+     */
+    protected void saveFile(Long fileId, FileType fileType) throws IOException {
+        File file = getFile(fileId, fileType);
+        java.io.File tempFile = new java.io.File(file.getFileId().getPath());
+        tempFile.mkdirs();
+        tempFile.createNewFile();
+
+        saveFileByIdAndEntity(fileId, file);
+    }
+
+    private File getFile(Long fileId, FileType fileType) {
+        return switch (fileType) {
+            case IMAGE -> File.create(
+                    FileId.create(
+                            tempDir.toString(),
+                            Authority.PUBLIC_FILE_ACCESS,
+                            fileType,
+                            String.format("test-%d.png", fileId),
+                            UUID.randomUUID().toString() + ".png"),
+                    FileStatus.CREATED,
+                    OwnerId.empty(),
+                    new FileSize(1234L, 100 * 1024 * 1024L));
+
+            case AUDIO -> File.create(
+                    FileId.create(
+                            tempDir.toString(),
+                            Authority.PUBLIC_FILE_ACCESS,
+                            fileType,
+                            String.format("test-%d.mp3", fileId),
+                            UUID.randomUUID().toString() + ".mp3"),
+                    FileStatus.CREATED,
+                    OwnerId.empty(),
+                    new FileSize(1234L, 100 * 1024 * 1024L));
+
+            case VIDEO -> throw new UnsupportedOperationException();
+        };
+    }
+
+    private void saveFileByIdAndEntity(Long fileId, File file) {
+        em.createNativeQuery("""
+                            INSERT INTO FILE (
+                                ID, REAL_FILE_NAME, FILE_SYSTEM_NAME, ABSOLUTE_PATH,
+                                IS_DELETED, FILE_SIZE, OWNER_ID, CREATED_TIME, UPDATED_TIME
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """)
+                .setParameter(1, fileId)  // ID
+                .setParameter(2, file.getFileId().getRealFileName())  // REAL_FILE_NAME
+                .setParameter(3, file.getFileId().getFileSystemName())  // FILE_SYSTEM_NAME
+                .setParameter(4, file.getFileId().getDirectory())  // ABSOLUTE_PATH
+                .setParameter(5, false)  // IS_DELETED
+                .setParameter(6, file.getSize().getFileByte())  // FILE_SIZE
+                .setParameter(7, null)  // OWNER_ID
+                .setParameter(8, Timestamp.valueOf("2025-07-09 15:00:00"))  // CREATED_TIME
+                .setParameter(9, Timestamp.valueOf("2025-07-09 15:00:00"))  // UPDATED_TIME
+                .executeUpdate();
     }
 
 }

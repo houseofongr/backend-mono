@@ -130,10 +130,10 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
     }
 
     private BooleanExpression filter(SearchUniverseCommand command) {
-        if (command.category() == null || command.category().isBlank() || !Category.contains(command.category()))
+        if (command.categoryId() == null)
             return null;
 
-        return universeJpaEntity.category.eq(Category.valueOf(command.category().toUpperCase()));
+        return universeJpaEntity.category.id.eq(command.categoryId());
     }
 
     private BooleanExpression search(String keyword, String searchType) {
@@ -143,10 +143,10 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
         return switch (UniverseSearchType.valueOf(searchType.toUpperCase())) {
             case CONTENT -> universeJpaEntity.title.likeIgnoreCase("%" + keyword + "%")
                     .or(universeJpaEntity.description.likeIgnoreCase("%" + keyword + "%"));
-            case AUTHOR -> universeJpaEntity.author.nickname.likeIgnoreCase(keyword);
+            case AUTHOR -> universeJpaEntity.author.nickname.likeIgnoreCase("%" + keyword + "%");
             case ALL -> universeJpaEntity.title.likeIgnoreCase("%" + keyword + "%")
                     .or(universeJpaEntity.description.likeIgnoreCase("%" + keyword + "%"))
-                    .or(universeJpaEntity.author.nickname.likeIgnoreCase(keyword));
+                    .or(universeJpaEntity.author.nickname.likeIgnoreCase("%" + keyword + "%"));
         };
     }
 

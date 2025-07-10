@@ -32,7 +32,7 @@ class DeleteHomeControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-home-delete",
                         pathParameters(
-                                parameterWithName("homeId").description("삭제할 홈 식별자입니다.")
+                                parameterWithName("homeId").description("삭제할 홈 ID입니다.")
                         ),
                         responseFields(fieldWithPath("message").description("삭제 완료 메시지 : 0번 홈이 삭제되었습니다."))
                 ));

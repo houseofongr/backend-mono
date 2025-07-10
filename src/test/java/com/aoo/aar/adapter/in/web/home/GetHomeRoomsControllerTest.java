@@ -37,23 +37,23 @@ class GetHomeRoomsControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-rooms",
                         queryParameters(
-                                parameterWithName("homeId").description("조회할 홈의 식별자입니다.")
+                                parameterWithName("homeId").description("조회할 홈의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("homeName").description("홈의 이름입니다."),
 
                                 fieldWithPath("house.width").description("하우스의 가로 길이입니다."),
                                 fieldWithPath("house.height").description("하우스의 높이입니다."),
-                                fieldWithPath("house.borderImageId").description("하우스 테두리 이미지의 식별자입니다."),
+                                fieldWithPath("house.borderImageId").description("하우스 테두리 이미지의 ID입니다."),
 
-                                fieldWithPath("rooms[].roomId").description("룸의 식별자입니다."),
+                                fieldWithPath("rooms[].roomId").description("룸의 ID입니다."),
                                 fieldWithPath("rooms[].name").description("룸의 이름입니다."),
                                 fieldWithPath("rooms[].x").description("룸의 시작점(X좌표)입니다."),
                                 fieldWithPath("rooms[].y").description("룸의 시작점(Y좌표)입니다."),
                                 fieldWithPath("rooms[].z").description("룸의 시작점(Z좌표)입니다."),
                                 fieldWithPath("rooms[].width").description("룸의 가로 길이입니다."),
                                 fieldWithPath("rooms[].height").description("룸의 높이입니다."),
-                                fieldWithPath("rooms[].imageId").description("룸의 이미지 식별자입니다.")
+                                fieldWithPath("rooms[].imageId").description("룸의 이미지 ID입니다.")
                         )
                 ));
     }

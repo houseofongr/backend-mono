@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:sql/clear.sql")
-@Sql("PublicUniverseControllerTest.sql")
+@Sql("classpath:/sql/universe.sql")
 class GetPublicUniverseControllerTest extends AbstractControllerTest {
 
     @Test
@@ -31,15 +31,15 @@ class GetPublicUniverseControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-public-universe-get",
                         pathParameters(
-                                parameterWithName("universeId").description("조회할 유니버스의 식별자입니다. +" + "\n" +
+                                parameterWithName("universeId").description("조회할 유니버스의 ID입니다. +" + "\n" +
                                                                             "* 본인 소유가 아닌 비공개 유니버스는 조회할 수 없습니다.")
                         ),
                         responseFields(
-                                fieldWithPath("universeId").description("유니버스의 식별자입니다."),
-                                fieldWithPath("thumbMusicId").description("썸뮤직 파일 식별자입니다."),
-                                fieldWithPath("thumbnailId").description("썸네일 파일 식별자입니다."),
-                                fieldWithPath("innerImageId").description("내부 이미지 파일 식별자입니다."),
-                                fieldWithPath("authorId").description("작성자의 식별자입니다."),
+                                fieldWithPath("universeId").description("유니버스의 ID입니다."),
+                                fieldWithPath("thumbMusicId").description("썸뮤직 파일 ID입니다."),
+                                fieldWithPath("thumbnailId").description("썸네일 파일 ID입니다."),
+                                fieldWithPath("innerImageId").description("내부 이미지 파일 ID입니다."),
+                                fieldWithPath("authorId").description("작성자의 ID입니다."),
                                 fieldWithPath("createdTime").description("유닉스 타임스탬프 형식의 생성(등록)일자입니다."),
                                 fieldWithPath("updatedTime").description("유닉스 타임스탬프 형식의 수정일자입니다."),
                                 fieldWithPath("view").description("조회수입니다. +" + "\n" +
@@ -48,7 +48,9 @@ class GetPublicUniverseControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").description("제목입니다."),
                                 fieldWithPath("author").description("작성자의 닉네임입니다."),
                                 fieldWithPath("description").description("설명입니다."),
-                                fieldWithPath("category").description("카테고리입니다."),
+                                fieldWithPath("category.id").description("카테고리의 ID입니다."),
+                                fieldWithPath("category.eng").description("카테고리의 영문 이름입니다."),
+                                fieldWithPath("category.kor").description("카테고리의 한글 이름입니다."),
                                 fieldWithPath("isMine").description("본인의 유니버스인지 여부입니다. +" + "\n" +
                                                                     "* 로그인 시에만 동작합니다."),
                                 fieldWithPath("isLiked").description("해당 게시글에 좋아요를 눌렀는지 여부입니다. +" + "\n" +
@@ -57,9 +59,9 @@ class GetPublicUniverseControllerTest extends AbstractControllerTest {
                                 fieldWithPath("spaces").description("유니버스 내부의 스페이스입니다."),
                                 fieldWithPath("pieces").description("유니버스 내부의 피스입니다."),
 
-                                fieldWithPath("spaces[].spaceId").description("스페이스의 식별자입니다."),
-                                fieldWithPath("spaces[].parentSpaceId").description("스페이스의 부모 스페이스 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
-                                fieldWithPath("spaces[].innerImageId").description("스페이스의 내부 이미지파일 식별자입니다."),
+                                fieldWithPath("spaces[].spaceId").description("스페이스의 ID입니다."),
+                                fieldWithPath("spaces[].parentSpaceId").description("스페이스의 부모 스페이스 ID입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
+                                fieldWithPath("spaces[].innerImageId").description("스페이스의 내부 이미지파일 ID입니다."),
                                 fieldWithPath("spaces[].depth").description("스페이스의 깊이입니다."),
                                 fieldWithPath("spaces[].title").description("스페이스의 제목입니다."),
                                 fieldWithPath("spaces[].description").description("스페이스의 설명입니다."),
@@ -72,9 +74,9 @@ class GetPublicUniverseControllerTest extends AbstractControllerTest {
                                 subsectionWithPath("spaces[].pieces").description("스페이스 내부의 피스입니다."),
                                 subsectionWithPath("spaces[].spaces").description("스페이스 내부의 스페이스입니다.(무한 depth)"),
 
-                                fieldWithPath("pieces[].pieceId").description("피스의 식별자입니다."),
-                                fieldWithPath("pieces[].parentSpaceId").description("피스의 부모 스페이스 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
-                                fieldWithPath("pieces[].innerImageId").description("피스의 내부 이미지파일 식별자입니다."),
+                                fieldWithPath("pieces[].pieceId").description("피스의 ID입니다."),
+                                fieldWithPath("pieces[].parentSpaceId").description("피스의 부모 스페이스 ID입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
+                                fieldWithPath("pieces[].innerImageId").description("피스의 내부 이미지파일 ID입니다."),
                                 fieldWithPath("pieces[].depth").description("피스의 깊이입니다."),
                                 fieldWithPath("pieces[].title").description("피스의 제목입니다."),
                                 fieldWithPath("pieces[].description").description("피스의 설명입니다."),

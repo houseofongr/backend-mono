@@ -2,6 +2,7 @@ package com.aoo.aar.application.port.in.universe;
 
 import com.aoo.aar.application.service.AarErrorCode;
 import com.aoo.aar.application.service.AarException;
+import com.aoo.admin.application.port.in.category.CategoryInfo;
 import com.aoo.admin.application.port.in.universe.TraversalUniverseResult;
 import com.aoo.admin.domain.universe.TreeInfo;
 import com.aoo.admin.domain.universe.Universe;
@@ -24,7 +25,7 @@ public record ViewPublicUniverseResult(
         String title,
         String description,
         String author,
-        String category,
+        CategoryInfo category,
         Boolean isMine,
         Boolean isLiked,
         List<String> hashtags,
@@ -47,7 +48,7 @@ public record ViewPublicUniverseResult(
                     universe.getBasicInfo().getTitle(),
                     universe.getBasicInfo().getDescription(),
                     universe.getAuthorInfo().getNickname(),
-                    universe.getBasicInfo().getCategory().name(),
+                    CategoryInfo.of(universe.getCategory()),
                     universe.isMine(userId),
                     isLiked,
                     universe.getSocialInfo().getHashtags(),

@@ -15,7 +15,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
-@Sql("SoundPersistenceAdapter.sql")
+@Sql("classpath:sql/universe.sql")
 @Import({SoundPersistenceAdapter.class, SoundMapper.class})
 class SoundPersistenceAdapterTest {
 

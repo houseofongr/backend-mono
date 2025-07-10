@@ -10,10 +10,10 @@ public record CreateUniverseResult(
         Long innerImageId,
         Long authorId,
         Long createdTime,
+        Long categoryId,
         String title,
         String description,
         String author,
-        String category,
         String publicStatus,
         List<String> hashtags
 ) {

@@ -12,8 +12,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("UniverseControllerTest.sql")
+@Sql("classpath:/sql/universe.sql")
 class GetUniverseControllerTest extends AbstractControllerTest {
 
     @Test
@@ -25,14 +24,14 @@ class GetUniverseControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-get",
                         pathParameters(
-                                parameterWithName("universeId").description("조회할 유니버스의 식별자입니다.")
+                                parameterWithName("universeId").description("조회할 유니버스의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("id").description("유니버스의 아이디입니다."),
-                                fieldWithPath("thumbnailId").description("썸네일 파일 식별자입니다."),
-                                fieldWithPath("thumbMusicId").description("썸뮤직 파일 식별자입니다."),
-                                fieldWithPath("innerImageId").description("내부 이미지 파일 식별자입니다."),
-                                fieldWithPath("authorId").description("작성자의 식별자입니다."),
+                                fieldWithPath("thumbnailId").description("썸네일 파일 ID입니다."),
+                                fieldWithPath("thumbMusicId").description("썸뮤직 파일 ID입니다."),
+                                fieldWithPath("innerImageId").description("내부 이미지 파일 ID입니다."),
+                                fieldWithPath("authorId").description("작성자의 ID입니다."),
                                 fieldWithPath("createdTime").description("유닉스 타임스탬프 형식의 생성(등록)일자입니다."),
                                 fieldWithPath("updatedTime").description("유닉스 타임스탬프 형식의 수정일자입니다."),
                                 fieldWithPath("view").description("조회수입니다."),
@@ -40,9 +39,11 @@ class GetUniverseControllerTest extends AbstractControllerTest {
                                 fieldWithPath("title").description("제목입니다."),
                                 fieldWithPath("author").description("작성자의 닉네임입니다."),
                                 fieldWithPath("description").description("설명입니다."),
-                                fieldWithPath("category").description("카테고리입니다."),
                                 fieldWithPath("publicStatus").description("공개 여부입니다."),
-                                fieldWithPath("hashtags").description("해시태그 리스트입니다.")
+                                fieldWithPath("hashtags").description("해시태그 리스트입니다."),
+                                fieldWithPath("category.id").description("카테고리의 ID입니다."),
+                                fieldWithPath("category.eng").description("카테고리의 영문 이름입니다."),
+                                fieldWithPath("category.kor").description("카테고리의 한글 이름입니다.")
                         )
                 ));
     }

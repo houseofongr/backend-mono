@@ -3,12 +3,14 @@ package com.aoo.admin.application.service.universe;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseCommand;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.application.port.in.universe.UpdateUniverseUseCase;
+import com.aoo.admin.application.port.out.category.FindCategoryPort;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.application.port.out.universe.UpdateUniversePort;
 import com.aoo.admin.application.port.out.user.FindUserPort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.admin.domain.user.User;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
 import com.aoo.file.application.port.in.UploadFileResult;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UpdateUniverseService implements UpdateUniverseUseCase {
 
     private final FindUniversePort findUniversePort;
+    private final FindCategoryPort findCategoryPort;
     private final UploadPublicImageUseCase uploadPublicImageUseCase;
     private final UploadPublicAudioUseCase uploadPublicAudioUseCase;
     private final DeleteFileUseCase deleteFileUseCase;
@@ -36,8 +39,13 @@ public class UpdateUniverseService implements UpdateUniverseUseCase {
         Universe targetUniverse = findUniversePort.load(universeId);
 
         targetUniverse.getAuthorInfo().update(command.authorId());
-        targetUniverse.getBasicInfo().updateUniverseInfo(command.title(), command.description(), command.category(), command.publicStatus());
+        targetUniverse.getBasicInfo().updateUniverseInfo(command.title(), command.description(), command.publicStatus());
         targetUniverse.getSocialInfo().updateHashtag(command.hashtags());
+
+        if (command.categoryId() != null) {
+            UniverseCategory universeCategory = findCategoryPort.findUniverseCategory(command.categoryId());
+            targetUniverse.updateCategory(universeCategory);
+        }
 
         return updateUniversePort.updateDetail(targetUniverse);
     }

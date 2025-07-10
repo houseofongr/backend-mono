@@ -19,8 +19,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("SpaceControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PostSpaceControllerTest extends AbstractControllerTest {
 
     //language=JSON
@@ -65,7 +64,7 @@ class PostSpaceControllerTest extends AbstractControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 스페이스가 생성되었습니다.'"),
-                                fieldWithPath("spaceId").description("생성된 스페이스의 식별자입니다."),
+                                fieldWithPath("spaceId").description("생성된 스페이스의 ID입니다."),
                                 fieldWithPath("innerImageId").description("생성된 스페이스의 내부 이미지입니다."),
                                 fieldWithPath("title").description("생성된 스페이스의 제목입니다."),
                                 fieldWithPath("description").description("생성된 스페이스의 상세정보입니다."),

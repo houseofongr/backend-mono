@@ -18,14 +18,13 @@ class UniverseJpaEntityTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, null);
+        UniverseJpaEntity universeJpaEntity = UniverseJpaEntity.create(universe, null, null);
 
         // then
         assertThat(universeJpaEntity.getId()).isEqualTo(null);
         assertThat(universeJpaEntity.getTitle()).isEqualTo(universe.getBasicInfo().getTitle());
         assertThat(universeJpaEntity.getDescription()).isEqualTo(universe.getBasicInfo().getDescription());
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(universe.getBasicInfo().getPublicStatus());
-        assertThat(universeJpaEntity.getCategory()).isEqualTo(universe.getBasicInfo().getCategory());
         assertThat(universeJpaEntity.getViewCount()).isEqualTo(0L);
         assertThat(universeJpaEntity.getUniverseHashtags()).isEmpty();
         assertThat(universeJpaEntity.getUniverseLikes()).isEqualTo(List.of());

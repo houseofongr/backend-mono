@@ -35,7 +35,7 @@ class PostLoginBusinessUserControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("message").description("로그인 완료 메시지 +" + "\n" +
                                                                      "* '[#id]번 사용자가 로그인 되었습니다'"),
-                                fieldWithPath("userId").description("로그인된 사용자의 식별자입니다."),
+                                fieldWithPath("userId").description("로그인된 사용자의 ID입니다."),
                                 fieldWithPath("email").description("로그인된 사용자의 이메일입니다."),
                                 fieldWithPath("nickname").description("로그인된 사용자의 닉네임입니다."),
                                 fieldWithPath("accessToken").description("로그인된 사용자의 액세스 토큰입니다.")

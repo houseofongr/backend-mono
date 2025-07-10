@@ -32,7 +32,7 @@ class PatchMainHomeControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-patch-main",
                         pathParameters(
-                                parameterWithName("homeId").description("수정할 집의 식별자입니다.")
+                                parameterWithName("homeId").description("수정할 집의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("수정 완료 메시지 : 0번 홈이 메인으로 수정되었습니다.")

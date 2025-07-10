@@ -29,16 +29,16 @@ class GetRoomItemsControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-room-items",
                         queryParameters(
-                                parameterWithName("homeId").description("조회할 홈의 식별자입니다."),
-                                parameterWithName("roomId").description("조회할 룸의 식별자입니다.")
+                                parameterWithName("homeId").description("조회할 홈의 ID입니다."),
+                                parameterWithName("roomId").description("조회할 룸의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("room.name").description("룸의 이름입니다."),
                                 fieldWithPath("room.width").description("룸의 가로 길이입니다."),
                                 fieldWithPath("room.height").description("룸의 높이입니다."),
-                                fieldWithPath("room.imageId").description("룸의 이미지 식별자입니다."),
+                                fieldWithPath("room.imageId").description("룸의 이미지 ID입니다."),
 
-                                fieldWithPath("items[].id").description("아이템의 식별자입니다."),
+                                fieldWithPath("items[].id").description("아이템의 ID입니다."),
                                 fieldWithPath("items[].name").description("아이템의 이름입니다."),
                                 fieldWithPath("items[].itemType").description("아이템의 타입입니다. +" + "\n" + "* 타입 : [CIRCLE, RECTANGLE, ELLIPSE]"),
 

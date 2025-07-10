@@ -27,7 +27,7 @@ class DeleteSoundSourceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-soundsource-delete",
                         pathParameters(
-                                parameterWithName("soundSourceId").description("삭제할 음원의 식별자입니다.")
+                                parameterWithName("soundSourceId").description("삭제할 음원의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("삭제 완료 메시지 : 0번 음원이 삭제되었습니다.")

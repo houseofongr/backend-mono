@@ -23,6 +23,16 @@ public class CreatePieceService implements CreatePieceUseCase {
         Piece newPiece = createPiecePort.createPieceWithoutImageFile(command);
         Long newPieceId = savePiecePort.save(newPiece);
 
-        return CreatePieceResult.from(newPieceId, newPiece);
+        return new CreatePieceResult(
+                String.format("[#%d]번 피스가 생성되었습니다.", newPieceId),
+                newPieceId,
+                newPiece.getBasicInfo().getTitle(),
+                newPiece.getBasicInfo().getDescription(),
+                newPiece.getPosInfo().getSx(),
+                newPiece.getPosInfo().getSy(),
+                newPiece.getPosInfo().getEx(),
+                newPiece.getPosInfo().getEy(),
+                newPiece.getBasicInfo().getHidden()
+        );
     }
 }

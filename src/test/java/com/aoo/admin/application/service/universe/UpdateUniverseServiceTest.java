@@ -1,6 +1,7 @@
 package com.aoo.admin.application.service.universe;
 
 import com.aoo.admin.application.port.in.universe.UpdateUniverseCommand;
+import com.aoo.admin.application.port.out.category.FindCategoryPort;
 import com.aoo.admin.application.port.out.universe.FindUniversePort;
 import com.aoo.admin.application.port.out.universe.UpdateUniversePort;
 import com.aoo.admin.application.service.AdminErrorCode;
@@ -8,6 +9,7 @@ import com.aoo.admin.application.service.AdminException;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.common.application.service.MockEntityFactoryService;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.DeleteFileUseCase;
@@ -33,6 +35,7 @@ class UpdateUniverseServiceTest {
     UpdateUniverseService sut;
 
     FindUniversePort findUniversePort = mock();
+    FindCategoryPort findCategoryPort = mock();
     UploadPublicImageUseCase uploadPublicImageUseCase = mock();
     UploadPublicAudioUseCase uploadPublicAudioUseCase = mock();
     DeleteFileUseCase deleteFileUseCase = mock();
@@ -40,7 +43,7 @@ class UpdateUniverseServiceTest {
 
     @BeforeEach
     void init() {
-        sut = new UpdateUniverseService(findUniversePort, uploadPublicImageUseCase, uploadPublicAudioUseCase, deleteFileUseCase, updateUniversePort);
+        sut = new UpdateUniverseService(findUniversePort, findCategoryPort, uploadPublicImageUseCase, uploadPublicAudioUseCase, deleteFileUseCase, updateUniversePort);
     }
 
     @Test
@@ -76,7 +79,7 @@ class UpdateUniverseServiceTest {
     @Test
     @DisplayName("정상 요청")
     void happyCase() {
-        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
+        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, 1L, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
 
         assertThat(command).isNotNull();
     }
@@ -102,18 +105,19 @@ class UpdateUniverseServiceTest {
     @DisplayName("정보 수정 서비스")
     void testUpdateDetail() {
         // given
-        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, Category.LIFE, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
+        UpdateUniverseCommand command = new UpdateUniverseCommand("오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", 1L, 1L, PublicStatus.PRIVATE, List.of("오르트구름", "태양계", "윤하", "별"));
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
         when(findUniversePort.load(universe.getId())).thenReturn(universe);
+        when(findCategoryPort.findUniverseCategory(1L)).thenReturn(new UniverseCategory(1L, "category", "카테고리"));
         sut.updateDetail(universe.getId(), command);
 
         // then
         verify(updateUniversePort, times(1)).updateDetail(universe);
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo("오르트구름");
         assertThat(universe.getBasicInfo().getDescription()).isEqualTo("오르트구름은 태양계 최외곽에 위치하고 있습니다.");
-        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.LIFE);
+        assertThat(universe.getCategory().getEng()).isEqualTo("category");
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PRIVATE);
         assertThat(universe.getSocialInfo().getHashtags()).contains("오르트구름", "태양계", "윤하", "별");
 

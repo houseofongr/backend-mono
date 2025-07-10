@@ -41,7 +41,7 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
         mockMvc.perform(get("/public/audios/{audioId}", entity.getId()))
                 .andExpect(status().is(200))
                 .andDo(document("file-public-audios-download-inline",
-                        pathParameters(parameterWithName("audioId").description("다운로드할 음원 식별자입니다.")),
+                        pathParameters(parameterWithName("audioId").description("다운로드할 음원 ID입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
@@ -69,7 +69,7 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
                         .param("attachment", "true"))
                 .andExpect(status().is(200))
                 .andDo(document("file-public-audios-download-attachment",
-                        pathParameters(parameterWithName("audioId").description("다운로드할 음원 식별자입니다.")),
+                        pathParameters(parameterWithName("audioId").description("다운로드할 음원 ID입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");

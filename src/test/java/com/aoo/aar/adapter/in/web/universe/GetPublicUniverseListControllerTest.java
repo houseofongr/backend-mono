@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql("classpath:/sql/clear.sql")
-@Sql("PublicUniverseControllerTest.sql")
+@Sql("classpath:/sql/universe.sql")
 class GetPublicUniverseListControllerTest extends AbstractControllerTest {
 
     @Test
@@ -50,9 +50,9 @@ class GetPublicUniverseListControllerTest extends AbstractControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("universes[].id").description("유니버스의 아이디입니다."),
-                                fieldWithPath("universes[].thumbnailId").description("썸네일 파일 식별자입니다."),
-                                fieldWithPath("universes[].thumbMusicId").description("썸뮤직 파일 식별자입니다."),
-                                fieldWithPath("universes[].authorId").description("작성자의 식별자입니다."),
+                                fieldWithPath("universes[].thumbnailId").description("썸네일 파일 ID입니다."),
+                                fieldWithPath("universes[].thumbMusicId").description("썸뮤직 파일 ID입니다."),
+                                fieldWithPath("universes[].authorId").description("작성자의 ID입니다."),
                                 fieldWithPath("universes[].createdTime").description("유닉스 타임스탬프 형식의 생성(등록)일자입니다."),
                                 fieldWithPath("universes[].view").description("조회수입니다."),
                                 fieldWithPath("universes[].likeCnt").description("좋아요 숫자입니다."),

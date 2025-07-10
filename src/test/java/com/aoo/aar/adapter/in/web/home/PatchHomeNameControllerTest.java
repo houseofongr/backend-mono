@@ -65,7 +65,7 @@ class PatchHomeNameControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-patch-name",
                         pathParameters(
-                                parameterWithName("homeId").description("수정할 집의 식별자입니다.")
+                                parameterWithName("homeId").description("수정할 집의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("newName").description("수정할 새로운 이름입니다.")

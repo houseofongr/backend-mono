@@ -48,7 +48,7 @@ class PatchRoomControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-room-patch",
                         requestFields(
-                                fieldWithPath("[].houseDetail").description("수정할 룸의 식별자입니다."),
+                                fieldWithPath("[].houseDetail").description("수정할 룸의 ID입니다."),
                                 fieldWithPath("[].newName").description("수정할 이름입니다.")
                         ),
                         responseFields(

@@ -13,8 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("PieceControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PatchPieceControllerTest extends AbstractControllerTest {
 
     @Test
@@ -36,7 +35,7 @@ class PatchPieceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-piece-patch",
                         pathParameters(
-                                parameterWithName("pieceId").description("수정할 피스의 식별자입니다.")
+                                parameterWithName("pieceId").description("수정할 피스의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다.").optional(),
@@ -72,7 +71,7 @@ class PatchPieceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-piece-patch-position",
                         pathParameters(
-                                parameterWithName("pieceId").description("수정할 피스의 식별자입니다.")
+                                parameterWithName("pieceId").description("수정할 피스의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("startX").description("수정할 X축 시작좌표입니다."),

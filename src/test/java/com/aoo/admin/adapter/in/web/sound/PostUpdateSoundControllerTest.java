@@ -4,12 +4,14 @@ import com.aoo.common.adapter.in.web.config.AbstractControllerTest;
 import com.aoo.common.adapter.out.persistence.repository.SoundJpaRepository;
 import com.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.aoo.file.domain.FileF;
+import com.aoo.file.domain.FileType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,17 +23,19 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("SoundControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PostUpdateSoundControllerTest extends AbstractControllerTest {
 
     @Autowired
     SoundJpaRepository soundJpaRepository;
 
     @Test
+    @Transactional
     @DisplayName("사운드 오디오파일 수정 API")
     void testUpdateSpaceInnerImageAPI() throws Exception {
-        saveFile(FileF.AUDIO_FILE_1.get(tempDir.toString()));
+
+        for (long i = 42; i <= 52; i++) saveFile(i, FileType.AUDIO);
+
         MockMultipartFile audio = new MockMultipartFile("audio", "new_sound.mp3", "audio/mpeg", "sound file".getBytes());
 
         mockMvc.perform(multipart("/admin/sounds/audio/{soundId}", 1)
@@ -41,7 +45,7 @@ class PostUpdateSoundControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-sound-post-update-audio",
                         pathParameters(
-                                parameterWithName("soundId").description("수정할 사운드의 식별자입니다.")
+                                parameterWithName("soundId").description("수정할 사운드의 ID입니다.")
                         ),
                         requestParts(
                                 partWithName("audio").description("수정할 사운드의 오디오 파일입니다.")
@@ -53,11 +57,11 @@ class PostUpdateSoundControllerTest extends AbstractControllerTest {
                         )
                 ));
 
-        List<FileJpaEntity> fileInDB = fileJpaRepository.findAll();
-        assertThat(fileInDB).hasSize(1);
-        assertThat(fileInDB)
+        List<FileJpaEntity> filesInDB = fileJpaRepository.findAll();
+        assertThat(filesInDB).hasSize(11);
+        assertThat(filesInDB)
                 .anySatisfy(fileJpaEntity -> assertThat(fileJpaEntity.getRealFileName()).isEqualTo("new_sound.mp3"));
-        assertThat(soundJpaRepository.findById(1L).orElseThrow().getAudioFileId()).isEqualTo(fileInDB.getFirst().getId());
+        assertThat(soundJpaRepository.findById(1L).orElseThrow().getAudioFileId()).isEqualTo(filesInDB.getLast().getId());
     }
 
 }

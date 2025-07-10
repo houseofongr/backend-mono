@@ -48,9 +48,9 @@ class PostItemControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-item-post",
                         pathParameters(
-                                parameterWithName("userId").description("생성할 아이템을 소유할 사용자의 식별자입니다."),
-                                parameterWithName("homeId").description("생성할 아이템을 보유할 홈의 식별자입니다."),
-                                parameterWithName("roomId").description("생성할 아이템을 포함할 룸의 식별자입니다.")
+                                parameterWithName("userId").description("생성할 아이템을 소유할 사용자의 ID입니다."),
+                                parameterWithName("homeId").description("생성할 아이템을 보유할 홈의 ID입니다."),
+                                parameterWithName("roomId").description("생성할 아이템을 포함할 룸의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("items").description("생성할 아이템의 정보를 담은 배열입니다."),
@@ -78,7 +78,7 @@ class PostItemControllerTest extends AbstractControllerTest {
                                 fieldWithPath("items[].ellipseData.rotation").optional().description("타원형의 회전 각도입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("createdItemIds[]").description("생성된 아이템의 식별자 리스트입니다.")
+                                fieldWithPath("createdItemIds[]").description("생성된 아이템의 ID 리스트입니다.")
                         )
                 ));
     }

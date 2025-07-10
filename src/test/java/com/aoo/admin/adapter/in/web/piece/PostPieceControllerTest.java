@@ -17,8 +17,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("PieceControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PostPieceControllerTest extends AbstractControllerTest {
 
     //language=JSON
@@ -50,8 +49,8 @@ class PostPieceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-piece-post",
                         requestFields(
-                                fieldWithPath("universeId").description("생성할 피스를 포함하는 유니버스의 식별자입니다."),
-                                fieldWithPath("parentSpaceId").description("생성할 피스를 포함하는 상위 스페이스의 식별자입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
+                                fieldWithPath("universeId").description("생성할 피스를 포함하는 유니버스의 ID입니다."),
+                                fieldWithPath("parentSpaceId").description("생성할 피스를 포함하는 상위 스페이스의 ID입니다. +" + "\n" + "* 부모가 유니버스일 경우, -1"),
                                 fieldWithPath("title").description("생성할 피스의 제목입니다."),
                                 fieldWithPath("description").description("생성할 피스의 상세정보입니다."),
                                 fieldWithPath("startX").description("생성할 피스의 시작좌표(x)입니다."),
@@ -62,7 +61,7 @@ class PostPieceControllerTest extends AbstractControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("message").description("생성 완료 메시지 : '[#id]번 피스가 생성되었습니다.'"),
-                                fieldWithPath("pieceId").description("생성된 피스의 식별자입니다."),
+                                fieldWithPath("pieceId").description("생성된 피스의 ID입니다."),
                                 fieldWithPath("title").description("생성된 피스의 제목입니다."),
                                 fieldWithPath("description").description("생성된 피스의 상세정보입니다."),
                                 fieldWithPath("startX").description("생성된 피스의 시작좌표(x)입니다."),
@@ -73,6 +72,6 @@ class PostPieceControllerTest extends AbstractControllerTest {
                         )
                 ));
 
-        assertThat(pieceJpaRepository.findById(1L).orElseThrow().getInnerImageFileId()).isEqualTo(-1);
+        assertThat(pieceJpaRepository.findAll().getLast().getInnerImageFileId()).isNull();
     }
 }

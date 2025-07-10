@@ -13,8 +13,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("SpaceControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PatchSpaceControllerTest extends AbstractControllerTest {
 
     @Test
@@ -36,7 +35,7 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-space-patch",
                         pathParameters(
-                                parameterWithName("spaceId").description("수정할 스페이스의 식별자입니다.")
+                                parameterWithName("spaceId").description("수정할 스페이스의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다.").optional(),
@@ -73,7 +72,7 @@ class PatchSpaceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-space-patch-position",
                         pathParameters(
-                                parameterWithName("spaceId").description("수정할 스페이스의 식별자입니다.")
+                                parameterWithName("spaceId").description("수정할 스페이스의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("startX").description("수정할 X축 시작좌표입니다."),

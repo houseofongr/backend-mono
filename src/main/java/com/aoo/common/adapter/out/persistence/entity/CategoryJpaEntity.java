@@ -17,17 +17,17 @@ public class CategoryJpaEntity {
     private Long id;
 
     @Column(nullable = false, length = 100)
-    private String titleKor;
-
-    @Column(nullable = false, length = 100)
     private String titleEng;
 
-    public static CategoryJpaEntity create(String kor, String eng) {
-        return new CategoryJpaEntity(null, kor, eng);
+    @Column(nullable = false, length = 100)
+    private String titleKor;
+
+    public static CategoryJpaEntity create(String eng, String kor) {
+        return new CategoryJpaEntity(null, eng, kor);
     }
 
-    public void update(String kor, String eng) {
-        this.titleKor = kor != null? kor : this.titleKor;
+    public void update(String eng, String kor) {
         this.titleEng = eng != null? eng : this.titleEng;
+        this.titleKor = kor != null? kor : this.titleKor;
     }
 }

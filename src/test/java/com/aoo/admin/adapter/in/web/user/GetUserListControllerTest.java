@@ -25,7 +25,7 @@ class GetUserListControllerTest extends AbstractControllerTest {
                                 parameterWithName("size").description("한 페이지에 보여줄 데이터 개수입니다. +" + "\n" + "* 기본값 : 10").optional()
                         ),
                         responseFields(
-                                fieldWithPath("users[].id").description("사용자의 식별자입니다."),
+                                fieldWithPath("users[].id").description("사용자의 ID입니다."),
                                 fieldWithPath("users[].realName").description("사용자의 이름입니다."),
                                 fieldWithPath("users[].nickName").description("사용자의 닉네임입니다."),
                                 fieldWithPath("users[].phoneNumber").description("사용자의 전화번호입니다."),

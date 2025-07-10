@@ -14,7 +14,7 @@ public record CreateUniverseCommand(
         @NotBlank String title,
         String description,
         Long authorId,
-        Category category,
+        Long categoryId,
         PublicStatus publicStatus,
         List<String> hashtags,
         Map<String, MultipartFile> fileMap
@@ -43,7 +43,7 @@ public record CreateUniverseCommand(
                 baseCommand.title(),
                 baseCommand.description(),
                 baseCommand.authorId(),
-                baseCommand.category(),
+                baseCommand.categoryId(),
                 baseCommand.publicStatus(),
                 baseCommand.hashtags(),
                 fileMap

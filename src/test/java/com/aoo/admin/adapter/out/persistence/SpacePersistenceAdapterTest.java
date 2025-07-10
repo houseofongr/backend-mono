@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @PersistenceAdapterTest
-@Sql("SpacePersistenceAdapterTest.sql")
+@Sql("classpath:sql/universe.sql")
 @Import({SpacePersistenceAdapter.class, SpaceMapper.class})
 class SpacePersistenceAdapterTest {
 
@@ -67,17 +67,17 @@ class SpacePersistenceAdapterTest {
 
         // then
         assertThat(space.getId()).isEqualTo(spaceId);
-        assertThat(space.getFileInfo().getImageId()).isEqualTo(1L);
+        assertThat(space.getFileInfo().getImageId()).isEqualTo(37L);
         assertThat(space.getBasicInfo().getParentSpaceId()).isNull();
         assertThat(space.getBasicInfo().getUniverseId()).isNull();
-        assertThat(space.getBasicInfo().getTitle()).isEqualTo("공간");
-        assertThat(space.getBasicInfo().getDescription()).isEqualTo("스페이스는 공간입니다.");
-        assertThat(space.getPosInfo().getSx()).isEqualTo(0.3f);
-        assertThat(space.getPosInfo().getSy()).isEqualTo(0.2f);
-        assertThat(space.getPosInfo().getEx()).isEqualTo(0.2f);
-        assertThat(space.getPosInfo().getEy()).isEqualTo(0.3f);
-        assertThat(space.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
-        assertThat(space.getDateInfo().getUpdatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+        assertThat(space.getBasicInfo().getTitle()).isEqualTo("SPACE1");
+        assertThat(space.getBasicInfo().getDescription()).isEqualTo("유니버스의 스페이스-1");
+        assertThat(space.getPosInfo().getSx()).isEqualTo(0.5f);
+        assertThat(space.getPosInfo().getSy()).isEqualTo(0.5f);
+        assertThat(space.getPosInfo().getEx()).isEqualTo(0.7f);
+        assertThat(space.getPosInfo().getEy()).isEqualTo(0.6f);
+        assertThat(space.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 7, 9, 15, 0, 0, 0, ZoneOffset.UTC));
+        assertThat(space.getDateInfo().getUpdatedTime()).isEqualTo(ZonedDateTime.of(2025, 7, 9, 15, 0, 0, 0, ZoneOffset.UTC));
     }
 
     @Test
@@ -119,8 +119,8 @@ class SpacePersistenceAdapterTest {
         assertThat(spaceInDB.getPosInfo().getSy()).isEqualTo(0.2f);
         assertThat(spaceInDB.getPosInfo().getEx()).isEqualTo(0.3f);
         assertThat(spaceInDB.getPosInfo().getEy()).isEqualTo(0.4f);
-        assertThat(spaceInDB.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
-        assertThat(spaceInDB.getDateInfo().getUpdatedTime()).isAfter(ZonedDateTime.of(2025, 6, 9, 10, 30, 0, 0, ZoneOffset.UTC));
+        assertThat(spaceInDB.getDateInfo().getCreatedTime()).isEqualTo(ZonedDateTime.of(2025, 7, 9, 15, 0, 0, 0, ZoneOffset.UTC));
+        assertThat(spaceInDB.getDateInfo().getUpdatedTime()).isAfter(ZonedDateTime.of(2025, 7, 9, 15, 0, 0, 0, ZoneOffset.UTC));
     }
 
     @Test
@@ -133,6 +133,6 @@ class SpacePersistenceAdapterTest {
         sut.deleteAll(ids);
 
         // then
-        assertThat(spaceJpaRepository.findAll()).isEmpty();
+        assertThat(spaceJpaRepository.findAll()).noneMatch(spaceJpaEntity -> spaceJpaEntity.getId().equals(1L));
     }
 }

@@ -32,7 +32,7 @@ class PostPublicAudioControllerTest extends AbstractControllerTest {
                 .andDo(document("file-public-audio-upload",
                         responseFields(
                                 fieldWithPath("fileInfos[].id").description("등록된 파일의 아이디입니다."),
-                                fieldWithPath("fileInfos[].ownerId").description("등록된 파일의 소유자 식별자입니다.(공개 이미지이므로 소유자는 없습니다.)"),
+                                fieldWithPath("fileInfos[].ownerId").description("등록된 파일의 소유자 ID입니다.(공개 이미지이므로 소유자는 없습니다.)"),
                                 fieldWithPath("fileInfos[].fileSystemName").description("저장된 파일명입니다."),
                                 fieldWithPath("fileInfos[].realName").description("실제 파일명입니다."),
                                 fieldWithPath("fileInfos[].size").description("등록된 파일의 용량입니다."),

@@ -34,7 +34,7 @@ class PatchHouseControllerTest extends AbstractControllerTest {
                         .with(user("admin").roles("ADMIN")))
                 .andExpect(status().is(200))
                 .andDo(document("admin-house-patch",
-                        pathParameters(parameterWithName("houseId").description("수정할 하우스의 식별자입니다.")),
+                        pathParameters(parameterWithName("houseId").description("수정할 하우스의 ID입니다.")),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다."),
                                 fieldWithPath("author").description("수정할 작가명입니다."),

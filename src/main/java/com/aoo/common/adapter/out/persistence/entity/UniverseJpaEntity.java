@@ -1,6 +1,5 @@
 package com.aoo.common.adapter.out.persistence.entity;
 
-import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
 import com.aoo.admin.domain.universe.Universe;
 import jakarta.persistence.*;
@@ -36,10 +35,6 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     private PublicStatus publicStatus;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
-
-    @Column(nullable = false)
     private Long thumbMusicFileId;
 
     @Column(nullable = false)
@@ -52,24 +47,28 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     @JoinColumn(name = "USER_ID")
     private UserJpaEntity author;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID")
+    private CategoryJpaEntity category;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<UniverseHashtagJpaEntity> universeHashtags;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "universe", cascade = CascadeType.REMOVE)
     private List<UniverseLikeJpaEntity> universeLikes;
 
-    public static UniverseJpaEntity create(Universe universe, UserJpaEntity author) {
+    public static UniverseJpaEntity create(Universe universe, UserJpaEntity author, CategoryJpaEntity category) {
         return new UniverseJpaEntity(
                 null,
                 universe.getBasicInfo().getTitle(),
                 universe.getBasicInfo().getDescription(),
                 universe.getSocialInfo().getViewCount(),
                 universe.getBasicInfo().getPublicStatus(),
-                universe.getBasicInfo().getCategory(),
                 universe.getFileInfo().getThumbMusicId(),
                 universe.getFileInfo().getThumbnailId(),
                 universe.getFileInfo().getImageId(),
                 author,
+                category,
                 new ArrayList<>(),
                 List.of());
     }
@@ -77,7 +76,6 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
     public void update(Universe universe) {
         this.title = universe.getBasicInfo().getTitle();
         this.description = universe.getBasicInfo().getDescription();
-        this.category = universe.getBasicInfo().getCategory();
         this.publicStatus = universe.getBasicInfo().getPublicStatus();
         this.thumbMusicFileId = universe.getFileInfo().getThumbMusicId();
         this.thumbnailFileId = universe.getFileInfo().getThumbnailId();
@@ -86,6 +84,10 @@ public class UniverseJpaEntity extends DateColumnBaseEntity {
 
     public void updateAuthor(UserJpaEntity author) {
         this.author = author;
+    }
+
+    public void updateCategory(CategoryJpaEntity category) {
+        this.category = category;
     }
 
     public void view() {

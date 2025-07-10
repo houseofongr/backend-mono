@@ -51,7 +51,7 @@ class GetPrivateImageControllerV2Test extends AbstractControllerTest {
                         .param("accessToken", accessToken))
                 .andExpect(status().is(200))
                 .andDo(document("file-private-images-download-v2",
-                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
+                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 ID입니다.")),
                         queryParameters(
                                 parameterWithName("accessToken").description("권한을 확인하기 위한 토큰입니다. +" + "\n" + "* 로그인 시 발급됩니다.")
                         )

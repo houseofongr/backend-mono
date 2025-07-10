@@ -35,7 +35,7 @@ class PatchSoundSourceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-soundsource-patch",
                         pathParameters(
-                                parameterWithName("soundSourceId").description("수정할 음원의 식별자입니다.")
+                                parameterWithName("soundSourceId").description("수정할 음원의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("name").description("음원의 변경할 이름입니다."),

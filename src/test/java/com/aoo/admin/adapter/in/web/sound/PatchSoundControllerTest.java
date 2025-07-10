@@ -16,8 +16,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql("classpath:/sql/clear.sql")
-@Sql("SoundControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PatchSoundControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -42,7 +41,7 @@ class PatchSoundControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-sound-patch",
                         pathParameters(
-                                parameterWithName("soundId").description("수정할 소리의 식별자입니다.")
+                                parameterWithName("soundId").description("수정할 소리의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 제목입니다.").optional(),

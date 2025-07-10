@@ -26,8 +26,8 @@ class GetUserHomesControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-list",
                         responseFields(
-                                fieldWithPath("homes[].id").description("홈의 식별자입니다."),
-                                fieldWithPath("homes[].basicImageId").description("홈의 기본 이미지 식별자입니다."),
+                                fieldWithPath("homes[].id").description("홈의 ID입니다."),
+                                fieldWithPath("homes[].basicImageId").description("홈의 기본 이미지 ID입니다."),
                                 fieldWithPath("homes[].name").description("홈의 이름입니다."),
                                 fieldWithPath("homes[].isMain").description("기본 홈인지 여부입니다.")
                         )

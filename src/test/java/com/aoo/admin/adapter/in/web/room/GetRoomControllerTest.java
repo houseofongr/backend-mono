@@ -26,13 +26,13 @@ class GetRoomControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-room-get",
                         pathParameters(
-                                parameterWithName("roomId").description("조회할 룸의 식별자입니다.")
+                                parameterWithName("roomId").description("조회할 룸의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("name").description("룸의 이름입니다."),
                                 fieldWithPath("width").description("룸의 가로 길이입니다."),
                                 fieldWithPath("height").description("룸의 높이입니다."),
-                                fieldWithPath("imageId").description("룸의 이미지 식별자입니다.")
+                                fieldWithPath("imageId").description("룸의 이미지 ID입니다.")
                         )
                 ));
     }

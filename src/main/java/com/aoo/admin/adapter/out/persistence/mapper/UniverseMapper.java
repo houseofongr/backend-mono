@@ -1,11 +1,15 @@
 package com.aoo.admin.adapter.out.persistence.mapper;
 
+import com.aoo.admin.application.port.in.category.CategoryInfo;
 import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
 import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
+import com.aoo.admin.application.port.in.universe.UpdateUniverseResult;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
-import com.aoo.admin.domain.universe.space.Space;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.admin.domain.universe.piece.Piece;
+import com.aoo.admin.domain.universe.space.Space;
+import com.aoo.common.adapter.out.persistence.entity.CategoryJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
 import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
@@ -29,10 +33,10 @@ public class UniverseMapper {
                 universeJpaEntity.getInnerImageFileId(),
                 universeJpaEntity.getAuthor().getId(),
                 universeJpaEntity.getCreatedTime().toEpochSecond(),
+                universeJpaEntity.getCategory().getId(),
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
                 universeJpaEntity.getAuthor().getNickname(),
-                universeJpaEntity.getCategory().name(),
                 universeJpaEntity.getPublicStatus().name(),
                 universeJpaEntity.getUniverseHashtags().stream()
                         .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
@@ -47,7 +51,11 @@ public class UniverseMapper {
                 universeJpaEntity.getInnerImageFileId(),
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
-                universeJpaEntity.getCategory(),
+                new UniverseCategory(
+                        universeJpaEntity.getCategory().getId(),
+                        universeJpaEntity.getCategory().getTitleKor(),
+                        universeJpaEntity.getCategory().getTitleEng()
+                ),
                 universeJpaEntity.getPublicStatus(),
                 universeJpaEntity.getUniverseLikes().size(),
                 universeJpaEntity.getViewCount(),
@@ -103,6 +111,7 @@ public class UniverseMapper {
 
 
     public SearchUniverseResult.UniverseListInfo mapToSearchUniverseListInfo(UniverseJpaEntity universeJpaEntity) {
+        CategoryJpaEntity category = universeJpaEntity.getCategory();
         return new SearchUniverseResult.UniverseListInfo(
                 universeJpaEntity.getId(),
                 universeJpaEntity.getThumbnailFileId(),
@@ -115,8 +124,8 @@ public class UniverseMapper {
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
                 universeJpaEntity.getAuthor().getNickname(),
-                universeJpaEntity.getCategory().name(),
                 universeJpaEntity.getPublicStatus().name(),
+                mapToCategoryInfo(category),
                 universeJpaEntity.getUniverseHashtags().stream()
                         .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
                         .toList()
@@ -137,11 +146,34 @@ public class UniverseMapper {
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
                 universeJpaEntity.getAuthor().getNickname(),
-                universeJpaEntity.getCategory().name(),
                 universeJpaEntity.getPublicStatus().name(),
+                mapToCategoryInfo(universeJpaEntity.getCategory()),
                 universeJpaEntity.getUniverseHashtags().stream()
                         .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
                         .toList()
         );
+    }
+
+    public UpdateUniverseResult.Detail mapToUpdateUniverseDetailResult(UniverseJpaEntity universeJpaEntity) {
+        return new UpdateUniverseResult.Detail(
+                String.format("[#%d]번 유니버스의 상세정보가 수정되었습니다.", universeJpaEntity.getId()),
+                universeJpaEntity.getAuthor().getId(),
+                universeJpaEntity.getUpdatedTime().toEpochSecond(),
+                universeJpaEntity.getTitle(),
+                universeJpaEntity.getDescription(),
+                universeJpaEntity.getAuthor().getNickname(),
+                universeJpaEntity.getPublicStatus().name(),
+                mapToCategoryInfo(universeJpaEntity.getCategory()),
+                universeJpaEntity.getUniverseHashtags().stream()
+                        .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
+                        .toList()
+        );
+    }
+
+    private CategoryInfo mapToCategoryInfo(CategoryJpaEntity category) {
+        return new CategoryInfo(
+                category.getId(),
+                category.getTitleEng(),
+                category.getTitleKor());
     }
 }

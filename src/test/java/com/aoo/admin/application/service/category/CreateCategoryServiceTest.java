@@ -1,12 +1,13 @@
 package com.aoo.admin.application.service.category;
 
 import com.aoo.admin.application.port.in.category.CreateCategoryCommand;
+import com.aoo.admin.application.port.in.category.CreateCategoryResult;
 import com.aoo.admin.application.port.out.category.SaveCategoryPort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CreateCategoryServiceTest {
@@ -39,7 +40,7 @@ class CreateCategoryServiceTest {
         String kor = "새 카테고리";
         String eng = "new category";
 
-        sut.create(new CreateCategoryCommand(kor,eng));
+        sut.create(new CreateCategoryCommand(kor, eng));
 
         verify(saveCategoryPort, times(1)).save(any(), any());
     }

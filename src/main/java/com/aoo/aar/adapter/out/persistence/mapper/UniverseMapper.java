@@ -3,13 +3,11 @@ package com.aoo.aar.adapter.out.persistence.mapper;
 import com.aoo.aar.application.port.in.universe.SearchPublicUniverseResult;
 import com.aoo.admin.domain.universe.TraversalComponents;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.admin.domain.universe.piece.Piece;
 import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.admin.domain.user.User;
-import com.aoo.common.adapter.out.persistence.entity.PieceJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.SpaceJpaEntity;
-import com.aoo.common.adapter.out.persistence.entity.TraversalJpaEntityComponents;
-import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.aoo.common.adapter.out.persistence.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -85,13 +83,19 @@ public class UniverseMapper {
     }
 
     public Universe mapToDomainEntity(UniverseJpaEntity universeJpaEntity) {
+        CategoryJpaEntity category = universeJpaEntity.getCategory();
+
         return Universe.load(universeJpaEntity.getId(),
                 universeJpaEntity.getThumbMusicFileId(),
                 universeJpaEntity.getThumbnailFileId(),
                 universeJpaEntity.getInnerImageFileId(),
                 universeJpaEntity.getTitle(),
                 universeJpaEntity.getDescription(),
-                universeJpaEntity.getCategory(),
+                new UniverseCategory(
+                        category.getId(),
+                        category.getTitleEng(),
+                        category.getTitleKor()
+                ),
                 universeJpaEntity.getPublicStatus(),
                 universeJpaEntity.getUniverseLikes().size(),
                 universeJpaEntity.getViewCount(),

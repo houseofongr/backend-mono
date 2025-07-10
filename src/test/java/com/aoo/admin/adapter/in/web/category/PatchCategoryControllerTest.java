@@ -35,7 +35,7 @@ class PatchCategoryControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-category-patch",
                         pathParameters(
-                                parameterWithName("categoryId").description("수정할 카테고리의 식별자입니다.")
+                                parameterWithName("categoryId").description("수정할 카테고리의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("kor").description("수정할 한글 이름입니다.(Null 시 한글 수정하지 않음)").optional(),

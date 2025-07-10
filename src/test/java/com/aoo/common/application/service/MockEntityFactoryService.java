@@ -13,6 +13,7 @@ import com.aoo.admin.domain.item.soundsource.SoundSource;
 import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
 import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.admin.domain.universe.space.Space;
 import com.aoo.admin.domain.user.DeletedUser;
 import com.aoo.admin.domain.user.User;
@@ -111,7 +112,7 @@ public class MockEntityFactoryService {
     }
 
     public static Universe getUniverse() {
-        return Universe.create(11L, 100L, 12L, "우주", "유니버스는 우주입니다.", Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), User.load(1L, "leaf"));
+        return Universe.create(11L, 100L, 12L, "우주", "유니버스는 우주입니다.", new UniverseCategory(1L, "카테고리", "category"), PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), User.load(1L, "leaf"));
     }
 
 

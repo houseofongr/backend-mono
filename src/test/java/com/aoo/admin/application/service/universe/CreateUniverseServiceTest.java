@@ -1,30 +1,38 @@
 package com.aoo.admin.application.service.universe;
 
 import com.aoo.admin.application.port.in.universe.CreateUniverseCommand;
-import com.aoo.admin.application.port.out.universe.CreateUniversePort;
+import com.aoo.admin.application.port.in.universe.CreateUniverseResult;
+import com.aoo.admin.application.port.out.category.FindCategoryPort;
 import com.aoo.admin.application.port.out.universe.SaveUniversePort;
 import com.aoo.admin.application.port.out.user.FindUserPort;
 import com.aoo.admin.application.service.AdminErrorCode;
-import com.aoo.admin.domain.universe.Category;
 import com.aoo.admin.domain.universe.PublicStatus;
+import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.admin.domain.user.User;
+import com.aoo.common.application.service.MockEntityFactoryService;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.UploadFileResult;
 import com.aoo.file.application.port.in.UploadPublicAudioUseCase;
 import com.aoo.file.application.port.in.UploadPublicImageUseCase;
 import com.aoo.file.domain.FileSize;
+import org.assertj.core.data.Offset;
+import org.assertj.core.data.TemporalUnitOffset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static com.aoo.admin.domain.universe.PublicStatus.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CreateUniverseServiceTest {
@@ -32,16 +40,16 @@ class CreateUniverseServiceTest {
     CreateUniverseService sut;
 
     FindUserPort findUserPort = mock();
+    FindCategoryPort findCategoryPort = mock();
     UploadPublicImageUseCase uploadPublicImageUseCase = mock();
     UploadPublicAudioUseCase uploadPublicAudioUseCase = mock();
     SaveUniversePort saveUniversePort = mock();
+    CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, 1L, PUBLIC, List.of("우주", "행성", "지구", "별"), Map.of());
 
     @BeforeEach
     void init() {
-        sut = new CreateUniverseService(findUserPort, uploadPublicImageUseCase, uploadPublicAudioUseCase, saveUniversePort);
+        sut = new CreateUniverseService(findUserPort, findCategoryPort, uploadPublicImageUseCase, uploadPublicAudioUseCase, saveUniversePort);
     }
-
-    CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), Map.of());
 
     @Test
     @DisplayName("잘못된 요청 파라미터")
@@ -53,12 +61,12 @@ class CreateUniverseServiceTest {
         List<String> exceedTagCount = List.of("소프트웨어개발", "백엔드개발", "프로그래밍", "자바개발", "웹개발", "데이터베이스설계", "도메인주도설계", "클린코드", "마이크로서비스아키텍처", "헥사고날아키텍처", "+1");
         List<String> exceedTagSize = List.of("a".repeat(501));
 
-        assertThatThrownBy(() -> new CreateUniverseCommand(nullTitle, "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new CreateUniverseCommand(emptyTitle, "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new CreateUniverseCommand(blankTitle, "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new CreateUniverseCommand("우주", exceed5000, 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, exceedTagSize, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
-        assertThatThrownBy(() -> new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, exceedTagCount, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateUniverseCommand(nullTitle, "유니버스는 우주입니다.", 1L, 1L, PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateUniverseCommand(emptyTitle, "유니버스는 우주입니다.", 1L, 1L, PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateUniverseCommand(blankTitle, "유니버스는 우주입니다.", 1L, 1L, PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateUniverseCommand("우주", exceed5000, 1L, 1L, PUBLIC, List.of("우주", "행성", "지구", "별"), null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, 1L, PUBLIC, exceedTagSize, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
+        assertThatThrownBy(() -> new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, 1L, PUBLIC, exceedTagCount, null)).hasMessage(AdminErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getMessage());
     }
 
     @Test
@@ -116,16 +124,34 @@ class CreateUniverseServiceTest {
         map.put("thumbnail", new MockMultipartFile("thumbnail", "universe_thumb.png", "image/png", "universe file".getBytes()));
         map.put("thumbMusic", new MockMultipartFile("thumbMusic", "universe_music.mp3", "audio/mpeg", "music file".getBytes()));
 
-        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, Category.GOVERNMENT_AND_PUBLIC_INSTITUTION, PublicStatus.PUBLIC, List.of("우주", "행성", "지구", "별"), map);
+        CreateUniverseCommand command = new CreateUniverseCommand("우주", "유니버스는 우주입니다.", 1L, 1L, PUBLIC, List.of("우주", "행성", "지구", "별"), map);
+
+        User user = User.load(1L, "leaf");
+        Universe universe = Universe.load(1L, 1L, 2L, 3L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", new UniverseCategory(1L, "카테고리", "category"), PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), user, ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
         when(findUserPort.loadUser(command.authorId())).thenReturn(Optional.of(User.load(1L, "leaf")));
+        when(findCategoryPort.findUniverseCategory(1L)).thenReturn(new UniverseCategory(1L, "category", "카테고리"));
         when(uploadPublicImageUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "universe_music.mp3", "test1235.mp3", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
         when(uploadPublicAudioUseCase.publicUpload((MultipartFile) any())).thenReturn(new UploadFileResult.FileInfo(1L, null, "universe_thumb.png", "test1234.png", new FileSize(1234L, 10000L).getUnitSize(), Authority.PUBLIC_FILE_ACCESS));
-        sut.create(command);
+        when(saveUniversePort.save(any())).thenReturn(universe);
+
+        CreateUniverseResult result = sut.create(command);
 
         // then
-        verify(saveUniversePort, times(1)).save(any());
+        assertThat(result.message()).matches("\\[#\\d+]번 유니버스가 생성되었습니다.");
+        assertThat(result.universeId()).isEqualTo(1L);
+        assertThat(result.thumbMusicId()).isEqualTo(1L);
+        assertThat(result.thumbnailId()).isEqualTo(2L);
+        assertThat(result.innerImageId()).isEqualTo(3L);
+        assertThat(result.authorId()).isEqualTo(1L);
+        assertThat(result.createdTime()).isCloseTo(ZonedDateTime.now().toEpochSecond(), Offset.offset(10L));
+        assertThat(result.categoryId()).isEqualTo(1L);
+        assertThat(result.title()).isEqualTo("오르트구름");
+        assertThat(result.description()).isEqualTo("오르트구름은 태양계 최외곽에 위치하고 있습니다.");
+        assertThat(result.author()).isEqualTo("leaf");
+        assertThat(result.publicStatus()).isEqualTo(PRIVATE.name());
+        assertThat(result.hashtags()).hasSize(4);
     }
 
 }

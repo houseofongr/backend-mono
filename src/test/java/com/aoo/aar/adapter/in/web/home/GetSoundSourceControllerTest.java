@@ -28,14 +28,14 @@ class GetSoundSourceControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-soundsource",
                         queryParameters(
-                                parameterWithName("soundSourceId").description("조회할 음원의 식별자입니다.")
+                                parameterWithName("soundSourceId").description("조회할 음원의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("name").description("조회된 음원의 이름입니다."),
                                 fieldWithPath("description").description("조회된 음원의 상세설명입니다."),
                                 fieldWithPath("createdDate").description("조회된 음원의 생성일입니다."),
                                 fieldWithPath("updatedDate").description("조회된 음원의 수정일입니다."),
-                                fieldWithPath("audioFileId").description("해당 음원이 보유한 음악 파일의 식별자입니다.")
+                                fieldWithPath("audioFileId").description("해당 음원이 보유한 음악 파일의 ID입니다.")
                         )
                 ));
     }

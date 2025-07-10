@@ -53,7 +53,7 @@ class PostBusinessUserControllerTest extends AbstractControllerTest {
                         responseFields(
                                 fieldWithPath("message").description("임시 회원가입 완료 메시지 +" + "\n" +
                                                                      "* '[#id]번 임시 사용자가 생성되었습니다. 관리자 승인 후 계정이 등록됩니다.'"),
-                                fieldWithPath("tempUserId").description("임시 회원가입된 사용자의 식별자입니다."),
+                                fieldWithPath("tempUserId").description("임시 회원가입된 사용자의 ID입니다."),
                                 fieldWithPath("email").description("회원가입한 사용자의 이메일입니다."),
                                 fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다."),
                                 fieldWithPath("termsOfUseAgreement").description("회원가입한 사용자의 이용약관 동의 여부입니다."),

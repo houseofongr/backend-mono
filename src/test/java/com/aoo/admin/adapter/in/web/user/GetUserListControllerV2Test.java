@@ -37,7 +37,7 @@ class GetUserListControllerV2Test extends AbstractControllerTest {
                                 parameterWithName("isAsc").description("정렬 시 오름차순인지 여부입니다.").optional()
                         ),
                         responseFields(
-                                fieldWithPath("users[].id").description("사용자의 식별자입니다."),
+                                fieldWithPath("users[].id").description("사용자의 ID입니다."),
                                 fieldWithPath("users[].name").description("사용자의 이름입니다."),
                                 fieldWithPath("users[].nickname").description("사용자의 닉네임입니다."),
                                 fieldWithPath("users[].phoneNumber").description("사용자의 전화번호입니다."),

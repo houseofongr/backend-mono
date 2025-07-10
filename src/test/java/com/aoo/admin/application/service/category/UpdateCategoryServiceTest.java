@@ -8,7 +8,7 @@ import com.aoo.admin.application.service.AdminErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UpdateCategoryServiceTest {
@@ -39,6 +39,7 @@ class UpdateCategoryServiceTest {
     @DisplayName("카테고리 업데이트 서비스")
     void testUpdateCategoryService() {
         sut.update(1L, new UpdateCategoryCommand("업데이트", "update"));
+
         verify(updateCategoryPort, times(1)).update(1L, "업데이트", "update");
     }
 

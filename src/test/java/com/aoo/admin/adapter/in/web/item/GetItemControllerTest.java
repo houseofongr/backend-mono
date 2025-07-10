@@ -22,16 +22,16 @@ class GetItemControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-item-get",
                         pathParameters(
-                                parameterWithName("itemId").description("조회할 아이템의 식별자입니다.")
+                                parameterWithName("itemId").description("조회할 아이템의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("itemName").description("아이템의 이름입니다."),
-                                fieldWithPath("soundSource[].id").description("음원의 식별자입니다."),
+                                fieldWithPath("soundSource[].id").description("음원의 ID입니다."),
                                 fieldWithPath("soundSource[].name").description("음원의 이름입니다."),
                                 fieldWithPath("soundSource[].description").description("음원에 대한 설명입니다."),
                                 fieldWithPath("soundSource[].createdDate").description("음원의 생성일입니다."),
                                 fieldWithPath("soundSource[].updatedDate").description("음원의 최종 수정일입니다."),
-                                fieldWithPath("soundSource[].audioFileId").description("음원파일의 식별자입니다.")
+                                fieldWithPath("soundSource[].audioFileId").description("음원파일의 ID입니다.")
                         )
                 ));
     }

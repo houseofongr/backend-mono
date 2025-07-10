@@ -26,7 +26,7 @@ class DeleteCategoryControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-category-delete",
                         pathParameters(
-                                parameterWithName("categoryId").description("삭제할 카테고리의 식별자입니다.")
+                                parameterWithName("categoryId").description("삭제할 카테고리의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("message").description("삭제 완료 메시지 : '[#id]번 카테고리가 삭제되었습니다.'"),

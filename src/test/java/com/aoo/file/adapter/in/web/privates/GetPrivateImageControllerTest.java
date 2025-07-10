@@ -46,7 +46,7 @@ class GetPrivateImageControllerTest extends AbstractControllerTest {
         mockMvc.perform(get("/private/images/{imageId}", entity.getId()))
                 .andExpect(status().is(200))
                 .andDo(document("file-private-images-download",
-                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 식별자입니다.")),
+                        pathParameters(parameterWithName("imageId").description("조회(다운로드)할 이미지 ID입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");

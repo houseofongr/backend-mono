@@ -21,8 +21,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql(value = "classpath:sql/clear.sql")
-@Sql("UniverseControllerTest.sql")
+@Sql("classpath:sql/universe.sql")
 class PostUpdateUniverseControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -41,7 +40,7 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-post-update-thumb-music",
                         pathParameters(
-                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                                parameterWithName("universeId").description("수정할 유니버스의 ID입니다.")
                         ),
                         requestParts(
                                 partWithName("thumbMusic").description("수정할 유니버스의 썸뮤직 오디오 파일입니다.")
@@ -74,7 +73,7 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-post-update-thumbnail",
                         pathParameters(
-                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                                parameterWithName("universeId").description("수정할 유니버스의 ID입니다.")
                         ),
                         requestParts(
                                 partWithName("thumbnail").description("수정할 유니버스의 썸네일 이미지입니다.")
@@ -108,7 +107,7 @@ class PostUpdateUniverseControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("admin-universe-post-update-inner-image",
                         pathParameters(
-                                parameterWithName("universeId").description("수정할 유니버스의 식별자입니다.")
+                                parameterWithName("universeId").description("수정할 유니버스의 ID입니다.")
                         ),
                         requestParts(
                                 partWithName("innerImage").description("수정할 유니버스의 내부 이미지입니다.")

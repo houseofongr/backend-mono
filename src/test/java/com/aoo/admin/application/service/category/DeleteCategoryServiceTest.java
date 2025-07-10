@@ -1,9 +1,11 @@
 package com.aoo.admin.application.service.category;
 
+import com.aoo.admin.application.port.in.category.DeleteCategoryResult;
 import com.aoo.admin.application.port.out.category.DeleteCategoryPort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class DeleteCategoryServiceTest {

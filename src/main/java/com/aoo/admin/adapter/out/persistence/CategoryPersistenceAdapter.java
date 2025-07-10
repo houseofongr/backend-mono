@@ -11,6 +11,7 @@ import com.aoo.admin.application.port.out.category.SaveCategoryPort;
 import com.aoo.admin.application.port.out.category.UpdateCategoryPort;
 import com.aoo.admin.application.service.AdminErrorCode;
 import com.aoo.admin.application.service.AdminException;
+import com.aoo.admin.domain.universe.UniverseCategory;
 import com.aoo.common.adapter.out.persistence.entity.CategoryJpaEntity;
 import com.aoo.common.adapter.out.persistence.repository.CategoryJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,14 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, FindCategor
     @Override
     public SearchCategoryResult findAll() {
         return categoryMapper.mapToSearchCategoryResult(categoryJpaRepository.findAll());
+    }
+
+    @Override
+    public UniverseCategory findUniverseCategory(Long categoryId) {
+        CategoryJpaEntity category = categoryJpaRepository.findById(categoryId)
+                .orElseThrow(() -> new AdminException(AdminErrorCode.CATEGORY_NOT_FOUND));
+
+        return categoryMapper.mapToUniverseCategory(category);
     }
 
     @Override

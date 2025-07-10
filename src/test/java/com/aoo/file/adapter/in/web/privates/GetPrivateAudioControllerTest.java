@@ -40,7 +40,7 @@ class GetPrivateAudioControllerTest extends AbstractControllerTest {
         mockMvc.perform(get("/private/audios/{audioId}", entity.getId()))
                 .andExpect(status().is(200))
                 .andDo(document("file-private-audios-download",
-                        pathParameters(parameterWithName("audioId").description("조회(다운로드)할 음원 식별자입니다.")),
+                        pathParameters(parameterWithName("audioId").description("조회(다운로드)할 음원 ID입니다.")),
                         operation -> {
                             var context = (RestDocumentationContext) operation.getAttributes().get(RestDocumentationContext.class.getName());
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");

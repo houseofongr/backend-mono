@@ -5,10 +5,7 @@ import com.aoo.admin.adapter.out.persistence.mapper.UniverseMapper;
 import com.aoo.admin.adapter.out.persistence.mapper.UserMapper;
 import com.aoo.admin.application.port.in.universe.SearchUniverseCommand;
 import com.aoo.admin.application.port.in.universe.SearchUniverseResult;
-import com.aoo.admin.domain.universe.Category;
-import com.aoo.admin.domain.universe.PublicStatus;
-import com.aoo.admin.domain.universe.TraversalComponents;
-import com.aoo.admin.domain.universe.Universe;
+import com.aoo.admin.domain.universe.*;
 import com.aoo.admin.domain.user.User;
 import com.aoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import com.aoo.common.adapter.out.persistence.entity.HashtagJpaEntity;
@@ -31,7 +28,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Sql("UniversePersistenceAdapterTest.sql")
+@Sql("classpath:sql/universe.sql")
 @PersistenceAdapterTest
 @Import({UniversePersistenceAdapter.class, UniverseMapper.class, UserMapper.class, SnsAccountMapper.class})
 class UniversePersistenceAdapterTest {
@@ -68,14 +65,14 @@ class UniversePersistenceAdapterTest {
         Universe universe = MockEntityFactoryService.getUniverse();
 
         // when
-        Long id = sut.save(universe).universeId();
+        Long id = sut.save(universe).getId();
         UniverseJpaEntity universeJpaEntity = universeJpaRepository.findById(id).orElseThrow();
 
         // then
         assertThat(universeJpaEntity.getTitle()).isEqualTo(universe.getBasicInfo().getTitle());
         assertThat(universeJpaEntity.getDescription()).isEqualTo(universe.getBasicInfo().getDescription());
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(universe.getBasicInfo().getPublicStatus());
-        assertThat(universeJpaEntity.getCategory()).isEqualTo(universe.getBasicInfo().getCategory());
+        assertThat(universeJpaEntity.getCategory().getId()).isEqualTo(universe.getCategory().getId());
         assertThat(universeJpaEntity.getViewCount()).isEqualTo(0L);
         assertThat(universeJpaEntity.getUniverseHashtags()).hasSize(4);
         assertThat(universeJpaEntity.getUniverseLikes()).isEmpty();
@@ -121,44 +118,44 @@ class UniversePersistenceAdapterTest {
     @DisplayName("특정 컨텐츠(이름, 내용, 작성자)가 포함된 유니버스 조회")
     void testSearchKeyword() {
         // given
-        SearchUniverseCommand 건강 = new SearchUniverseCommand(PageRequest.of(0, 10), "content", "건강", null, null, false);
-        SearchUniverseCommand 콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), "content", "콘텐츠", null, null, false);
-        SearchUniverseCommand leaf = new SearchUniverseCommand(PageRequest.of(0, 10), "author", "leaf", null, null, false);
-        SearchUniverseCommand 건 = new SearchUniverseCommand(PageRequest.of(0, 10), "all", "건", null, null, false);
+        SearchUniverseCommand content_건강 = new SearchUniverseCommand(PageRequest.of(0, 10), null, "content", "건강", null, false);
+        SearchUniverseCommand content_콘텐츠 = new SearchUniverseCommand(PageRequest.of(0, 10), null, "content","콘텐츠", null, false);
+        SearchUniverseCommand author_leaf = new SearchUniverseCommand(PageRequest.of(0, 10), null, "author","leaf", null, false);
+        SearchUniverseCommand all_op = new SearchUniverseCommand(PageRequest.of(0, 10), null, "all","op", null, false);
 
         // when
-        SearchUniverseResult result_건강 = sut.search(건강);
-        SearchUniverseResult result_콘텐츠 = sut.search(콘텐츠);
-        SearchUniverseResult result_leaf = sut.search(leaf);
-        SearchUniverseResult result_건 = sut.search(건);
+        SearchUniverseResult result_content_건강 = sut.search(content_건강);
+        SearchUniverseResult result_content_콘텐츠 = sut.search(content_콘텐츠);
+        SearchUniverseResult result_author_leaf = sut.search(author_leaf);
+        SearchUniverseResult result_all_op = sut.search(all_op);
 
         // then
-        assertThat(result_건강.universes().size()).isEqualTo(3);
-        assertThat(result_콘텐츠.universes().size()).isEqualTo(4);
-        assertThat(result_leaf.universes().size()).isEqualTo(7);
-        assertThat(result_건.universes().size()).isEqualTo(7);
-        assertThat(result_건강.universes()).allMatch(universeInfo -> universeInfo.title().contains("건강") || universeInfo.description().contains("건강"));
-        assertThat(result_콘텐츠.universes()).allMatch(universeInfo -> universeInfo.title().contains("콘텐츠") || universeInfo.description().contains("콘텐츠"));
-        assertThat(result_leaf.universes()).allMatch(universeInfo -> universeInfo.author().contains("leaf"));
-        assertThat(result_건.universes()).allMatch(universeInfo -> universeInfo.title().contains("건") || universeInfo.description().contains("건") || universeInfo.author().contains("건"));
+        assertThat(result_content_건강.universes().size()).isEqualTo(3);
+        assertThat(result_content_콘텐츠.universes().size()).isEqualTo(4);
+        assertThat(result_author_leaf.universes().size()).isEqualTo(9);
+        assertThat(result_all_op.universes().size()).isEqualTo(3);
+        assertThat(result_content_건강.universes()).allMatch(universeInfo -> universeInfo.title().contains("건강") || universeInfo.description().contains("건강"));
+        assertThat(result_content_콘텐츠.universes()).allMatch(universeInfo -> universeInfo.title().contains("콘텐츠") || universeInfo.description().contains("콘텐츠"));
+        assertThat(result_author_leaf.universes()).allMatch(universeInfo -> universeInfo.author().contains("leaf"));
+        assertThat(result_all_op.universes()).allMatch(universeInfo -> universeInfo.title().contains("op") || universeInfo.description().contains("op") || universeInfo.author().contains("op"));
     }
 
     @Test
     @DisplayName("특정 카테고리가 포함된 유니버스 조회")
     void testFilterCategory() {
         // given
-        SearchUniverseCommand life = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, Category.LIFE.toString(), null, false);
-        SearchUniverseCommand fashion = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, Category.FASHION_AND_BEAUTY.toString(), null, false);
+        SearchUniverseCommand life = new SearchUniverseCommand(PageRequest.of(0, 10), 1L, null, null, null, false);
+        SearchUniverseCommand government = new SearchUniverseCommand(PageRequest.of(0, 10), 3L, null, null, null, false);
 
         // when
         SearchUniverseResult result_life = sut.search(life);
-        SearchUniverseResult result_fashion = sut.search(fashion);
+        SearchUniverseResult result_government = sut.search(government);
 
         // then
-        assertThat(result_life.universes().size()).isEqualTo(3);
-        assertThat(result_fashion.universes().size()).isEqualTo(3);
-        assertThat(result_life.universes()).allMatch(universeInfo -> universeInfo.category().equals(Category.LIFE.toString()));
-        assertThat(result_fashion.universes()).allMatch(universeInfo -> universeInfo.category().equals(Category.FASHION_AND_BEAUTY.toString()));
+        assertThat(result_life.universes().size()).isEqualTo(8);
+        assertThat(result_government.universes().size()).isEqualTo(1);
+        assertThat(result_life.universes()).allMatch(universeInfo -> universeInfo.category().eng().equals("LIFE"));
+        assertThat(result_government.universes()).allMatch(universeInfo -> universeInfo.category().eng().equals("GOVERNMENT"));
     }
 
     @Test
@@ -203,7 +200,7 @@ class UniversePersistenceAdapterTest {
     @DisplayName("유니버스 기본 검색(아무 파라미터 없이 검색 시 → 10건 등록 날짜 내림차순)")
     void testSearch() {
         // given
-        Universe universe = Universe.create(1L, 1L, 1L, "test title", "test desc", Category.FASHION_AND_BEAUTY, PublicStatus.PRIVATE, List.of(), User.load(1L, "leaf"));
+        Universe universe = Universe.create(1L, 1L, 1L, "test title", "test desc", new UniverseCategory(1L, "카테고리", "category"), PublicStatus.PRIVATE, List.of(), User.load(1L, "leaf"));
         sut.save(universe);
 
         SearchUniverseCommand command = new SearchUniverseCommand(PageRequest.of(0, 10), null, null, null, null, null);
@@ -226,7 +223,7 @@ class UniversePersistenceAdapterTest {
 
         // then
         assertThat(treeComponents.getUniverse().getId()).isEqualTo(1L);
-        assertThat(treeComponents.getUniverse().getFileInfo().getImageId()).isEqualTo(1L);
+        assertThat(treeComponents.getUniverse().getFileInfo().getImageId()).isEqualTo(3L);
         assertThat(treeComponents.getSpaces()).hasSize(5);
         assertThat(treeComponents.getPieces()).hasSize(7);
     }
@@ -236,7 +233,7 @@ class UniversePersistenceAdapterTest {
     void testDeleteOriginalTag() {
         // given
         User user = User.load(1L, "leaf");
-        Universe universe = Universe.load(12L, 13L, 13L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), user, ZonedDateTime.now(), ZonedDateTime.now());
+        Universe universe = Universe.load(1L, 1L, 2L, 3L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", new UniverseCategory(1L, "카테고리", "category"), PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), user, ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
         sut.updateDetail(universe);
@@ -252,7 +249,7 @@ class UniversePersistenceAdapterTest {
     void happyCase() {
         // given
         User user = User.load(1L, "leaf");
-        Universe universe = Universe.load(12L, 13L, 13L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", Category.LIFE, PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), user, ZonedDateTime.now(), ZonedDateTime.now());
+        Universe universe = Universe.load(12L, 13L, 13L, 1L, "오르트구름", "오르트구름은 태양계 최외곽에 위치하고 있습니다.", new UniverseCategory(1L, "LIFE", "생활"), PublicStatus.PRIVATE, 0, 0L, List.of("오르트구름", "태양계", "윤하", "별"), user, ZonedDateTime.now(), ZonedDateTime.now());
 
         // when
         sut.updateDetail(universe);
@@ -263,7 +260,7 @@ class UniversePersistenceAdapterTest {
         assertThat(universeJpaEntity.getThumbMusicFileId()).isEqualTo(13L);
         assertThat(universeJpaEntity.getTitle()).isEqualTo("오르트구름");
         assertThat(universeJpaEntity.getDescription()).isEqualTo("오르트구름은 태양계 최외곽에 위치하고 있습니다.");
-        assertThat(universeJpaEntity.getCategory()).isEqualTo(Category.LIFE);
+        assertThat(universeJpaEntity.getCategory().getTitleKor()).isEqualTo("생활");
         assertThat(universeJpaEntity.getPublicStatus()).isEqualTo(PublicStatus.PRIVATE);
         assertThat(universeJpaEntity.getUniverseHashtags().stream().map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag()).toList()).allMatch(tag -> List.of("오르트구름", "태양계", "윤하", "별").contains(tag));
     }
@@ -273,16 +270,16 @@ class UniversePersistenceAdapterTest {
     @Transactional
     void testDeleteRelationship() {
         // given
-        Universe universe = Universe.load(12L, 12L, 12L, 1L, "우주", null, null, null, null, null, List.of("오르트구름", "태양계", "윤하", "별"), User.load(1L, "leaf"), null, null);
+        Long universeId = 1L;
 
         // when
-        sut.delete(universe.getId());
+        sut.delete(universeId);
         List<UniverseHashtagJpaEntity> hashtagEntities = em.createQuery("select uh from UniverseHashtagJpaEntity uh where uh.id in (1, 2, 3, 4)", UniverseHashtagJpaEntity.class).getResultList();
         List<UniverseLikeJpaEntity> likeEntities = em.createQuery("select ul from UniverseLikeJpaEntity ul where ul.id in (1, 2, 3, 4)", UniverseLikeJpaEntity.class).getResultList();
 
         // then
-        assertThat(universeJpaRepository.findById(universe.getId())).isEmpty();
+        assertThat(universeJpaRepository.findById(universeId)).isEmpty();
         assertThat(hashtagEntities).isEmpty();
-        assertThat(likeEntities).isEmpty();
+        assertThat(likeEntities).hasSize(2);
     }
 }

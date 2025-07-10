@@ -18,7 +18,7 @@ class UniverseTest {
         String title = "우주";
         String description = "유니버스는 우주입니다.";
         List<String> tag = List.of("우주", "행성", "지구", "별");
-        Category category = Category.GOVERNMENT_AND_PUBLIC_INSTITUTION;
+        UniverseCategory category = new UniverseCategory(1L, "카테고리", "category");
         PublicStatus publicStatus = PublicStatus.PUBLIC;
         Long thumbMusicId = 100L;
         Long thumbnailId = 11L;
@@ -38,10 +38,10 @@ class UniverseTest {
         assertThat(universe.getDateInfo()).isNull();
         assertThat(universe.getTreeInfo()).isNull();
         assertThat(universe.getAuthorInfo().getId()).isEqualTo(author.getUserInfo().getId());
+        assertThat(universe.getCategory()).isEqualTo(category);
         assertThat(basicInfo.getPublicStatus()).isEqualTo(publicStatus);
         assertThat(basicInfo.getTitle()).isEqualTo(title);
         assertThat(basicInfo.getDescription()).isEqualTo(description);
-        assertThat(basicInfo.getCategory()).isEqualTo(category);
         assertThat(socialInfo.getHashtags()).hasSize(4);
         assertThat(socialInfo.getHashtags()).contains(tag.toArray(String[]::new));
         assertThat(socialInfo.getLikeCount()).isEqualTo(0L);
@@ -56,23 +56,20 @@ class UniverseTest {
 
         String title = "오르트구름";
         String description = "오르트구름은 태양계 최외곽에 위치하고 있습니다.";
-        Category category = Category.LIFE;
         PublicStatus publicStatus = PublicStatus.PRIVATE;
 
         // when
-        universe.getBasicInfo().updateUniverseInfo(title, description,null, null);
+        universe.getBasicInfo().updateUniverseInfo(title, description,null);
 
         // then
         assertThat(universe.getBasicInfo().getTitle()).isEqualTo(title);
         assertThat(universe.getBasicInfo().getDescription()).isEqualTo(description);
-        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(Category.GOVERNMENT_AND_PUBLIC_INSTITUTION);
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(PublicStatus.PUBLIC);
 
         // when 2
-        universe.getBasicInfo().updateUniverseInfo(null, null, category, publicStatus);
+        universe.getBasicInfo().updateUniverseInfo(null, null, publicStatus);
 
         // then 2
-        assertThat(universe.getBasicInfo().getCategory()).isEqualTo(category);
         assertThat(universe.getBasicInfo().getPublicStatus()).isEqualTo(publicStatus);
     }
 

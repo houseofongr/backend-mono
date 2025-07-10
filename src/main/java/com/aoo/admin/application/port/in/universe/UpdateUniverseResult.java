@@ -1,6 +1,6 @@
 package com.aoo.admin.application.port.in.universe;
 
-import com.aoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.aoo.admin.application.port.in.category.CategoryInfo;
 
 import java.util.List;
 
@@ -13,25 +13,10 @@ public record UpdateUniverseResult() {
             String title,
             String description,
             String author,
-            String category,
             String publicStatus,
+            CategoryInfo category,
             List<String> hashtags
     ) {
-        public static Detail of(UniverseJpaEntity universeJpaEntity) {
-            return new Detail(
-                    String.format("[#%d]번 유니버스의 상세정보가 수정되었습니다.", universeJpaEntity.getId()),
-                    universeJpaEntity.getAuthor().getId(),
-                    universeJpaEntity.getUpdatedTime().toEpochSecond(),
-                    universeJpaEntity.getTitle(),
-                    universeJpaEntity.getDescription(),
-                    universeJpaEntity.getAuthor().getNickname(),
-                    universeJpaEntity.getCategory().name(),
-                    universeJpaEntity.getPublicStatus().name(),
-                    universeJpaEntity.getUniverseHashtags().stream()
-                            .map(universeHashtagJpaEntity -> universeHashtagJpaEntity.getHashtag().getTag())
-                            .toList()
-            );
-        }
     }
 
     public record Thumbnail(

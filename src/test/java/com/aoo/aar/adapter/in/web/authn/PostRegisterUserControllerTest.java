@@ -45,7 +45,7 @@ public class PostRegisterUserControllerTest extends AbstractControllerTest {
                                 fieldWithPath("personalInformationAgreement").description("사용자 개인정보 수집 및 활용에 대한 동의여부입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("userId").description("회원가입한 사용자의 식별자입니다."),
+                                fieldWithPath("userId").description("회원가입한 사용자의 ID입니다."),
                                 fieldWithPath("nickname").description("회원가입한 사용자의 닉네임입니다."),
                                 fieldWithPath("accessToken").description("회원가입한 사용자의 JWT 액세스 토큰입니다. +" + "\n" + "* Claims : [userId, snsId, nickname, role]"))));
     }

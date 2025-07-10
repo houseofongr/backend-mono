@@ -1,5 +1,7 @@
 package com.aoo.admin.application.port.in.universe;
 
+import com.aoo.admin.application.port.in.category.CategoryInfo;
+import com.aoo.common.adapter.out.persistence.entity.CategoryJpaEntity;
 import com.aoo.common.application.port.in.Pagination;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public record SearchUniverseResult(
             String title,
             String description,
             String author,
-            String category,
             String publicStatus,
+            CategoryInfo category,
             List<String> hashtags
     ) {
 
@@ -40,8 +42,8 @@ public record SearchUniverseResult(
             String title,
             String description,
             String author,
-            String category,
             String publicStatus,
+            CategoryInfo category,
             List<String> hashtags
     ) {
     }

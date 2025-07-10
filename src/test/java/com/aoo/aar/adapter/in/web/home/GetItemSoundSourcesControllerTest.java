@@ -28,12 +28,12 @@ class GetItemSoundSourcesControllerTest extends AbstractControllerTest {
                 .andExpect(status().is(200))
                 .andDo(document("aar-home-get-item-soundsources",
                         queryParameters(
-                                parameterWithName("itemId").description("조회할 아이템의 식별자입니다.")
+                                parameterWithName("itemId").description("조회할 아이템의 ID입니다.")
                         ),
                         responseFields(
                                 fieldWithPath("itemName").description("아이템의 이름입니다."),
 
-                                fieldWithPath("soundSources[].id").description("음원의 식별자입니다."),
+                                fieldWithPath("soundSources[].id").description("음원의 ID입니다."),
                                 fieldWithPath("soundSources[].name").description("음원의 이름입니다."),
                                 fieldWithPath("soundSources[].description").description("음원에 대한 설명입니다."),
                                 fieldWithPath("soundSources[].createdDate").description("음원의 생성일입니다."),

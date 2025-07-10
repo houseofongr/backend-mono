@@ -45,9 +45,9 @@ class PostItemControllerV2Test extends AbstractControllerTest {
                 .andExpect(status().is(201))
                 .andDo(document("admin-item-post-v2",
                         pathParameters(
-                                parameterWithName("userId").description("아이템을 소유할 사용자의 식별자입니다."),
-                                parameterWithName("homeId").description("아이템을 보유할 홈의 식별자입니다."),
-                                parameterWithName("roomId").description("아이템을 포함할 룸의 식별자입니다.")
+                                parameterWithName("userId").description("아이템을 소유할 사용자의 ID입니다."),
+                                parameterWithName("homeId").description("아이템을 보유할 홈의 ID입니다."),
+                                parameterWithName("roomId").description("아이템을 포함할 룸의 ID입니다.")
                         ),
                         requestFields(
                                 fieldWithPath("createItems").description("생성할 아이템의 정보를 담은 배열입니다."),
@@ -77,7 +77,7 @@ class PostItemControllerV2Test extends AbstractControllerTest {
                                 fieldWithPath("createItems[].ellipseData.rotation").optional().description("타원형의 회전 각도입니다."),
 
                                 fieldWithPath("updateItems").description("수정할 아이템의 정보를 담은 배열입니다."),
-                                fieldWithPath("updateItems[].id").description("수정할 아이템의 식별자입니다."),
+                                fieldWithPath("updateItems[].id").description("수정할 아이템의 ID입니다."),
                                 fieldWithPath("updateItems[].name").description("수정할 아이템의 이름입니다."),
                                 fieldWithPath("updateItems[].itemType").description("수정할 아이템의 타입입니다. +" + "\n" + "* 타입 : [CIRCLE, RECTANGLE, ELLIPSE]"),
 
@@ -102,7 +102,7 @@ class PostItemControllerV2Test extends AbstractControllerTest {
                                 fieldWithPath("updateItems[].ellipseData.rotation").optional().description("타원형의 회전 각도입니다.")
                         ),
                         responseFields(
-                                fieldWithPath("itemIds[]").description("생성 및 수정된 아이템의 식별자 리스트입니다.")
+                                fieldWithPath("itemIds[]").description("생성 및 수정된 아이템의 ID 리스트입니다.")
                         )
                 ));
     }

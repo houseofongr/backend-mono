@@ -14,7 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @PersistenceAdapterTest
-@Sql("CategoryPersistenceAdapterTest.sql")
+@Sql("classpath:sql/universe.sql")
 @Import({CategoryPersistenceAdapter.class, CategoryMapper.class})
 class CategoryPersistenceAdapterTest {
 
@@ -32,7 +32,7 @@ class CategoryPersistenceAdapterTest {
         String eng = "new category";
 
         // when
-        CreateCategoryResult result = sut.save(kor, eng);
+        CreateCategoryResult result = sut.save(eng, kor);
 
         // then
         assertThat(result.categoryId()).isNotNull();
@@ -63,7 +63,7 @@ class CategoryPersistenceAdapterTest {
         String eng = "altered category";
 
         // when
-        UpdateCategoryResult result = sut.update(id, kor, eng);
+        UpdateCategoryResult result = sut.update(id, eng, kor);
         CategoryJpaEntity categoryJpaEntity = categoryJpaRepository.findById(1L).orElseThrow();
 
         // then
