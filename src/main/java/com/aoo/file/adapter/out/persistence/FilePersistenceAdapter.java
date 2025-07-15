@@ -5,7 +5,10 @@ import com.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.aoo.file.application.port.out.database.DeleteFilePort;
 import com.aoo.file.application.port.out.database.FindFilePort;
 import com.aoo.file.application.port.out.database.SaveFilePort;
+import com.aoo.file.application.service.FileErrorCode;
+import com.aoo.file.application.service.FileException;
 import com.aoo.file.domain.File;
+import com.aoo.file.domain.FileType;
 import com.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.aoo.file.domain.exception.FileSizeLimitExceedException;
 import com.aoo.file.domain.exception.IllegalFileAuthorityDirException;
@@ -48,6 +51,17 @@ public class FilePersistenceAdapter implements SaveFilePort, FindFilePort, Delet
     @Override
     public List<File> loadAll(List<Long> ids) {
         return fileJpaRepository.findAllById(ids).stream().map(fileMapper::mapToDomainEntity).toList();
+    }
+
+    @Override
+    public FileType findFileType(Long fileId) {
+
+        FileJpaEntity fileJpaEntity = fileJpaRepository.findById(fileId)
+                .orElseThrow(() -> new FileException(FileErrorCode.FILE_NOT_FOUND));
+
+        File file = fileMapper.mapToDomainEntity(fileJpaEntity);
+
+        return file.getFileId().getFileType();
     }
 
     @Override

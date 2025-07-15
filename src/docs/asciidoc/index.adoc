@@ -832,6 +832,14 @@ operation::admin-sound-delete[snippets='path-parameters,http-request,http-respon
 
 별도의 권한 없이 요청 가능한 API입니다.
 
+[[file-public-videos-get-api]]
+==== 파일 다운로드 API
+
+특정 파일을 공개 서버로부터 다운로드합니다.
+
+operation::file-public-files-download[snippets='path-parameters,http-request,response-file']
+
+
 [[file-public-images-post-api]]
 ==== 이미지 업로드 API
 
@@ -840,7 +848,7 @@ operation::admin-sound-delete[snippets='path-parameters,http-request,http-respon
 operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
 
 [[file-public-images-get-api]]
-==== 이미지 인라인 다운로드 API
+==== 이미지 다운로드 API
 
 이미지 파일을 공개 서버로부터 다운로드합니다.
 
@@ -855,7 +863,7 @@ operation::file-public-images-download[snippets='path-parameters,http-request,re
 operation::file-public-audio-upload[snippets='http-request,http-response,response-fields']
 
 [[file-public-audios-get-api]]
-==== 오디오 인라인 다운로드 API
+==== 오디오 다운로드 API
 
 오디오 파일을 공개 서버로부터 다운로드합니다.
 
