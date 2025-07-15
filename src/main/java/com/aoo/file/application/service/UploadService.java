@@ -1,7 +1,7 @@
 package com.aoo.file.application.service;
 
 import com.aoo.file.application.port.in.UploadFileResult;
-import com.aoo.file.application.port.out.database.SaveImageFilePort;
+import com.aoo.file.application.port.out.database.SaveFilePort;
 import com.aoo.file.application.port.out.filesystem.RandomFileNamePort;
 import com.aoo.file.application.port.out.filesystem.WriteFilePort;
 import com.aoo.file.domain.*;
@@ -24,19 +24,19 @@ import java.util.Map;
 class UploadService {
 
     private final FileProperties fileProperties;
-    private final SaveImageFilePort saveImageFilePort;
+    private final SaveFilePort saveImageFilePort;
     private final WriteFilePort writeFilePort;
     private final RandomFileNamePort randomFileNamePort;
 
-    UploadFileResult upload(List<MultipartFile> files, FileIdCreateStrategy fileIdCreateStrategy) {
+    public UploadFileResult upload(List<MultipartFile> files, FileIdCreateStrategy fileIdCreateStrategy) {
         return upload(files, null, fileIdCreateStrategy);
     }
 
-    UploadFileResult.FileInfo upload(MultipartFile image, FileIdCreateStrategy fileIdCreateStrategy) {
-        return upload(List.of(image), fileIdCreateStrategy).fileInfos().getFirst();
+    public UploadFileResult.FileInfo upload(MultipartFile file, FileIdCreateStrategy fileIdCreateStrategy) {
+        return upload(List.of(file), fileIdCreateStrategy).fileInfos().getFirst();
     }
 
-    UploadFileResult upload(List<MultipartFile> files, Long ownerId, FileIdCreateStrategy idCreateStrategy) {
+    public UploadFileResult upload(List<MultipartFile> files, Long ownerId, FileIdCreateStrategy idCreateStrategy) {
 
         // int[0] : total file name count | int[1] : name suffix(increase)
         Map<String, int[]> fileNameMap = fileNameMap(files);

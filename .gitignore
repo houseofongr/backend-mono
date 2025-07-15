@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### config ###
-aoo-config.yml
+src/main/resources/aoo-config.yml

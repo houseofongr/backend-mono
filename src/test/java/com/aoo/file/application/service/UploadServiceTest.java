@@ -3,7 +3,7 @@ package com.aoo.file.application.service;
 import com.aoo.common.domain.Authority;
 import com.aoo.file.adapter.out.filesystem.FileSystemAdapter;
 import com.aoo.file.application.port.in.UploadFileResult;
-import com.aoo.file.application.port.out.database.SaveImageFilePort;
+import com.aoo.file.application.port.out.database.SaveFilePort;
 import com.aoo.file.application.port.out.filesystem.RandomFileNamePort;
 import com.aoo.file.application.port.out.filesystem.WriteFilePort;
 import com.aoo.file.domain.FileType;
@@ -29,7 +29,7 @@ class UploadServiceTest {
 
     FileProperties fileProperties;
 
-    SaveImageFilePort saveImageFilePort;
+    SaveFilePort saveImageFilePort;
 
     WriteFilePort writeFilePort;
 

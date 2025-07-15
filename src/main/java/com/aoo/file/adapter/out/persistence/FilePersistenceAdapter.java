@@ -4,7 +4,7 @@ import com.aoo.file.adapter.out.persistence.entity.FileJpaEntity;
 import com.aoo.file.adapter.out.persistence.repository.FileJpaRepository;
 import com.aoo.file.application.port.out.database.DeleteFilePort;
 import com.aoo.file.application.port.out.database.FindFilePort;
-import com.aoo.file.application.port.out.database.SaveImageFilePort;
+import com.aoo.file.application.port.out.database.SaveFilePort;
 import com.aoo.file.domain.File;
 import com.aoo.file.domain.exception.FileExtensionMismatchException;
 import com.aoo.file.domain.exception.FileSizeLimitExceedException;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class FilePersistenceAdapter implements SaveImageFilePort, FindFilePort, DeleteFilePort {
+public class FilePersistenceAdapter implements SaveFilePort, FindFilePort, DeleteFilePort {
 
     private final FileJpaRepository fileJpaRepository;
     private final FileMapper fileMapper;

@@ -7,12 +7,14 @@ import com.aoo.file.application.port.in.UploadPublicImageUseCase;
 import com.aoo.file.domain.FileType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Component
+@Service
+@Transactional
 @RequiredArgsConstructor
 public class UploadImageService implements UploadPublicImageUseCase, UploadPrivateImageUseCase {
 
@@ -20,7 +22,6 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
     private final UploadService uploadService;
 
     @Override
-    @Transactional
     public UploadFileResult publicUpload(List<MultipartFile> images) {
         return uploadService.upload(images, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.PUBLIC_FILE_ACCESS, FileType.IMAGE));
     }
@@ -31,7 +32,6 @@ public class UploadImageService implements UploadPublicImageUseCase, UploadPriva
     }
 
     @Override
-    @Transactional
     public UploadFileResult privateUpload(List<MultipartFile> images) {
         return uploadService.upload(images, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.ALL_PRIVATE_IMAGE_ACCESS, FileType.IMAGE));
     }

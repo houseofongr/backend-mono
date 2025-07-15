@@ -83,7 +83,8 @@ public class FileId {
                     throw new FileExtensionMismatchException(fileType, fileName);
             }
             case VIDEO -> {
-                throw new UnsupportedOperationException();
+                if (!fileName.matches(".*\\.(?:mp4)$"))
+                    throw new FileExtensionMismatchException(fileType, fileName);
             }
         }
     }

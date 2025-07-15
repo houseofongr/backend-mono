@@ -839,23 +839,13 @@ operation::admin-sound-delete[snippets='path-parameters,http-request,http-respon
 
 operation::file-public-images-upload[snippets='http-request,http-response,response-fields']
 
-[[file-public-images-get-inline-api]]
+[[file-public-images-get-api]]
 ==== 이미지 인라인 다운로드 API
 
 이미지 파일을 공개 서버로부터 다운로드합니다.
 
-> 해당 API는 인라인 방식으로, 브라우저에서는 <img/> 태그 내부의 파일로 인식합니다.
+operation::file-public-images-download[snippets='path-parameters,http-request,response-file']
 
-operation::file-public-images-download-inline[snippets='path-parameters,http-request,response-file']
-
-[[file-public-images-get-attachment-api]]
-==== 이미지 첨부파일 다운로드 API
-
-이미지 파일을 공개 서버로부터 다운로드합니다.
-
-> 해당 API는 첨부파일 방식으로, 브라우저에서는 첨부파일로 다운로드를 시도합니다.
-
-operation::file-public-images-download-attachment[snippets='path-parameters,http-request,response-file']
 
 [[file-public-audios-post-api]]
 ==== 오디오 업로드 API
@@ -865,23 +855,28 @@ operation::file-public-images-download-attachment[snippets='path-parameters,http
 operation::file-public-audio-upload[snippets='http-request,http-response,response-fields']
 
 
-[[file-public-audios-get-inline-api]]
+[[file-public-audios-get-api]]
 ==== 오디오 인라인 다운로드 API
 
 오디오 파일을 공개 서버로부터 다운로드합니다.
 
-> 해당 API는 인라인 방식으로, 브라우저에서는 <audio/> 태그 내부의 파일로 인식합니다.
+operation::file-public-audios-download[snippets='path-parameters,http-request,response-file']
 
-operation::file-public-audios-download-inline[snippets='path-parameters,http-request,response-file']
+[[file-public-videos-post-api]]
+==== 비디오 업로드 API
 
-[[file-public-audios-get-attachment-api]]
-==== 오디오 첨부파일 다운로드 API
+비디오 파일을 공개 서버에 업로드합니다.
+
+operation::file-public-video-upload[snippets='http-request,http-response,response-fields']
+
+
+[[file-public-videos-get-api]]
+==== 비디오 다운로드 API
 
 오디오 파일을 공개 서버로부터 다운로드합니다.
 
-> 해당 API는 첨부파일 방식으로, 브라우저에서는 첨부파일로 다운로드를 시도합니다.
+operation::file-public-videos-download[snippets='path-parameters,http-request,response-file']
 
-operation::file-public-audios-download-attachment[snippets='path-parameters,http-request,response-file']
 
 [[file-private-api]]
 === 비공개(Private) API

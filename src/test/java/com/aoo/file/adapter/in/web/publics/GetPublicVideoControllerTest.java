@@ -19,7 +19,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetPublicAudioControllerTest extends AbstractControllerTest {
+class GetPublicVideoControllerTest extends AbstractControllerTest {
 
     @Autowired
     FileJpaRepository fileJpaRepository;
@@ -30,20 +30,20 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @DisplayName("오디오 다운로드 API")
-    void downloadAudio() throws Exception {
+    @DisplayName("비디오 다운로드 API")
+    void downloadVideo() throws Exception {
 
-        ClassPathResource resource = new ClassPathResource("public/audios/sample.mp3");
+        ClassPathResource resource = new ClassPathResource("public/videos/sample.mp4");
         byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        FileJpaEntity entity = new FileJpaEntity(null, "sample.mp3", "sample.mp3", resource.getFile().getParent(), false, (long) bytes.length, null);
+        FileJpaEntity entity = new FileJpaEntity(null, "sample.mp4", "sample.mp4", resource.getFile().getParent(), false, (long) bytes.length, null);
         fileJpaRepository.save(entity);
 
-        mockMvc.perform(get("/public/audios/{audioId}", entity.getId())
-                .param("attachment", "false"))
+        mockMvc.perform(get("/public/videos/{videoId}", entity.getId())
+                        .param("attachment", "false"))
                 .andExpect(status().is(200))
-                .andDo(document("file-public-audios-download",
+                .andDo(document("file-public-videos-download",
                         pathParameters(
-                                parameterWithName("audioId").description("다운로드할 음원 ID입니다."),
+                                parameterWithName("videoId").description("다운로드할 영상 ID입니다."),
                                 parameterWithName("attachment").description("첨부파일 여부입니다. +" + "\n" +
                                                                             "* 첨부파일로 설정하면 바로 다운로드를 진행합니다.").optional()
                         ),
@@ -52,7 +52,7 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
                             var path = Paths.get(context.getOutputDirectory().getAbsolutePath(), operation.getName(), "response-file.adoc");
                             var outputStream = new ByteArrayOutputStream();
                             outputStream.write("++++\n".getBytes());
-                            outputStream.write("<audio controls type=\"audio/mp3\" src=\"data:audio/mp3;base64,".getBytes());
+                            outputStream.write("<video controls type=\"video/mp4\" src=\"data:audio/mp3;base64,".getBytes());
                             outputStream.write(Base64.getEncoder().encode(operation.getResponse().getContent()));
                             outputStream.write("\"/>\n".getBytes());
                             outputStream.write("++++\n".getBytes());
@@ -60,5 +60,4 @@ class GetPublicAudioControllerTest extends AbstractControllerTest {
                             Files.write(path, outputStream.toByteArray());
                         }));
     }
-
 }

@@ -1,9 +1,11 @@
 package com.aoo.file.application.service;
 
+import com.aoo.common.domain.Authority;
 import com.aoo.file.application.port.in.DownloadFileResult;
 import com.aoo.file.application.port.in.DownloadImageUseCase;
 import com.aoo.file.application.port.in.DownloadPrivateImageUseCase;
 import com.aoo.file.application.port.out.jwt.VerifyAccessTokenPort;
+import com.aoo.file.domain.FileType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.jwt.JwtException;

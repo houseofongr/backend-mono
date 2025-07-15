@@ -7,12 +7,14 @@ import com.aoo.file.application.port.in.UploadPublicAudioUseCase;
 import com.aoo.file.domain.FileType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Component
+@Service
+@Transactional
 @RequiredArgsConstructor
 public class UploadAudioService implements UploadPublicAudioUseCase, UploadPrivateAudioUseCase {
 
@@ -30,7 +32,6 @@ public class UploadAudioService implements UploadPublicAudioUseCase, UploadPriva
     }
 
     @Override
-    @Transactional
     public UploadFileResult privateUpload(List<MultipartFile> audios, Long ownerId) {
         return uploadService.upload(audios, ownerId, new BasicFileIdCreateStrategy(fileProperties.getBaseDir(), Authority.ALL_PRIVATE_AUDIO_ACCESS, FileType.AUDIO));
     }
