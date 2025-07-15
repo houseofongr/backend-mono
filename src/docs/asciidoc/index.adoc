@@ -900,6 +900,7 @@ operation::file-private-images-download-v2[snippets='path-parameters,query-param
 
 > 응답은 <<file-private-api>>와 동일합니다.
 
+
 [[file-private-audios-get-api]]
 ==== 오디오 로드 API
 
