@@ -1,16 +1,21 @@
 package com.hoo.main.adapter.out.persistence;
 
+import com.hoo.admin.domain.universe.PublicStatus;
+import com.hoo.admin.domain.universe.TraversalComponents;
+import com.hoo.common.adapter.out.persistence.PersistenceAdapterTest;
+import com.hoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
+import com.hoo.common.adapter.out.persistence.repository.UniverseJpaRepository;
 import com.hoo.main.adapter.out.persistence.mapper.UniverseMapper;
 import com.hoo.main.application.port.in.universe.SearchPublicUniverseCommand;
 import com.hoo.main.application.port.in.universe.SearchPublicUniverseResult;
-import com.hoo.admin.domain.universe.TraversalComponents;
-import com.hoo.common.adapter.out.persistence.PersistenceAdapterTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +26,8 @@ class UniversePersistenceAdapterTest {
 
     @Autowired
     UniversePersistenceAdapter sut;
+    @Autowired
+    private UniverseJpaRepository universeJpaRepository;
 
     @Test
     @DisplayName("유니버스 전체 조회")
@@ -114,5 +121,23 @@ class UniversePersistenceAdapterTest {
         assertThat(treeComponents.getSpaces()).hasSize(4);
         assertThat(treeComponents.getPieces()).hasSize(6);
         assertThat(treeComponents.getUniverse().getSocialInfo().getViewCount()).isEqualTo(2L);
+    }
+
+    @Test
+    @DisplayName("특정 유니버스 제외하고 공개된 100개 ID 조회")
+    void findUniverse100Except() {
+        // given
+        List<Long> exceptIds = List.of(1L, 2L, 3L);
+
+        // when
+        List<Long> universeIds = sut.findNewPublicUniverseIdsLimit100Except(exceptIds);
+        List<UniverseJpaEntity> universeJpaEntities = universeJpaRepository.findAllById(universeIds);
+
+        // then
+        assertThat(universeIds).hasSize(6);
+        assertThat(universeIds).noneMatch(id -> id.equals(1L) || id.equals(2L) || id.equals(3L));
+        assertThat(universeJpaEntities).noneMatch(universeJpaEntity ->
+                universeJpaEntity.getPublicStatus() == PublicStatus.PRIVATE
+        );
     }
 }

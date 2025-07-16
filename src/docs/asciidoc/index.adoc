@@ -272,7 +272,14 @@ operation::aar-public-universe-get-list[snippets='path-parameters,http-request,h
 
 > 조회 시 조회수가 1 증가하며, 내부의 모든 컴포넌트를 함께 조회합니다.
 
-operation::aar-public-universe-get[snippets='path-parameters,http-request,http-response,response-fields']
+[[suggest-random-universe-api]]
+==== 유니버스 랜덤 추천 API
+
+공개된 유니버스 중 일부를 랜덤 추천합니다.
+
+> 비공개 유니버스는 조회되지 않습니다.
+
+operation::suggest-random-universe[snippets='path-parameters,http-request,http-response,response-fields']
 
 [[admin-api]]
 == 관리자(Admin) API
@@ -832,7 +839,7 @@ operation::admin-sound-delete[snippets='path-parameters,http-request,http-respon
 
 별도의 권한 없이 요청 가능한 API입니다.
 
-[[file-public-videos-get-api]]
+[[file-public-get-api]]
 ==== 파일 다운로드 API
 
 특정 파일을 공개 서버로부터 다운로드합니다.

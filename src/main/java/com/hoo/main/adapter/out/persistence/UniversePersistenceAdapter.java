@@ -1,9 +1,14 @@
 package com.hoo.main.adapter.out.persistence;
 
+import com.hoo.admin.domain.universe.Universe;
+import com.hoo.common.adapter.out.persistence.entity.UniverseJpaEntity;
 import com.hoo.main.adapter.out.persistence.mapper.UniverseMapper;
 import com.hoo.main.application.port.in.universe.SearchPublicUniverseCommand;
 import com.hoo.main.application.port.in.universe.SearchPublicUniverseResult;
+import com.hoo.main.application.port.in.universe.SuggestRandomUniverseCommand;
+import com.hoo.main.application.port.in.universe.SuggestRandomUniverseResult;
 import com.hoo.main.application.port.out.persistence.universe.CheckIsLikedUniversePort;
+import com.hoo.main.application.port.out.persistence.universe.LoadUniversePort;
 import com.hoo.main.application.port.out.persistence.universe.SearchPublicUniversePort;
 import com.hoo.main.application.port.out.persistence.universe.ViewPublicUniversePort;
 import com.hoo.main.application.service.AarErrorCode;
@@ -15,9 +20,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component("AARUniversePersistenceAdapter")
 @RequiredArgsConstructor
-public class UniversePersistenceAdapter implements SearchPublicUniversePort, CheckIsLikedUniversePort, ViewPublicUniversePort {
+public class UniversePersistenceAdapter implements SearchPublicUniversePort, CheckIsLikedUniversePort, ViewPublicUniversePort, LoadUniversePort {
 
     private final UniverseMapper universeMapper;
     private final UniverseJpaRepository universeJpaRepository;
@@ -31,6 +38,11 @@ public class UniversePersistenceAdapter implements SearchPublicUniversePort, Che
     }
 
     @Override
+    public List<Long> findNewPublicUniverseIdsLimit100Except(List<Long> exceptIds) {
+        return universeJpaRepository.findNewPublicUniverseIdLimit100Except(exceptIds);
+    }
+
+    @Override
     public boolean checkIsLiked(Long universeId, Long userId) {
         return universeJpaRepository.checkIsLiked(universeId, userId);
     }
@@ -40,5 +52,10 @@ public class UniversePersistenceAdapter implements SearchPublicUniversePort, Che
         universeJpaRepository.findById(universeId).orElseThrow(() -> new AarException(AarErrorCode.UNIVERSE_NOT_FOUND)).view();
 
         return universeMapper.mapToTraversalComponents(universeJpaRepository.findAllPublicTreeComponentById(universeId));
+    }
+
+    @Override
+    public List<Universe> loadAllUniverseOnly(List<Long> universeIds) {
+        return universeJpaRepository.findAllById(universeIds).stream().map(universeMapper::mapToDomainEntity).toList();
     }
 }

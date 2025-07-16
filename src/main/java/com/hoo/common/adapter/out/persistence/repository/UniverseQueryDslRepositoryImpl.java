@@ -25,6 +25,8 @@ import static com.hoo.common.adapter.out.persistence.entity.QSpaceJpaEntity.spac
 import static com.hoo.common.adapter.out.persistence.entity.QUniverseHashtagJpaEntity.universeHashtagJpaEntity;
 import static com.hoo.common.adapter.out.persistence.entity.QUniverseJpaEntity.universeJpaEntity;
 import static com.hoo.common.adapter.out.persistence.entity.QUniverseLikeJpaEntity.universeLikeJpaEntity;
+import static com.hoo.common.adapter.out.persistence.entity.QUserJpaEntity.userJpaEntity;
+import static com.querydsl.core.types.dsl.MathExpressions.random;
 
 public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepository {
 
@@ -96,6 +98,16 @@ public class UniverseQueryDslRepositoryImpl implements UniverseQueryDslRepositor
                 .fetch();
 
         return new TraversalJpaEntityComponents(universe, spaceJpaEntities, pieceJpaEntities);
+    }
+
+    public List<Long> findNewPublicUniverseIdLimit100Except(List<Long> exceptIds) {
+        return query.select(universeJpaEntity.id)
+                .from(universeJpaEntity)
+                .where(universeJpaEntity.id.notIn(exceptIds)
+                        .and(universeJpaEntity.publicStatus.eq(PublicStatus.PUBLIC)))
+                .orderBy(universeJpaEntity.id.desc())
+                .limit(100)
+                .fetch();
     }
 
     @Override
