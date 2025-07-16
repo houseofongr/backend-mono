@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.List;
-
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -28,16 +26,17 @@ class SuggestRandomUniverseControllerTest extends AbstractControllerTest {
                   "exceptIds" : [1, 2, 3, 4]
                 }
                 """;
-        mockMvc.perform(get("/universes/random/{size}", 4)
+        mockMvc.perform(get("/universes/random")
+                        .param("size", "4")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andDo(document("suggest-random-universe",
                         pathParameters(
-                                parameterWithName("size").description("가져올 데이터 개수입니다.")
+                                parameterWithName("size").description("가져올 데이터 개수입니다.").optional()
                         ),
                         requestFields(
-                                fieldWithPath("exceptIds").description("조회 대상에서 제외할 ID입니다.")
+                                fieldWithPath("exceptIds").description("조회 대상에서 제외할 ID입니다.").optional()
                         ),
                         responseFields(
                                 fieldWithPath("universes[].id").description("유니버스의 아이디입니다."),

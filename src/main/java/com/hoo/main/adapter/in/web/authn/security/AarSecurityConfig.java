@@ -48,7 +48,16 @@ public class AarSecurityConfig {
                         .jwt(jwt -> jwt.decoder(jwtDecoder)))
 
                 .authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers(GET,
+                        authorize
+                                .requestMatchers(GET,
+                                        "/homes/**")
+                                .hasRole("USER")
+
+                                .requestMatchers(POST,
+                                        "/authn/regist")
+                                .hasRole("TEMP_USER")
+
+                                .requestMatchers(GET,
                                         "/authn/login/**",
                                         "/authn/code/**",
                                         "/authn/kakao/callback",
@@ -58,21 +67,9 @@ public class AarSecurityConfig {
                                 .permitAll()
 
                                 .requestMatchers(POST,
+                                        "/users/business",
                                         "/authn/email-code/**",
-                                        "/authn/business/login"
-                                        )
-                                .permitAll()
-
-                                .requestMatchers(GET,
-                                        "/homes/**")
-                                .hasRole("USER")
-
-                                .requestMatchers(POST,
-                                        "/authn/regist")
-                                .hasRole("TEMP_USER")
-
-                                .requestMatchers(POST,
-                                        "/users/business")
+                                        "/authn/business/login")
                                 .permitAll()
 
                                 .anyRequest().authenticated())

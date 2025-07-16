@@ -5,10 +5,9 @@ import com.hoo.main.application.port.in.universe.SuggestRandomUniverseResult;
 import com.hoo.main.application.port.in.universe.SuggestRandomUniverseUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,12 +15,13 @@ public class SuggestRandomUniverseController {
 
     private final SuggestRandomUniverseUseCase useCase;
 
-    @GetMapping("/universes/random/{size}")
+    @GetMapping("/universes/random")
     ResponseEntity<SuggestRandomUniverseResult> suggestRandom(
-            @PathVariable Integer size,
-            @RequestBody SuggestRandomUniverseCommand command
+            @RequestParam(defaultValue = "4") Integer size,
+            @RequestBody(required = false) SuggestRandomUniverseCommand command
     ) {
 
+        if (command == null) command = new SuggestRandomUniverseCommand(List.of());
         return ResponseEntity.ok(useCase.suggestRandomSidebarUniverse(size, command));
     }
 
