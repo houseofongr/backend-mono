@@ -23,7 +23,7 @@ spring:
             client-id: kakao-client-id
             client-secret: kakao-client-secret
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/aar/authn/login/kakao
+            redirect-uri: http://localhost:8080/authn/login/kakao
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
