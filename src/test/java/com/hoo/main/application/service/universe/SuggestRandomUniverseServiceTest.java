@@ -39,7 +39,7 @@ class SuggestRandomUniverseServiceTest {
             List<Long> ids = invocation.getArgument(0);
             return ids.stream().map(id -> Universe.load(id, null, null, null, null, null, null, null, null, null, List.of(), User.load(1L, "leaf"), null, null)).toList();
         });
-        SuggestRandomUniverseResult result = sut.suggestRandomSidebarUniverse(4, new SuggestRandomUniverseCommand(exceptIds));
+        SuggestRandomUniverseResult result = sut.suggestRandomSidebarUniverse(new SuggestRandomUniverseCommand(4, exceptIds));
 
         // then
         assertThat(result.universes()).hasSizeLessThanOrEqualTo(4);

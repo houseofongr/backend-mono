@@ -23,12 +23,12 @@ public class SuggestRandomUniverseService implements SuggestRandomUniverseUseCas
     private final LoadUniversePort loadUniversePort;
 
     @Override
-    public SuggestRandomUniverseResult suggestRandomSidebarUniverse(Integer size, SuggestRandomUniverseCommand command) {
+    public SuggestRandomUniverseResult suggestRandomSidebarUniverse(SuggestRandomUniverseCommand command) {
 
         List<Long> universeIds = searchPublicUniversePort.findNewPublicUniverseIdsLimit100Except(command.exceptIds());
 
         Collections.shuffle(universeIds);
-        List<Long> randomFourIds = universeIds.subList(0, Math.min(size, universeIds.size()));
+        List<Long> randomFourIds = universeIds.subList(0, Math.min(command.size(), universeIds.size()));
 
         List<Universe> universes = new ArrayList<>(loadUniversePort.loadAllUniverseOnly(randomFourIds));
         Collections.shuffle(universes);
